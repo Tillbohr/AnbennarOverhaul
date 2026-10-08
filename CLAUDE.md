@@ -23,6 +23,7 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 | Rebuild holdings override | `python -I tools/build_holdings_override.py` |
 | Rebuild HUD override | `python -I tools/build_hud_override.py` |
 | Run tool tests | `python -I -m unittest discover -s tools/tests -v` |
+| Rebuild inventions | `python -I tools/build_inventions.py` (needs EU4 Anbennar installed for icons) |
 
 ## Loading
 
@@ -52,6 +53,7 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 |---|---|---|
 | `common/holdings/00_holdings.txt` | `python -I tools/build_holdings_override.py` | Holdings are whole-file only. The script copies Anbennar's file and inserts the `ADDITIONS` (marked `# Anbennar Overhaul`). Never edit the output by hand. |
 | `gui/hud.gui` | `python -I tools/build_hud_override.py` | The main tab bar is whole-file only. The script copies Anbennar's `gui/hud.gui` if it has one, else the game's, and inserts the Artificery tab after `tab_situation` (marked `# Anbennar Overhaul`). Never edit the output by hand. |
+| `common/modifiers/aov_invention_modifiers.txt`, `common/scripted_triggers/aov_invention_triggers.txt`, `common/script_values/aov_invention_values.txt`, `common/scripted_effects/aov_invention_effects.txt`, `common/scripted_guis/aov_invention_sgui.txt`, `common/customizable_localization/aov_invention_custom_loc.txt`, `gui/aov_inventions_generated.gui`, `localization/english/aov_inventions_l_english.yml`, `gfx/interface/icons/aov_inventions/` | `python -I tools/build_inventions.py` | One block per invention, generated from `tools/data/inventions.py` (edit the data, then rerun). |
 
 ## Updating to a new Anbennar version
 
@@ -82,4 +84,9 @@ inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error
   `can_use_artificery_trigger` (gnome race, Gnomish Ingenuity culture, exactly one academy) via scripted GUI
   `aov_artificery_available`. Opens `gui/aov_window_artificery.gui` (scripted widget, variable
   `aov_artificery_window`) with Factions/Inventions tabs (variable `aov_artificery_tab`, unset = Factions);
-  both tab bodies are placeholders until the factions and inventions systems are built.
+  the Factions body is a placeholder until the factions system is built.
+- **Artificery inventions:** 60 inventions in `tools/data/inventions.py` (EU4 Anbennar mapping in
+  `docs/research/2026-10-08-eu4-artificer-inventions.md`). Research sponsored by Brillites (5 y, random),
+  Mechanists (10 y, chosen field) or Technomancers (15 y, chosen invention), 50 gold each; tiers gated by culture
+  era; 3/4/5 slots with a 1-year cooldown; state in ruler variables, inherited by the heir; dormant while
+  ineligible. Logic in `aov_artificery_research_*` files and `common/on_action/aov_inventions_on_actions.txt`.
