@@ -26,7 +26,6 @@
  AOV_ARTIFICERY_TAB_FACTIONS: "Factions"
  AOV_ARTIFICERY_TAB_INVENTIONS: "Inventions"
  AOV_ARTIFICERY_FACTIONS_PLACEHOLDER: "The artificer factions will be shown here."
- AOV_ARTIFICERY_INVENTIONS_PLACEHOLDER: "Inventions will be researched here."
 
  # Inventions
  AOV_CATEGORY_ECONOMIC: "Economic"

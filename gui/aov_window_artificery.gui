@@ -120,23 +120,121 @@ window = {
 					expand = {}
 				}
 
-				# Inventions tab: filled by the inventions spec
+				# Inventions tab
 				vbox = {
 					name = "aov_artificery_inventions_body"
 					visible = "[GetVariableSystem.HasValue( 'aov_artificery_tab', 'inventions' )]"
 					layoutpolicy_horizontal = expanding
 					layoutpolicy_vertical = expanding
-					margin = { 20 20 }
+					margin = { 10 10 }
+					spacing = 8
 
-					text_multi = {
+					hbox = {
 						layoutpolicy_horizontal = expanding
-						autoresize = yes
-						max_width = 580
-						text = "AOV_ARTIFICERY_INVENTIONS_PLACEHOLDER"
-						default_format = "#low"
+						spacing = 8
+
+						text_single = {
+							text = "AOV_INVENTIONS_SLOTS"
+							tooltip = "AOV_INVENTIONS_SLOTS_TT"
+							align = left|nobaseline
+						}
+
+						text_single = {
+							visible = "[GreaterThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_invention_slots_cooling' ), '(CFixedPoint)0' )]"
+							text = "AOV_INVENTIONS_COOLING"
+							align = left|nobaseline
+						}
+
+						expand = {}
 					}
 
-					expand = {}
+					# Research panel
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						vbox = {
+							visible = "[GetScriptedGui('aov_research_running_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							layoutpolicy_horizontal = expanding
+
+							text_single = {
+								layoutpolicy_horizontal = expanding
+								text = "AOV_RESEARCH_RUNNING"
+								align = left|nobaseline
+							}
+
+							text_single = {
+								visible = "[GetScriptedGui('aov_research_has_target_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								layoutpolicy_horizontal = expanding
+								text = "AOV_RESEARCH_RUNNING_TARGET"
+								align = left|nobaseline
+							}
+
+							text_single = {
+								visible = "[GetScriptedGui('aov_research_has_category_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								layoutpolicy_horizontal = expanding
+								text = "AOV_RESEARCH_RUNNING_CATEGORY"
+								align = left|nobaseline
+							}
+						}
+
+						expand = {
+							visible = "[Not( GetScriptedGui('aov_research_running_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+						}
+
+						button_standard = {
+							visible = "[Not( GetScriptedGui('aov_research_running_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+							size = { 200 36 }
+							text = "AOV_RESEARCH_BUTTON"
+							enabled = "[GetScriptedGui('aov_research_can_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							tooltip = "[GetScriptedGui('aov_research_can_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							onclick = "[GetVariableSystem.Set( 'aov_research_popup', 'open' )]"
+						}
+					}
+
+					# Category filters: pressed = shown
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 6
+
+						button_standard = {
+							size = { 150 30 }
+							text = "AOV_FILTER_ECONOMIC"
+							tooltip = "AOV_FILTER_TT"
+							down = "[Not( GetVariableSystem.Exists( 'aov_filter_hide_economic' ) )]"
+							onclick = "[GetVariableSystem.Toggle( 'aov_filter_hide_economic' )]"
+						}
+
+						button_standard = {
+							size = { 150 30 }
+							text = "AOV_FILTER_MILITARY"
+							tooltip = "AOV_FILTER_TT"
+							down = "[Not( GetVariableSystem.Exists( 'aov_filter_hide_military' ) )]"
+							onclick = "[GetVariableSystem.Toggle( 'aov_filter_hide_military' )]"
+						}
+
+						button_standard = {
+							size = { 150 30 }
+							text = "AOV_FILTER_SOCIETY"
+							tooltip = "AOV_FILTER_TT"
+							down = "[Not( GetVariableSystem.Exists( 'aov_filter_hide_society' ) )]"
+							onclick = "[GetVariableSystem.Toggle( 'aov_filter_hide_society' )]"
+						}
+
+						expand = {}
+					}
+
+					scrollbox = {
+						layoutpolicy_horizontal = expanding
+						layoutpolicy_vertical = expanding
+
+						blockoverride "scrollbox_content"
+						{
+							aov_inventions_list = {
+								layoutpolicy_horizontal = expanding
+							}
+						}
+					}
 				}
 			}
 		}
