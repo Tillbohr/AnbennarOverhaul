@@ -21,6 +21,8 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 | Validate (everything) | `python -I tools/validate.py --all` |
 | Accept current reports as baseline | `python -I tools/validate.py --baseline` (only after confirming they are inherited from Anbennar) |
 | Rebuild holdings override | `python -I tools/build_holdings_override.py` |
+| Rebuild HUD override | `python -I tools/build_hud_override.py` |
+| Run tool tests | `python -I -m unittest discover -s tools/tests -v` |
 
 ## Loading
 
@@ -49,13 +51,16 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 | File | Generator | Why |
 |---|---|---|
 | `common/holdings/00_holdings.txt` | `python -I tools/build_holdings_override.py` | Holdings are whole-file only. The script copies Anbennar's file and inserts the `ADDITIONS` (marked `# Anbennar Overhaul`). Never edit the output by hand. |
+| `gui/hud.gui` | `python -I tools/build_hud_override.py` | The main tab bar is whole-file only. The script copies Anbennar's `gui/hud.gui` if it has one, else the game's, and inserts the Artificery tab after `tab_situation` (marked `# Anbennar Overhaul`). Never edit the output by hand. |
 
 ## Updating to a new Anbennar version
 
 1. Replace `../anbennar-ck3-dev-master` with the new Anbennar release.
-2. Run `python -I tools/build_holdings_override.py`.
+2. Run `python -I tools/build_holdings_override.py` and `python -I tools/build_hud_override.py`.
 3. Run tiger (below) and fix anything that references renamed Anbennar content.
 4. Test in game; check `database_conflicts.log` for overhaul keys now also defined by Anbennar.
+
+After a CK3 patch, rerun `python -I tools/build_hud_override.py` too: its source is the game's `hud.gui`.
 
 ## Validation
 
@@ -63,7 +68,8 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 reports that are not in the baseline (it ends `fatal: 0, error: 0, ...` when clean). `ck3-tiger.conf` loads the
 base mod via its in-folder `descriptor.mod`; pointing it at the launcher's `../descriptor.mod` makes tiger load
 the whole `mod/` folder instead. Current baseline: 4 `temple_citadel_holding` modifier-format warnings,
-inherited from Anbennar's holdings file.
+inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error in the generated `gui/hud.gui`
+(vanilla HUD code referring to a dynastic-cycle group that Anbennar's `tgp_dynastic_cycle.txt` drops).
 
 ## Systems
 

@@ -5,6 +5,27 @@
   "key": "missing-item",
   "locations": [
     {
+      "column": 80,
+      "from": "MOD",
+      "fullpath": ".\\gui\\hud.gui",
+      "length": 12,
+      "line": "\t\t\tvisible = \"[And(GetSituation('dynastic_cycle').GetTopParticipantGroupByKey('other_rulers').IsCharacterParticipant( Character.Self ), Character.ShouldShowMerit)]\"",
+      "linenr": 1722,
+      "path": "gui\\hud.gui",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "situation participant group other_rulers not defined in common/situation/situations/",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
       "column": 1,
       "from": "MOD",
       "fullpath": ".\\common\\holdings\\00_holdings.txt",
