@@ -76,6 +76,16 @@ class InsertTabTests(unittest.TestCase):
         self.assertIn('tooltip = "AOV_ARTIFICERY_BUTTON"', out)
         self.assertIn(bho.TEXTURE, out)
 
+    def test_button_closes_open_main_tab_before_toggling(self):
+        # Toggling then closing a vanilla game view closes whichever main tab is open (PoD's pattern),
+        # so the Artificery window is not left hidden behind Not( IsRightWindowOpen )
+        out = bho.insert_tab(HUD)
+        toggle_view = out.index("onclick = \"[ToggleGameView( 'decisions' )]\"", out.index("tab_aov_artificery"))
+        close_view = out.index("onclick = \"[CloseGameView( 'decisions' )]\"", toggle_view)
+        toggle_var = out.index("GetVariableSystem.Toggle( 'aov_artificery_window' )", close_view)
+        self.assertLess(toggle_view, close_view)
+        self.assertLess(close_view, toggle_var)
+
     def test_block_braces_balance(self):
         self.assertEqual(sum(bho.brace_delta(l) for l in bho.insert_tab(HUD).split("\n")), 0)
 

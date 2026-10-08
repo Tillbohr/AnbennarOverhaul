@@ -29,6 +29,21 @@ window = {
 		using = Window_Position_MainTab_Hide
 	}
 
+	# Vanilla main-tab windows get this background from sidebar_background_right (hud_sidebars.gui),
+	# which only shows while IsRightWindowOpen; this window is a scripted widget, so it draws its own
+	margin_widget = {
+		size = { 100% 100% }
+		margin_right = 40
+
+		using = Window_Background
+
+		blockoverride "bg_margins"
+		{
+			margin_right = -35
+			margin_left = -23
+		}
+	}
+
 	margin_widget = {
 		size = { 100% 100% }
 		margin_top = 30
