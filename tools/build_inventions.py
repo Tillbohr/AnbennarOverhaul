@@ -308,6 +308,8 @@ def sguis(invs: list) -> str:
             f"aov_inv_{k}_research_sgui = {{\n\tscope = character\n"
             f"\tis_valid = {{ aov_artificery_can_start_research = yes aov_invention_{k}_discoverable = yes }}\n"
             f"\teffect = {{ aov_artificery_start_technomancers_research = {{ CATEGORY = {c} TARGET = {k} }} }}\n}}\n"
+            f"# Never executed: its tooltip shows the invention's effects\n"
+            f"aov_inv_{k}_effects_sgui = {{\n\tscope = character\n\teffect = {{ add_character_modifier = {{ modifier = aov_invention_{k} }} }}\n}}\n"
         )
     return "\n".join(out)
 
@@ -342,7 +344,7 @@ def row(i) -> str:
         f"\t\t\t\tmargin = {{ 6 2 }}\n"
         f"\t\t\t\tspacing = 8\n\n"
         f"\t\t\t\ticon = {{\n\t\t\t\t\tsize = {{ 44 42 }}\n\t\t\t\t\ttexture = \"{ICON_DIR}/{i['icon']}\"\n\t\t\t\t\ttooltip = \"aov_invention_{k}_tt\"\n\t\t\t\t}}\n"
-        f"\t\t\t\ttext_single = {{\n\t\t\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\t\t\ttext = \"aov_invention_{k}\"\n\t\t\t\t\ttooltip = \"aov_invention_{k}_tt\"\n\t\t\t\t\talign = left|nobaseline\n\t\t\t\t}}\n"
+        f"\t\t\t\ttext_single = {{\n\t\t\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\t\t\ttext = \"aov_invention_{k}\"\n\t\t\t\t\ttooltip = \"[{sg(k, 'effects')}.BuildTooltip( {ROOT} )]\"\n\t\t\t\t\talign = left|nobaseline\n\t\t\t\t}}\n"
         + status(f"Not( {sg(k, 'unlocked')}.IsShown( {ROOT} ) )", "AOV_INV_STATUS_LOCKED", f"AOV_INV_LOCKED_TIER_{t}_TT")
         + status(f"{sg(k, 'undiscovered')}.IsShown( {ROOT} )", "AOV_INV_STATUS_UNDISCOVERED", "AOV_INV_UNDISCOVERED_TT")
         + status(f"{sg(k, 'deactivate')}.IsShown( {ROOT} )", "AOV_INV_STATUS_ACTIVE")
@@ -361,7 +363,7 @@ def offer_row(i) -> str:
         f"\t\t\tlayoutpolicy_horizontal = expanding\n"
         f"\t\t\tspacing = 8\n\n"
         f"\t\t\ticon = {{\n\t\t\t\tsize = {{ 44 42 }}\n\t\t\t\ttexture = \"{ICON_DIR}/{i['icon']}\"\n\t\t\t\ttooltip = \"aov_invention_{k}_tt\"\n\t\t\t}}\n"
-        f"\t\t\ttext_single = {{\n\t\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\t\ttext = \"aov_invention_{k}\"\n\t\t\t\ttooltip = \"aov_invention_{k}_tt\"\n\t\t\t\talign = left|nobaseline\n\t\t\t}}\n"
+        f"\t\t\ttext_single = {{\n\t\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\t\ttext = \"aov_invention_{k}\"\n\t\t\t\ttooltip = \"[{sg(k, 'effects')}.BuildTooltip( {ROOT} )]\"\n\t\t\t\talign = left|nobaseline\n\t\t\t}}\n"
         f"\t\t\tbutton_standard = {{\n"
         f"\t\t\t\tsize = {{ 170 30 }}\n"
         f"\t\t\t\ttext = \"AOV_RESEARCH_START\"\n"

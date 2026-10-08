@@ -218,11 +218,11 @@ class ScriptOutputTests(unittest.TestCase):
 
 
 class GuiOutputTests(unittest.TestCase):
-    def test_seven_sguis_per_invention(self):
+    def test_eight_sguis_per_invention(self):
         names = top_level_blocks(bi.sguis(INVENTIONS))
-        self.assertEqual(len(names), 7 * 60)
+        self.assertEqual(len(names), 8 * 60)
         for k in KEYS:
-            for s in ("visible", "unlocked", "undiscovered", "activate", "deactivate", "offered", "research"):
+            for s in ("visible", "unlocked", "undiscovered", "activate", "deactivate", "offered", "research", "effects"):
                 self.assertIn(f"aov_inv_{k}_{s}_sgui", names)
 
     def test_deactivate_starts_cooldown(self):
@@ -245,6 +245,20 @@ class GuiOutputTests(unittest.TestCase):
             self.assertIn(f"aov_inv_{k}_visible_sgui", row.group(1))
             self.assertIn(f"GetVariableSystem.Exists( 'aov_filter_hide_{c}' )", row.group(1))
             self.assertIn(f"gfx/interface/icons/aov_inventions/{i['icon']}", row.group(1))
+
+    def test_effects_sgui_adds_the_invention_modifier(self):
+        text = bi.sguis(INVENTIONS)
+        for k in KEYS:
+            block = re.search(rf"^aov_inv_{k}_effects_sgui = \{{\n(.*?)\n\}}", text, re.M | re.S).group(1)
+            self.assertIn(f"add_character_modifier = {{ modifier = aov_invention_{k} }}", block)
+            self.assertNotIn("is_shown", block)
+
+    def test_names_show_effects_tooltip_in_rows_and_offers(self):
+        # Spec: each row's tooltip has the description and the effects; the name shows the effects
+        text = bi.gui(INVENTIONS)
+        for k in KEYS:
+            tt = f"tooltip = \"[GetScriptedGui('aov_inv_{k}_effects_sgui').BuildTooltip( {bi.ROOT} )]\""
+            self.assertEqual(text.count(tt), 2, k)
 
     def test_rows_grouped_under_tier_headers(self):
         text = bi.gui(INVENTIONS)

@@ -31,7 +31,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_arcane_battery_capital_complex"
-					tooltip = "aov_invention_arcane_battery_capital_complex_tt"
+					tooltip = "[GetScriptedGui('aov_inv_arcane_battery_capital_complex_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -89,7 +89,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_automated_translator"
-					tooltip = "aov_invention_automated_translator_tt"
+					tooltip = "[GetScriptedGui('aov_inv_automated_translator_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -147,7 +147,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_market_mender"
-					tooltip = "aov_invention_market_mender_tt"
+					tooltip = "[GetScriptedGui('aov_inv_market_mender_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -205,7 +205,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_plane_of_water_teleporter"
-					tooltip = "aov_invention_plane_of_water_teleporter_tt"
+					tooltip = "[GetScriptedGui('aov_inv_plane_of_water_teleporter_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -263,7 +263,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_self_cleaning_parchment"
-					tooltip = "aov_invention_self_cleaning_parchment_tt"
+					tooltip = "[GetScriptedGui('aov_inv_self_cleaning_parchment_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -321,7 +321,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_spell_in_a_box"
-					tooltip = "aov_invention_spell_in_a_box_tt"
+					tooltip = "[GetScriptedGui('aov_inv_spell_in_a_box_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -379,7 +379,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_ancestral_golems"
-					tooltip = "aov_invention_ancestral_golems_tt"
+					tooltip = "[GetScriptedGui('aov_inv_ancestral_golems_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -437,7 +437,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_artificer_exo_arms"
-					tooltip = "aov_invention_artificer_exo_arms_tt"
+					tooltip = "[GetScriptedGui('aov_inv_artificer_exo_arms_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -495,7 +495,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_box_of_holding"
-					tooltip = "aov_invention_box_of_holding_tt"
+					tooltip = "[GetScriptedGui('aov_inv_box_of_holding_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -553,7 +553,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_commercial_sky_galleons"
-					tooltip = "aov_invention_commercial_sky_galleons_tt"
+					tooltip = "[GetScriptedGui('aov_inv_commercial_sky_galleons_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -611,7 +611,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_magic_missile_deployer"
-					tooltip = "aov_invention_magic_missile_deployer_tt"
+					tooltip = "[GetScriptedGui('aov_inv_magic_missile_deployer_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -669,7 +669,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_portable_turrets"
-					tooltip = "aov_invention_portable_turrets_tt"
+					tooltip = "[GetScriptedGui('aov_inv_portable_turrets_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -727,7 +727,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_sparkdrive_rifles"
-					tooltip = "aov_invention_sparkdrive_rifles_tt"
+					tooltip = "[GetScriptedGui('aov_inv_sparkdrive_rifles_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -785,7 +785,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_sunbeam_armaments"
-					tooltip = "aov_invention_sunbeam_armaments_tt"
+					tooltip = "[GetScriptedGui('aov_inv_sunbeam_armaments_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -843,7 +843,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_vorpal_bullets"
-					tooltip = "aov_invention_vorpal_bullets_tt"
+					tooltip = "[GetScriptedGui('aov_inv_vorpal_bullets_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -901,7 +901,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_apparitional_communicator"
-					tooltip = "aov_invention_apparitional_communicator_tt"
+					tooltip = "[GetScriptedGui('aov_inv_apparitional_communicator_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -959,7 +959,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_centipedal_chests"
-					tooltip = "aov_invention_centipedal_chests_tt"
+					tooltip = "[GetScriptedGui('aov_inv_centipedal_chests_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -1017,7 +1017,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_conversation_calibrator"
-					tooltip = "aov_invention_conversation_calibrator_tt"
+					tooltip = "[GetScriptedGui('aov_inv_conversation_calibrator_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -1075,7 +1075,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_fey_spray"
-					tooltip = "aov_invention_fey_spray_tt"
+					tooltip = "[GetScriptedGui('aov_inv_fey_spray_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -1133,7 +1133,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_living_mirrors"
-					tooltip = "aov_invention_living_mirrors_tt"
+					tooltip = "[GetScriptedGui('aov_inv_living_mirrors_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -1191,7 +1191,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_mystic_ciphers"
-					tooltip = "aov_invention_mystic_ciphers_tt"
+					tooltip = "[GetScriptedGui('aov_inv_mystic_ciphers_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -1249,7 +1249,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_sending_stones"
-					tooltip = "aov_invention_sending_stones_tt"
+					tooltip = "[GetScriptedGui('aov_inv_sending_stones_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -1307,7 +1307,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_viewcatcher"
-					tooltip = "aov_invention_viewcatcher_tt"
+					tooltip = "[GetScriptedGui('aov_inv_viewcatcher_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -1373,7 +1373,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_brass_prosthesis"
-					tooltip = "aov_invention_brass_prosthesis_tt"
+					tooltip = "[GetScriptedGui('aov_inv_brass_prosthesis_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -1431,7 +1431,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_chi_cultivation"
-					tooltip = "aov_invention_chi_cultivation_tt"
+					tooltip = "[GetScriptedGui('aov_inv_chi_cultivation_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -1489,7 +1489,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_gene_food_cultivation"
-					tooltip = "aov_invention_gene_food_cultivation_tt"
+					tooltip = "[GetScriptedGui('aov_inv_gene_food_cultivation_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -1547,7 +1547,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_growth_beans"
-					tooltip = "aov_invention_growth_beans_tt"
+					tooltip = "[GetScriptedGui('aov_inv_growth_beans_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -1605,7 +1605,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_subterrenes"
-					tooltip = "aov_invention_subterrenes_tt"
+					tooltip = "[GetScriptedGui('aov_inv_subterrenes_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -1663,7 +1663,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_vendorless_stall"
-					tooltip = "aov_invention_vendorless_stall_tt"
+					tooltip = "[GetScriptedGui('aov_inv_vendorless_stall_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -1721,7 +1721,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_arcane_blaster"
-					tooltip = "aov_invention_arcane_blaster_tt"
+					tooltip = "[GetScriptedGui('aov_inv_arcane_blaster_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -1779,7 +1779,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_avatar_supersoldier_serum"
-					tooltip = "aov_invention_avatar_supersoldier_serum_tt"
+					tooltip = "[GetScriptedGui('aov_inv_avatar_supersoldier_serum_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -1837,7 +1837,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_balloonboost_packs"
-					tooltip = "aov_invention_balloonboost_packs_tt"
+					tooltip = "[GetScriptedGui('aov_inv_balloonboost_packs_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -1895,7 +1895,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_coddorran_powered_exosuit"
-					tooltip = "aov_invention_coddorran_powered_exosuit_tt"
+					tooltip = "[GetScriptedGui('aov_inv_coddorran_powered_exosuit_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -1953,7 +1953,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_gu_boats"
-					tooltip = "aov_invention_gu_boats_tt"
+					tooltip = "[GetScriptedGui('aov_inv_gu_boats_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -2011,7 +2011,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_lullaby_cannon"
-					tooltip = "aov_invention_lullaby_cannon_tt"
+					tooltip = "[GetScriptedGui('aov_inv_lullaby_cannon_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -2069,7 +2069,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_prototype_tanks"
-					tooltip = "aov_invention_prototype_tanks_tt"
+					tooltip = "[GetScriptedGui('aov_inv_prototype_tanks_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -2127,7 +2127,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_wandlocks"
-					tooltip = "aov_invention_wandlocks_tt"
+					tooltip = "[GetScriptedGui('aov_inv_wandlocks_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -2185,7 +2185,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_war_golems"
-					tooltip = "aov_invention_war_golems_tt"
+					tooltip = "[GetScriptedGui('aov_inv_war_golems_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -2243,7 +2243,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_arithmatons"
-					tooltip = "aov_invention_arithmatons_tt"
+					tooltip = "[GetScriptedGui('aov_inv_arithmatons_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -2301,7 +2301,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_empire_engine"
-					tooltip = "aov_invention_empire_engine_tt"
+					tooltip = "[GetScriptedGui('aov_inv_empire_engine_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -2359,7 +2359,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_game_of_khet"
-					tooltip = "aov_invention_game_of_khet_tt"
+					tooltip = "[GetScriptedGui('aov_inv_game_of_khet_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -2417,7 +2417,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_mirage_detector_3000"
-					tooltip = "aov_invention_mirage_detector_3000_tt"
+					tooltip = "[GetScriptedGui('aov_inv_mirage_detector_3000_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -2475,7 +2475,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_remedial_tinctures"
-					tooltip = "aov_invention_remedial_tinctures_tt"
+					tooltip = "[GetScriptedGui('aov_inv_remedial_tinctures_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -2533,7 +2533,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_think_thought_transmitters"
-					tooltip = "aov_invention_think_thought_transmitters_tt"
+					tooltip = "[GetScriptedGui('aov_inv_think_thought_transmitters_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -2599,7 +2599,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_elemental_locomotives"
-					tooltip = "aov_invention_elemental_locomotives_tt"
+					tooltip = "[GetScriptedGui('aov_inv_elemental_locomotives_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -2657,7 +2657,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_pathway_transmutation"
-					tooltip = "aov_invention_pathway_transmutation_tt"
+					tooltip = "[GetScriptedGui('aov_inv_pathway_transmutation_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -2715,7 +2715,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_prefabricated_city_constructors"
-					tooltip = "aov_invention_prefabricated_city_constructors_tt"
+					tooltip = "[GetScriptedGui('aov_inv_prefabricated_city_constructors_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -2773,7 +2773,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_t_wave_transceivers"
-					tooltip = "aov_invention_t_wave_transceivers_tt"
+					tooltip = "[GetScriptedGui('aov_inv_t_wave_transceivers_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -2831,7 +2831,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_artillery_autoloader"
-					tooltip = "aov_invention_artillery_autoloader_tt"
+					tooltip = "[GetScriptedGui('aov_inv_artillery_autoloader_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -2889,7 +2889,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_bioartificed_ascension"
-					tooltip = "aov_invention_bioartificed_ascension_tt"
+					tooltip = "[GetScriptedGui('aov_inv_bioartificed_ascension_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -2947,7 +2947,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_black_damestear_bullets"
-					tooltip = "aov_invention_black_damestear_bullets_tt"
+					tooltip = "[GetScriptedGui('aov_inv_black_damestear_bullets_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -3005,7 +3005,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_damestear_reactor_megacannon"
-					tooltip = "aov_invention_damestear_reactor_megacannon_tt"
+					tooltip = "[GetScriptedGui('aov_inv_damestear_reactor_megacannon_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -3063,7 +3063,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_demonflame_flamethrowers"
-					tooltip = "aov_invention_demonflame_flamethrowers_tt"
+					tooltip = "[GetScriptedGui('aov_inv_demonflame_flamethrowers_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -3121,7 +3121,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_military_sky_galleons"
-					tooltip = "aov_invention_military_sky_galleons_tt"
+					tooltip = "[GetScriptedGui('aov_inv_military_sky_galleons_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -3179,7 +3179,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_naval_mageshields"
-					tooltip = "aov_invention_naval_mageshields_tt"
+					tooltip = "[GetScriptedGui('aov_inv_naval_mageshields_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -3237,7 +3237,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_personal_mageshields"
-					tooltip = "aov_invention_personal_mageshields_tt"
+					tooltip = "[GetScriptedGui('aov_inv_personal_mageshields_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -3295,7 +3295,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_bureaucratizer"
-					tooltip = "aov_invention_bureaucratizer_tt"
+					tooltip = "[GetScriptedGui('aov_inv_bureaucratizer_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -3353,7 +3353,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_crierless_crier_device"
-					tooltip = "aov_invention_crierless_crier_device_tt"
+					tooltip = "[GetScriptedGui('aov_inv_crierless_crier_device_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -3411,7 +3411,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_negotiation_nexus"
-					tooltip = "aov_invention_negotiation_nexus_tt"
+					tooltip = "[GetScriptedGui('aov_inv_negotiation_nexus_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -3469,7 +3469,7 @@ types AovInventions
 				text_single = {
 					layoutpolicy_horizontal = expanding
 					text = "aov_invention_runethought_network"
-					tooltip = "aov_invention_runethought_network_tt"
+					tooltip = "[GetScriptedGui('aov_inv_runethought_network_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					align = left|nobaseline
 				}
 				text_single = {
@@ -3527,7 +3527,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_arcane_battery_capital_complex"
-				tooltip = "aov_invention_arcane_battery_capital_complex_tt"
+				tooltip = "[GetScriptedGui('aov_inv_arcane_battery_capital_complex_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -3554,7 +3554,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_automated_translator"
-				tooltip = "aov_invention_automated_translator_tt"
+				tooltip = "[GetScriptedGui('aov_inv_automated_translator_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -3581,7 +3581,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_market_mender"
-				tooltip = "aov_invention_market_mender_tt"
+				tooltip = "[GetScriptedGui('aov_inv_market_mender_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -3608,7 +3608,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_plane_of_water_teleporter"
-				tooltip = "aov_invention_plane_of_water_teleporter_tt"
+				tooltip = "[GetScriptedGui('aov_inv_plane_of_water_teleporter_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -3635,7 +3635,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_self_cleaning_parchment"
-				tooltip = "aov_invention_self_cleaning_parchment_tt"
+				tooltip = "[GetScriptedGui('aov_inv_self_cleaning_parchment_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -3662,7 +3662,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_spell_in_a_box"
-				tooltip = "aov_invention_spell_in_a_box_tt"
+				tooltip = "[GetScriptedGui('aov_inv_spell_in_a_box_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -3689,7 +3689,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_brass_prosthesis"
-				tooltip = "aov_invention_brass_prosthesis_tt"
+				tooltip = "[GetScriptedGui('aov_inv_brass_prosthesis_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -3716,7 +3716,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_chi_cultivation"
-				tooltip = "aov_invention_chi_cultivation_tt"
+				tooltip = "[GetScriptedGui('aov_inv_chi_cultivation_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -3743,7 +3743,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_gene_food_cultivation"
-				tooltip = "aov_invention_gene_food_cultivation_tt"
+				tooltip = "[GetScriptedGui('aov_inv_gene_food_cultivation_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -3770,7 +3770,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_growth_beans"
-				tooltip = "aov_invention_growth_beans_tt"
+				tooltip = "[GetScriptedGui('aov_inv_growth_beans_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -3797,7 +3797,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_subterrenes"
-				tooltip = "aov_invention_subterrenes_tt"
+				tooltip = "[GetScriptedGui('aov_inv_subterrenes_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -3824,7 +3824,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_vendorless_stall"
-				tooltip = "aov_invention_vendorless_stall_tt"
+				tooltip = "[GetScriptedGui('aov_inv_vendorless_stall_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -3851,7 +3851,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_elemental_locomotives"
-				tooltip = "aov_invention_elemental_locomotives_tt"
+				tooltip = "[GetScriptedGui('aov_inv_elemental_locomotives_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -3878,7 +3878,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_pathway_transmutation"
-				tooltip = "aov_invention_pathway_transmutation_tt"
+				tooltip = "[GetScriptedGui('aov_inv_pathway_transmutation_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -3905,7 +3905,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_prefabricated_city_constructors"
-				tooltip = "aov_invention_prefabricated_city_constructors_tt"
+				tooltip = "[GetScriptedGui('aov_inv_prefabricated_city_constructors_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -3932,7 +3932,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_t_wave_transceivers"
-				tooltip = "aov_invention_t_wave_transceivers_tt"
+				tooltip = "[GetScriptedGui('aov_inv_t_wave_transceivers_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -3964,7 +3964,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_ancestral_golems"
-				tooltip = "aov_invention_ancestral_golems_tt"
+				tooltip = "[GetScriptedGui('aov_inv_ancestral_golems_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -3991,7 +3991,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_artificer_exo_arms"
-				tooltip = "aov_invention_artificer_exo_arms_tt"
+				tooltip = "[GetScriptedGui('aov_inv_artificer_exo_arms_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4018,7 +4018,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_box_of_holding"
-				tooltip = "aov_invention_box_of_holding_tt"
+				tooltip = "[GetScriptedGui('aov_inv_box_of_holding_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4045,7 +4045,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_commercial_sky_galleons"
-				tooltip = "aov_invention_commercial_sky_galleons_tt"
+				tooltip = "[GetScriptedGui('aov_inv_commercial_sky_galleons_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4072,7 +4072,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_magic_missile_deployer"
-				tooltip = "aov_invention_magic_missile_deployer_tt"
+				tooltip = "[GetScriptedGui('aov_inv_magic_missile_deployer_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4099,7 +4099,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_portable_turrets"
-				tooltip = "aov_invention_portable_turrets_tt"
+				tooltip = "[GetScriptedGui('aov_inv_portable_turrets_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4126,7 +4126,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_sparkdrive_rifles"
-				tooltip = "aov_invention_sparkdrive_rifles_tt"
+				tooltip = "[GetScriptedGui('aov_inv_sparkdrive_rifles_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4153,7 +4153,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_sunbeam_armaments"
-				tooltip = "aov_invention_sunbeam_armaments_tt"
+				tooltip = "[GetScriptedGui('aov_inv_sunbeam_armaments_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4180,7 +4180,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_vorpal_bullets"
-				tooltip = "aov_invention_vorpal_bullets_tt"
+				tooltip = "[GetScriptedGui('aov_inv_vorpal_bullets_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4207,7 +4207,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_arcane_blaster"
-				tooltip = "aov_invention_arcane_blaster_tt"
+				tooltip = "[GetScriptedGui('aov_inv_arcane_blaster_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4234,7 +4234,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_avatar_supersoldier_serum"
-				tooltip = "aov_invention_avatar_supersoldier_serum_tt"
+				tooltip = "[GetScriptedGui('aov_inv_avatar_supersoldier_serum_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4261,7 +4261,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_balloonboost_packs"
-				tooltip = "aov_invention_balloonboost_packs_tt"
+				tooltip = "[GetScriptedGui('aov_inv_balloonboost_packs_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4288,7 +4288,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_coddorran_powered_exosuit"
-				tooltip = "aov_invention_coddorran_powered_exosuit_tt"
+				tooltip = "[GetScriptedGui('aov_inv_coddorran_powered_exosuit_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4315,7 +4315,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_gu_boats"
-				tooltip = "aov_invention_gu_boats_tt"
+				tooltip = "[GetScriptedGui('aov_inv_gu_boats_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4342,7 +4342,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_lullaby_cannon"
-				tooltip = "aov_invention_lullaby_cannon_tt"
+				tooltip = "[GetScriptedGui('aov_inv_lullaby_cannon_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4369,7 +4369,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_prototype_tanks"
-				tooltip = "aov_invention_prototype_tanks_tt"
+				tooltip = "[GetScriptedGui('aov_inv_prototype_tanks_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4396,7 +4396,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_wandlocks"
-				tooltip = "aov_invention_wandlocks_tt"
+				tooltip = "[GetScriptedGui('aov_inv_wandlocks_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4423,7 +4423,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_war_golems"
-				tooltip = "aov_invention_war_golems_tt"
+				tooltip = "[GetScriptedGui('aov_inv_war_golems_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4450,7 +4450,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_artillery_autoloader"
-				tooltip = "aov_invention_artillery_autoloader_tt"
+				tooltip = "[GetScriptedGui('aov_inv_artillery_autoloader_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4477,7 +4477,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_bioartificed_ascension"
-				tooltip = "aov_invention_bioartificed_ascension_tt"
+				tooltip = "[GetScriptedGui('aov_inv_bioartificed_ascension_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4504,7 +4504,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_black_damestear_bullets"
-				tooltip = "aov_invention_black_damestear_bullets_tt"
+				tooltip = "[GetScriptedGui('aov_inv_black_damestear_bullets_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4531,7 +4531,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_damestear_reactor_megacannon"
-				tooltip = "aov_invention_damestear_reactor_megacannon_tt"
+				tooltip = "[GetScriptedGui('aov_inv_damestear_reactor_megacannon_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4558,7 +4558,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_demonflame_flamethrowers"
-				tooltip = "aov_invention_demonflame_flamethrowers_tt"
+				tooltip = "[GetScriptedGui('aov_inv_demonflame_flamethrowers_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4585,7 +4585,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_military_sky_galleons"
-				tooltip = "aov_invention_military_sky_galleons_tt"
+				tooltip = "[GetScriptedGui('aov_inv_military_sky_galleons_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4612,7 +4612,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_naval_mageshields"
-				tooltip = "aov_invention_naval_mageshields_tt"
+				tooltip = "[GetScriptedGui('aov_inv_naval_mageshields_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4639,7 +4639,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_personal_mageshields"
-				tooltip = "aov_invention_personal_mageshields_tt"
+				tooltip = "[GetScriptedGui('aov_inv_personal_mageshields_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4671,7 +4671,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_apparitional_communicator"
-				tooltip = "aov_invention_apparitional_communicator_tt"
+				tooltip = "[GetScriptedGui('aov_inv_apparitional_communicator_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4698,7 +4698,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_centipedal_chests"
-				tooltip = "aov_invention_centipedal_chests_tt"
+				tooltip = "[GetScriptedGui('aov_inv_centipedal_chests_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4725,7 +4725,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_conversation_calibrator"
-				tooltip = "aov_invention_conversation_calibrator_tt"
+				tooltip = "[GetScriptedGui('aov_inv_conversation_calibrator_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4752,7 +4752,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_fey_spray"
-				tooltip = "aov_invention_fey_spray_tt"
+				tooltip = "[GetScriptedGui('aov_inv_fey_spray_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4779,7 +4779,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_living_mirrors"
-				tooltip = "aov_invention_living_mirrors_tt"
+				tooltip = "[GetScriptedGui('aov_inv_living_mirrors_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4806,7 +4806,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_mystic_ciphers"
-				tooltip = "aov_invention_mystic_ciphers_tt"
+				tooltip = "[GetScriptedGui('aov_inv_mystic_ciphers_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4833,7 +4833,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_sending_stones"
-				tooltip = "aov_invention_sending_stones_tt"
+				tooltip = "[GetScriptedGui('aov_inv_sending_stones_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4860,7 +4860,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_viewcatcher"
-				tooltip = "aov_invention_viewcatcher_tt"
+				tooltip = "[GetScriptedGui('aov_inv_viewcatcher_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4887,7 +4887,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_arithmatons"
-				tooltip = "aov_invention_arithmatons_tt"
+				tooltip = "[GetScriptedGui('aov_inv_arithmatons_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4914,7 +4914,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_empire_engine"
-				tooltip = "aov_invention_empire_engine_tt"
+				tooltip = "[GetScriptedGui('aov_inv_empire_engine_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4941,7 +4941,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_game_of_khet"
-				tooltip = "aov_invention_game_of_khet_tt"
+				tooltip = "[GetScriptedGui('aov_inv_game_of_khet_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4968,7 +4968,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_mirage_detector_3000"
-				tooltip = "aov_invention_mirage_detector_3000_tt"
+				tooltip = "[GetScriptedGui('aov_inv_mirage_detector_3000_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -4995,7 +4995,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_remedial_tinctures"
-				tooltip = "aov_invention_remedial_tinctures_tt"
+				tooltip = "[GetScriptedGui('aov_inv_remedial_tinctures_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -5022,7 +5022,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_think_thought_transmitters"
-				tooltip = "aov_invention_think_thought_transmitters_tt"
+				tooltip = "[GetScriptedGui('aov_inv_think_thought_transmitters_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -5049,7 +5049,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_bureaucratizer"
-				tooltip = "aov_invention_bureaucratizer_tt"
+				tooltip = "[GetScriptedGui('aov_inv_bureaucratizer_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -5076,7 +5076,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_crierless_crier_device"
-				tooltip = "aov_invention_crierless_crier_device_tt"
+				tooltip = "[GetScriptedGui('aov_inv_crierless_crier_device_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -5103,7 +5103,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_negotiation_nexus"
-				tooltip = "aov_invention_negotiation_nexus_tt"
+				tooltip = "[GetScriptedGui('aov_inv_negotiation_nexus_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
@@ -5130,7 +5130,7 @@ types AovInventions
 			text_single = {
 				layoutpolicy_horizontal = expanding
 				text = "aov_invention_runethought_network"
-				tooltip = "aov_invention_runethought_network_tt"
+				tooltip = "[GetScriptedGui('aov_inv_runethought_network_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				align = left|nobaseline
 			}
 			button_standard = {
