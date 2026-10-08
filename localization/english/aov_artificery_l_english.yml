@@ -19,3 +19,11 @@
  # Men-at-Arms
  artificer_handgunners: "Artificer Handgunners"
  artificer_handgunners_flavor: "#F Trained in the halls of the Artificer Academy, these gnomish gunners wield firearms of their own meticulous design.#!\n#help Enabled by the [GetBuilding('artificer_academy_01').GetName].#!"
+
+ # Artificery tab
+ AOV_ARTIFICERY_BUTTON: "Artificery"
+ AOV_ARTIFICERY_WINDOW_TITLE: "Artificery"
+ AOV_ARTIFICERY_TAB_FACTIONS: "Factions"
+ AOV_ARTIFICERY_TAB_INVENTIONS: "Inventions"
+ AOV_ARTIFICERY_FACTIONS_PLACEHOLDER: "The artificer factions will be shown here."
+ AOV_ARTIFICERY_INVENTIONS_PLACEHOLDER: "Inventions will be researched here."

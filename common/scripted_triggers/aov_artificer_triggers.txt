@@ -54,3 +54,14 @@ has_enabled_artificer_academy_trigger = {
 		}
 	}
 }
+
+# Character scope
+# The character may use the Artificery tab: a gnome whose culture has Gnomish Ingenuity
+# and who holds exactly one (so enabled) Artificer Academy
+can_use_artificery_trigger = {
+	has_trait = race_gnome
+	culture = {
+		has_cultural_tradition = tradition_gnomish_ingenuity
+	}
+	has_enabled_artificer_academy_trigger = yes
+}
