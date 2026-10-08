@@ -69,7 +69,7 @@ aov_invention_vendorless_stall = {
 aov_invention_elemental_locomotives = {
 	icon = stewardship_positive
 	movement_speed = 0.1
-	travel_speed = 20
+	character_travel_speed_mult = 0.2
 	domain_limit = 1
 }
 
@@ -108,7 +108,7 @@ aov_invention_box_of_holding = {
 
 aov_invention_commercial_sky_galleons = {
 	icon = martial_positive
-	travel_speed = 10
+	character_travel_speed_mult = 0.1
 	monthly_income_mult = 0.03
 }
 
@@ -240,7 +240,7 @@ aov_invention_apparitional_communicator = {
 
 aov_invention_centipedal_chests = {
 	icon = diplomacy_positive
-	travel_speed = 15
+	character_travel_speed_mult = 0.15
 	travel_danger = -5
 }
 
@@ -257,7 +257,7 @@ aov_invention_fey_spray = {
 
 aov_invention_living_mirrors = {
 	icon = diplomacy_positive
-	cultural_acceptance_gain_mult = 0.25
+	different_culture_opinion = 10
 	county_opinion_add = 5
 }
 
@@ -332,6 +332,6 @@ aov_invention_negotiation_nexus = {
 
 aov_invention_runethought_network = {
 	icon = diplomacy_positive
-	cultural_acceptance_gain_mult = 0.35
+	different_culture_opinion = 15
 	cultural_head_fascination_mult = 0.1
 }

@@ -62,6 +62,13 @@ class DataTests(unittest.TestCase):
         self.assertEqual({i["key"] for i in INVENTIONS if i["gnome_only"]},
                          {"conversation_calibrator", "coddorran_powered_exosuit", "gu_boats", "prefabricated_city_constructors"})
 
+    def test_no_keys_tiger_rejects_in_character_modifiers(self):
+        # travel_speed is a travel-plan modifier and cultural_acceptance_gain_mult a culture modifier
+        for i in INVENTIONS:
+            keys = set(re.findall(r"^\s*([a-z_]+)\s*=", i["modifier"], re.M))
+            with self.subTest(i["key"]):
+                self.assertFalse(keys & {"travel_speed", "cultural_acceptance_gain_mult"})
+
     def test_sorted_by_category_tier_key(self):
         order = {"economic": 0, "military": 1, "society": 2}
         self.assertEqual(INVENTIONS, sorted(INVENTIONS, key=lambda i: (order[i["category"]], i["tier"], i["key"])))
