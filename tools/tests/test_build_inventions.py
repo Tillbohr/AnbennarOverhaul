@@ -210,5 +210,83 @@ class ScriptOutputTests(unittest.TestCase):
             self.assertEqual(getattr(bi, name)(INVENTIONS), getattr(bi, name)(INVENTIONS))
 
 
+class GuiOutputTests(unittest.TestCase):
+    def test_seven_sguis_per_invention(self):
+        names = top_level_blocks(bi.sguis(INVENTIONS))
+        self.assertEqual(len(names), 7 * 60)
+        for k in KEYS:
+            for s in ("visible", "unlocked", "undiscovered", "activate", "deactivate", "offered", "research"):
+                self.assertIn(f"aov_inv_{k}_{s}_sgui", names)
+
+    def test_deactivate_starts_cooldown(self):
+        text = bi.sguis(INVENTIONS)
+        block = re.search(r"^aov_inv_sparkdrive_rifles_deactivate_sgui = \{\n(.*?)\n\}", text, re.M | re.S).group(1)
+        self.assertIn("aov_artificery_start_slot_cooldown = yes", block)
+
+    def test_gui_balanced_with_types(self):
+        text = bi.gui(INVENTIONS)
+        self.assertTrue(balanced(text))
+        for t in ("aov_inventions_list", "aov_inventions_offers_economic", "aov_inventions_offers_military", "aov_inventions_offers_society"):
+            self.assertIn(f"type {t} = vbox {{", text)
+
+    def test_row_visibility_uses_visible_sgui_and_category_filter(self):
+        text = bi.gui(INVENTIONS)
+        for i in INVENTIONS:
+            k, c = i["key"], i["category"]
+            row = re.search(rf'name = "aov_inv_row_{k}"\n(.*?)\n\t\t\t\}}\n\t\t\}}', text, re.S)
+            self.assertIsNotNone(row, k)
+            self.assertIn(f"aov_inv_{k}_visible_sgui", row.group(1))
+            self.assertIn(f"GetVariableSystem.Exists( 'aov_filter_hide_{c}' )", row.group(1))
+            self.assertIn(f"gfx/interface/icons/aov_inventions/{i['icon']}", row.group(1))
+
+    def test_rows_grouped_under_tier_headers(self):
+        text = bi.gui(INVENTIONS)
+        list_body = text.split("type aov_inventions_list = vbox {")[1].split("type aov_inventions_offers_economic")[0]
+        h2, h3 = list_body.index("AOV_INVENTIONS_TIER_2"), list_body.index("AOV_INVENTIONS_TIER_3")
+        for i in INVENTIONS:
+            pos = list_body.index(f'name = "aov_inv_row_{i["key"]}"')
+            self.assertEqual(1 + (pos > h2) + (pos > h3), i["tier"], i["key"])
+
+    def test_offers_only_list_their_category(self):
+        text = bi.gui(INVENTIONS)
+        for c in bi.CATEGORIES:
+            body = text.split(f"type aov_inventions_offers_{c} = vbox {{")[1].split("type aov_inventions_offers_")[0]
+            listed = set(re.findall(r'name = "aov_inv_offer_([a-z0-9_]+)"', body))
+            self.assertEqual(listed, {i["key"] for i in INVENTIONS if i["category"] == c})
+
+    def test_render_all_paths(self):
+        files = bi.render_all(INVENTIONS)
+        self.assertEqual(set(files), {
+            "common/modifiers/aov_invention_modifiers.txt",
+            "common/scripted_triggers/aov_invention_triggers.txt",
+            "common/script_values/aov_invention_values.txt",
+            "common/scripted_effects/aov_invention_effects.txt",
+            "common/scripted_guis/aov_invention_sgui.txt",
+            "common/customizable_localization/aov_invention_custom_loc.txt",
+            "gui/aov_inventions_generated.gui",
+            "localization/english/aov_inventions_l_english.yml",
+        })
+
+    def test_write_all_bom_lf(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            bi.write_all({"a/b.txt": "x = {\n}\n"}, Path(tmp))
+            raw = (Path(tmp) / "a" / "b.txt").read_bytes()
+            self.assertEqual(raw, b"\xef\xbb\xbfx = {\n}\n")
+
+    def test_copy_icons_copies_each_distinct_icon(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            eu4, root = Path(tmp, "eu4"), Path(tmp, "mod")
+            (eu4 / bi.EU4_ICONS).mkdir(parents=True)
+            for name in {i["icon"] for i in INVENTIONS}:
+                (eu4 / bi.EU4_ICONS / name).write_bytes(b"DDS ")
+            bi.copy_icons(INVENTIONS, eu4, root)
+            self.assertEqual(len(list((root / bi.ICON_DIR).glob("*.dds"))), len({i["icon"] for i in INVENTIONS}))
+
+    def test_copy_icons_missing_source(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaises(bi.GeneratorError):
+                bi.copy_icons(INVENTIONS, Path(tmp, "nope"), Path(tmp, "mod"))
+
+
 if __name__ == "__main__":
     unittest.main()

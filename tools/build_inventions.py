@@ -280,3 +280,163 @@ def loc(invs: list) -> str:
         out.append(f' aov_invention_{k}_desc: "{i["desc"]}"')
         out.append(f' aov_invention_{k}_tt: "#T $aov_invention_{k}$#!\\n#weak $AOV_CATEGORY_{i["category"].upper()}$, $AOV_TIER_{i["tier"]}$#!\\n\\n$aov_invention_{k}_desc$"')
     return "\n".join(out) + "\n"
+
+
+ROOT = "GuiScope.SetRoot( GetPlayer.MakeScope ).End"
+
+
+def sg(k: str, s: str) -> str:
+    return f"GetScriptedGui('aov_inv_{k}_{s}_sgui')"
+
+
+def sguis(invs: list) -> str:
+    out = [HEADER]
+    for i in invs:
+        k, c = i["key"], i["category"]
+        out.append(
+            f"aov_inv_{k}_visible_sgui = {{\n\tscope = character\n\tis_shown = {{ aov_invention_{k}_visible = yes }}\n}}\n"
+            f"aov_inv_{k}_unlocked_sgui = {{\n\tscope = character\n\tis_shown = {{ aov_invention_{k}_unlocked = yes }}\n}}\n"
+            f"aov_inv_{k}_undiscovered_sgui = {{\n\tscope = character\n\tis_shown = {{ aov_invention_{k}_unlocked = yes NOT = {{ aov_invention_{k}_discovered = yes }} }}\n}}\n"
+            f"aov_inv_{k}_activate_sgui = {{\n\tscope = character\n"
+            f"\tis_shown = {{ aov_invention_{k}_discovered = yes NOT = {{ aov_invention_{k}_active = yes }} }}\n"
+            f"\tis_valid = {{ aov_invention_{k}_available = yes aov_artificery_has_free_slot = yes }}\n"
+            f"\teffect = {{ aov_invention_{k}_activate = yes }}\n}}\n"
+            f"aov_inv_{k}_deactivate_sgui = {{\n\tscope = character\n"
+            f"\tis_shown = {{ aov_invention_{k}_active = yes }}\n"
+            f"\teffect = {{\n\t\taov_invention_{k}_deactivate = yes\n\t\taov_artificery_start_slot_cooldown = yes\n\t}}\n}}\n"
+            f"aov_inv_{k}_offered_sgui = {{\n\tscope = character\n\tis_shown = {{ aov_invention_{k}_offered = yes aov_invention_{k}_discoverable = yes }}\n}}\n"
+            f"aov_inv_{k}_research_sgui = {{\n\tscope = character\n"
+            f"\tis_valid = {{ aov_artificery_can_start_research = yes aov_invention_{k}_discoverable = yes }}\n"
+            f"\teffect = {{ aov_artificery_start_technomancers_research = {{ CATEGORY = {c} TARGET = {k} }} }}\n}}\n"
+        )
+    return "\n".join(out)
+
+
+def sg_button(k: str, s: str, text: str, extra: str = "") -> str:
+    return (
+        f"\t\t\t\tbutton_standard = {{\n"
+        f"\t\t\t\t\tvisible = \"[{sg(k, s)}.IsShown( {ROOT} )]\"\n"
+        f"\t\t\t\t\tsize = {{ 120 30 }}\n"
+        f"\t\t\t\t\ttext = \"{text}\"\n"
+        f"\t\t\t\t\tenabled = \"[{sg(k, s)}.IsValid( {ROOT} )]\"\n"
+        f"\t\t\t\t\tonclick = \"[{sg(k, s)}.Execute( {ROOT} )]\"\n{extra}"
+        f"\t\t\t\t\ttooltip = \"[{sg(k, s)}.BuildTooltip( {ROOT} )]\"\n"
+        f"\t\t\t\t}}\n"
+    )
+
+
+def row(i) -> str:
+    k, c, t = i["key"], i["category"], i["tier"]
+    status = lambda vis, text, tt="": (  # noqa: E731
+        f"\t\t\t\ttext_single = {{\n\t\t\t\t\tvisible = \"[{vis}]\"\n\t\t\t\t\ttext = \"{text}\"\n"
+        + (f"\t\t\t\t\ttooltip = \"{tt}\"\n" if tt else "") + "\t\t\t\t\talign = right|nobaseline\n\t\t\t\t}\n"
+    )
+    return (
+        f"\t\twidget = {{\n"
+        f"\t\t\tname = \"aov_inv_row_{k}\"\n"
+        f"\t\t\tvisible = \"[And( {sg(k, 'visible')}.IsShown( {ROOT} ), Not( GetVariableSystem.Exists( 'aov_filter_hide_{c}' ) ) )]\"\n"
+        f"\t\t\tlayoutpolicy_horizontal = expanding\n"
+        f"\t\t\tsize = {{ 0 46 }}\n\n"
+        f"\t\t\thbox = {{\n"
+        f"\t\t\t\tsize = {{ 100% 100% }}\n"
+        f"\t\t\t\tmargin = {{ 6 2 }}\n"
+        f"\t\t\t\tspacing = 8\n\n"
+        f"\t\t\t\ticon = {{\n\t\t\t\t\tsize = {{ 44 42 }}\n\t\t\t\t\ttexture = \"{ICON_DIR}/{i['icon']}\"\n\t\t\t\t\ttooltip = \"aov_invention_{k}_tt\"\n\t\t\t\t}}\n"
+        f"\t\t\t\ttext_single = {{\n\t\t\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\t\t\ttext = \"aov_invention_{k}\"\n\t\t\t\t\ttooltip = \"aov_invention_{k}_tt\"\n\t\t\t\t\talign = left|nobaseline\n\t\t\t\t}}\n"
+        + status(f"Not( {sg(k, 'unlocked')}.IsShown( {ROOT} ) )", "AOV_INV_STATUS_LOCKED", f"AOV_INV_LOCKED_TIER_{t}_TT")
+        + status(f"{sg(k, 'undiscovered')}.IsShown( {ROOT} )", "AOV_INV_STATUS_UNDISCOVERED", "AOV_INV_UNDISCOVERED_TT")
+        + status(f"{sg(k, 'deactivate')}.IsShown( {ROOT} )", "AOV_INV_STATUS_ACTIVE")
+        + sg_button(k, "activate", "AOV_INV_ACTIVATE")
+        + sg_button(k, "deactivate", "AOV_INV_DEACTIVATE")
+        + "\t\t\t}\n\t\t}\n"
+    )
+
+
+def offer_row(i) -> str:
+    k = i["key"]
+    return (
+        f"\t\thbox = {{\n"
+        f"\t\t\tname = \"aov_inv_offer_{k}\"\n"
+        f"\t\t\tvisible = \"[{sg(k, 'offered')}.IsShown( {ROOT} )]\"\n"
+        f"\t\t\tlayoutpolicy_horizontal = expanding\n"
+        f"\t\t\tspacing = 8\n\n"
+        f"\t\t\ticon = {{\n\t\t\t\tsize = {{ 44 42 }}\n\t\t\t\ttexture = \"{ICON_DIR}/{i['icon']}\"\n\t\t\t\ttooltip = \"aov_invention_{k}_tt\"\n\t\t\t}}\n"
+        f"\t\t\ttext_single = {{\n\t\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\t\ttext = \"aov_invention_{k}\"\n\t\t\t\ttooltip = \"aov_invention_{k}_tt\"\n\t\t\t\talign = left|nobaseline\n\t\t\t}}\n"
+        f"\t\t\tbutton_standard = {{\n"
+        f"\t\t\t\tsize = {{ 170 30 }}\n"
+        f"\t\t\t\ttext = \"AOV_RESEARCH_START\"\n"
+        f"\t\t\t\tenabled = \"[{sg(k, 'research')}.IsValid( {ROOT} )]\"\n"
+        f"\t\t\t\tonclick = \"[{sg(k, 'research')}.Execute( {ROOT} )]\"\n"
+        f"\t\t\t\tonclick = \"[GetVariableSystem.Clear( 'aov_research_popup' )]\"\n"
+        f"\t\t\t\ttooltip = \"[{sg(k, 'research')}.BuildTooltip( {ROOT} )]\"\n"
+        f"\t\t\t}}\n"
+        f"\t\t}}\n"
+    )
+
+
+def gui(invs: list) -> str:
+    parts = [HEADER, "types AovInventions\n{\n", "\ttype aov_inventions_list = vbox {\n\t\tspacing = 2\n\n"]
+    for t in (1, 2, 3):
+        parts.append(
+            f"\t\ttext_single = {{\n\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\tmargin_top = 8\n"
+            f"\t\t\ttext = \"AOV_INVENTIONS_TIER_{t}\"\n\t\t\tdefault_format = \"#T\"\n\t\t\talign = left|nobaseline\n\t\t}}\n\n"
+        )
+        parts.extend(row(i) + "\n" for i in of(invs, tier=t))
+    parts.append("\t}\n\n")
+    for c in CATEGORIES:
+        parts.append(f"\ttype aov_inventions_offers_{c} = vbox {{\n\t\tspacing = 4\n\n")
+        parts.extend(offer_row(i) + "\n" for i in of(invs, c))
+        parts.append("\t}\n\n")
+    parts.append("}\n")
+    return "".join(parts)
+
+
+def render_all(invs: list) -> dict:
+    return {
+        "common/modifiers/aov_invention_modifiers.txt": modifiers(invs),
+        "common/scripted_triggers/aov_invention_triggers.txt": triggers(invs),
+        "common/script_values/aov_invention_values.txt": values(invs),
+        "common/scripted_effects/aov_invention_effects.txt": effects(invs),
+        "common/scripted_guis/aov_invention_sgui.txt": sguis(invs),
+        "common/customizable_localization/aov_invention_custom_loc.txt": custom_loc(invs),
+        "gui/aov_inventions_generated.gui": gui(invs),
+        "localization/english/aov_inventions_l_english.yml": loc(invs),
+    }
+
+
+def write_all(files: dict, root: Path) -> None:
+    for rel, text in files.items():
+        out = root / rel
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_bytes(b"\xef\xbb\xbf" + text.replace("\r\n", "\n").encode("utf-8"))
+
+
+def copy_icons(invs: list, eu4: Path, root: Path) -> None:
+    src_dir = eu4 / EU4_ICONS
+    names = sorted({i["icon"] for i in invs})
+    missing = [n for n in names if not (src_dir / n).is_file()]
+    if missing:
+        raise GeneratorError(f"EU4 icons not found in {src_dir}: {', '.join(missing)}")
+    dst = root / ICON_DIR
+    dst.mkdir(parents=True, exist_ok=True)
+    for n in names:
+        shutil.copyfile(src_dir / n, dst / n)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--eu4", type=Path, default=DEFAULT_EU4)
+    args = parser.parse_args()
+    try:
+        invs = load_inventions()
+        validate(invs)
+        files = render_all(invs)
+        write_all(files, SUBMOD)
+        copy_icons(invs, args.eu4, SUBMOD)
+    except GeneratorError as e:
+        sys.exit(f"error: {e}")
+    print(f"wrote {len(files)} files and {len({i['icon'] for i in invs})} icons for {len(invs)} inventions")
+
+
+if __name__ == "__main__":
+    main()
