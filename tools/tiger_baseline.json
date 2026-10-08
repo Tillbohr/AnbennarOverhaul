@@ -1,0 +1,86 @@
+[
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\common\\holdings\\00_holdings.txt",
+      "length": 22,
+      "line": "temple_citadel_holding = {",
+      "linenr": 245,
+      "path": "common\\holdings\\00_holdings.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format temple_citadel_holding_build_prestige_cost not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\common\\holdings\\00_holdings.txt",
+      "length": 22,
+      "line": "temple_citadel_holding = {",
+      "linenr": 245,
+      "path": "common\\holdings\\00_holdings.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format temple_citadel_holding_build_speed not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\common\\holdings\\00_holdings.txt",
+      "length": 22,
+      "line": "temple_citadel_holding = {",
+      "linenr": 245,
+      "path": "common\\holdings\\00_holdings.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format temple_citadel_holding_holding_build_piety_cost not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\common\\holdings\\00_holdings.txt",
+      "length": 22,
+      "line": "temple_citadel_holding = {",
+      "linenr": 245,
+      "path": "common\\holdings\\00_holdings.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format temple_citadel_holding_holding_build_prestige_cost not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+}
+]

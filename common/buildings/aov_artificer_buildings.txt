@@ -1,0 +1,55 @@
+﻿##########
+# Artificer Academy
+##########
+
+# Regular building unlocked by tradition_gnomish_ingenuity (can_build_artificer_academy).
+# Same icon and modifiers as generic_university. Limited to one per ruler domain, see aov_artificer_triggers.txt.
+# Owning the (enabled) academy allows recruiting artificer_handgunners.
+artificer_academy_01 = {
+	construction_time = very_slow_construction_time
+
+	type_icon = "icon_building_university.dds"
+
+	effect_desc = {
+		desc = artificer_academy_effect_desc
+	}
+
+	can_construct_potential = {
+		building_requirement_tribal = no
+		building_requirement_castle_city_church = { LEVEL = 01 }
+		scope:holder.culture = {
+			has_cultural_parameter = can_build_artificer_academy
+		}
+	}
+
+	can_construct = {
+		artificer_academy_none_in_domain_trigger = yes
+	}
+
+	is_enabled = {
+		artificer_academy_domain_limit_trigger = yes
+	}
+
+	show_disabled = yes
+
+	cost_gold = 1000
+
+	character_modifier = {
+		learning_per_prestige_level = 1
+		monthly_lifestyle_xp_gain_mult = 0.1
+		cultural_head_fascination_mult = 0.05
+		monthly_dynasty_prestige = 0.25
+	}
+
+	county_modifier = {
+		development_growth_factor = 0.1
+		development_growth = 0.1
+	}
+
+	ai_value = {
+		base = 30 # Unlocks artificer regiments, so a high priority for gnomish rulers
+		ai_general_building_modifier = yes
+	}
+
+	flag = artificer_academy
+}

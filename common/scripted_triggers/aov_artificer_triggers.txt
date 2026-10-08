@@ -1,0 +1,56 @@
+﻿# Artificer Academy triggers
+# Each ruler may have only one Artificer Academy across the holdings in their own domain.
+# Vassals follow the same rule for their own domains, independently of their liege.
+# If a ruler ends up with two or more (e.g. through conquest or inheritance), all of theirs are disabled until only one remains.
+
+# Province scope (building triggers), scope:holder = holder of the barony
+# Building's is_enabled: the holder doesn't hold more than one academy in their domain
+artificer_academy_domain_limit_trigger = {
+	custom_tooltip = {
+		text = artificer_academy_domain_limit_tt
+		scope:holder = {
+			NOT = {
+				any_directly_owned_province = {
+					count >= 2
+					has_building_with_flag = artificer_academy
+				}
+			}
+		}
+	}
+}
+
+# Province scope (building triggers), scope:holder = holder of the barony
+# No other academy exists or is being built anywhere in the holder's domain
+artificer_academy_none_in_domain_trigger = {
+	custom_tooltip = {
+		text = artificer_academy_none_in_domain_tt
+		scope:holder = {
+			NOT = {
+				any_directly_owned_province = {
+					NOT = { this = root }
+					OR = {
+						has_building_with_flag = artificer_academy
+						has_construction_with_flag = artificer_academy
+					}
+				}
+			}
+		}
+	}
+}
+
+# Character scope
+# The character holds exactly one Artificer Academy in their domain, so it is enabled
+has_enabled_artificer_academy_trigger = {
+	custom_tooltip = {
+		text = has_enabled_artificer_academy_tt
+		any_directly_owned_province = {
+			has_building_with_flag = artificer_academy
+		}
+		NOT = {
+			any_directly_owned_province = {
+				count >= 2
+				has_building_with_flag = artificer_academy
+			}
+		}
+	}
+}

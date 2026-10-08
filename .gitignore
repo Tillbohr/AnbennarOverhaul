@@ -1,0 +1,8 @@
+# Machine-specific Claude Code settings
+.claude/settings.local.json
+# Python
+__pycache__/
+# Editor/backup files
+*.bak
+/.vs
+/.vscode

@@ -1,0 +1,52 @@
+﻿######################
+# Gnomish Traditions #
+######################
+
+# Gnomish Ingenuity: only available to cultures with gnomish heritage.
+# Unlocks the Artificer Academy building and, through it, Artificer Handgunners.
+# Non-gnomish cultures are also stripped of it in aov_artificer_on_actions.txt as a safety net.
+tradition_gnomish_ingenuity = {
+	category = societal
+	layers = {
+		0 = learning
+		1 = western
+		4 = tools.dds
+	}
+
+	is_shown = {
+		has_cultural_pillar = heritage_gnomish
+	}
+	can_pick = {
+		custom_tooltip = {
+			text = gnomish_heritage_trigger
+			has_cultural_pillar = heritage_gnomish
+		}
+	}
+	can_pick_for_hybridization = {
+		custom_tooltip = {
+			text = gnomish_heritage_trigger
+			culture_pillar:heritage_gnomish = { is_in_list = traits }
+		}
+	}
+
+	parameters = {
+		can_build_artificer_academy = yes
+		unlock_maa_artificer_handgunners = yes
+	}
+
+	cost = {
+		prestige = {
+			add = {
+				value = tradition_base_cost
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+
+			multiply = tradition_replacement_cost_if_relevant
+		}
+	}
+
+	ai_will_do = {
+		value = 1000
+	}
+}

@@ -1,0 +1,42 @@
+﻿# Anbennar Overhaul: Gnomish Ingenuity on_actions
+# Appended to vanilla/Anbennar on_actions via on_actions = { } so no base file is edited.
+
+# New games: every gnomish culture starts with Gnomish Ingenuity
+on_game_start = {
+	on_actions = { aov_gnomish_ingenuity_game_start }
+}
+
+# Safety net: non-gnomish cultures must never keep tradition_gnomish_ingenuity,
+# whatever path gave it to them (hybridization, divergence, script).
+on_culture_created = {
+	on_actions = { aov_gnomish_ingenuity_heritage_check }
+}
+
+on_tradition_added = {
+	on_actions = { aov_gnomish_ingenuity_heritage_check }
+}
+
+aov_gnomish_ingenuity_game_start = {
+	effect = {
+		every_culture_global = {
+			limit = {
+				has_cultural_pillar = heritage_gnomish
+				NOT = { has_cultural_tradition = tradition_gnomish_ingenuity }
+			}
+			add_culture_tradition = tradition_gnomish_ingenuity
+		}
+	}
+}
+
+# Root = culture
+aov_gnomish_ingenuity_heritage_check = {
+	effect = {
+		if = {
+			limit = {
+				has_cultural_tradition = tradition_gnomish_ingenuity
+				NOT = { has_cultural_pillar = heritage_gnomish }
+			}
+			remove_culture_tradition = tradition_gnomish_ingenuity
+		}
+	}
+}

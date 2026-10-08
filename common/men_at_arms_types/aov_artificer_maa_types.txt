@@ -1,0 +1,39 @@
+﻿@cultural_maa_extra_ai_score = 80 # Equivalent to having 8 extra regiments beyond what the code scoring would indicate (see NEGATIVE_SCORE_PER_EXISTING_REGIMENT)
+@provisions_cost_infantry_moderate = 7
+
+### GNOMES
+
+# Handgunners recruited from an Artificer Academy (tradition_gnomish_ingenuity)
+artificer_handgunners = {
+	type = gunpowder
+
+	damage = 52
+	toughness = 12
+	pursuit = 0
+	screen = 5
+
+	can_recruit = {
+		culture = { has_cultural_parameter = unlock_maa_artificer_handgunners }
+		has_enabled_artificer_academy_trigger = yes
+	}
+
+	terrain_bonus = {
+		wetlands = { damage = -10 }
+		floodplains = { damage = -5 }
+	}
+
+	counters = {
+		heavy_infantry = 1
+	}
+
+	buy_cost = { gold = handgunner_recruitment_cost }
+	low_maintenance_cost = { gold = handgunner_low_maint_cost }
+	high_maintenance_cost = { gold = handgunner_high_maint_cost }
+	provision_cost = @provisions_cost_infantry_moderate
+
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+
+	stack = 100
+
+	icon = handgonne
+}

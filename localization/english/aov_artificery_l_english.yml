@@ -1,0 +1,21 @@
+﻿l_english:
+ # Tradition
+ tradition_gnomish_ingenuity_name: "Gnomish Ingenuity"
+ tradition_gnomish_ingenuity_desc: "No problem is too great for a sufficiently clever contraption. This culture channels its boundless curiosity into the art of artificery, founding academies where tinkerers forge the wondrous weapons of tomorrow."
+ culture_parameter_can_build_artificer_academy: "Can construct the [GetBuilding('artificer_academy_01').GetName] [building|E]"
+ culture_parameter_unlock_maa_artificer_handgunners: "Can recruit [GetMaA('artificer_handgunners').GetName] as [men_at_arms|E] when their [domain|E] has an active [GetBuilding('artificer_academy_01').GetName]"
+ gnomish_heritage_trigger: "The [culture|E] must be of Gnomish [heritage|E]"
+
+ # Building
+ building_type_artificer_academy_01: "Artificer Academy"
+ building_type_artificer_academy_01_desc: "A sprawling hall of workshops, lecture rooms and suspiciously scorched testing grounds, where gnomish artificers teach the next generation to bend the world to their designs."
+ building_artificer_academy_01: "$building_type_artificer_academy_01$"
+ building_artificer_academy_01_desc: "$building_type_artificer_academy_01_desc$"
+ artificer_academy_effect_desc: "#low Unlocks:#!\nRecruitment of [GetMaA('artificer_handgunners').GetName] [men_at_arms|E]\n\n#low A [ruler|E] may only have one [GetBuilding('artificer_academy_01').GetName] in their [domain|E]. If they hold more than one, all of them are disabled until only one remains.#!"
+ artificer_academy_domain_limit_tt: "The holder has no more than one [GetBuilding('artificer_academy_01').GetName] in their [domain|E]"
+ artificer_academy_none_in_domain_tt: "No other [GetBuilding('artificer_academy_01').GetName] exists or is being built in the holder's [domain|E]"
+ has_enabled_artificer_academy_tt: "Has an active [GetBuilding('artificer_academy_01').GetName] in their [domain|E] (only one may exist per [domain|E])"
+
+ # Men-at-Arms
+ artificer_handgunners: "Artificer Handgunners"
+ artificer_handgunners_flavor: "#F Trained in the halls of the Artificer Academy, these gnomish gunners wield firearms of their own meticulous design.#!\n#help Enabled by the [GetBuilding('artificer_academy_01').GetName].#!"
