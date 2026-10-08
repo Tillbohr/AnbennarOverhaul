@@ -87,7 +87,7 @@ class InsertTabTests(unittest.TestCase):
         self.assertLess(close_view, toggle_var)
 
     def test_icon_is_the_shipped_eu4_artificery_icon(self):
-        # EU4 Anbennar's research_artificery.dds (the Artificery menu's inventions button), shipped in the submod
+        # Frame 1 (tier 1 emblem) of EU4 Anbennar's artifice_tier_emblems_strip.dds, shipped in the submod
         self.assertEqual(bho.TEXTURE, "gfx/interface/skinned/hud_maintab/aov_maintab_artificery.dds")
         self.assertTrue((bho.SUBMOD / bho.TEXTURE).is_file())
 

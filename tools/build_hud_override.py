@@ -17,7 +17,7 @@ BEGIN = f"{MARKER}: begin Artificery tab"
 END = f"{MARKER}: end Artificery tab"
 ANCHOR = 'name = "tab_situation"'
 TAB_NAME = "tab_aov_artificery"
-TEXTURE = "gfx/interface/skinned/hud_maintab/aov_maintab_artificery.dds"  # EU4 Anbennar research_artificery.dds
+TEXTURE = "gfx/interface/skinned/hud_maintab/aov_maintab_artificery.dds"  # EU4 Anbennar artifice_tier_emblems_strip.dds, frame 1
 REL_PATH = Path("gui/hud.gui")
 
 SUBMOD = Path(__file__).resolve().parent.parent
