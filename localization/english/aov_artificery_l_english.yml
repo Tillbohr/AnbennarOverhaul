@@ -82,3 +82,11 @@
  aov_artificery.2.t: "Research Abandoned"
  aov_artificery.2.desc: "The [ROOT.Char.Custom('AovLastSponsorName')] report that nothing in their field is left for them to discover. The @gold_icon! 50 gold sponsorship has been returned."
  aov_artificery.2.a: "A pity."
+
+ # Invention men-at-arms
+ aov_prototype_tanks: "Prototype Tanks"
+ aov_prototype_tanks_flavor: "#F Lumbering iron war machines that replace a lance with a cannon and a horse with a boiler.#!\n#help Recruitable while [GetModifier('aov_invention_prototype_tanks').GetName] is active.#!"
+ aov_war_golems: "War Golems"
+ aov_war_golems_flavor: "#F Stone soldiers animated by artifice, as tireless as they are hard to break.#!\n#help Recruitable while [GetModifier('aov_invention_war_golems').GetName] is active.#!"
+ aov_damestear_megacannon: "Damestear Megacannon"
+ aov_damestear_megacannon_flavor: "#F A mithril barrel insulated with porcelain, channelling damestear into a beam that levels walls.#!\n#help Recruitable while [GetModifier('aov_invention_damestear_reactor_megacannon').GetName] is active.#!"

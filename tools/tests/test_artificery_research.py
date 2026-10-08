@@ -48,3 +48,10 @@ class ResearchTests(unittest.TestCase):
         text = read("common/on_action/aov_inventions_on_actions.txt")
         self.assertIn("quarterly_playable_pulse = {\n\ton_actions = { aov_artificery_quarterly }", text)
         self.assertIn("on_death = {\n\ton_actions = { aov_artificery_on_death }", text)
+
+    def test_maa_gated_on_active_invention(self):
+        text = read("common/men_at_arms_types/aov_invention_maa_types.txt")
+        for maa, inv in (("aov_prototype_tanks", "prototype_tanks"), ("aov_war_golems", "war_golems"),
+                         ("aov_damestear_megacannon", "damestear_reactor_megacannon")):
+            b = block(text, maa)
+            self.assertIn(f"aov_invention_{inv}_active = yes", b)
