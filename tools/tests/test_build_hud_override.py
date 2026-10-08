@@ -86,6 +86,11 @@ class InsertTabTests(unittest.TestCase):
         self.assertLess(toggle_view, close_view)
         self.assertLess(close_view, toggle_var)
 
+    def test_icon_is_the_shipped_eu4_artificery_icon(self):
+        # EU4 Anbennar's research_artificery.dds (the Artificery menu's inventions button), shipped in the submod
+        self.assertEqual(bho.TEXTURE, "gfx/interface/skinned/hud_maintab/aov_maintab_artificery.dds")
+        self.assertTrue((bho.SUBMOD / bho.TEXTURE).is_file())
+
     def test_block_braces_balance(self):
         self.assertEqual(sum(bho.brace_delta(l) for l in bho.insert_tab(HUD).split("\n")), 0)
 

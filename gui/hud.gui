@@ -711,7 +711,7 @@ widget = {
 
 					blockoverride "maintab_button"
 					{
-						texture = "gfx/interface/skinned/hud_maintab/maintab_estate.dds"
+						texture = "gfx/interface/skinned/hud_maintab/aov_maintab_artificery.dds"
 						# Opening then closing a game view closes any open vanilla main tab, which would hide this window
 						onclick = "[ToggleGameView( 'decisions' )]"
 						onclick = "[CloseGameView( 'decisions' )]"
