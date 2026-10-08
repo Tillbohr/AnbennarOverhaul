@@ -78,3 +78,8 @@ inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error
   castle/city building, university icon and modifiers, one per ruler's domain, all of a ruler's academies disabled
   if they hold 2+) → `artificer_handgunners` MaA (handgunner stats, needs the tradition and an enabled academy in
   the recruiter's domain).
+- **Artificery tab:** HUD main tab below Situations (`gui/hud.gui`, generated) shown when the player passes
+  `can_use_artificery_trigger` (gnome race, Gnomish Ingenuity culture, exactly one academy) via scripted GUI
+  `aov_artificery_available`. Opens `gui/aov_window_artificery.gui` (scripted widget, variable
+  `aov_artificery_window`) with Factions/Inventions tabs (variable `aov_artificery_tab`, unset = Factions);
+  both tab bodies are placeholders until the factions and inventions systems are built.

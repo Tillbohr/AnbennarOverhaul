@@ -1,0 +1,1 @@
+﻿gui/aov_window_artificery.gui = aov_artificery_window
