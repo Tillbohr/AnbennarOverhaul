@@ -8,3 +8,20 @@ aov_is_artificer_faction_title = {
 		this = title:d_technomancers
 	}
 }
+
+# Character scope: the ruler's influence level with a faction
+aov_influence_is_hostile_brillites = { aov_influence_level_brillites = 0 }
+aov_influence_is_displeased_brillites = { aov_influence_level_brillites = 1 }
+aov_influence_is_neutral_brillites = { aov_influence_level_brillites = 2 }
+aov_influence_is_favored_brillites = { aov_influence_level_brillites = 3 }
+aov_influence_is_exalted_brillites = { aov_influence_level_brillites = 4 }
+aov_influence_is_hostile_mechanists = { aov_influence_level_mechanists = 0 }
+aov_influence_is_displeased_mechanists = { aov_influence_level_mechanists = 1 }
+aov_influence_is_neutral_mechanists = { aov_influence_level_mechanists = 2 }
+aov_influence_is_favored_mechanists = { aov_influence_level_mechanists = 3 }
+aov_influence_is_exalted_mechanists = { aov_influence_level_mechanists = 4 }
+aov_influence_is_hostile_technomancers = { aov_influence_level_technomancers = 0 }
+aov_influence_is_displeased_technomancers = { aov_influence_level_technomancers = 1 }
+aov_influence_is_neutral_technomancers = { aov_influence_level_technomancers = 2 }
+aov_influence_is_favored_technomancers = { aov_influence_level_technomancers = 3 }
+aov_influence_is_exalted_technomancers = { aov_influence_level_technomancers = 4 }

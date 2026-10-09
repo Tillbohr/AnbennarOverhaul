@@ -1,0 +1,119 @@
+﻿# Anbennar Overhaul: artificer faction influence. Character scope (the ruler).
+# Levels: 0 Hostile (0-14), 1 Displeased (15-29), 2 Neutral (30-59), 3 Favored (60-84), 4 Exalted (85-100).
+
+# Influence with the Brillites (40 until first set)
+aov_influence_brillites = {
+	value = 40
+	if = {
+		limit = { has_variable = aov_influence_brillites }
+		value = var:aov_influence_brillites
+	}
+}
+
+aov_influence_level_brillites = {
+	value = 0
+	if = { limit = { aov_influence_brillites >= 15 } value = 1 }
+	if = { limit = { aov_influence_brillites >= 30 } value = 2 }
+	if = { limit = { aov_influence_brillites >= 60 } value = 3 }
+	if = { limit = { aov_influence_brillites >= 85 } value = 4 }
+}
+
+# Election vote weight: Hostile 1 ... Exalted 5
+aov_vote_weight_brillites = {
+	value = aov_influence_level_brillites
+	add = 1
+}
+
+# Gold to sponsor their research
+aov_research_cost_brillites = {
+	value = 50
+	if = { limit = { aov_influence_level_brillites = 0 } value = 100 }
+	else_if = { limit = { aov_influence_level_brillites = 1 } value = 75 }
+	else_if = { limit = { aov_influence_level_brillites = 3 } value = 38 }
+	else_if = { limit = { aov_influence_level_brillites = 4 } value = 25 }
+}
+
+# Quarters their research takes: +25% when Displeased or worse, -25% when Exalted
+aov_research_quarters_brillites = {
+	value = 20
+	if = { limit = { aov_influence_level_brillites <= 1 } value = 25 }
+	else_if = { limit = { aov_influence_level_brillites = 4 } value = 15 }
+}
+
+# Influence with the Mechanists (40 until first set)
+aov_influence_mechanists = {
+	value = 40
+	if = {
+		limit = { has_variable = aov_influence_mechanists }
+		value = var:aov_influence_mechanists
+	}
+}
+
+aov_influence_level_mechanists = {
+	value = 0
+	if = { limit = { aov_influence_mechanists >= 15 } value = 1 }
+	if = { limit = { aov_influence_mechanists >= 30 } value = 2 }
+	if = { limit = { aov_influence_mechanists >= 60 } value = 3 }
+	if = { limit = { aov_influence_mechanists >= 85 } value = 4 }
+}
+
+# Election vote weight: Hostile 1 ... Exalted 5
+aov_vote_weight_mechanists = {
+	value = aov_influence_level_mechanists
+	add = 1
+}
+
+# Gold to sponsor their research
+aov_research_cost_mechanists = {
+	value = 50
+	if = { limit = { aov_influence_level_mechanists = 0 } value = 100 }
+	else_if = { limit = { aov_influence_level_mechanists = 1 } value = 75 }
+	else_if = { limit = { aov_influence_level_mechanists = 3 } value = 38 }
+	else_if = { limit = { aov_influence_level_mechanists = 4 } value = 25 }
+}
+
+# Quarters their research takes: +25% when Displeased or worse, -25% when Exalted
+aov_research_quarters_mechanists = {
+	value = 40
+	if = { limit = { aov_influence_level_mechanists <= 1 } value = 50 }
+	else_if = { limit = { aov_influence_level_mechanists = 4 } value = 30 }
+}
+
+# Influence with the Technomancers (40 until first set)
+aov_influence_technomancers = {
+	value = 40
+	if = {
+		limit = { has_variable = aov_influence_technomancers }
+		value = var:aov_influence_technomancers
+	}
+}
+
+aov_influence_level_technomancers = {
+	value = 0
+	if = { limit = { aov_influence_technomancers >= 15 } value = 1 }
+	if = { limit = { aov_influence_technomancers >= 30 } value = 2 }
+	if = { limit = { aov_influence_technomancers >= 60 } value = 3 }
+	if = { limit = { aov_influence_technomancers >= 85 } value = 4 }
+}
+
+# Election vote weight: Hostile 1 ... Exalted 5
+aov_vote_weight_technomancers = {
+	value = aov_influence_level_technomancers
+	add = 1
+}
+
+# Gold to sponsor their research
+aov_research_cost_technomancers = {
+	value = 50
+	if = { limit = { aov_influence_level_technomancers = 0 } value = 100 }
+	else_if = { limit = { aov_influence_level_technomancers = 1 } value = 75 }
+	else_if = { limit = { aov_influence_level_technomancers = 3 } value = 38 }
+	else_if = { limit = { aov_influence_level_technomancers = 4 } value = 25 }
+}
+
+# Quarters their research takes: +25% when Displeased or worse, -25% when Exalted
+aov_research_quarters_technomancers = {
+	value = 60
+	if = { limit = { aov_influence_level_technomancers <= 1 } value = 75 }
+	else_if = { limit = { aov_influence_level_technomancers = 4 } value = 45 }
+}

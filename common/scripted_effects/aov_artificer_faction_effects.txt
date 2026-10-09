@@ -1,0 +1,153 @@
+﻿# Anbennar Overhaul: artificer faction influence. Character scope (the ruler).
+# FACTION = brillites | mechanists | technomancers
+
+# First eligibility: every faction starts at 40
+aov_faction_init = {
+	if = {
+		limit = { NOT = { has_variable = aov_influence_brillites } }
+		set_variable = { name = aov_influence_brillites value = 40 }
+	}
+	if = {
+		limit = { NOT = { has_variable = aov_influence_mechanists } }
+		set_variable = { name = aov_influence_mechanists value = 40 }
+	}
+	if = {
+		limit = { NOT = { has_variable = aov_influence_technomancers } }
+		set_variable = { name = aov_influence_technomancers value = 40 }
+	}
+}
+
+# AMOUNT is a number or a script value; influence stays within 0-100
+aov_faction_change_influence = {
+	if = {
+		limit = { NOT = { has_variable = aov_influence_$FACTION$ } }
+		set_variable = { name = aov_influence_$FACTION$ value = 40 }
+	}
+	change_variable = { name = aov_influence_$FACTION$ add = $AMOUNT$ }
+	clamp_variable = { name = aov_influence_$FACTION$ min = 0 max = 100 }
+	aov_faction_refresh_modifiers = yes
+}
+
+# Exactly one level modifier per faction (none at Neutral); none while dormant
+aov_faction_refresh_modifiers = {
+	if = {
+		limit = {
+			NOT = { has_variable = aov_artificery_dormant }
+			can_use_artificery_trigger = yes
+		}
+		if = {
+			limit = { aov_influence_level_brillites = 0 NOT = { has_character_modifier = aov_brillites_hostile } }
+			add_character_modifier = { modifier = aov_brillites_hostile }
+		}
+		if = {
+			limit = { NOT = { aov_influence_level_brillites = 0 } has_character_modifier = aov_brillites_hostile }
+			remove_character_modifier = aov_brillites_hostile
+		}
+		if = {
+			limit = { aov_influence_level_brillites = 1 NOT = { has_character_modifier = aov_brillites_displeased } }
+			add_character_modifier = { modifier = aov_brillites_displeased }
+		}
+		if = {
+			limit = { NOT = { aov_influence_level_brillites = 1 } has_character_modifier = aov_brillites_displeased }
+			remove_character_modifier = aov_brillites_displeased
+		}
+		if = {
+			limit = { aov_influence_level_brillites = 3 NOT = { has_character_modifier = aov_brillites_favored } }
+			add_character_modifier = { modifier = aov_brillites_favored }
+		}
+		if = {
+			limit = { NOT = { aov_influence_level_brillites = 3 } has_character_modifier = aov_brillites_favored }
+			remove_character_modifier = aov_brillites_favored
+		}
+		if = {
+			limit = { aov_influence_level_brillites = 4 NOT = { has_character_modifier = aov_brillites_exalted } }
+			add_character_modifier = { modifier = aov_brillites_exalted }
+		}
+		if = {
+			limit = { NOT = { aov_influence_level_brillites = 4 } has_character_modifier = aov_brillites_exalted }
+			remove_character_modifier = aov_brillites_exalted
+		}
+		if = {
+			limit = { aov_influence_level_mechanists = 0 NOT = { has_character_modifier = aov_mechanists_hostile } }
+			add_character_modifier = { modifier = aov_mechanists_hostile }
+		}
+		if = {
+			limit = { NOT = { aov_influence_level_mechanists = 0 } has_character_modifier = aov_mechanists_hostile }
+			remove_character_modifier = aov_mechanists_hostile
+		}
+		if = {
+			limit = { aov_influence_level_mechanists = 1 NOT = { has_character_modifier = aov_mechanists_displeased } }
+			add_character_modifier = { modifier = aov_mechanists_displeased }
+		}
+		if = {
+			limit = { NOT = { aov_influence_level_mechanists = 1 } has_character_modifier = aov_mechanists_displeased }
+			remove_character_modifier = aov_mechanists_displeased
+		}
+		if = {
+			limit = { aov_influence_level_mechanists = 3 NOT = { has_character_modifier = aov_mechanists_favored } }
+			add_character_modifier = { modifier = aov_mechanists_favored }
+		}
+		if = {
+			limit = { NOT = { aov_influence_level_mechanists = 3 } has_character_modifier = aov_mechanists_favored }
+			remove_character_modifier = aov_mechanists_favored
+		}
+		if = {
+			limit = { aov_influence_level_mechanists = 4 NOT = { has_character_modifier = aov_mechanists_exalted } }
+			add_character_modifier = { modifier = aov_mechanists_exalted }
+		}
+		if = {
+			limit = { NOT = { aov_influence_level_mechanists = 4 } has_character_modifier = aov_mechanists_exalted }
+			remove_character_modifier = aov_mechanists_exalted
+		}
+		if = {
+			limit = { aov_influence_level_technomancers = 0 NOT = { has_character_modifier = aov_technomancers_hostile } }
+			add_character_modifier = { modifier = aov_technomancers_hostile }
+		}
+		if = {
+			limit = { NOT = { aov_influence_level_technomancers = 0 } has_character_modifier = aov_technomancers_hostile }
+			remove_character_modifier = aov_technomancers_hostile
+		}
+		if = {
+			limit = { aov_influence_level_technomancers = 1 NOT = { has_character_modifier = aov_technomancers_displeased } }
+			add_character_modifier = { modifier = aov_technomancers_displeased }
+		}
+		if = {
+			limit = { NOT = { aov_influence_level_technomancers = 1 } has_character_modifier = aov_technomancers_displeased }
+			remove_character_modifier = aov_technomancers_displeased
+		}
+		if = {
+			limit = { aov_influence_level_technomancers = 3 NOT = { has_character_modifier = aov_technomancers_favored } }
+			add_character_modifier = { modifier = aov_technomancers_favored }
+		}
+		if = {
+			limit = { NOT = { aov_influence_level_technomancers = 3 } has_character_modifier = aov_technomancers_favored }
+			remove_character_modifier = aov_technomancers_favored
+		}
+		if = {
+			limit = { aov_influence_level_technomancers = 4 NOT = { has_character_modifier = aov_technomancers_exalted } }
+			add_character_modifier = { modifier = aov_technomancers_exalted }
+		}
+		if = {
+			limit = { NOT = { aov_influence_level_technomancers = 4 } has_character_modifier = aov_technomancers_exalted }
+			remove_character_modifier = aov_technomancers_exalted
+		}
+	}
+	else = {
+		aov_faction_remove_modifiers = yes
+	}
+}
+
+aov_faction_remove_modifiers = {
+	if = { limit = { has_character_modifier = aov_brillites_hostile } remove_character_modifier = aov_brillites_hostile }
+	if = { limit = { has_character_modifier = aov_brillites_displeased } remove_character_modifier = aov_brillites_displeased }
+	if = { limit = { has_character_modifier = aov_brillites_favored } remove_character_modifier = aov_brillites_favored }
+	if = { limit = { has_character_modifier = aov_brillites_exalted } remove_character_modifier = aov_brillites_exalted }
+	if = { limit = { has_character_modifier = aov_mechanists_hostile } remove_character_modifier = aov_mechanists_hostile }
+	if = { limit = { has_character_modifier = aov_mechanists_displeased } remove_character_modifier = aov_mechanists_displeased }
+	if = { limit = { has_character_modifier = aov_mechanists_favored } remove_character_modifier = aov_mechanists_favored }
+	if = { limit = { has_character_modifier = aov_mechanists_exalted } remove_character_modifier = aov_mechanists_exalted }
+	if = { limit = { has_character_modifier = aov_technomancers_hostile } remove_character_modifier = aov_technomancers_hostile }
+	if = { limit = { has_character_modifier = aov_technomancers_displeased } remove_character_modifier = aov_technomancers_displeased }
+	if = { limit = { has_character_modifier = aov_technomancers_favored } remove_character_modifier = aov_technomancers_favored }
+	if = { limit = { has_character_modifier = aov_technomancers_exalted } remove_character_modifier = aov_technomancers_exalted }
+}

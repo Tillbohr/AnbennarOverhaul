@@ -53,5 +53,37 @@ class TitleTests(unittest.TestCase):
             self.assertIn(f"this = title:d_{f}", b)
 
 
+class InfluenceTests(unittest.TestCase):
+    def test_twelve_modifiers(self):
+        text = read("common/modifiers/aov_artificer_faction_modifiers.txt")
+        for f in FACTIONS:
+            for lv in LEVELS:
+                block(text, f"aov_{f}_{lv}")
+        self.assertIn("domain_tax_mult = 0.1", block(text, "aov_mechanists_exalted"))
+        self.assertIn("domain_tax_mult = -0.1", block(text, "aov_mechanists_hostile"))
+        self.assertIn("learning = 2", block(text, "aov_brillites_exalted"))
+        self.assertIn("advantage = -5", block(text, "aov_technomancers_hostile"))
+
+    def test_level_thresholds(self):
+        b = block(read("common/script_values/aov_artificer_faction_values.txt"), "aov_influence_level_brillites")
+        for n in ("15", "30", "60", "85"):
+            self.assertIn(f">= {n}", b)
+
+    def test_costs_and_quarters(self):
+        text = read("common/script_values/aov_artificer_faction_values.txt")
+        cost = block(text, "aov_research_cost_mechanists")
+        for v in ("100", "75", "50", "38", "25"):
+            self.assertIn(f"value = {v}", cost)
+        q = block(text, "aov_research_quarters_technomancers")
+        for v in ("75", "60", "45"):
+            self.assertIn(f"value = {v}", q)
+
+    def test_change_influence_clamps(self):
+        b = block(read("common/scripted_effects/aov_artificer_faction_effects.txt"), "aov_faction_change_influence")
+        self.assertIn("min = 0", b)
+        self.assertIn("max = 100", b)
+        self.assertIn("aov_faction_refresh_modifiers = yes", b)
+
+
 if __name__ == "__main__":
     unittest.main()
