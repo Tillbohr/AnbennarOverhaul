@@ -1,7 +1,6 @@
 # Great projects: framework and Cannor (design)
 
-Date: 2026-10-09. Status: approved in chat (decomposition, effects, start state, art, approach, content, the
-14 existing buildings, translation and costs); awaiting written-spec review.
+Date: 2026-10-09. Status: built (see "Changes during the build").
 Sub-project 1 of 3 of the great projects. Sub-project 2 is the Middle Dwarovar (Dwarven Monuments on the CK3 map);
 sub-project 3 is the rest of the map (Bulwar, Salahad, Kheterata, Dragon Coast, Deepwoods). Both reuse this
 framework.
@@ -59,7 +58,7 @@ The exact per-project list (EU4 key, CK3 key, barony, start level, art) is the i
   are upgrades (`next_building`), as EU4's tiers 1-3. EU4's tier 0 (inert) has no CK3 level.
 - Monuments existing before 1022 start built at level 1 (see Decisions). Players and AI can upgrade them.
 - Effects at each level come from that EU4 tier's modifiers through the translation table:
-  `province_modifiers` → the barony/county, `area_modifier` → the duchy capital county, `country_modifiers` → the
+  `province_modifiers` → the barony/county, `area_modifier` → the county (`county_modifier`), `country_modifiers` → the
   holder's character.
 - **Culture gate:** EU4's `can_use_modifiers_trigger` / `can_upgrade_trigger` (cultures, culture groups, religions)
   becomes `is_enabled` (effects active) and `can_construct` (build/upgrade) on the CK3 building, through a
@@ -113,15 +112,15 @@ The exact per-project list (EU4 key, CK3 key, barony, start level, art) is the i
 
 | Tool | Does |
 |---|---|
-| `tools/import_eu4_monuments.py --region cannor` | Reads the three EU4 mods, applies the precedence and region filter, matches baronies, translates tiers through `translation.py`, and writes `tools/data/monuments/cannor.py` plus a report of unmatched placements, untranslated keys and gate fallbacks. Re-running it shows a diff against the curated file; it never overwrites hand fields marked `# hand` |
+| `tools/import_eu4_monuments.py --region cannor` | Reads the three EU4 mods, applies the precedence and region filter, matches baronies, translates tiers through `translation.py`, and writes `tools/data/monuments/cannor.py` plus a report of unmatched placements, untranslated keys and gate fallbacks. Re-running it shows a diff against the curated file; hand fixes live in `tools/data/monuments/cannor_hand.py` (`HAND`), merged on every run (`tiers` key by key) |
 | `tools/build_monuments.py` | Validates the data and writes every output (below). Fails on any unmapped modifier key, unresolved barony, duplicate slot or missing loc |
 
 ### Outputs (generated; header "generated ... do not edit by hand")
 
 | File | Content |
 |---|---|
-| `common/buildings/aov_monuments_cannor.txt` | New monument buildings, all levels |
-| `common/buildings/zz_aov_monument_overrides_cannor.txt` | The 14 and the two placeholder overrides (Highest Moon, Lorenan's Rest): Anbennar's definitions copied with the EU4 effects and `next_building` inserted; plus `castle_dameris_01/_02/_03` (EU4's Imperial Palace), new definitions under Anbennar's reserved keys |
+| `common/buildings/aov_monuments_cannor.txt` | New monument buildings, all levels, plus `castle_dameris_01/_02/_03` (EU4's Imperial Palace) under Anbennar's reserved keys |
+| `common/buildings/zz_aov_monument_overrides_cannor.txt` | The 14 and the two placeholder overrides (Highest Moon, Lorenan's Rest): Anbennar's definitions copied with the EU4 effects and `next_building` inserted;  |
 | `history/provinces/aov_monuments_cannor.txt` | `special_building_slot` (and level 1 where it existed before 1022) per new monument |
 | `localization/english/aov_monuments_cannor_l_english.yml` | Building names and descriptions (`building_<key>`, `building_<key>_desc`) |
 | `common/customizable_localization/aov_monument_illustration.txt` | `AovMonumentIllustration` (province scope): one entry per monument with art, `has_building_or_higher` on its level 1 → loc key holding the picture path |
@@ -163,3 +162,24 @@ Anbennar-update steps.
 
 - Middle Dwarovar and the rest of the map (sub-projects 2 and 3), canals, relocating monuments (EU4 `can_be_moved`),
   EU4 monuments outside the CK3 map, Anbennar placeholders without an EU4 project.
+
+## Changes during the build
+
+1. Hand fixes live in `tools/data/monuments/cannor_hand.py` (`HAND`, merged by the importer on every run; `tiers`
+   merge key by key), not `# hand` comments.
+2. EU4 `area_modifier` lands in CK3 `county_modifier` (the engine allows `duchy_capital_county_modifier` only on
+   duchy-capital buildings).
+3. Castle Dameris is generated into `aov_monuments_cannor.txt`, not the overrides file.
+4. The 5 EU4 mission monuments (Palace of Unity, three Elikhander monuments, Bastion of the God Fragment) use their
+   commented `# start = N` province.
+5. One-off EU4 effects inside a conditional `if`/`else` are not translated (listed in each tier's `dropped`);
+   courtier one-offs use `gender_female_chance = 50`.
+6. Overrides of Anbennar levels do not add the EU4 culture gate (it would switch off Anbennar's own effects); the
+   new upper levels keep it. The gate is wrapped in a `custom_tooltip` ("Built and used by: ...").
+7. A modifier key already in an Anbennar block becomes one summed line (named values resolved from
+   `00_building_values.txt`).
+8. Balance guard: no level above fort_level 4 or county tax_mult 0.3 (Morgurax and Humac's Tomb capped in the hand
+   file); 10 gates stay open (EU4 gates on tags/flags/legacies), each noted.
+9. Paintings also come from EU4 sprite definitions (`GFX_great_project_<key>`); 51 of 81 monuments have one; ruins
+   stages never show it.
+10. Quotes in names and descriptions become `'` in loc.

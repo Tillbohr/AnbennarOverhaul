@@ -24,6 +24,8 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 | Rebuild HUD override | `python -I tools/build_hud_override.py` |
 | Rebuild lifestyle window override | `python -I tools/build_lifestyle_override.py` |
 | Rebuild county view override | `python -I tools/build_county_view_override.py` |
+| Import EU4 monuments (Cannor) | `python -I tools/import_eu4_monuments.py --region cannor` (needs the EU4 Anbennar, Cannorian and Dwarven Monuments mods installed; rewrites `tools/data/monuments/cannor.py`) |
+| Rebuild Cannor monuments | `python -I tools/build_monuments.py --region cannor` |
 | Run tool tests | `python -I -m unittest discover -s tools/tests -v` |
 | Rebuild inventions | `python -I tools/build_inventions.py` (needs EU4 Anbennar installed for icons) |
 | Rebuild spells | `python -I tools/build_spells.py` (needs EU4 Anbennar installed for magic art) |
@@ -149,3 +151,14 @@ inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error
   magic lifestyle XP. `magic_mastery` = school levels + magic perks. Art and the lifestyle window override come from
   `tools/build_magic_lifestyle_art.py` and `tools/build_lifestyle_override.py`. Spec
   `docs/superpowers/specs/2026-10-08-magic-lifestyle-design.md`.
+- **Great projects (Cannor):** the EU4 Anbennar great projects in Cannor (81 monuments, 3 levels each) as CK3 special
+  buildings: new `aov_monument_<eu4key>_01/_02/_03` chains, 17 Anbennar levels re-emitted with EU4 tiers
+  (`zz_aov_monument_overrides_cannor.txt`), and Castle Dameris (`castle_dameris_01/_02/_03`, generated into
+  `aov_monuments_cannor.txt`). Effects come from EU4 through the table `tools/data/monuments/translation.py`; the
+  importer writes `tools/data/monuments/cannor.py` and merges hand fixes from `tools/data/monuments/cannor_hand.py`
+  (`HAND`, re-applied on every run; `tiers` merge key by key), so edit the hand file, never `cannor.py`. Rebuild:
+  `import_eu4_monuments.py --region cannor`, then `build_monuments.py --region cannor`, then
+  `build_county_view_override.py` (paintings in the county view). Dropped modifiers and one-offs are listed per tier
+  (`dropped`); 10 gates stay open (EU4 gates on tags/flags/legacies); balance caps: fort_level 4, county tax_mult 0.3.
+  The Middle Dwarovar (dwarven monuments) and the rest of the map are sub-projects 2 and 3, reusing this framework.
+  Spec `docs/superpowers/specs/2026-10-09-great-projects-cannor-design.md`.
