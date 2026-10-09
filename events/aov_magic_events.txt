@@ -1,0 +1,49 @@
+﻿namespace = aov_magic
+
+# A school reached a new level (scope:aov_school = flag:<school>)
+aov_magic.1 = {
+	type = character_event
+	title = aov_magic.1.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:aov_school = flag:abjuration }
+				desc = aov_magic.1.desc.abjuration
+			}
+			triggered_desc = {
+				trigger = { scope:aov_school = flag:conjuration }
+				desc = aov_magic.1.desc.conjuration
+			}
+			triggered_desc = {
+				trigger = { scope:aov_school = flag:divination }
+				desc = aov_magic.1.desc.divination
+			}
+			triggered_desc = {
+				trigger = { scope:aov_school = flag:enchantment }
+				desc = aov_magic.1.desc.enchantment
+			}
+			triggered_desc = {
+				trigger = { scope:aov_school = flag:evocation }
+				desc = aov_magic.1.desc.evocation
+			}
+			triggered_desc = {
+				trigger = { scope:aov_school = flag:illusion }
+				desc = aov_magic.1.desc.illusion
+			}
+			triggered_desc = {
+				trigger = { scope:aov_school = flag:necromancy }
+				desc = aov_magic.1.desc.necromancy
+			}
+			triggered_desc = {
+				trigger = { scope:aov_school = flag:transmutation }
+				desc = aov_magic.1.desc.transmutation
+			}
+		}
+	}
+	theme = learning
+	left_portrait = root
+
+	option = {
+		name = aov_magic.1.a
+	}
+}

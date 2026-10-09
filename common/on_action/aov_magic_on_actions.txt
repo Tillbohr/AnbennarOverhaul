@@ -1,0 +1,11 @@
+﻿# Anbennar Overhaul: magic schools on_actions, appended to vanilla on_actions.
+
+quarterly_playable_pulse = {
+	on_actions = { aov_magic_quarterly_pulse }
+}
+
+# Root = character
+aov_magic_quarterly_pulse = {
+	trigger = { aov_is_mage = yes }
+	effect = { aov_magic_quarterly = yes }
+}

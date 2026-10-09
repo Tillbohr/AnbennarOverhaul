@@ -1,0 +1,236 @@
+﻿# Anbennar Overhaul: magic schools. Character scope (the mage).
+
+aov_affinity_level = {
+	value = 0
+	if = { limit = { has_trait = magical_affinity_1 } value = 1 }
+	if = { limit = { has_trait = magical_affinity_2 } value = 2 }
+	if = { limit = { has_trait = magical_affinity_3 } value = 3 }
+}
+
+aov_mana = {
+	value = 0
+	if = {
+		limit = { has_variable = aov_mana }
+		value = var:aov_mana
+	}
+}
+
+# 100 + 50 per affinity level
+aov_mana_max = {
+	value = 100
+	add = {
+		value = aov_affinity_level
+		multiply = 50
+	}
+}
+
+# Per month: 5 + Learning / 2 + 2 per affinity level (applied quarterly x 3)
+aov_mana_refill_month = {
+	value = 5
+	add = {
+		value = learning
+		divide = 2
+	}
+	add = {
+		value = aov_affinity_level
+		multiply = 2
+	}
+}
+
+# Study per month: Learning + 5 per affinity level (applied quarterly x 3)
+aov_study_gain_month = {
+	value = learning
+	add = {
+		value = aov_affinity_level
+		multiply = 5
+	}
+}
+
+aov_school_abjuration_progress = {
+	value = 0
+	if = {
+		limit = { has_variable = aov_school_abjuration_progress }
+		value = var:aov_school_abjuration_progress
+	}
+}
+
+aov_school_abjuration_level = {
+	value = 0
+	if = { limit = { aov_school_abjuration_progress >= 300 } value = 1 }
+	if = { limit = { aov_school_abjuration_progress >= 800 } value = 2 }
+	if = { limit = { aov_school_abjuration_progress >= 2000 } value = 3 }
+}
+
+# Progress needed for the next level (2000 once at level 3)
+aov_school_abjuration_next = {
+	value = 300
+	if = { limit = { aov_school_abjuration_level >= 1 } value = 800 }
+	if = { limit = { aov_school_abjuration_level >= 2 } value = 2000 }
+}
+
+aov_school_conjuration_progress = {
+	value = 0
+	if = {
+		limit = { has_variable = aov_school_conjuration_progress }
+		value = var:aov_school_conjuration_progress
+	}
+}
+
+aov_school_conjuration_level = {
+	value = 0
+	if = { limit = { aov_school_conjuration_progress >= 300 } value = 1 }
+	if = { limit = { aov_school_conjuration_progress >= 800 } value = 2 }
+	if = { limit = { aov_school_conjuration_progress >= 2000 } value = 3 }
+}
+
+# Progress needed for the next level (2000 once at level 3)
+aov_school_conjuration_next = {
+	value = 300
+	if = { limit = { aov_school_conjuration_level >= 1 } value = 800 }
+	if = { limit = { aov_school_conjuration_level >= 2 } value = 2000 }
+}
+
+aov_school_divination_progress = {
+	value = 0
+	if = {
+		limit = { has_variable = aov_school_divination_progress }
+		value = var:aov_school_divination_progress
+	}
+}
+
+aov_school_divination_level = {
+	value = 0
+	if = { limit = { aov_school_divination_progress >= 300 } value = 1 }
+	if = { limit = { aov_school_divination_progress >= 800 } value = 2 }
+	if = { limit = { aov_school_divination_progress >= 2000 } value = 3 }
+}
+
+# Progress needed for the next level (2000 once at level 3)
+aov_school_divination_next = {
+	value = 300
+	if = { limit = { aov_school_divination_level >= 1 } value = 800 }
+	if = { limit = { aov_school_divination_level >= 2 } value = 2000 }
+}
+
+aov_school_enchantment_progress = {
+	value = 0
+	if = {
+		limit = { has_variable = aov_school_enchantment_progress }
+		value = var:aov_school_enchantment_progress
+	}
+}
+
+aov_school_enchantment_level = {
+	value = 0
+	if = { limit = { aov_school_enchantment_progress >= 300 } value = 1 }
+	if = { limit = { aov_school_enchantment_progress >= 800 } value = 2 }
+	if = { limit = { aov_school_enchantment_progress >= 2000 } value = 3 }
+}
+
+# Progress needed for the next level (2000 once at level 3)
+aov_school_enchantment_next = {
+	value = 300
+	if = { limit = { aov_school_enchantment_level >= 1 } value = 800 }
+	if = { limit = { aov_school_enchantment_level >= 2 } value = 2000 }
+}
+
+aov_school_evocation_progress = {
+	value = 0
+	if = {
+		limit = { has_variable = aov_school_evocation_progress }
+		value = var:aov_school_evocation_progress
+	}
+}
+
+aov_school_evocation_level = {
+	value = 0
+	if = { limit = { aov_school_evocation_progress >= 300 } value = 1 }
+	if = { limit = { aov_school_evocation_progress >= 800 } value = 2 }
+	if = { limit = { aov_school_evocation_progress >= 2000 } value = 3 }
+}
+
+# Progress needed for the next level (2000 once at level 3)
+aov_school_evocation_next = {
+	value = 300
+	if = { limit = { aov_school_evocation_level >= 1 } value = 800 }
+	if = { limit = { aov_school_evocation_level >= 2 } value = 2000 }
+}
+
+aov_school_illusion_progress = {
+	value = 0
+	if = {
+		limit = { has_variable = aov_school_illusion_progress }
+		value = var:aov_school_illusion_progress
+	}
+}
+
+aov_school_illusion_level = {
+	value = 0
+	if = { limit = { aov_school_illusion_progress >= 300 } value = 1 }
+	if = { limit = { aov_school_illusion_progress >= 800 } value = 2 }
+	if = { limit = { aov_school_illusion_progress >= 2000 } value = 3 }
+}
+
+# Progress needed for the next level (2000 once at level 3)
+aov_school_illusion_next = {
+	value = 300
+	if = { limit = { aov_school_illusion_level >= 1 } value = 800 }
+	if = { limit = { aov_school_illusion_level >= 2 } value = 2000 }
+}
+
+aov_school_necromancy_progress = {
+	value = 0
+	if = {
+		limit = { has_variable = aov_school_necromancy_progress }
+		value = var:aov_school_necromancy_progress
+	}
+}
+
+aov_school_necromancy_level = {
+	value = 0
+	if = { limit = { aov_school_necromancy_progress >= 300 } value = 1 }
+	if = { limit = { aov_school_necromancy_progress >= 800 } value = 2 }
+	if = { limit = { aov_school_necromancy_progress >= 2000 } value = 3 }
+}
+
+# Progress needed for the next level (2000 once at level 3)
+aov_school_necromancy_next = {
+	value = 300
+	if = { limit = { aov_school_necromancy_level >= 1 } value = 800 }
+	if = { limit = { aov_school_necromancy_level >= 2 } value = 2000 }
+}
+
+aov_school_transmutation_progress = {
+	value = 0
+	if = {
+		limit = { has_variable = aov_school_transmutation_progress }
+		value = var:aov_school_transmutation_progress
+	}
+}
+
+aov_school_transmutation_level = {
+	value = 0
+	if = { limit = { aov_school_transmutation_progress >= 300 } value = 1 }
+	if = { limit = { aov_school_transmutation_progress >= 800 } value = 2 }
+	if = { limit = { aov_school_transmutation_progress >= 2000 } value = 3 }
+}
+
+# Progress needed for the next level (2000 once at level 3)
+aov_school_transmutation_next = {
+	value = 300
+	if = { limit = { aov_school_transmutation_level >= 1 } value = 800 }
+	if = { limit = { aov_school_transmutation_level >= 2 } value = 2000 }
+}
+
+# Anbennar's magic_mastery: the sum of school levels (0-24)
+aov_magic_mastery_value = {
+	value = 0
+	add = aov_school_abjuration_level
+	add = aov_school_conjuration_level
+	add = aov_school_divination_level
+	add = aov_school_enchantment_level
+	add = aov_school_evocation_level
+	add = aov_school_illusion_level
+	add = aov_school_necromancy_level
+	add = aov_school_transmutation_level
+}

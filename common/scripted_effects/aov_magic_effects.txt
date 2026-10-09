@@ -1,0 +1,117 @@
+﻿# Anbennar Overhaul: magic schools. Character scope (the mage).
+# SCHOOL = abjuration ... transmutation
+
+# A new mage starts with full mana
+aov_magic_init = {
+	set_variable = { name = aov_mana value = aov_mana_max }
+}
+
+# AMOUNT: number or scope value; mana stays within 0..max
+aov_mana_change = {
+	if = {
+		limit = { NOT = { has_variable = aov_mana } }
+		set_variable = { name = aov_mana value = 0 }
+	}
+	change_variable = { name = aov_mana add = $AMOUNT$ }
+	clamp_variable = { name = aov_mana min = 0 max = aov_mana_max }
+}
+
+aov_study_set = {
+	set_variable = { name = aov_studying value = flag:$SCHOOL$ }
+}
+
+# Adds progress; a crossed threshold fires the level-up event
+aov_school_add_progress = {
+	save_temporary_scope_value_as = { name = aov_old_level value = aov_school_$SCHOOL$_level }
+	change_variable = { name = aov_school_$SCHOOL$_progress add = $AMOUNT$ }
+	if = {
+		limit = { aov_school_$SCHOOL$_level > scope:aov_old_level }
+		save_scope_value_as = { name = aov_school value = flag:$SCHOOL$ }
+		trigger_event = aov_magic.1
+	}
+	aov_magic_sync_mastery = yes
+}
+
+aov_magic_sync_mastery = {
+	set_variable = { name = magic_mastery value = aov_magic_mastery_value }
+}
+
+# Quarterly (common/on_action/aov_magic_on_actions.txt): three months of mana and study
+aov_magic_quarterly = {
+	if = {
+		limit = { NOT = { has_variable = aov_mana } }
+		aov_magic_init = yes
+	}
+	save_temporary_scope_value_as = {
+		name = aov_refill_quarter
+		value = {
+			value = aov_mana_refill_month
+			multiply = 3
+		}
+	}
+	aov_mana_change = { AMOUNT = scope:aov_refill_quarter }
+	save_temporary_scope_value_as = {
+		name = aov_study_quarter
+		value = {
+			value = aov_study_gain_month
+			multiply = 3
+		}
+	}
+	if = {
+		limit = {
+			aov_is_studying = { SCHOOL = abjuration }
+			aov_school_abjuration_level < 3
+		}
+		aov_school_add_progress = { SCHOOL = abjuration AMOUNT = scope:aov_study_quarter }
+	}
+	if = {
+		limit = {
+			aov_is_studying = { SCHOOL = conjuration }
+			aov_school_conjuration_level < 3
+		}
+		aov_school_add_progress = { SCHOOL = conjuration AMOUNT = scope:aov_study_quarter }
+	}
+	if = {
+		limit = {
+			aov_is_studying = { SCHOOL = divination }
+			aov_school_divination_level < 3
+		}
+		aov_school_add_progress = { SCHOOL = divination AMOUNT = scope:aov_study_quarter }
+	}
+	if = {
+		limit = {
+			aov_is_studying = { SCHOOL = enchantment }
+			aov_school_enchantment_level < 3
+		}
+		aov_school_add_progress = { SCHOOL = enchantment AMOUNT = scope:aov_study_quarter }
+	}
+	if = {
+		limit = {
+			aov_is_studying = { SCHOOL = evocation }
+			aov_school_evocation_level < 3
+		}
+		aov_school_add_progress = { SCHOOL = evocation AMOUNT = scope:aov_study_quarter }
+	}
+	if = {
+		limit = {
+			aov_is_studying = { SCHOOL = illusion }
+			aov_school_illusion_level < 3
+		}
+		aov_school_add_progress = { SCHOOL = illusion AMOUNT = scope:aov_study_quarter }
+	}
+	if = {
+		limit = {
+			aov_is_studying = { SCHOOL = necromancy }
+			aov_school_necromancy_level < 3
+		}
+		aov_school_add_progress = { SCHOOL = necromancy AMOUNT = scope:aov_study_quarter }
+	}
+	if = {
+		limit = {
+			aov_is_studying = { SCHOOL = transmutation }
+			aov_school_transmutation_level < 3
+		}
+		aov_school_add_progress = { SCHOOL = transmutation AMOUNT = scope:aov_study_quarter }
+	}
+	aov_magic_sync_mastery = yes
+}

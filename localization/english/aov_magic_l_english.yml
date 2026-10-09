@@ -1,0 +1,22 @@
+﻿l_english:
+ # Schools
+ AOV_SCHOOL_ABJURATION: "Abjuration"
+ AOV_SCHOOL_CONJURATION: "Conjuration"
+ AOV_SCHOOL_DIVINATION: "Divination"
+ AOV_SCHOOL_ENCHANTMENT: "Enchantment"
+ AOV_SCHOOL_EVOCATION: "Evocation"
+ AOV_SCHOOL_ILLUSION: "Illusion"
+ AOV_SCHOOL_NECROMANCY: "Necromancy"
+ AOV_SCHOOL_TRANSMUTATION: "Transmutation"
+
+ # Level up
+ aov_magic.1.t: "Deeper Mastery"
+ aov_magic.1.a: "The craft rewards the patient."
+ aov_magic.1.desc.abjuration: "Long study has borne fruit. My command of Abjuration has deepened, and I can now work its spells up to level #V [ROOT.Char.MakeScope.ScriptValue('aov_school_abjuration_level')|0]#!."
+ aov_magic.1.desc.conjuration: "Long study has borne fruit. My command of Conjuration has deepened, and I can now work its spells up to level #V [ROOT.Char.MakeScope.ScriptValue('aov_school_conjuration_level')|0]#!."
+ aov_magic.1.desc.divination: "Long study has borne fruit. My command of Divination has deepened, and I can now work its spells up to level #V [ROOT.Char.MakeScope.ScriptValue('aov_school_divination_level')|0]#!."
+ aov_magic.1.desc.enchantment: "Long study has borne fruit. My command of Enchantment has deepened, and I can now work its spells up to level #V [ROOT.Char.MakeScope.ScriptValue('aov_school_enchantment_level')|0]#!."
+ aov_magic.1.desc.evocation: "Long study has borne fruit. My command of Evocation has deepened, and I can now work its spells up to level #V [ROOT.Char.MakeScope.ScriptValue('aov_school_evocation_level')|0]#!."
+ aov_magic.1.desc.illusion: "Long study has borne fruit. My command of Illusion has deepened, and I can now work its spells up to level #V [ROOT.Char.MakeScope.ScriptValue('aov_school_illusion_level')|0]#!."
+ aov_magic.1.desc.necromancy: "Long study has borne fruit. My command of Necromancy has deepened, and I can now work its spells up to level #V [ROOT.Char.MakeScope.ScriptValue('aov_school_necromancy_level')|0]#!."
+ aov_magic.1.desc.transmutation: "Long study has borne fruit. My command of Transmutation has deepened, and I can now work its spells up to level #V [ROOT.Char.MakeScope.ScriptValue('aov_school_transmutation_level')|0]#!."
