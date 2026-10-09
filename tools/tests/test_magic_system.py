@@ -80,5 +80,43 @@ class ManaStudyTests(unittest.TestCase):
         self.assertIn("has_magical_affinity = yes", block(read("common/scripted_triggers/aov_magic_triggers.txt"), "aov_is_mage"))
 
 
+class SpecialSpellTests(unittest.TestCase):
+    def test_elementals_spawn_bound_to_war(self):
+        b = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_summon_elementals")
+        for s in ("spawn_army", "type = aov_conjured_elementals", "inheritable = no", "save_scope_as = aov_new_elementals",
+                  "name = aov_elemental_army", "id = aov_magic.10", "war = scope:aov_elemental_war"):
+            self.assertIn(s, b)
+
+    def test_elementals_depletion_guarded(self):
+        b = block(read("events/aov_magic_events.txt"), "aov_magic.10")
+        self.assertIn("exists = var:aov_elemental_army", b)
+        self.assertIn("deplete_army_by_percentage = 1", b)  # 0-1 fraction
+        self.assertIn("remove_variable = aov_elemental_army", b)
+
+    def test_elementals_never_recruitable(self):
+        self.assertIn("always = no", block(read("common/men_at_arms_types/aov_magic_maa_types.txt"), "aov_conjured_elementals"))
+
+    def test_rite_of_conception_on_birth(self):
+        text = read("common/on_action/aov_magic_on_actions.txt")
+        self.assertIn("on_birth_child = {\n\ton_actions = { aov_magic_on_birth }", text)
+        b = block(text, "aov_magic_on_birth")
+        self.assertIn("has_character_modifier = aov_spell_rite_of_conception", b)
+        self.assertIn("add_trait = magical_affinity_1", b)
+        self.assertIn("chance = 50", b)
+
+    def test_eye_for_talent_brings_a_courtier(self):
+        b = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_eye_for_talent")
+        self.assertIn("create_character", b)
+        self.assertIn("add_courtier = scope:aov_talent", b)
+        templates = read("common/scripted_character_templates/aov_magic_templates.txt")
+        for skill in ("diplomacy", "martial", "stewardship", "intrigue", "learning"):
+            self.assertIn(f"{skill} = {{ 14 18 }}", block(templates, f"aov_talent_{skill}_template"))
+
+    def test_extraplanar_contact_event(self):
+        b = block(read("events/aov_magic_events.txt"), "aov_magic.20")
+        self.assertEqual(b.count("option = {"), 3)
+        self.assertIn("aov_extraplanar_price = yes", b)
+
+
 if __name__ == "__main__":
     unittest.main()

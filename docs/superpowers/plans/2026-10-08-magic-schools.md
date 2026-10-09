@@ -22,7 +22,7 @@
 - Durations and cooldowns by spell level: 1/2/3/5 years.
 - Dark magic: Necromancy cast with faith `has_doctrine_parameter = witchcraft_illegal` 25%, `witchcraft_shunned` 10% chance of `forbidden_magic_practitioner`.
 - Spell keys: `aov_spell_<key>`; per-spell cooldown timed variable `aov_spell_<key>_cd`.
-- Summon Elementals: `spawn_army` at the caster's capital with men-at-arms type `aov_conjured_elementals` (never recruitable), bound to the caster's war, removed after 3 years with `deplete_army_by_percent = 1`.
+- Summon Elementals: `spawn_army` at the caster's capital with men-at-arms type `aov_conjured_elementals` (never recruitable), bound to the caster's war, removed after 3 years with `deplete_army_by_percentage = 1`.
 
 ## Review Focus
 
@@ -229,7 +229,7 @@ def test_elementals_spawn_bound_to_war(self):
 def test_elementals_depletion_guarded(self):
     b = block(read("events/aov_magic_events.txt"), "aov_magic.10")
     self.assertIn("exists = var:aov_elemental_army", b)
-    self.assertIn("deplete_army_by_percent = 1", b)
+    self.assertIn("deplete_army_by_percentage = 1", b)
 def test_elementals_never_recruitable(self):
     self.assertIn("always = no", block(read("common/men_at_arms_types/aov_magic_maa_types.txt"), "aov_conjured_elementals"))
 def test_rite_of_conception_on_birth(self):

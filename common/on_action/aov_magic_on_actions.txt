@@ -9,3 +9,24 @@ aov_magic_quarterly_pulse = {
 	trigger = { aov_is_mage = yes }
 	effect = { aov_magic_quarterly = yes }
 }
+
+on_birth_child = {
+	on_actions = { aov_magic_on_birth }
+}
+
+# scope:child, scope:mother, scope:real_father. Rite of Conception: half of the children born while it lasts get Magical Affinity.
+aov_magic_on_birth = {
+	trigger = {
+		OR = {
+			scope:mother ?= { has_character_modifier = aov_spell_rite_of_conception }
+			scope:real_father ?= { has_character_modifier = aov_spell_rite_of_conception }
+		}
+		scope:child = { NOT = { has_magical_affinity = yes } }
+	}
+	effect = {
+		random = {
+			chance = 50
+			scope:child = { add_trait = magical_affinity_1 }
+		}
+	}
+}

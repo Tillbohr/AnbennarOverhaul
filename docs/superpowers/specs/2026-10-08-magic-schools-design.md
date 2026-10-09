@@ -275,7 +275,7 @@ Ability; else generated).
   against 1.19; substitutes are recorded.
 - **Summon Elementals** uses `spawn_army` (`men_at_arms = { type = aov_conjured_elementals stacks = 4 }`,
   `location = capital_province`, `war` = the caster's current war, `inheritable = no`, `uses_supply = no`), saved in
-  variable `aov_elemental_army`. A scheduled event 3 years later runs `deplete_army_by_percent = 1` on it (an engine
+  variable `aov_elemental_army`. A scheduled event 3 years later runs `deplete_army_by_percentage = 1` on it (an engine
   effect tiger knows; vanilla never uses it, so it needs an in-game check). Binding it to the war also removes it
   when the war ends. `aov_conjured_elementals` is a new men-at-arms type that can never be recruited.
 - **HUD space:** a second extra main tab; check the tab column still fits at 1080p.

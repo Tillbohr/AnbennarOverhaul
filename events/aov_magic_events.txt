@@ -47,3 +47,63 @@ aov_magic.1 = {
 		name = aov_magic.1.a
 	}
 }
+
+# Summon Elementals ends: the conjured army returns to its plane (army may already be gone with its war)
+aov_magic.10 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		if = {
+			limit = { exists = var:aov_elemental_army }
+			var:aov_elemental_army = { deplete_army_by_percentage = 1 }
+		}
+		remove_variable = aov_elemental_army
+	}
+}
+
+# Extraplanar Contact
+aov_magic.20 = {
+	type = character_event
+	title = aov_magic.20.t
+	desc = aov_magic.20.desc
+	theme = learning
+	left_portrait = root
+
+	option = { # Knowledge
+		name = aov_magic.20.a
+		add_learning_lifestyle_xp = 2000
+		aov_extraplanar_price = yes
+	}
+
+	option = { # A tome of the outer planes
+		name = aov_magic.20.b
+		create_artifact_book_effect = {
+			OWNER = root
+			CREATOR = root
+			SET_SUBJECT = flag:no
+			SET_TOPIC = flag:no
+		}
+		aov_extraplanar_price = yes
+	}
+
+	option = { # Gold
+		name = aov_magic.20.c
+		add_gold = 300
+		aov_extraplanar_price = yes
+	}
+}
+
+# Eye for Talent: the newcomer (scope:aov_talent)
+aov_magic.30 = {
+	type = character_event
+	title = aov_magic.30.t
+	desc = aov_magic.30.desc
+	theme = learning
+	left_portrait = root
+	right_portrait = scope:aov_talent
+
+	option = {
+		name = aov_magic.30.a
+	}
+}

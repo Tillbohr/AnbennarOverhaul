@@ -226,3 +226,100 @@ aov_assimilation_program = {
 		}
 	}
 }
+
+### Special spells (Task 4). Caster scope.
+
+# Summon Elementals: a free army at the capital, bound to the caster's war, removed after 3 years (aov_magic.10)
+aov_summon_elementals = {
+	if = {
+		limit = {
+			exists = capital_province
+			any_character_war = { always = yes }
+		}
+		random_character_war = { save_scope_as = aov_elemental_war }
+		spawn_army = {
+			name = aov_elemental_army_name
+			men_at_arms = {
+				type = aov_conjured_elementals
+				stacks = 4
+			}
+			location = capital_province
+			war = scope:aov_elemental_war
+			inheritable = no
+			uses_supply = no
+			save_scope_as = aov_new_elementals
+		}
+		set_variable = { name = aov_elemental_army value = scope:aov_new_elementals }
+		trigger_event = { id = aov_magic.10 years = 3 }
+	}
+}
+
+# Eye for Talent: a skilled character arrives at court
+aov_eye_for_talent = {
+	random_list = {
+		1 = {
+			create_character = {
+				template = aov_talent_diplomacy_template
+				location = root.location
+				culture = root.culture
+				faith = root.faith
+				save_scope_as = aov_talent
+			}
+		}
+		1 = {
+			create_character = {
+				template = aov_talent_martial_template
+				location = root.location
+				culture = root.culture
+				faith = root.faith
+				save_scope_as = aov_talent
+			}
+		}
+		1 = {
+			create_character = {
+				template = aov_talent_stewardship_template
+				location = root.location
+				culture = root.culture
+				faith = root.faith
+				save_scope_as = aov_talent
+			}
+		}
+		1 = {
+			create_character = {
+				template = aov_talent_intrigue_template
+				location = root.location
+				culture = root.culture
+				faith = root.faith
+				save_scope_as = aov_talent
+			}
+		}
+		1 = {
+			create_character = {
+				template = aov_talent_learning_template
+				location = root.location
+				culture = root.culture
+				faith = root.faith
+				save_scope_as = aov_talent
+			}
+		}
+	}
+	add_courtier = scope:aov_talent
+	trigger_event = aov_magic.30
+}
+
+# Extraplanar Contact: the outsider's price
+aov_extraplanar_price = {
+	random = {
+		chance = 30
+		random_list = {
+			2 = { add_stress = 40 }
+			1 = {
+				if = {
+					limit = { NOT = { has_trait = scarred } }
+					add_trait = scarred
+				}
+				else = { add_stress = 40 }
+			}
+		}
+	}
+}

@@ -30,3 +30,16 @@
  aov_spell_steal_vitality_victim: "Vitality Stolen"
  aov_spell_steal_vitality_victim_desc: "Something has drained this character's strength."
  aov_charmed_opinion: "Charmed"
+
+ # Special spells
+ aov_elemental_army_name: "Conjured Elementals"
+ aov_conjured_elementals: "Conjured Elementals"
+ aov_conjured_elementals_flavor: "#F Stone and flame given shape, bound to their summoner until the spell runs out.#!"
+ aov_magic.20.t: "Beyond the Veil"
+ aov_magic.20.desc: "The circle flares, and something answers. It speaks without a mouth and offers knowledge, wonders or wealth. It does not say what it wants in return."
+ aov_magic.20.a: "Teach me what you know."
+ aov_magic.20.b: "Show me the lore of your plane."
+ aov_magic.20.c: "Gold. Plain, honest gold."
+ aov_magic.30.t: "A Promising Arrival"
+ aov_magic.30.desc: "The threads of fate led me to [aov_talent.GetName], who has accepted a place at my court."
+ aov_magic.30.a: "Welcome."

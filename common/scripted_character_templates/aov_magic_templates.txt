@@ -1,0 +1,81 @@
+﻿# Anbennar Overhaul: Eye for Talent (common/scripted_effects/aov_magic_effects.txt)
+
+aov_talent_diplomacy_template = {
+	age = { 20 40 }
+	gender_female_chance = 50
+	random_traits = no
+	diplomacy = { 14 18 }
+	random_traits_list = {
+		count = 2
+		diligent = {}
+		gregarious = {}
+		honest = {}
+		just = {}
+		diplomat = {}
+	}
+	dynasty = none
+}
+
+aov_talent_martial_template = {
+	age = { 20 40 }
+	gender_female_chance = 50
+	random_traits = no
+	martial = { 14 18 }
+	random_traits_list = {
+		count = 2
+		brave = {}
+		diligent = {}
+		just = {}
+		strategist = {}
+		organizer = {}
+	}
+	dynasty = none
+}
+
+aov_talent_stewardship_template = {
+	age = { 20 40 }
+	gender_female_chance = 50
+	random_traits = no
+	stewardship = { 14 18 }
+	random_traits_list = {
+		count = 2
+		diligent = {}
+		temperate = {}
+		just = {}
+		architect = {}
+		administrator = {}
+	}
+	dynasty = none
+}
+
+aov_talent_intrigue_template = {
+	age = { 20 40 }
+	gender_female_chance = 50
+	random_traits = no
+	intrigue = { 14 18 }
+	random_traits_list = {
+		count = 2
+		diligent = {}
+		patient = {}
+		deceitful = {}
+		schemer = {}
+		torturer = {}
+	}
+	dynasty = none
+}
+
+aov_talent_learning_template = {
+	age = { 20 40 }
+	gender_female_chance = 50
+	random_traits = no
+	learning = { 14 18 }
+	random_traits_list = {
+		count = 2
+		diligent = {}
+		patient = {}
+		scholar = {}
+		theologian = {}
+		whole_of_body = {}
+	}
+	dynasty = none
+}
