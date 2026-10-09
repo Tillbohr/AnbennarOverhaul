@@ -704,7 +704,7 @@ widget = {
 					}
 				}
 
-				# Anbennar Overhaul: begin Artificery tab
+				# Anbennar Overhaul: begin Artificery and Magic tabs
 				widget_hud_main_tab = {
 					name = "tab_aov_artificery"
 					visible = "[GetScriptedGui('aov_artificery_available').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
@@ -715,12 +715,29 @@ widget = {
 						# Opening then closing a game view closes any open vanilla main tab, which would hide this window
 						onclick = "[ToggleGameView( 'decisions' )]"
 						onclick = "[CloseGameView( 'decisions' )]"
+						onclick = "[GetVariableSystem.Clear( 'aov_magic_window' )]"
 						onclick = "[GetVariableSystem.Toggle( 'aov_artificery_window' )]"
 						tooltip = "AOV_ARTIFICERY_BUTTON"
 						down = "[GetVariableSystem.Exists( 'aov_artificery_window' )]"
 					}
 				}
-				# Anbennar Overhaul: end Artificery tab
+
+				widget_hud_main_tab = {
+					name = "tab_aov_magic"
+					visible = "[GetScriptedGui('aov_magic_available').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+
+					blockoverride "maintab_button"
+					{
+						texture = "gfx/interface/skinned/hud_maintab/aov_maintab_magic.dds"
+						onclick = "[ToggleGameView( 'decisions' )]"
+						onclick = "[CloseGameView( 'decisions' )]"
+						onclick = "[GetVariableSystem.Clear( 'aov_artificery_window' )]"
+						onclick = "[GetVariableSystem.Toggle( 'aov_magic_window' )]"
+						tooltip = "AOV_MAGIC_BUTTON"
+						down = "[GetVariableSystem.Exists( 'aov_magic_window' )]"
+					}
+				}
+				# Anbennar Overhaul: end Artificery and Magic tabs
 
 				widget_hud_main_tab = {
 					datacontext = "[GetPlayer]"

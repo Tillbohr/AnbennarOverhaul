@@ -13,18 +13,21 @@ import sys
 from pathlib import Path
 
 MARKER = "# Anbennar Overhaul"
-BEGIN = f"{MARKER}: begin Artificery tab"
-END = f"{MARKER}: end Artificery tab"
+BEGIN = f"{MARKER}: begin Artificery and Magic tabs"
+END = f"{MARKER}: end Artificery and Magic tabs"
 ANCHOR = 'name = "tab_situation"'
 TAB_NAME = "tab_aov_artificery"
 TEXTURE = "gfx/interface/skinned/hud_maintab/aov_maintab_artificery.dds"  # EU4 Anbennar artifice_tier_emblems_strip.dds, frame 1
+MAGIC_TAB_NAME = "tab_aov_magic"
+MAGIC_TEXTURE = "gfx/interface/skinned/hud_maintab/aov_maintab_magic.dds"  # EU4 Anbennar magic_center_graphic.dds, 95x95 (tools/build_spells.py)
 REL_PATH = Path("gui/hud.gui")
 
 SUBMOD = Path(__file__).resolve().parent.parent
 DEFAULT_ANBENNAR = SUBMOD.parent / "anbennar-ck3-dev-master"
 DEFAULT_GAME = Path("C:/Program Files (x86)/Steam/steamapps/common/Crusader Kings III/game")
 
-# Inserted after the Situations tab, indented like the sibling widgets
+# Inserted after the Situations tab, indented like the sibling widgets. The two windows share the main-tab
+# area, so each tab closes the other's window.
 BLOCK = [
     BEGIN,
     "widget_hud_main_tab = {",
@@ -37,9 +40,26 @@ BLOCK = [
     "\t\t# Opening then closing a game view closes any open vanilla main tab, which would hide this window",
     "\t\tonclick = \"[ToggleGameView( 'decisions' )]\"",
     "\t\tonclick = \"[CloseGameView( 'decisions' )]\"",
+    "\t\tonclick = \"[GetVariableSystem.Clear( 'aov_magic_window' )]\"",
     "\t\tonclick = \"[GetVariableSystem.Toggle( 'aov_artificery_window' )]\"",
     '\t\ttooltip = "AOV_ARTIFICERY_BUTTON"',
     "\t\tdown = \"[GetVariableSystem.Exists( 'aov_artificery_window' )]\"",
+    "\t}",
+    "}",
+    "",
+    "widget_hud_main_tab = {",
+    f'\tname = "{MAGIC_TAB_NAME}"',
+    "\tvisible = \"[GetScriptedGui('aov_magic_available').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]\"",
+    "",
+    '\tblockoverride "maintab_button"',
+    "\t{",
+    f'\t\ttexture = "{MAGIC_TEXTURE}"',
+    "\t\tonclick = \"[ToggleGameView( 'decisions' )]\"",
+    "\t\tonclick = \"[CloseGameView( 'decisions' )]\"",
+    "\t\tonclick = \"[GetVariableSystem.Clear( 'aov_artificery_window' )]\"",
+    "\t\tonclick = \"[GetVariableSystem.Toggle( 'aov_magic_window' )]\"",
+    '\t\ttooltip = "AOV_MAGIC_BUTTON"',
+    "\t\tdown = \"[GetVariableSystem.Exists( 'aov_magic_window' )]\"",
     "\t}",
     "}",
     END,

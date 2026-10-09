@@ -1,0 +1,145 @@
+﻿# Anbennar Overhaul: single-object overrides of Anbennar's spell interactions
+# (common/character_interactions/anb_spellcasting_infin_spells.txt and anb_spellcasting_interactions_enchantment.txt).
+# Compel and Dominate are copied verbatim plus the lines marked '# Anbennar Overhaul'; re-copy them after every
+# Anbennar update. Enhance Ability is a stub and needs no re-copy.
+
+start_compel_interaction = {
+	
+	category = interaction_category_spells
+	scheme = anb_compel_spell
+	common_interaction = no
+
+	is_shown = {
+		#has_perk = _perk # Interaction unlocked by Perk
+		scope:actor = { has_magical_affinity = yes }
+		NOT = { scope:recipient = scope:actor }
+	}
+	
+	send_name = cast_compel_start
+
+	is_valid_showing_failures_only = {
+		# Anbennar Overhaul: school level, mana, cooldown; not a Field of Forbiddance
+		scope:actor = { aov_spell_thoughtweave_castable = yes }
+		scope:recipient = { aov_spell_target_allowed = yes }
+		scope:actor = {
+			can_start_scheme = {
+				type = anb_compel_spell
+				target_character = scope:recipient
+			}
+		}
+	}
+
+	on_accept = {
+		# Anbennar Overhaul: pay mana, gain school progress, start the cooldown
+		scope:actor = { aov_spell_thoughtweave_cast = yes }
+		scope:actor = {
+			stress_impact = {
+				compassionate = major_stress_impact_gain
+				honest = medium_stress_impact_gain
+				just = medium_stress_impact_gain
+			}
+		}
+		hidden_effect = {
+			scope:actor = {
+				send_interface_toast = {
+					title = start_compel_interaction_notification
+
+					left_icon = scope:actor					
+					right_icon = scope:recipient
+
+					start_scheme = {
+						type = anb_compel_spell
+						target_character = scope:recipient
+					}
+
+					show_as_tooltip = {
+						stress_impact = {
+							compassionate = major_stress_impact_gain
+							honest = medium_stress_impact_gain
+							just = medium_stress_impact_gain
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	auto_accept = yes
+
+}
+
+start_dominate_interaction = {
+	
+	category = interaction_category_spells
+	scheme = anb_dominate_spell
+	common_interaction = no
+	is_shown = {
+		#has_perk = _perk # Interaction unlocked by Perk
+		scope:actor = { has_magical_affinity = yes }
+		NOT = { scope:recipient = scope:actor }
+	}
+	
+	send_name = cast_dominate_start
+
+	is_valid_showing_failures_only = {
+		# Anbennar Overhaul: school level, mana, cooldown; not a Field of Forbiddance
+		scope:actor = { aov_spell_dominate_to_surrender_castable = yes }
+		scope:recipient = { aov_spell_target_allowed = yes }
+		scope:actor = {
+			can_start_scheme = {
+				type = anb_dominate_spell
+				target_character = scope:recipient
+			}
+		}
+	}
+
+	on_accept = {
+		# Anbennar Overhaul: pay mana, gain school progress, start the cooldown
+		scope:actor = { aov_spell_dominate_to_surrender_cast = yes }
+		scope:actor = {
+			stress_impact = {
+				compassionate = major_stress_impact_gain
+				honest = medium_stress_impact_gain
+				just = medium_stress_impact_gain
+			}
+		}
+		hidden_effect = {
+			scope:actor = {
+				send_interface_toast = {
+					title = start_dominate_interaction_notification
+
+					left_icon = scope:actor					
+					right_icon = scope:recipient
+
+					start_scheme = {
+						type = anb_dominate_spell
+						target_character = scope:recipient
+					}
+
+					show_as_tooltip = {
+						stress_impact = {
+							compassionate = major_stress_impact_gain
+							honest = medium_stress_impact_gain
+							just = medium_stress_impact_gain
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	auto_accept = yes
+
+}
+
+# Anbennar Overhaul: Enhance Ability is removed from the game. This interaction is the only way to start
+# Anbennar's anb_enhance_ability_spell scheme, and this full override hides it whatever Anbennar's body becomes.
+# tools/tests/test_magic_system.py (EnhanceAbilityRemovedTests) fails if an Anbennar update renames it or adds
+# another way to start the scheme.
+anb_enhance_ability_interaction = {
+	category = interaction_category_spells
+	is_shown = { always = no }
+	ai_will_do = {
+		base = 0
+	}
+}

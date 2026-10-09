@@ -1,0 +1,6 @@
+﻿# Anbennar Overhaul: magic schools
+
+# Heartstring (charm)
+aov_charmed_opinion = {
+	opinion = 30
+}

@@ -1,0 +1,40 @@
+﻿# Anbennar Overhaul: the school a mage is studying
+
+AovStudyingSchool = {
+	type = character
+	text = {
+		trigger = { aov_is_studying = { SCHOOL = abjuration } }
+		localization_key = AOV_SCHOOL_ABJURATION
+	}
+	text = {
+		trigger = { aov_is_studying = { SCHOOL = conjuration } }
+		localization_key = AOV_SCHOOL_CONJURATION
+	}
+	text = {
+		trigger = { aov_is_studying = { SCHOOL = divination } }
+		localization_key = AOV_SCHOOL_DIVINATION
+	}
+	text = {
+		trigger = { aov_is_studying = { SCHOOL = enchantment } }
+		localization_key = AOV_SCHOOL_ENCHANTMENT
+	}
+	text = {
+		trigger = { aov_is_studying = { SCHOOL = evocation } }
+		localization_key = AOV_SCHOOL_EVOCATION
+	}
+	text = {
+		trigger = { aov_is_studying = { SCHOOL = illusion } }
+		localization_key = AOV_SCHOOL_ILLUSION
+	}
+	text = {
+		trigger = { aov_is_studying = { SCHOOL = necromancy } }
+		localization_key = AOV_SCHOOL_NECROMANCY
+	}
+	text = {
+		trigger = { aov_is_studying = { SCHOOL = transmutation } }
+		localization_key = AOV_SCHOOL_TRANSMUTATION
+	}
+	text = {
+		localization_key = AOV_SCHOOL_NONE
+	}
+}

@@ -1,0 +1,364 @@
+﻿# Anbennar Overhaul: magic schools. Character scope (the mage).
+
+aov_affinity_level = {
+	value = 0
+	if = { limit = { has_trait = magical_affinity_1 } value = 1 }
+	if = { limit = { has_trait = magical_affinity_2 } value = 2 }
+	if = { limit = { has_trait = magical_affinity_3 } value = 3 }
+}
+
+# Full until first set: a new mage starts with full mana
+aov_mana = {
+	value = aov_mana_max
+	if = {
+		limit = { has_variable = aov_mana }
+		value = var:aov_mana
+	}
+}
+
+# 100 + 50 per affinity level + perk/trait bonus (aov_magic_lifestyle_values.txt)
+aov_mana_max = {
+	value = 100
+	add = {
+		value = aov_affinity_level
+		multiply = 50
+	}
+	add = aov_mana_max_bonus
+}
+
+# Per month: (5 + Learning / 2 + 2 per affinity level) x aov_mana_refill_mult (applied quarterly x 3)
+aov_mana_refill_month = {
+	value = 5
+	add = {
+		value = learning
+		divide = 2
+	}
+	add = {
+		value = aov_affinity_level
+		multiply = 2
+	}
+	multiply = aov_mana_refill_mult
+}
+
+# Study per month: Learning + 5 per affinity level, before the per-school multiplier (applied quarterly x 3)
+aov_study_gain_month = {
+	value = learning
+	add = {
+		value = aov_affinity_level
+		multiply = 5
+	}
+}
+
+# Abjuration study per month, with perks, focus and trait
+aov_study_gain_abjuration_month = {
+	value = aov_study_gain_month
+	multiply = aov_study_mult_abjuration
+}
+
+# Conjuration study per month, with perks, focus and trait
+aov_study_gain_conjuration_month = {
+	value = aov_study_gain_month
+	multiply = aov_study_mult_conjuration
+}
+
+# Divination study per month, with perks, focus and trait
+aov_study_gain_divination_month = {
+	value = aov_study_gain_month
+	multiply = aov_study_mult_divination
+}
+
+# Enchantment study per month, with perks, focus and trait
+aov_study_gain_enchantment_month = {
+	value = aov_study_gain_month
+	multiply = aov_study_mult_enchantment
+}
+
+# Evocation study per month, with perks, focus and trait
+aov_study_gain_evocation_month = {
+	value = aov_study_gain_month
+	multiply = aov_study_mult_evocation
+}
+
+# Illusion study per month, with perks, focus and trait
+aov_study_gain_illusion_month = {
+	value = aov_study_gain_month
+	multiply = aov_study_mult_illusion
+}
+
+# Necromancy study per month, with perks, focus and trait
+aov_study_gain_necromancy_month = {
+	value = aov_study_gain_month
+	multiply = aov_study_mult_necromancy
+}
+
+# Transmutation study per month, with perks, focus and trait
+aov_study_gain_transmutation_month = {
+	value = aov_study_gain_month
+	multiply = aov_study_mult_transmutation
+}
+
+# Study per month in the school being studied (0 if none)
+aov_study_gain_current_month = {
+	value = 0
+	if = { limit = { aov_is_studying = { SCHOOL = abjuration } } value = aov_study_gain_abjuration_month }
+	if = { limit = { aov_is_studying = { SCHOOL = conjuration } } value = aov_study_gain_conjuration_month }
+	if = { limit = { aov_is_studying = { SCHOOL = divination } } value = aov_study_gain_divination_month }
+	if = { limit = { aov_is_studying = { SCHOOL = enchantment } } value = aov_study_gain_enchantment_month }
+	if = { limit = { aov_is_studying = { SCHOOL = evocation } } value = aov_study_gain_evocation_month }
+	if = { limit = { aov_is_studying = { SCHOOL = illusion } } value = aov_study_gain_illusion_month }
+	if = { limit = { aov_is_studying = { SCHOOL = necromancy } } value = aov_study_gain_necromancy_month }
+	if = { limit = { aov_is_studying = { SCHOOL = transmutation } } value = aov_study_gain_transmutation_month }
+}
+
+aov_school_abjuration_progress = {
+	value = 0
+	if = {
+		limit = { has_variable = aov_school_abjuration_progress }
+		value = var:aov_school_abjuration_progress
+	}
+}
+
+aov_school_abjuration_level = {
+	value = 0
+	if = { limit = { aov_school_abjuration_progress >= 300 } value = 1 }
+	if = { limit = { aov_school_abjuration_progress >= 800 } value = 2 }
+	if = { limit = { aov_school_abjuration_progress >= 2000 } value = 3 }
+}
+
+# Progress needed for the next level (2000 once at level 3)
+aov_school_abjuration_next = {
+	value = 300
+	if = { limit = { aov_school_abjuration_level >= 1 } value = 800 }
+	if = { limit = { aov_school_abjuration_level >= 2 } value = 2000 }
+}
+
+aov_school_conjuration_progress = {
+	value = 0
+	if = {
+		limit = { has_variable = aov_school_conjuration_progress }
+		value = var:aov_school_conjuration_progress
+	}
+}
+
+aov_school_conjuration_level = {
+	value = 0
+	if = { limit = { aov_school_conjuration_progress >= 300 } value = 1 }
+	if = { limit = { aov_school_conjuration_progress >= 800 } value = 2 }
+	if = { limit = { aov_school_conjuration_progress >= 2000 } value = 3 }
+}
+
+# Progress needed for the next level (2000 once at level 3)
+aov_school_conjuration_next = {
+	value = 300
+	if = { limit = { aov_school_conjuration_level >= 1 } value = 800 }
+	if = { limit = { aov_school_conjuration_level >= 2 } value = 2000 }
+}
+
+aov_school_divination_progress = {
+	value = 0
+	if = {
+		limit = { has_variable = aov_school_divination_progress }
+		value = var:aov_school_divination_progress
+	}
+}
+
+aov_school_divination_level = {
+	value = 0
+	if = { limit = { aov_school_divination_progress >= 300 } value = 1 }
+	if = { limit = { aov_school_divination_progress >= 800 } value = 2 }
+	if = { limit = { aov_school_divination_progress >= 2000 } value = 3 }
+}
+
+# Progress needed for the next level (2000 once at level 3)
+aov_school_divination_next = {
+	value = 300
+	if = { limit = { aov_school_divination_level >= 1 } value = 800 }
+	if = { limit = { aov_school_divination_level >= 2 } value = 2000 }
+}
+
+aov_school_enchantment_progress = {
+	value = 0
+	if = {
+		limit = { has_variable = aov_school_enchantment_progress }
+		value = var:aov_school_enchantment_progress
+	}
+}
+
+aov_school_enchantment_level = {
+	value = 0
+	if = { limit = { aov_school_enchantment_progress >= 300 } value = 1 }
+	if = { limit = { aov_school_enchantment_progress >= 800 } value = 2 }
+	if = { limit = { aov_school_enchantment_progress >= 2000 } value = 3 }
+}
+
+# Progress needed for the next level (2000 once at level 3)
+aov_school_enchantment_next = {
+	value = 300
+	if = { limit = { aov_school_enchantment_level >= 1 } value = 800 }
+	if = { limit = { aov_school_enchantment_level >= 2 } value = 2000 }
+}
+
+aov_school_evocation_progress = {
+	value = 0
+	if = {
+		limit = { has_variable = aov_school_evocation_progress }
+		value = var:aov_school_evocation_progress
+	}
+}
+
+aov_school_evocation_level = {
+	value = 0
+	if = { limit = { aov_school_evocation_progress >= 300 } value = 1 }
+	if = { limit = { aov_school_evocation_progress >= 800 } value = 2 }
+	if = { limit = { aov_school_evocation_progress >= 2000 } value = 3 }
+}
+
+# Progress needed for the next level (2000 once at level 3)
+aov_school_evocation_next = {
+	value = 300
+	if = { limit = { aov_school_evocation_level >= 1 } value = 800 }
+	if = { limit = { aov_school_evocation_level >= 2 } value = 2000 }
+}
+
+aov_school_illusion_progress = {
+	value = 0
+	if = {
+		limit = { has_variable = aov_school_illusion_progress }
+		value = var:aov_school_illusion_progress
+	}
+}
+
+aov_school_illusion_level = {
+	value = 0
+	if = { limit = { aov_school_illusion_progress >= 300 } value = 1 }
+	if = { limit = { aov_school_illusion_progress >= 800 } value = 2 }
+	if = { limit = { aov_school_illusion_progress >= 2000 } value = 3 }
+}
+
+# Progress needed for the next level (2000 once at level 3)
+aov_school_illusion_next = {
+	value = 300
+	if = { limit = { aov_school_illusion_level >= 1 } value = 800 }
+	if = { limit = { aov_school_illusion_level >= 2 } value = 2000 }
+}
+
+aov_school_necromancy_progress = {
+	value = 0
+	if = {
+		limit = { has_variable = aov_school_necromancy_progress }
+		value = var:aov_school_necromancy_progress
+	}
+}
+
+aov_school_necromancy_level = {
+	value = 0
+	if = { limit = { aov_school_necromancy_progress >= 300 } value = 1 }
+	if = { limit = { aov_school_necromancy_progress >= 800 } value = 2 }
+	if = { limit = { aov_school_necromancy_progress >= 2000 } value = 3 }
+}
+
+# Progress needed for the next level (2000 once at level 3)
+aov_school_necromancy_next = {
+	value = 300
+	if = { limit = { aov_school_necromancy_level >= 1 } value = 800 }
+	if = { limit = { aov_school_necromancy_level >= 2 } value = 2000 }
+}
+
+aov_school_transmutation_progress = {
+	value = 0
+	if = {
+		limit = { has_variable = aov_school_transmutation_progress }
+		value = var:aov_school_transmutation_progress
+	}
+}
+
+aov_school_transmutation_level = {
+	value = 0
+	if = { limit = { aov_school_transmutation_progress >= 300 } value = 1 }
+	if = { limit = { aov_school_transmutation_progress >= 800 } value = 2 }
+	if = { limit = { aov_school_transmutation_progress >= 2000 } value = 3 }
+}
+
+# Progress needed for the next level (2000 once at level 3)
+aov_school_transmutation_next = {
+	value = 300
+	if = { limit = { aov_school_transmutation_level >= 1 } value = 800 }
+	if = { limit = { aov_school_transmutation_level >= 2 } value = 2000 }
+}
+
+# Anbennar's magic_mastery: the sum of school levels (0-24)
+aov_magic_mastery_value = {
+	value = 0
+	add = aov_school_abjuration_level
+	add = aov_school_conjuration_level
+	add = aov_school_divination_level
+	add = aov_school_enchantment_level
+	add = aov_school_evocation_level
+	add = aov_school_illusion_level
+	add = aov_school_necromancy_level
+	add = aov_school_transmutation_level
+	add = magic_lifestyle_perks
+}
+
+# Window bars (0-100)
+aov_mana_percent = {
+	value = aov_mana
+	multiply = 100
+	divide = aov_mana_max
+}
+
+aov_school_abjuration_percent = {
+	value = aov_school_abjuration_progress
+	multiply = 100
+	divide = aov_school_abjuration_next
+	max = 100
+}
+
+aov_school_conjuration_percent = {
+	value = aov_school_conjuration_progress
+	multiply = 100
+	divide = aov_school_conjuration_next
+	max = 100
+}
+
+aov_school_divination_percent = {
+	value = aov_school_divination_progress
+	multiply = 100
+	divide = aov_school_divination_next
+	max = 100
+}
+
+aov_school_enchantment_percent = {
+	value = aov_school_enchantment_progress
+	multiply = 100
+	divide = aov_school_enchantment_next
+	max = 100
+}
+
+aov_school_evocation_percent = {
+	value = aov_school_evocation_progress
+	multiply = 100
+	divide = aov_school_evocation_next
+	max = 100
+}
+
+aov_school_illusion_percent = {
+	value = aov_school_illusion_progress
+	multiply = 100
+	divide = aov_school_illusion_next
+	max = 100
+}
+
+aov_school_necromancy_percent = {
+	value = aov_school_necromancy_progress
+	multiply = 100
+	divide = aov_school_necromancy_next
+	max = 100
+}
+
+aov_school_transmutation_percent = {
+	value = aov_school_transmutation_progress
+	multiply = 100
+	divide = aov_school_transmutation_next
+	max = 100
+}

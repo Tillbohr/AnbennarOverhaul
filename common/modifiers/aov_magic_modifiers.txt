@@ -1,0 +1,13 @@
+﻿# Anbennar Overhaul: magic schools; modifiers put on the targets of spells (common/scripted_effects/aov_spell_effects.txt).
+
+# Ward
+aov_spell_ward_target = {
+	icon = martial_positive
+	enemy_hostile_scheme_success_chance_add = -15
+}
+
+# Steal Vitality
+aov_spell_steal_vitality_victim = {
+	icon = health_negative
+	health = -1
+}

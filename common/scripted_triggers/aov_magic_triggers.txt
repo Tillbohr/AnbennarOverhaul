@@ -1,0 +1,34 @@
+﻿# Anbennar Overhaul: magic schools. Character scope.
+
+# A mage: any Magical Affinity (Anbennar)
+aov_is_mage = {
+	has_magical_affinity = yes
+}
+
+# SCHOOL = abjuration ... transmutation, LEVEL = 0-3
+aov_school_level_at_least = {
+	aov_school_$SCHOOL$_level >= $LEVEL$
+}
+
+aov_is_studying = {
+	has_variable = aov_studying
+	var:aov_studying = flag:$SCHOOL$
+}
+
+# Necromancy is dark magic where the faith makes magic illegal or shunned
+aov_dark_magic_risky = {
+	faith = {
+		OR = {
+			has_doctrine_parameter = witchcraft_illegal
+			has_doctrine_parameter = witchcraft_shunned
+		}
+	}
+}
+
+# Recipient of a targeted spell: not protected by Field of Forbiddance
+aov_spell_target_allowed = {
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_NOT_FORBIDDEN
+		NOT = { has_character_modifier = aov_spell_field_of_forbiddance }
+	}
+}

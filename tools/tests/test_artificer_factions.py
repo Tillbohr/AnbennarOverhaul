@@ -162,6 +162,24 @@ class ElectionTests(unittest.TestCase):
         self.assertIn("name = aov_election_running_$FACTION$ days = 30", b)
         self.assertIn("trigger_event = aov_artificer_factions.1", b)
 
+    def test_candidate_count_guards_a_missing_list(self):
+        """global_variable_list_size errors on a list that does not exist, which the candidate list is when no
+        artificer court has a candidate (error.log at game start). Size checks go through the guarded trigger."""
+        for rel in ("common/scripted_effects/aov_artificer_election_effects.txt", "events/aov_artificer_faction_events.txt"):
+            path = MOD / rel
+            if path.exists():
+                self.assertNotIn("global_variable_list_size", read(rel), rel)
+        t = block(read("common/scripted_triggers/aov_artificer_faction_triggers.txt"), "aov_election_candidates_below")
+        guard = t.index("NOT = { has_global_variable_list = aov_candidates_$FACTION$ }")
+        self.assertLess(guard, t.index("global_variable_list_size = { name = aov_candidates_$FACTION$ value < $COUNT$ }"))
+        self.assertIn("OR = {", t)
+        b = self.eff("aov_election_open")
+        self.assertEqual(b.count("aov_election_candidates_below = { FACTION = $FACTION$ COUNT = 3 }"), 2)
+        # No candidates at all (an empty list, which does not exist): the title stays vacant
+        empty = b.index("limit = { aov_election_candidates_below = { FACTION = $FACTION$ COUNT = 1 } }")
+        self.assertLess(empty, b.index("# No gnomes at all: stays vacant"))
+        self.assertNotIn("NOT = { aov_election_candidates_below", b)
+
     def test_vote_adds_weight_and_marks_voter(self):
         b = self.eff("aov_election_cast_vote")
         self.assertIn("save_temporary_scope_value_as = { name = aov_vote_weight value = aov_vote_weight_$FACTION$ }", b)

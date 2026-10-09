@@ -1,0 +1,31 @@
+﻿arcane_scholar = {
+	category = lifestyle
+
+	learning = 3
+
+	desc = trait_arcane_scholar_desc
+
+	ruler_designer_cost = 50
+}
+
+battle_mage = {
+	category = lifestyle
+
+	martial = 2
+	prowess = 5
+
+	desc = trait_battle_mage_desc
+
+	ruler_designer_cost = 50
+}
+
+mindweaver = {
+	category = lifestyle
+
+	intrigue = 2
+	diplomacy = 1
+
+	desc = trait_mindweaver_desc
+
+	ruler_designer_cost = 50
+}

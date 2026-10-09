@@ -1,0 +1,121 @@
+﻿# Anbennar Overhaul: the Duelist focus becomes the Battle Mage focus (overrides Anbennar's definition)
+magic_duelist_focus = {
+	lifestyle = magic_lifestyle
+
+	modifier = {
+		prowess = 3
+		martial = 1
+	}
+
+	desc = {
+		desc = magic_duelist_focus_desc
+		desc = line_break
+		desc = magic_duelist_focus_study_desc
+	}
+
+	auto_selection_weight = {
+		value = 11
+		if = {
+			limit = {
+				OR = {
+					aov_is_studying = { SCHOOL = evocation }
+					aov_is_studying = { SCHOOL = conjuration }
+				}
+			}
+			add = 1989
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = martial
+					highest_skill_including_prowess = prowess
+				}
+			}
+			add = 1000
+		}
+		if = {
+			limit = {
+				has_trait = brave
+			}
+			multiply = 5
+		}
+	}
+}
+
+magic_arcane_study_focus = {
+	lifestyle = magic_lifestyle
+
+	modifier = {
+		learning = 2
+	}
+
+	desc = {
+		desc = magic_arcane_study_focus_desc
+		desc = line_break
+		desc = magic_arcane_study_focus_study_desc
+	}
+
+	auto_selection_weight = {
+		value = 11
+		if = {
+			limit = {
+				OR = {
+					aov_is_studying = { SCHOOL = divination }
+					aov_is_studying = { SCHOOL = abjuration }
+					aov_is_studying = { SCHOOL = transmutation }
+				}
+			}
+			add = 1989
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = learning
+					highest_skill = stewardship
+				}
+			}
+			add = 1000
+		}
+	}
+}
+
+magic_mindweaving_focus = {
+	lifestyle = magic_lifestyle
+
+	modifier = {
+		intrigue = 1
+		diplomacy = 1
+	}
+
+	desc = {
+		desc = magic_mindweaving_focus_desc
+		desc = line_break
+		desc = magic_mindweaving_focus_study_desc
+	}
+
+	auto_selection_weight = {
+		value = 11
+		if = {
+			limit = {
+				OR = {
+					aov_is_studying = { SCHOOL = enchantment }
+					aov_is_studying = { SCHOOL = illusion }
+					aov_is_studying = { SCHOOL = necromancy }
+				}
+			}
+			add = 1989
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = diplomacy
+					highest_skill = intrigue
+				}
+			}
+			add = 1000
+		}
+	}
+}

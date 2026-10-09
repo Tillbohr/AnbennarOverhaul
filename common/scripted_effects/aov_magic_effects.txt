@@ -1,0 +1,494 @@
+﻿# Anbennar Overhaul: magic schools. Character scope (the mage).
+# SCHOOL = abjuration ... transmutation
+
+# A new mage starts with full mana
+aov_magic_init = {
+	set_variable = { name = aov_mana value = aov_mana_max }
+}
+
+# AMOUNT: number or scope value; mana stays within 0..max
+aov_mana_change = {
+	if = {
+		limit = { NOT = { has_variable = aov_mana } }
+		set_variable = { name = aov_mana value = aov_mana_max }
+	}
+	change_variable = { name = aov_mana add = $AMOUNT$ }
+	clamp_variable = { name = aov_mana min = 0 max = aov_mana_max }
+}
+
+# AMOUNT: number or scope value; spends mana, staying within 0..max
+aov_mana_spend = {
+	if = {
+		limit = { NOT = { has_variable = aov_mana } }
+		set_variable = { name = aov_mana value = aov_mana_max }
+	}
+	change_variable = { name = aov_mana subtract = $AMOUNT$ }
+	clamp_variable = { name = aov_mana min = 0 max = aov_mana_max }
+}
+
+aov_study_set = {
+	set_variable = { name = aov_studying value = flag:$SCHOOL$ }
+}
+
+# The Study button (aov_study_<school>_sgui): a new school opens the study event (aov_magic.2)
+aov_study_choose = {
+	if = {
+		limit = { NOT = { aov_is_studying = { SCHOOL = $SCHOOL$ } } }
+		aov_study_set = { SCHOOL = $SCHOOL$ }
+		trigger_event = aov_magic.2
+	}
+}
+
+# Adds progress; a crossed threshold fires the level-up event
+aov_school_add_progress = {
+	save_temporary_scope_value_as = { name = aov_old_level value = aov_school_$SCHOOL$_level }
+	# change_variable does nothing on a variable that does not exist yet
+	if = {
+		limit = { NOT = { has_variable = aov_school_$SCHOOL$_progress } }
+		set_variable = { name = aov_school_$SCHOOL$_progress value = 0 }
+	}
+	change_variable = { name = aov_school_$SCHOOL$_progress add = $AMOUNT$ }
+	if = {
+		limit = { aov_school_$SCHOOL$_level > scope:aov_old_level }
+		save_scope_value_as = { name = aov_school value = flag:$SCHOOL$ }
+		trigger_event = aov_magic.1
+	}
+	aov_magic_sync_mastery = yes
+}
+
+aov_magic_sync_mastery = {
+	set_variable = { name = magic_mastery value = aov_magic_mastery_value }
+	set_variable = { name = magic_lifestyle_total_points value = magic_lifestyle_perks }
+}
+
+# Quarterly (common/on_action/aov_magic_on_actions.txt): three months of mana and study
+aov_magic_quarterly = {
+	if = {
+		limit = { NOT = { has_variable = aov_mana } }
+		aov_magic_init = yes
+	}
+	save_temporary_scope_value_as = {
+		name = aov_refill_quarter
+		value = {
+			value = aov_mana_refill_month
+			multiply = 3
+		}
+	}
+	aov_mana_change = { AMOUNT = scope:aov_refill_quarter }
+	if = {
+		limit = {
+			aov_is_studying = { SCHOOL = abjuration }
+			aov_school_abjuration_level < 3
+		}
+		save_temporary_scope_value_as = {
+			name = aov_study_quarter
+			value = {
+				value = aov_study_gain_abjuration_month
+				multiply = 3
+			}
+		}
+		aov_school_add_progress = { SCHOOL = abjuration AMOUNT = scope:aov_study_quarter }
+	}
+	if = {
+		limit = {
+			aov_is_studying = { SCHOOL = conjuration }
+			aov_school_conjuration_level < 3
+		}
+		save_temporary_scope_value_as = {
+			name = aov_study_quarter
+			value = {
+				value = aov_study_gain_conjuration_month
+				multiply = 3
+			}
+		}
+		aov_school_add_progress = { SCHOOL = conjuration AMOUNT = scope:aov_study_quarter }
+	}
+	if = {
+		limit = {
+			aov_is_studying = { SCHOOL = divination }
+			aov_school_divination_level < 3
+		}
+		save_temporary_scope_value_as = {
+			name = aov_study_quarter
+			value = {
+				value = aov_study_gain_divination_month
+				multiply = 3
+			}
+		}
+		aov_school_add_progress = { SCHOOL = divination AMOUNT = scope:aov_study_quarter }
+	}
+	if = {
+		limit = {
+			aov_is_studying = { SCHOOL = enchantment }
+			aov_school_enchantment_level < 3
+		}
+		save_temporary_scope_value_as = {
+			name = aov_study_quarter
+			value = {
+				value = aov_study_gain_enchantment_month
+				multiply = 3
+			}
+		}
+		aov_school_add_progress = { SCHOOL = enchantment AMOUNT = scope:aov_study_quarter }
+	}
+	if = {
+		limit = {
+			aov_is_studying = { SCHOOL = evocation }
+			aov_school_evocation_level < 3
+		}
+		save_temporary_scope_value_as = {
+			name = aov_study_quarter
+			value = {
+				value = aov_study_gain_evocation_month
+				multiply = 3
+			}
+		}
+		aov_school_add_progress = { SCHOOL = evocation AMOUNT = scope:aov_study_quarter }
+	}
+	if = {
+		limit = {
+			aov_is_studying = { SCHOOL = illusion }
+			aov_school_illusion_level < 3
+		}
+		save_temporary_scope_value_as = {
+			name = aov_study_quarter
+			value = {
+				value = aov_study_gain_illusion_month
+				multiply = 3
+			}
+		}
+		aov_school_add_progress = { SCHOOL = illusion AMOUNT = scope:aov_study_quarter }
+	}
+	if = {
+		limit = {
+			aov_is_studying = { SCHOOL = necromancy }
+			aov_school_necromancy_level < 3
+		}
+		save_temporary_scope_value_as = {
+			name = aov_study_quarter
+			value = {
+				value = aov_study_gain_necromancy_month
+				multiply = 3
+			}
+		}
+		aov_school_add_progress = { SCHOOL = necromancy AMOUNT = scope:aov_study_quarter }
+	}
+	if = {
+		limit = {
+			aov_is_studying = { SCHOOL = transmutation }
+			aov_school_transmutation_level < 3
+		}
+		save_temporary_scope_value_as = {
+			name = aov_study_quarter
+			value = {
+				value = aov_study_gain_transmutation_month
+				multiply = 3
+			}
+		}
+		aov_school_add_progress = { SCHOOL = transmutation AMOUNT = scope:aov_study_quarter }
+	}
+	aov_magic_sync_mastery = yes
+}
+
+# Necromancy cast: where the faith forbids or shuns magic, the caster may be found out
+aov_dark_magic_roll = {
+	if = {
+		limit = {
+			NOT = { has_trait = forbidden_magic_practitioner }
+			faith = { has_doctrine_parameter = witchcraft_illegal }
+		}
+		random = {
+			chance = {
+				value = 25
+				multiply = aov_dark_magic_mult
+			}
+			add_trait = forbidden_magic_practitioner
+		}
+	}
+	else_if = {
+		limit = {
+			NOT = { has_trait = forbidden_magic_practitioner }
+			faith = { has_doctrine_parameter = witchcraft_shunned }
+		}
+		random = {
+			chance = {
+				value = 10
+				multiply = aov_dark_magic_mult
+			}
+			add_trait = forbidden_magic_practitioner
+		}
+	}
+}
+
+### One-off spell effects (tools/data/spells.py). Caster scope.
+
+# Deposit Divination: gold from a newly found deposit
+aov_deposit_divination = {
+	if = {
+		limit = { exists = capital_county }
+		add_gold = {
+			value = capital_county.development_level
+			multiply = 5
+			add = 25
+		}
+	}
+	else = {
+		add_gold = 25
+	}
+}
+
+# Scry (scope:recipient = target): reveal a secret, else intrigue experience
+aov_scry_reveal = {
+	if = {
+		limit = {
+			scope:recipient = {
+				any_secret = { NOT = { is_known_by = root } }
+			}
+		}
+		scope:recipient = {
+			random_secret = {
+				limit = { NOT = { is_known_by = root } }
+				reveal_to = root
+			}
+		}
+	}
+	else = {
+		add_intrigue_lifestyle_xp = 500
+	}
+}
+
+# Speak With Dead: the ancestors teach, and sometimes tell
+aov_speak_with_dead = {
+	add_learning_lifestyle_xp = 1000
+	random = {
+		chance = 33
+		random_close_or_extended_family_member = {
+			limit = {
+				is_alive = yes
+				any_secret = { NOT = { is_known_by = root } }
+			}
+			random_secret = {
+				limit = { NOT = { is_known_by = root } }
+				reveal_to = root
+			}
+		}
+	}
+}
+
+# Remove Pain: wounds and illness healed, stress eased
+aov_remove_pain = {
+	if = { limit = { has_trait = wounded_1 } remove_trait = wounded_1 }
+	if = { limit = { has_trait = wounded_2 } remove_trait = wounded_2 }
+	if = { limit = { has_trait = wounded_3 } remove_trait = wounded_3 }
+	if = { limit = { has_trait = ill } remove_trait = ill }
+	add_stress = -30
+}
+
+# Transmute to Gold: Learning x 15 gold, at a stress cost
+aov_transmute_to_gold = {
+	add_gold = {
+		value = learning
+		multiply = 15
+	}
+	add_stress = 20
+}
+
+# Assimilation Program: the most developed domain county of another culture adopts the caster's
+aov_assimilation_program = {
+	if = {
+		limit = {
+			any_held_county = { NOT = { culture = root.culture } }
+		}
+		ordered_held_county = {
+			limit = { NOT = { culture = root.culture } }
+			order_by = development_level
+			set_county_culture = root.culture
+		}
+	}
+}
+
+### Special spells (Task 4). Caster scope.
+
+# Summon Elementals: a free army at the capital, bound to the caster's war, removed when the spell's duration ends (aov_magic.10)
+aov_summon_elementals = {
+	if = {
+		limit = {
+			exists = capital_province
+			any_character_war = { always = yes }
+		}
+		random_character_war = { save_scope_as = aov_elemental_war }
+		spawn_army = {
+			name = aov_elemental_army_name
+			men_at_arms = {
+				type = aov_conjured_elementals
+				stacks = 4
+			}
+			location = capital_province
+			war = scope:aov_elemental_war
+			inheritable = no
+			uses_supply = no
+			save_scope_as = aov_new_elementals
+		}
+		set_variable = { name = aov_elemental_army value = scope:aov_new_elementals }
+		trigger_event = { id = aov_magic.10 years = aov_spell_summon_elementals_years }
+	}
+	else = {
+		# No capital to summon at: the spell fizzles and costs nothing
+		aov_mana_change = { AMOUNT = aov_spell_summon_elementals_cost }
+		remove_variable = aov_spell_summon_elementals_cd
+	}
+}
+
+# Eye for Talent: a skilled character arrives at court
+aov_eye_for_talent = {
+	random_list = {
+		1 = {
+			create_character = {
+				template = aov_talent_diplomacy_template
+				location = root.location
+				culture = root.culture
+				faith = root.faith
+				save_scope_as = aov_talent
+			}
+		}
+		1 = {
+			create_character = {
+				template = aov_talent_martial_template
+				location = root.location
+				culture = root.culture
+				faith = root.faith
+				save_scope_as = aov_talent
+			}
+		}
+		1 = {
+			create_character = {
+				template = aov_talent_stewardship_template
+				location = root.location
+				culture = root.culture
+				faith = root.faith
+				save_scope_as = aov_talent
+			}
+		}
+		1 = {
+			create_character = {
+				template = aov_talent_intrigue_template
+				location = root.location
+				culture = root.culture
+				faith = root.faith
+				save_scope_as = aov_talent
+			}
+		}
+		1 = {
+			create_character = {
+				template = aov_talent_learning_template
+				location = root.location
+				culture = root.culture
+				faith = root.faith
+				save_scope_as = aov_talent
+			}
+		}
+	}
+	add_courtier = scope:aov_talent
+	trigger_event = aov_magic.30
+}
+
+# Extraplanar Contact: the outsider's price
+aov_extraplanar_price = {
+	random = {
+		chance = 30
+		random_list = {
+			2 = { add_stress = 40 }
+			1 = {
+				if = {
+					limit = { NOT = { has_trait = scarred } }
+					add_trait = scarred
+				}
+				else = { add_stress = 40 }
+			}
+		}
+	}
+}
+
+### AI (quarterly, aov_magic_on_actions.txt)
+
+aov_magic_ai_quarterly = {
+	if = {
+		limit = { is_ai = yes }
+		# Study the school that fits the best skill; once it is mastered, any unmastered school
+		if = {
+			limit = { NOT = { has_variable = aov_studying } }
+			if = {
+				limit = { diplomacy >= martial diplomacy >= stewardship diplomacy >= intrigue diplomacy >= learning }
+				aov_study_set = { SCHOOL = enchantment }
+			}
+			else_if = {
+				limit = { martial >= stewardship martial >= intrigue martial >= learning }
+				aov_study_set = { SCHOOL = evocation }
+			}
+			else_if = {
+				limit = { stewardship >= intrigue stewardship >= learning }
+				aov_study_set = { SCHOOL = transmutation }
+			}
+			else_if = {
+				limit = { intrigue >= learning }
+				aov_study_set = { SCHOOL = illusion }
+			}
+			else = {
+				aov_study_set = { SCHOOL = divination }
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					AND = { aov_is_studying = { SCHOOL = abjuration } aov_school_abjuration_level >= 3 }
+					AND = { aov_is_studying = { SCHOOL = conjuration } aov_school_conjuration_level >= 3 }
+					AND = { aov_is_studying = { SCHOOL = divination } aov_school_divination_level >= 3 }
+					AND = { aov_is_studying = { SCHOOL = enchantment } aov_school_enchantment_level >= 3 }
+					AND = { aov_is_studying = { SCHOOL = evocation } aov_school_evocation_level >= 3 }
+					AND = { aov_is_studying = { SCHOOL = illusion } aov_school_illusion_level >= 3 }
+					AND = { aov_is_studying = { SCHOOL = necromancy } aov_school_necromancy_level >= 3 }
+					AND = { aov_is_studying = { SCHOOL = transmutation } aov_school_transmutation_level >= 3 }
+				}
+			}
+			random_list = {
+				1 = {
+					trigger = { aov_school_abjuration_level < 3 }
+					aov_study_set = { SCHOOL = abjuration }
+				}
+				1 = {
+					trigger = { aov_school_conjuration_level < 3 }
+					aov_study_set = { SCHOOL = conjuration }
+				}
+				1 = {
+					trigger = { aov_school_divination_level < 3 }
+					aov_study_set = { SCHOOL = divination }
+				}
+				1 = {
+					trigger = { aov_school_enchantment_level < 3 }
+					aov_study_set = { SCHOOL = enchantment }
+				}
+				1 = {
+					trigger = { aov_school_evocation_level < 3 }
+					aov_study_set = { SCHOOL = evocation }
+				}
+				1 = {
+					trigger = { aov_school_illusion_level < 3 }
+					aov_study_set = { SCHOOL = illusion }
+				}
+				1 = {
+					trigger = { aov_school_necromancy_level < 3 }
+					aov_study_set = { SCHOOL = necromancy }
+				}
+				1 = {
+					trigger = { aov_school_transmutation_level < 3 }
+					aov_study_set = { SCHOOL = transmutation }
+				}
+			}
+		}
+		# Cast one spell
+		if = {
+			limit = { aov_magic_ai_any_castable = yes }
+			aov_magic_ai_cast_random = yes
+		}
+	}
+}

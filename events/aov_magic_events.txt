@@ -1,0 +1,169 @@
+﻿namespace = aov_magic
+
+# A school reached a new level (scope:aov_school = flag:<school>)
+aov_magic.1 = {
+	type = character_event
+	title = aov_magic.1.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:aov_school = flag:abjuration }
+				desc = aov_magic.1.desc.abjuration
+			}
+			triggered_desc = {
+				trigger = { scope:aov_school = flag:conjuration }
+				desc = aov_magic.1.desc.conjuration
+			}
+			triggered_desc = {
+				trigger = { scope:aov_school = flag:divination }
+				desc = aov_magic.1.desc.divination
+			}
+			triggered_desc = {
+				trigger = { scope:aov_school = flag:enchantment }
+				desc = aov_magic.1.desc.enchantment
+			}
+			triggered_desc = {
+				trigger = { scope:aov_school = flag:evocation }
+				desc = aov_magic.1.desc.evocation
+			}
+			triggered_desc = {
+				trigger = { scope:aov_school = flag:illusion }
+				desc = aov_magic.1.desc.illusion
+			}
+			triggered_desc = {
+				trigger = { scope:aov_school = flag:necromancy }
+				desc = aov_magic.1.desc.necromancy
+			}
+			triggered_desc = {
+				trigger = { scope:aov_school = flag:transmutation }
+				desc = aov_magic.1.desc.transmutation
+			}
+		}
+	}
+	theme = learning
+	left_portrait = root
+
+	option = {
+		name = aov_magic.1.a
+	}
+}
+
+# The player chose a new school to study (aov_study_choose): the mage at their books
+aov_magic.2 = {
+	type = character_event
+	title = aov_magic.2.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { aov_is_studying = { SCHOOL = abjuration } }
+				desc = aov_magic.2.desc.abjuration
+			}
+			triggered_desc = {
+				trigger = { aov_is_studying = { SCHOOL = conjuration } }
+				desc = aov_magic.2.desc.conjuration
+			}
+			triggered_desc = {
+				trigger = { aov_is_studying = { SCHOOL = divination } }
+				desc = aov_magic.2.desc.divination
+			}
+			triggered_desc = {
+				trigger = { aov_is_studying = { SCHOOL = enchantment } }
+				desc = aov_magic.2.desc.enchantment
+			}
+			triggered_desc = {
+				trigger = { aov_is_studying = { SCHOOL = evocation } }
+				desc = aov_magic.2.desc.evocation
+			}
+			triggered_desc = {
+				trigger = { aov_is_studying = { SCHOOL = illusion } }
+				desc = aov_magic.2.desc.illusion
+			}
+			triggered_desc = {
+				trigger = { aov_is_studying = { SCHOOL = necromancy } }
+				desc = aov_magic.2.desc.necromancy
+			}
+			triggered_desc = {
+				trigger = { aov_is_studying = { SCHOOL = transmutation } }
+				desc = aov_magic.2.desc.transmutation
+			}
+		}
+		desc = aov_magic.2.rate
+	}
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = reading
+	}
+
+	option = {
+		name = aov_magic.2.a
+	}
+}
+
+# Summon Elementals ends: the conjured army returns to its plane (army may already be gone with its war)
+aov_magic.10 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		if = {
+			limit = { exists = scope:aov_new_elementals }
+			scope:aov_new_elementals = { deplete_army_by_percentage = 1 }
+		}
+		if = {
+			limit = {
+				exists = var:aov_elemental_army
+				exists = scope:aov_new_elementals
+				var:aov_elemental_army = scope:aov_new_elementals
+			}
+			remove_variable = aov_elemental_army
+		}
+	}
+}
+
+# Extraplanar Contact
+aov_magic.20 = {
+	type = character_event
+	title = aov_magic.20.t
+	desc = aov_magic.20.desc
+	theme = learning
+	left_portrait = root
+
+	option = { # Knowledge
+		name = aov_magic.20.a
+		add_learning_lifestyle_xp = 2000
+		aov_extraplanar_price = yes
+	}
+
+	option = { # A tome of the outer planes
+		name = aov_magic.20.b
+		create_artifact_book_effect = {
+			OWNER = root
+			CREATOR = root
+			SET_SUBJECT = flag:no
+			SET_TOPIC = flag:no
+		}
+		aov_extraplanar_price = yes
+	}
+
+	option = { # Gold
+		name = aov_magic.20.c
+		add_gold = 300
+		aov_extraplanar_price = yes
+	}
+}
+
+# Eye for Talent: the newcomer (scope:aov_talent)
+aov_magic.30 = {
+	type = character_event
+	title = aov_magic.30.t
+	desc = aov_magic.30.desc
+	theme = learning
+	left_portrait = root
+	right_portrait = scope:aov_talent
+
+	option = {
+		name = aov_magic.30.a
+	}
+}
