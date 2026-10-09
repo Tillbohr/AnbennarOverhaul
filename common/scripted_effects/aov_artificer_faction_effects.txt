@@ -168,3 +168,80 @@ aov_faction_sponsor_shift_technomancers = {
 	aov_faction_change_influence = { FACTION = brillites AMOUNT = -10 }
 	aov_faction_change_influence = { FACTION = mechanists AMOUNT = -10 }
 }
+
+# Quarterly, while eligible (common/on_action/aov_artificer_faction_on_actions.txt)
+aov_factions_quarterly = {
+	# brillites: their research is running, favour fades above 40, the leader's opinion
+	if = {
+		limit = {
+			has_variable = aov_research_sponsor
+			var:aov_research_sponsor = flag:brillites
+		}
+		aov_faction_change_influence = { FACTION = brillites AMOUNT = 1 }
+	}
+	if = {
+		limit = { var:aov_influence_brillites > 40 }
+		aov_faction_change_influence = { FACTION = brillites AMOUNT = -1 }
+	}
+	aov_faction_change_influence = { FACTION = brillites AMOUNT = aov_opinion_drift_brillites }
+	# mechanists: their research is running, favour fades above 40, the leader's opinion
+	if = {
+		limit = {
+			has_variable = aov_research_sponsor
+			var:aov_research_sponsor = flag:mechanists
+		}
+		aov_faction_change_influence = { FACTION = mechanists AMOUNT = 1 }
+	}
+	if = {
+		limit = { var:aov_influence_mechanists > 40 }
+		aov_faction_change_influence = { FACTION = mechanists AMOUNT = -1 }
+	}
+	aov_faction_change_influence = { FACTION = mechanists AMOUNT = aov_opinion_drift_mechanists }
+	# technomancers: their research is running, favour fades above 40, the leader's opinion
+	if = {
+		limit = {
+			has_variable = aov_research_sponsor
+			var:aov_research_sponsor = flag:technomancers
+		}
+		aov_faction_change_influence = { FACTION = technomancers AMOUNT = 1 }
+	}
+	if = {
+		limit = { var:aov_influence_technomancers > 40 }
+		aov_faction_change_influence = { FACTION = technomancers AMOUNT = -1 }
+	}
+	aov_faction_change_influence = { FACTION = technomancers AMOUNT = aov_opinion_drift_technomancers }
+}
+
+# Heir scope; scope:aov_predecessor is the dead ruler. The heir keeps their own influence if they have any.
+aov_factions_inherit = {
+	if = {
+		limit = {
+			NOT = { has_variable = aov_influence_brillites }
+			scope:aov_predecessor = { has_variable = aov_influence_brillites }
+		}
+		set_variable = { name = aov_influence_brillites value = scope:aov_predecessor.var:aov_influence_brillites }
+	}
+	if = {
+		limit = {
+			NOT = { has_variable = aov_influence_mechanists }
+			scope:aov_predecessor = { has_variable = aov_influence_mechanists }
+		}
+		set_variable = { name = aov_influence_mechanists value = scope:aov_predecessor.var:aov_influence_mechanists }
+	}
+	if = {
+		limit = {
+			NOT = { has_variable = aov_influence_technomancers }
+			scope:aov_predecessor = { has_variable = aov_influence_technomancers }
+		}
+		set_variable = { name = aov_influence_technomancers value = scope:aov_predecessor.var:aov_influence_technomancers }
+	}
+	aov_faction_refresh_modifiers = yes
+}
+
+# Make Amends (Factions tab, AI): 100 gold for +10, never above 40; callers check it is below 40
+aov_faction_make_amends = {
+	remove_short_term_gold = 100
+	change_variable = { name = aov_influence_$FACTION$ add = 10 }
+	clamp_variable = { name = aov_influence_$FACTION$ min = 0 max = 40 }
+	aov_faction_refresh_modifiers = yes
+}

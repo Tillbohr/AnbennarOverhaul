@@ -368,7 +368,7 @@ class ElectionTests(unittest.TestCase):
 class FactionsTabTests(unittest.TestCase):
     def test_make_amends_caps_at_forty(self):
         b = block(read("common/scripted_effects/aov_artificer_faction_effects.txt"), "aov_faction_make_amends")
-        self.assertIn("add_gold = -100", b)
+        self.assertIn("remove_short_term_gold = 100", b)
         self.assertIn("max = 40", b)
 
     def test_tab_has_three_cards(self):

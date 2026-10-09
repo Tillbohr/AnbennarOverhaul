@@ -137,6 +137,7 @@ aov_artificery_update_dormancy = {
 		}
 		remove_variable = aov_artificery_dormant
 		aov_inventions_resume_all = yes
+		aov_faction_refresh_modifiers = yes
 	}
 	else_if = {
 		limit = {
@@ -146,50 +147,84 @@ aov_artificery_update_dormancy = {
 		}
 		set_variable = aov_artificery_dormant
 		aov_inventions_suspend_all = yes
+		aov_faction_remove_modifiers = yes
+	}
+}
+
+# AI: a field chosen at random among those with something to discover
+aov_artificery_ai_sponsor_mechanists = {
+	random_list = {
+		1 = {
+			trigger = { aov_inventions_economic_discoverable = yes }
+			aov_artificery_start_mechanists_research = { CATEGORY = economic }
+		}
+		1 = {
+			trigger = { aov_inventions_military_discoverable = yes }
+			aov_artificery_start_mechanists_research = { CATEGORY = military }
+		}
+		1 = {
+			trigger = { aov_inventions_society_discoverable = yes }
+			aov_artificery_start_mechanists_research = { CATEGORY = society }
+		}
+	}
+}
+
+aov_artificery_ai_sponsor_technomancers = {
+	random_list = {
+		1 = {
+			trigger = { aov_inventions_economic_discoverable = yes }
+			aov_inventions_roll_offers_economic = yes
+			aov_inventions_ai_start_technomancers_economic = yes
+		}
+		1 = {
+			trigger = { aov_inventions_military_discoverable = yes }
+			aov_inventions_roll_offers_military = yes
+			aov_inventions_ai_start_technomancers_military = yes
+		}
+		1 = {
+			trigger = { aov_inventions_society_discoverable = yes }
+			aov_inventions_roll_offers_society = yes
+			aov_inventions_ai_start_technomancers_society = yes
+		}
 	}
 }
 
 aov_artificery_ai_research = {
-	random_list = {
-		50 = {
-			trigger = { aov_artificery_can_sponsor = { FACTION = brillites } }
-			aov_artificery_start_brillites_research = yes
+	# Win back a Displeased or Hostile faction first
+	if = {
+		limit = {
+			aov_influence_level_brillites <= 1
+			aov_artificery_can_sponsor = { FACTION = brillites }
 		}
-		30 = {
-			trigger = { aov_artificery_can_sponsor = { FACTION = mechanists } }
-			random_list = {
-				1 = {
-					trigger = { aov_inventions_economic_discoverable = yes }
-					aov_artificery_start_mechanists_research = { CATEGORY = economic }
-				}
-				1 = {
-					trigger = { aov_inventions_military_discoverable = yes }
-					aov_artificery_start_mechanists_research = { CATEGORY = military }
-				}
-				1 = {
-					trigger = { aov_inventions_society_discoverable = yes }
-					aov_artificery_start_mechanists_research = { CATEGORY = society }
-				}
+		aov_artificery_start_brillites_research = yes
+	}
+	else_if = {
+		limit = {
+			aov_influence_level_mechanists <= 1
+			aov_artificery_can_sponsor = { FACTION = mechanists }
+		}
+		aov_artificery_ai_sponsor_mechanists = yes
+	}
+	else_if = {
+		limit = {
+			aov_influence_level_technomancers <= 1
+			aov_artificery_can_sponsor = { FACTION = technomancers }
+		}
+		aov_artificery_ai_sponsor_technomancers = yes
+	}
+	else = {
+		random_list = {
+			50 = {
+				trigger = { aov_artificery_can_sponsor = { FACTION = brillites } }
+				aov_artificery_start_brillites_research = yes
 			}
-		}
-		20 = {
-			trigger = { aov_artificery_can_sponsor = { FACTION = technomancers } }
-			random_list = {
-				1 = {
-					trigger = { aov_inventions_economic_discoverable = yes }
-					aov_inventions_roll_offers_economic = yes
-					aov_inventions_ai_start_technomancers_economic = yes
-				}
-				1 = {
-					trigger = { aov_inventions_military_discoverable = yes }
-					aov_inventions_roll_offers_military = yes
-					aov_inventions_ai_start_technomancers_military = yes
-				}
-				1 = {
-					trigger = { aov_inventions_society_discoverable = yes }
-					aov_inventions_roll_offers_society = yes
-					aov_inventions_ai_start_technomancers_society = yes
-				}
+			30 = {
+				trigger = { aov_artificery_can_sponsor = { FACTION = mechanists } }
+				aov_artificery_ai_sponsor_mechanists = yes
+			}
+			20 = {
+				trigger = { aov_artificery_can_sponsor = { FACTION = technomancers } }
+				aov_artificery_ai_sponsor_technomancers = yes
 			}
 		}
 	}
@@ -201,6 +236,27 @@ aov_artificery_ai_quarterly = {
 		if = {
 			limit = { aov_artificery_can_start_research = yes }
 			aov_artificery_ai_research = yes
+		}
+		if = {
+			limit = {
+				aov_influence_level_brillites = 0
+				gold > 300
+			}
+			aov_faction_make_amends = { FACTION = brillites }
+		}
+		if = {
+			limit = {
+				aov_influence_level_mechanists = 0
+				gold > 300
+			}
+			aov_faction_make_amends = { FACTION = mechanists }
+		}
+		if = {
+			limit = {
+				aov_influence_level_technomancers = 0
+				gold > 300
+			}
+			aov_faction_make_amends = { FACTION = technomancers }
 		}
 		while = {
 			limit = {
@@ -215,6 +271,7 @@ aov_artificery_ai_quarterly = {
 # Heir scope; scope:aov_predecessor is the dead ruler
 aov_artificery_inherit = {
 	aov_inventions_inherit = yes
+	aov_factions_inherit = yes
 	if = {
 		limit = {
 			NOT = { aov_artificery_is_researching = yes }

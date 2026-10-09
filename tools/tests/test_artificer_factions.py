@@ -117,5 +117,36 @@ class ResearchCostTests(unittest.TestCase):
         self.assertIn("aov_artificery_can_sponsor = { FACTION = technomancers }", block(gen, "aov_inv_sparkdrive_rifles_research_sgui"))
 
 
+class DriftTests(unittest.TestCase):
+    def test_quarterly_applies_running_fade_and_opinion(self):
+        b = block(read("common/scripted_effects/aov_artificer_faction_effects.txt"), "aov_factions_quarterly")
+        for f in FACTIONS:
+            self.assertIn(f"var:aov_research_sponsor = flag:{f}", b)
+            self.assertIn(f"var:aov_influence_{f} > 40", b)
+            self.assertIn(f"AMOUNT = aov_opinion_drift_{f}", b)
+
+    def test_opinion_drift_bands(self):
+        b = block(read("common/script_values/aov_artificer_faction_values.txt"), "aov_opinion_drift_brillites")
+        self.assertIn("exists = title:d_brillites.holder", b)
+        for cond in ("value >= 50", "value >= 20", "value <= -20", "value <= -50"):
+            self.assertIn(f"opinion = {{ target = root {cond} }}", b)
+
+    def test_dormancy_and_inheritance_hooked(self):
+        eff = read("common/scripted_effects/aov_artificery_research_effects.txt")
+        self.assertIn("aov_faction_remove_modifiers = yes", block(eff, "aov_artificery_update_dormancy"))
+        self.assertIn("aov_faction_refresh_modifiers = yes", block(eff, "aov_artificery_update_dormancy"))
+        self.assertIn("aov_factions_inherit = yes", block(eff, "aov_artificery_inherit"))
+
+    def test_quarterly_on_action(self):
+        text = read("common/on_action/aov_artificer_faction_on_actions.txt")
+        self.assertIn("quarterly_playable_pulse = {\n\ton_actions = { aov_artificer_factions_quarterly }", text)
+
+    def test_ai_makes_amends_when_hostile_and_rich(self):
+        b = block(read("common/scripted_effects/aov_artificery_research_effects.txt"), "aov_artificery_ai_quarterly")
+        for f in FACTIONS:
+            self.assertIn(f"aov_faction_make_amends = {{ FACTION = {f} }}", b)
+        self.assertIn("gold > 300", b)
+
+
 if __name__ == "__main__":
     unittest.main()

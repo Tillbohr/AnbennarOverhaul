@@ -1,0 +1,14 @@
+﻿# Anbennar Overhaul: artificer factions on_actions, appended to vanilla on_actions.
+
+quarterly_playable_pulse = {
+	on_actions = { aov_artificer_factions_quarterly }
+}
+
+# Root = character
+aov_artificer_factions_quarterly = {
+	trigger = { can_use_artificery_trigger = yes }
+	effect = {
+		aov_faction_init = yes
+		aov_factions_quarterly = yes
+	}
+}

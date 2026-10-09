@@ -37,5 +37,6 @@ aov_artificery_has_state = {
 	OR = {
 		aov_artificery_is_researching = yes
 		aov_inventions_any_discovered = yes
+		has_variable = aov_influence_brillites
 	}
 }
