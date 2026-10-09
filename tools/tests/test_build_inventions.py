@@ -278,8 +278,42 @@ class GuiOutputTests(unittest.TestCase):
             self.assertIn(f"aov_inv_{k}_visible_sgui", b.split("\n")[1])
             self.assertIn(f"onclick = \"[GetScriptedGui('aov_inv_{k}_toggle_sgui').Execute( {bi.ROOT} )]\"", b)
             self.assertRegex(b, rf"tooltipwidget = \{{\s*aov_invention_{k}_tooltip = \{{\}}")
-            self.assertIn(f"gfx/interface/icons/aov_inventions/{i['icon']}", b)
-            self.assertIn(f"down = \"[GetScriptedGui('aov_inv_{k}_deactivate_sgui').IsShown( {bi.ROOT} )]\"", b)
+            # not the EU4 estate-privilege icon (the slice may run into the next type, e.g. the offers, so cut it)
+            self.assertNotIn(i["icon"], b.split("type aov_inventions_")[0])
+
+    def test_box_uses_eu4_invention_button_frames(self):
+        # EU4 Anbennar's inventions menu: category strip, frame 1 locked/undiscovered, 2 discovered, 3 active
+        for i in INVENTIONS:
+            k, c = i["key"], i["category"]
+            b = self.box(k)
+            tex = f'texture = "gfx/interface/icons/aov_inventions/aov_invention_button_{c}.dds"'
+            self.assertEqual(b.count(tex), 3, k)
+            self.assertEqual(b.count("framesize = { 78 78 }"), 3, k)
+            frames = {n: b.split(f"frame = {n}\n")[0].rsplit("visible = ", 1)[1] for n in (1, 2, 3)}
+            self.assertIn(f"aov_inv_{k}_activate_sgui", frames[2])
+            self.assertIn(f"aov_inv_{k}_deactivate_sgui", frames[3])
+            self.assertIn(f"Not( Or( GetScriptedGui('aov_inv_{k}_activate_sgui')", frames[1])
+            # EU4's society strip has a colour frame 1 (same as frame 2), so frame 1 is greyed in CK3
+            self.assertIn('effectname = "GreyedOut"', frames[1].split("highlight_icon")[0] + b.split("frame = 1\n")[0].rsplit("highlight_icon", 1)[1])
+
+    def test_dx10_bgra_converts_to_legacy_header(self):
+        import struct
+        w, h = 6, 2
+        pixels = bytes(range(w * h * 4))
+        head = bytearray(128)
+        head[0:4] = b"DDS "
+        struct.pack_into("<I", head, 4, 124)
+        struct.pack_into("<II", head, 12, h, w)
+        head[84:88] = b"DX10"
+        src = bytes(head) + struct.pack("<IIIII", 91, 3, 0, 1, 0) + pixels
+        out = bi.dx10_bgra_to_legacy(src)
+        self.assertEqual(len(out), 128 + len(pixels))
+        self.assertEqual(out[128:], pixels)
+        self.assertEqual(struct.unpack("<II", out[12:20]), (h, w))
+        self.assertEqual(struct.unpack("<I", out[80:84])[0], 0x41)        # DDPF_RGB | DDPF_ALPHAPIXELS
+        self.assertEqual(struct.unpack("<5I", out[88:108]), (32, 0x00FF0000, 0x0000FF00, 0x000000FF, 0xFF000000))
+        with self.assertRaises(bi.GeneratorError):
+            bi.dx10_bgra_to_legacy(bytes(head) + struct.pack("<IIIII", 98, 3, 0, 1, 0) + pixels)  # BC7
 
     def test_tooltip_has_name_description_effects_and_status(self):
         text = bi.gui(INVENTIONS)
@@ -340,7 +374,24 @@ class GuiOutputTests(unittest.TestCase):
             for name in {i["icon"] for i in INVENTIONS}:
                 (eu4 / bi.EU4_ICONS / name).write_bytes(b"DDS ")
             bi.copy_icons(INVENTIONS, eu4, root)
-            self.assertEqual(len(list((root / bi.ICON_DIR).glob("*.dds"))), len({i["icon"] for i in INVENTIONS}))
+            self.assertEqual(len(list((root / bi.ICON_DIR).glob("Artf_*.dds"))), len({i["icon"] for i in INVENTIONS}))
+
+    def test_copy_button_icons_converts_each_category(self):
+        import struct
+        with tempfile.TemporaryDirectory() as tmp:
+            eu4, root = Path(tmp, "eu4"), Path(tmp, "mod")
+            (eu4 / bi.EU4_BUTTONS).mkdir(parents=True)
+            head = bytearray(128)
+            head[0:4] = b"DDS "
+            struct.pack_into("<II", head, 12, 78, 234)
+            head[84:88] = b"DX10"
+            for c in bi.CATEGORIES:
+                (eu4 / bi.EU4_BUTTONS / f"artificery_innovation_{c}.dds").write_bytes(
+                    bytes(head) + struct.pack("<IIIII", 91, 3, 0, 1, 0) + bytes(234 * 78 * 4))
+            bi.copy_button_icons(eu4, root)
+            for c in bi.CATEGORIES:
+                out = (root / bi.ICON_DIR / f"aov_invention_button_{c}.dds").read_bytes()
+                self.assertNotEqual(out[84:88], b"DX10")
 
     def test_copy_icons_missing_source(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -93,7 +93,9 @@ inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error
   era; 3/4/5 slots with a 1-year cooldown; state in ruler variables, inherited by the heir; dormant while
   ineligible. Logic in `aov_artificery_research_*` files and `common/on_action/aov_inventions_on_actions.txt`.
 - **Inventions tab UI:** EU4-style. Tier I/II/III tabs (variable `aov_inventions_tier`, unset = I), each with
-  Society/Economic/Military sections of invention boxes (generated types `aov_inventions_tier_<n>`). Clicking a box
+  Society/Economic/Military sections of invention boxes (generated types `aov_inventions_tier_<n>`), drawn with EU4
+  Anbennar's inventions-menu buttons (`aov_invention_button_<category>.dds`, frames: locked/undiscovered, discovered,
+  active; converted from DX10 by the generator). Clicking a box
   runs `aov_inv_<key>_toggle_sgui` (activate, or deactivate with the slot cooldown); hovering shows
   `aov_invention_<key>_tooltip` (name, field/tier, description, effects, status).
 - **Research popup:** `gui/aov_window_artificery_research.gui`, drawn like a character event (`bp2_university`
