@@ -160,6 +160,25 @@ def _project(key, body, source, file):
     )
 
 
+_GATE_ATOM = re.compile(
+    r"(?<![A-Za-z0-9_])(culture_group|primary_culture|accepted_culture|culture|religion_group|religion|tag"
+    r"|has_country_flag)\s*=\s*([A-Za-z0-9_]+)")
+_ATOM_KIND = {"primary_culture": "culture", "accepted_culture": "culture", "has_country_flag": "flag"}
+
+
+def gate_atoms(body):
+    """Culture/religion/tag/flag conditions of a gate as "kind:value", in order, without duplicates.
+
+    `primary_culture` and `accepted_culture` count as `culture`, `has_country_flag` as `flag`. The logic around
+    the atoms (AND/NOT/if) is ignored: the CK3 gate is an OR of the atoms' translations."""
+    atoms = []
+    for kind, value in _GATE_ATOM.findall(strip_comments(body)):
+        atom = f"{_ATOM_KIND.get(kind, kind)}:{value}"
+        if value not in ("yes", "no") and atom not in atoms:
+            atoms.append(atom)
+    return atoms
+
+
 def load_projects(roots):
     """Every great project; when several roots define a key, PRECEDENCE decides."""
     projects = {}
