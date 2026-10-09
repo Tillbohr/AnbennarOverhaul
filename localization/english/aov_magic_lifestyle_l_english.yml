@@ -74,5 +74,3 @@
  magic_mindweaving_focus_effect_desc: "Focusing on Mindweaving grants:"
  magic_mindweaving_focus_study_desc: "Study of $AOV_SCHOOL_ENCHANTMENT$, $AOV_SCHOOL_ILLUSION$ and $AOV_SCHOOL_NECROMANCY$ is #P 25%#! faster"
  magic_duelist_focus_study_desc: "Study of $AOV_SCHOOL_EVOCATION$ and $AOV_SCHOOL_CONJURATION$ is #P 25%#! faster"
- # Modifiers
- monthly_magic_lifestyle_xp_gain_mult: "Monthly Magic [lifestyle|E] Experience"

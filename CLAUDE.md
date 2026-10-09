@@ -1,4 +1,4 @@
-﻿# Anbennar Overhaul — project notes
+# Anbennar Overhaul — project notes
 
 Submod for the Anbennar CK3 total conversion. **All new content goes here; the base Anbennar mod
 (`../anbennar-ck3-dev-master`) stays an unmodified upstream copy** so the overhaul can be laid over any
@@ -130,8 +130,8 @@ inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error
   (`gui/aov_window_magic.gui`, HUD tab below Artificery, generated pages `gui/aov_magic_generated.gui`), targeted
   spells as interactions in Anbennar's Spells category (Compel, Dominate, Enhance Ability overridden to need mana and
   knowledge). Necromancy risks Forbidden Magic Practitioner under witchcraft-illegal/shunned faiths. Hand-written
-  logic in `aov_magic_*` files; Summon Elementals spawns an army removed after 3 years.
-- **Magic lifestyle:** Anbennar's stub `magic_lifestyle` made full: three trees of 9 perks (Arcane Scholar, Battle Mage,
+  logic in `aov_magic_*` files; Summon Elementals spawns an army removed after the spell's duration (`aov_spell_summon_elementals_years`, extended by Bound Elementals).
+- **Magic lifestyle:** fills the "Known gaps" magic-lifestyle skeleton listed in the base mod's CLAUDE.md (which cannot be edited). Anbennar's stub `magic_lifestyle` made full: three trees of 9 perks (Arcane Scholar, Battle Mage,
   Mindweaver; `common/lifestyle_perks/aov_magic_*_perks.txt`), each ending in a trait
   (`common/traits/aov_magic_lifestyle_traits.txt`), and three focuses (`common/focuses/zz_aov_magic_focuses.txt`;
   Anbennar's `magic_duelist_focus` is overridden as Battle Mage, name via `localization/replace/`). Perks feed magic only

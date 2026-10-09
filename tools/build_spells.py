@@ -67,6 +67,8 @@ def validate(spells: list) -> None:
             raise GeneratorError(f"{k}: bad level {s['level']}")
         if s["slot"] and LEVEL_OF_SLOT.get(s["slot"]) != s["level"]:
             raise GeneratorError(f"{k}: slot {s['slot']} does not match level {s['level']}")
+        if s["scales_duration"] and not (s["modifier"].strip() or k == "summon_elementals"):
+            raise GeneratorError(f"{k}: scales_duration without a lasting effect")
         if s["type"] == "targeted" and not s["interaction"]:
             raise GeneratorError(f"{k}: targeted spell without interaction")
         if s["type"] != "targeted" and not (s["modifier"].strip() or s["effect"].strip()):
@@ -166,10 +168,11 @@ def values(spells: list) -> str:
     for s in spells:
         k, c, lvl = s["key"], s["school"], s["level"]
         extra = f"\tsubtract = aov_cost_cut_{s['type']}\n" if s["type"] in ("war", "targeted") else ""
+        mult = f"\tmultiply = aov_years_mult_{c}\n" if s["scales_duration"] else ""
         out.append(
             f"aov_spell_{k}_cost = {{\n\tvalue = 1\n\tsubtract = aov_cost_cut_{c}\n{extra}"
             f"\tmin = 0.5\n\tmultiply = {COSTS[lvl]}\n\tadd = 0.5\n\tfloor = yes\n}}\n"
-            f"aov_spell_{k}_years = {{\n\tvalue = {YEARS[lvl]}\n\tmultiply = aov_years_mult_{c}\n\tadd = 0.5\n\tfloor = yes\n}}\n"
+            f"aov_spell_{k}_years = {{\n\tvalue = {YEARS[lvl]}\n{mult}\tadd = 0.5\n\tfloor = yes\n}}\n"
         )
     return "\n".join(out)
 
@@ -374,7 +377,7 @@ def loc(spells: list) -> str:
         player = "GetPlayer.MakeScope.ScriptValue"
         cost = f"#V [{player}('aov_spell_{k}_cost')|0]#!"
         years = f"#V [{player}('aov_spell_{k}_years')|0]#!"
-        out.append(f' aov_spell_{k}_facts: "Level {s["level"]} · {cost} mana · {TYPE_LABEL[s["type"]]} · {years} years"')
+        out.append(f' aov_spell_{k}_facts: "Level {s["level"]} · {cost} mana · {TYPE_LABEL[s["type"]]} · {years} yr"')
         out.append(f' aov_spell_{k}_req_mana: "Has at least {cost} mana"')
         out.append(f' aov_spell_{k}_cost_tt: "Costs {cost} mana"')
         if s["interaction"] == f"aov_spell_{k}_interaction":

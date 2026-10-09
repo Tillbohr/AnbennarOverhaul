@@ -7,15 +7,17 @@ slot: EU4 icon slot within the school (1 = level 0, 2-3 = level 1, 4-5 = level 2
 type: self | realm | war (castable only at war) | targeted (a character interaction).
 modifier: character modifier body on the caster for the duration ("" for one-off spells).
 effect: one-off script run on cast, in the caster's scope; targeted spells have the target as scope:recipient.
+scales_duration: the duration perks (aov_years_mult_<school>) apply; default = has a lasting modifier.
 interaction: targeted spells only; Anbennar's own interaction for Compel, Dominate and Enhance Ability.
 """
 
 
-def spell(key, school, level, slot, type, name, desc, flavour, modifier="", effect="", interaction=""):
+def spell(key, school, level, slot, type, name, desc, flavour, modifier="", effect="", interaction="", scales_duration=None):
     if type == "targeted" and not interaction:
         interaction = f"aov_spell_{key}_interaction"
     return dict(key=key, school=school, level=level, slot=slot, type=type, name=name, desc=desc, flavour=flavour,
-                modifier=modifier, effect=effect, interaction=interaction)
+                modifier=modifier, effect=effect, interaction=interaction,
+                scales_duration=bool(modifier.strip()) if scales_duration is None else scales_duration)
 
 
 SPELLS = [
@@ -53,7 +55,7 @@ SPELLS = [
     spell("summon_elementals", "conjuration", 2, 4, "war", "Summon Elementals",
           "A free army of conjured elementals appears at your capital for the spell's duration",
           "Stone and flame take shape and march at their summoner's word.",
-          effect="aov_summon_elementals = yes"),
+          effect="aov_summon_elementals = yes", scales_duration=True),
     spell("aid_construction", "conjuration", 2, 5, "realm", "Aid Construction", "Buildings 30% faster and 20% cheaper",
           "Unseen servants haul stone through the night.",
           modifier="build_speed = -0.3\nbuild_gold_cost = -0.2"),

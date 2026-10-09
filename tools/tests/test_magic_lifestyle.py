@@ -165,7 +165,6 @@ class LocTests(unittest.TestCase):
         keys += [f"trait_{t}" for t in TRAIT_OF.values()] + [f"trait_{t}_desc" for t in TRAIT_OF.values()]
         for f in ("magic_arcane_study_focus", "magic_mindweaving_focus"):
             keys += [f, f"{f}_desc", f"{f}_modifier"]
-        keys += ["monthly_magic_lifestyle_xp_gain_mult"]
         keys += ["magic_arcane_study_focus_study_desc", "magic_arcane_study_focus_effect_desc",
                  "magic_mindweaving_focus_study_desc", "magic_mindweaving_focus_effect_desc", "magic_duelist_focus_study_desc"]
         for k in keys:

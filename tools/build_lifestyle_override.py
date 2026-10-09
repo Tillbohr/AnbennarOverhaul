@@ -52,7 +52,7 @@ def magic_copy(block: list[str], indent: str) -> list[str]:
 
 def insert_magic(text: str) -> str:
     if "'magic_lifestyle'" in text:
-        raise GeneratorError("source already contains 'magic_lifestyle'; is it a generated file?")
+        raise GeneratorError("source already contains 'magic_lifestyle'; is it a generated file? Anbennar may now ship its own magic lifestyle branches, in which case this override and its CLAUDE.md rows can be retired.")
     lines = text.split("\n")
     anchors = [i for i, l in enumerate(lines) if ANCHOR in l]
     if len(anchors) != EXPECTED_ANCHORS:

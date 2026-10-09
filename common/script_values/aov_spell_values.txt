@@ -28,7 +28,6 @@ aov_spell_ward_cost = {
 }
 aov_spell_ward_years = {
 	value = 2
-	multiply = aov_years_mult_abjuration
 	add = 0.5
 	floor = yes
 }
@@ -182,7 +181,6 @@ aov_spell_extraplanar_contact_cost = {
 }
 aov_spell_extraplanar_contact_years = {
 	value = 5
-	multiply = aov_years_mult_conjuration
 	add = 0.5
 	floor = yes
 }
@@ -212,7 +210,6 @@ aov_spell_eye_for_talent_cost = {
 }
 aov_spell_eye_for_talent_years = {
 	value = 2
-	multiply = aov_years_mult_divination
 	add = 0.5
 	floor = yes
 }
@@ -243,7 +240,6 @@ aov_spell_scry_cost = {
 }
 aov_spell_scry_years = {
 	value = 3
-	multiply = aov_years_mult_divination
 	add = 0.5
 	floor = yes
 }
@@ -304,7 +300,6 @@ aov_spell_heartstring_cost = {
 }
 aov_spell_heartstring_years = {
 	value = 2
-	multiply = aov_years_mult_enchantment
 	add = 0.5
 	floor = yes
 }
@@ -336,7 +331,6 @@ aov_spell_thoughtweave_cost = {
 }
 aov_spell_thoughtweave_years = {
 	value = 3
-	multiply = aov_years_mult_enchantment
 	add = 0.5
 	floor = yes
 }
@@ -367,7 +361,6 @@ aov_spell_dominate_to_surrender_cost = {
 }
 aov_spell_dominate_to_surrender_years = {
 	value = 5
-	multiply = aov_years_mult_enchantment
 	add = 0.5
 	floor = yes
 }
@@ -599,7 +592,6 @@ aov_spell_contagion_cost = {
 }
 aov_spell_contagion_years = {
 	value = 2
-	multiply = aov_years_mult_necromancy
 	add = 0.5
 	floor = yes
 }
@@ -614,7 +606,6 @@ aov_spell_speak_with_dead_cost = {
 }
 aov_spell_speak_with_dead_years = {
 	value = 3
-	multiply = aov_years_mult_necromancy
 	add = 0.5
 	floor = yes
 }
@@ -629,7 +620,6 @@ aov_spell_remove_pain_cost = {
 }
 aov_spell_remove_pain_years = {
 	value = 3
-	multiply = aov_years_mult_necromancy
 	add = 0.5
 	floor = yes
 }
@@ -706,7 +696,6 @@ aov_spell_enhance_ability_cost = {
 }
 aov_spell_enhance_ability_years = {
 	value = 2
-	multiply = aov_years_mult_transmutation
 	add = 0.5
 	floor = yes
 }
@@ -721,7 +710,6 @@ aov_spell_transmute_to_gold_cost = {
 }
 aov_spell_transmute_to_gold_years = {
 	value = 3
-	multiply = aov_years_mult_transmutation
 	add = 0.5
 	floor = yes
 }

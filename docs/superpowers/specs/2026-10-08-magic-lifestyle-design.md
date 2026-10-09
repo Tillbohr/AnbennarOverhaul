@@ -1,4 +1,4 @@
-﻿# Magic lifestyle: design
+# Magic lifestyle: design
 
 Date: 2026-10-08. Status: built.
 Sub-project 2 of 3 of the magic system. Sub-project 1 (schools and spells,
@@ -44,7 +44,7 @@ Vanilla layout: two branches of three (`position = { 0 0..2 }` and `{ 2 0..2 }`)
 (`{ 1 3 }` with both branch ends as parents, then `{ 1 4 }`), and the trait perk at `{ 1 5 }`.
 
 Shorthand: **Study +25% X** = studying school X gains 25% more progress. **Cost −25% X** = X's spells cost 25%
-less mana. **Lasts +50% X** = X's lasting spells last 50% longer; the cooldown equals the actual duration, so a
+less mana. **Lasts +50% X** = X's lasting spells (those with a lasting modifier, plus Summon Elementals) last 50% longer; one-off and targeted spells keep their base years; the cooldown equals the actual duration, so a
 spell still cannot be stacked.
 
 **Arcane Scholar** (`aov_arcane_scholar`): Divination | Abjuration → Transmutation
@@ -89,7 +89,7 @@ spell still cannot be stacked.
 | 1,4 | `aov_deathless_will_perk` | Deathless Will | Cost −25% Necromancy | +10% stress loss |
 | 1,5 | `aov_mindweaver_perk` | Mindweaver | grants trait `mindweaver` | — |
 
-Tiger accepted the keys used: `enemy_hostile_scheme_success_chance_add`, `owned_scheme_secrecy_add`, `advantage`, `supply_capacity_add`, `knight_effectiveness_mult`, `stress_loss_mult`, `dread_baseline_add`, `general_opinion`, `monthly_magic_lifestyle_xp_gain_mult`.
+Tiger accepted the keys used: `enemy_hostile_scheme_success_chance_add`, `owned_scheme_secrecy_add`, `advantage`, `supply_capacity_mult`, `knight_effectiveness_mult`, `stress_loss_mult`, `dread_baseline_add`, `general_opinion`, `monthly_magic_lifestyle_xp_gain_mult`.
 
 Modifier keys (enemy scheme success, scheme discovery, advantage, supply limit, knight effectiveness, stress loss,
 dread) are checked against 1.19 with tiger while building; any substitute is recorded in this spec.

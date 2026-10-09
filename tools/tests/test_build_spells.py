@@ -126,6 +126,12 @@ class ValueTests(unittest.TestCase):
         self.assertIn("multiply = aov_years_mult_evocation", b)
         self.assertIn("floor = yes", b)
 
+    def test_duration_multiplier_only_for_lasting_spells(self):
+        for k in ("scry", "heartstring"):
+            self.assertNotIn("aov_years_mult", block(self.v, f"aov_spell_{k}_years"), k)
+        for k in ("enchanting_envoy", "summon_elementals"):
+            self.assertIn("multiply = aov_years_mult_", block(self.v, f"aov_spell_{k}_years"), k)
+
     def test_cooldown_and_modifier_share_years_value(self):
         b = block(self.files["common/scripted_effects/aov_spell_effects.txt"], "aov_spell_guidance_cast")
         self.assertIn("set_variable = { name = aov_spell_guidance_cd years = aov_spell_guidance_years }", b)
