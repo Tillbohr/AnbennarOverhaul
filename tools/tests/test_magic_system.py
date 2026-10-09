@@ -118,5 +118,36 @@ class SpecialSpellTests(unittest.TestCase):
         self.assertIn("aov_extraplanar_price = yes", b)
 
 
+class SpellOverrideTests(unittest.TestCase):
+    OVERRIDES = (
+        ("start_compel_interaction", "anb_spellcasting_infin_spells.txt", "thoughtweave"),
+        ("start_dominate_interaction", "anb_spellcasting_infin_spells.txt", "dominate_to_surrender"),
+        ("anb_enhance_ability_interaction", "anb_spellcasting_interactions_enchantment.txt", "enhance_ability"),
+    )
+
+    def over(self):
+        return read("common/character_interactions/zz_aov_spell_overrides.txt")
+
+    def test_overrides_keep_anbennar_bodies(self):
+        for name, src, _ in self.OVERRIDES:
+            base = (MOD.parent / "anbennar-ck3-dev-master/common/character_interactions" / src).read_text(encoding="utf-8-sig")
+            ours = block(self.over(), name)
+            for line in block(base, name).splitlines():
+                if line.strip() and not line.strip().startswith("#"):
+                    self.assertIn(line, ours, f"{name}: {line}")
+
+    def test_overrides_need_mana_level_and_cast(self):
+        for name, _, k in self.OVERRIDES:
+            b = block(self.over(), name)
+            self.assertIn(f"scope:actor = {{ aov_spell_{k}_castable = yes }}", b)
+            self.assertIn(f"scope:actor = {{ aov_spell_{k}_cast = yes }}", b)
+
+    def test_interactions_respect_forbiddance(self):
+        for name, _, _ in self.OVERRIDES:
+            self.assertIn("scope:recipient = { aov_spell_target_allowed = yes }", block(self.over(), name))
+        t = block(read("common/scripted_triggers/aov_magic_triggers.txt"), "aov_spell_target_allowed")
+        self.assertIn("has_character_modifier = aov_spell_field_of_forbiddance", t)
+
+
 if __name__ == "__main__":
     unittest.main()

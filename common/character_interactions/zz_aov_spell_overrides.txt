@@ -1,0 +1,407 @@
+﻿# Anbennar Overhaul: single-object overrides of Anbennar's spell interactions
+# (common/character_interactions/anb_spellcasting_infin_spells.txt and anb_spellcasting_interactions_enchantment.txt).
+# Copied verbatim plus the lines marked '# Anbennar Overhaul'; re-copy after every Anbennar update.
+
+start_compel_interaction = {
+	
+	category = interaction_category_spells
+	scheme = anb_compel_spell
+	common_interaction = no
+
+	is_shown = {
+		#has_perk = _perk # Interaction unlocked by Perk
+		scope:actor = { has_magical_affinity = yes }
+		NOT = { scope:recipient = scope:actor }
+	}
+	
+	send_name = cast_compel_start
+
+	is_valid_showing_failures_only = {
+		# Anbennar Overhaul: school level, mana, cooldown; not a Field of Forbiddance
+		scope:actor = { aov_spell_thoughtweave_castable = yes }
+		scope:recipient = { aov_spell_target_allowed = yes }
+		scope:actor = {
+			can_start_scheme = {
+				type = anb_compel_spell
+				target_character = scope:recipient
+			}
+		}
+	}
+
+	on_accept = {
+		# Anbennar Overhaul: pay mana, gain school progress, start the cooldown
+		scope:actor = { aov_spell_thoughtweave_cast = yes }
+		scope:actor = {
+			stress_impact = {
+				compassionate = major_stress_impact_gain
+				honest = medium_stress_impact_gain
+				just = medium_stress_impact_gain
+			}
+		}
+		hidden_effect = {
+			scope:actor = {
+				send_interface_toast = {
+					title = start_compel_interaction_notification
+
+					left_icon = scope:actor					
+					right_icon = scope:recipient
+
+					start_scheme = {
+						type = anb_compel_spell
+						target_character = scope:recipient
+					}
+
+					show_as_tooltip = {
+						stress_impact = {
+							compassionate = major_stress_impact_gain
+							honest = medium_stress_impact_gain
+							just = medium_stress_impact_gain
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	auto_accept = yes
+
+}
+
+start_dominate_interaction = {
+	
+	category = interaction_category_spells
+	scheme = anb_dominate_spell
+	common_interaction = no
+	is_shown = {
+		#has_perk = _perk # Interaction unlocked by Perk
+		scope:actor = { has_magical_affinity = yes }
+		NOT = { scope:recipient = scope:actor }
+	}
+	
+	send_name = cast_dominate_start
+
+	is_valid_showing_failures_only = {
+		# Anbennar Overhaul: school level, mana, cooldown; not a Field of Forbiddance
+		scope:actor = { aov_spell_dominate_to_surrender_castable = yes }
+		scope:recipient = { aov_spell_target_allowed = yes }
+		scope:actor = {
+			can_start_scheme = {
+				type = anb_dominate_spell
+				target_character = scope:recipient
+			}
+		}
+	}
+
+	on_accept = {
+		# Anbennar Overhaul: pay mana, gain school progress, start the cooldown
+		scope:actor = { aov_spell_dominate_to_surrender_cast = yes }
+		scope:actor = {
+			stress_impact = {
+				compassionate = major_stress_impact_gain
+				honest = medium_stress_impact_gain
+				just = medium_stress_impact_gain
+			}
+		}
+		hidden_effect = {
+			scope:actor = {
+				send_interface_toast = {
+					title = start_dominate_interaction_notification
+
+					left_icon = scope:actor					
+					right_icon = scope:recipient
+
+					start_scheme = {
+						type = anb_dominate_spell
+						target_character = scope:recipient
+					}
+
+					show_as_tooltip = {
+						stress_impact = {
+							compassionate = major_stress_impact_gain
+							honest = medium_stress_impact_gain
+							just = medium_stress_impact_gain
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	auto_accept = yes
+
+}
+
+anb_enhance_ability_interaction = {
+	category = interaction_category_spells
+	scheme = anb_enhance_ability_spell
+
+	is_shown = {
+		scope:actor = { has_magical_affinity = yes }
+		#add 'knows spell' trigger later
+	}
+	common_interaction = yes
+
+	send_name = cast_enhance_ability_start
+
+	is_valid_showing_failures_only = {
+		# Anbennar Overhaul: school level, mana, cooldown; not a Field of Forbiddance
+		scope:actor = { aov_spell_enhance_ability_castable = yes }
+		scope:recipient = { aov_spell_target_allowed = yes }
+		scope:actor = {
+			can_start_scheme = {
+				type = anb_enhance_ability_spell
+				target_character = scope:recipient
+			}
+		}
+	}
+
+	options_heading = anb_enhance_ability_interaction_options_heading
+	send_option = {
+		flag = anb_enhance_ability_interaction_option_diplomacy
+		localization = anb_enhance_ability_interaction_option_diplomacy
+	} 
+
+	send_option = {
+		flag = anb_enhance_ability_interaction_option_martial
+		localization = anb_enhance_ability_interaction_option_martial
+	} 
+	
+	send_option = {
+		flag = anb_enhance_ability_interaction_option_stewardship
+		localization = anb_enhance_ability_interaction_option_stewardship
+	} 
+
+	send_option = {
+		flag = anb_enhance_ability_interaction_option_intrigue
+		localization = anb_enhance_ability_interaction_option_intrigue
+	}
+
+	send_option = {
+		flag = anb_enhance_ability_interaction_option_learning
+		localization = anb_enhance_ability_interaction_option_learning
+	}
+	send_option = {
+		flag = anb_enhance_ability_interaction_option_prowess
+		localization = anb_enhance_ability_interaction_option_prowess
+	}
+
+
+
+	auto_accept = no
+	ai_accept = {
+		#Add more accept/deny modifiers here later
+		#All WIP
+		base = -25
+
+		#Opinion of you
+		opinion_modifier = {
+			who = scope:recipient
+			opinion_target = scope:actor
+			multiplier = 0.5
+			desc = AI_OPINION_REASON
+		}
+
+		#Recipient bad/garbage in diplomacy
+		modifier = {
+			add = 25
+			trigger = {
+				scope:anb_enhance_ability_interaction_option_diplomacy = yes
+				scope:recipient.diplomacy > terrible_skill_level
+				scope:recipient.diplomacy < average_skill_level
+			}
+			desc = anb_enhance_ability_interaction_poor_skill_acceptance
+		}
+		modifier = {
+			add = 50
+			trigger = {
+				scope:anb_enhance_ability_interaction_option_diplomacy = yes
+				scope:recipient.diplomacy < terrible_skill_level
+			}
+			desc = anb_enhance_ability_interaction_terrible_skill_acceptance
+		}
+
+		#Recipient bad/garbage in martial
+		modifier = {
+			add = 25
+			trigger = {
+				scope:anb_enhance_ability_interaction_option_martial = yes
+				scope:recipient.martial > terrible_skill_level
+				scope:recipient.martial < poor_skill_level
+			}
+			desc = anb_enhance_ability_interaction_poor_skill_acceptance
+		}
+		modifier = {
+			add = 50
+			trigger = {
+				scope:anb_enhance_ability_interaction_option_martial = yes
+				scope:recipient.martial < terrible_skill_level
+			}
+			desc = anb_enhance_ability_interaction_terrible_skill_acceptance
+		}
+
+		#Recipient bad/garbage in stewardship
+		modifier = {
+			add = 25
+			trigger = {
+				scope:anb_enhance_ability_interaction_option_stewardship = yes
+				scope:recipient.stewardship > terrible_skill_level
+				scope:recipient.stewardship < poor_skill_level
+			}
+			desc = anb_enhance_ability_interaction_poor_skill_acceptance
+		}
+		modifier = {
+			add = 50
+			trigger = {
+				scope:anb_enhance_ability_interaction_option_stewardship = yes
+				scope:recipient.stewardship < terrible_skill_level
+			}
+			desc = anb_enhance_ability_interaction_terrible_skill_acceptance
+		}
+
+		#Recipient bad/garbage in intrigue
+		modifier = {
+			add = 25
+			trigger = {
+				scope:anb_enhance_ability_interaction_option_intrigue = yes
+				scope:recipient.intrigue > terrible_skill_level
+				scope:recipient.intrigue < poor_skill_level
+			}
+			desc = anb_enhance_ability_interaction_poor_skill_acceptance
+		}
+		modifier = {
+			add = 50
+			trigger = {
+				scope:anb_enhance_ability_interaction_option_intrigue = yes
+				scope:recipient.intrigue < terrible_skill_level
+			}
+			desc = anb_enhance_ability_interaction_terrible_skill_acceptance
+		}
+
+		#Recipient bad/garbage in learning
+		modifier = {
+			add = 25
+			trigger = {
+				scope:anb_enhance_ability_interaction_option_learning = yes
+				scope:recipient.learning > terrible_skill_level
+				scope:recipient.learning < poor_skill_level
+			}
+			desc = anb_enhance_ability_interaction_poor_skill_acceptance
+		}
+		modifier = {
+			add = 50
+			trigger = {
+				scope:anb_enhance_ability_interaction_option_learning = yes
+				scope:recipient.learning < terrible_skill_level
+			}
+			desc = anb_enhance_ability_interaction_terrible_skill_acceptance
+		}
+
+
+		#Recipient bad/garbage in prowess
+		modifier = {
+			add = 25
+			trigger = {
+				scope:anb_enhance_ability_interaction_option_prowess = yes
+				scope:recipient.prowess > terrible_skill_level
+				scope:recipient.prowess < poor_skill_level
+			}
+			desc = anb_enhance_ability_interaction_poor_skill_acceptance
+		}
+		modifier = {
+			add = 50
+			trigger = {
+				scope:anb_enhance_ability_interaction_option_prowess = yes
+				scope:recipient.prowess < terrible_skill_level
+			}
+			desc = anb_enhance_ability_interaction_terrible_skill_acceptance
+		}
+
+
+		#Recipient paranoid
+		modifier = {
+			add = -50
+			scope:recipient = {
+				has_trait = paranoid
+			}
+			desc = anb_enhance_ability_interaction_paranoid_acceptance
+		}
+
+		#Recipient ambitious
+		modifier = {
+			add = 50
+			scope:recipient = {
+				has_trait = ambitious
+			}
+			desc = anb_enhance_ability_interaction_ambitious_acceptance
+		}
+
+		#Recipient content
+		modifier = {
+			add = -50
+			scope:recipient = {
+				has_trait = content
+			}
+			desc = anb_enhance_ability_interaction_content_acceptance
+		}
+
+		#Recipient is a racial purist and you are not the same race
+		modifier = {
+			add = -50
+			trigger = {
+				scope:recipient = {
+					anb_is_racial_purist_trigger = yes
+				}
+				anb_same_race_trigger = {
+					ACTOR = scope:actor
+					RECIPIENT = scope:recipient
+				}
+			}
+			desc = anb_enhance_ability_interaction_racial_purist_acceptance
+		}
+	}
+
+	on_accept = {
+		# Anbennar Overhaul: pay mana, gain school progress, start the cooldown
+		scope:actor = { aov_spell_enhance_ability_cast = yes }
+		hidden_effect = {
+			scope:actor = {
+				send_interface_toast = {
+					title = anb_enhance_ability_interaction_toast
+					left_icon = scope:actor
+					right_icon = scope:recipient
+	
+					start_scheme = {
+						type = anb_enhance_ability_spell
+						target_character = scope:recipient
+					}		
+				}
+			}
+			scope:recipient = {
+				if = {
+					limit = { scope:anb_enhance_ability_interaction_option_diplomacy = yes }
+					add_character_flag = enhance_ability_diplomacy
+				}
+				else_if = {
+					limit = { scope:anb_enhance_ability_interaction_option_martial = yes }
+					add_character_flag = enhance_ability_martial
+				}
+				else_if = {
+					limit = { scope:anb_enhance_ability_interaction_option_stewardship = yes }
+					add_character_flag = enhance_ability_stewardship
+				}
+				else_if = {
+					limit = { scope:anb_enhance_ability_interaction_option_intrigue = yes }
+					add_character_flag = enhance_ability_intrigue
+				}
+				else_if = {
+					limit = { scope:anb_enhance_ability_interaction_option_learning = yes }
+					add_character_flag = enhance_ability_learning
+				}
+				else_if = {
+					limit = { scope:anb_enhance_ability_interaction_option_prowess = yes }
+					add_character_flag = enhance_ability_prowess
+				}
+			}
+		}
+	}
+}

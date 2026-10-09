@@ -216,6 +216,31 @@ def sguis(spells: list) -> str:
     return "\n".join(out)
 
 
+def interactions(spells: list) -> str:
+    """Targeted spells without an Anbennar interaction. Magic cannot be refused: auto-accepted.
+    AI does not use them (ai_will_do 0); it casts window spells (aov_magic_ai_quarterly)."""
+    out = [HEADER]
+    for s in spells:
+        if s["type"] != "targeted" or s["interaction"] != f"aov_spell_{s['key']}_interaction":
+            continue
+        k = s["key"]
+        out.append(
+            f"aov_spell_{k}_interaction = {{\n"
+            f"\tcategory = interaction_category_spells\n"
+            f"\tcommon_interaction = no\n"
+            f"\tdesc = aov_spell_{k}_interaction_desc\n\n"
+            f"\tis_shown = {{\n\t\tscope:actor = {{ aov_is_mage = yes }}\n\t\tNOT = {{ scope:recipient = scope:actor }}\n\t}}\n\n"
+            f"\tis_valid_showing_failures_only = {{\n"
+            f"\t\tscope:actor = {{ aov_spell_{k}_castable = yes }}\n"
+            f"\t\tscope:recipient = {{ aov_spell_target_allowed = yes }}\n\t}}\n\n"
+            f"\ton_accept = {{\n\t\tscope:actor = {{ aov_spell_{k}_cast = yes }}\n\t}}\n\n"
+            f"\tauto_accept = yes\n\n"
+            f"\tai_will_do = {{\n\t\tbase = 0\n\t}}\n"
+            f"}}\n"
+        )
+    return "\n".join(out)
+
+
 def loc(spells: list) -> str:
     out = ["l_english:", " # " + HEADER.strip("# \n")]
     for s in spells:
@@ -223,6 +248,9 @@ def loc(spells: list) -> str:
         out.append(f' aov_spell_{k}: "{s["name"]}"')
         out.append(f' aov_spell_{k}_desc: "{s["desc"]}"')
         out.append(f' aov_spell_{k}_flavour: "#F {s["flavour"]}#!"')
+        if s["interaction"] == f"aov_spell_{k}_interaction":
+            out.append(f' aov_spell_{k}_interaction: "Cast {s["name"]}"')
+            out.append(f' aov_spell_{k}_interaction_desc: "{s["desc"]}"')
     out.append("")
     for c in SCHOOLS:
         for lvl in range(4):
@@ -239,6 +267,7 @@ def render_all(spells: list) -> dict:
         "common/scripted_triggers/aov_spell_triggers.txt": triggers(spells),
         "common/scripted_effects/aov_spell_effects.txt": effects(spells),
         "common/scripted_guis/aov_spell_sgui.txt": sguis(spells),
+        "common/character_interactions/aov_spell_interactions.txt": interactions(spells),
         "localization/english/aov_spells_l_english.yml": loc(spells),
     }
 

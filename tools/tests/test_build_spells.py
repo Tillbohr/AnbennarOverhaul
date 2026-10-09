@@ -162,8 +162,28 @@ class GeneratedTests(unittest.TestCase):
             for lvl in range(4):
                 self.assertIn(f" AOV_SPELL_REQ_{c.upper()}_{lvl}:", lc)
 
+    def test_generated_interactions(self):
+        text = bs.interactions(SPELLS)
+        self.assertTrue(balanced(text))
+        names = set(top_level_blocks(text))
+        self.assertEqual(names, {f"aov_spell_{k}_interaction" for k in ("ward", "heartstring", "scry", "steal_vitality", "contagion")})
+        for name in names:
+            b = block(text, name)
+            k = name[len("aov_spell_"):-len("_interaction")]
+            self.assertIn("category = interaction_category_spells", b)
+            self.assertIn(f"scope:actor = {{ aov_spell_{k}_castable = yes }}", b)
+            self.assertIn("scope:recipient = { aov_spell_target_allowed = yes }", b)
+            self.assertIn(f"scope:actor = {{ aov_spell_{k}_cast = yes }}", b)
+
+    def test_interaction_loc(self):
+        lc = bs.loc(SPELLS)
+        for k in ("ward", "heartstring", "scry", "steal_vitality", "contagion"):
+            self.assertIn(f" aov_spell_{k}_interaction:", lc)
+            self.assertIn(f" aov_spell_{k}_interaction_desc:", lc)
+
     def test_render_all_paths(self):
         self.assertEqual(set(bs.render_all(SPELLS)), {
+            "common/character_interactions/aov_spell_interactions.txt",
             "common/modifiers/aov_spell_modifiers.txt",
             "common/scripted_triggers/aov_spell_triggers.txt",
             "common/scripted_effects/aov_spell_effects.txt",

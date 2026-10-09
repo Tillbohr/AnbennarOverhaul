@@ -24,3 +24,11 @@ aov_dark_magic_risky = {
 		}
 	}
 }
+
+# Recipient of a targeted spell: not protected by Field of Forbiddance
+aov_spell_target_allowed = {
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_NOT_FORBIDDEN
+		NOT = { has_character_modifier = aov_spell_field_of_forbiddance }
+	}
+}
