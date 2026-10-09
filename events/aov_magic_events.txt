@@ -48,6 +48,59 @@ aov_magic.1 = {
 	}
 }
 
+# The player chose a new school to study (aov_study_choose): the mage at their books
+aov_magic.2 = {
+	type = character_event
+	title = aov_magic.2.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { aov_is_studying = { SCHOOL = abjuration } }
+				desc = aov_magic.2.desc.abjuration
+			}
+			triggered_desc = {
+				trigger = { aov_is_studying = { SCHOOL = conjuration } }
+				desc = aov_magic.2.desc.conjuration
+			}
+			triggered_desc = {
+				trigger = { aov_is_studying = { SCHOOL = divination } }
+				desc = aov_magic.2.desc.divination
+			}
+			triggered_desc = {
+				trigger = { aov_is_studying = { SCHOOL = enchantment } }
+				desc = aov_magic.2.desc.enchantment
+			}
+			triggered_desc = {
+				trigger = { aov_is_studying = { SCHOOL = evocation } }
+				desc = aov_magic.2.desc.evocation
+			}
+			triggered_desc = {
+				trigger = { aov_is_studying = { SCHOOL = illusion } }
+				desc = aov_magic.2.desc.illusion
+			}
+			triggered_desc = {
+				trigger = { aov_is_studying = { SCHOOL = necromancy } }
+				desc = aov_magic.2.desc.necromancy
+			}
+			triggered_desc = {
+				trigger = { aov_is_studying = { SCHOOL = transmutation } }
+				desc = aov_magic.2.desc.transmutation
+			}
+		}
+		desc = aov_magic.2.rate
+	}
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = reading
+	}
+
+	option = {
+		name = aov_magic.2.a
+	}
+}
+
 # Summon Elementals ends: the conjured army returns to its plane (army may already be gone with its war)
 aov_magic.10 = {
 	type = character_event

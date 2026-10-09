@@ -30,6 +30,15 @@ aov_study_set = {
 	set_variable = { name = aov_studying value = flag:$SCHOOL$ }
 }
 
+# The Study button (aov_study_<school>_sgui): a new school opens the study event (aov_magic.2)
+aov_study_choose = {
+	if = {
+		limit = { NOT = { aov_is_studying = { SCHOOL = $SCHOOL$ } } }
+		aov_study_set = { SCHOOL = $SCHOOL$ }
+		trigger_event = aov_magic.2
+	}
+}
+
 # Adds progress; a crossed threshold fires the level-up event
 aov_school_add_progress = {
 	save_temporary_scope_value_as = { name = aov_old_level value = aov_school_$SCHOOL$_level }

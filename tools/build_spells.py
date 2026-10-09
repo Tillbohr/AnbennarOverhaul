@@ -252,7 +252,7 @@ def sguis(spells: list) -> str:
     for c in SCHOOLS:
         out.append(f"aov_study_{c}_sgui = {{\n\tscope = character\n\tis_shown = {{ aov_is_studying = {{ SCHOOL = {c} }} }}\n"
                    f"\tis_valid = {{\n\t\taov_is_mage = yes\n\t\tcustom_tooltip = {{\n\t\t\ttext = AOV_STUDY_REQ_NOT_MASTERED\n"
-                   f"\t\t\taov_school_{c}_level < 3\n\t\t}}\n\t}}\n\teffect = {{ aov_study_set = {{ SCHOOL = {c} }} }}\n}}\n")
+                   f"\t\t\taov_school_{c}_level < 3\n\t\t}}\n\t}}\n\teffect = {{ aov_study_choose = {{ SCHOOL = {c} }} }}\n}}\n")
     return "\n".join(out)
 
 

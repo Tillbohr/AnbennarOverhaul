@@ -141,6 +141,31 @@ class ReviewFixTests(unittest.TestCase):
         self.assertIn("remove_variable = aov_spell_summon_elementals_cd", b)
 
 
+class StudyEventTests(unittest.TestCase):
+    """Choosing a new school to study shows a character event: the mage reading, in a study."""
+
+    def test_choose_fires_event_only_on_a_new_school(self):
+        b = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_study_choose")
+        self.assertIn("NOT = { aov_is_studying = { SCHOOL = $SCHOOL$ } }", b)
+        self.assertLess(b.index("aov_study_set = { SCHOOL = $SCHOOL$ }"), b.index("trigger_event = aov_magic.2"))
+
+    def test_event_shows_mage_reading_in_a_study(self):
+        e = block(read("events/aov_magic_events.txt"), "aov_magic.2")
+        self.assertIn("type = character_event", e)
+        self.assertIn("animation = reading", e)
+        self.assertIn("override_background = { reference = study }", e)
+        for s in SCHOOLS:
+            self.assertIn(f"trigger = {{ aov_is_studying = {{ SCHOOL = {s} }} }}", e)
+            self.assertIn(f"desc = aov_magic.2.desc.{s}", e)
+        self.assertIn("desc = aov_magic.2.rate", e)
+
+    def test_event_loc(self):
+        loc = read("localization/english/aov_magic_l_english.yml")
+        for k in ["aov_magic.2.t", "aov_magic.2.a", "aov_magic.2.rate"] + [f"aov_magic.2.desc.{s}" for s in SCHOOLS]:
+            self.assertRegex(loc, rf"(?m)^ {re.escape(k)}:", k)
+        self.assertIn("aov_study_gain_current_month", loc.split(" aov_magic.2.rate:")[1].split("\n")[0])
+
+
 class AiTests(unittest.TestCase):
     def test_ai_studies_and_casts(self):
         b = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_magic_ai_quarterly")

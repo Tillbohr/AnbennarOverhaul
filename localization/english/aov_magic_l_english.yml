@@ -20,6 +20,17 @@
  aov_magic.1.desc.illusion: "Long study has borne fruit. My command of Illusion has deepened, and I can now work its spells up to level #V [ROOT.Char.MakeScope.ScriptValue('aov_school_illusion_level')|0]#!."
  aov_magic.1.desc.necromancy: "Long study has borne fruit. My command of Necromancy has deepened, and I can now work its spells up to level #V [ROOT.Char.MakeScope.ScriptValue('aov_school_necromancy_level')|0]#!."
  aov_magic.1.desc.transmutation: "Long study has borne fruit. My command of Transmutation has deepened, and I can now work its spells up to level #V [ROOT.Char.MakeScope.ScriptValue('aov_school_transmutation_level')|0]#!."
+ aov_magic.2.t: "The Study of [ROOT.Char.Custom('AovStudyingSchool')]"
+ aov_magic.2.a: "To the books."
+ aov_magic.2.rate: "\n\nEach month of study will bring me #V [ROOT.Char.MakeScope.ScriptValue('aov_study_gain_current_month')|0]#! progress in this school."
+ aov_magic.2.desc.abjuration: "The wardbooks are dry reading: circles, sigils, and long lists of what each barrier will and will not stop. Yet every page is a wall between me and those who would do me harm, and I mean to learn them all."
+ aov_magic.2.desc.conjuration: "The summoner's manuals warn on every page: name a thing exactly, bind it firmly, and never call what you cannot send back. I sharpen my quill and begin with the smallest circles."
+ aov_magic.2.desc.divination: "Star charts, scrying notes and the ramblings of long-dead seers cover my desk. Somewhere among them is the trick of seeing what has not yet happened, and I intend to find it."
+ aov_magic.2.desc.enchantment: "These treatises on the mind read half like medicine and half like seduction. To bend another's will, I must first understand how a will is made."
+ aov_magic.2.desc.evocation: "The evoker's primers are scorched at the edges, and some pages are missing altogether. Fire, lightning and frost answer only to those who study them without fear, so I read on."
+ aov_magic.2.desc.illusion: "Illusionists write in riddles, and half their diagrams are lies meant to catch the careless. To master deception, I must first learn to see through it."
+ aov_magic.2.desc.necromancy: "The grimoire's pages are cold to the touch, and the margins are full of other hands' warnings. I read on anyway."
+ aov_magic.2.desc.transmutation: "Lead into gold, water into wine, flesh into stone: the transmuter's texts promise that all things may change. I open the first volume, curious what it will change in me."
 
  # Casting
  AOV_SPELL_REQ_READY: "The spell is not on cooldown"

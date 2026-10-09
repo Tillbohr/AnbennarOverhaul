@@ -258,7 +258,7 @@ aov_study_abjuration_sgui = {
 			aov_school_abjuration_level < 3
 		}
 	}
-	effect = { aov_study_set = { SCHOOL = abjuration } }
+	effect = { aov_study_choose = { SCHOOL = abjuration } }
 }
 
 aov_study_conjuration_sgui = {
@@ -271,7 +271,7 @@ aov_study_conjuration_sgui = {
 			aov_school_conjuration_level < 3
 		}
 	}
-	effect = { aov_study_set = { SCHOOL = conjuration } }
+	effect = { aov_study_choose = { SCHOOL = conjuration } }
 }
 
 aov_study_divination_sgui = {
@@ -284,7 +284,7 @@ aov_study_divination_sgui = {
 			aov_school_divination_level < 3
 		}
 	}
-	effect = { aov_study_set = { SCHOOL = divination } }
+	effect = { aov_study_choose = { SCHOOL = divination } }
 }
 
 aov_study_enchantment_sgui = {
@@ -297,7 +297,7 @@ aov_study_enchantment_sgui = {
 			aov_school_enchantment_level < 3
 		}
 	}
-	effect = { aov_study_set = { SCHOOL = enchantment } }
+	effect = { aov_study_choose = { SCHOOL = enchantment } }
 }
 
 aov_study_evocation_sgui = {
@@ -310,7 +310,7 @@ aov_study_evocation_sgui = {
 			aov_school_evocation_level < 3
 		}
 	}
-	effect = { aov_study_set = { SCHOOL = evocation } }
+	effect = { aov_study_choose = { SCHOOL = evocation } }
 }
 
 aov_study_illusion_sgui = {
@@ -323,7 +323,7 @@ aov_study_illusion_sgui = {
 			aov_school_illusion_level < 3
 		}
 	}
-	effect = { aov_study_set = { SCHOOL = illusion } }
+	effect = { aov_study_choose = { SCHOOL = illusion } }
 }
 
 aov_study_necromancy_sgui = {
@@ -336,7 +336,7 @@ aov_study_necromancy_sgui = {
 			aov_school_necromancy_level < 3
 		}
 	}
-	effect = { aov_study_set = { SCHOOL = necromancy } }
+	effect = { aov_study_choose = { SCHOOL = necromancy } }
 }
 
 aov_study_transmutation_sgui = {
@@ -349,5 +349,5 @@ aov_study_transmutation_sgui = {
 			aov_school_transmutation_level < 3
 		}
 	}
-	effect = { aov_study_set = { SCHOOL = transmutation } }
+	effect = { aov_study_choose = { SCHOOL = transmutation } }
 }

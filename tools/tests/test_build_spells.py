@@ -299,6 +299,13 @@ class GeneratedTests(unittest.TestCase):
         for w in re.findall(r"aov_spell_card_[a-z_]+\"\n\t*size = \{ (\d+) ", bs.gui(SPELLS)):
             self.assertLessEqual(int(w), 480)
 
+    def test_study_button_chooses_school(self):
+        """The Study button goes through aov_study_choose, which fires the study event on a change of school."""
+        text = bs.sguis(SPELLS)
+        for c in bs.SCHOOLS:
+            self.assertIn(f"effect = {{ aov_study_choose = {{ SCHOOL = {c} }} }}", block(text, f"aov_study_{c}_sgui"))
+        self.assertNotIn("aov_study_set", text)
+
     def test_gui_school_header_study_button(self):
         text = bs.gui(SPELLS)
         for c in bs.SCHOOLS:
