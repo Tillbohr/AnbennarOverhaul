@@ -84,11 +84,13 @@ spell still cannot be stacked.
 | 0,1 | `aov_hearts_desire_perk` | Heart's Desire | Cost −25% Enchantment | +5 general opinion |
 | 0,2 | `aov_lasting_charm_perk` | Lasting Charm | Lasts +50% Enchantment | +1 Diplomacy |
 | 2,0 | `aov_veil_perk` | Veil | Study +25% Illusion | +1 Intrigue |
-| 2,1 | `aov_mirror_image_perk` | Mirror Image | Cost −25% Illusion | own schemes harder to discover |
+| 2,1 | `aov_mirror_image_perk` | Mirror Image | Cost −25% Illusion | +10 scheme secrecy (`owned_scheme_secrecy_add`) |
 | 2,2 | `aov_grand_illusion_perk` | Grand Illusion | Lasts +50% Illusion | +10 dread |
 | 1,3 | `aov_grave_whispers_perk` | Grave Whispers | Study +25% Necromancy; Forbidden Magic chance halved | — |
 | 1,4 | `aov_deathless_will_perk` | Deathless Will | Cost −25% Necromancy | +10% stress loss |
 | 1,5 | `aov_mindweaver_perk` | Mindweaver | grants trait `mindweaver` | — |
+
+Tiger accepted the keys used: `enemy_hostile_scheme_success_chance_add`, `owned_scheme_secrecy_add`, `advantage`, `supply_capacity_add`, `knight_effectiveness_mult`, `stress_loss_mult`, `dread_baseline_add`, `general_opinion`, `monthly_magic_lifestyle_xp_gain_mult`.
 
 Modifier keys (enemy scheme success, scheme discovery, advantage, supply limit, knight effectiveness, stress loss,
 dread) are checked against 1.19 with tiger while building; any substitute is recorded in this spec.

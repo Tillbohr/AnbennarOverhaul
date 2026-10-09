@@ -34,6 +34,7 @@ aov_school_add_progress = {
 
 aov_magic_sync_mastery = {
 	set_variable = { name = magic_mastery value = aov_magic_mastery_value }
+	set_variable = { name = magic_lifestyle_total_points value = magic_lifestyle_perks }
 }
 
 # Quarterly (common/on_action/aov_magic_on_actions.txt): three months of mana and study

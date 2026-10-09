@@ -234,6 +234,7 @@ aov_magic_mastery_value = {
 	add = aov_school_illusion_level
 	add = aov_school_necromancy_level
 	add = aov_school_transmutation_level
+	add = magic_lifestyle_perks
 }
 
 # Window bars (0-100)
