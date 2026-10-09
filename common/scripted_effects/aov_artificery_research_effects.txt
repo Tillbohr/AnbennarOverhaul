@@ -1,26 +1,30 @@
 ﻿# Artificery inventions: research, slots, dormancy, AI and inheritance. Character scope (the ruler).
 # Per-invention effects are generated: common/scripted_effects/aov_invention_effects.txt.
 
+# Pays the sponsor's influence-scaled cost and time (common/script_values/aov_artificer_faction_values.txt)
 aov_artificery_start_research_common = {
+	set_variable = { name = aov_research_paid value = aov_research_cost_$SPONSOR$ }
 	add_gold = {
-		value = aov_research_cost
+		value = aov_research_cost_$SPONSOR$
 		multiply = -1
 	}
 	set_variable = { name = aov_research_sponsor value = flag:$SPONSOR$ }
-	set_variable = { name = aov_research_quarters_left value = $QUARTERS$ }
+	set_variable = { name = aov_research_quarters_left value = aov_research_quarters_$SPONSOR$ }
+	custom_tooltip = aov_sponsor_influence_$SPONSOR$_tt
+	hidden_effect = { aov_faction_sponsor_shift_$SPONSOR$ = yes }
 }
 
 aov_artificery_start_brillites_research = {
-	aov_artificery_start_research_common = { SPONSOR = brillites QUARTERS = 20 }
+	aov_artificery_start_research_common = { SPONSOR = brillites }
 }
 
 aov_artificery_start_mechanists_research = {
-	aov_artificery_start_research_common = { SPONSOR = mechanists QUARTERS = 40 }
+	aov_artificery_start_research_common = { SPONSOR = mechanists }
 	set_variable = { name = aov_research_category value = flag:$CATEGORY$ }
 }
 
 aov_artificery_start_technomancers_research = {
-	aov_artificery_start_research_common = { SPONSOR = technomancers QUARTERS = 60 }
+	aov_artificery_start_research_common = { SPONSOR = technomancers }
 	set_variable = { name = aov_research_category value = flag:$CATEGORY$ }
 	set_variable = { name = aov_research_target value = flag:$TARGET$ }
 }
@@ -77,7 +81,7 @@ aov_artificery_complete_research = {
 		trigger_event = aov_artificery.1
 	}
 	else = {
-		add_gold = aov_research_cost
+		add_gold = var:aov_research_paid
 		trigger_event = aov_artificery.2
 	}
 }
@@ -148,9 +152,11 @@ aov_artificery_update_dormancy = {
 aov_artificery_ai_research = {
 	random_list = {
 		50 = {
+			trigger = { aov_artificery_can_sponsor = { FACTION = brillites } }
 			aov_artificery_start_brillites_research = yes
 		}
 		30 = {
+			trigger = { aov_artificery_can_sponsor = { FACTION = mechanists } }
 			random_list = {
 				1 = {
 					trigger = { aov_inventions_economic_discoverable = yes }
@@ -167,6 +173,7 @@ aov_artificery_ai_research = {
 			}
 		}
 		20 = {
+			trigger = { aov_artificery_can_sponsor = { FACTION = technomancers } }
 			random_list = {
 				1 = {
 					trigger = { aov_inventions_economic_discoverable = yes }

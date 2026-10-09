@@ -85,5 +85,37 @@ class InfluenceTests(unittest.TestCase):
         self.assertIn("aov_faction_refresh_modifiers = yes", b)
 
 
+class ResearchCostTests(unittest.TestCase):
+    def test_common_start_pays_scaled_cost_and_shifts_influence(self):
+        b = block(read("common/scripted_effects/aov_artificery_research_effects.txt"), "aov_artificery_start_research_common")
+        self.assertIn("set_variable = { name = aov_research_paid value = aov_research_cost_$SPONSOR$ }", b)
+        self.assertIn("value = aov_research_quarters_$SPONSOR$", b)
+        self.assertIn("aov_faction_sponsor_shift_$SPONSOR$ = yes", b)
+        self.assertIn("custom_tooltip = aov_sponsor_influence_$SPONSOR$_tt", b)
+
+    def test_sponsor_shift_is_plus_twenty_minus_ten(self):
+        text = read("common/scripted_effects/aov_artificer_faction_effects.txt")
+        for f in FACTIONS:
+            b = block(text, f"aov_faction_sponsor_shift_{f}")
+            self.assertIn(f"aov_faction_change_influence = {{ FACTION = {f} AMOUNT = 20 }}", b)
+            for o in FACTIONS:
+                if o != f:
+                    self.assertIn(f"aov_faction_change_influence = {{ FACTION = {o} AMOUNT = -10 }}", b)
+
+    def test_refund_uses_paid_amount(self):
+        b = block(read("common/scripted_effects/aov_artificery_research_effects.txt"), "aov_artificery_complete_research")
+        self.assertIn("add_gold = var:aov_research_paid", b)
+        self.assertNotIn("add_gold = aov_research_cost", b)
+
+    def test_sponsor_sguis_check_their_faction(self):
+        text = read("common/scripted_guis/aov_artificery_research_sgui.txt")
+        self.assertIn("aov_artificery_can_sponsor = { FACTION = brillites }", block(text, "aov_research_brillites_sgui"))
+        for c in ("economic", "military", "society"):
+            self.assertIn("FACTION = mechanists", block(text, f"aov_research_mechanists_{c}_sgui"))
+            self.assertIn("FACTION = technomancers", block(text, f"aov_research_technomancers_{c}_sgui"))
+        gen = read("common/scripted_guis/aov_invention_sgui.txt")
+        self.assertIn("aov_artificery_can_sponsor = { FACTION = technomancers }", block(gen, "aov_inv_sparkdrive_rifles_research_sgui"))
+
+
 if __name__ == "__main__":
     unittest.main()

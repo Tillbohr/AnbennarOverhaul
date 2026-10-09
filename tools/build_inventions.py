@@ -316,7 +316,7 @@ def sguis(invs: list) -> str:
             f"\t\telse = {{ aov_invention_{k}_activate = yes }}\n\t}}\n}}\n"
             f"aov_inv_{k}_offered_sgui = {{\n\tscope = character\n\tis_shown = {{ aov_invention_{k}_offered = yes aov_invention_{k}_discoverable = yes }}\n}}\n"
             f"aov_inv_{k}_research_sgui = {{\n\tscope = character\n"
-            f"\tis_valid = {{ aov_artificery_can_start_research = yes aov_invention_{k}_discoverable = yes }}\n"
+            f"\tis_valid = {{ aov_artificery_can_sponsor = {{ FACTION = technomancers }} aov_invention_{k}_discoverable = yes }}\n"
             f"\teffect = {{ aov_artificery_start_technomancers_research = {{ CATEGORY = {c} TARGET = {k} }} }}\n}}\n"
             f"# Never executed: its tooltip shows the invention's effects\n"
             f"aov_inv_{k}_effects_sgui = {{\n\tscope = character\n\teffect = {{ add_character_modifier = {{ modifier = aov_invention_{k} }} }}\n}}\n"

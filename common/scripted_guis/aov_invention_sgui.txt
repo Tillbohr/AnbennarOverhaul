@@ -52,7 +52,7 @@ aov_inv_arcane_battery_capital_complex_offered_sgui = {
 }
 aov_inv_arcane_battery_capital_complex_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_arcane_battery_capital_complex_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_arcane_battery_capital_complex_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = economic TARGET = arcane_battery_capital_complex } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -113,7 +113,7 @@ aov_inv_automated_translator_offered_sgui = {
 }
 aov_inv_automated_translator_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_automated_translator_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_automated_translator_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = economic TARGET = automated_translator } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -174,7 +174,7 @@ aov_inv_market_mender_offered_sgui = {
 }
 aov_inv_market_mender_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_market_mender_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_market_mender_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = economic TARGET = market_mender } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -235,7 +235,7 @@ aov_inv_plane_of_water_teleporter_offered_sgui = {
 }
 aov_inv_plane_of_water_teleporter_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_plane_of_water_teleporter_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_plane_of_water_teleporter_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = economic TARGET = plane_of_water_teleporter } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -296,7 +296,7 @@ aov_inv_self_cleaning_parchment_offered_sgui = {
 }
 aov_inv_self_cleaning_parchment_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_self_cleaning_parchment_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_self_cleaning_parchment_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = economic TARGET = self_cleaning_parchment } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -357,7 +357,7 @@ aov_inv_spell_in_a_box_offered_sgui = {
 }
 aov_inv_spell_in_a_box_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_spell_in_a_box_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_spell_in_a_box_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = economic TARGET = spell_in_a_box } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -418,7 +418,7 @@ aov_inv_brass_prosthesis_offered_sgui = {
 }
 aov_inv_brass_prosthesis_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_brass_prosthesis_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_brass_prosthesis_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = economic TARGET = brass_prosthesis } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -479,7 +479,7 @@ aov_inv_chi_cultivation_offered_sgui = {
 }
 aov_inv_chi_cultivation_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_chi_cultivation_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_chi_cultivation_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = economic TARGET = chi_cultivation } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -540,7 +540,7 @@ aov_inv_gene_food_cultivation_offered_sgui = {
 }
 aov_inv_gene_food_cultivation_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_gene_food_cultivation_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_gene_food_cultivation_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = economic TARGET = gene_food_cultivation } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -601,7 +601,7 @@ aov_inv_growth_beans_offered_sgui = {
 }
 aov_inv_growth_beans_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_growth_beans_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_growth_beans_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = economic TARGET = growth_beans } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -662,7 +662,7 @@ aov_inv_subterrenes_offered_sgui = {
 }
 aov_inv_subterrenes_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_subterrenes_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_subterrenes_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = economic TARGET = subterrenes } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -723,7 +723,7 @@ aov_inv_vendorless_stall_offered_sgui = {
 }
 aov_inv_vendorless_stall_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_vendorless_stall_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_vendorless_stall_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = economic TARGET = vendorless_stall } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -784,7 +784,7 @@ aov_inv_elemental_locomotives_offered_sgui = {
 }
 aov_inv_elemental_locomotives_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_elemental_locomotives_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_elemental_locomotives_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = economic TARGET = elemental_locomotives } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -845,7 +845,7 @@ aov_inv_pathway_transmutation_offered_sgui = {
 }
 aov_inv_pathway_transmutation_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_pathway_transmutation_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_pathway_transmutation_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = economic TARGET = pathway_transmutation } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -906,7 +906,7 @@ aov_inv_prefabricated_city_constructors_offered_sgui = {
 }
 aov_inv_prefabricated_city_constructors_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_prefabricated_city_constructors_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_prefabricated_city_constructors_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = economic TARGET = prefabricated_city_constructors } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -967,7 +967,7 @@ aov_inv_t_wave_transceivers_offered_sgui = {
 }
 aov_inv_t_wave_transceivers_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_t_wave_transceivers_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_t_wave_transceivers_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = economic TARGET = t_wave_transceivers } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -1028,7 +1028,7 @@ aov_inv_ancestral_golems_offered_sgui = {
 }
 aov_inv_ancestral_golems_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_ancestral_golems_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_ancestral_golems_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = ancestral_golems } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -1089,7 +1089,7 @@ aov_inv_artificer_exo_arms_offered_sgui = {
 }
 aov_inv_artificer_exo_arms_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_artificer_exo_arms_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_artificer_exo_arms_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = artificer_exo_arms } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -1150,7 +1150,7 @@ aov_inv_box_of_holding_offered_sgui = {
 }
 aov_inv_box_of_holding_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_box_of_holding_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_box_of_holding_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = box_of_holding } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -1211,7 +1211,7 @@ aov_inv_commercial_sky_galleons_offered_sgui = {
 }
 aov_inv_commercial_sky_galleons_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_commercial_sky_galleons_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_commercial_sky_galleons_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = commercial_sky_galleons } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -1272,7 +1272,7 @@ aov_inv_magic_missile_deployer_offered_sgui = {
 }
 aov_inv_magic_missile_deployer_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_magic_missile_deployer_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_magic_missile_deployer_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = magic_missile_deployer } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -1333,7 +1333,7 @@ aov_inv_portable_turrets_offered_sgui = {
 }
 aov_inv_portable_turrets_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_portable_turrets_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_portable_turrets_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = portable_turrets } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -1394,7 +1394,7 @@ aov_inv_sparkdrive_rifles_offered_sgui = {
 }
 aov_inv_sparkdrive_rifles_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_sparkdrive_rifles_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_sparkdrive_rifles_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = sparkdrive_rifles } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -1455,7 +1455,7 @@ aov_inv_sunbeam_armaments_offered_sgui = {
 }
 aov_inv_sunbeam_armaments_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_sunbeam_armaments_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_sunbeam_armaments_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = sunbeam_armaments } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -1516,7 +1516,7 @@ aov_inv_vorpal_bullets_offered_sgui = {
 }
 aov_inv_vorpal_bullets_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_vorpal_bullets_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_vorpal_bullets_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = vorpal_bullets } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -1577,7 +1577,7 @@ aov_inv_arcane_blaster_offered_sgui = {
 }
 aov_inv_arcane_blaster_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_arcane_blaster_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_arcane_blaster_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = arcane_blaster } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -1638,7 +1638,7 @@ aov_inv_avatar_supersoldier_serum_offered_sgui = {
 }
 aov_inv_avatar_supersoldier_serum_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_avatar_supersoldier_serum_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_avatar_supersoldier_serum_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = avatar_supersoldier_serum } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -1699,7 +1699,7 @@ aov_inv_balloonboost_packs_offered_sgui = {
 }
 aov_inv_balloonboost_packs_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_balloonboost_packs_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_balloonboost_packs_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = balloonboost_packs } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -1760,7 +1760,7 @@ aov_inv_coddorran_powered_exosuit_offered_sgui = {
 }
 aov_inv_coddorran_powered_exosuit_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_coddorran_powered_exosuit_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_coddorran_powered_exosuit_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = coddorran_powered_exosuit } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -1821,7 +1821,7 @@ aov_inv_gu_boats_offered_sgui = {
 }
 aov_inv_gu_boats_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_gu_boats_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_gu_boats_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = gu_boats } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -1882,7 +1882,7 @@ aov_inv_lullaby_cannon_offered_sgui = {
 }
 aov_inv_lullaby_cannon_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_lullaby_cannon_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_lullaby_cannon_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = lullaby_cannon } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -1943,7 +1943,7 @@ aov_inv_prototype_tanks_offered_sgui = {
 }
 aov_inv_prototype_tanks_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_prototype_tanks_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_prototype_tanks_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = prototype_tanks } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -2004,7 +2004,7 @@ aov_inv_wandlocks_offered_sgui = {
 }
 aov_inv_wandlocks_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_wandlocks_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_wandlocks_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = wandlocks } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -2065,7 +2065,7 @@ aov_inv_war_golems_offered_sgui = {
 }
 aov_inv_war_golems_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_war_golems_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_war_golems_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = war_golems } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -2126,7 +2126,7 @@ aov_inv_artillery_autoloader_offered_sgui = {
 }
 aov_inv_artillery_autoloader_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_artillery_autoloader_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_artillery_autoloader_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = artillery_autoloader } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -2187,7 +2187,7 @@ aov_inv_bioartificed_ascension_offered_sgui = {
 }
 aov_inv_bioartificed_ascension_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_bioartificed_ascension_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_bioartificed_ascension_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = bioartificed_ascension } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -2248,7 +2248,7 @@ aov_inv_black_damestear_bullets_offered_sgui = {
 }
 aov_inv_black_damestear_bullets_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_black_damestear_bullets_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_black_damestear_bullets_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = black_damestear_bullets } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -2309,7 +2309,7 @@ aov_inv_damestear_reactor_megacannon_offered_sgui = {
 }
 aov_inv_damestear_reactor_megacannon_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_damestear_reactor_megacannon_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_damestear_reactor_megacannon_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = damestear_reactor_megacannon } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -2370,7 +2370,7 @@ aov_inv_demonflame_flamethrowers_offered_sgui = {
 }
 aov_inv_demonflame_flamethrowers_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_demonflame_flamethrowers_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_demonflame_flamethrowers_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = demonflame_flamethrowers } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -2431,7 +2431,7 @@ aov_inv_military_sky_galleons_offered_sgui = {
 }
 aov_inv_military_sky_galleons_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_military_sky_galleons_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_military_sky_galleons_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = military_sky_galleons } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -2492,7 +2492,7 @@ aov_inv_naval_mageshields_offered_sgui = {
 }
 aov_inv_naval_mageshields_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_naval_mageshields_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_naval_mageshields_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = naval_mageshields } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -2553,7 +2553,7 @@ aov_inv_personal_mageshields_offered_sgui = {
 }
 aov_inv_personal_mageshields_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_personal_mageshields_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_personal_mageshields_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = military TARGET = personal_mageshields } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -2614,7 +2614,7 @@ aov_inv_apparitional_communicator_offered_sgui = {
 }
 aov_inv_apparitional_communicator_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_apparitional_communicator_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_apparitional_communicator_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = society TARGET = apparitional_communicator } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -2675,7 +2675,7 @@ aov_inv_centipedal_chests_offered_sgui = {
 }
 aov_inv_centipedal_chests_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_centipedal_chests_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_centipedal_chests_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = society TARGET = centipedal_chests } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -2736,7 +2736,7 @@ aov_inv_conversation_calibrator_offered_sgui = {
 }
 aov_inv_conversation_calibrator_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_conversation_calibrator_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_conversation_calibrator_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = society TARGET = conversation_calibrator } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -2797,7 +2797,7 @@ aov_inv_fey_spray_offered_sgui = {
 }
 aov_inv_fey_spray_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_fey_spray_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_fey_spray_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = society TARGET = fey_spray } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -2858,7 +2858,7 @@ aov_inv_living_mirrors_offered_sgui = {
 }
 aov_inv_living_mirrors_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_living_mirrors_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_living_mirrors_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = society TARGET = living_mirrors } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -2919,7 +2919,7 @@ aov_inv_mystic_ciphers_offered_sgui = {
 }
 aov_inv_mystic_ciphers_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_mystic_ciphers_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_mystic_ciphers_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = society TARGET = mystic_ciphers } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -2980,7 +2980,7 @@ aov_inv_sending_stones_offered_sgui = {
 }
 aov_inv_sending_stones_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_sending_stones_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_sending_stones_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = society TARGET = sending_stones } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -3041,7 +3041,7 @@ aov_inv_viewcatcher_offered_sgui = {
 }
 aov_inv_viewcatcher_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_viewcatcher_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_viewcatcher_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = society TARGET = viewcatcher } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -3102,7 +3102,7 @@ aov_inv_arithmatons_offered_sgui = {
 }
 aov_inv_arithmatons_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_arithmatons_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_arithmatons_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = society TARGET = arithmatons } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -3163,7 +3163,7 @@ aov_inv_empire_engine_offered_sgui = {
 }
 aov_inv_empire_engine_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_empire_engine_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_empire_engine_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = society TARGET = empire_engine } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -3224,7 +3224,7 @@ aov_inv_game_of_khet_offered_sgui = {
 }
 aov_inv_game_of_khet_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_game_of_khet_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_game_of_khet_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = society TARGET = game_of_khet } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -3285,7 +3285,7 @@ aov_inv_mirage_detector_3000_offered_sgui = {
 }
 aov_inv_mirage_detector_3000_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_mirage_detector_3000_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_mirage_detector_3000_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = society TARGET = mirage_detector_3000 } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -3346,7 +3346,7 @@ aov_inv_remedial_tinctures_offered_sgui = {
 }
 aov_inv_remedial_tinctures_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_remedial_tinctures_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_remedial_tinctures_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = society TARGET = remedial_tinctures } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -3407,7 +3407,7 @@ aov_inv_think_thought_transmitters_offered_sgui = {
 }
 aov_inv_think_thought_transmitters_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_think_thought_transmitters_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_think_thought_transmitters_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = society TARGET = think_thought_transmitters } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -3468,7 +3468,7 @@ aov_inv_bureaucratizer_offered_sgui = {
 }
 aov_inv_bureaucratizer_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_bureaucratizer_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_bureaucratizer_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = society TARGET = bureaucratizer } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -3529,7 +3529,7 @@ aov_inv_crierless_crier_device_offered_sgui = {
 }
 aov_inv_crierless_crier_device_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_crierless_crier_device_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_crierless_crier_device_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = society TARGET = crierless_crier_device } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -3590,7 +3590,7 @@ aov_inv_negotiation_nexus_offered_sgui = {
 }
 aov_inv_negotiation_nexus_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_negotiation_nexus_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_negotiation_nexus_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = society TARGET = negotiation_nexus } }
 }
 # Never executed: its tooltip shows the invention's effects
@@ -3651,7 +3651,7 @@ aov_inv_runethought_network_offered_sgui = {
 }
 aov_inv_runethought_network_research_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes aov_invention_runethought_network_discoverable = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = technomancers } aov_invention_runethought_network_discoverable = yes }
 	effect = { aov_artificery_start_technomancers_research = { CATEGORY = society TARGET = runethought_network } }
 }
 # Never executed: its tooltip shows the invention's effects

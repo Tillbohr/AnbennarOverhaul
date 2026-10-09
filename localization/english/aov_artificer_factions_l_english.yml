@@ -47,3 +47,8 @@
  aov_technomancers_favored_desc: "Technomancer enchantments strengthen my champions."
  aov_technomancers_exalted: "Exalted by the Technomancers"
  aov_technomancers_exalted_desc: "The Technomancer Conclave arms my warriors with its most potent artifice."
+
+ # Sponsoring
+ aov_sponsor_influence_brillites_tt: "#P +20#! influence with the Brillites, #N -10#! with the Mechanists and the Technomancers"
+ aov_sponsor_influence_mechanists_tt: "#P +20#! influence with the Mechanists, #N -10#! with the Brillites and the Technomancers"
+ aov_sponsor_influence_technomancers_tt: "#P +20#! influence with the Technomancers, #N -10#! with the Brillites and the Mechanists"

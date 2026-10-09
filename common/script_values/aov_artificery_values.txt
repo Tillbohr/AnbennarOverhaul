@@ -1,7 +1,5 @@
 ﻿# Artificery inventions: character-scope values. See common/scripted_effects/aov_artificery_research_effects.txt.
 
-aov_research_cost = 50
-
 # 3 slots, 4 from the High Medieval era, 5 from the Late Medieval era
 aov_invention_slots_max = {
 	value = 3

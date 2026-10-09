@@ -24,13 +24,14 @@ class ResearchTests(unittest.TestCase):
     def test_complete_research_refunds_when_nothing_discovered(self):
         b = block(read("common/scripted_effects/aov_artificery_research_effects.txt"), "aov_artificery_complete_research")
         self.assertIn("remove_variable = aov_last_discovered", b)
-        self.assertRegex(b, r"else = \{\s*add_gold = aov_research_cost\s*trigger_event = aov_artificery\.2")
+        self.assertRegex(b, r"else = \{\s*add_gold = var:aov_research_paid\s*trigger_event = aov_artificery\.2")
 
     def test_sponsor_durations(self):
         text = read("common/scripted_effects/aov_artificery_research_effects.txt")
-        self.assertIn("SPONSOR = brillites QUARTERS = 20", text)
-        self.assertIn("SPONSOR = mechanists QUARTERS = 40", text)
-        self.assertIn("SPONSOR = technomancers QUARTERS = 60", text)
+        # Durations are per faction and influence: common/script_values/aov_artificer_faction_values.txt
+        for f in ("brillites", "mechanists", "technomancers"):
+            self.assertIn(f"aov_artificery_start_research_common = {{ SPONSOR = {f} }}", text)
+        self.assertIn("value = aov_research_quarters_$SPONSOR$", text)
 
     def test_technomancer_category_sgui_rolls_only_once(self):
         text = read("common/scripted_guis/aov_artificery_research_sgui.txt")

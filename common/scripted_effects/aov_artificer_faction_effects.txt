@@ -151,3 +151,20 @@ aov_faction_remove_modifiers = {
 	if = { limit = { has_character_modifier = aov_technomancers_favored } remove_character_modifier = aov_technomancers_favored }
 	if = { limit = { has_character_modifier = aov_technomancers_exalted } remove_character_modifier = aov_technomancers_exalted }
 }
+
+# Sponsoring research (aov_artificery_start_research_common): +20 to the sponsor, -10 to each other faction
+aov_faction_sponsor_shift_brillites = {
+	aov_faction_change_influence = { FACTION = brillites AMOUNT = 20 }
+	aov_faction_change_influence = { FACTION = mechanists AMOUNT = -10 }
+	aov_faction_change_influence = { FACTION = technomancers AMOUNT = -10 }
+}
+aov_faction_sponsor_shift_mechanists = {
+	aov_faction_change_influence = { FACTION = mechanists AMOUNT = 20 }
+	aov_faction_change_influence = { FACTION = brillites AMOUNT = -10 }
+	aov_faction_change_influence = { FACTION = technomancers AMOUNT = -10 }
+}
+aov_faction_sponsor_shift_technomancers = {
+	aov_faction_change_influence = { FACTION = technomancers AMOUNT = 20 }
+	aov_faction_change_influence = { FACTION = brillites AMOUNT = -10 }
+	aov_faction_change_influence = { FACTION = mechanists AMOUNT = -10 }
+}

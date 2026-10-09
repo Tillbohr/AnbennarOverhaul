@@ -25,14 +25,14 @@ aov_research_has_category_sgui = {
 
 aov_research_brillites_sgui = {
 	scope = character
-	is_valid = { aov_artificery_can_start_research = yes }
+	is_valid = { aov_artificery_can_sponsor = { FACTION = brillites } }
 	effect = { aov_artificery_start_brillites_research = yes }
 }
 
 aov_research_mechanists_economic_sgui = {
 	scope = character
 	is_valid = {
-		aov_artificery_can_start_research = yes
+		aov_artificery_can_sponsor = { FACTION = mechanists }
 		custom_tooltip = { text = aov_artificery_category_discoverable_tt aov_inventions_economic_discoverable = yes }
 	}
 	effect = { aov_artificery_start_mechanists_research = { CATEGORY = economic } }
@@ -41,7 +41,7 @@ aov_research_mechanists_economic_sgui = {
 aov_research_mechanists_military_sgui = {
 	scope = character
 	is_valid = {
-		aov_artificery_can_start_research = yes
+		aov_artificery_can_sponsor = { FACTION = mechanists }
 		custom_tooltip = { text = aov_artificery_category_discoverable_tt aov_inventions_military_discoverable = yes }
 	}
 	effect = { aov_artificery_start_mechanists_research = { CATEGORY = military } }
@@ -50,7 +50,7 @@ aov_research_mechanists_military_sgui = {
 aov_research_mechanists_society_sgui = {
 	scope = character
 	is_valid = {
-		aov_artificery_can_start_research = yes
+		aov_artificery_can_sponsor = { FACTION = mechanists }
 		custom_tooltip = { text = aov_artificery_category_discoverable_tt aov_inventions_society_discoverable = yes }
 	}
 	effect = { aov_artificery_start_mechanists_research = { CATEGORY = society } }
@@ -60,7 +60,7 @@ aov_research_mechanists_society_sgui = {
 aov_research_technomancers_economic_sgui = {
 	scope = character
 	is_valid = {
-		aov_artificery_can_start_research = yes
+		aov_artificery_can_sponsor = { FACTION = technomancers }
 		custom_tooltip = { text = aov_artificery_category_discoverable_tt aov_inventions_economic_discoverable = yes }
 	}
 	effect = {
@@ -74,7 +74,7 @@ aov_research_technomancers_economic_sgui = {
 aov_research_technomancers_military_sgui = {
 	scope = character
 	is_valid = {
-		aov_artificery_can_start_research = yes
+		aov_artificery_can_sponsor = { FACTION = technomancers }
 		custom_tooltip = { text = aov_artificery_category_discoverable_tt aov_inventions_military_discoverable = yes }
 	}
 	effect = {
@@ -88,7 +88,7 @@ aov_research_technomancers_military_sgui = {
 aov_research_technomancers_society_sgui = {
 	scope = character
 	is_valid = {
-		aov_artificery_can_start_research = yes
+		aov_artificery_can_sponsor = { FACTION = technomancers }
 		custom_tooltip = { text = aov_artificery_category_discoverable_tt aov_inventions_society_discoverable = yes }
 	}
 	effect = {

@@ -11,12 +11,17 @@ aov_artificery_can_start_research = {
 		NOT = { aov_artificery_is_researching = yes }
 	}
 	custom_tooltip = {
-		text = aov_artificery_research_gold_tt
-		gold >= aov_research_cost
-	}
-	custom_tooltip = {
 		text = aov_artificery_any_discoverable_tt
 		aov_inventions_any_discoverable = yes
+	}
+}
+
+# FACTION = brillites | mechanists | technomancers: can start research with them at their current price
+aov_artificery_can_sponsor = {
+	aov_artificery_can_start_research = yes
+	custom_tooltip = {
+		text = aov_artificery_research_gold_$FACTION$_tt
+		gold >= aov_research_cost_$FACTION$
 	}
 }
 
