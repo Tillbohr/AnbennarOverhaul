@@ -60,7 +60,9 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 1. Replace `../anbennar-ck3-dev-master` with the new Anbennar release.
 2. Run `python -I tools/build_holdings_override.py` and `python -I tools/build_hud_override.py`.
 3. Run tiger (below) and fix anything that references renamed Anbennar content.
-4. Test in game; check `database_conflicts.log` for overhaul keys now also defined by Anbennar.
+4. Re-copy Anbennar's `title_revocation_standard_can_pick_title_trigger` (`common/scripted_triggers/00_interaction_triggers.txt`)
+   into `common/scripted_triggers/zz_aov_interaction_triggers.txt`, keeping the `# Anbennar Overhaul` faction-title exclusion.
+5. Test in game; check `database_conflicts.log` for overhaul keys now also defined by Anbennar.
 
 After a CK3 patch, rerun `python -I tools/build_hud_override.py` too: its source is the game's `hud.gui`.
 
@@ -83,11 +85,11 @@ inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error
 - **Artificery tab:** HUD main tab below Situations (`gui/hud.gui`, generated) shown when the player passes
   `can_use_artificery_trigger` (gnome race, Gnomish Ingenuity culture, exactly one academy) via scripted GUI
   `aov_artificery_available`. Opens `gui/aov_window_artificery.gui` (scripted widget, variable
-  `aov_artificery_window`) with Factions/Inventions tabs (variable `aov_artificery_tab`, unset = Factions);
-  the Factions body is a placeholder until the factions system is built.
+  `aov_artificery_window`) with Factions/Inventions tabs (variable `aov_artificery_tab`, unset = Factions).
 - **Artificery inventions:** 60 inventions in `tools/data/inventions.py` (EU4 Anbennar mapping in
   `docs/research/2026-10-08-eu4-artificer-inventions.md`). Research sponsored by Brillites (5 y, random),
-  Mechanists (10 y, chosen field) or Technomancers (15 y, chosen invention), 50 gold each; tiers gated by culture
+  Mechanists (10 y, chosen field) or Technomancers (15 y, chosen invention); cost and time set by that faction's
+  influence (below); tiers gated by culture
   era; 3/4/5 slots with a 1-year cooldown; state in ruler variables, inherited by the heir; dormant while
   ineligible. Logic in `aov_artificery_research_*` files and `common/on_action/aov_inventions_on_actions.txt`.
 - **Inventions tab UI:** EU4-style. Tier I/II/III tabs (variable `aov_inventions_tier`, unset = I), each with
@@ -95,6 +97,17 @@ inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error
   runs `aov_inv_<key>_toggle_sgui` (activate, or deactivate with the slot cooldown); hovering shows
   `aov_invention_<key>_tooltip` (name, field/tier, description, effects, status).
 - **Research popup:** `gui/aov_window_artificery_research.gui`, drawn like a character event (`bp2_university`
-  background, `type_inspiration` icon). Three faction leaders stand on the right; they are **placeholders showing
-  the player** until the factions system exists (swap each `aov_research_leader` datacontext). Steps use GUI
-  variable `aov_research_stage` (unset → `mechanists` / `technomancers` → `tech_<field>` proposals).
+  background, `type_inspiration` icon). The three faction title holders stand on the right ("Vacant" plate when
+  empty); each option shows that faction's price. Steps use GUI variable `aov_research_stage` (unset →
+  `mechanists` / `technomancers` → `tech_<field>` proposals).
+- **Artificer factions:** global landless duchies `d_brillites`, `d_mechanists`, `d_technomancers`
+  (`common/landed_titles/aov_artificer_faction_titles.txt`), held for life, not revocable (revoke-trigger override).
+  When a holder dies (`common/on_action/aov_artificer_faction_on_actions.txt`) the title is destroyed and
+  `aov_election_open` (`common/scripted_effects/aov_artificer_election_effects.txt`) picks three gnome candidates;
+  every artificer nation votes, weighted by influence level (players via event `aov_artificer_factions.1`), and
+  the count after 30 days grants the title to the winner, who stays their liege's vassal. Vacant titles are filled
+  at game start and yearly. **Influence** per ruler and faction (`aov_influence_<f>`, 0-100, start 40): sponsoring
+  +20 / rivals -10, +1/quarter while their research runs, -1/quarter above 40, ±1-2/quarter from the leader's
+  opinion, Make Amends (100 gold, +10, up to 40). Levels Hostile/Displeased/Neutral/Favored/Exalted give modifiers
+  `aov_<f>_<level>` and set research cost (100/75/50/38/25) and time (+25%/+25%/-/-/-25%). Values in
+  `common/script_values/aov_artificer_faction_values.txt`; Factions tab cards in `gui/aov_artificer_factions.gui`.
