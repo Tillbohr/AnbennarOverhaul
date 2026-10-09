@@ -202,5 +202,35 @@ class ElectionTests(unittest.TestCase):
         self.assertIn("resolve_title_and_vassal_change = scope:aov_change", b)
 
 
+class FactionsTabTests(unittest.TestCase):
+    def test_make_amends_caps_at_forty(self):
+        b = block(read("common/scripted_effects/aov_artificer_faction_effects.txt"), "aov_faction_make_amends")
+        self.assertIn("remove_short_term_gold = 100", b)
+        self.assertIn("max = 40", b)
+
+    def test_make_amends_sgui_only_below_forty_with_gold(self):
+        text = read("common/scripted_guis/aov_artificer_faction_sgui.txt")
+        for f in FACTIONS:
+            b = block(text, f"aov_make_amends_{f}_sgui")
+            self.assertIn(f"aov_influence_{f} < 40", b)
+            self.assertIn("gold >= 100", b)
+            self.assertIn(f"aov_faction_make_amends = {{ FACTION = {f} }}", b)
+
+    def test_tab_has_three_cards(self):
+        win = read("gui/aov_window_artificery.gui")
+        self.assertNotIn("AOV_ARTIFICERY_FACTIONS_PLACEHOLDER", win)
+        self.assertEqual(win.count("aov_faction_card = {"), 3)
+        for f in FACTIONS:
+            self.assertIn(f"GetTitleByKey('d_{f}')", win)
+            self.assertIn(f"aov_make_amends_{f}_sgui", win)
+
+    def test_bar_markers_at_thresholds(self):
+        gui = read("gui/aov_artificer_factions.gui")
+        self.assertIn("type aov_influence_bar", gui)
+        self.assertEqual(gui.count("widget_level_marker = {"), 4)
+        for x in ("15%", "30%", "60%", "85%"):
+            self.assertIn(x, gui)
+
+
 if __name__ == "__main__":
     unittest.main()

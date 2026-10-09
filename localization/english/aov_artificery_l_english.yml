@@ -25,7 +25,6 @@
  AOV_ARTIFICERY_WINDOW_TITLE: "Artificery"
  AOV_ARTIFICERY_TAB_FACTIONS: "Factions"
  AOV_ARTIFICERY_TAB_INVENTIONS: "Inventions"
- AOV_ARTIFICERY_FACTIONS_PLACEHOLDER: "The artificer factions will be shown here."
 
  # Inventions
  AOV_CATEGORY_ECONOMIC: "Economic"

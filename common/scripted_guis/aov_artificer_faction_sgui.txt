@@ -1,0 +1,61 @@
+﻿# Anbennar Overhaul: artificer factions in the Factions tab (gui/aov_window_artificery.gui)
+
+aov_make_amends_brillites_sgui = {
+	scope = character
+	is_valid = {
+		custom_tooltip = {
+			text = aov_make_amends_below_40_tt
+			aov_influence_brillites < 40
+		}
+		custom_tooltip = {
+			text = aov_make_amends_gold_tt
+			gold >= 100
+		}
+	}
+	effect = { aov_faction_make_amends = { FACTION = brillites } }
+}
+
+aov_faction_brillites_election_sgui = {
+	scope = character
+	is_shown = { exists = global_var:aov_election_open_brillites }
+}
+
+aov_make_amends_mechanists_sgui = {
+	scope = character
+	is_valid = {
+		custom_tooltip = {
+			text = aov_make_amends_below_40_tt
+			aov_influence_mechanists < 40
+		}
+		custom_tooltip = {
+			text = aov_make_amends_gold_tt
+			gold >= 100
+		}
+	}
+	effect = { aov_faction_make_amends = { FACTION = mechanists } }
+}
+
+aov_faction_mechanists_election_sgui = {
+	scope = character
+	is_shown = { exists = global_var:aov_election_open_mechanists }
+}
+
+aov_make_amends_technomancers_sgui = {
+	scope = character
+	is_valid = {
+		custom_tooltip = {
+			text = aov_make_amends_below_40_tt
+			aov_influence_technomancers < 40
+		}
+		custom_tooltip = {
+			text = aov_make_amends_gold_tt
+			gold >= 100
+		}
+	}
+	effect = { aov_faction_make_amends = { FACTION = technomancers } }
+}
+
+aov_faction_technomancers_election_sgui = {
+	scope = character
+	is_shown = { exists = global_var:aov_election_open_technomancers }
+}

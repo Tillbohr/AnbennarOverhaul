@@ -1,0 +1,211 @@
+﻿# Anbennar Overhaul: artificer faction cards in the Factions tab of the Artificery window.
+# The influence bar is styled like the vanilla trait level track (gui/shared/progressbars.gui).
+
+types AovArtificerFactions
+{
+	# 0-100 bar with level markers at 15%, 30%, 60% and 85% (Displeased, Neutral, Favored, Exalted)
+	type aov_influence_bar = widget {
+		layoutpolicy_horizontal = expanding
+		size = { 0 40 }
+
+		progressbar_standard = {
+			parentanchor = vcenter
+			size = { 100% 15 }
+			min = 0
+			max = 100
+			progresstexture = "gfx/interface/progressbars/progress_standard.dds"
+			noprogresstexture = "gfx/interface/progressbars/progress_black.dds"
+
+			block "value" {
+				value = 40
+			}
+			block "bar_tooltip" {}
+		}
+
+		# Spacers 15 / 15 / 30 / 25 / 15 put the markers at 15%, 30%, 60% and 85%
+		hbox = {
+			widget = {
+				layoutpolicy_horizontal = expanding
+				layoutstretchfactor_horizontal = 15
+			}
+			widget_level_marker = {
+				scale = 0.75
+
+				blockoverride "visible_active" {
+					block "marker_1_active" {}
+				}
+				blockoverride "visible_inactive" {
+					block "marker_1_inactive" {}
+				}
+				blockoverride "marker_text" {
+					text = "AOV_LEVEL_NUMERAL_1"
+				}
+				blockoverride "marker_tooltip" {
+					block "marker_1_tooltip" {}
+				}
+			}
+			widget = {
+				layoutpolicy_horizontal = expanding
+				layoutstretchfactor_horizontal = 15
+			}
+			widget_level_marker = {
+				scale = 0.75
+
+				blockoverride "visible_active" {
+					block "marker_2_active" {}
+				}
+				blockoverride "visible_inactive" {
+					block "marker_2_inactive" {}
+				}
+				blockoverride "marker_text" {
+					text = "AOV_LEVEL_NUMERAL_2"
+				}
+				blockoverride "marker_tooltip" {
+					block "marker_2_tooltip" {}
+				}
+			}
+			widget = {
+				layoutpolicy_horizontal = expanding
+				layoutstretchfactor_horizontal = 30
+			}
+			widget_level_marker = {
+				scale = 0.75
+
+				blockoverride "visible_active" {
+					block "marker_3_active" {}
+				}
+				blockoverride "visible_inactive" {
+					block "marker_3_inactive" {}
+				}
+				blockoverride "marker_text" {
+					text = "AOV_LEVEL_NUMERAL_3"
+				}
+				blockoverride "marker_tooltip" {
+					block "marker_3_tooltip" {}
+				}
+			}
+			widget = {
+				layoutpolicy_horizontal = expanding
+				layoutstretchfactor_horizontal = 25
+			}
+			widget_level_marker = {
+				scale = 0.75
+
+				blockoverride "visible_active" {
+					block "marker_4_active" {}
+				}
+				blockoverride "visible_inactive" {
+					block "marker_4_inactive" {}
+				}
+				blockoverride "marker_text" {
+					text = "AOV_LEVEL_NUMERAL_4"
+				}
+				blockoverride "marker_tooltip" {
+					block "marker_4_tooltip" {}
+				}
+			}
+			widget = {
+				layoutpolicy_horizontal = expanding
+				layoutstretchfactor_horizontal = 15
+			}
+		}
+	}
+
+	# A faction: coat of arms, leader, influence bar, Make Amends
+	type aov_faction_card = vbox {
+		layoutpolicy_horizontal = expanding
+		margin = { 14 12 }
+		margin_top = 14
+		spacing = 6
+
+		background = {
+			using = Background_Area_With_Header
+		}
+
+		block "title" {}
+
+		hbox = {
+			layoutpolicy_horizontal = expanding
+			spacing = 10
+
+			coa_title_medium = {}
+
+			widget = {
+				size = { 70 80 }
+
+				portrait_head = {
+					datacontext = "[Title.GetHolder]"
+					visible = "[Title.HasHolder]"
+				}
+			}
+
+			vbox = {
+				layoutpolicy_horizontal = expanding
+				spacing = 2
+
+				text_single = {
+					layoutpolicy_horizontal = expanding
+					using = Font_Type_Flavor
+					using = Font_Size_Medium
+					default_format = "#T"
+					max_width = 380
+					align = left|nobaseline
+
+					block "faction_name" {}
+				}
+
+				text_single = {
+					visible = "[Title.HasHolder]"
+					layoutpolicy_horizontal = expanding
+					text = "AOV_FACTION_LEADER"
+					max_width = 380
+					align = left|nobaseline
+				}
+
+				text_single = {
+					visible = "[Not( Title.HasHolder )]"
+					layoutpolicy_horizontal = expanding
+					max_width = 380
+					align = left|nobaseline
+
+					block "vacant_text" {}
+				}
+
+				text_multi = {
+					layoutpolicy_horizontal = expanding
+					size = { 380 0 }
+					max_width = 380
+					autoresize = yes
+					default_format = "#weak"
+
+					block "description" {}
+				}
+			}
+		}
+
+		aov_influence_bar = {
+			block "bar" {}
+		}
+
+		hbox = {
+			layoutpolicy_horizontal = expanding
+			spacing = 8
+
+			text_single = {
+				max_width = 380
+				align = left|nobaseline
+
+				block "status" {}
+			}
+
+			expand = {}
+
+			button_standard = {
+				size = { 170 30 }
+				text = "AOV_MAKE_AMENDS"
+
+				block "amends" {}
+			}
+		}
+	}
+}

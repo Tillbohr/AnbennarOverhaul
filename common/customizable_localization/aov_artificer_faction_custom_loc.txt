@@ -1,0 +1,73 @@
+﻿# Anbennar Overhaul: the ruler's influence level name per artificer faction
+
+AovInfluenceLevel_brillites = {
+	type = character
+	text = {
+		trigger = { aov_influence_is_hostile_brillites = yes }
+		localization_key = AOV_LEVEL_HOSTILE
+	}
+	text = {
+		trigger = { aov_influence_is_displeased_brillites = yes }
+		localization_key = AOV_LEVEL_DISPLEASED
+	}
+	text = {
+		trigger = { aov_influence_is_neutral_brillites = yes }
+		localization_key = AOV_LEVEL_NEUTRAL
+	}
+	text = {
+		trigger = { aov_influence_is_favored_brillites = yes }
+		localization_key = AOV_LEVEL_FAVORED
+	}
+	text = {
+		trigger = { aov_influence_is_exalted_brillites = yes }
+		localization_key = AOV_LEVEL_EXALTED
+	}
+}
+
+AovInfluenceLevel_mechanists = {
+	type = character
+	text = {
+		trigger = { aov_influence_is_hostile_mechanists = yes }
+		localization_key = AOV_LEVEL_HOSTILE
+	}
+	text = {
+		trigger = { aov_influence_is_displeased_mechanists = yes }
+		localization_key = AOV_LEVEL_DISPLEASED
+	}
+	text = {
+		trigger = { aov_influence_is_neutral_mechanists = yes }
+		localization_key = AOV_LEVEL_NEUTRAL
+	}
+	text = {
+		trigger = { aov_influence_is_favored_mechanists = yes }
+		localization_key = AOV_LEVEL_FAVORED
+	}
+	text = {
+		trigger = { aov_influence_is_exalted_mechanists = yes }
+		localization_key = AOV_LEVEL_EXALTED
+	}
+}
+
+AovInfluenceLevel_technomancers = {
+	type = character
+	text = {
+		trigger = { aov_influence_is_hostile_technomancers = yes }
+		localization_key = AOV_LEVEL_HOSTILE
+	}
+	text = {
+		trigger = { aov_influence_is_displeased_technomancers = yes }
+		localization_key = AOV_LEVEL_DISPLEASED
+	}
+	text = {
+		trigger = { aov_influence_is_neutral_technomancers = yes }
+		localization_key = AOV_LEVEL_NEUTRAL
+	}
+	text = {
+		trigger = { aov_influence_is_favored_technomancers = yes }
+		localization_key = AOV_LEVEL_FAVORED
+	}
+	text = {
+		trigger = { aov_influence_is_exalted_technomancers = yes }
+		localization_key = AOV_LEVEL_EXALTED
+	}
+}

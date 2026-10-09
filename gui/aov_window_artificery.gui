@@ -107,17 +107,217 @@ window = {
 					visible = "[Not( GetVariableSystem.Exists( 'aov_artificery_tab' ) )]"
 					layoutpolicy_horizontal = expanding
 					layoutpolicy_vertical = expanding
-					margin = { 20 20 }
+					margin = { 10 10 }
 
-					text_multi = {
+					# One card per faction: gui/aov_artificer_factions.gui
+					scrollbox = {
 						layoutpolicy_horizontal = expanding
-						autoresize = yes
-						max_width = 580
-						text = "AOV_ARTIFICERY_FACTIONS_PLACEHOLDER"
-						default_format = "#low"
-					}
+						layoutpolicy_vertical = expanding
 
-					expand = {}
+						blockoverride "scrollbox_content"
+						{
+							vbox = {
+								layoutpolicy_horizontal = expanding
+								margin = { 6 6 }
+								spacing = 12
+
+								aov_faction_card = {
+									blockoverride "title" {
+										datacontext = "[GetTitleByKey('d_brillites')]"
+									}
+									blockoverride "faction_name" {
+										text = "AOV_FACTION_NAME_BRILLITES"
+									}
+									blockoverride "vacant_text" {
+										text = "[SelectLocalization( GetScriptedGui('aov_faction_brillites_election_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), 'AOV_FACTION_ELECTION_UNDER_WAY', 'AOV_FACTION_VACANT' )]"
+									}
+									blockoverride "description" {
+										text = "AOV_FACTION_DESC_BRILLITES"
+									}
+									blockoverride "value" {
+										value = "[FixedPointToFloat( GetPlayer.MakeScope.ScriptValue('aov_influence_brillites') )]"
+									}
+									blockoverride "bar_tooltip" {
+										tooltip = "AOV_INFLUENCE_BRILLITES_TT"
+									}
+									blockoverride "marker_1_active" {
+										visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_brillites'), '(CFixedPoint)1' )]"
+									}
+									blockoverride "marker_1_inactive" {
+										visible = "[Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_brillites'), '(CFixedPoint)1' ) )]"
+									}
+									blockoverride "marker_1_tooltip" {
+										tooltip = "AOV_LEVEL_DISPLEASED_BRILLITES_TT"
+									}
+									blockoverride "marker_2_active" {
+										visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_brillites'), '(CFixedPoint)2' )]"
+									}
+									blockoverride "marker_2_inactive" {
+										visible = "[Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_brillites'), '(CFixedPoint)2' ) )]"
+									}
+									blockoverride "marker_2_tooltip" {
+										tooltip = "AOV_LEVEL_NEUTRAL_BRILLITES_TT"
+									}
+									blockoverride "marker_3_active" {
+										visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_brillites'), '(CFixedPoint)3' )]"
+									}
+									blockoverride "marker_3_inactive" {
+										visible = "[Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_brillites'), '(CFixedPoint)3' ) )]"
+									}
+									blockoverride "marker_3_tooltip" {
+										tooltip = "AOV_LEVEL_FAVORED_BRILLITES_TT"
+									}
+									blockoverride "marker_4_active" {
+										visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_brillites'), '(CFixedPoint)4' )]"
+									}
+									blockoverride "marker_4_inactive" {
+										visible = "[Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_brillites'), '(CFixedPoint)4' ) )]"
+									}
+									blockoverride "marker_4_tooltip" {
+										tooltip = "AOV_LEVEL_EXALTED_BRILLITES_TT"
+									}
+									blockoverride "status" {
+										text = "AOV_FACTION_STATUS_BRILLITES"
+									}
+									blockoverride "amends" {
+										enabled = "[GetScriptedGui('aov_make_amends_brillites_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "[GetScriptedGui('aov_make_amends_brillites_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										onclick = "[GetScriptedGui('aov_make_amends_brillites_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+									}
+								}
+
+								aov_faction_card = {
+									blockoverride "title" {
+										datacontext = "[GetTitleByKey('d_mechanists')]"
+									}
+									blockoverride "faction_name" {
+										text = "AOV_FACTION_NAME_MECHANISTS"
+									}
+									blockoverride "vacant_text" {
+										text = "[SelectLocalization( GetScriptedGui('aov_faction_mechanists_election_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), 'AOV_FACTION_ELECTION_UNDER_WAY', 'AOV_FACTION_VACANT' )]"
+									}
+									blockoverride "description" {
+										text = "AOV_FACTION_DESC_MECHANISTS"
+									}
+									blockoverride "value" {
+										value = "[FixedPointToFloat( GetPlayer.MakeScope.ScriptValue('aov_influence_mechanists') )]"
+									}
+									blockoverride "bar_tooltip" {
+										tooltip = "AOV_INFLUENCE_MECHANISTS_TT"
+									}
+									blockoverride "marker_1_active" {
+										visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_mechanists'), '(CFixedPoint)1' )]"
+									}
+									blockoverride "marker_1_inactive" {
+										visible = "[Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_mechanists'), '(CFixedPoint)1' ) )]"
+									}
+									blockoverride "marker_1_tooltip" {
+										tooltip = "AOV_LEVEL_DISPLEASED_MECHANISTS_TT"
+									}
+									blockoverride "marker_2_active" {
+										visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_mechanists'), '(CFixedPoint)2' )]"
+									}
+									blockoverride "marker_2_inactive" {
+										visible = "[Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_mechanists'), '(CFixedPoint)2' ) )]"
+									}
+									blockoverride "marker_2_tooltip" {
+										tooltip = "AOV_LEVEL_NEUTRAL_MECHANISTS_TT"
+									}
+									blockoverride "marker_3_active" {
+										visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_mechanists'), '(CFixedPoint)3' )]"
+									}
+									blockoverride "marker_3_inactive" {
+										visible = "[Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_mechanists'), '(CFixedPoint)3' ) )]"
+									}
+									blockoverride "marker_3_tooltip" {
+										tooltip = "AOV_LEVEL_FAVORED_MECHANISTS_TT"
+									}
+									blockoverride "marker_4_active" {
+										visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_mechanists'), '(CFixedPoint)4' )]"
+									}
+									blockoverride "marker_4_inactive" {
+										visible = "[Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_mechanists'), '(CFixedPoint)4' ) )]"
+									}
+									blockoverride "marker_4_tooltip" {
+										tooltip = "AOV_LEVEL_EXALTED_MECHANISTS_TT"
+									}
+									blockoverride "status" {
+										text = "AOV_FACTION_STATUS_MECHANISTS"
+									}
+									blockoverride "amends" {
+										enabled = "[GetScriptedGui('aov_make_amends_mechanists_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "[GetScriptedGui('aov_make_amends_mechanists_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										onclick = "[GetScriptedGui('aov_make_amends_mechanists_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+									}
+								}
+
+								aov_faction_card = {
+									blockoverride "title" {
+										datacontext = "[GetTitleByKey('d_technomancers')]"
+									}
+									blockoverride "faction_name" {
+										text = "AOV_FACTION_NAME_TECHNOMANCERS"
+									}
+									blockoverride "vacant_text" {
+										text = "[SelectLocalization( GetScriptedGui('aov_faction_technomancers_election_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), 'AOV_FACTION_ELECTION_UNDER_WAY', 'AOV_FACTION_VACANT' )]"
+									}
+									blockoverride "description" {
+										text = "AOV_FACTION_DESC_TECHNOMANCERS"
+									}
+									blockoverride "value" {
+										value = "[FixedPointToFloat( GetPlayer.MakeScope.ScriptValue('aov_influence_technomancers') )]"
+									}
+									blockoverride "bar_tooltip" {
+										tooltip = "AOV_INFLUENCE_TECHNOMANCERS_TT"
+									}
+									blockoverride "marker_1_active" {
+										visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_technomancers'), '(CFixedPoint)1' )]"
+									}
+									blockoverride "marker_1_inactive" {
+										visible = "[Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_technomancers'), '(CFixedPoint)1' ) )]"
+									}
+									blockoverride "marker_1_tooltip" {
+										tooltip = "AOV_LEVEL_DISPLEASED_TECHNOMANCERS_TT"
+									}
+									blockoverride "marker_2_active" {
+										visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_technomancers'), '(CFixedPoint)2' )]"
+									}
+									blockoverride "marker_2_inactive" {
+										visible = "[Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_technomancers'), '(CFixedPoint)2' ) )]"
+									}
+									blockoverride "marker_2_tooltip" {
+										tooltip = "AOV_LEVEL_NEUTRAL_TECHNOMANCERS_TT"
+									}
+									blockoverride "marker_3_active" {
+										visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_technomancers'), '(CFixedPoint)3' )]"
+									}
+									blockoverride "marker_3_inactive" {
+										visible = "[Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_technomancers'), '(CFixedPoint)3' ) )]"
+									}
+									blockoverride "marker_3_tooltip" {
+										tooltip = "AOV_LEVEL_FAVORED_TECHNOMANCERS_TT"
+									}
+									blockoverride "marker_4_active" {
+										visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_technomancers'), '(CFixedPoint)4' )]"
+									}
+									blockoverride "marker_4_inactive" {
+										visible = "[Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('aov_influence_level_technomancers'), '(CFixedPoint)4' ) )]"
+									}
+									blockoverride "marker_4_tooltip" {
+										tooltip = "AOV_LEVEL_EXALTED_TECHNOMANCERS_TT"
+									}
+									blockoverride "status" {
+										text = "AOV_FACTION_STATUS_TECHNOMANCERS"
+									}
+									blockoverride "amends" {
+										enabled = "[GetScriptedGui('aov_make_amends_technomancers_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "[GetScriptedGui('aov_make_amends_technomancers_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										onclick = "[GetScriptedGui('aov_make_amends_technomancers_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+									}
+								}
+							}
+						}
+					}
 				}
 
 				# Inventions tab
