@@ -55,10 +55,17 @@ aov_magic.10 = {
 
 	immediate = {
 		if = {
-			limit = { exists = var:aov_elemental_army }
-			var:aov_elemental_army = { deplete_army_by_percentage = 1 }
+			limit = { exists = scope:aov_new_elementals }
+			scope:aov_new_elementals = { deplete_army_by_percentage = 1 }
 		}
-		remove_variable = aov_elemental_army
+		if = {
+			limit = {
+				exists = var:aov_elemental_army
+				exists = scope:aov_new_elementals
+				var:aov_elemental_army = scope:aov_new_elementals
+			}
+			remove_variable = aov_elemental_army
+		}
 	}
 }
 

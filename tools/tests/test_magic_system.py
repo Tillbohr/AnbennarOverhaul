@@ -89,9 +89,9 @@ class SpecialSpellTests(unittest.TestCase):
 
     def test_elementals_depletion_guarded(self):
         b = block(read("events/aov_magic_events.txt"), "aov_magic.10")
-        self.assertIn("exists = var:aov_elemental_army", b)
-        self.assertIn("deplete_army_by_percentage = 1", b)  # 0-1 fraction
-        self.assertIn("remove_variable = aov_elemental_army", b)
+        # The army this event was scheduled for (a recast army is a different scope), guarded if already gone
+        self.assertIn("exists = scope:aov_new_elementals", b)
+        self.assertIn("scope:aov_new_elementals = { deplete_army_by_percentage = 1 }", b)  # 0-1 fraction
 
     def test_elementals_never_recruitable(self):
         self.assertIn("always = no", block(read("common/men_at_arms_types/aov_magic_maa_types.txt"), "aov_conjured_elementals"))
@@ -116,6 +116,19 @@ class SpecialSpellTests(unittest.TestCase):
         b = block(read("events/aov_magic_events.txt"), "aov_magic.20")
         self.assertEqual(b.count("option = {"), 3)
         self.assertIn("aov_extraplanar_price = yes", b)
+
+
+class ReviewFixTests(unittest.TestCase):
+    def test_new_mage_starts_full(self):
+        v = block(read("common/script_values/aov_magic_values.txt"), "aov_mana")
+        self.assertIn("value = aov_mana_max", v)
+        e = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_mana_change")
+        self.assertIn("set_variable = { name = aov_mana value = aov_mana_max }", e)
+
+    def test_elementals_refund_without_capital(self):
+        b = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_summon_elementals")
+        self.assertIn("aov_mana_change = { AMOUNT = 100 }", b)
+        self.assertIn("remove_variable = aov_spell_summon_elementals_cd", b)
 
 
 class AiTests(unittest.TestCase):

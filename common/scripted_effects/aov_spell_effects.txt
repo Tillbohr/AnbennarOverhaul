@@ -626,19 +626,19 @@ aov_magic_ai_cast_random = {
 			aov_spell_lead_the_crowds_cast = yes
 		}
 		10 = {
-			trigger = { aov_spell_false_life_castable = yes }
+			trigger = { NOT = { aov_dark_magic_risky = yes } aov_spell_false_life_castable = yes }
 			aov_spell_false_life_cast = yes
 		}
 		10 = {
-			trigger = { aov_spell_speak_with_dead_castable = yes }
+			trigger = { NOT = { aov_dark_magic_risky = yes } aov_spell_speak_with_dead_castable = yes }
 			aov_spell_speak_with_dead_cast = yes
 		}
 		10 = {
-			trigger = { aov_spell_remove_pain_castable = yes }
+			trigger = { NOT = { aov_dark_magic_risky = yes } aov_spell_remove_pain_castable = yes }
 			aov_spell_remove_pain_cast = yes
 		}
 		10 = {
-			trigger = { aov_spell_chronophage_castable = yes }
+			trigger = { NOT = { aov_dark_magic_risky = yes } aov_spell_chronophage_castable = yes }
 			aov_spell_chronophage_cast = yes
 		}
 		10 = {

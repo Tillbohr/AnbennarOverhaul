@@ -168,8 +168,13 @@ class GeneratedTests(unittest.TestCase):
             if s["type"] == "targeted":
                 self.assertNotIn(f"aov_spell_{s['key']}_cast", b)
             else:
-                self.assertIn(f"trigger = {{ aov_spell_{s['key']}_castable = yes }}", b)
+                self.assertIn(f"aov_spell_{s['key']}_castable = yes }}", b)
         self.assertIn("30 = {", b)  # war spells weigh more
+        # AI does not risk Forbidden Magic Practitioner: Necromancy only where magic is not illegal or shunned
+        for sp in SPELLS:
+            if sp["school"] == "necromancy" and sp["type"] != "targeted":
+                opt = b.split(f"aov_spell_{sp['key']}_castable = yes")[0].rsplit("trigger = {", 1)[1]
+                self.assertIn("NOT = { aov_dark_magic_risky = yes }", opt, sp["key"])
         t = block(bs.triggers(SPELLS), "aov_magic_ai_any_castable")
         self.assertIn("aov_spell_guidance_castable = yes", t)
         self.assertNotIn("aov_spell_heartstring_castable", t)

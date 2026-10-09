@@ -10,7 +10,7 @@ aov_magic_init = {
 aov_mana_change = {
 	if = {
 		limit = { NOT = { has_variable = aov_mana } }
-		set_variable = { name = aov_mana value = 0 }
+		set_variable = { name = aov_mana value = aov_mana_max }
 	}
 	change_variable = { name = aov_mana add = $AMOUNT$ }
 	clamp_variable = { name = aov_mana min = 0 max = aov_mana_max }
@@ -251,6 +251,11 @@ aov_summon_elementals = {
 		}
 		set_variable = { name = aov_elemental_army value = scope:aov_new_elementals }
 		trigger_event = { id = aov_magic.10 years = 3 }
+	}
+	else = {
+		# No capital to summon at: the spell fizzles and costs nothing
+		aov_mana_change = { AMOUNT = 100 }
+		remove_variable = aov_spell_summon_elementals_cd
 	}
 }
 

@@ -202,7 +202,10 @@ def effects(spells: list) -> str:
             lines.append("\taov_dark_magic_roll = yes")
         out.append(f"aov_spell_{k}_cast = {{\n" + "\n".join(lines) + "\n}\n")
     options = "\n".join(
-        f"\t\t{30 if s['type'] == 'war' else 10} = {{\n\t\t\ttrigger = {{ aov_spell_{s['key']}_castable = yes }}\n"
+        # The AI keeps clear of Forbidden Magic Practitioner: no Necromancy where magic is illegal or shunned
+        f"\t\t{30 if s['type'] == 'war' else 10} = {{\n\t\t\ttrigger = {{ "
+        + ("NOT = { aov_dark_magic_risky = yes } " if s["school"] == "necromancy" else "")
+        + f"aov_spell_{s['key']}_castable = yes }}\n"
         f"\t\t\taov_spell_{s['key']}_cast = yes\n\t\t}}"
         for s in spells if window_spell(s))
     out.append("# AI (aov_magic_ai_quarterly): one castable window spell; war spells weigh more\n"

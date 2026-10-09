@@ -7,8 +7,9 @@ aov_affinity_level = {
 	if = { limit = { has_trait = magical_affinity_3 } value = 3 }
 }
 
+# Full until first set: a new mage starts with full mana
 aov_mana = {
-	value = 0
+	value = aov_mana_max
 	if = {
 		limit = { has_variable = aov_mana }
 		value = var:aov_mana
