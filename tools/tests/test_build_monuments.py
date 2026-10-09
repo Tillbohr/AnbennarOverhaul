@@ -69,6 +69,12 @@ class BuildMonumentTests(unittest.TestCase):
         self.assertNotIn("on_complete", text)
         self.assertNotIn("duchy_capital", B)
 
+    def test_real_generated_file_is_well_formed(self):
+        text = (bm.SUBMOD / "common/buildings/aov_monuments_cannor.txt").read_text(encoding="utf-8-sig")
+        self.assertNotRegex(text, r"_modifier = \{\s*\}")
+        self.assertEqual(text.count("{"), text.count("}"))
+        self.assertEqual(text, B)
+
     def test_number_format(self):
         self.assertEqual(bm.num(0.05), "0.05")
         self.assertEqual(bm.num(2), "2")

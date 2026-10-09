@@ -50,7 +50,7 @@ aov_monument_adenica_longlance_knights_academy_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_adenica_longlance_knights_academy_03
@@ -1480,7 +1480,7 @@ aov_monument_bjarnrik_staple_port_of_konungrhavn_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_bjarnrik_staple_port_of_konungrhavn_03
@@ -2037,7 +2037,7 @@ aov_monument_celmaldor_icewind_palace_of_commerce_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = education_stewardship_3 stewardship = { 14 18 } random_traits = yes } }
+		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_stewardship_3 stewardship = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_celmaldor_icewind_palace_of_commerce_03
@@ -2183,7 +2183,7 @@ aov_monument_damescrown_grand_exchange_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = education_stewardship_3 stewardship = { 14 18 } random_traits = yes } }
+		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_stewardship_3 stewardship = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_damescrown_grand_exchange_03
@@ -2311,7 +2311,7 @@ aov_monument_damish_temple_moonmount_library_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = education_learning_3 learning = { 14 18 } random_traits = yes } }
+		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_learning_3 learning = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_damish_temple_moonmount_library_03
@@ -2545,7 +2545,7 @@ aov_monument_deranne_westport_gateway_to_aelantir_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_deranne_westport_gateway_to_aelantir_03
@@ -3614,7 +3614,7 @@ aov_monument_freecestir_mustering_grounds_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_freecestir_mustering_grounds_03
@@ -3764,7 +3764,7 @@ aov_monument_gawed_castle_gaweton_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_gawed_castle_gaweton_03
@@ -4125,7 +4125,7 @@ aov_monument_hammerhome_artificers_guild_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = education_learning_3 learning = { 14 18 } random_traits = yes } }
+		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_learning_3 learning = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_hammerhome_artificers_guild_03
@@ -5286,7 +5286,7 @@ aov_monument_lorentaine_mage_academy_03 = {
 
 	on_complete = {
 		county.holder = { add_prestige = 150 }
-county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
 	}
 
 	ai_value = {
@@ -5389,7 +5389,7 @@ aov_monument_marrhold_gate_to_the_serpentspine_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_marrhold_gate_to_the_serpentspine_03
@@ -5445,7 +5445,7 @@ aov_monument_marrhold_gate_to_the_serpentspine_03 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
 	}
 
 	ai_value = {
@@ -6077,7 +6077,7 @@ aov_monument_nathalaire_city_of_pirates_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = education_intrigue_3 intrigue = { 14 18 } random_traits = yes } }
+		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_intrigue_3 intrigue = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_nathalaire_city_of_pirates_03
@@ -6749,7 +6749,7 @@ aov_monument_portnamm_portroy_merchants_guild_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = education_stewardship_3 stewardship = { 14 18 } random_traits = yes } }
+		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_stewardship_3 stewardship = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_portnamm_portroy_merchants_guild_03
@@ -7583,7 +7583,7 @@ aov_monument_silvelar_silver_spires_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = education_stewardship_3 stewardship = { 14 18 } random_traits = yes } }
+		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_stewardship_3 stewardship = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_silvelar_silver_spires_03
@@ -7788,7 +7788,7 @@ aov_monument_silverforge_strongbellow_academy_03 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
 	}
 
 	ai_value = {
@@ -9065,7 +9065,7 @@ aov_monument_urviksten_ebonsteel_armory_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_urviksten_ebonsteel_armory_03

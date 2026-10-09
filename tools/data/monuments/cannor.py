@@ -31,9 +31,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
-                            '{ 30 50 } gender_female_chance = '
-                            'root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = '
-                            'education_martial_3 martial = { 14 18 } random_traits = yes } }',
+                            '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '
+                            'martial = { 14 18 } random_traits = yes } }',
              'cost': 800,
              'days': 2700,
              'dropped': ['local_institution_spread: EU4 institutions; no CK3 equivalent']},
@@ -738,9 +737,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
-                            '{ 30 50 } gender_female_chance = '
-                            'root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = '
-                            'education_martial_3 martial = { 14 18 } random_traits = yes } }',
+                            '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '
+                            'martial = { 14 18 } random_traits = yes } }',
              'cost': 1000,
              'days': 3600,
              'dropped': ['range: EU4 trade nodes/merchants/colonies; no CK3 equivalent',
@@ -1031,8 +1029,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
-                            '{ 30 50 } gender_female_chance = '
-                            'root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = '
+                            '{ 30 50 } gender_female_chance = 50 dynasty = none trait = '
                             'education_stewardship_3 stewardship = { 14 18 } random_traits = yes } }',
              'cost': 1000,
              'days': 3600,
@@ -1084,8 +1081,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
-                            '{ 30 50 } gender_female_chance = '
-                            'root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = '
+                            '{ 30 50 } gender_female_chance = 50 dynasty = none trait = '
                             'education_stewardship_3 stewardship = { 14 18 } random_traits = yes } }',
              'cost': 1000,
              'days': 3600,
@@ -1140,9 +1136,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
-                            '{ 30 50 } gender_female_chance = '
-                            'root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = '
-                            'education_learning_3 learning = { 14 18 } random_traits = yes } }',
+                            '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_learning_3 '
+                            'learning = { 14 18 } random_traits = yes } }',
              'cost': 1000,
              'days': 3600,
              'dropped': ['local_institution_spread: EU4 institutions; no CK3 equivalent',
@@ -1246,9 +1241,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
-                            '{ 30 50 } gender_female_chance = '
-                            'root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = '
-                            'education_martial_3 martial = { 14 18 } random_traits = yes } }',
+                            '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '
+                            'martial = { 14 18 } random_traits = yes } }',
              'cost': 1000,
              'days': 3600,
              'dropped': ['range: EU4 trade nodes/merchants/colonies; no CK3 equivalent',
@@ -1686,9 +1680,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
-                            '{ 30 50 } gender_female_chance = '
-                            'root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = '
-                            'education_martial_3 martial = { 14 18 } random_traits = yes } }',
+                            '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '
+                            'martial = { 14 18 } random_traits = yes } }',
              'cost': 1000,
              'days': 3600,
              'dropped': []},
@@ -1737,9 +1730,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
-                            '{ 30 50 } gender_female_chance = '
-                            'root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = '
-                            'education_martial_3 martial = { 14 18 } random_traits = yes } }',
+                            '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '
+                            'martial = { 14 18 } random_traits = yes } }',
              'cost': 1000,
              'days': 3600,
              'dropped': ['republican_tradition: government-specific twin of legitimacy (translated); EU4 '
@@ -1912,9 +1904,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
-                            '{ 30 50 } gender_female_chance = '
-                            'root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = '
-                            'education_learning_3 learning = { 14 18 } random_traits = yes } }',
+                            '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_learning_3 '
+                            'learning = { 14 18 } random_traits = yes } }',
              'cost': 800,
              'days': 2700,
              'dropped': ['local_institution_spread: EU4 institutions; no CK3 equivalent',
@@ -2447,9 +2438,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
                             'county.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
-                            '{ 30 50 } gender_female_chance = '
-                            'root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = '
-                            'education_martial_3 martial = { 14 18 } random_traits = yes } }',
+                            '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '
+                            'martial = { 14 18 } random_traits = yes } }',
              'cost': 2000,
              'days': 7200,
              'dropped': ['allowed_num_of_manufactories: EU4 manufactories; no CK3 equivalent',
@@ -2488,9 +2478,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
-                            '{ 30 50 } gender_female_chance = '
-                            'root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = '
-                            'education_martial_3 martial = { 14 18 } random_traits = yes } }',
+                            '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '
+                            'martial = { 14 18 } random_traits = yes } }',
              'cost': 1400,
              'days': 3600,
              'dropped': ['mil_advisor_cost: EU4 advisors; CK3 councillors are not hired']},
@@ -2502,9 +2491,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
-                            '{ 30 50 } gender_female_chance = '
-                            'root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = '
-                            'education_martial_3 martial = { 14 18 } random_traits = yes } }',
+                            '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '
+                            'martial = { 14 18 } random_traits = yes } }',
              'cost': 2800,
              'days': 7200,
              'dropped': ['mil_advisor_cost: EU4 advisors; CK3 councillors are not hired',
@@ -2727,9 +2715,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
-                            '{ 30 50 } gender_female_chance = '
-                            'root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = '
-                            'education_intrigue_3 intrigue = { 14 18 } random_traits = yes } }',
+                            '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_intrigue_3 '
+                            'intrigue = { 14 18 } random_traits = yes } }',
              'cost': 1000,
              'days': 3600,
              'dropped': ['dip_advisor_cost: EU4 advisors; CK3 councillors are not hired',
@@ -3030,8 +3017,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
-                            '{ 30 50 } gender_female_chance = '
-                            'root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = '
+                            '{ 30 50 } gender_female_chance = 50 dynasty = none trait = '
                             'education_stewardship_3 stewardship = { 14 18 } random_traits = yes } }',
              'cost': 720,
              'days': 3600,
@@ -3410,8 +3396,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
-                            '{ 30 50 } gender_female_chance = '
-                            'root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = '
+                            '{ 30 50 } gender_female_chance = 50 dynasty = none trait = '
                             'education_stewardship_3 stewardship = { 14 18 } random_traits = yes } }',
              'cost': 1000,
              'days': 3600,
@@ -3475,9 +3460,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
-                            '{ 30 50 } gender_female_chance = '
-                            'root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = '
-                            'education_martial_3 martial = { 14 18 } random_traits = yes } }',
+                            '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '
+                            'martial = { 14 18 } random_traits = yes } }',
              'cost': 2800,
              'days': 7200,
              'dropped': ['on_upgraded: center_of_trade = 1',
@@ -4040,9 +4024,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
-                            '{ 30 50 } gender_female_chance = '
-                            'root_faith_dominant_gender_adjusted_female_chance dynasty = none trait = '
-                            'education_martial_3 martial = { 14 18 } random_traits = yes } }',
+                            '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '
+                            'martial = { 14 18 } random_traits = yes } }',
              'cost': 1000,
              'days': 3600,
              'dropped': ['on_upgraded: add_base_production = 2']},

@@ -159,6 +159,10 @@ class TranslationTableTests(unittest.TestCase):
             if trig is not None:
                 self.assertEqual(trig.count("{"), trig.count("}"), k)
 
+    def test_one_off_has_no_character_root_values(self):
+        for pattern, effect in tr.ONE_OFF:
+            self.assertNotIn("root_faith", effect or "", pattern)
+
     def test_one_off_patterns_compile_and_scale(self):
         for pattern, effect in tr.ONE_OFF:
             re.compile(pattern)

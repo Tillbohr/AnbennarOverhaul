@@ -263,7 +263,7 @@ MODIFIERS = {
 }
 
 
-def _courtier(skill, education, *, extra_trait=None, female_chance="root_faith_dominant_gender_adjusted_female_chance"):
+def _courtier(skill, education, *, extra_trait=None, female_chance="50"):
     """create_character of a skilled courtier at the court of the holder (root = the monument's province)."""
     extra = f" trait = {extra_trait}" if extra_trait else ""
     return (
