@@ -93,9 +93,25 @@ class ValidateTests(unittest.TestCase):
 
 
 class ArtTests(unittest.TestCase):
-    def test_downscale_averages(self):
-        px = bytes([255, 0, 0, 255] * 4)  # 2x2 BGRA
-        self.assertEqual(bs.downscale(px, 2, 2, 1), bytes([255, 0, 0, 255]))
+    def test_tab_emblem_drops_ring_and_fills_icon(self):
+        """The tab icon is only the hands-and-flame emblem from the middle of EU4's school wheel: the ring and
+        the school icons around it are cleared, and the emblem is cropped and scaled to fill the icon."""
+        w = h = 181
+        c = w // 2
+        px = bytearray(w * h * 4)
+        for y in range(h):
+            for x in range(w):
+                d2 = (x - c) ** 2 + (y - c) ** 2
+                if d2 <= 20 ** 2 or 55 ** 2 <= d2 <= 60 ** 2:  # emblem blob and ring
+                    px[(y * w + x) * 4:(y * w + x) * 4 + 4] = bytes([0, 0, 255, 255])
+        out = bs.tab_emblem(bytes(px), w, h, 95)
+        self.assertEqual(len(out), 95 * 95 * 4)
+        alpha = [[out[(y * 95 + x) * 4 + 3] for x in range(95)] for y in range(95)]
+        self.assertEqual(alpha[0][0], 0)                       # corners clear: no ring
+        self.assertEqual(alpha[47][47], 255)                   # emblem in the middle
+        opaque = [x for x in range(95) if alpha[47][x] > 128]
+        self.assertLessEqual(min(opaque), 6)                   # emblem spans the icon (small margin only)
+        self.assertGreaterEqual(max(opaque), 88)
 
     def test_copy_art_missing_source(self):
         with tempfile.TemporaryDirectory() as tmp:

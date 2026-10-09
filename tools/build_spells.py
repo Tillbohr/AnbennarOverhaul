@@ -98,25 +98,37 @@ def write_bgra(width: int, height: int, pixels: bytes) -> bytes:
     return bytes(head) + pixels
 
 
-def downscale(px: bytes, w: int, h: int, size: int) -> bytes:
-    """Area-average BGRA pixels to size x size."""
-    out = bytearray(size * size * 4)
-    for oy in range(size):
-        y0, y1 = oy * h // size, max(oy * h // size + 1, (oy + 1) * h // size)
-        for ox in range(size):
-            x0, x1 = ox * w // size, max(ox * w // size + 1, (ox + 1) * w // size)
-            acc = [0, 0, 0, 0]
-            n = 0
-            for y in range(y0, y1):
-                row = y * w * 4
-                for x in range(x0, x1):
-                    i = row + x * 4
-                    for c in range(4):
-                        acc[c] += px[i + c]
-                    n += 1
-            o = (oy * size + ox) * 4
-            out[o:o + 4] = bytes(v // n for v in acc)
-    return bytes(out)
+# The hands-and-flame emblem sits inside the school ring of magic_center_graphic.dds; the ring's inner edge is
+# ~52 px from the centre. EU4's standalone copies of the emblem are 32 px at most, too small for the tab.
+EMBLEM_RADIUS = 46
+
+
+def tab_emblem(px: bytes, w: int, h: int, size: int) -> bytes:
+    """Only the emblem from the middle of the school wheel: pixels beyond EMBLEM_RADIUS from the centre are
+    cleared, and the rest is cropped to a square around them (2 px margin) and resized to size x size."""
+    from build_magic_lifestyle_art import resize  # imports this module, so not at the top
+    cx, cy = w / 2, h / 2
+    kept = bytearray(w * h * 4)
+    xs, ys = [], []
+    for y in range(h):
+        for x in range(w):
+            i = (y * w + x) * 4
+            if px[i + 3] and (x + 0.5 - cx) ** 2 + (y + 0.5 - cy) ** 2 <= EMBLEM_RADIUS ** 2:
+                kept[i:i + 4] = px[i:i + 4]
+                xs.append(x)
+                ys.append(y)
+    if not xs:
+        raise GeneratorError(f"no emblem within {EMBLEM_RADIUS} px of the centre of {TAB_SOURCE}")
+    side = max(max(xs) - min(xs), max(ys) - min(ys)) + 1 + 4
+    x0 = (min(xs) + max(xs) + 1 - side) // 2
+    y0 = (min(ys) + max(ys) + 1 - side) // 2
+    crop = bytearray(side * side * 4)
+    for y in range(side):
+        for x in range(side):
+            sx, sy = x0 + x, y0 + y
+            if 0 <= sx < w and 0 <= sy < h:
+                crop[(y * side + x) * 4:(y * side + x) * 4 + 4] = kept[(sy * w + sx) * 4:(sy * w + sx) * 4 + 4]
+    return resize(bytes(crop), side, side, size, size)
 
 
 def copy_art(eu4: Path, root: Path) -> None:
@@ -134,7 +146,7 @@ def copy_art(eu4: Path, root: Path) -> None:
     w, h, px = read_bgra((src_dir / TAB_SOURCE).read_bytes())
     tab = root / TAB_ICON
     tab.parent.mkdir(parents=True, exist_ok=True)
-    tab.write_bytes(write_bgra(95, 95, downscale(px, w, h, 95)))
+    tab.write_bytes(write_bgra(95, 95, tab_emblem(px, w, h, 95)))
 
 
 def of_school(spells: list, school: str) -> list:
