@@ -258,12 +258,33 @@ def province_superregions(anbennar):
     return result
 
 
+def _sprite_target(roots, key):
+    """Relative texture path of the interface sprite GFX_great_project_<key> (`//` normalised), or None."""
+    pattern = re.compile(r'name\s*=\s*"GFX_great_project_' + re.escape(key) + r'"\s*texturefile\s*=\s*"([^"]+)"', re.I)
+    for source in PRECEDENCE:
+        root = roots.get(source)
+        if not root or not (root / "interface").is_dir():
+            continue
+        for gfx in sorted((root / "interface").glob("*.gfx")):
+            found = pattern.search(gfx.read_text(encoding="latin-1"))
+            if found:
+                return re.sub(r"/+", "/", found.group(1).replace("\\", "/"))
+    return None
+
+
 def art_file(roots, key):
+    """The painting for a project: the flat great_project_<key>.dds, else its sprite's texture, if a mod has the file."""
     rel = Path("gfx/interface/great_projects") / f"great_project_{key}.dds"
     for source in PRECEDENCE:
         root = roots.get(source)
         if root and (root / rel).is_file():
             return root / rel
+    target = _sprite_target(roots, key)
+    if target:
+        for source in PRECEDENCE:
+            root = roots.get(source)
+            if root and (root / target).is_file():
+                return root / target
     return None
 
 

@@ -474,7 +474,7 @@ def run(region, anbennar_ck3=None, roots=None, hand=None):
             excluded[key] = CANAL
             continue
         art = em.art_file(roots, key)
-        rel = f"gfx/interface/great_projects/great_project_{key}.dds" if art else None
+        rel = "gfx/" + art.as_posix().split("/gfx/", 1)[1] if art else None
         monuments.append(merge(build(project, province_name.get(project.start, ""), loc, rel), hand))
     report = place(monuments, ck3_titles(anbennar_ck3), anbennar_slots(anbennar_ck3))
     report += _quality_report(monuments)

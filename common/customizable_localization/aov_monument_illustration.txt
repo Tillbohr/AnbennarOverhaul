@@ -26,9 +26,37 @@ AovMonumentIllustration = {
 
 	text = {
 		trigger = {
+			has_building_or_higher = castanorian_citadel_bal_dostan_01
+		}
+		localization_key = aov_monument_art_bal_dostan
+	}
+
+	text = {
+		trigger = {
 			has_building_or_higher = castanorian_citadel_bal_hyl_01
 		}
 		localization_key = aov_monument_art_bal_hyl
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = castanorian_citadel_bal_mire_02
+		}
+		localization_key = aov_monument_art_bal_mire
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = castanorian_citadel_bal_vertesk_01
+		}
+		localization_key = aov_monument_art_bal_vertesk
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = castanorian_citadel_bal_vroren_02
+		}
+		localization_key = aov_monument_art_bal_vroren
 	}
 
 	text = {
@@ -50,6 +78,20 @@ AovMonumentIllustration = {
 			has_building_or_higher = aov_monument_bjarnrik_staple_port_of_konungrhavn_01
 		}
 		localization_key = aov_monument_art_bjarnrik_staple_port_of_konungrhavn
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = castle_bladeskeep_02
+		}
+		localization_key = aov_monument_art_bladeskeep_monument
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_bladeskeep_shaded_monument_01
+		}
+		localization_key = aov_monument_art_bladeskeep_shaded_monument
 	}
 
 	text = {
@@ -141,6 +183,13 @@ AovMonumentIllustration = {
 			has_building_or_higher = aov_monument_ibevar_temple_of_munas_01
 		}
 		localization_key = aov_monument_art_ibevar_temple_of_munas
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_kazakesh_stingport_01
+		}
+		localization_key = aov_monument_art_kazakesh_stingport
 	}
 
 	text = {
@@ -292,9 +341,23 @@ AovMonumentIllustration = {
 
 	text = {
 		trigger = {
+			has_building_or_higher = lake_palace_01
+		}
+		localization_key = aov_monument_art_the_lake_palace
+	}
+
+	text = {
+		trigger = {
 			has_building_or_higher = aov_monument_urviksten_ebonsteel_armory_01
 		}
 		localization_key = aov_monument_art_urviksten_ebonsteel_armory
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_well_of_majesty_01
+		}
+		localization_key = aov_monument_art_well_of_majesty
 	}
 
 	text = {

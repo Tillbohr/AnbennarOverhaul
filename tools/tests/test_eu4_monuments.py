@@ -121,6 +121,19 @@ class Eu4MonumentsTests(unittest.TestCase):
         self.assertEqual(em.art_file(roots, "p"), roots["dwarven"] / "gfx/interface/great_projects/great_project_p.dds")
         self.assertIsNone(em.art_file(roots, "none"))
 
+    def test_art_falls_back_to_sprite_texture(self):
+        roots = fixture_roots()
+        write(roots["anbennar"] / "interface/g.gfx",
+              'spriteTypes = {\n\tspriteType = {\n\t\tname = "GFX_great_project_q" \n'
+              '\t\ttexturefile = "gfx//interface//great_projects//great_project_other.dds"\n\t}\n'
+              '\tspriteType = {\n\t\tname = "GFX_great_project_gone"\n'
+              '\t\ttexturefile = "gfx//interface//great_projects//great_project_base_game.dds"\n\t}\n}\n')
+        write(roots["dwarven"] / "gfx/interface/great_projects/great_project_other.dds", "x")
+        self.assertEqual(em.art_file(roots, "q"), roots["dwarven"] / "gfx/interface/great_projects/great_project_other.dds")
+        self.assertIsNone(em.art_file(roots, "gone"))
+        write(roots["anbennar"] / "gfx/interface/great_projects/great_project_q.dds", "x")
+        self.assertEqual(em.art_file(roots, "q"), roots["anbennar"] / "gfx/interface/great_projects/great_project_q.dds")
+
     def test_decode_dxt1_block(self):
         data = dds_dxt1_header(4, 4) + bytes([0x00, 0xF8, 0x00, 0x00, 0, 0, 0, 0])
         w, h, px = em.decode_dxt1(data)
