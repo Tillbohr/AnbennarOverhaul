@@ -95,6 +95,40 @@ class PerkTests(unittest.TestCase):
                 self.assertIn("can_start_new_lifestyle_tree_trigger = no", all_perks()[root])
 
 
+TREE_SKILLS = {"aov_arcane_scholar": {"learning", "stewardship"}, "aov_battle_mage": {"martial", "prowess"}, "aov_mindweaver": {"diplomacy", "intrigue"}}
+TREE_OF_FOCUS = {"magic_arcane_study_focus": "aov_arcane_scholar", "magic_duelist_focus": "aov_battle_mage", "magic_mindweaving_focus": "aov_mindweaver"}
+
+
+def tree_schools(tree):
+    return {s for s in SCHOOLS if FOCUS_OF[s] == {v: k for k, v in TREE_OF_FOCUS.items()}[tree]}
+
+
+class AIWeightTests(unittest.TestCase):
+    def check(self, body, tree, label):
+        weight = body
+        self.assertEqual(set(re.findall(r"aov_is_studying = \{ SCHOOL = (\w+) \}", weight)), tree_schools(tree), label)
+        self.assertEqual(set(re.findall(r"highest_skill = (\w+)", weight)), TREE_SKILLS[tree], label)
+        self.assertIn("NOT = { has_variable = aov_studying }", weight, label)
+        self.assertIn("add = 1000", weight, label)
+
+    def test_perk_weights(self):
+        for tree, keys in TREES.items():
+            for k in keys[:8]:
+                self.check(all_perks()[k].split("character_modifier")[0].split("effect = {")[0], tree, k)
+
+    def test_focus_weights(self):
+        f = read("common/focuses/zz_aov_magic_focuses.txt")
+        for focus, tree in TREE_OF_FOCUS.items():
+            self.check(block(f, focus), tree, focus)
+        self.assertIn("has_trait = brave", block(f, "magic_duelist_focus"))
+
+    def test_root_rule_is_last(self):
+        for keys in TREES.values():
+            for r in (keys[0], keys[3]):
+                w = all_perks()[r]
+                self.assertLess(w.index("add = 1000"), w.index("multiply = 0"))
+
+
 class TraitFocusTests(unittest.TestCase):
     def test_traits_are_lifestyle(self):
         t = read("common/traits/aov_magic_lifestyle_traits.txt")
@@ -118,10 +152,13 @@ class LocTests(unittest.TestCase):
         for f in ("magic_arcane_study_focus", "magic_mindweaving_focus"):
             keys += [f, f"{f}_desc", f"{f}_modifier"]
         keys += ["monthly_magic_lifestyle_xp_gain_mult"]
+        keys += ["magic_arcane_study_focus_study_desc", "magic_arcane_study_focus_effect_desc",
+                 "magic_mindweaving_focus_study_desc", "magic_mindweaving_focus_effect_desc", "magic_duelist_focus_study_desc"]
         for k in keys:
             self.assertRegex(loc, rf"(?m)^ {re.escape(k)}:", k)
         rep = read("localization/replace/english/aov_magic_lifestyle_replace_l_english.yml")
         self.assertIn(' magic_duelist_focus: "Battle Mage Focus"', rep)
+        self.assertRegex(rep, r"(?m)^ magic_duelist_focus_effect_desc:")
 
 
 class MasteryTests(unittest.TestCase):

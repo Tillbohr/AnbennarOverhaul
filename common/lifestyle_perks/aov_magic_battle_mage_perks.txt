@@ -18,6 +18,16 @@ aov_spark_of_battle_perk = {
 		}
 		if = {
 			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = martial
+					highest_skill = prowess
+				}
+			}
+			add = 1000
+		}
+		if = {
+			limit = {
 				has_focus = magic_duelist_focus
 			}
 			multiply = 5
@@ -63,6 +73,16 @@ aov_overchannel_perk = {
 		}
 		if = {
 			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = martial
+					highest_skill = prowess
+				}
+			}
+			add = 1000
+		}
+		if = {
+			limit = {
 				has_focus = magic_duelist_focus
 			}
 			multiply = 5
@@ -101,6 +121,16 @@ aov_firestorm_tactics_perk = {
 		}
 		if = {
 			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = martial
+					highest_skill = prowess
+				}
+			}
+			add = 1000
+		}
+		if = {
+			limit = {
 				has_focus = magic_duelist_focus
 			}
 			multiply = 5
@@ -134,6 +164,16 @@ aov_summoners_circle_perk = {
 				}
 			}
 			add = 1989
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = martial
+					highest_skill = prowess
+				}
+			}
+			add = 1000
 		}
 		if = {
 			limit = {
@@ -182,6 +222,16 @@ aov_conjured_provisions_perk = {
 		}
 		if = {
 			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = martial
+					highest_skill = prowess
+				}
+			}
+			add = 1000
+		}
+		if = {
+			limit = {
 				has_focus = magic_duelist_focus
 			}
 			multiply = 5
@@ -220,6 +270,16 @@ aov_bound_elementals_perk = {
 		}
 		if = {
 			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = martial
+					highest_skill = prowess
+				}
+			}
+			add = 1000
+		}
+		if = {
+			limit = {
 				has_focus = magic_duelist_focus
 			}
 			multiply = 5
@@ -255,6 +315,16 @@ aov_battle_meditation_perk = {
 		}
 		if = {
 			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = martial
+					highest_skill = prowess
+				}
+			}
+			add = 1000
+		}
+		if = {
+			limit = {
 				has_focus = magic_duelist_focus
 			}
 			multiply = 5
@@ -286,6 +356,16 @@ aov_mage_knight_perk = {
 				}
 			}
 			add = 1989
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = martial
+					highest_skill = prowess
+				}
+			}
+			add = 1000
 		}
 		if = {
 			limit = {

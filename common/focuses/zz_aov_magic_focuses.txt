@@ -17,18 +17,22 @@ magic_duelist_focus = {
 		value = 11
 		if = {
 			limit = {
-				has_magical_affinity_trigger = yes
-			}
-			add = 1989
-		}
-		if = {
-			limit = {
 				OR = {
 					aov_is_studying = { SCHOOL = evocation }
 					aov_is_studying = { SCHOOL = conjuration }
 				}
 			}
 			add = 1989
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = martial
+					highest_skill = prowess
+				}
+			}
+			add = 1000
 		}
 		if = {
 			limit = {
@@ -56,12 +60,6 @@ magic_arcane_study_focus = {
 		value = 11
 		if = {
 			limit = {
-				has_magical_affinity_trigger = yes
-			}
-			add = 1989
-		}
-		if = {
-			limit = {
 				OR = {
 					aov_is_studying = { SCHOOL = divination }
 					aov_is_studying = { SCHOOL = abjuration }
@@ -69,6 +67,16 @@ magic_arcane_study_focus = {
 				}
 			}
 			add = 1989
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = learning
+					highest_skill = stewardship
+				}
+			}
+			add = 1000
 		}
 	}
 }
@@ -91,12 +99,6 @@ magic_mindweaving_focus = {
 		value = 11
 		if = {
 			limit = {
-				has_magical_affinity_trigger = yes
-			}
-			add = 1989
-		}
-		if = {
-			limit = {
 				OR = {
 					aov_is_studying = { SCHOOL = enchantment }
 					aov_is_studying = { SCHOOL = illusion }
@@ -104,6 +106,16 @@ magic_mindweaving_focus = {
 				}
 			}
 			add = 1989
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = diplomacy
+					highest_skill = intrigue
+				}
+			}
+			add = 1000
 		}
 	}
 }

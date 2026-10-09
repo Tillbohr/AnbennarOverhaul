@@ -19,6 +19,16 @@ aov_diviners_eye_perk = {
 		}
 		if = {
 			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = learning
+					highest_skill = stewardship
+				}
+			}
+			add = 1000
+		}
+		if = {
+			limit = {
 				has_focus = magic_arcane_study_focus
 			}
 			multiply = 5
@@ -65,6 +75,16 @@ aov_read_the_stars_perk = {
 		}
 		if = {
 			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = learning
+					highest_skill = stewardship
+				}
+			}
+			add = 1000
+		}
+		if = {
+			limit = {
 				has_focus = magic_arcane_study_focus
 			}
 			multiply = 5
@@ -104,6 +124,16 @@ aov_prescience_perk = {
 		}
 		if = {
 			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = learning
+					highest_skill = stewardship
+				}
+			}
+			add = 1000
+		}
+		if = {
+			limit = {
 				has_focus = magic_arcane_study_focus
 			}
 			multiply = 5
@@ -138,6 +168,16 @@ aov_warding_glyphs_perk = {
 				}
 			}
 			add = 1989
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = learning
+					highest_skill = stewardship
+				}
+			}
+			add = 1000
 		}
 		if = {
 			limit = {
@@ -187,6 +227,16 @@ aov_arcane_reservoir_perk = {
 		}
 		if = {
 			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = learning
+					highest_skill = stewardship
+				}
+			}
+			add = 1000
+		}
+		if = {
+			limit = {
 				has_focus = magic_arcane_study_focus
 			}
 			multiply = 5
@@ -219,6 +269,16 @@ aov_spellguard_perk = {
 				}
 			}
 			add = 1989
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = learning
+					highest_skill = stewardship
+				}
+			}
+			add = 1000
 		}
 		if = {
 			limit = {
@@ -262,6 +322,16 @@ aov_transmuters_craft_perk = {
 		}
 		if = {
 			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = learning
+					highest_skill = stewardship
+				}
+			}
+			add = 1000
+		}
+		if = {
+			limit = {
 				has_focus = magic_arcane_study_focus
 			}
 			multiply = 5
@@ -298,6 +368,16 @@ aov_ley_lines_perk = {
 				}
 			}
 			add = 1989
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = aov_studying }
+				OR = {
+					highest_skill = learning
+					highest_skill = stewardship
+				}
+			}
+			add = 1000
 		}
 		if = {
 			limit = {
