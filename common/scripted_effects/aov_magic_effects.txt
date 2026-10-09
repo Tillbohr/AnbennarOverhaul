@@ -115,3 +115,114 @@ aov_magic_quarterly = {
 	}
 	aov_magic_sync_mastery = yes
 }
+
+# Necromancy cast: where the faith forbids or shuns magic, the caster may be found out
+aov_dark_magic_roll = {
+	if = {
+		limit = {
+			NOT = { has_trait = forbidden_magic_practitioner }
+			faith = { has_doctrine_parameter = witchcraft_illegal }
+		}
+		random = {
+			chance = 25
+			add_trait = forbidden_magic_practitioner
+		}
+	}
+	else_if = {
+		limit = {
+			NOT = { has_trait = forbidden_magic_practitioner }
+			faith = { has_doctrine_parameter = witchcraft_shunned }
+		}
+		random = {
+			chance = 10
+			add_trait = forbidden_magic_practitioner
+		}
+	}
+}
+
+### One-off spell effects (tools/data/spells.py). Caster scope.
+
+# Deposit Divination: gold from a newly found deposit
+aov_deposit_divination = {
+	if = {
+		limit = { exists = capital_county }
+		add_gold = {
+			value = capital_county.development_level
+			multiply = 5
+			add = 25
+		}
+	}
+	else = {
+		add_gold = 25
+	}
+}
+
+# Scry (scope:recipient = target): reveal a secret, else intrigue experience
+aov_scry_reveal = {
+	if = {
+		limit = {
+			scope:recipient = {
+				any_secret = { NOT = { is_known_by = root } }
+			}
+		}
+		scope:recipient = {
+			random_secret = {
+				limit = { NOT = { is_known_by = root } }
+				reveal_to = root
+			}
+		}
+	}
+	else = {
+		add_intrigue_lifestyle_xp = 500
+	}
+}
+
+# Speak With Dead: the ancestors teach, and sometimes tell
+aov_speak_with_dead = {
+	add_learning_lifestyle_xp = 1000
+	random = {
+		chance = 33
+		random_close_or_extended_family_member = {
+			limit = {
+				is_alive = yes
+				any_secret = { NOT = { is_known_by = root } }
+			}
+			random_secret = {
+				limit = { NOT = { is_known_by = root } }
+				reveal_to = root
+			}
+		}
+	}
+}
+
+# Remove Pain: wounds and illness healed, stress eased
+aov_remove_pain = {
+	if = { limit = { has_trait = wounded_1 } remove_trait = wounded_1 }
+	if = { limit = { has_trait = wounded_2 } remove_trait = wounded_2 }
+	if = { limit = { has_trait = wounded_3 } remove_trait = wounded_3 }
+	if = { limit = { has_trait = ill } remove_trait = ill }
+	add_stress = -30
+}
+
+# Transmute to Gold: Learning x 15 gold, at a stress cost
+aov_transmute_to_gold = {
+	add_gold = {
+		value = learning
+		multiply = 15
+	}
+	add_stress = 20
+}
+
+# Assimilation Program: the most developed domain county of another culture adopts the caster's
+aov_assimilation_program = {
+	if = {
+		limit = {
+			any_held_county = { NOT = { culture = root.culture } }
+		}
+		ordered_held_county = {
+			limit = { NOT = { culture = root.culture } }
+			order_by = development_level
+			set_county_culture = root.culture
+		}
+	}
+}

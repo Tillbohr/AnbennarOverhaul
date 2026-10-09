@@ -20,3 +20,13 @@
  aov_magic.1.desc.illusion: "Long study has borne fruit. My command of Illusion has deepened, and I can now work its spells up to level #V [ROOT.Char.MakeScope.ScriptValue('aov_school_illusion_level')|0]#!."
  aov_magic.1.desc.necromancy: "Long study has borne fruit. My command of Necromancy has deepened, and I can now work its spells up to level #V [ROOT.Char.MakeScope.ScriptValue('aov_school_necromancy_level')|0]#!."
  aov_magic.1.desc.transmutation: "Long study has borne fruit. My command of Transmutation has deepened, and I can now work its spells up to level #V [ROOT.Char.MakeScope.ScriptValue('aov_school_transmutation_level')|0]#!."
+
+ # Casting
+ AOV_SPELL_REQ_READY: "The spell is not on cooldown"
+ AOV_SPELL_REQ_WAR: "Is at war"
+ AOV_STUDY_REQ_NOT_MASTERED: "This school is not yet mastered (level 3)"
+ aov_spell_ward_target: "Warded"
+ aov_spell_ward_target_desc: "Protective wards fray every plot aimed at this character."
+ aov_spell_steal_vitality_victim: "Vitality Stolen"
+ aov_spell_steal_vitality_victim_desc: "Something has drained this character's strength."
+ aov_charmed_opinion: "Charmed"

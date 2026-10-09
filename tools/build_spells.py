@@ -135,6 +135,121 @@ def copy_art(eu4: Path, root: Path) -> None:
     tab.write_bytes(write_bgra(95, 95, downscale(px, w, h, 95)))
 
 
+def of_school(spells: list, school: str) -> list:
+    return [s for s in spells if s["school"] == school]
+
+
+def lasting(s) -> bool:
+    return bool(s["modifier"].strip())
+
+
+def window_spell(s) -> bool:
+    return s["type"] != "targeted"
+
+
+def body(text: str, depth: int) -> str:
+    pad = "\t" * depth
+    return "\n".join(pad + line.strip() for line in text.splitlines() if line.strip())
+
+
+def modifiers(spells: list) -> str:
+    out = [HEADER]
+    for s in spells:
+        if lasting(s):
+            out.append(f"aov_spell_{s['key']} = {{\n\ticon = learning_positive\n{body(s['modifier'], 1)}\n}}\n")
+    return "\n".join(out)
+
+
+def triggers(spells: list) -> str:
+    out = [HEADER, "# Character scope (the caster).\n"]
+    for s in spells:
+        k, c, lvl = s["key"], s["school"], s["level"]
+        cost = COSTS[lvl]
+        war = (f"\tcustom_tooltip = {{\n\t\ttext = AOV_SPELL_REQ_WAR\n\t\tis_at_war = yes\n\t}}\n" if s["type"] == "war" else "")
+        out.append(
+            f"aov_spell_{k}_known = {{\n\taov_school_level_at_least = {{ SCHOOL = {c} LEVEL = {lvl} }}\n}}\n"
+            f"aov_spell_{k}_ready = {{\n\tNOT = {{ has_variable = aov_spell_{k}_cd }}\n}}\n"
+            f"aov_spell_{k}_castable = {{\n"
+            f"\taov_is_mage = yes\n"
+            f"\tcustom_tooltip = {{\n\t\ttext = AOV_SPELL_REQ_{c.upper()}_{lvl}\n\t\taov_spell_{k}_known = yes\n\t}}\n"
+            f"\tcustom_tooltip = {{\n\t\ttext = AOV_SPELL_REQ_READY\n\t\taov_spell_{k}_ready = yes\n\t}}\n"
+            f"\tcustom_tooltip = {{\n\t\ttext = AOV_SPELL_REQ_MANA_{cost}\n\t\taov_mana >= {cost}\n\t}}\n"
+            f"{war}}}\n"
+        )
+    return "\n".join(out)
+
+
+def effects(spells: list) -> str:
+    out = [HEADER, "# Character scope (the caster); targeted spells have the target as scope:recipient.\n"]
+    for s in spells:
+        k, c, lvl = s["key"], s["school"], s["level"]
+        cost, years = COSTS[lvl], YEARS[lvl]
+        lines = [
+            f"\tcustom_tooltip = AOV_SPELL_COST_{cost}",
+            f"\thidden_effect = {{",
+            f"\t\taov_mana_change = {{ AMOUNT = -{cost} }}",
+            f"\t\taov_school_add_progress = {{ SCHOOL = {c} AMOUNT = {cost} }}",
+            f"\t\tset_variable = {{ name = aov_spell_{k}_cd years = {years} }}",
+            f"\t}}",
+        ]
+        if lasting(s):
+            lines.append(f"\tadd_character_modifier = {{ modifier = aov_spell_{k} years = {years} }}")
+        if s["effect"].strip():
+            lines.append(body(s["effect"], 1))
+        if c == "necromancy":
+            lines.append("\taov_dark_magic_roll = yes")
+        out.append(f"aov_spell_{k}_cast = {{\n" + "\n".join(lines) + "\n}\n")
+    return "\n".join(out)
+
+
+def sguis(spells: list) -> str:
+    out = [HEADER, "# Magic window (gui/aov_window_magic.gui, gui/aov_magic_generated.gui). Targeted spells are interactions.\n"]
+    for s in spells:
+        if window_spell(s):
+            k = s["key"]
+            out.append(f"aov_spell_{k}_sgui = {{\n\tscope = character\n\tis_valid = {{ aov_spell_{k}_castable = yes }}\n"
+                       f"\teffect = {{ aov_spell_{k}_cast = yes }}\n}}\n")
+    for c in SCHOOLS:
+        out.append(f"aov_study_{c}_sgui = {{\n\tscope = character\n\tis_shown = {{ aov_is_studying = {{ SCHOOL = {c} }} }}\n"
+                   f"\tis_valid = {{\n\t\taov_is_mage = yes\n\t\tcustom_tooltip = {{\n\t\t\ttext = AOV_STUDY_REQ_NOT_MASTERED\n"
+                   f"\t\t\taov_school_{c}_level < 3\n\t\t}}\n\t}}\n\teffect = {{ aov_study_set = {{ SCHOOL = {c} }} }}\n}}\n")
+    return "\n".join(out)
+
+
+def loc(spells: list) -> str:
+    out = ["l_english:", " # " + HEADER.strip("# \n")]
+    for s in spells:
+        k = s["key"]
+        out.append(f' aov_spell_{k}: "{s["name"]}"')
+        out.append(f' aov_spell_{k}_desc: "{s["desc"]}"')
+        out.append(f' aov_spell_{k}_flavour: "#F {s["flavour"]}#!"')
+    out.append("")
+    for c in SCHOOLS:
+        for lvl in range(4):
+            out.append(f' AOV_SPELL_REQ_{c.upper()}_{lvl}: "Knows $AOV_SCHOOL_{c.upper()}$ at level {lvl} or higher"')
+    for cost in COSTS:
+        out.append(f' AOV_SPELL_REQ_MANA_{cost}: "Has at least #V {cost}#! mana"')
+        out.append(f' AOV_SPELL_COST_{cost}: "Costs #V {cost}#! mana"')
+    return "\n".join(out) + "\n"
+
+
+def render_all(spells: list) -> dict:
+    return {
+        "common/modifiers/aov_spell_modifiers.txt": modifiers(spells),
+        "common/scripted_triggers/aov_spell_triggers.txt": triggers(spells),
+        "common/scripted_effects/aov_spell_effects.txt": effects(spells),
+        "common/scripted_guis/aov_spell_sgui.txt": sguis(spells),
+        "localization/english/aov_spells_l_english.yml": loc(spells),
+    }
+
+
+def write_all(files: dict, root: Path) -> None:
+    for rel, text in files.items():
+        out = root / rel
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_bytes(b"\xef\xbb\xbf" + text.replace("\r\n", "\n").encode("utf-8"))
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--eu4", type=Path, default=DEFAULT_EU4)
@@ -142,10 +257,12 @@ def main() -> None:
     try:
         spells = load_spells()
         validate(spells)
+        files = render_all(spells)
+        write_all(files, SUBMOD)
         copy_art(args.eu4, SUBMOD)
     except GeneratorError as e:
         sys.exit(f"error: {e}")
-    print(f"validated {len(spells)} spells; copied {len(ART) + 1} art files")
+    print(f"wrote {len(files)} files for {len(spells)} spells; copied {len(ART) + 1} art files")
 
 
 if __name__ == "__main__":
