@@ -33,6 +33,11 @@ aov_study_set = {
 # Adds progress; a crossed threshold fires the level-up event
 aov_school_add_progress = {
 	save_temporary_scope_value_as = { name = aov_old_level value = aov_school_$SCHOOL$_level }
+	# change_variable does nothing on a variable that does not exist yet
+	if = {
+		limit = { NOT = { has_variable = aov_school_$SCHOOL$_progress } }
+		set_variable = { name = aov_school_$SCHOOL$_progress value = 0 }
+	}
 	change_variable = { name = aov_school_$SCHOOL$_progress add = $AMOUNT$ }
 	if = {
 		limit = { aov_school_$SCHOOL$_level > scope:aov_old_level }

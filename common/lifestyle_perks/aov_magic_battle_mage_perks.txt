@@ -21,7 +21,7 @@ aov_spark_of_battle_perk = {
 				NOT = { has_variable = aov_studying }
 				OR = {
 					highest_skill = martial
-					highest_skill = prowess
+					highest_skill_including_prowess = prowess
 				}
 			}
 			add = 1000
@@ -76,7 +76,7 @@ aov_overchannel_perk = {
 				NOT = { has_variable = aov_studying }
 				OR = {
 					highest_skill = martial
-					highest_skill = prowess
+					highest_skill_including_prowess = prowess
 				}
 			}
 			add = 1000
@@ -124,7 +124,7 @@ aov_firestorm_tactics_perk = {
 				NOT = { has_variable = aov_studying }
 				OR = {
 					highest_skill = martial
-					highest_skill = prowess
+					highest_skill_including_prowess = prowess
 				}
 			}
 			add = 1000
@@ -170,7 +170,7 @@ aov_summoners_circle_perk = {
 				NOT = { has_variable = aov_studying }
 				OR = {
 					highest_skill = martial
-					highest_skill = prowess
+					highest_skill_including_prowess = prowess
 				}
 			}
 			add = 1000
@@ -225,7 +225,7 @@ aov_conjured_provisions_perk = {
 				NOT = { has_variable = aov_studying }
 				OR = {
 					highest_skill = martial
-					highest_skill = prowess
+					highest_skill_including_prowess = prowess
 				}
 			}
 			add = 1000
@@ -273,7 +273,7 @@ aov_bound_elementals_perk = {
 				NOT = { has_variable = aov_studying }
 				OR = {
 					highest_skill = martial
-					highest_skill = prowess
+					highest_skill_including_prowess = prowess
 				}
 			}
 			add = 1000
@@ -318,7 +318,7 @@ aov_battle_meditation_perk = {
 				NOT = { has_variable = aov_studying }
 				OR = {
 					highest_skill = martial
-					highest_skill = prowess
+					highest_skill_including_prowess = prowess
 				}
 			}
 			add = 1000
@@ -362,7 +362,7 @@ aov_mage_knight_perk = {
 				NOT = { has_variable = aov_studying }
 				OR = {
 					highest_skill = martial
-					highest_skill = prowess
+					highest_skill_including_prowess = prowess
 				}
 			}
 			add = 1000

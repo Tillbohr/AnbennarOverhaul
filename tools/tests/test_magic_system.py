@@ -35,6 +35,16 @@ class ManaStudyTests(unittest.TestCase):
         self.assertIn("value = 5", block(v, "aov_mana_refill_month"))
         self.assertIn("multiply = 5", block(v, "aov_study_gain_month"))
 
+    def test_change_variable_only_on_existing_variables(self):
+        """change_variable on an unset variable is a runtime error that does nothing ('Variable not of the
+        value scope type'), so school progress never grew. Every changed variable is created first."""
+        effects = self.effects()
+        for name in set(re.findall(r"change_variable = \{ name = (\S+)", effects)):
+            self.assertIn(f"NOT = {{ has_variable = {name} }}", effects, name)
+        b = block(effects, "aov_school_add_progress")
+        create = b.index("set_variable = { name = aov_school_$SCHOOL$_progress value = 0 }")
+        self.assertLess(create, b.index("change_variable = { name = aov_school_$SCHOOL$_progress"))
+
     def test_mana_change_clamps(self):
         b = block(self.effects(), "aov_mana_change")
         self.assertIn("min = 0", b)

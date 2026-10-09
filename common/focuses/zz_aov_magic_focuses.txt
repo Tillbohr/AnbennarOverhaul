@@ -29,7 +29,7 @@ magic_duelist_focus = {
 				NOT = { has_variable = aov_studying }
 				OR = {
 					highest_skill = martial
-					highest_skill = prowess
+					highest_skill_including_prowess = prowess
 				}
 			}
 			add = 1000

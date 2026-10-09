@@ -121,7 +121,9 @@ class AIWeightTests(unittest.TestCase):
     def check(self, body, tree, label):
         weight = body
         self.assertEqual(set(re.findall(r"aov_is_studying = \{ SCHOOL = (\w+) \}", weight)), tree_schools(tree), label)
-        self.assertEqual(set(re.findall(r"highest_skill = (\w+)", weight)), TREE_SKILLS[tree], label)
+        self.assertEqual(set(re.findall(r"highest_skill(?:_including_prowess)? = (\w+)", weight)), TREE_SKILLS[tree], label)
+        # The engine rejects prowess in highest_skill (error.log): it needs highest_skill_including_prowess
+        self.assertNotIn("highest_skill = prowess", weight, label)
         self.assertIn("NOT = { has_variable = aov_studying }", weight, label)
         self.assertIn("add = 1000", weight, label)
 
