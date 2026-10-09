@@ -84,6 +84,16 @@ class Eu4MonumentsTests(unittest.TestCase):
         self.assertEqual((b.tiers[2].cost_factor, b.tiers[2].months, b.tiers[2].province), (0, 0, {}))
         self.assertEqual(b.gate, "")
 
+    def test_commented_start_fallback(self):
+        roots = fixture_roots()
+        write(roots["anbennar"] / "common/great_projects/m.txt",
+              "m1 = {\n\t# start = 42\n\tdate = 01.01.01\n\ttype = monument\n}\n"
+              "m2 = {\n\tdate = 01.01.01\n}\n")
+        projects = em.load_projects(roots)
+        self.assertEqual((projects["m1"].start, projects["m1"].mission), (42, True))
+        self.assertEqual((projects["m2"].start, projects["m2"].mission), (0, False))
+        self.assertEqual((projects["proj"].start, projects["proj"].mission), (67, False))
+
     def test_submod_precedence(self):
         roots = fixture_roots()
         self.assertEqual(em.load_projects(roots)["dup"].tiers[0].cost_factor, 2)
@@ -124,14 +134,14 @@ class Eu4MonumentsTests(unittest.TestCase):
         self.assertEqual(px[:4], bytes([0, 0, 0, 0]))
 
     @unittest.skipUnless(em.EU4_ROOTS["anbennar"].is_dir(), "needs EU4 Anbennar")
-    def test_cannor_projects(self):
+    def test_cannor_has_82_projects(self):
         projects = em.load_projects(em.EU4_ROOTS)
         sup = em.province_superregions(em.EU4_ROOTS["anbennar"])
         cannor = [p for p in projects.values() if sup.get(p.start) in em.CANNOR]
-        # The brief expected 82; the data gives 77 by province. Palace of Unity has no start (commented out
-        # as 8, Anbenncost) and is the spec's 78th. See task-1-report.md.
-        self.assertEqual(len(cannor), 77)
+        self.assertEqual(len(cannor), 82)
         self.assertEqual([p.key for p in cannor if p.type == "canal"], ["marrhold_dwarovar_tunnel"])
+        self.assertEqual(projects["palace_of_unity"].start, 8)
+        self.assertIs(projects["palace_of_unity"].mission, True)
 
 
 if __name__ == "__main__":

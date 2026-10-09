@@ -124,6 +124,7 @@ class Project:
     starting_tier: int
     gate: str
     tiers: list
+    mission: bool = False  # start taken from a commented `# start = N` (mission-spawned monument)
 
 
 def _tier(body):
@@ -141,16 +142,21 @@ def _tier(body):
 
 def _project(key, body, source, file):
     sub = parse_blocks(body)
+    start = _scalar(body, "start")
+    mission = start is None and _scalar(body, "commented_start") is not None
+    if mission:
+        start = _scalar(body, "commented_start")
     return Project(
         key=key,
         source=source,
         file=file,
-        start=int(_number(_scalar(body, "start"))),
+        start=int(_number(start)),
         year=int(_number(_scalar(body, "date"), 1)),
         type=_scalar(body, "type", "monument"),
         starting_tier=int(_number(_scalar(body, "starting_tier"))),
         gate=sub.get("can_use_modifiers_trigger", ""),
         tiers=[_tier(sub[f"tier_{n}"]) if f"tier_{n}" in sub else Tier() for n in (1, 2, 3)],
+        mission=mission,
     )
 
 
@@ -164,6 +170,8 @@ def load_projects(roots):
             continue
         for path in sorted(folder.glob("*.txt")):
             text = path.read_bytes().decode("latin-1")
+            # expose `# start = N` to the comment stripper as a readable key
+            text = re.sub(r"(?m)^[ \t]*#[ \t]*start[ \t]*=[ \t]*(\d+)", r"commented_start = \1", text)
             for key, body in parse_blocks(text).items():
                 projects[key] = _project(key, body, source, path.name)
     return projects
