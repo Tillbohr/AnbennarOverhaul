@@ -22,6 +22,7 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 | Accept current reports as baseline | `python -I tools/validate.py --baseline` (only after confirming they are inherited from Anbennar) |
 | Rebuild holdings override | `python -I tools/build_holdings_override.py` |
 | Rebuild HUD override | `python -I tools/build_hud_override.py` |
+| Rebuild lifestyle window override | `python -I tools/build_lifestyle_override.py` |
 | Run tool tests | `python -I -m unittest discover -s tools/tests -v` |
 | Rebuild inventions | `python -I tools/build_inventions.py` (needs EU4 Anbennar installed for icons) |
 | Rebuild spells | `python -I tools/build_spells.py` (needs EU4 Anbennar installed for magic art) |
@@ -55,6 +56,7 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 |---|---|---|
 | `common/holdings/00_holdings.txt` | `python -I tools/build_holdings_override.py` | Holdings are whole-file only. The script copies Anbennar's file and inserts the `ADDITIONS` (marked `# Anbennar Overhaul`). Never edit the output by hand. |
 | `gui/hud.gui` | `python -I tools/build_hud_override.py` | The main tab bar is whole-file only. The script copies Anbennar's `gui/hud.gui` if it has one, else the game's, and inserts the Artificery tab after `tab_situation` (marked `# Anbennar Overhaul`). Never edit the output by hand. |
+| `gui/window_character_lifestyle.gui` | `python -I tools/build_lifestyle_override.py` | The lifestyle window is whole-file only. The script copies Anbennar's `gui/window_character_lifestyle.gui` if it has one, else the game's, and adds a `magic_lifestyle` copy after each of the three `wanderer_lifestyle` blocks (XP bar background, progress bar, unspent-points icon) using the magic art (marked `# Anbennar Overhaul: magic lifestyle`). Never edit the output by hand. |
 | `common/modifiers/aov_invention_modifiers.txt`, `common/scripted_triggers/aov_invention_triggers.txt`, `common/script_values/aov_invention_values.txt`, `common/scripted_effects/aov_invention_effects.txt`, `common/scripted_guis/aov_invention_sgui.txt`, `common/customizable_localization/aov_invention_custom_loc.txt`, `gui/aov_inventions_generated.gui`, `localization/english/aov_inventions_l_english.yml`, `gfx/interface/icons/aov_inventions/` | `python -I tools/build_inventions.py` | One block per invention, generated from `tools/data/inventions.py` (edit the data, then rerun). |
 | `common/modifiers/aov_spell_modifiers.txt`, `common/scripted_triggers/aov_spell_triggers.txt`, `common/scripted_effects/aov_spell_effects.txt`, `common/scripted_guis/aov_spell_sgui.txt`, `common/character_interactions/aov_spell_interactions.txt`, `gui/aov_magic_generated.gui`, `localization/english/aov_spells_l_english.yml`, `gfx/interface/icons/aov_magic/`, `gfx/interface/skinned/hud_maintab/aov_maintab_magic.dds` | `python -I tools/build_spells.py` | One block per spell, generated from `tools/data/spells.py` (edit the data, then rerun). |
 | `gfx/interface/icons/{lifestyles,focuses,traits,lifestyles_perks,lifestyle_tree_backgrounds}/` magic files, `gfx/interface/illustrations/lifestyles_background/magic_lifestyle.dds`, `gfx/interface/progressbars/aov_progress_magic*.dds` | `python -I tools/build_magic_lifestyle_art.py` | Magic lifestyle art (18 DDS files) composed from EU4 Anbennar magic art and uncompressed vanilla files; the output list is `OUTPUTS` in the script. |
@@ -62,7 +64,7 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 ## Updating to a new Anbennar version
 
 1. Replace `../anbennar-ck3-dev-master` with the new Anbennar release.
-2. Run `python -I tools/build_holdings_override.py` and `python -I tools/build_hud_override.py`.
+2. Run `python -I tools/build_holdings_override.py` and `python -I tools/build_hud_override.py` and `python -I tools/build_lifestyle_override.py`.
 3. Run tiger (below) and fix anything that references renamed Anbennar content.
 4. Re-copy Anbennar's `title_revocation_standard_can_pick_title_trigger` (`common/scripted_triggers/00_interaction_triggers.txt`)
    into `common/scripted_triggers/zz_aov_interaction_triggers.txt`, keeping the `# Anbennar Overhaul` faction-title exclusion.
@@ -70,7 +72,7 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
    `common/character_interactions/zz_aov_spell_overrides.txt`, keeping the `# Anbennar Overhaul` lines.
 6. Test in game; check `database_conflicts.log` for overhaul keys now also defined by Anbennar.
 
-After a CK3 patch, rerun `python -I tools/build_hud_override.py` too: its source is the game's `hud.gui`.
+After a CK3 patch, rerun `python -I tools/build_hud_override.py` and `python -I tools/build_lifestyle_override.py` too: their sources are the game's `hud.gui` and `window_character_lifestyle.gui` (when Anbennar ships no copy).
 
 ## Validation
 
