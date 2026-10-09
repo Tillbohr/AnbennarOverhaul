@@ -3,11 +3,10 @@
 Read by tools/import_eu4_monuments.py. How the importer applies it:
 
 - MODIFIERS: each EU4 modifier of a tier becomes `ck3 = value * mult`. EU4 `province_modifiers` land in the
-  building's `province_modifier` or `county_modifier` (the row's `scope`); `area_modifier` lands in
-  `duchy_capital_county_modifier` and `country_modifiers` in `character_modifier` whatever the scope. (The
-  engine and tiger allow `duchy_capital_county_modifier` only on `type = duchy_capital` buildings, so every row
-  that occurs in an EU4 area block uses a key that is also valid in `county_modifier`.) Rows that
-  hit the same CK3 key in one block add up. Keys in INTEGER are rounded half away from zero and never round a
+  building's `province_modifier` or `county_modifier` (the row's `scope`); `area_modifier` also lands in
+  `county_modifier` (CK3's `duchy_capital_county_modifier` works only on `type = duchy_capital` buildings), and
+  `country_modifiers` in `character_modifier`, whatever the scope. Rows that hit the same CK3 key in one block
+  add up. Keys in INTEGER are rounded half away from zero and never round a
   nonzero value to 0 (+-1 minimum). Drop rows are listed in the tier's `dropped` notes.
 - Balance target: a fully upgraded monument is about a strong vanilla special building (Hagia Sophia, Notre Dame:
   tax_mult 0.2-0.3, development_growth_factor 0.2-0.3, monthly_income 2, a skill +2, monthly_piety 1), never a
@@ -33,11 +32,13 @@ DAYS_PER_MONTH = 15  # EU4 120/240/480 months -> 5/10/20 years
 INTEGER = {
     "fort_level", "defender_holding_advantage", "building_slot_add", "county_opinion_add", "diplomacy", "martial",
     "general_opinion", "domain_limit", "knight_limit", "advantage", "defender_advantage", "heavy_cavalry_max_size_add",
+    "levy_toughness",
 }
 
 _ESTATES = "EU4 estate system; CK3 has no estates"
 _ABSOLUTISM = "EU4 absolutism/revolution; no CK3 equivalent"
 _ADVISORS = "EU4 advisors; CK3 councillors are not hired"
+_CULTURE_CONVERSION = "CK3 has no county culture-conversion modifier"
 _TRADE = "EU4 trade nodes/merchants/colonies; no CK3 equivalent"
 _SHIPS = "EU4 ship design/flagships; CK3 has no navies"
 _GOVERNMENT = "government-specific twin of legitimacy (translated); EU4 gives only the one that applies"
@@ -112,9 +113,9 @@ MODIFIERS = {
     "tolerance_of_heathens_capacity": Row("different_faith_county_opinion_mult", -0.05, H),
     "global_missionary_strength": Row("faith_conversion_piety_cost_mult", -5, H),  # +3% -> -15% conversion cost
     "missionaries": Row("faith_conversion_piety_cost_mult", -0.1, H),
-    "culture_conversion_cost": Row("cultural_head_acceptance_gain_mult", -1, H),
-    "culture_conversion_time": Row("cultural_head_acceptance_gain_mult", -1, H),
-    "promote_culture_cost": Row("cultural_head_acceptance_gain_mult", -0.5, H),
+    "culture_conversion_cost": Drop(_CULTURE_CONVERSION),
+    "culture_conversion_time": Drop(_CULTURE_CONVERSION),
+    "promote_culture_cost": Drop(_CULTURE_CONVERSION),
 
     # --- Country: diplomacy and intrigue. Reputation -> diplomacy skill; relations/AE -> opinion (+0.3 -> +6).
     "diplomatic_reputation": Row("diplomacy", 1, H),
@@ -152,22 +153,23 @@ MODIFIERS = {
     "adventurers_influence_modifier": Row("knight_effectiveness_mult", 1, H),
     "burghers_loyalty_modifier": Row("monthly_income_mult", 0.5, H),
     "burghers_influence_modifier": Row("monthly_income_mult", 0.5, H),
-    "artificers_loyalty_modifier": Row("cultural_head_fascination_mult", 0.5, H),  # artificers spread innovation
-    "artificers_influence_modifier": Row("cultural_head_fascination_mult", 0.5, H),
+    "artificers_loyalty_modifier": Row("monthly_learning_lifestyle_xp_gain_mult", 0.5, H),  # artificers ~ scholars
+    "artificers_influence_modifier": Row("monthly_learning_lifestyle_xp_gain_mult", 0.5, H),
     "artificers_capacity": Drop(_ESTATES),
     "vampires_loyalty_modifier": Drop(_ESTATES),
     "all_estate_possible_privileges": Drop(_ESTATES),
     "estate_interaction_cooldown_modifier": Drop(_ESTATES),
 
-    # --- Country: monarch power, ideas, technology -> lifestyle XP and innovation (-10% tech cost -> +10%).
+    # --- Country: monarch power, ideas, technology -> lifestyle XP (cultural_head_* keys only work for the
+    # cultural head, so not used). One-category tech cost -10% -> +10% learning XP; all-tech cost -5% -> +10%.
     "monarch_military_power": Row("martial", 1, H),
     "all_power_cost": Row("monthly_lifestyle_xp_gain_mult", -2, H),
     "idea_cost": Row("monthly_lifestyle_xp_gain_mult", -1, H),
-    "technology_cost": Row("cultural_head_fascination_mult", -2, H),
-    "adm_tech_cost_modifier": Row("cultural_head_fascination_mult", -1, H),
-    "dip_tech_cost_modifier": Row("cultural_head_fascination_mult", -1, H),
-    "mil_tech_cost_modifier": Row("cultural_head_fascination_mult", -1, H),
-    "innovativeness_gain": Row("cultural_head_fascination_mult", 0.5, H),
+    "technology_cost": Row("monthly_learning_lifestyle_xp_gain_mult", -2, H),
+    "adm_tech_cost_modifier": Row("monthly_learning_lifestyle_xp_gain_mult", -1, H),
+    "dip_tech_cost_modifier": Row("monthly_learning_lifestyle_xp_gain_mult", -1, H),
+    "mil_tech_cost_modifier": Row("monthly_learning_lifestyle_xp_gain_mult", -1, H),
+    "innovativeness_gain": Row("monthly_learning_lifestyle_xp_gain_mult", 0.5, H),
     "advisor_cost": Drop(_ADVISORS),
     "adm_advisor_cost": Drop(_ADVISORS),
     "dip_advisor_cost": Drop(_ADVISORS),
@@ -201,7 +203,7 @@ MODIFIERS = {
     "manpower_in_accepted_culture_provinces": Row("levy_size", 0.5, H),
     "manpower_recovery_speed": Row("levy_reinforcement_rate", 1, H),
     "recover_army_morale_speed": Row("levy_reinforcement_rate", 1, H),
-    "reserves_organisation": Row("levy_toughness", 1, H),
+    "reserves_organisation": Row("levy_toughness", 30, H),  # +10% -> +3 (vanilla uses +-2..5)
     "global_regiment_cost": Row("men_at_arms_maintenance", 1, H),
     "infantry_cost": Row("heavy_infantry_maintenance_mult", 1, H),
     "mercenary_cost": Row("mercenary_hire_cost_mult", 1, H),
@@ -366,10 +368,9 @@ CULTURES = {
     "culture_group:kheteratan": "culture = { has_cultural_pillar = heritage_kheteratan }",
     "culture_group:kobold": "culture = { has_cultural_pillar = heritage_kobold }",
     "culture_group:lencori": "culture = { has_cultural_pillar = heritage_lencori }",
-    # EU4's reachman group (blue/white reachmen, moormen) is split over two CK3 heritages: name the cultures
-    # (several triggers are fine: the gate is an OR of all atoms).
+    # EU4's reachman group (blue/white reachmen, moormen) is split over two CK3 heritages: name the cultures.
     "culture_group:reachman": (
-        "culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman"),
+        "OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman }"),
     "culture_group:goblin": None,  # no goblin cultures in CK3
     "culture_group:orcish": None,  # no orc cultures in CK3
     "culture_group:centaur": None,  # no centaur cultures in CK3

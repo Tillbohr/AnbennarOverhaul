@@ -72,6 +72,26 @@ ANBENNAR_RELIGIONS = _top_level_names(ANBENNAR / "common/religion/religion_types
 ANBENNAR_FAITHS = _nested_names(ANBENNAR / "common/religion/religion_types", 2)
 
 
+def integer(value):
+    """INTEGER rounding as the module docstring defines it: half away from zero, never 0 for a nonzero value."""
+    if value == 0:
+        return 0
+    rounded = max(1, int(abs(value) + 0.5))
+    return rounded if value > 0 else -rounded
+
+
+def top_level_statements(text):
+    """`key = value` / `key = { ... }` statements at the top level of a script snippet."""
+    statements, pos = [], 0
+    for m in re.finditer(r"[A-Za-z0-9_.:]+\s*=\s*", text):
+        if m.start() < pos:
+            continue
+        end = em._balanced(text, m.end()) if text[m.end():m.end() + 1] == "{" else m.end() + len(text[m.end():].split()[0])
+        statements.append(text[m.start():end])
+        pos = end
+    return statements
+
+
 def cannor_projects():
     supers = em.province_superregions(em.EU4_ROOTS["anbennar"])
     return [p for p in em.load_projects(em.EU4_ROOTS).values() if supers.get(p.start) in em.CANNOR]
@@ -165,10 +185,20 @@ class TranslationTableTests(unittest.TestCase):
         self.assertIn("fort_level", tr.INTEGER)
         self.assertLessEqual(tr.INTEGER, targets)
 
-    def test_local_defensiveness_rounds_to_one_fort_level(self):
+    def test_local_defensiveness_scales_to_fort_levels(self):
         row = tr.MODIFIERS["local_defensiveness"]
         self.assertEqual((row.ck3, row.scope), ("fort_level", "province"))
-        self.assertEqual(max(1, round(0.1 * row.mult)), 1)
+        self.assertEqual([integer(v * row.mult) for v in (0.05, 0.1, 0.25, 0.33, 1.0)], [1, 1, 2, 2, 6])
+
+    def test_no_row_targets_a_cultural_head_modifier(self):  # cultural_head_* only works for the cultural head
+        for k, r in tr.MODIFIERS.items():
+            if isinstance(r, tr.Row):
+                self.assertFalse(r.ck3.startswith("cultural_head_"), f"{k} -> {r.ck3}")
+
+    def test_each_culture_value_is_one_trigger(self):
+        for k, trig in tr.CULTURES.items():
+            if trig is not None:
+                self.assertEqual(len(top_level_statements(trig)), 1, f"{k}: {trig}")
 
     def test_costs(self):
         self.assertEqual([round(f * tr.COST) for f in (1000, 2500, 5000)], [400, 1000, 2000])
