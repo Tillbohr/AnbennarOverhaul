@@ -24,6 +24,7 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 | Rebuild HUD override | `python -I tools/build_hud_override.py` |
 | Run tool tests | `python -I -m unittest discover -s tools/tests -v` |
 | Rebuild inventions | `python -I tools/build_inventions.py` (needs EU4 Anbennar installed for icons) |
+| Rebuild spells | `python -I tools/build_spells.py` (needs EU4 Anbennar installed for magic art) |
 
 ## Loading
 
@@ -54,6 +55,7 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 | `common/holdings/00_holdings.txt` | `python -I tools/build_holdings_override.py` | Holdings are whole-file only. The script copies Anbennar's file and inserts the `ADDITIONS` (marked `# Anbennar Overhaul`). Never edit the output by hand. |
 | `gui/hud.gui` | `python -I tools/build_hud_override.py` | The main tab bar is whole-file only. The script copies Anbennar's `gui/hud.gui` if it has one, else the game's, and inserts the Artificery tab after `tab_situation` (marked `# Anbennar Overhaul`). Never edit the output by hand. |
 | `common/modifiers/aov_invention_modifiers.txt`, `common/scripted_triggers/aov_invention_triggers.txt`, `common/script_values/aov_invention_values.txt`, `common/scripted_effects/aov_invention_effects.txt`, `common/scripted_guis/aov_invention_sgui.txt`, `common/customizable_localization/aov_invention_custom_loc.txt`, `gui/aov_inventions_generated.gui`, `localization/english/aov_inventions_l_english.yml`, `gfx/interface/icons/aov_inventions/` | `python -I tools/build_inventions.py` | One block per invention, generated from `tools/data/inventions.py` (edit the data, then rerun). |
+| `common/modifiers/aov_spell_modifiers.txt`, `common/scripted_triggers/aov_spell_triggers.txt`, `common/scripted_effects/aov_spell_effects.txt`, `common/scripted_guis/aov_spell_sgui.txt`, `common/character_interactions/aov_spell_interactions.txt`, `gui/aov_magic_generated.gui`, `localization/english/aov_spells_l_english.yml`, `gfx/interface/icons/aov_magic/`, `gfx/interface/skinned/hud_maintab/aov_maintab_magic.dds` | `python -I tools/build_spells.py` | One block per spell, generated from `tools/data/spells.py` (edit the data, then rerun). |
 
 ## Updating to a new Anbennar version
 
@@ -62,7 +64,9 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 3. Run tiger (below) and fix anything that references renamed Anbennar content.
 4. Re-copy Anbennar's `title_revocation_standard_can_pick_title_trigger` (`common/scripted_triggers/00_interaction_triggers.txt`)
    into `common/scripted_triggers/zz_aov_interaction_triggers.txt`, keeping the `# Anbennar Overhaul` faction-title exclusion.
-5. Test in game; check `database_conflicts.log` for overhaul keys now also defined by Anbennar.
+5. Re-copy Anbennar's `start_compel_interaction`, `start_dominate_interaction` and `anb_enhance_ability_interaction` into
+   `common/character_interactions/zz_aov_spell_overrides.txt`, keeping the `# Anbennar Overhaul` lines.
+6. Test in game; check `database_conflicts.log` for overhaul keys now also defined by Anbennar.
 
 After a CK3 patch, rerun `python -I tools/build_hud_override.py` too: its source is the game's `hud.gui`.
 
@@ -114,3 +118,13 @@ inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error
   opinion, Make Amends (100 gold, +10, up to 40). Levels Hostile/Displeased/Neutral/Favored/Exalted give modifiers
   `aov_<f>_<level>` and set research cost (100/75/50/38/25) and time (+25%/+25%/-/-/-25%). Values in
   `common/script_values/aov_artificer_faction_values.txt`; Factions tab cards in `gui/aov_artificer_factions.gui`.
+- **Magic schools:** eight schools (Abjuration, Conjuration, Divination, Enchantment, Evocation, Illusion, Necromancy,
+  Transmutation) for mages (`has_magical_affinity`, Anbennar). Mana (100 + 50 per affinity level, refilled quarterly at
+  3x the monthly rate), per-school knowledge levels 0-3 (300/800/2000 progress) from studying one chosen school and
+  from casting; `magic_mastery` = sum of levels. 49 spells in `tools/data/spells.py` (spec
+  `docs/superpowers/specs/2026-10-08-magic-schools-design.md`): self/realm/war spells cast from the Magic window
+  (`gui/aov_window_magic.gui`, HUD tab below Artificery, generated pages `gui/aov_magic_generated.gui`), targeted
+  spells as interactions in Anbennar's Spells category (Compel, Dominate, Enhance Ability overridden to need mana and
+  knowledge). Necromancy risks Forbidden Magic Practitioner under witchcraft-illegal/shunned faiths. Hand-written
+  logic in `aov_magic_*` files; Summon Elementals spawns an army removed after 3 years. Sub-project 2 (the magic
+  lifestyle) is not built yet.
