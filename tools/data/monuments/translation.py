@@ -135,6 +135,10 @@ MODIFIERS = {
     "stability_cost_modifier": Row("county_opinion_add", -20, H),
     "war_exhaustion": Row("county_opinion_add", -100, H),
     "years_of_nationalism": Row("monthly_county_control_growth_add", -0.1, H),
+    # Keys of EU4 event modifiers that a project's on_upgraded adds (read by hand into cannor_hand.py, e.g. Castle
+    # Dameris): imperial authority -> prestige (+0.25 -> +0.5/month), favours -> vassal opinion (+0.1 -> +4).
+    "free_city_imperial_authority": Row("monthly_prestige", 2, H),
+    "monthly_favor_modifier": Row("vassal_opinion", 40, H),
     "max_absolutism": Drop(_ABSOLUTISM),
     "yearly_absolutism": Drop(_ABSOLUTISM),
     "max_revolutionary_zeal": Drop(_ABSOLUTISM),
@@ -263,11 +267,13 @@ MODIFIERS = {
 }
 
 
+# One-offs reward the barony holder, who also gets the building's character_modifier (vanilla building
+# on_complete uses `barony.holder`, e.g. 00_castle_buildings.txt).
 def _courtier(skill, education, *, extra_trait=None, female_chance="50"):
     """create_character of a skilled courtier at the court of the holder (root = the monument's province)."""
     extra = f" trait = {extra_trait}" if extra_trait else ""
     return (
-        "county.holder = { save_scope_as = aov_monument_patron "
+        "barony.holder = { save_scope_as = aov_monument_patron "
         "create_character = { employer = scope:aov_monument_patron "
         "culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith "
         f"age = {{ 30 50 }} gender_female_chance = {female_chance} dynasty = none "
@@ -276,7 +282,7 @@ def _courtier(skill, education, *, extra_trait=None, female_chance="50"):
 
 
 def _gain(currency, amount):
-    return f"county.holder = {{ add_{currency} = {amount} }}"
+    return f"barony.holder = {{ add_{currency} = {amount} }}"
 
 
 _LOYALTY = r"add_estate_loyalty\s*=\s*\{{\s*estate\s*=\s*{estate}\s+loyalty\s*=\s*{n}\b"

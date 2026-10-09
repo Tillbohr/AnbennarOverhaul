@@ -135,6 +135,39 @@ class PlacementTests(unittest.TestCase):
         self.assertEqual((ms[0]["barony"], ms[0]["province"]), ("b_2", 12))
         self.assertEqual(report, [])
 
+    def test_unbuilt_monument_prefers_barony_with_holding(self):  # final review 8
+        ms = [{"eu4_key": "m", "place": "Firstbarony", "barony": None, "province": None, "start_level": 0}]
+        report = imp.place(ms, fixture_titles(), slots={}, holdings={12, 13})
+        self.assertEqual(ms[0]["barony"], "b_2")
+        self.assertTrue(any("b_1 has no holding" in line and "took b_2" in line for line in report))
+
+    def test_built_monument_keeps_its_barony_without_holding(self):
+        ms = [{"eu4_key": "m", "place": "Firstbarony", "barony": None, "province": None, "start_level": 1}]
+        imp.place(ms, fixture_titles(), slots={}, holdings={12})
+        self.assertEqual(ms[0]["barony"], "b_1")
+
+    def test_county_without_holding_keeps_choice_and_reports(self):
+        ms = [{"eu4_key": "m", "place": "Ytown", "barony": None, "province": None, "start_level": 0}]
+        report = imp.place(ms, fixture_titles(), slots={}, holdings=set())
+        self.assertEqual(ms[0]["barony"], "b_y1")
+        self.assertTrue(any("kept" in line for line in report))
+
+    def test_anbennar_holdings(self):
+        tmp, root = fixture_root()
+        with tmp:
+            (root / "history/provinces/anb_k_b.txt").write_bytes(
+                "13 = {\n\tholding = none\n}\n14 = { holding = city_holding }\n".encode("utf-8"))
+            self.assertEqual(imp.anbennar_holdings(root), {11, 12, 14})
+
+    def test_ck3_loc_reads_nested_folders(self):
+        tmp, root = fixture_root()
+        with tmp:
+            write(root / "localization/english/culture/anb_cultures_l_english.yml",
+                  'l_english:\n moon_elvish: "Moon Elvish"\n')
+            loc = imp.ck3_loc(root)
+            self.assertEqual(loc["moon_elvish"], "Moon Elvish")
+            self.assertEqual(loc["c_x"], "Xland")
+
     def test_county_overrides(self):
         titles = fixture_titles()
         ms = [{"eu4_key": k, "place": "Nowhere", "barony": None, "province": None}
@@ -237,7 +270,7 @@ class ConversionTests(unittest.TestCase):
             "if = { limit = { has_estate = estate_vampires } "
             "add_estate_loyalty = { estate = estate_vampires loyalty = 5 } }\n"
             "if = { limit = { has_x = yes } add_prestige = 10 } else = { add_prestige = 15 } }")))
-        self.assertEqual(t["on_complete"], "county.holder = { add_prestige = 50 }")
+        self.assertEqual(t["on_complete"], "barony.holder = { add_prestige = 50 }")
         self.assertEqual(len(t["dropped"]), 4)
         self.assertTrue(t["dropped"][0].startswith("on_upgraded: if has_estate = estate_castonath_patricians: add_estate"))
         self.assertTrue(t["dropped"][1].startswith("on_upgraded: if has_estate = estate_vampires: add_estate"))
@@ -259,6 +292,33 @@ class ConversionTests(unittest.TestCase):
                          ("", "", ["gate atom tag:A80 ignored (no CK3 equivalent)"]))
         self.assertEqual(imp.translate_gate("", {}), ("", "", []))
         self.assertEqual(imp.translate_gate("culture = castanorian", {})[0], "culture = culture:castanorian")
+
+    def test_negated_gate_atoms_are_not_mapped(self):  # final review I4
+        body = "OR = { culture = castanorian NOT = { culture_group = lencori } }"
+        gate, desc, notes = imp.translate_gate(body, {})
+        self.assertEqual(gate, "culture = culture:castanorian")
+        self.assertNotIn("lencori", gate)
+        self.assertIn("gate atom culture_group:lencori not mapped (negated in EU4: NOT/NOR)", notes)
+        gate, desc, notes = imp.translate_gate("NOR = { culture = castanorian religion = the_thought }", {})
+        self.assertEqual((gate, desc), ("", ""))
+        self.assertEqual(len(notes), 2)
+        self.assertTrue(all("negated" in n for n in notes))
+
+    def test_gate_desc_uses_ck3_names(self):  # final review 6
+        ck3 = {"moon_elvish": "Moon Elvish", "heritage_damesheader_name": "Damesheader",
+               "cannorian_pantheon_religion": "Cannorian Pantheon", "blue_reachman": "Blue Reachman",
+               "white_reachman": "White Reachman", "moorman": "Moorman"}
+        eu4 = {"moon_elf": "Moon Elf", "anbennarian": "Anbennarian", "cannorian": "Cannorian", "alenic": "Alenic"}
+        body = ("culture = moon_elf culture_group = anbennarian religion_group = cannorian culture_group = reachman "
+                "culture_group = alenic culture = white_reachman")
+        _, desc, _ = imp.translate_gate(body, eu4, ck3)
+        self.assertEqual(desc, "Moon Elvish, Damesheader, Cannorian Pantheon, Blue Reachman, White Reachman, "
+                               "Moorman, Alenic")  # Alenic: no CK3 loc in the fixture, EU4 name kept
+
+    def test_ck3_name(self):
+        self.assertEqual(imp.ck3_name("faith = faith:elikhetist", {"elikhetist": "Elikhetist"}), "Elikhetist")
+        self.assertIsNone(imp.ck3_name("culture = culture:x", {}))
+        self.assertIsNone(imp.ck3_name("culture = culture:x", {"x": "$y$"}))
 
     def test_category_guess(self):
         self.assertEqual(imp.guess_category("bal_ouord", "Bal Ouord"), "fortress")
@@ -302,7 +362,7 @@ class LiveTests(unittest.TestCase):
     def test_dameris_and_unity_share_anbenncost(self):
         by = {m["eu4_key"]: m for m in self.data["MONUMENTS"]}
         self.assertEqual(by["imperial_palace_anbenncost"]["barony"], "b_castle_dameris")
-        self.assertEqual(by["palace_of_unity"]["barony"], "b_the_bilge")
+        self.assertEqual(by["palace_of_unity"]["barony"], "b_elvendocks")  # b_the_bilge has no holding
         self.assertEqual(by["imperial_palace_anbenncost"]["name"], "Castle Dameris")
 
     def test_monument_shape(self):

@@ -39,7 +39,15 @@ HAND = {'aelcandar': {'desc': 'Aelcandar, another great work by Calasandur the M
                      'a stunning array of flowers from places as far away as Fangaula and Rahen bloom year '
                      'round. Here the spirit of Itrahureš lives on: combining disparate cultures to create '
                      'something better, stronger and infinitely more beautiful.',
-             'category': 'palace'},
+             'category': 'palace',
+             'tiers': [{'county_modifier': {'monthly_county_control_growth_add': 0.25}},
+                       {'county_modifier': {'monthly_county_control_growth_add': 0.25}},
+                       {'county_modifier': {'monthly_county_control_growth_add': 0.25}}],
+             'notes': ['gate atom tag:A49 ignored (no CK3 equivalent)',
+                       'Hand tiers: EU4 statewide_governing_cost -0.5 (dropped by the table as a states key) '
+                       'is translated like local_governing_cost (county control growth +0.25) at every '
+                       'level, so level 1 has an effect; the EU4 on_upgraded culture-province modifiers '
+                       '(ascajar_culture_mod1/2) are not translated.']},
  'bal_dostan': {'desc': 'In 470, the Raven King and his tribesmen stumbled on the abandoned citadel of Bal '
                         'Dostan, its gates left wide open. In the high solar, the petty king found the '
                         'Sapphire Key badge of the Bal Dostan castellans, and seized it as divine favor for '
@@ -215,7 +223,13 @@ HAND = {'aelcandar': {'desc': 'Aelcandar, another great work by Calasandur the M
                            'CK3 equivalent (tags A25 Damescrown (crownsman), A46 Arbaran (half-elf, not in '
                            'CK3), A40 Exwes (exwesser), five merchants); a culture gate would be stricter '
                            "than EU4's, so any holder may use it."]},
- 'damish_temple_moonmount_library': {'category': 'library'},
+ 'damish_temple_moonmount_library': {'category': 'library',
+                                     'tiers': [{'character_modifier': {'monthly_learning_lifestyle_xp_gain_mult': 0.025}},
+                                               {},
+                                               {}],
+                                     'notes': ['Hand tier 1: EU4 tier 1 has only institution spread and '
+                                               'advisor cost (no CK3 equivalent); level 1 gets half of level '
+                                               "2's learning lifestyle XP so it has an effect."]},
  'derilde_s_gateway': {'desc': "Derhilde's Gateway, also known as the Middanroy Gateway, sits astride the "
                                'river mouth. Control over the entrance to the river is of vital economic '
                                'importance, as most trade with the Small Country coming from the west is '
@@ -275,20 +289,35 @@ HAND = {'aelcandar': {'desc': 'Aelcandar, another great work by Calasandur the M
                          'after Venaan, the word "human" comes from Humac.',
                  'tiers': [{}, {}, {'county_modifier': {'tax_mult': 0.3}}],
                  'notes': ['Balance cap (ruling 7): county tax_mult reduced from 0.5 to 0.3 at level 3.']},
- 'imperial_palace_anbenncost': {'desc': 'On top of the highest hill of the Royal Quarter of Anbenncóst, the '
-                                        'Imperial Palace stands proudly watching over the City of the '
-                                        "World's Desire. Built after the War of Rule on the site of old "
-                                        'castle Dameris, and renovated and expanded multiple times '
-                                        'throughout the centuries, the Imperial Palace is the heart of '
-                                        'imperial politics, serving as the home of the emperor but also the '
-                                        'seat of the imperial parliament.',
+ 'imperial_palace_anbenncost': {'desc': 'Castle Dameris crowns the highest hill of Anbenncóst, the seat of '
+                                        "the Kings of Dameria above the City of the World's Desire. Its old "
+                                        'keep has watched over the Damerian court for generations, and every '
+                                        'hall and tower its lords add makes it a grander stage for the royal '
+                                        "court and the realm's great nobles.",
                                 'category': 'palace',
                                 'notes': ['gate atom tag:Z01 ignored (no CK3 equivalent)',
                                           'gate atom flag:has_dismantled_the_hre ignored (no CK3 equivalent)',
                                           'Gate decision: left open. The EU4 gate is an OR with alternatives '
                                           'that have no CK3 equivalent (HRE membership, tag Z01 (east '
                                           'damerian, not in CK3), a dismantled-HRE flag); a culture gate '
-                                          "would be stricter than EU4's, so any holder may use it."]},
+                                          "would be stricter than EU4's, so any holder may use it.",
+                                          'Hand tiers: EU4 gives this project no modifiers of its own; its '
+                                          'on_upgraded adds event modifiers imperial_palace_modifier_tier_N '
+                                          '(emperor: free_city_imperial_authority 0.1/0.25/0.5) and '
+                                          'imperial_palace_prince_modifier_tier_N (HRE princes: '
+                                          'monthly_favor_modifier 0.1/0.15/0.2, diplomatic_reputation 0/1/2, '
+                                          'diplomatic_upkeep), translated through translation.py as country '
+                                          'modifiers for the holder.',
+                                          'Hand desc: the EU4 desc describes the later Imperial Palace, '
+                                          'which does not exist in 1022.'],
+                                'tiers': [{'character_modifier': {'monthly_prestige': 0.2,
+                                                                  'vassal_opinion': 4}},
+                                          {'character_modifier': {'monthly_prestige': 0.5,
+                                                                  'vassal_opinion': 6,
+                                                                  'diplomacy': 1}},
+                                          {'character_modifier': {'monthly_prestige': 1,
+                                                                  'vassal_opinion': 8,
+                                                                  'diplomacy': 2}}]},
  'jag_radash_monument': {'desc': "Jag'Radash - 'Brave Battle' in Orcish - marks the centre of a vast hunting "
                                  'ground, set up in the wake of a population boom amongst some of the wilder '
                                  'animals after the Greentide swept across Escann. Traditional hunters '
@@ -366,7 +395,20 @@ HAND = {'aelcandar': {'desc': 'Aelcandar, another great work by Calasandur the M
                                'Gate decision: left open. The EU4 gate is an OR with alternatives that have '
                                'no CK3 equivalent (tag Z01 Empire of Anbennar (east damerian, not in CK3), a '
                                "dismantled-HRE flag); a culture gate would be stricter than EU4's, so any "
-                               'holder may use it.']},
+                               'holder may use it.',
+                               'Hand tiers: EU4 gives only max_absolutism/max_revolutionary_zeal (no CK3 '
+                               'equivalent) and, at tier 3, a flag for extra development in Anbennarian '
+                               'provinces; the levels get modest palace effects instead (prestige, vassal '
+                               'and county opinion) and, at level 3, county development growth for the '
+                               'development flag.'],
+                     'tiers': [{'character_modifier': {'monthly_prestige': 0.2, 'vassal_opinion': 4}},
+                               {'character_modifier': {'monthly_prestige': 0.4,
+                                                       'vassal_opinion': 6,
+                                                       'county_opinion_add': 5}},
+                               {'character_modifier': {'monthly_prestige': 0.6,
+                                                       'vassal_opinion': 8,
+                                                       'county_opinion_add': 10},
+                                'county_modifier': {'development_growth_factor': 0.15}}]},
  'portnamm_portroy_merchants_guild': {'category': 'guild'},
  'rainbow_hall_north_monument': {'desc': 'During the eleventh century, a conflict tore fair Viswall. City '
                                          'politics saw the noble court of the síl Vis stuck into a '
@@ -483,7 +525,7 @@ HAND = {'aelcandar': {'desc': 'Aelcandar, another great work by Calasandur the M
                                'guarded the southern approaches to Castonath. It housed the legions that '
                                'kept the roads of the Empire of Castanor open.'},
  'thednakerja': {'desc': 'As the Era of Frost came to an end and the ice and snow receded, the body of the '
-                         'Giants Grave´s terror, the Leviathan, was revealed to the population. Its flesh, '
+                         "Giants Grave's terror, the Leviathan, was revealed to the population. Its flesh, "
                          'never rotting, was used as food for generations to come. With the word spreading, '
                          'Skaldhyrric priests began the construction of the Thednakerja, a temple marking '
                          'the first thaw and the end of the terror that plagued the sea, using the '

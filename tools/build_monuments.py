@@ -7,6 +7,11 @@ Source: tools/data/monuments/<region>.py (monument data) and translation.py (ico
 Building levels whose key Anbennar does not define are written to aov_monuments_<region>.txt. Levels Anbennar does
 define are re-emitted, with the EU4 tier lines inserted, in zz_aov_monument_overrides_<region>.txt (single-object
 overrides that load after Anbennar); they copy Anbennar's current definition, so rerun after an Anbennar update.
+The new upper levels of a chain that starts with an Anbennar building are copies of the chain's top Anbennar level
+(an upgrade replaces the previous level's effects in CK3), with that EU4 tier merged in the same way.
+
+The data is validated first (placement, names, icons, modifier keys, an effect on every level); any problem raises
+GeneratorError naming the monument.
 """
 
 import argparse
@@ -31,6 +36,17 @@ DROPPED_NOTE = " Some effects of the original Europa Universalis IV project have
 
 NL = "\n"
 ART_DIR = "gfx/interface/illustrations/aov_monuments"
+
+
+# ai_value of every generated level: vanilla's special-building pattern (00_special_buildings.txt), base 100, the
+# category's preference modifier, and no special building while the holding has a free building slot.
+AI_PREFERENCE = {
+    "fortress": "culture_likely_to_fortify_modifier",
+    "castle": "culture_likely_to_fortify_modifier",
+    "temple": "ai_pious_building_preference_modifier",
+}
+AI_GUARD = ["\t\tmodifier = { # Fill all building slots before going for special buildings", "\t\t\tfactor = 0",
+            "\t\t\tfree_building_slots > 0", "\t\t}"]
 
 
 class GeneratorError(Exception):
@@ -225,17 +241,28 @@ def num(v) -> str:
     return "0" if s in ("", "-0") else s
 
 
-def building(m: dict, level: int, key: str, next_key, icon=None) -> str:
+def ai_value(category: str) -> list:
+    out = ["\tai_value = {", "\t\tbase = 100"]
+    if category in AI_PREFERENCE:
+        out.append(f"\t\t{AI_PREFERENCE[category]} = yes")
+    return out + AI_GUARD + ["\t}"]
+
+
+def gate_body(m: dict) -> list:
+    """The EU4 culture gate in the holder's scope, wrapped in its custom tooltip (indented for a depth-1 block)."""
+    return ["\t\tscope:holder = {", "\t\t\tcustom_tooltip = {", f"\t\t\t\ttext = aov_monument_{m['eu4_key']}_gate",
+            f"\t\t\t\t{m['gate']}", "\t\t\t}", "\t\t}"]
+
+
+def building(m: dict, level: int, key: str, next_key) -> str:
     tier = m["tiers"][level - 1]
-    icon = icon or translation.ICONS[m["category"]]
+    icon = translation.ICONS[m["category"]]
     out = [f"{key} = {{", f"\tconstruction_time = {tier['days']}", "",
            f'\ttype_icon = "{icon}"', "",
            "\tcan_construct_potential = {", "\t\tbuilding_requirement_tribal = no", "\t}", ""]
     if m["gate"]:
-        tt = f"aov_monument_{m['eu4_key']}_gate"
         for name in ("can_construct", "is_enabled"):
-            out += [f"\t{name} = {{", "\t\tscope:holder = {", f"\t\t\tcustom_tooltip = {{", f"\t\t\t\ttext = {tt}",
-                    f"\t\t\t\t{m['gate']}", "\t\t\t}", "\t\t}", "\t}", ""]
+            out += [f"\t{name} = {{"] + gate_body(m) + ["\t}", ""]
     out += [f"\tcost_gold = {tier['cost']}", ""]
     for block in BLOCKS:
         mods = tier[block]
@@ -247,8 +274,56 @@ def building(m: dict, level: int, key: str, next_key, icon=None) -> str:
         out += ["\ton_complete = {", f"\t\t{tier['on_complete'].strip()}", "\t}", ""]
     if next_key:
         out += [f"\tnext_building = {next_key}", ""]
-    out += ["\tai_value = {", "\t\tbase = 100", "\t}", "", "\ttype = special", "}", ""]
+    out += ai_value(m["category"]) + ["", "\ttype = special", "}", ""]
     return "\n".join(out)
+
+
+def chain_top(m: dict, known: set):
+    """The chain's last Anbennar-keyed level, or None when the chain starts with a new building."""
+    if m["levels"][0] not in known:
+        return None
+    return [k for k in m["levels"] if k in known][-1]
+
+
+def set_line(lines: list, name: str, value, note: str) -> None:
+    """Set the depth-1 `name = value` line, or add it after the opening line."""
+    depths = depths_of(lines)
+    line = f"\t{name} = {value} {note}"
+    for i, l in enumerate(lines):
+        if depths[i] == 1 and re.match(rf"\t{name}\s*=", l):
+            lines[i] = line
+            return
+    lines[1:1] = [line]
+
+
+def upper_level(m: dict, level: int, key: str, next_key, top: str, root, values: dict, warnings: list) -> str:
+    """A new upper level of an Anbennar chain: Anbennar's `top` level renamed, with EU4 tier `level` merged as in
+    override(), cost and time from the tier, next_building set (removed at the end of the chain), the EU4 gate
+    added to can_construct only (is_enabled would also switch off Anbennar's own effects), and vanilla's
+    free-building-slot guard added to Anbennar's ai_value."""
+    tier = m["tiers"][level - 1]
+    note = f"# Anbennar Overhaul: EU4 tier {level}"
+    lines = override(anbennar_definition(root, top), key, tier, next_key, level, values, warnings).rstrip(NL).split(NL)
+    if not next_key:
+        depths = depths_of(lines)
+        lines = [l for i, l in enumerate(lines) if not (depths[i] == 1 and re.match(r"\tnext_building\s*=", l))]
+    set_line(lines, "cost_gold", tier["cost"], note)
+    set_line(lines, "construction_time", tier["days"], note)
+    if m["gate"]:
+        found = find_block(lines, "can_construct")
+        if found:
+            lines[found[1]:found[1]] = ["\t\t# Anbennar Overhaul: EU4 culture gate"] + gate_body(m)
+        else:
+            at = insert_point(lines)
+            lines[at:at] = ["\tcan_construct = { # Anbennar Overhaul: EU4 culture gate"] + gate_body(m) + ["\t}", ""]
+    found = find_block(lines, "ai_value")
+    if found is None:
+        at = insert_point(lines)
+        lines[at:at] = ai_value(m["category"]) + [""]
+    elif not any("free_building_slots" in l for l in lines[found[0]:found[1]]):
+        lines[found[1]:found[1]] = AI_GUARD
+    head = f"# Anbennar Overhaul: Anbennar's {top} with EU4 tier {level} merged in"
+    return head + NL + NL.join(lines) + NL
 
 
 def written_levels(monuments: list, known: set):
@@ -260,18 +335,17 @@ def written_levels(monuments: list, known: set):
                 yield m, i + 1, key, (keys[i + 1] if i + 1 < len(keys) else None)
 
 
-def chain_icon(m: dict, known: set, root):
-    """type_icon of the chain's tier-1 Anbennar level, or None when the chain starts with a new building."""
-    first = m["levels"][0]
-    if first not in known:
-        return None
-    found = re.search(r'type_icon\s*=\s*"([^"]+)"', anbennar_definition(root, first))
-    return found.group(1) if found else None
-
-
 def buildings(monuments: list, known: set, root: Path = ANBENNAR_CK3) -> str:
-    return HEADER + "\n" + "\n".join(building(m, lvl, key, nxt, chain_icon(m, known, root))
-                                     for m, lvl, key, nxt in written_levels(monuments, known))
+    values, warnings, out = load_values(root), [], []
+    for m, lvl, key, nxt in written_levels(monuments, known):
+        top = chain_top(m, known)
+        if top:
+            out.append(upper_level(m, lvl, key, nxt, top, root, values, warnings))
+        else:
+            out.append(building(m, lvl, key, nxt))
+    for w in warnings:
+        print(f"warning: {w}", file=sys.stderr)
+    return HEADER + "\n" + "\n".join(out)
 
 
 def overrides(monuments: list, known: set, root: Path = ANBENNAR_CK3) -> str:
@@ -358,9 +432,53 @@ def render_art(region: str, roots=None) -> dict:
     return out
 
 
+def hand_keys(region: str) -> set:
+    """CK3 modifier keys the region's hand file sets in its tiers."""
+    try:
+        hand = importlib.import_module(f"data.monuments.{region}_hand").HAND
+    except ModuleNotFoundError:
+        return set()
+    return {k for fields in hand.values() for tier in fields.get("tiers", [])
+            for block in BLOCKS for k in (tier.get(block) or {})}
+
+
+def validate(monuments: list, known: set, extra_keys=()) -> None:
+    """Raise GeneratorError naming the monument for: no barony or province, a province used twice, an empty name or
+    desc, a category without an icon, a modifier key that is no translation-table target (nor in `extra_keys`, the
+    hand file's keys), or a level without any effect (no modifier and no on_complete). Levels of chains that start
+    with an Anbennar building carry Anbennar's effects, so they need no EU4 effect of their own."""
+    allowed = {row.ck3 for row in translation.MODIFIERS.values() if isinstance(row, translation.Row)} | set(extra_keys)
+    seen = {}
+    for m in monuments:
+        key = m.get("eu4_key", "?")
+
+        def fail(msg):
+            raise GeneratorError(f"monument {key}: {msg}")
+
+        if not m.get("barony") or m.get("province") is None:
+            fail("no barony or province")
+        if m["province"] in seen:
+            fail(f"province {m['province']} already holds {seen[m['province']]}")
+        seen[m["province"]] = key
+        for field in ("name", "desc"):
+            if not (m.get(field) or "").strip():
+                fail(f"empty {field}")
+        if m.get("category") not in translation.ICONS:
+            fail(f"category {m.get('category')!r} has no icon in translation.ICONS")
+        top = chain_top(m, known)
+        for level, tier in enumerate(m["tiers"], 1):
+            for block in BLOCKS:
+                for k in tier[block]:
+                    if k not in allowed:
+                        fail(f"level {level} {block} key {k} is not a translation-table target or a hand key")
+            if top is None and not (any(tier[b] for b in BLOCKS) or tier["on_complete"].strip()):
+                fail(f"level {level} has no effect (no modifier and no on_complete)")
+
+
 def render_all(region: str, root: Path = ANBENNAR_CK3) -> dict:
     monuments = load_monuments(region)
     known = anbennar_keys(root)
+    validate(monuments, known, hand_keys(region))
     return {
         f"common/buildings/aov_monuments_{region}.txt": buildings(monuments, known, root),
         f"common/buildings/zz_aov_monument_overrides_{region}.txt": overrides(monuments, known, root),

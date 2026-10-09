@@ -166,15 +166,49 @@ _GATE_ATOM = re.compile(
 _ATOM_KIND = {"primary_culture": "culture", "accepted_culture": "culture", "has_country_flag": "flag"}
 
 
+_GATE_TOKEN = re.compile(r"([A-Za-z0-9_.:\-]+)\s*=\s*\{|\}")
+_NEGATIONS = ("NOT", "NOR")
+
+
+def _gate_atoms(body):
+    """(atom, negated) for every culture/religion/tag/flag condition of a gate, in order."""
+    text = strip_comments(body)
+    opens = [(m.start(), m.group(1)) for m in _GATE_TOKEN.finditer(text)]
+    out = []
+    for m in _GATE_ATOM.finditer(text):
+        stack = []  # block keys open at the atom
+        for pos, key in opens:
+            if pos >= m.start():
+                break
+            if key is None:
+                if stack:
+                    stack.pop()
+            else:
+                stack.append(key)
+        kind, value = m.groups()
+        if value not in ("yes", "no"):
+            out.append((f"{_ATOM_KIND.get(kind, kind)}:{value}", any(k in _NEGATIONS for k in stack)))
+    return out
+
+
 def gate_atoms(body):
     """Culture/religion/tag/flag conditions of a gate as "kind:value", in order, without duplicates.
 
     `primary_culture` and `accepted_culture` count as `culture`, `has_country_flag` as `flag`. The logic around
-    the atoms (AND/NOT/if) is ignored: the CK3 gate is an OR of the atoms' translations."""
+    the atoms (AND/OR/if) is ignored: the CK3 gate is an OR of the atoms' translations. Atoms inside a NOT or NOR
+    block (at any depth) are left out (see negated_gate_atoms): an OR of them would mean the opposite."""
     atoms = []
-    for kind, value in _GATE_ATOM.findall(strip_comments(body)):
-        atom = f"{_ATOM_KIND.get(kind, kind)}:{value}"
-        if value not in ("yes", "no") and atom not in atoms:
+    for atom, negated in _gate_atoms(body):
+        if not negated and atom not in atoms:
+            atoms.append(atom)
+    return atoms
+
+
+def negated_gate_atoms(body):
+    """The atoms of a gate that sit inside a NOT or NOR block, in order, without duplicates."""
+    atoms = []
+    for atom, negated in _gate_atoms(body):
+        if negated and atom not in atoms:
             atoms.append(atom)
     return atoms
 

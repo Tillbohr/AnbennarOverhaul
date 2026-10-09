@@ -177,6 +177,22 @@ def ck3_titles(anbennar_ck3):
     return names, provinces, county_baronies, capitals
 
 
+_LOC_ANY = re.compile(r'^\s*([A-Za-z0-9_.\-]+):\d*\s*"(.*)"')
+
+
+def ck3_loc(anbennar_ck3):
+    """Every English loc key of Anbennar CK3 (first definition wins, `replace` folders first)."""
+    root = Path(anbennar_ck3) / "localization"
+    files = sorted(root.rglob("*_l_english.yml"), key=lambda p: ("replace" not in p.parts, p.as_posix()))
+    loc = {}
+    for path in files:
+        for line in _read(path).split("\n"):
+            m = _LOC_ANY.match(line)
+            if m:
+                loc.setdefault(m.group(1), m.group(2))
+    return loc
+
+
 _PROVINCE_START = re.compile(r"^(\d+)\s*=\s*\{")
 _SPECIAL = re.compile(r"\bspecial_building(?:_slot)?\s*=\s*([A-Za-z0-9_]+)")
 
@@ -202,17 +218,51 @@ def anbennar_slots(anbennar_ck3):
     return slots
 
 
+_HOLDING = re.compile(r"\bholding\s*=\s*([A-Za-z0-9_]+)")
+
+
+def anbennar_holdings(anbennar_ck3):
+    """Province ids whose last `holding =` in Anbennar's province history (dated blocks included) is not `none`."""
+    last = {}
+    for path in sorted((Path(anbennar_ck3) / "history" / "provinces").glob("*.txt")):
+        province, depth = None, 0
+        for line in _read(path).split("\n"):
+            code = line.split("#", 1)[0]
+            if depth == 0:
+                m = _PROVINCE_START.match(code)
+                if m:
+                    province = int(m.group(1))
+            if province is not None:
+                h = _HOLDING.search(code)
+                if h:
+                    last[province] = h.group(1)
+            depth += code.count("{") - code.count("}")
+            if depth <= 0:
+                depth, province = 0, None
+    return {p for p, holding in last.items() if holding != "none"}
+
+
 # --- Placement ---------------------------------------------------------------------------------------------------
 
-def place(monuments, titles, slots=None):
+def place(monuments, titles, slots=None, holdings=None):
     """Fill `barony` and `province` of every monument without a barony; return the open items as report lines.
 
     Order: chains (Anbennar's barony of the tier-1 building), then COUNTY_OVERRIDES, then the rest by key. A
     monument's `place` is the name of its EU4 start province; the CK3 title with that name (a county first)
-    gives its barony. A shared county gives its next free barony, skipping provinces with an Anbennar slot."""
+    gives its barony. A shared county gives its next free barony, skipping provinces with an Anbennar slot.
+    `holdings` (provinces with a holding in Anbennar's history, see anbennar_holdings): a monument that starts
+    unbuilt (start_level 0) prefers a free barony of its county with a holding, since an empty barony cannot
+    build it; when the county has none, the barony without a holding is kept and reported."""
     names, province_of, county_baronies, capitals = titles
     slots = slots or {}
     report = []
+    county_of = {b: c for c, bs in county_baronies.items() for b in bs}
+
+    def needs_holding(m):
+        return holdings is not None and m.get("start_level") == 0
+
+    def has_holding(barony):
+        return province_of.get(barony) in holdings
     barony_of_province = {p: b for b, p in province_of.items()}
     taken = {m["barony"] for m in monuments if m.get("barony")}
     for m in monuments:
@@ -228,12 +278,23 @@ def place(monuments, titles, slots=None):
         taken.add(barony)
         m["barony"], m["province"] = barony, province_of.get(barony)
 
-    def take_from_county(m, county):
+    def take_from_county(m, county, first=None):
         free = free_baronies(county)
-        if free:
-            take(m, free[0])
-        else:
+        if first:
+            free = [first] + [b for b in free if b != first]
+        if not free:
             report.append(f"{m['eu4_key']}: county {county} has no free barony")
+            return
+        if needs_holding(m) and not has_holding(free[0]):
+            with_holding = [b for b in free if has_holding(b)]
+            if with_holding:
+                report.append(f"{m['eu4_key']}: {free[0]} has no holding in Anbennar's history; "
+                              f"took {with_holding[0]} of the same county")
+                take(m, with_holding[0])
+                return
+            report.append(f"{m['eu4_key']}: {free[0]} has no holding in Anbennar's history and no free barony of "
+                          f"{county} has one; kept (starts unbuilt, may not be buildable)")
+        take(m, free[0])
 
     def priority(m):
         key = m["eu4_key"]
@@ -264,7 +325,10 @@ def place(monuments, titles, slots=None):
             report.append(f"{key}: no CK3 title named {m.get('place')!r}")
         elif title.startswith("b_"):
             if title not in taken and province_of.get(title) not in slots:
-                take(m, title)
+                if needs_holding(m) and title in county_of:
+                    take_from_county(m, county_of[title], first=title)
+                else:
+                    take(m, title)
             else:
                 report.append(f"{key}: barony {title} ({m.get('place')}) is not free")
         else:
@@ -376,9 +440,30 @@ def translate_tier(tier):
     }
 
 
-def translate_gate(body, loc):
-    """-> (CK3 gate trigger text or "", comma-separated EU4 names of the mapped atoms, notes)."""
+_CK3_REFS = re.compile(r"(?:culture|religion|faith):([A-Za-z0-9_]+)|\b(heritage_[A-Za-z0-9_]+)")
+
+
+def ck3_name(trigger, ck3_loc):
+    """CK3 display name(s) of the cultures/heritages/religions/faiths a CULTURES trigger names, or None if any
+    of them has no CK3 loc."""
+    names = []
+    for ref, heritage in _CK3_REFS.findall(trigger):
+        name = ck3_loc.get(f"{heritage}_name") if heritage else ck3_loc.get(ref)
+        if not name or "$" in name:
+            return None
+        names.append(name)
+    return ", ".join(names) or None
+
+
+def translate_gate(body, loc, ck3_loc=None):
+    """-> (CK3 gate trigger text or "", comma-separated names of the mapped atoms, notes).
+
+    Names are the CK3 (Anbennar) loc names of what the trigger checks, else the EU4 loc name of the atom. Atoms
+    inside an EU4 NOT/NOR are not mapped (an OR of them would mean the opposite); each gets a note, and the gate
+    is built from the positive atoms only (open when there are none)."""
     triggers, names, notes = [], [], []
+    for atom in em.negated_gate_atoms(body):
+        notes.append(f"gate atom {atom} not mapped (negated in EU4: NOT/NOR)")
     for atom in em.gate_atoms(body):
         if atom not in tr.CULTURES:
             notes.append(f"gate atom {atom} not in the translation table")
@@ -387,14 +472,15 @@ def translate_gate(body, loc):
         elif tr.CULTURES[atom] not in triggers:
             triggers.append(tr.CULTURES[atom])
             value = atom.split(":", 1)[1]
-            names.append(loc.get(value) or value)
+            names.append(ck3_name(tr.CULTURES[atom], ck3_loc or {}) or loc.get(value) or value)
     if not triggers:
         gate = ""
     elif len(triggers) == 1:
         gate = triggers[0]
     else:
         gate = "OR = { " + " ".join(triggers) + " }"
-    return gate, ", ".join(names), notes
+    parts = [p for name in names for p in name.split(", ")]
+    return gate, ", ".join(dict.fromkeys(parts)), notes
 
 
 def merge(monument, hand):
@@ -424,9 +510,9 @@ def _clean(text):
     return re.sub(r"§.", "", text).strip()
 
 
-def build(project, place_name, loc, art):
+def build(project, place_name, loc, art, ck3=None):
     name = EXTRA_NAMES.get(project.key) or _clean(loc.get(project.key, project.key.replace("_", " ").title()))
-    gate, gate_desc, notes = translate_gate(project.gate, loc)
+    gate, gate_desc, notes = translate_gate(project.gate, loc, ck3)
     if project.mission:
         notes.append("mission-spawned in EU4 (start province read from a commented start)")
     return {
@@ -465,6 +551,7 @@ def run(region, anbennar_ck3=None, roots=None, hand=None):
     superregions = em.province_superregions(roots["anbennar"])
     province_name = em.province_names(roots["anbennar"])
     loc = em.eu4_loc(roots)
+    ck3 = ck3_loc(anbennar_ck3)
     monuments, excluded = [], {}
     for key in sorted(projects):
         project = projects[key]
@@ -475,8 +562,9 @@ def run(region, anbennar_ck3=None, roots=None, hand=None):
             continue
         art = em.art_file(roots, key)
         rel = "gfx/" + art.as_posix().split("/gfx/", 1)[1] if art else None
-        monuments.append(merge(build(project, province_name.get(project.start, ""), loc, rel), hand))
-    report = place(monuments, ck3_titles(anbennar_ck3), anbennar_slots(anbennar_ck3))
+        monuments.append(merge(build(project, province_name.get(project.start, ""), loc, rel, ck3), hand))
+    report = place(monuments, ck3_titles(anbennar_ck3), anbennar_slots(anbennar_ck3),
+                   anbennar_holdings(anbennar_ck3))
     report += _quality_report(monuments)
     for m in monuments:
         del m["place"]

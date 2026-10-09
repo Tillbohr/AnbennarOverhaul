@@ -79,7 +79,7 @@ castanorian_citadel_bal_dostan_01 = {
 	
 	on_complete = {
 		# Anbennar Overhaul: EU4 tier 1
-		county.holder = { add_prestige = 50 }
+		barony.holder = { add_prestige = 50 }
 	}
 
 	next_building = aov_monument_bal_dostan_02 # Anbennar Overhaul: EU4 tier 1
@@ -544,7 +544,7 @@ lake_palace_01 = {
 	
 	on_complete = {
 		# Anbennar Overhaul: EU4 tier 1
-		county.holder = { add_prestige = 75 }
+		barony.holder = { add_prestige = 75 }
 	}
 
 	type = special
@@ -601,7 +601,7 @@ lake_palace_02 = {
 	
 	on_complete = {
 		# Anbennar Overhaul: EU4 tier 2
-		county.holder = { add_prestige = 150 }
+		barony.holder = { add_prestige = 150 }
 	}
 
 	next_building = aov_monument_the_lake_palace_03 # Anbennar Overhaul: EU4 tier 2
@@ -695,7 +695,7 @@ holy_site_the_necropolis_01 = {
 	
 	on_complete = {
 		# Anbennar Overhaul: EU4 tier 1
-		county.holder = { add_piety = 50 }
+		barony.holder = { add_piety = 50 }
 	}
 
 	next_building = aov_monument_the_necropolis_02 # Anbennar Overhaul: EU4 tier 1
@@ -792,7 +792,7 @@ castanorian_citadel_south_citadel_01 = {
 	
 	on_complete = {
 		# Anbennar Overhaul: EU4 tier 1
-		county.holder = { add_prestige = 50 }
+		barony.holder = { add_prestige = 50 }
 	}
 
 	next_building = aov_monument_the_south_citadel_02 # Anbennar Overhaul: EU4 tier 1

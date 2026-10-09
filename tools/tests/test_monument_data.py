@@ -3,6 +3,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # python -I does not add the tools folder
+import build_monuments as bm  # noqa: E402
 import import_eu4_monuments as imp  # noqa: E402
 from data.monuments import translation as tr  # noqa: E402
 from data.monuments.cannor import EXCLUDED, MONUMENTS  # noqa: E402
@@ -18,7 +19,8 @@ else:
 
 MAX_FORT_LEVEL = 4
 MAX_COUNTY_TAX_MULT = 0.3
-DIRTY_TEXT = (chr(92) + "n", "---", "\ufffd", "\u00a7", "\u2018", "\u2019", "\u201c", "\u201d", "\u2013", "\u2014")
+DIRTY_TEXT = (chr(92) + "n", "---", "\ufffd", "\u00a7", "\u2018", "\u2019", "\u201c", "\u201d", "\u2013", "\u2014",
+              "\u00b4")
 
 
 class CannorMonumentTests(unittest.TestCase):
@@ -59,6 +61,18 @@ class CannorMonumentTests(unittest.TestCase):
     def test_accounting(self):
         self.assertEqual(len(MONUMENTS) + len(EXCLUDED), 82)
         self.assertEqual(sum(m["levels"][0].startswith("aov_monument_") for m in MONUMENTS), 64)
+
+    @unittest.skipUnless(LIVE, "needs Anbennar CK3")
+    def test_every_level_has_an_effect(self):
+        """Final review I2: a level of a new chain needs a modifier or an on_complete (chains that start with an
+        Anbennar building carry Anbennar's effects)."""
+        known = bm.anbennar_keys()
+        for m in MONUMENTS:
+            if bm.chain_top(m, known):
+                continue
+            for level, tier in enumerate(m["tiers"], 1):
+                has = any(tier[b] for b in bm.BLOCKS) or tier["on_complete"].strip()
+                self.assertTrue(has, f"{m['eu4_key']} level {level}")
 
     def test_balance_guard(self):
         """Ruling 7: no level fortifies above 4 or adds more than 30% county tax."""

@@ -24,6 +24,10 @@ aov_monument_adenica_longlance_knights_academy_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -50,13 +54,17 @@ aov_monument_adenica_longlance_knights_academy_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+		barony.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_adenica_longlance_knights_academy_03
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -85,21 +93,30 @@ aov_monument_adenica_longlance_knights_academy_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's calasandur_castle_aelcandar_01 with EU4 tier 2 merged in
 aov_monument_aelcandar_02 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
 
 	type_icon = "icon_structure_alhambra.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
+	
 	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
+		# Anbennar Overhaul: EU4 culture gate
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_aelcandar_gate
@@ -107,46 +124,54 @@ aov_monument_aelcandar_02 = {
 			}
 		}
 	}
-
-	is_enabled = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_aelcandar_gate
-				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = culture:gawedi }
-			}
-		}
-	}
-
-	cost_gold = 1000
-
-	province_modifier = {
-		fort_level = 2
-	}
+	
+	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
 
 	character_modifier = {
+		monthly_prestige = 0.2
+		# Anbennar Overhaul: EU4 tier 2
 		tyranny_gain_mult = -0.15
 		domain_limit = 1
 	}
-
-	next_building = aov_monument_aelcandar_03
-
+	max_garrison = good_building_max_garrison_tier_3
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_3
+		# Anbennar Overhaul: EU4 tier 2 (+2 to good_building_fort_level_tier_3 = 6)
+		fort_level = 8
+	}
+	county_modifier = {
+		development_growth = 0.2
+		development_growth_factor = 0.15
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
+	
+	next_building = aov_monument_aelcandar_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's calasandur_castle_aelcandar_01 with EU4 tier 3 merged in
 aov_monument_aelcandar_03 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
 
 	type_icon = "icon_structure_alhambra.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
+	
 	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
+		# Anbennar Overhaul: EU4 culture gate
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_aelcandar_gate
@@ -154,31 +179,34 @@ aov_monument_aelcandar_03 = {
 			}
 		}
 	}
-
-	is_enabled = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_aelcandar_gate
-				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = culture:gawedi }
-			}
-		}
-	}
-
-	cost_gold = 2000
-
-	province_modifier = {
-		fort_level = 4
-	}
+	
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	character_modifier = {
+		monthly_prestige = 0.2
+		# Anbennar Overhaul: EU4 tier 3
 		tyranny_gain_mult = -0.2
 		domain_limit = 1
 	}
-
+	max_garrison = good_building_max_garrison_tier_3
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_3
+		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6)
+		fort_level = 10
+	}
+	county_modifier = {
+		development_growth = 0.2
+		development_growth_factor = 0.15
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
-
+	
 	type = special
 }
 
@@ -206,6 +234,10 @@ aov_monument_ancardia_escanni_academy_of_war_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -235,6 +267,10 @@ aov_monument_ancardia_escanni_academy_of_war_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -263,6 +299,10 @@ aov_monument_ancardia_escanni_academy_of_war_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -313,6 +353,11 @@ aov_monument_ara_temple_01 = {
 
 	ai_value = {
 		base = 100
+		ai_pious_building_preference_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -363,6 +408,11 @@ aov_monument_ara_temple_02 = {
 
 	ai_value = {
 		base = 100
+		ai_pious_building_preference_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -411,6 +461,11 @@ aov_monument_ara_temple_03 = {
 
 	ai_value = {
 		base = 100
+		ai_pious_building_preference_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -445,10 +500,18 @@ aov_monument_ascajar_01 = {
 
 	cost_gold = 400
 
+	county_modifier = {
+		monthly_county_control_growth_add = 0.25
+	}
+
 	next_building = aov_monument_ascajar_02
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -483,6 +546,10 @@ aov_monument_ascajar_02 = {
 
 	cost_gold = 1000
 
+	county_modifier = {
+		monthly_county_control_growth_add = 0.25
+	}
+
 	character_modifier = {
 		levy_size = 0.075
 	}
@@ -491,6 +558,10 @@ aov_monument_ascajar_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -525,136 +596,193 @@ aov_monument_ascajar_03 = {
 
 	cost_gold = 2000
 
+	county_modifier = {
+		monthly_county_control_growth_add = 0.25
+	}
+
 	character_modifier = {
 		levy_size = 0.075
 	}
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's castanorian_citadel_bal_dostan_01 with EU4 tier 2 merged in
 aov_monument_bal_dostan_02 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
-	cost_gold = 1000
-
-	province_modifier = {
-		fort_level = 2
-	}
-
-	character_modifier = {
-		vassal_tax_contribution_mult = 0.1
-	}
-
-	on_complete = {
-		county.holder = { add_prestige = 100 }
-	}
-
-	next_building = aov_monument_bal_dostan_03
-
-	ai_value = {
-		base = 100
-	}
-
-	type = special
-}
-
-aov_monument_bal_dostan_03 = {
-	construction_time = 1800
-
-	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
-
-	can_construct_potential = {
-		building_requirement_tribal = no
-	}
-
-	cost_gold = 2000
-
-	province_modifier = {
-		fort_level = 2
-	}
-
-	county_modifier = {
-		development_growth_factor = 0.2
-	}
-
-	character_modifier = {
-		vassal_tax_contribution_mult = 0.1
-	}
-
-	ai_value = {
-		base = 100
-	}
-
-	type = special
-}
-
-aov_monument_bal_hyl_02 = {
-	construction_time = 1800
-
-	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
-
-	can_construct_potential = {
-		building_requirement_tribal = no
-	}
-
+	
 	can_construct = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_bal_hyl_gate
-				culture = culture:wexonard
-			}
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
 		}
 	}
-
-	is_enabled = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_bal_hyl_gate
-				culture = culture:wexonard
-			}
-		}
-	}
-
-	cost_gold = 1000
-
-	province_modifier = {
-		fort_level = 2
-	}
+	
+	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
 
 	character_modifier = {
+		monthly_prestige = 0.1
+		# Anbennar Overhaul: EU4 tier 2
+		vassal_tax_contribution_mult = 0.1
+	}
+	max_garrison = good_building_max_garrison_tier_3
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_3
+		# Anbennar Overhaul: EU4 tier 2 (+2 to good_building_fort_level_tier_3 = 6)
+		fort_level = 8
+	}
+	county_modifier = {
+		development_growth = 0.1
+		development_growth_factor = 0.1
+	}
+	
+	ai_value = {
+		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
+	}
+	
+	on_complete = {
+		# Anbennar Overhaul: EU4 tier 2
+		barony.holder = { add_prestige = 100 }
+	}
+
+	next_building = aov_monument_bal_dostan_03 # Anbennar Overhaul: EU4 tier 2
+
+	type = special
+}
+
+# Anbennar Overhaul: Anbennar's castanorian_citadel_bal_dostan_01 with EU4 tier 3 merged in
+aov_monument_bal_dostan_03 = {
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
+
+	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
+	
+	can_construct_potential = {
+		building_requirement_tribal = no
+	}
+	
+	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
+	}
+	
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
+
+	character_modifier = {
+		monthly_prestige = 0.1
+		# Anbennar Overhaul: EU4 tier 3
+		vassal_tax_contribution_mult = 0.1
+	}
+	max_garrison = good_building_max_garrison_tier_3
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_3
+		# Anbennar Overhaul: EU4 tier 3 (+2 to good_building_fort_level_tier_3 = 6)
+		fort_level = 8
+	}
+	county_modifier = {
+		development_growth = 0.1
+		# Anbennar Overhaul: EU4 tier 3 (+0.2 to 0.1 = 0.1)
+		development_growth_factor = 0.3
+	}
+	
+	ai_value = {
+		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
+	}
+	
+	type = special
+}
+
+# Anbennar Overhaul: Anbennar's castanorian_citadel_bal_hyl_01 with EU4 tier 2 merged in
+aov_monument_bal_hyl_02 = {
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
+
+	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
+	
+	can_construct_potential = {
+		building_requirement_tribal = no
+	}
+	
+	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
+		# Anbennar Overhaul: EU4 culture gate
+		scope:holder = {
+			custom_tooltip = {
+				text = aov_monument_bal_hyl_gate
+				culture = culture:wexonard
+			}
+		}
+	}
+	
+	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
+
+	character_modifier = {
+		monthly_prestige = 0.1
+		# Anbennar Overhaul: EU4 tier 2
 		owned_scheme_secrecy_add = 3
 		general_opinion = 1
 	}
-
-	next_building = aov_monument_bal_hyl_03
-
+	max_garrison = good_building_max_garrison_tier_3
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_3
+		# Anbennar Overhaul: EU4 tier 2 (+2 to good_building_fort_level_tier_3 = 6)
+		fort_level = 8
+	}
+	county_modifier = {
+		development_growth = 0.1
+		development_growth_factor = 0.1
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
+	
+	next_building = aov_monument_bal_hyl_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's castanorian_citadel_bal_hyl_01 with EU4 tier 3 merged in
 aov_monument_bal_hyl_03 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
+	
 	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
+		# Anbennar Overhaul: EU4 culture gate
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_bal_hyl_gate
@@ -662,102 +790,149 @@ aov_monument_bal_hyl_03 = {
 			}
 		}
 	}
-
-	is_enabled = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_bal_hyl_gate
-				culture = culture:wexonard
-			}
-		}
-	}
-
-	cost_gold = 2000
-
-	province_modifier = {
-		fort_level = 4
-	}
+	
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	character_modifier = {
+		monthly_prestige = 0.1
+		# Anbennar Overhaul: EU4 tier 3
 		owned_scheme_secrecy_add = 5
 		general_opinion = 2
 	}
-
+	max_garrison = good_building_max_garrison_tier_3
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_3
+		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6)
+		fort_level = 10
+	}
+	county_modifier = {
+		development_growth = 0.1
+		development_growth_factor = 0.1
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
-
+	
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's castanorian_citadel_bal_mire_02 with EU4 tier 2 merged in
 aov_monument_bal_mire_02 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
-	cost_gold = 1000
-
-	province_modifier = {
-		fort_level = 2
-		hostile_raid_time = 0.25
+	
+	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
 	}
+	
+	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
 
 	character_modifier = {
+		monthly_prestige = 0.1
+		# Anbennar Overhaul: EU4 tier 2
 		supply_limit_mult = 0.2
 		army_maintenance_mult = -0.037
 	}
-
-	next_building = aov_monument_bal_mire_03
-
+	max_garrison = good_building_max_garrison_tier_3
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_3
+		# Anbennar Overhaul: EU4 tier 2 (+2 to good_building_fort_level_tier_3 = 6)
+		fort_level = 8
+		# Anbennar Overhaul: EU4 tier 2
+		hostile_raid_time = 0.25
+	}
+	county_modifier = {
+		development_growth = 0.1
+		development_growth_factor = 0.1
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
+	
+	next_building = aov_monument_bal_mire_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's castanorian_citadel_bal_mire_02 with EU4 tier 3 merged in
 aov_monument_bal_mire_03 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
-	cost_gold = 2000
-
-	province_modifier = {
-		fort_level = 4
+	
+	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
 	}
+	
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	character_modifier = {
+		monthly_prestige = 0.1
+		# Anbennar Overhaul: EU4 tier 3
 		supply_limit_mult = 0.2
 		army_maintenance_mult = -0.037
 		defender_advantage = 2
 	}
-
+	max_garrison = good_building_max_garrison_tier_3
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_3
+		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6)
+		fort_level = 10
+	}
+	county_modifier = {
+		development_growth = 0.1
+		development_growth_factor = 0.1
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
-
+	
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's castanorian_citadel_bal_ouord_02 with EU4 tier 2 merged in
 aov_monument_bal_ouord_02 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
+	
 	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
+		# Anbennar Overhaul: EU4 culture gate
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_bal_ouord_gate
@@ -765,46 +940,54 @@ aov_monument_bal_ouord_02 = {
 			}
 		}
 	}
-
-	is_enabled = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_bal_ouord_gate
-				OR = { culture = culture:ourdi culture = culture:dostanorian }
-			}
-		}
-	}
-
-	cost_gold = 1000
-
-	province_modifier = {
-		fort_level = 2
-	}
+	
+	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
 
 	character_modifier = {
+		monthly_prestige = 0.1
+		# Anbennar Overhaul: EU4 tier 2
 		embarkation_cost_mult = -0.15
 		garrison_size = 0.15
 	}
-
-	next_building = aov_monument_bal_ouord_03
-
+	max_garrison = good_building_max_garrison_tier_3
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_3
+		# Anbennar Overhaul: EU4 tier 2 (+2 to good_building_fort_level_tier_3 = 6)
+		fort_level = 8
+	}
+	county_modifier = {
+		development_growth = 0.1
+		development_growth_factor = 0.1
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
+	
+	next_building = aov_monument_bal_ouord_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's castanorian_citadel_bal_ouord_02 with EU4 tier 3 merged in
 aov_monument_bal_ouord_03 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
+	
 	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
+		# Anbennar Overhaul: EU4 culture gate
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_bal_ouord_gate
@@ -812,44 +995,52 @@ aov_monument_bal_ouord_03 = {
 			}
 		}
 	}
-
-	is_enabled = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_bal_ouord_gate
-				OR = { culture = culture:ourdi culture = culture:dostanorian }
-			}
-		}
-	}
-
-	cost_gold = 2000
-
-	province_modifier = {
-		fort_level = 4
-	}
+	
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	character_modifier = {
+		monthly_prestige = 0.1
+		# Anbennar Overhaul: EU4 tier 3
 		embarkation_cost_mult = -0.2
 		garrison_size = 0.25
 	}
-
+	max_garrison = good_building_max_garrison_tier_3
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_3
+		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6)
+		fort_level = 10
+	}
+	county_modifier = {
+		development_growth = 0.1
+		development_growth_factor = 0.1
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
-
+	
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's castanorian_citadel_bal_vertesk_01 with EU4 tier 2 merged in
 aov_monument_bal_vertesk_02 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
+	
 	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
+		# Anbennar Overhaul: EU4 culture gate
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_bal_vertesk_gate
@@ -857,45 +1048,53 @@ aov_monument_bal_vertesk_02 = {
 			}
 		}
 	}
-
-	is_enabled = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_bal_vertesk_gate
-				culture = culture:vertesker
-			}
-		}
-	}
-
-	cost_gold = 1000
-
-	province_modifier = {
-		fort_level = 2
-	}
+	
+	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
 
 	character_modifier = {
+		monthly_prestige = 0.1
+		# Anbennar Overhaul: EU4 tier 2
 		owned_hostile_scheme_success_chance_add = 5
 	}
-
-	next_building = aov_monument_bal_vertesk_03
-
+	max_garrison = good_building_max_garrison_tier_3
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_3
+		# Anbennar Overhaul: EU4 tier 2 (+2 to good_building_fort_level_tier_3 = 6)
+		fort_level = 8
+	}
+	county_modifier = {
+		development_growth = 0.1
+		development_growth_factor = 0.1
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
+	
+	next_building = aov_monument_bal_vertesk_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's castanorian_citadel_bal_vertesk_01 with EU4 tier 3 merged in
 aov_monument_bal_vertesk_03 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
+	
 	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
+		# Anbennar Overhaul: EU4 culture gate
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_bal_vertesk_gate
@@ -903,43 +1102,51 @@ aov_monument_bal_vertesk_03 = {
 			}
 		}
 	}
-
-	is_enabled = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_bal_vertesk_gate
-				culture = culture:vertesker
-			}
-		}
-	}
-
-	cost_gold = 2000
-
-	province_modifier = {
-		fort_level = 4
-	}
+	
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	character_modifier = {
+		monthly_prestige = 0.1
+		# Anbennar Overhaul: EU4 tier 3
 		owned_hostile_scheme_success_chance_add = 10
 	}
-
+	max_garrison = good_building_max_garrison_tier_3
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_3
+		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6)
+		fort_level = 10
+	}
+	county_modifier = {
+		development_growth = 0.1
+		development_growth_factor = 0.1
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
-
+	
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's castanorian_citadel_bal_vroren_02 with EU4 tier 2 merged in
 aov_monument_bal_vroren_02 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
+	
 	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
+		# Anbennar Overhaul: EU4 culture gate
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_bal_vroren_gate
@@ -947,45 +1154,53 @@ aov_monument_bal_vroren_02 = {
 			}
 		}
 	}
-
-	is_enabled = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_bal_vroren_gate
-				OR = { culture = culture:white_reachman culture = { has_cultural_pillar = heritage_gerudian } }
-			}
-		}
-	}
-
-	cost_gold = 1000
-
-	province_modifier = {
-		fort_level = 2
-	}
+	
+	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
 
 	character_modifier = {
+		monthly_prestige = 0.1
+		# Anbennar Overhaul: EU4 tier 2
 		maa_toughness_mult = 0.04
 	}
-
-	next_building = aov_monument_bal_vroren_03
-
+	max_garrison = good_building_max_garrison_tier_3
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_3
+		# Anbennar Overhaul: EU4 tier 2 (+2 to good_building_fort_level_tier_3 = 6)
+		fort_level = 8
+	}
+	county_modifier = {
+		development_growth = 0.1
+		development_growth_factor = 0.1
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
+	
+	next_building = aov_monument_bal_vroren_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's castanorian_citadel_bal_vroren_02 with EU4 tier 3 merged in
 aov_monument_bal_vroren_03 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
+	
 	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
+		# Anbennar Overhaul: EU4 culture gate
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_bal_vroren_gate
@@ -993,31 +1208,34 @@ aov_monument_bal_vroren_03 = {
 			}
 		}
 	}
-
-	is_enabled = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_bal_vroren_gate
-				OR = { culture = culture:white_reachman culture = { has_cultural_pillar = heritage_gerudian } }
-			}
-		}
-	}
-
-	cost_gold = 2000
-
-	province_modifier = {
-		fort_level = 4
-	}
+	
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	character_modifier = {
+		monthly_prestige = 0.1
+		# Anbennar Overhaul: EU4 tier 3
 		maa_toughness_mult = 0.08
 		monthly_martial_lifestyle_xp_gain_mult = 0.1
 	}
-
+	max_garrison = good_building_max_garrison_tier_3
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_3
+		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6)
+		fort_level = 10
+	}
+	county_modifier = {
+		development_growth = 0.1
+		development_growth_factor = 0.1
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
-
+	
 	type = special
 }
 
@@ -1045,6 +1263,10 @@ aov_monument_baths_of_verinus_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -1070,6 +1292,10 @@ aov_monument_baths_of_verinus_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -1093,6 +1319,10 @@ aov_monument_baths_of_verinus_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -1141,6 +1371,10 @@ aov_monument_bayvic_grandest_city_of_the_reach_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -1189,6 +1423,10 @@ aov_monument_bayvic_grandest_city_of_the_reach_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -1236,6 +1474,10 @@ aov_monument_bayvic_grandest_city_of_the_reach_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -1283,6 +1525,10 @@ aov_monument_beepeck_the_largest_small_city_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -1334,6 +1580,10 @@ aov_monument_beepeck_the_largest_small_city_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -1383,6 +1633,10 @@ aov_monument_beepeck_the_largest_small_city_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -1433,6 +1687,10 @@ aov_monument_bjarnrik_staple_port_of_konungrhavn_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -1480,13 +1738,17 @@ aov_monument_bjarnrik_staple_port_of_konungrhavn_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+		barony.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_bjarnrik_staple_port_of_konungrhavn_03
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -1535,6 +1797,10 @@ aov_monument_bjarnrik_staple_port_of_konungrhavn_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -1581,6 +1847,10 @@ aov_monument_black_iron_mine_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -1628,6 +1898,10 @@ aov_monument_black_iron_mine_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -1673,56 +1947,100 @@ aov_monument_black_iron_mine_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's castle_bladeskeep_02 with EU4 tier 2 merged in
 aov_monument_bladeskeep_monument_02 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
 
 	type_icon = "icon_structure_bladeskeep.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
-	cost_gold = 1000
-
+	
+	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
+	
 	character_modifier = {
+		monthly_dynasty_prestige_mult = 0.05
+		martial_per_prestige_level = 1 #moved from Calindal
+		# Anbennar Overhaul: EU4 tier 2
 		monthly_martial_lifestyle_xp_gain_mult = 0.05
 		monthly_prestige_gain_mult = 0.05
 	}
-
-	next_building = aov_monument_bladeskeep_monument_03
-
+	max_garrison = good_building_max_garrison_tier_2
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_2
+		fort_level = normal_building_fort_level_tier_2
+		stationed_maa_damage_mult = high_maa_damage_tier_2
+		stationed_maa_toughness_mult = high_maa_toughness_tier_2
+	}
+	county_modifier = {
+		tax_mult = 0.05
+		monthly_county_control_growth_add = 0.5
+		county_opinion_add = 10
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
+	
+	next_building = aov_monument_bladeskeep_monument_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's castle_bladeskeep_02 with EU4 tier 3 merged in
 aov_monument_bladeskeep_monument_03 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
 
 	type_icon = "icon_structure_bladeskeep.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
-	cost_gold = 2000
-
+	
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
+	
 	character_modifier = {
+		monthly_dynasty_prestige_mult = 0.05
+		martial_per_prestige_level = 1 #moved from Calindal
+		# Anbennar Overhaul: EU4 tier 3
 		monthly_martial_lifestyle_xp_gain_mult = 0.075
 		monthly_prestige_gain_mult = 0.1
 	}
-
+	max_garrison = good_building_max_garrison_tier_2
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_2
+		fort_level = normal_building_fort_level_tier_2
+		stationed_maa_damage_mult = high_maa_damage_tier_2
+		stationed_maa_toughness_mult = high_maa_toughness_tier_2
+	}
+	county_modifier = {
+		tax_mult = 0.05
+		monthly_county_control_growth_add = 0.5
+		county_opinion_add = 10
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
-
+	
 	type = special
 }
 
@@ -1745,6 +2063,11 @@ aov_monument_bladeskeep_shaded_monument_01 = {
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -1770,6 +2093,11 @@ aov_monument_bladeskeep_shaded_monument_02 = {
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -1793,6 +2121,11 @@ aov_monument_bladeskeep_shaded_monument_03 = {
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -1821,6 +2154,10 @@ aov_monument_blaiddscal_academy_monument_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -1850,6 +2187,10 @@ aov_monument_blaiddscal_academy_monument_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -1878,68 +2219,110 @@ aov_monument_blaiddscal_academy_monument_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's calasandur_castle_calascandar_01 with EU4 tier 2 merged in
 aov_monument_calascandar_02 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
 
 	type_icon = "icon_structure_alhambra.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
-	cost_gold = 1000
-
-	province_modifier = {
-		fort_level = 2
+	
+	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
 	}
+	
+	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
 
 	character_modifier = {
+		monthly_prestige = 0.3
+		# Anbennar Overhaul: EU4 tier 2
 		monthly_income_mult = 0.04
 		army_maintenance_mult = -0.037
 	}
-
-	next_building = aov_monument_calascandar_03
-
+	max_garrison = good_building_max_garrison_tier_4
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_4
+		# Anbennar Overhaul: EU4 tier 2 (+2 to good_building_fort_level_tier_4 = 8)
+		fort_level = 10
+	}
+	county_modifier = {
+		development_growth = 0.2
+		development_growth_factor = 0.25
+		monthly_county_control_growth_add = 1
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
+	
+	next_building = aov_monument_calascandar_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's calasandur_castle_calascandar_01 with EU4 tier 3 merged in
 aov_monument_calascandar_03 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
 
 	type_icon = "icon_structure_alhambra.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
-	cost_gold = 2000
-
-	province_modifier = {
-		fort_level = 4
+	
+	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
 	}
-
-	county_modifier = {
-		tax_mult = 0.075
-	}
+	
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	character_modifier = {
+		monthly_prestige = 0.3
+		# Anbennar Overhaul: EU4 tier 3
 		monthly_income_mult = 0.05
 		army_maintenance_mult = -0.075
 	}
-
+	max_garrison = good_building_max_garrison_tier_4
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_4
+		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_4 = 8)
+		fort_level = 12
+	}
+	county_modifier = {
+		development_growth = 0.2
+		development_growth_factor = 0.25
+		monthly_county_control_growth_add = 1
+		# Anbennar Overhaul: EU4 tier 3
+		tax_mult = 0.075
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
-
+	
 	type = special
 }
 
@@ -1989,6 +2372,10 @@ aov_monument_celmaldor_icewind_palace_of_commerce_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -2037,13 +2424,17 @@ aov_monument_celmaldor_icewind_palace_of_commerce_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_stewardship_3 stewardship = { 14 18 } random_traits = yes } }
+		barony.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_stewardship_3 stewardship = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_celmaldor_icewind_palace_of_commerce_03
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -2094,6 +2485,10 @@ aov_monument_celmaldor_icewind_palace_of_commerce_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -2140,6 +2535,10 @@ aov_monument_damescrown_grand_exchange_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -2183,13 +2582,17 @@ aov_monument_damescrown_grand_exchange_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_stewardship_3 stewardship = { 14 18 } random_traits = yes } }
+		barony.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_stewardship_3 stewardship = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_damescrown_grand_exchange_03
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -2234,6 +2637,10 @@ aov_monument_damescrown_grand_exchange_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -2268,10 +2675,18 @@ aov_monument_damish_temple_moonmount_library_01 = {
 
 	cost_gold = 400
 
+	character_modifier = {
+		monthly_learning_lifestyle_xp_gain_mult = 0.025
+	}
+
 	next_building = aov_monument_damish_temple_moonmount_library_02
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -2311,13 +2726,17 @@ aov_monument_damish_temple_moonmount_library_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_learning_3 learning = { 14 18 } random_traits = yes } }
+		barony.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_learning_3 learning = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_damish_temple_moonmount_library_03
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -2362,105 +2781,115 @@ aov_monument_damish_temple_moonmount_library_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's temple_highest_moon_01 with EU4 tier 2 merged in
 aov_monument_damish_temple_temple_of_the_highest_moon_02 = {
-	construction_time = 3600
-
+	construction_time = 3600 # Anbennar Overhaul: EU4 tier 2
+	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
 	type_icon = "icon_structure_sumela_monastery.dds"
 
-	can_construct_potential = {
-		building_requirement_tribal = no
+	province_modifier = {
+		monthly_income = 2
 	}
-
-	can_construct = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_damish_temple_temple_of_the_highest_moon_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
-			}
-		}
-	}
-
-	is_enabled = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_damish_temple_temple_of_the_highest_moon_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
-			}
-		}
-	}
-
-	cost_gold = 1000
-
 	county_modifier = {
-		development_growth_factor = 0.25
+		# Anbennar Overhaul: EU4 tier 2 (+0.06 to 0.2 = 0.2)
+		tax_mult = 0.26
+		# Anbennar Overhaul: EU4 tier 2 (+0.25 to 0.3 = 0.3)
+		development_growth_factor = 0.55
+		development_growth = 0.3
+		# Anbennar Overhaul: EU4 tier 2
 		county_opinion_add = 6
-		tax_mult = 0.06
 	}
-
 	character_modifier = {
-		monthly_piety = 0.25
+		# Anbennar Overhaul: EU4 tier 2 (+0.25 to 1 = 1)
+		monthly_piety = 1.25
+		monthly_dynasty_prestige_mult = 0.05
+		monthly_county_control_growth_factor = 0.1
+		same_faith_opinion = 5
+		# Anbennar Overhaul: EU4 tier 2
 		different_faith_county_opinion_mult = -0.15
 	}
-
-	next_building = aov_monument_damish_temple_temple_of_the_highest_moon_03
-
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
+	}
+	
+	next_building = aov_monument_damish_temple_temple_of_the_highest_moon_03 # Anbennar Overhaul: EU4 tier 2
+
+	can_construct = { # Anbennar Overhaul: EU4 culture gate
+		scope:holder = {
+			custom_tooltip = {
+				text = aov_monument_damish_temple_temple_of_the_highest_moon_gate
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+			}
+		}
 	}
 
 	type = special
+
+	flag = travel_point_of_interest_religious
+	flag = holy_building
 }
 
+# Anbennar Overhaul: Anbennar's temple_highest_moon_01 with EU4 tier 3 merged in
 aov_monument_damish_temple_temple_of_the_highest_moon_03 = {
-	construction_time = 7200
-
+	construction_time = 7200 # Anbennar Overhaul: EU4 tier 3
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 	type_icon = "icon_structure_sumela_monastery.dds"
 
-	can_construct_potential = {
-		building_requirement_tribal = no
+	province_modifier = {
+		monthly_income = 2
 	}
-
-	can_construct = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_damish_temple_temple_of_the_highest_moon_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
-			}
-		}
-	}
-
-	is_enabled = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_damish_temple_temple_of_the_highest_moon_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
-			}
-		}
-	}
-
-	cost_gold = 2000
-
 	county_modifier = {
-		development_growth_factor = 0.35
+		# Anbennar Overhaul: EU4 tier 3 (+0.099 to 0.2 = 0.2)
+		tax_mult = 0.299
+		# Anbennar Overhaul: EU4 tier 3 (+0.35 to 0.3 = 0.3)
+		development_growth_factor = 0.65
+		development_growth = 0.3
+		# Anbennar Overhaul: EU4 tier 3
 		county_opinion_add = 10
-		tax_mult = 0.099
 	}
-
 	character_modifier = {
-		monthly_piety = 0.5
+		# Anbennar Overhaul: EU4 tier 3 (+0.5 to 1 = 1)
+		monthly_piety = 1.5
+		monthly_dynasty_prestige_mult = 0.05
+		monthly_county_control_growth_factor = 0.1
+		same_faith_opinion = 5
+		# Anbennar Overhaul: EU4 tier 3
 		different_faith_county_opinion_mult = -0.3
 	}
-
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
+	}
+	
+	can_construct = { # Anbennar Overhaul: EU4 culture gate
+		scope:holder = {
+			custom_tooltip = {
+				text = aov_monument_damish_temple_temple_of_the_highest_moon_gate
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+			}
+		}
 	}
 
 	type = special
+
+	flag = travel_point_of_interest_religious
+	flag = holy_building
 }
 
 aov_monument_deranne_westport_gateway_to_aelantir_01 = {
@@ -2503,6 +2932,10 @@ aov_monument_deranne_westport_gateway_to_aelantir_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -2545,13 +2978,17 @@ aov_monument_deranne_westport_gateway_to_aelantir_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+		barony.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_deranne_westport_gateway_to_aelantir_03
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -2595,6 +3032,10 @@ aov_monument_deranne_westport_gateway_to_aelantir_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -2637,6 +3078,11 @@ aov_monument_derilde_s_gateway_01 = {
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -2679,6 +3125,11 @@ aov_monument_derilde_s_gateway_02 = {
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -2719,6 +3170,11 @@ aov_monument_derilde_s_gateway_03 = {
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -2761,6 +3217,10 @@ aov_monument_draculas_throne_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -2803,6 +3263,10 @@ aov_monument_draculas_throne_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -2843,6 +3307,10 @@ aov_monument_draculas_throne_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -2891,6 +3359,11 @@ aov_monument_eborthil_toref_citadel_01 = {
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -2939,6 +3412,11 @@ aov_monument_eborthil_toref_citadel_02 = {
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -2986,6 +3464,11 @@ aov_monument_eborthil_toref_citadel_03 = {
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3028,6 +3511,10 @@ aov_monument_elikhander_orbs_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3071,6 +3558,10 @@ aov_monument_elikhander_orbs_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3112,6 +3603,10 @@ aov_monument_elikhander_orbs_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3154,6 +3649,10 @@ aov_monument_elikhander_pyramid_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3197,6 +3696,10 @@ aov_monument_elikhander_pyramid_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3238,6 +3741,10 @@ aov_monument_elikhander_pyramid_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3280,6 +3787,10 @@ aov_monument_elikhander_sphinx_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3324,6 +3835,10 @@ aov_monument_elikhander_sphinx_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3366,62 +3881,104 @@ aov_monument_elikhander_sphinx_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's calasandur_castle_escandar_01 with EU4 tier 2 merged in
 aov_monument_escandar_02 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
 
 	type_icon = "icon_structure_alhambra.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
-	cost_gold = 1000
-
-	province_modifier = {
-		fort_level = 2
+	
+	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
 	}
+	
+	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
 
 	character_modifier = {
+		monthly_prestige = 0.2
+		# Anbennar Overhaul: EU4 tier 2
 		mercenary_hire_cost_mult = -0.1
 	}
-
-	next_building = aov_monument_escandar_03
-
+	max_garrison = good_building_max_garrison_tier_3
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_3
+		# Anbennar Overhaul: EU4 tier 2 (+2 to good_building_fort_level_tier_3 = 6)
+		fort_level = 8
+	}
+	county_modifier = {
+		development_growth = 0.2
+		development_growth_factor = 0.15
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
+	
+	next_building = aov_monument_escandar_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's calasandur_castle_escandar_01 with EU4 tier 3 merged in
 aov_monument_escandar_03 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
 
 	type_icon = "icon_structure_alhambra.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
-	cost_gold = 2000
-
-	province_modifier = {
-		fort_level = 4
+	
+	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
 	}
+	
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	character_modifier = {
+		monthly_prestige = 0.2
+		# Anbennar Overhaul: EU4 tier 3
 		mercenary_hire_cost_mult = -0.2
 	}
-
+	max_garrison = good_building_max_garrison_tier_3
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_3
+		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6)
+		fort_level = 10
+	}
+	county_modifier = {
+		development_growth = 0.2
+		development_growth_factor = 0.15
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
-
+	
 	type = special
 }
 
@@ -3452,6 +4009,10 @@ aov_monument_esthili_academy_of_magic_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3482,13 +4043,17 @@ aov_monument_esthili_academy_of_magic_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_learning_3 trait = magical_affinity_2 learning = { 14 18 } random_traits = yes } }
+		barony.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_learning_3 trait = magical_affinity_2 learning = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_esthili_academy_of_magic_03
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3521,6 +4086,10 @@ aov_monument_esthili_academy_of_magic_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3569,6 +4138,11 @@ aov_monument_freecestir_mustering_grounds_01 = {
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3614,13 +4188,18 @@ aov_monument_freecestir_mustering_grounds_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+		barony.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_freecestir_mustering_grounds_03
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3667,6 +4246,11 @@ aov_monument_freecestir_mustering_grounds_03 = {
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3717,6 +4301,11 @@ aov_monument_gawed_castle_gaweton_01 = {
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3764,13 +4353,18 @@ aov_monument_gawed_castle_gaweton_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+		barony.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_gawed_castle_gaweton_03
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3820,6 +4414,11 @@ aov_monument_gawed_castle_gaweton_03 = {
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3867,6 +4466,10 @@ aov_monument_giberd_academy_of_engineering_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3914,6 +4517,10 @@ aov_monument_giberd_academy_of_engineering_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3959,6 +4566,10 @@ aov_monument_giberd_academy_of_engineering_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -3984,6 +4595,10 @@ aov_monument_grave_forest_of_ilvandet_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4009,6 +4624,10 @@ aov_monument_grave_forest_of_ilvandet_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4032,6 +4651,10 @@ aov_monument_grave_forest_of_ilvandet_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4080,6 +4703,10 @@ aov_monument_hammerhome_artificers_guild_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4125,13 +4752,17 @@ aov_monument_hammerhome_artificers_guild_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_learning_3 learning = { 14 18 } random_traits = yes } }
+		barony.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_learning_3 learning = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_hammerhome_artificers_guild_03
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4178,6 +4809,10 @@ aov_monument_hammerhome_artificers_guild_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4204,13 +4839,17 @@ aov_monument_humacs_tomb_01 = {
 	}
 
 	on_complete = {
-		county.holder = { add_prestige = 100 }
+		barony.holder = { add_prestige = 100 }
 	}
 
 	next_building = aov_monument_humacs_tomb_02
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4238,13 +4877,17 @@ aov_monument_humacs_tomb_02 = {
 	}
 
 	on_complete = {
-		county.holder = { add_prestige = 200 }
+		barony.holder = { add_prestige = 200 }
 	}
 
 	next_building = aov_monument_humacs_tomb_03
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4272,11 +4915,15 @@ aov_monument_humacs_tomb_03 = {
 	}
 
 	on_complete = {
-		county.holder = { add_prestige = 300 }
+		barony.holder = { add_prestige = 300 }
 	}
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4326,6 +4973,11 @@ aov_monument_ibevar_temple_of_munas_01 = {
 
 	ai_value = {
 		base = 100
+		ai_pious_building_preference_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4375,6 +5027,11 @@ aov_monument_ibevar_temple_of_munas_02 = {
 
 	ai_value = {
 		base = 100
+		ai_pious_building_preference_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4422,6 +5079,11 @@ aov_monument_ibevar_temple_of_munas_03 = {
 
 	ai_value = {
 		base = 100
+		ai_pious_building_preference_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4438,10 +5100,19 @@ castle_dameris_01 = {
 
 	cost_gold = 400
 
+	character_modifier = {
+		monthly_prestige = 0.2
+		vassal_opinion = 4
+	}
+
 	next_building = castle_dameris_02
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4458,10 +5129,20 @@ castle_dameris_02 = {
 
 	cost_gold = 1000
 
+	character_modifier = {
+		monthly_prestige = 0.5
+		vassal_opinion = 6
+		diplomacy = 1
+	}
+
 	next_building = castle_dameris_03
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4478,8 +5159,18 @@ castle_dameris_03 = {
 
 	cost_gold = 2000
 
+	character_modifier = {
+		monthly_prestige = 1
+		vassal_opinion = 8
+		diplomacy = 2
+	}
+
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4512,6 +5203,10 @@ aov_monument_jag_radash_monument_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4545,6 +5240,10 @@ aov_monument_jag_radash_monument_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4576,6 +5275,10 @@ aov_monument_jag_radash_monument_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4604,6 +5307,10 @@ aov_monument_kazakesh_stingport_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4633,6 +5340,10 @@ aov_monument_kazakesh_stingport_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4660,6 +5371,10 @@ aov_monument_kazakesh_stingport_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4703,6 +5418,10 @@ aov_monument_kobildzan_kobildzex_guild_of_trapsmiths_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4746,6 +5465,10 @@ aov_monument_kobildzan_kobildzex_guild_of_trapsmiths_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4787,6 +5510,10 @@ aov_monument_kobildzan_kobildzex_guild_of_trapsmiths_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4829,6 +5556,10 @@ aov_monument_konwell_the_imperial_archives_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4872,6 +5603,10 @@ aov_monument_konwell_the_imperial_archives_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -4913,95 +5648,109 @@ aov_monument_konwell_the_imperial_archives_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's lorenans_rest_01 with EU4 tier 2 merged in
 aov_monument_lorenans_rest_02 = {
-	construction_time = 1800
-
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
+	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
 	type_icon = "icon_structure_cilician_gates.dds"
 
-	can_construct_potential = {
-		building_requirement_tribal = no
+	province_modifier = {
+		monthly_income = 0.5
+		# funeral cost -50%
 	}
-
-	can_construct = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_lorenans_rest_gate
-				culture = { has_cultural_pillar = heritage_lencori }
-			}
-		}
-	}
-
-	is_enabled = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_lorenans_rest_gate
-				culture = { has_cultural_pillar = heritage_lencori }
-			}
-		}
-	}
-
-	cost_gold = 1000
-
 	character_modifier = {
+		learning = 2
+		monthly_dynasty_prestige_mult = 0.05
+		monthly_prestige = 1
+		# Anbennar Overhaul: EU4 tier 2
 		monthly_legitimacy_add = 0.125
 		heavy_cavalry_max_size_add = 1
 		heavy_cavalry_damage_mult = 0.05
 	}
-
-	next_building = aov_monument_lorenans_rest_03
-
+	effect_desc = {
+		triggered_desc = {
+			trigger = { has_dlc_feature = legends_of_the_dead }
+			desc = funeral_cost_discount_lorenans_rest_01_desc
+		}
+	}
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
+	}
+	
+	next_building = aov_monument_lorenans_rest_03 # Anbennar Overhaul: EU4 tier 2
+
+	can_construct = { # Anbennar Overhaul: EU4 culture gate
+		scope:holder = {
+			custom_tooltip = {
+				text = aov_monument_lorenans_rest_gate
+				culture = { has_cultural_pillar = heritage_lencori }
+			}
+		}
 	}
 
 	type = special
+	
+	flag = travel_point_of_interest_religious
 }
 
+# Anbennar Overhaul: Anbennar's lorenans_rest_01 with EU4 tier 3 merged in
 aov_monument_lorenans_rest_03 = {
-	construction_time = 1800
-
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 	type_icon = "icon_structure_cilician_gates.dds"
 
-	can_construct_potential = {
-		building_requirement_tribal = no
+	province_modifier = {
+		monthly_income = 0.5
+		# funeral cost -50%
 	}
-
-	can_construct = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_lorenans_rest_gate
-				culture = { has_cultural_pillar = heritage_lencori }
-			}
-		}
-	}
-
-	is_enabled = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_lorenans_rest_gate
-				culture = { has_cultural_pillar = heritage_lencori }
-			}
-		}
-	}
-
-	cost_gold = 2000
-
 	character_modifier = {
+		learning = 2
+		monthly_dynasty_prestige_mult = 0.05
+		monthly_prestige = 1
+		# Anbennar Overhaul: EU4 tier 3
 		monthly_legitimacy_add = 0.25
 		heavy_cavalry_max_size_add = 1
 		heavy_cavalry_damage_mult = 0.1
 	}
-
+	effect_desc = {
+		triggered_desc = {
+			trigger = { has_dlc_feature = legends_of_the_dead }
+			desc = funeral_cost_discount_lorenans_rest_01_desc
+		}
+	}
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
+	}
+	
+	can_construct = { # Anbennar Overhaul: EU4 culture gate
+		scope:holder = {
+			custom_tooltip = {
+				text = aov_monument_lorenans_rest_gate
+				culture = { has_cultural_pillar = heritage_lencori }
+			}
+		}
 	}
 
 	type = special
+	
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_lorent_new_adea_naval_school_01 = {
@@ -5042,6 +5791,10 @@ aov_monument_lorent_new_adea_naval_school_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -5085,6 +5838,10 @@ aov_monument_lorent_new_adea_naval_school_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -5126,6 +5883,10 @@ aov_monument_lorent_new_adea_naval_school_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -5173,13 +5934,17 @@ aov_monument_lorentaine_mage_academy_01 = {
 	}
 
 	on_complete = {
-		county.holder = { add_prestige = 50 }
+		barony.holder = { add_prestige = 50 }
 	}
 
 	next_building = aov_monument_lorentaine_mage_academy_02
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -5228,14 +5993,18 @@ aov_monument_lorentaine_mage_academy_02 = {
 	}
 
 	on_complete = {
-		county.holder = { add_prestige = 100 }
-county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_learning_3 trait = magical_affinity_2 learning = { 14 18 } random_traits = yes } }
+		barony.holder = { add_prestige = 100 }
+barony.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_learning_3 trait = magical_affinity_2 learning = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_lorentaine_mage_academy_03
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -5285,12 +6054,16 @@ aov_monument_lorentaine_mage_academy_03 = {
 	}
 
 	on_complete = {
-		county.holder = { add_prestige = 150 }
-county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+		barony.holder = { add_prestige = 150 }
+barony.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
 	}
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -5341,6 +6114,11 @@ aov_monument_marrhold_gate_to_the_serpentspine_01 = {
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -5389,13 +6167,18 @@ aov_monument_marrhold_gate_to_the_serpentspine_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+		barony.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_marrhold_gate_to_the_serpentspine_03
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -5445,11 +6228,16 @@ aov_monument_marrhold_gate_to_the_serpentspine_03 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+		barony.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
 	}
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -5478,6 +6266,10 @@ aov_monument_marrhold_the_feather_academy_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -5511,6 +6303,10 @@ aov_monument_marrhold_the_feather_academy_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -5544,6 +6340,10 @@ aov_monument_marrhold_the_feather_academy_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -5588,13 +6388,17 @@ aov_monument_menibor_hall_of_the_gallant_01 = {
 	}
 
 	on_complete = {
-		county.holder = { add_prestige = 100 }
+		barony.holder = { add_prestige = 100 }
 	}
 
 	next_building = aov_monument_menibor_hall_of_the_gallant_02
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -5639,13 +6443,17 @@ aov_monument_menibor_hall_of_the_gallant_02 = {
 	}
 
 	on_complete = {
-		county.holder = { add_prestige = 150 }
+		barony.holder = { add_prestige = 150 }
 	}
 
 	next_building = aov_monument_menibor_hall_of_the_gallant_03
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -5686,12 +6494,16 @@ aov_monument_menibor_hall_of_the_gallant_03 = {
 	}
 
 	on_complete = {
-		county.holder = { add_prestige = 250 }
-county.holder = { add_prestige = 150 }
+		barony.holder = { add_prestige = 250 }
+barony.holder = { add_prestige = 150 }
 	}
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -5741,6 +6553,11 @@ aov_monument_minara_temple_01 = {
 
 	ai_value = {
 		base = 100
+		ai_pious_building_preference_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -5790,6 +6607,11 @@ aov_monument_minara_temple_02 = {
 
 	ai_value = {
 		base = 100
+		ai_pious_building_preference_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -5837,6 +6659,11 @@ aov_monument_minara_temple_03 = {
 
 	ai_value = {
 		base = 100
+		ai_pious_building_preference_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -5884,6 +6711,10 @@ aov_monument_moonhaven_port_munas_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -5931,6 +6762,10 @@ aov_monument_moonhaven_port_munas_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -5976,6 +6811,10 @@ aov_monument_moonhaven_port_munas_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6028,6 +6867,10 @@ aov_monument_nathalaire_city_of_pirates_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6077,13 +6920,17 @@ aov_monument_nathalaire_city_of_pirates_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_intrigue_3 intrigue = { 14 18 } random_traits = yes } }
+		barony.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_intrigue_3 intrigue = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_nathalaire_city_of_pirates_03
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6134,6 +6981,10 @@ aov_monument_nathalaire_city_of_pirates_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6185,6 +7036,10 @@ aov_monument_neckcliffe_the_imperial_dockyard_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6237,6 +7092,10 @@ aov_monument_neckcliffe_the_imperial_dockyard_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6287,6 +7146,10 @@ aov_monument_neckcliffe_the_imperial_dockyard_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6330,13 +7193,17 @@ aov_monument_nimscodd_academy_01 = {
 	}
 
 	on_complete = {
-		county.holder = { add_prestige = 50 }
+		barony.holder = { add_prestige = 50 }
 	}
 
 	next_building = aov_monument_nimscodd_academy_02
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6380,13 +7247,17 @@ aov_monument_nimscodd_academy_02 = {
 	}
 
 	on_complete = {
-		county.holder = { add_prestige = 100 }
+		barony.holder = { add_prestige = 100 }
 	}
 
 	next_building = aov_monument_nimscodd_academy_03
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6430,11 +7301,15 @@ aov_monument_nimscodd_academy_03 = {
 	}
 
 	on_complete = {
-		county.holder = { add_prestige = 150 }
+		barony.holder = { add_prestige = 150 }
 	}
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6460,6 +7335,10 @@ aov_monument_nimsnoms_theatre_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6490,6 +7369,10 @@ aov_monument_nimsnoms_theatre_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6518,6 +7401,10 @@ aov_monument_nimsnoms_theatre_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6543,6 +7430,10 @@ aov_monument_oldhaven_memorial_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6569,6 +7460,10 @@ aov_monument_oldhaven_memorial_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6594,6 +7489,10 @@ aov_monument_oldhaven_memorial_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6610,10 +7509,19 @@ aov_monument_palace_of_unity_01 = {
 
 	cost_gold = 400
 
+	character_modifier = {
+		monthly_prestige = 0.2
+		vassal_opinion = 4
+	}
+
 	next_building = aov_monument_palace_of_unity_02
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6630,10 +7538,20 @@ aov_monument_palace_of_unity_02 = {
 
 	cost_gold = 1000
 
+	character_modifier = {
+		monthly_prestige = 0.4
+		vassal_opinion = 6
+		county_opinion_add = 5
+	}
+
 	next_building = aov_monument_palace_of_unity_03
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6650,8 +7568,22 @@ aov_monument_palace_of_unity_03 = {
 
 	cost_gold = 2000
 
+	county_modifier = {
+		development_growth_factor = 0.15
+	}
+
+	character_modifier = {
+		monthly_prestige = 0.6
+		vassal_opinion = 8
+		county_opinion_add = 10
+	}
+
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6702,6 +7634,10 @@ aov_monument_portnamm_portroy_merchants_guild_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6749,13 +7685,17 @@ aov_monument_portnamm_portroy_merchants_guild_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_stewardship_3 stewardship = { 14 18 } random_traits = yes } }
+		barony.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_stewardship_3 stewardship = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_portnamm_portroy_merchants_guild_03
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6804,6 +7744,10 @@ aov_monument_portnamm_portroy_merchants_guild_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6850,6 +7794,10 @@ aov_monument_rainbow_hall_north_monument_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6899,6 +7847,10 @@ aov_monument_rainbow_hall_north_monument_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6946,6 +7898,10 @@ aov_monument_rainbow_hall_north_monument_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -6992,6 +7948,10 @@ aov_monument_rainbow_hall_south_monument_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7041,6 +8001,10 @@ aov_monument_rainbow_hall_south_monument_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7088,6 +8052,10 @@ aov_monument_rainbow_hall_south_monument_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7121,6 +8089,11 @@ aov_monument_ravioli_bastion_01 = {
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7156,6 +8129,11 @@ aov_monument_ravioli_bastion_02 = {
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7190,6 +8168,11 @@ aov_monument_ravioli_bastion_03 = {
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7218,6 +8201,10 @@ aov_monument_refuge_of_the_glasslords_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7246,6 +8233,10 @@ aov_monument_refuge_of_the_glasslords_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7272,6 +8263,10 @@ aov_monument_refuge_of_the_glasslords_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7302,6 +8297,10 @@ aov_monument_rubyhold_academy_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7332,6 +8331,10 @@ aov_monument_rubyhold_academy_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7361,6 +8364,10 @@ aov_monument_rubyhold_academy_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7408,6 +8415,10 @@ aov_monument_seinathil_institute_of_song_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7455,6 +8466,10 @@ aov_monument_seinathil_institute_of_song_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7500,6 +8515,10 @@ aov_monument_seinathil_institute_of_song_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7543,6 +8562,11 @@ aov_monument_silvelar_silver_spires_01 = {
 
 	ai_value = {
 		base = 100
+		ai_pious_building_preference_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7583,13 +8607,18 @@ aov_monument_silvelar_silver_spires_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_stewardship_3 stewardship = { 14 18 } random_traits = yes } }
+		barony.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_stewardship_3 stewardship = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_silvelar_silver_spires_03
 
 	ai_value = {
 		base = 100
+		ai_pious_building_preference_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7635,6 +8664,11 @@ aov_monument_silvelar_silver_spires_03 = {
 
 	ai_value = {
 		base = 100
+		ai_pious_building_preference_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7686,6 +8720,10 @@ aov_monument_silverforge_strongbellow_academy_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7738,6 +8776,10 @@ aov_monument_silverforge_strongbellow_academy_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7788,11 +8830,15 @@ aov_monument_silverforge_strongbellow_academy_03 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+		barony.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
 	}
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7845,6 +8891,10 @@ aov_monument_sorncell_deepwater_harbor_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7897,6 +8947,10 @@ aov_monument_sorncell_deepwater_harbor_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7947,6 +9001,10 @@ aov_monument_sorncell_deepwater_harbor_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -7993,6 +9051,10 @@ aov_monument_telgeir_vanbury_steel_foundry_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -8040,6 +9102,10 @@ aov_monument_telgeir_vanbury_steel_foundry_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -8085,6 +9151,10 @@ aov_monument_telgeir_vanbury_steel_foundry_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -8134,6 +9204,11 @@ aov_monument_temple_of_ryala_01 = {
 
 	ai_value = {
 		base = 100
+		ai_pious_building_preference_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -8183,6 +9258,11 @@ aov_monument_temple_of_ryala_02 = {
 
 	ai_value = {
 		base = 100
+		ai_pious_building_preference_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -8230,6 +9310,11 @@ aov_monument_temple_of_ryala_03 = {
 
 	ai_value = {
 		base = 100
+		ai_pious_building_preference_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -8278,6 +9363,10 @@ aov_monument_the_dragonhoard_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -8326,6 +9415,10 @@ aov_monument_the_dragonhoard_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -8372,21 +9465,31 @@ aov_monument_the_dragonhoard_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's lake_palace_02 with EU4 tier 3 merged in
 aov_monument_the_lake_palace_03 = {
-	construction_time = 1800
+	
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
 
 	type_icon = "icon_structure_doges_palace.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
+	
 	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_heraldry
+		}
+		# Anbennar Overhaul: EU4 culture gate
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_the_lake_palace_gate
@@ -8394,47 +9497,84 @@ aov_monument_the_lake_palace_03 = {
 			}
 		}
 	}
-
-	is_enabled = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_the_lake_palace_gate
-				culture = culture:esmari
-			}
-		}
-	}
-
-	cost_gold = 2000
+	
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	province_modifier = {
-		fort_level = 2
+		# Anbennar Overhaul: EU4 tier 3 (+2 to 1 = 1)
+		fort_level = 3
+		hostile_raid_time = 0.5
+	}
+
+	county_modifier = {
+		monthly_county_control_growth_add = 0.5
+		development_growth_factor = 0.1
 	}
 
 	character_modifier = {
+		embarkation_cost_mult = -0.1
+		naval_movement_speed_mult = 0.1
+		monthly_prestige_gain_per_happy_powerful_vassal_add = 0.15
+		legitimacy_gain_mult = 0.1
+		monthly_dynasty_prestige_mult = 0.1
+		courtly_opinion = 5
+		powerful_vassal_opinion = 5
+		parochial_opinion = 5
+		# Anbennar Overhaul: EU4 tier 3
 		life_expectancy = 3
 	}
-
-	on_complete = {
-		county.holder = { add_prestige = 225 }
-	}
-
+	
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
+	}
+	
+	on_complete = {
+		# Anbennar Overhaul: EU4 tier 3
+		barony.holder = { add_prestige = 225 }
 	}
 
 	type = special
+
+	flag = travel_point_of_interest_diplomatic
 }
 
+# Anbennar Overhaul: Anbennar's holy_site_the_necropolis_01 with EU4 tier 2 merged in
 aov_monument_the_necropolis_02 = {
-	construction_time = 1800
+	
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
 
 	type_icon = "icon_structure_mahabodhi_temple.dds"
-
-	can_construct_potential = {
-		building_requirement_tribal = no
+	
+	effect_desc = {
+		triggered_desc = {
+			trigger = { has_dlc_feature = legends_of_the_dead }
+			desc = building_funeral_effect_desc
+		}
 	}
-
+	
 	can_construct = {
+		OR = {
+			scope:holder = {
+				religion = religion:cannorian_pantheon_religion
+			}
+			custom_description = {
+				text = holy_site_building_trigger
+				barony = {
+					is_holy_site_of = scope:holder.faith
+				}
+			}
+		}
+		# scope:holder = {
+		# 	culture = {
+		# 		has_innovation = innovation_crop_rotation
+		# 	}
+		# }
+		# Anbennar Overhaul: EU4 culture gate
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_the_necropolis_gate
@@ -8442,51 +9582,106 @@ aov_monument_the_necropolis_02 = {
 			}
 		}
 	}
-
+	
 	is_enabled = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_the_necropolis_gate
-				faith.religion = religion:cannorian_pantheon_religion
+		custom_description = {
+			text = holy_site_pantheonic_or_holy_site_trigger
+			OR = {
+				scope:holder = {
+					religion = religion:cannorian_pantheon_religion
+				}
+				custom_description = {
+					text = holy_site_building_trigger
+					barony = {
+						is_holy_site_of = scope:holder.faith
+					}
+				}
 			}
 		}
 	}
-
-	cost_gold = 1000
-
-	county_modifier = {
-		tax_mult = 0.05
-	}
+	
+	show_disabled = yes
+	
+	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
 
 	character_modifier = {
+		monthly_piety = 1
+		monthly_dynasty_prestige_mult = 0.05
+		learning_per_piety_level = 2
+		different_faith_opinion = 5
+		religious_vassal_opinion = 10
+		different_faith_county_opinion_mult = -0.2
+		# Anbennar Overhaul: EU4 tier 2
 		faith_conversion_piety_cost_mult = -0.2
 		county_opinion_add = 2
 		vassal_tax_contribution_mult = 0.025
 	}
-
-	on_complete = {
-		county.holder = { add_piety = 100 }
+	
+	county_modifier = {
+		# Anbennar Overhaul: EU4 tier 2 (+0.05 to 0.2 = 0.2)
+		tax_mult = 0.25
+		development_growth_factor = 0.3
+		development_growth = 0.2
 	}
-
-	next_building = aov_monument_the_necropolis_03
-
+	
+	province_modifier = {
+		monthly_income = 3
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
+	
+	on_complete = {
+		# Anbennar Overhaul: EU4 tier 2
+		barony.holder = { add_piety = 100 }
+	}
+
+	next_building = aov_monument_the_necropolis_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
+	
+	flag = travel_point_of_interest_religious
+	flag = holy_building
+	flag = religious_studies_location
 }
 
+# Anbennar Overhaul: Anbennar's holy_site_the_necropolis_01 with EU4 tier 3 merged in
 aov_monument_the_necropolis_03 = {
-	construction_time = 1800
+	
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
 
 	type_icon = "icon_structure_mahabodhi_temple.dds"
-
-	can_construct_potential = {
-		building_requirement_tribal = no
+	
+	effect_desc = {
+		triggered_desc = {
+			trigger = { has_dlc_feature = legends_of_the_dead }
+			desc = building_funeral_effect_desc
+		}
 	}
-
+	
 	can_construct = {
+		OR = {
+			scope:holder = {
+				religion = religion:cannorian_pantheon_religion
+			}
+			custom_description = {
+				text = holy_site_building_trigger
+				barony = {
+					is_holy_site_of = scope:holder.faith
+				}
+			}
+		}
+		# scope:holder = {
+		# 	culture = {
+		# 		has_innovation = innovation_crop_rotation
+		# 	}
+		# }
+		# Anbennar Overhaul: EU4 culture gate
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_the_necropolis_gate
@@ -8494,45 +9689,82 @@ aov_monument_the_necropolis_03 = {
 			}
 		}
 	}
-
+	
 	is_enabled = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_the_necropolis_gate
-				faith.religion = religion:cannorian_pantheon_religion
+		custom_description = {
+			text = holy_site_pantheonic_or_holy_site_trigger
+			OR = {
+				scope:holder = {
+					religion = religion:cannorian_pantheon_religion
+				}
+				custom_description = {
+					text = holy_site_building_trigger
+					barony = {
+						is_holy_site_of = scope:holder.faith
+					}
+				}
 			}
 		}
 	}
-
-	cost_gold = 2000
-
-	county_modifier = {
-		tax_mult = 0.075
-	}
+	
+	show_disabled = yes
+	
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	character_modifier = {
+		monthly_piety = 1
+		monthly_dynasty_prestige_mult = 0.05
+		learning_per_piety_level = 2
+		different_faith_opinion = 5
+		religious_vassal_opinion = 10
+		different_faith_county_opinion_mult = -0.2
+		# Anbennar Overhaul: EU4 tier 3
 		faith_conversion_piety_cost_mult = -0.25
 		county_opinion_add = 3
 		vassal_tax_contribution_mult = 0.05
 	}
-
+	
+	county_modifier = {
+		# Anbennar Overhaul: EU4 tier 3 (+0.075 to 0.2 = 0.2)
+		tax_mult = 0.275
+		development_growth_factor = 0.3
+		development_growth = 0.2
+	}
+	
+	province_modifier = {
+		monthly_income = 3
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
-
+	
 	type = special
+	
+	flag = travel_point_of_interest_religious
+	flag = holy_building
+	flag = religious_studies_location
 }
 
+# Anbennar Overhaul: Anbennar's castanorian_citadel_north_citadel_01 with EU4 tier 2 merged in
 aov_monument_the_north_citadel_02 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
+	
 	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
+		# Anbennar Overhaul: EU4 culture gate
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_the_north_citadel_gate
@@ -8540,45 +9772,54 @@ aov_monument_the_north_citadel_02 = {
 			}
 		}
 	}
-
-	is_enabled = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_the_north_citadel_gate
-				OR = { culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_halfling } culture = culture:stone_dwarvish culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_elven } }
-			}
-		}
-	}
-
-	cost_gold = 1000
-
-	province_modifier = {
-		fort_level = 1
-	}
+	
+	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
 
 	character_modifier = {
+		monthly_prestige = 0.3
+		# Anbennar Overhaul: EU4 tier 2
 		domain_limit = 1
 	}
-
-	next_building = aov_monument_the_north_citadel_03
-
+	max_garrison = good_building_max_garrison_tier_4
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_4
+		# Anbennar Overhaul: EU4 tier 2 (+1 to good_building_fort_level_tier_4 = 8)
+		fort_level = 9
+	}
+	county_modifier = {
+		development_growth = 0.1
+		development_growth_factor = 0.1
+		monthly_county_control_growth_add = 1
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
+	
+	next_building = aov_monument_the_north_citadel_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's castanorian_citadel_north_citadel_01 with EU4 tier 3 merged in
 aov_monument_the_north_citadel_03 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
+	
 	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
+		# Anbennar Overhaul: EU4 culture gate
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_the_north_citadel_gate
@@ -8586,30 +9827,34 @@ aov_monument_the_north_citadel_03 = {
 			}
 		}
 	}
-
-	is_enabled = {
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_the_north_citadel_gate
-				OR = { culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_halfling } culture = culture:stone_dwarvish culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_elven } }
-			}
-		}
-	}
-
-	cost_gold = 2000
-
-	province_modifier = {
-		fort_level = 1
-	}
+	
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	character_modifier = {
+		monthly_prestige = 0.3
+		# Anbennar Overhaul: EU4 tier 3
 		domain_limit = 2
 	}
-
+	max_garrison = good_building_max_garrison_tier_4
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_4
+		# Anbennar Overhaul: EU4 tier 3 (+1 to good_building_fort_level_tier_4 = 8)
+		fort_level = 9
+	}
+	county_modifier = {
+		development_growth = 0.1
+		development_growth_factor = 0.1
+		monthly_county_control_growth_add = 1
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
-
+	
 	type = special
 }
 
@@ -8632,6 +9877,11 @@ aov_monument_the_north_citadel_morgurax_monument_01 = {
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -8660,6 +9910,11 @@ aov_monument_the_north_citadel_morgurax_monument_02 = {
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -8687,74 +9942,120 @@ aov_monument_the_north_citadel_morgurax_monument_03 = {
 
 	ai_value = {
 		base = 100
+		culture_likely_to_fortify_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's castanorian_citadel_south_citadel_01 with EU4 tier 2 merged in
 aov_monument_the_south_citadel_02 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
-	cost_gold = 1000
-
-	province_modifier = {
-		fort_level = 1
+	
+	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
 	}
+	
+	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
 
 	character_modifier = {
-		monthly_prestige = 0.25
+		# Anbennar Overhaul: EU4 tier 2 (+0.25 to 0.3 = 0.3)
+		monthly_prestige = 0.55
+		monthly_prestige_gain_mult = 0.05
+		# Anbennar Overhaul: EU4 tier 2
 		diplomacy = 1
 		general_opinion = 1
 	}
-
-	on_complete = {
-		county.holder = { add_prestige = 100 }
+	max_garrison = good_building_max_garrison_tier_4
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_4
+		# Anbennar Overhaul: EU4 tier 2 (+1 to good_building_fort_level_tier_4 = 8)
+		fort_level = 9
 	}
-
-	next_building = aov_monument_the_south_citadel_03
-
+	county_modifier = {
+		development_growth = 0.2
+		development_growth_factor = 0.10
+		monthly_county_control_growth_add = 1
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
+	
+	on_complete = {
+		# Anbennar Overhaul: EU4 tier 2
+		barony.holder = { add_prestige = 100 }
+	}
+
+	next_building = aov_monument_the_south_citadel_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
 }
 
+# Anbennar Overhaul: Anbennar's castanorian_citadel_south_citadel_01 with EU4 tier 3 merged in
 aov_monument_the_south_citadel_03 = {
-	construction_time = 1800
+	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
-
+	
 	can_construct_potential = {
 		building_requirement_tribal = no
 	}
-
-	cost_gold = 2000
-
-	province_modifier = {
-		fort_level = 1
+	
+	can_construct = {
+		scope:holder.culture = {
+			has_innovation = innovation_hoardings
+		}
 	}
-
-	county_modifier = {
-		fort_level = 1
-	}
+	
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	character_modifier = {
-		monthly_prestige = 0.5
+		# Anbennar Overhaul: EU4 tier 3 (+0.5 to 0.3 = 0.3)
+		monthly_prestige = 0.8
+		monthly_prestige_gain_mult = 0.05
+		# Anbennar Overhaul: EU4 tier 3
 		diplomacy = 1
 		general_opinion = 2
 	}
-
+	max_garrison = good_building_max_garrison_tier_4
+	province_modifier = {
+		defender_holding_advantage = normal_building_advantage_tier_4
+		# Anbennar Overhaul: EU4 tier 3 (+1 to good_building_fort_level_tier_4 = 8)
+		fort_level = 9
+	}
+	county_modifier = {
+		development_growth = 0.2
+		development_growth_factor = 0.10
+		monthly_county_control_growth_add = 1
+		# Anbennar Overhaul: EU4 tier 3
+		fort_level = 1
+	}
+	
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
-
+	
 	type = special
 }
 
@@ -8799,6 +10100,11 @@ aov_monument_thednakerja_01 = {
 
 	ai_value = {
 		base = 100
+		ai_pious_building_preference_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -8846,6 +10152,11 @@ aov_monument_thednakerja_02 = {
 
 	ai_value = {
 		base = 100
+		ai_pious_building_preference_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -8891,6 +10202,11 @@ aov_monument_thednakerja_03 = {
 
 	ai_value = {
 		base = 100
+		ai_pious_building_preference_modifier = yes
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -8915,6 +10231,10 @@ aov_monument_toncodden_lighthouse_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -8939,6 +10259,10 @@ aov_monument_toncodden_lighthouse_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -8961,6 +10285,10 @@ aov_monument_toncodden_lighthouse_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -9014,6 +10342,10 @@ aov_monument_urviksten_ebonsteel_armory_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -9065,13 +10397,17 @@ aov_monument_urviksten_ebonsteel_armory_02 = {
 	}
 
 	on_complete = {
-		county.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+		barony.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
 	}
 
 	next_building = aov_monument_urviksten_ebonsteel_armory_03
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -9124,6 +10460,10 @@ aov_monument_urviksten_ebonsteel_armory_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -9148,6 +10488,10 @@ aov_monument_well_of_majesty_01 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -9172,6 +10516,10 @@ aov_monument_well_of_majesty_02 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special
@@ -9194,6 +10542,10 @@ aov_monument_well_of_majesty_03 = {
 
 	ai_value = {
 		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
 	}
 
 	type = special

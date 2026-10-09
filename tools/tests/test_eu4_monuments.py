@@ -147,6 +147,19 @@ class Eu4MonumentsTests(unittest.TestCase):
         self.assertEqual(px[:4], bytes([0, 0, 0, 0]))
 
     @unittest.skipUnless(em.EU4_ROOTS["anbennar"].is_dir(), "needs EU4 Anbennar")
+    def test_gate_atoms_skip_negated(self):  # final review I4
+        body = """owner = {
+			OR = {
+				culture = castanorian
+				NOT = { culture_group = lencori }
+				NOR = { tag = A01 AND = { religion = the_thought } }
+				has_country_flag = f
+			}
+		}"""
+        self.assertEqual(em.gate_atoms(body), ["culture:castanorian", "flag:f"])
+        self.assertEqual(em.negated_gate_atoms(body), ["culture_group:lencori", "tag:A01", "religion:the_thought"])
+        self.assertEqual(em.gate_atoms("NOT = { culture = x } culture = x"), ["culture:x"])
+
     def test_cannor_has_82_projects(self):
         projects = em.load_projects(em.EU4_ROOTS)
         sup = em.province_superregions(em.EU4_ROOTS["anbennar"])

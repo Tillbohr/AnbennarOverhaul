@@ -28,7 +28,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'county_modifier': {'development_growth_factor': 0.1},
              'character_modifier': {'monthly_martial_lifestyle_xp_gain_mult': 0.015,
                                     'heavy_cavalry_damage_mult': 0.1},
-             'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
+             'on_complete': 'barony.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
                             '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '
@@ -153,8 +153,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish '
           'culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard '
           'culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }',
-  'gate_desc': 'Cannorian, Anbennarian, Imperial Halfling, Imperial Gnome, Moon Elf, Silver Dwarf, Wexonard, '
-               'Vertesker, Roilsardi, Castanorian',
+  'gate_desc': 'Cannorian Pantheon, Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver '
+               'Dwarven, Wexonard, Vertesker, Roilsardi, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.05, 'county_opinion_add': 2, 'tax_mult': 0.1},
              'character_modifier': {'monthly_piety': 0.125,
@@ -219,9 +219,9 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'category': 'palace',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_bulwari } culture = { has_cultural_pillar = '
           'heritage_businori } }',
-  'gate_desc': 'Itrahureši, Businori',
+  'gate_desc': 'Bulwari, Businori',
   'tiers': [{'province_modifier': {},
-             'county_modifier': {},
+             'county_modifier': {'monthly_county_control_growth_add': 0.25},
              'character_modifier': {},
              'on_complete': '',
              'cost': 400,
@@ -231,7 +231,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
                          'on_upgraded: every_owned_province = { limit = { OR = { has_owner_accepted_culture '
                          '= yes has_owner_culture = yes } } ascajar_accepted_culture_modifier = yes }']},
             {'province_modifier': {},
-             'county_modifier': {},
+             'county_modifier': {'monthly_county_control_growth_add': 0.25},
              'character_modifier': {'levy_size': 0.075},
              'on_complete': '',
              'cost': 1000,
@@ -239,7 +239,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'dropped': ['allowed_num_of_manufactories: EU4 manufactories; no CK3 equivalent',
                          'statewide_governing_cost: EU4 states/governing capacity; no CK3 equivalent']},
             {'province_modifier': {},
-             'county_modifier': {},
+             'county_modifier': {'monthly_county_control_growth_add': 0.25},
              'character_modifier': {'levy_size': 0.075},
              'on_complete': '',
              'cost': 2000,
@@ -251,7 +251,11 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
                          'on_upgraded: every_owned_province = { limit = { OR = { has_owner_accepted_culture '
                          '= yes has_owner_culture = yes } } ascajar_accepted_culture_modifier = yes }']}],
   'art': None,
-  'notes': ['gate atom tag:A49 ignored (no CK3 equivalent)']},
+  'notes': ['gate atom tag:A49 ignored (no CK3 equivalent)',
+            'Hand tiers: EU4 statewide_governing_cost -0.5 (dropped by the table as a states key) is '
+            'translated like local_governing_cost (county control growth +0.25) at every level, so level 1 '
+            'has an effect; the EU4 on_upgraded culture-province modifiers (ascajar_culture_mod1/2) are not '
+            'translated.']},
  {'eu4_key': 'bal_dostan',
   'source': 'anbennar',
   'name': 'Bal Dostan',
@@ -275,7 +279,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'tiers': [{'province_modifier': {'fort_level': 1},
              'county_modifier': {},
              'character_modifier': {},
-             'on_complete': 'county.holder = { add_prestige = 50 }',
+             'on_complete': 'barony.holder = { add_prestige = 50 }',
              'cost': 400,
              'days': 1800,
              'dropped': ['vampires_loyalty_modifier: EU4 estate system; CK3 has no estates',
@@ -286,7 +290,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
             {'province_modifier': {'fort_level': 2},
              'county_modifier': {},
              'character_modifier': {'vassal_tax_contribution_mult': 0.1},
-             'on_complete': 'county.holder = { add_prestige = 100 }',
+             'on_complete': 'barony.holder = { add_prestige = 100 }',
              'cost': 1000,
              'days': 1800,
              'dropped': ['vampires_loyalty_modifier: EU4 estate system; CK3 has no estates',
@@ -525,7 +529,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 0,
   'category': 'fortress',
   'gate': 'OR = { culture = culture:white_reachman culture = { has_cultural_pillar = heritage_gerudian } }',
-  'gate_desc': 'White Reachman, Grey Reachman',
+  'gate_desc': 'White Reachman, Gerudian',
   'tiers': [{'province_modifier': {'fort_level': 1},
              'county_modifier': {},
              'character_modifier': {'maa_toughness_mult': 0.02},
@@ -630,7 +634,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman '
           'culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman '
           'culture = culture:moon_elvish culture = culture:castanorian }',
-  'gate_desc': 'Alenic, Reachman, White Reachman, Moon Elf, Castanorian',
+  'gate_desc': 'Alenic, Blue Reachman, White Reachman, Moorman, Moon Elvish, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.05, 'tax_mult': 0.05},
              'character_modifier': {'embarkation_cost_mult': -0.05, 'naval_movement_speed_mult': 0.025},
@@ -675,7 +679,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'heritage_halfling } culture = culture:imperial_gnomish culture = culture:moon_elvish culture = '
           'culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = '
           'culture:roilsardi culture = culture:castanorian }',
-  'gate_desc': 'Anbennarian, Halfling, Imperial Gnome, Moon Elf, Silver Dwarf, Wexonard, Vertesker, '
+  'gate_desc': 'Damesheader, Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, Vertesker, '
                'Roilsardi, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.05, 'tax_mult': 0.05},
@@ -722,7 +726,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = '
           'culture:blue_reachman culture = culture:white_reachman culture = culture:black_castanorian '
           'culture = culture:castanorian culture = culture:jarnklo }',
-  'gate_desc': 'Gerudian, Reachman, Blue Reachman, White Reachman, Black Castanorian, Castanorian, Járnklo '
+  'gate_desc': 'Gerudian, Blue Reachman, White Reachman, Moorman, Black Castanorian, Castanorian, Járnklo '
                'Harpy',
   'tiers': [{'province_modifier': {'monthly_income': 0.3},
              'county_modifier': {'development_growth_factor': 0.05},
@@ -734,7 +738,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
             {'province_modifier': {'monthly_income': 0.5},
              'county_modifier': {'development_growth_factor': 0.1},
              'character_modifier': {'naval_movement_speed_mult': 0.1},
-             'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
+             'on_complete': 'barony.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
                             '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '
@@ -772,7 +776,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'category': 'mine',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_gerudian } culture = { has_cultural_pillar = '
           'heritage_alenic } culture = culture:gawedi }',
-  'gate_desc': 'Skamvin, Alenic, Gawedi',
+  'gate_desc': 'Gerudian, Alenic, Gawedi',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'tax_mult': 0.1},
              'character_modifier': {'vassal_opinion': 2.5},
@@ -1015,7 +1019,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman '
           'culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman '
           'culture = culture:moon_elvish culture = culture:castanorian }',
-  'gate_desc': 'Alenic, Reachman, White Reachman, Moon Elf, Castanorian',
+  'gate_desc': 'Alenic, Blue Reachman, White Reachman, Moorman, Moon Elvish, Castanorian',
   'tiers': [{'province_modifier': {'monthly_income': 0.3},
              'county_modifier': {'development_growth_factor': 0.1},
              'character_modifier': {'naval_movement_speed_mult': 0.025, 'monthly_income_mult': 0.025},
@@ -1026,7 +1030,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
             {'province_modifier': {'monthly_income': 0.5},
              'county_modifier': {'development_growth_factor': 0.15},
              'character_modifier': {'naval_movement_speed_mult': 0.05, 'monthly_income_mult': 0.0375},
-             'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
+             'on_complete': 'barony.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
                             '{ 30 50 } gender_female_chance = 50 dynasty = none trait = '
@@ -1064,8 +1068,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = culture:castanorian }',
-  'gate_desc': 'Anbennarian, Imperial Halfling, Imperial Gnome, Moon Elf, Silver Dwarf, Wexonard, Vertesker, '
-               'Roilsardi, Castanorian',
+  'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
+               'Vertesker, Roilsardi, Castanorian',
   'tiers': [{'province_modifier': {'monthly_income': 0.5},
              'county_modifier': {'tax_mult': 0.05},
              'character_modifier': {},
@@ -1078,7 +1082,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
             {'province_modifier': {'monthly_income': 1},
              'county_modifier': {'tax_mult': 0.1},
              'character_modifier': {},
-             'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
+             'on_complete': 'barony.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
                             '{ 30 50 } gender_female_chance = 50 dynasty = none trait = '
@@ -1120,11 +1124,11 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = culture:castanorian }',
-  'gate_desc': 'Anbennarian, Imperial Halfling, Imperial Gnome, Moon Elf, Silver Dwarf, Wexonard, Vertesker, '
-               'Roilsardi, Castanorian',
+  'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
+               'Vertesker, Roilsardi, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {},
-             'character_modifier': {},
+             'character_modifier': {'monthly_learning_lifestyle_xp_gain_mult': 0.025},
              'on_complete': '',
              'cost': 400,
              'days': 1800,
@@ -1133,7 +1137,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
             {'province_modifier': {},
              'county_modifier': {},
              'character_modifier': {'monthly_learning_lifestyle_xp_gain_mult': 0.05},
-             'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
+             'on_complete': 'barony.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
                             '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_learning_3 '
@@ -1155,7 +1159,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
                          'on_upgraded: add_country_modifier = { name = dartaxagerdim_spell_research duration '
                          '= 2555 }']}],
   'art': 'gfx/interface/great_projects/great_project_damish_temple_moonmount_library.dds',
-  'notes': []},
+  'notes': ['Hand tier 1: EU4 tier 1 has only institution spread and advisor cost (no CK3 equivalent); level '
+            "1 gets half of level 2's learning lifestyle XP so it has an effect."]},
  {'eu4_key': 'damish_temple_temple_of_the_highest_moon',
   'source': 'cannorian',
   'name': 'Temple of the Highest Moon',
@@ -1173,8 +1178,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish '
           'culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard '
           'culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }',
-  'gate_desc': 'Cannorian, Anbennarian, Imperial Halfling, Imperial Gnome, Moon Elf, Silver Dwarf, Wexonard, '
-               'Vertesker, Roilsardi, Castanorian',
+  'gate_desc': 'Cannorian Pantheon, Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver '
+               'Dwarven, Wexonard, Vertesker, Roilsardi, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.15,
                                  'county_opinion_add': 2,
@@ -1221,7 +1226,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'category': 'port',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { has_cultural_pillar = '
           'heritage_gerudian } culture = culture:moon_elvish culture = culture:castanorian }',
-  'gate_desc': 'Lencori, Gerudian, Moon Elf, Castanorian',
+  'gate_desc': 'Lencori, Gerudian, Moon Elvish, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.05,
                                  'levy_size': 0.0625,
@@ -1238,7 +1243,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
                                  'build_gold_cost': -0.1,
                                  'levy_reinforcement_rate': 0.125},
              'character_modifier': {},
-             'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
+             'on_complete': 'barony.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
                             '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '
@@ -1395,7 +1400,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_businori } culture = { has_cultural_pillar = '
           'heritage_kheteratan } culture = culture:castanorian culture = { has_cultural_pillar = '
           'heritage_gnollish } }',
-  'gate_desc': 'Businori, Kheteratan, Castanorian, Hillthrone Gnoll',
+  'gate_desc': 'Businori, Kheteratan, Castanorian, Gnollish',
   'tiers': [{'province_modifier': {'fort_level': 1, 'hostile_raid_time': 0.15},
              'county_modifier': {'levy_size': 0.0625, 'defender_holding_advantage': 2},
              'character_modifier': {},
@@ -1436,7 +1441,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 0,
   'category': 'monument',
   'gate': 'OR = { faith.religion = religion:khetism_religion faith = faith:elikhetist }',
-  'gate_desc': 'Khetist, Dalcabba',
+  'gate_desc': 'Khetism, Elikhetist',
   'tiers': [{'province_modifier': {},
              'county_modifier': {},
              'character_modifier': {'monthly_lifestyle_xp_gain_mult': 0.02},
@@ -1475,7 +1480,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 0,
   'category': 'monument',
   'gate': 'OR = { faith.religion = religion:khetism_religion faith = faith:elikhetist }',
-  'gate_desc': 'Khetist, Dalcabba',
+  'gate_desc': 'Khetism, Elikhetist',
   'tiers': [{'province_modifier': {'fort_level': 1},
              'county_modifier': {},
              'character_modifier': {},
@@ -1512,7 +1517,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 0,
   'category': 'monument',
   'gate': 'OR = { faith.religion = religion:khetism_religion faith = faith:elikhetist }',
-  'gate_desc': 'Khetist, Dalcabba',
+  'gate_desc': 'Khetism, Elikhetist',
   'tiers': [{'province_modifier': {},
              'county_modifier': {},
              'character_modifier': {'diplomacy': 1},
@@ -1614,7 +1619,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'county_modifier': {'development_growth_factor': 0.1},
              'character_modifier': {'monthly_magic_lifestyle_xp_gain_mult': 0.05,
                                     'monthly_learning_lifestyle_xp_gain_mult': 0.05},
-             'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
+             'on_complete': 'barony.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
                             '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_learning_3 '
@@ -1665,8 +1670,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } '
           'culture = culture:white_reachman culture = culture:vertesker culture = culture:roilsardi culture '
           '= culture:castanorian }',
-  'gate_desc': 'Anbennarian, Imperial Halfling, Imperial Gnome, Moon Elf, Silver Dwarf, Alenic, Reachman, '
-               'White Reachman, Vertesker, Roilsardi, Castanorian',
+  'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Alenic, Blue '
+               'Reachman, White Reachman, Moorman, Vertesker, Roilsardi, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'tax_mult': 0.03, 'supply_limit_mult': 0.15, 'levy_size': 0.05},
              'character_modifier': {'levy_size': 0.025},
@@ -1677,7 +1682,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
             {'province_modifier': {},
              'county_modifier': {'tax_mult': 0.06, 'supply_limit_mult': 0.3, 'levy_size': 0.1},
              'character_modifier': {'levy_size': 0.05},
-             'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
+             'on_complete': 'barony.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
                             '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '
@@ -1710,7 +1715,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman '
           'culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman '
           'culture = culture:castanorian }',
-  'gate_desc': 'Alenic, Reachman, White Reachman, Castanorian',
+  'gate_desc': 'Alenic, Blue Reachman, White Reachman, Moorman, Castanorian',
   'tiers': [{'province_modifier': {'fort_level': 1},
              'county_modifier': {'tax_mult': 0.03},
              'character_modifier': {'monthly_legitimacy_add': 0.0625},
@@ -1727,7 +1732,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
             {'province_modifier': {'fort_level': 1},
              'county_modifier': {'tax_mult': 0.06},
              'character_modifier': {'monthly_legitimacy_add': 0.125},
-             'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
+             'on_complete': 'barony.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
                             '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '
@@ -1776,8 +1781,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = culture:castanorian }',
-  'gate_desc': 'Anbennarian, Imperial Halfling, Imperial Gnome, Moon Elf, Silver Dwarf, Wexonard, Vertesker, '
-               'Roilsardi, Castanorian',
+  'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
+               'Vertesker, Roilsardi, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'tax_mult': 0.075},
              'character_modifier': {'build_gold_cost': -0.025, 'build_speed': -0.05},
@@ -1882,8 +1887,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'heritage_dwarven } culture = { has_cultural_pillar = heritage_gnomish } culture = { '
           'has_cultural_pillar = heritage_kobold } culture = { has_cultural_pillar = heritage_halfling } '
           'culture = culture:moon_elvish culture = culture:hapremiti }',
-  'gate_desc': 'Escanni, Dostanorian, Marrodic, Dwarven, Gnomish, Kobold, Newfoot Halfling, Moon Elf, '
-               'Hapremiti',
+  'gate_desc': 'Escanni, Dostanorian, Marrodic, Dwarven, Gnomish, Kobold, Halfling, Moon Elvish, Hapremiti',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.05, 'tax_mult': 0.05},
              'character_modifier': {'monthly_learning_lifestyle_xp_gain_mult': 0.0125,
@@ -1901,7 +1905,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'county_modifier': {'development_growth_factor': 0.1, 'tax_mult': 0.1},
              'character_modifier': {'monthly_learning_lifestyle_xp_gain_mult': 0.0375,
                                     'maa_toughness_mult': 0.05},
-             'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
+             'on_complete': 'barony.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
                             '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_learning_3 '
@@ -1951,7 +1955,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'tax_mult': 0.1},
              'character_modifier': {'vassal_opinion': 1.25, 'monthly_legitimacy_add': 0.25},
-             'on_complete': 'county.holder = { add_prestige = 100 }',
+             'on_complete': 'barony.holder = { add_prestige = 100 }',
              'cost': 400,
              'days': 1800,
              'dropped': ['devotion: government-specific twin of legitimacy (translated); EU4 gives only the '
@@ -1963,7 +1967,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
             {'province_modifier': {},
              'county_modifier': {'tax_mult': 0.25, 'development_growth_factor': 0.1},
              'character_modifier': {'vassal_opinion': 2.5, 'monthly_legitimacy_add': 0.5},
-             'on_complete': 'county.holder = { add_prestige = 200 }',
+             'on_complete': 'barony.holder = { add_prestige = 200 }',
              'cost': 1000,
              'days': 1800,
              'dropped': ['devotion: government-specific twin of legitimacy (translated); EU4 gives only the '
@@ -1979,7 +1983,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
             {'province_modifier': {},
              'county_modifier': {'tax_mult': 0.3, 'development_growth_factor': 0.1},
              'character_modifier': {'vassal_opinion': 2.5, 'monthly_legitimacy_add': 0.5},
-             'on_complete': 'county.holder = { add_prestige = 300 }',
+             'on_complete': 'barony.holder = { add_prestige = 300 }',
              'cost': 2000,
              'days': 1800,
              'dropped': ['devotion: government-specific twin of legitimacy (translated); EU4 gives only the '
@@ -2010,8 +2014,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'culture = culture:imperial_gnomish culture = culture:moon_elvish culture = '
           'culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = '
           'culture:roilsardi culture = culture:castanorian }',
-  'gate_desc': 'Cannorian, Elven Forebears, Anbennarian, Imperial Halfling, Imperial Gnome, Moon Elf, Silver '
-               'Dwarf, Wexonard, Vertesker, Roilsardi, Castanorian',
+  'gate_desc': 'Cannorian Pantheon, Elven Forebears, Damesheader, Imperial Halfling, Imperial Gnomish, Moon '
+               'Elvish, Silver Dwarven, Wexonard, Vertesker, Roilsardi, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.05,
                                  'county_opinion_add': 2,
@@ -2044,11 +2048,10 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
  {'eu4_key': 'imperial_palace_anbenncost',
   'source': 'anbennar',
   'name': 'Castle Dameris',
-  'desc': 'On top of the highest hill of the Royal Quarter of Anbenncóst, the Imperial Palace stands proudly '
-          "watching over the City of the World's Desire. Built after the War of Rule on the site of old "
-          'castle Dameris, and renovated and expanded multiple times throughout the centuries, the Imperial '
-          'Palace is the heart of imperial politics, serving as the home of the emperor but also the seat of '
-          'the imperial parliament.',
+  'desc': 'Castle Dameris crowns the highest hill of Anbenncóst, the seat of the Kings of Dameria above the '
+          "City of the World's Desire. Its old keep has watched over the Damerian court for generations, and "
+          "every hall and tower its lords add makes it a grander stage for the royal court and the realm's "
+          'great nobles.',
   'levels': ['castle_dameris_01', 'castle_dameris_02', 'castle_dameris_03'],
   'barony': 'b_castle_dameris',
   'province': 8,
@@ -2058,7 +2061,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'gate_desc': '',
   'tiers': [{'province_modifier': {},
              'county_modifier': {},
-             'character_modifier': {},
+             'character_modifier': {'monthly_prestige': 0.2, 'vassal_opinion': 4},
              'on_complete': '',
              'cost': 400,
              'days': 1800,
@@ -2072,7 +2075,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
                          'imperial_palace_modifier_tier_1 duration = -1 } }']},
             {'province_modifier': {},
              'county_modifier': {},
-             'character_modifier': {},
+             'character_modifier': {'monthly_prestige': 0.5, 'vassal_opinion': 6, 'diplomacy': 1},
              'on_complete': '',
              'cost': 1000,
              'days': 1800,
@@ -2088,7 +2091,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
                          'add_ruler_modifier = { name = imperial_palace_modifier_tier_2 duration = -1 } }']},
             {'province_modifier': {},
              'county_modifier': {},
-             'character_modifier': {},
+             'character_modifier': {'monthly_prestige': 1, 'vassal_opinion': 8, 'diplomacy': 2},
              'on_complete': '',
              'cost': 2000,
              'days': 1800,
@@ -2105,7 +2108,13 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
             'gate atom flag:has_dismantled_the_hre ignored (no CK3 equivalent)',
             'Gate decision: left open. The EU4 gate is an OR with alternatives that have no CK3 equivalent '
             '(HRE membership, tag Z01 (east damerian, not in CK3), a dismantled-HRE flag); a culture gate '
-            "would be stricter than EU4's, so any holder may use it."]},
+            "would be stricter than EU4's, so any holder may use it.",
+            'Hand tiers: EU4 gives this project no modifiers of its own; its on_upgraded adds event '
+            'modifiers imperial_palace_modifier_tier_N (emperor: free_city_imperial_authority 0.1/0.25/0.5) '
+            'and imperial_palace_prince_modifier_tier_N (HRE princes: monthly_favor_modifier 0.1/0.15/0.2, '
+            'diplomatic_reputation 0/1/2, diplomatic_upkeep), translated through translation.py as country '
+            'modifiers for the holder.',
+            'Hand desc: the EU4 desc describes the later Imperial Palace, which does not exist in 1022.']},
  {'eu4_key': 'jag_radash_monument',
   'source': 'anbennar',
   'name': "Jag'Radash",
@@ -2251,8 +2260,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = culture:castanorian }',
-  'gate_desc': 'Anbennarian, Imperial Halfling, Imperial Gnome, Moon Elf, Silver Dwarf, Wexonard, Vertesker, '
-               'Roilsardi, Castanorian',
+  'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
+               'Vertesker, Roilsardi, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {},
              'character_modifier': {'monthly_learning_lifestyle_xp_gain_mult': 0.025},
@@ -2356,7 +2365,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'category': 'academy',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture '
           '= culture:castanorian }',
-  'gate_desc': 'Lencori, Moon Elf, Castanorian',
+  'gate_desc': 'Lencori, Moon Elvish, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.05, 'levy_size': 0.0625},
              'character_modifier': {},
@@ -2400,17 +2409,17 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'levels': ['aov_monument_lorentaine_mage_academy_01',
              'aov_monument_lorentaine_mage_academy_02',
              'aov_monument_lorentaine_mage_academy_03'],
-  'barony': 'b_rosewood',
-  'province': 1021,
+  'barony': 'b_rosionn',
+  'province': 1023,
   'start_level': 0,
   'category': 'academy',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture '
           '= culture:castanorian }',
-  'gate_desc': 'Lencori, Moon Elf, Castanorian',
+  'gate_desc': 'Lencori, Moon Elvish, Castanorian',
   'tiers': [{'province_modifier': {'fort_level': 1},
              'county_modifier': {'development_growth_factor': 0.05},
              'character_modifier': {'monthly_learning_lifestyle_xp_gain_mult': 0.025},
-             'on_complete': 'county.holder = { add_prestige = 50 }',
+             'on_complete': 'barony.holder = { add_prestige = 50 }',
              'cost': 400,
              'days': 1800,
              'dropped': ['allowed_num_of_manufactories: EU4 manufactories; no CK3 equivalent',
@@ -2420,8 +2429,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'county_modifier': {'development_growth_factor': 0.1},
              'character_modifier': {'monthly_magic_lifestyle_xp_gain_mult': 0.05,
                                     'monthly_learning_lifestyle_xp_gain_mult': 0.05},
-             'on_complete': 'county.holder = { add_prestige = 100 }\n'
-                            'county.holder = { save_scope_as = aov_monument_patron create_character = { '
+             'on_complete': 'barony.holder = { add_prestige = 100 }\n'
+                            'barony.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
                             '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_learning_3 '
@@ -2434,8 +2443,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'character_modifier': {'monthly_magic_lifestyle_xp_gain_mult': 0.1,
                                     'monthly_learning_lifestyle_xp_gain_mult': 0.1,
                                     'monthly_lifestyle_xp_gain_mult': 0.05},
-             'on_complete': 'county.holder = { add_prestige = 150 }\n'
-                            'county.holder = { save_scope_as = aov_monument_patron create_character = { '
+             'on_complete': 'barony.holder = { add_prestige = 150 }\n'
+                            'barony.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
                             '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '
@@ -2464,7 +2473,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           '{ has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian '
           '} culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = '
           'heritage_kobold } culture = culture:moon_elvish }',
-  'gate_desc': 'Marrodic, Newfoot Halfling, Escanni, Dostanorian, Dwarven, Kobold, Moon Elf',
+  'gate_desc': 'Marrodic, Halfling, Escanni, Dostanorian, Dwarven, Kobold, Moon Elvish',
   'tiers': [{'province_modifier': {'fort_level': 1},
              'county_modifier': {'levy_size': 0.05},
              'character_modifier': {'accolade_glory_gain_mult': 0.1},
@@ -2475,7 +2484,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
             {'province_modifier': {'fort_level': 2, 'hostile_raid_time': 0.125},
              'county_modifier': {'levy_size': 0.1},
              'character_modifier': {'accolade_glory_gain_mult': 0.15},
-             'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
+             'on_complete': 'barony.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
                             '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '
@@ -2488,7 +2497,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
                                    'defender_holding_advantage': 4},
              'county_modifier': {'levy_size': 0.165},
              'character_modifier': {'accolade_glory_gain_mult': 0.2},
-             'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
+             'on_complete': 'barony.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
                             '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '
@@ -2563,26 +2572,26 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = culture:castanorian }',
-  'gate_desc': 'Anbennarian, Imperial Halfling, Imperial Gnome, Moon Elf, Silver Dwarf, Wexonard, Vertesker, '
-               'Roilsardi, Castanorian',
+  'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
+               'Vertesker, Roilsardi, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'tax_mult': 0.165},
              'character_modifier': {'knight_effectiveness_mult': 0.025, 'monthly_prestige': 0.1},
-             'on_complete': 'county.holder = { add_prestige = 100 }',
+             'on_complete': 'barony.holder = { add_prestige = 100 }',
              'cost': 400,
              'days': 1800,
              'dropped': []},
             {'province_modifier': {},
              'county_modifier': {'tax_mult': 0.165},
              'character_modifier': {'knight_effectiveness_mult': 0.075, 'monthly_prestige': 0.8},
-             'on_complete': 'county.holder = { add_prestige = 150 }',
+             'on_complete': 'barony.holder = { add_prestige = 150 }',
              'cost': 1000,
              'days': 3600,
              'dropped': []},
             {'province_modifier': {},
              'county_modifier': {},
              'character_modifier': {'knight_effectiveness_mult': 0.15, 'monthly_prestige': 1.5},
-             'on_complete': 'county.holder = { add_prestige = 250 }\ncounty.holder = { add_prestige = 150 }',
+             'on_complete': 'barony.holder = { add_prestige = 250 }\nbarony.holder = { add_prestige = 150 }',
              'cost': 2000,
              'days': 7200,
              'dropped': []}],
@@ -2603,7 +2612,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'category': 'temple',
   'gate': 'OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = '
           'heritage_lencori } culture = culture:moon_elvish culture = culture:castanorian }',
-  'gate_desc': 'Cannorian, Lencori, Moon Elf, Castanorian',
+  'gate_desc': 'Cannorian Pantheon, Lencori, Moon Elvish, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.05, 'tax_mult': 0.1, 'county_opinion_add': 2},
              'character_modifier': {'monthly_piety': 0.125, 'general_opinion': 2},
@@ -2650,8 +2659,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = culture:castanorian }',
-  'gate_desc': 'Anbennarian, Imperial Halfling, Imperial Gnome, Moon Elf, Silver Dwarf, Wexonard, Vertesker, '
-               'Roilsardi, Castanorian',
+  'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
+               'Vertesker, Roilsardi, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'levy_size': 0.0625, 'levy_reinforcement_rate': 0.0375},
              'character_modifier': {'embarkation_cost_mult': -0.05},
@@ -2700,8 +2709,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = { has_cultural_pillar = heritage_gnollish } culture = { '
           'has_cultural_pillar = heritage_dostanorian } culture = culture:castanorian }',
-  'gate_desc': 'Anbennarian, Imperial Halfling, Imperial Gnome, Moon Elf, Silver Dwarf, Wexonard, Vertesker, '
-               'Roilsardi, Flamemarked Gnoll, Dostanorian, Castanorian',
+  'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
+               'Vertesker, Roilsardi, Gnollish, Dostanorian, Castanorian',
   'tiers': [{'province_modifier': {'monthly_income': 0.5, 'build_speed': -0.075},
              'county_modifier': {'levy_size': 0.0625},
              'character_modifier': {'owned_hostile_scheme_success_chance_add': 2, 'raid_speed': 0.1},
@@ -2712,7 +2721,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
             {'province_modifier': {'monthly_income': 1, 'build_speed': -0.125},
              'county_modifier': {'levy_size': 0.125},
              'character_modifier': {'owned_hostile_scheme_success_chance_add': 3, 'raid_speed': 0.15},
-             'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
+             'on_complete': 'barony.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
                             '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_intrigue_3 '
@@ -2749,8 +2758,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = culture:castanorian }',
-  'gate_desc': 'Anbennarian, Imperial Halfling, Imperial Gnome, Moon Elf, Silver Dwarf, Wexonard, Vertesker, '
-               'Roilsardi, Castanorian',
+  'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
+               'Vertesker, Roilsardi, Castanorian',
   'tiers': [{'province_modifier': {'build_speed': -0.05},
              'county_modifier': {'levy_reinforcement_rate': 0.0375, 'levy_size': 0.025},
              'character_modifier': {'embarkation_cost_mult': -0.05},
@@ -2803,7 +2812,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.15},
              'character_modifier': {'monthly_learning_lifestyle_xp_gain_mult': 0.0625},
-             'on_complete': 'county.holder = { add_prestige = 50 }',
+             'on_complete': 'barony.holder = { add_prestige = 50 }',
              'cost': 320,
              'days': 1800,
              'dropped': ['local_institution_spread: EU4 institutions; no CK3 equivalent',
@@ -2811,7 +2820,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
             {'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.25},
              'character_modifier': {'monthly_learning_lifestyle_xp_gain_mult': 0.1375},
-             'on_complete': 'county.holder = { add_prestige = 100 }',
+             'on_complete': 'barony.holder = { add_prestige = 100 }',
              'cost': 800,
              'days': 3600,
              'dropped': ['local_institution_spread: EU4 institutions; no CK3 equivalent',
@@ -2819,7 +2828,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
             {'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.35},
              'character_modifier': {'monthly_learning_lifestyle_xp_gain_mult': 0.24},
-             'on_complete': 'county.holder = { add_prestige = 150 }',
+             'on_complete': 'barony.holder = { add_prestige = 150 }',
              'cost': 1400,
              'days': 7200,
              'dropped': ['local_institution_spread: EU4 institutions; no CK3 equivalent',
@@ -2949,30 +2958,30 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'levels': ['aov_monument_palace_of_unity_01',
              'aov_monument_palace_of_unity_02',
              'aov_monument_palace_of_unity_03'],
-  'barony': 'b_the_bilge',
-  'province': 924,
+  'barony': 'b_elvendocks',
+  'province': 925,
   'start_level': 0,
   'category': 'palace',
   'gate': '',
   'gate_desc': '',
   'tiers': [{'province_modifier': {},
              'county_modifier': {},
-             'character_modifier': {},
+             'character_modifier': {'monthly_prestige': 0.2, 'vassal_opinion': 4},
              'on_complete': '',
              'cost': 400,
              'days': 1800,
              'dropped': []},
             {'province_modifier': {},
              'county_modifier': {},
-             'character_modifier': {},
+             'character_modifier': {'monthly_prestige': 0.4, 'vassal_opinion': 6, 'county_opinion_add': 5},
              'on_complete': '',
              'cost': 1000,
              'days': 1800,
              'dropped': ['max_absolutism: EU4 absolutism/revolution; no CK3 equivalent',
                          'max_revolutionary_zeal: EU4 absolutism/revolution; no CK3 equivalent']},
             {'province_modifier': {},
-             'county_modifier': {},
-             'character_modifier': {},
+             'county_modifier': {'development_growth_factor': 0.15},
+             'character_modifier': {'monthly_prestige': 0.6, 'vassal_opinion': 8, 'county_opinion_add': 10},
              'on_complete': '',
              'cost': 2000,
              'days': 1800,
@@ -2985,7 +2994,11 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
             'mission-spawned in EU4 (start province read from a commented start)',
             'Gate decision: left open. The EU4 gate is an OR with alternatives that have no CK3 equivalent '
             '(tag Z01 Empire of Anbennar (east damerian, not in CK3), a dismantled-HRE flag); a culture gate '
-            "would be stricter than EU4's, so any holder may use it."]},
+            "would be stricter than EU4's, so any holder may use it.",
+            'Hand tiers: EU4 gives only max_absolutism/max_revolutionary_zeal (no CK3 equivalent) and, at '
+            'tier 3, a flag for extra development in Anbennarian provinces; the levels get modest palace '
+            'effects instead (prestige, vassal and county opinion) and, at level 3, county development '
+            'growth for the development flag.']},
  {'eu4_key': 'portnamm_portroy_merchants_guild',
   'source': 'cannorian',
   'name': "Portroy Merchant's Guild",
@@ -3014,7 +3027,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
             {'province_modifier': {'monthly_income': 1},
              'county_modifier': {'tax_mult': 0.15},
              'character_modifier': {'monthly_income_mult': 0.0625},
-             'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
+             'on_complete': 'barony.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
                             '{ 30 50 } gender_female_chance = 50 dynasty = none trait = '
@@ -3054,7 +3067,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'category': 'monument',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_halfling } culture = culture:visfoot_halfling '
           'culture = culture:creek_gnomish }',
-  'gate_desc': 'Halfling, Visfoot Halfling, Creek Gnome',
+  'gate_desc': 'Halfling, Visfoot Halfling, Creek Gnomish',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.1},
              'character_modifier': {'monthly_prestige': 0.5},
@@ -3114,7 +3127,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'category': 'monument',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_halfling } culture = culture:visfoot_halfling '
           'culture = culture:creek_gnomish }',
-  'gate_desc': 'Halfling, Visfoot Halfling, Creek Gnome',
+  'gate_desc': 'Halfling, Visfoot Halfling, Creek Gnomish',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.1},
              'character_modifier': {'monthly_prestige': 0.5},
@@ -3334,8 +3347,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = culture:castanorian }',
-  'gate_desc': 'Anbennarian, Imperial Halfling, Imperial Gnome, Moon Elf, Silver Dwarf, Wexonard, Vertesker, '
-               'Roilsardi, Castanorian',
+  'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
+               'Vertesker, Roilsardi, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'tax_mult': 0.099},
              'character_modifier': {'levy_reinforcement_rate': 0.025, 'county_opinion_add': 1},
@@ -3380,8 +3393,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = culture:castanorian }',
-  'gate_desc': 'Anbennarian, Imperial Halfling, Imperial Gnome, Moon Elf, Silver Dwarf, Wexonard, Vertesker, '
-               'Roilsardi, Castanorian',
+  'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
+               'Vertesker, Roilsardi, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.05, 'tax_mult': 0.05},
              'character_modifier': {},
@@ -3393,7 +3406,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
             {'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.1, 'tax_mult': 0.1},
              'character_modifier': {},
-             'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
+             'on_complete': 'barony.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
                             '{ 30 50 } gender_female_chance = 50 dynasty = none trait = '
@@ -3432,8 +3445,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
           'culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = '
           'culture:castanorian }',
-  'gate_desc': 'Anbennarian, Imperial Halfling, Imperial Gnome, Moon Elf, Wexonard, Vertesker, Roilsardi, '
-               'Castanorian',
+  'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Wexonard, Vertesker, '
+               'Roilsardi, Castanorian',
   'tiers': [{'province_modifier': {'fort_level': 1},
              'county_modifier': {'development_growth_factor': 0.05},
              'character_modifier': {'men_at_arms_maintenance': -0.05,
@@ -3457,7 +3470,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'character_modifier': {'men_at_arms_maintenance': -0.1,
                                     'monthly_learning_lifestyle_xp_gain_mult': 0.1,
                                     'knight_limit': 2},
-             'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
+             'on_complete': 'barony.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
                             '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '
@@ -3486,8 +3499,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'heritage_businori } culture = culture:imperial_halfling culture = culture:imperial_gnomish '
           'culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard '
           'culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }',
-  'gate_desc': 'Anbennarian, Businori, Imperial Halfling, Imperial Gnome, Moon Elf, Silver Dwarf, Wexonard, '
-               'Vertesker, Roilsardi, Castanorian',
+  'gate_desc': 'Damesheader, Businori, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, '
+               'Wexonard, Vertesker, Roilsardi, Castanorian',
   'tiers': [{'province_modifier': {'build_speed': -0.05},
              'county_modifier': {'development_growth_factor': 0.05, 'levy_size': 0.0625},
              'character_modifier': {'embarkation_cost_mult': -0.05, 'naval_movement_speed_mult': 0.025},
@@ -3535,8 +3548,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = culture:castanorian }',
-  'gate_desc': 'Anbennarian, Imperial Halfling, Imperial Gnome, Moon Elf, Silver Dwarf, Wexonard, Vertesker, '
-               'Roilsardi, Castanorian',
+  'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
+               'Vertesker, Roilsardi, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'tax_mult': 0.075},
              'character_modifier': {'archers_damage_mult': 0.05},
@@ -3578,8 +3591,8 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish '
           'culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard '
           'culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }',
-  'gate_desc': 'Cannorian, Anbennarian, Imperial Halfling, Imperial Gnome, Moon Elf, Silver Dwarf, Wexonard, '
-               'Vertesker, Roilsardi, Castanorian',
+  'gate_desc': 'Cannorian Pantheon, Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver '
+               'Dwarven, Wexonard, Vertesker, Roilsardi, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.05, 'county_opinion_add': 2, 'tax_mult': 0.1},
              'character_modifier': {'monthly_piety': 0.125, 'diplomacy': 1},
@@ -3681,21 +3694,21 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'tiers': [{'province_modifier': {'fort_level': 1},
              'county_modifier': {},
              'character_modifier': {'life_expectancy': 1},
-             'on_complete': 'county.holder = { add_prestige = 75 }',
+             'on_complete': 'barony.holder = { add_prestige = 75 }',
              'cost': 400,
              'days': 1800,
              'dropped': []},
             {'province_modifier': {'fort_level': 1},
              'county_modifier': {},
              'character_modifier': {'life_expectancy': 2},
-             'on_complete': 'county.holder = { add_prestige = 150 }',
+             'on_complete': 'barony.holder = { add_prestige = 150 }',
              'cost': 1000,
              'days': 1800,
              'dropped': ['all_estate_possible_privileges: EU4 estate system; CK3 has no estates']},
             {'province_modifier': {'fort_level': 2},
              'county_modifier': {},
              'character_modifier': {'life_expectancy': 3},
-             'on_complete': 'county.holder = { add_prestige = 225 }',
+             'on_complete': 'barony.holder = { add_prestige = 225 }',
              'cost': 2000,
              'days': 1800,
              'dropped': ['all_estate_possible_privileges: EU4 estate system; CK3 has no estates']}],
@@ -3723,11 +3736,11 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 1,
   'category': 'tomb',
   'gate': 'faith.religion = religion:cannorian_pantheon_religion',
-  'gate_desc': 'Cannorian',
+  'gate_desc': 'Cannorian Pantheon',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'monthly_county_control_growth_add': 0.25, 'tax_mult': 0.025},
              'character_modifier': {'faith_conversion_piety_cost_mult': -0.05, 'county_opinion_add': 1},
-             'on_complete': 'county.holder = { add_piety = 50 }',
+             'on_complete': 'barony.holder = { add_piety = 50 }',
              'cost': 400,
              'days': 1800,
              'dropped': []},
@@ -3736,7 +3749,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'character_modifier': {'faith_conversion_piety_cost_mult': -0.2,
                                     'county_opinion_add': 2,
                                     'vassal_tax_contribution_mult': 0.025},
-             'on_complete': 'county.holder = { add_piety = 100 }',
+             'on_complete': 'barony.holder = { add_piety = 100 }',
              'cost': 1000,
              'days': 1800,
              'dropped': []},
@@ -3772,7 +3785,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = '
           'heritage_halfling } culture = culture:stone_dwarvish culture = { has_cultural_pillar = '
           'heritage_dwarven } culture = { has_cultural_pillar = heritage_elven } }',
-  'gate_desc': 'Escanni, Newfoot Halfling, Stone Dwarf, Iron Dwarf, Eclipse Elf',
+  'gate_desc': 'Escanni, Halfling, Stone Dwarven, Dwarven, Elven',
   'tiers': [{'province_modifier': {'fort_level': 1},
              'county_modifier': {},
              'character_modifier': {'domain_limit': 1},
@@ -3860,14 +3873,14 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'tiers': [{'province_modifier': {'fort_level': 1},
              'county_modifier': {},
              'character_modifier': {'monthly_prestige': 0.1, 'diplomacy': 1},
-             'on_complete': 'county.holder = { add_prestige = 50 }',
+             'on_complete': 'barony.holder = { add_prestige = 50 }',
              'cost': 400,
              'days': 1800,
              'dropped': []},
             {'province_modifier': {'fort_level': 1},
              'county_modifier': {},
              'character_modifier': {'monthly_prestige': 0.25, 'diplomacy': 1, 'general_opinion': 1},
-             'on_complete': 'county.holder = { add_prestige = 100 }',
+             'on_complete': 'barony.holder = { add_prestige = 100 }',
              'cost': 1000,
              'days': 1800,
              'dropped': []},
@@ -3883,7 +3896,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
  {'eu4_key': 'thednakerja',
   'source': 'anbennar',
   'name': 'Thednakerja',
-  'desc': 'As the Era of Frost came to an end and the ice and snow receded, the body of the Giants Grave´s '
+  'desc': "As the Era of Frost came to an end and the ice and snow receded, the body of the Giants Grave's "
           'terror, the Leviathan, was revealed to the population. Its flesh, never rotting, was used as food '
           'for generations to come. With the word spreading, Skaldhyrric priests began the construction of '
           'the Thednakerja, a temple marking the first thaw and the end of the terror that plagued the sea, '
@@ -4002,7 +4015,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = '
           'culture:blue_reachman culture = culture:white_reachman culture = culture:black_castanorian '
           'culture = culture:castanorian culture = culture:jarnklo }',
-  'gate_desc': 'Gerudian, Reachman, Blue Reachman, White Reachman, Black Castanorian, Castanorian, Járnklo '
+  'gate_desc': 'Gerudian, Blue Reachman, White Reachman, Moorman, Black Castanorian, Castanorian, Járnklo '
                'Harpy',
   'tiers': [{'province_modifier': {'building_slot_add': 1},
              'county_modifier': {'development_growth_factor': 0.15,
@@ -4021,7 +4034,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
              'character_modifier': {'heavy_infantry_damage_mult': 0.1,
                                     'heavy_infantry_maintenance_mult': -0.05,
                                     'maa_toughness_mult': 0.025},
-             'on_complete': 'county.holder = { save_scope_as = aov_monument_patron create_character = { '
+             'on_complete': 'barony.holder = { save_scope_as = aov_monument_patron create_character = { '
                             'employer = scope:aov_monument_patron culture = '
                             'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
                             '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '

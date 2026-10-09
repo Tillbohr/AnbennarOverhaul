@@ -285,6 +285,283 @@ class OverrideTests(unittest.TestCase):
                       block(B, "aov_monument_bal_ouord_02"))
 
 
+def modifiers(text):
+    """(block, key) -> raw value of the depth-2 lines of every modifier block of a building body."""
+    out = {}
+    for name in bm.BLOCKS:
+        m = re.search(rf"^\t{name} = \{{\n(.*?)^\t\}}", text, re.M | re.S)
+        if m:
+            for k, v in re.findall(r"^\t\t(\w+) = ([^\s#]+)", m.group(1), re.M):
+                out[(name, k)] = v
+    return out
+
+
+def level_text(key):
+    return block(overrides(), key) if key in bm.anbennar_keys() else block(B, key)
+
+
+def override_chains():
+    known = bm.anbennar_keys()
+    return [(m, bm.chain_top(m, known)) for m in MONUMENTS if bm.chain_top(m, known)]
+
+
+KEPT_LINES = re.compile(r"^\t(flag|type_icon|show_disabled|max_garrison) = |^\t(is_enabled|effect_desc) = \{")
+
+
+@unittest.skipUnless(LIVE, "Anbennar CK3 not present")
+class UpperLevelTests(unittest.TestCase):
+    """Final review C1: upper levels of Anbennar chains copy the chain's top Anbennar level (an upgrade replaces the
+    previous level's effects)."""
+
+    def test_sixteen_chains(self):
+        self.assertEqual(len(override_chains()), 16)
+
+    def test_upper_levels_keep_anbennar_top_level_effects(self):
+        values = bm.load_values()
+        for m, top in override_chains():
+            base = modifiers(bm.anbennar_definition(ANBENNAR, top))
+            self.assertTrue(base, top)
+            for key in m["levels"][1:]:
+                ours = modifiers(level_text(key))
+                for (name, k), raw in base.items():
+                    self.assertIn((name, k), ours, f"{key} lost {name} {k}")
+                    old, new = bm.resolve(raw, values), bm.resolve(ours[(name, k)], values)
+                    if old >= 0:
+                        self.assertGreaterEqual(new, old, f"{key} {name} {k}")
+                    else:
+                        self.assertLessEqual(new, old, f"{key} {name} {k}")
+
+    def test_upper_levels_keep_flags_and_gates_of_anbennar(self):
+        for m, top in override_chains():
+            base = bm.anbennar_definition(ANBENNAR, top)
+            kept = [l.rstrip() for l in base.splitlines() if KEPT_LINES.match(l)]
+            for key in m["levels"][1:]:
+                lines = [l.rstrip() for l in level_text(key).splitlines()]
+                for line in kept:
+                    self.assertIn(line, lines, f"{key}: {line}")
+
+    def test_necropolis_upper_levels_keep_holy_site_gate(self):
+        for key in ("aov_monument_the_necropolis_02", "aov_monument_the_necropolis_03"):
+            text = block(B, key)
+            self.assertIn("holy_site_pantheonic_or_holy_site_trigger", text)
+            self.assertIn("flag = holy_building", text)
+            self.assertIn("monthly_income = 3", text)
+
+    def test_eu4_gate_only_in_can_construct(self):
+        for m, top in override_chains():
+            if not m["gate"]:
+                continue
+            for key in m["levels"][1:]:
+                if key in bm.anbennar_keys():
+                    continue
+                text = block(B, key)
+                cc = re.search(r"^\tcan_construct = \{.*?\n(.*?)^\t\}", text, re.M | re.S).group(1)
+                self.assertIn(f"text = aov_monument_{m['eu4_key']}_gate", cc, key)
+                self.assertEqual(text.count(f"aov_monument_{m['eu4_key']}_gate"), 1, key)
+                self.assertEqual(text.count("can_construct = {"), 1, key)
+
+    def test_existing_can_construct_is_extended(self):
+        text = block(B, "aov_monument_bal_ouord_02")
+        cc = re.search(r"^\tcan_construct = \{\n(.*?)^\t\}", text, re.M | re.S).group(1)
+        self.assertIn("has_innovation = innovation_hoardings", cc)
+        self.assertIn("aov_monument_bal_ouord_gate", cc)
+
+    def test_cost_time_and_chain_from_tier(self):
+        for m, top in override_chains():
+            for i, key in enumerate(m["levels"]):
+                if key in bm.anbennar_keys():
+                    continue
+                text = block(B, key)
+                tier = m["tiers"][i]
+                self.assertRegex(text, rf"(?m)^\tcost_gold = {tier['cost']}\b", key)
+                self.assertRegex(text, rf"(?m)^\tconstruction_time = {tier['days']}\b", key)
+                nxt = re.findall(r"(?m)^\tnext_building = (\w+)", text)
+                self.assertEqual(nxt, m["levels"][i + 1:i + 2], key)
+
+    def test_lake_palace_top_copies_level_two(self):
+        text = block(B, "aov_monument_the_lake_palace_03")
+        self.assertIn("legitimacy_gain_mult = 0.1", text)
+        self.assertIn("flag = travel_point_of_interest_diplomatic", text)
+        self.assertIn("culture_likely_to_fortify_modifier = yes", text)
+
+    def test_chain_top_is_last_anbennar_level(self):
+        known = {"x_01", "x_02"}
+        self.assertEqual(bm.chain_top({"levels": ["x_01", "x_02", "aov_x_03"]}, known), "x_02")
+        self.assertIsNone(bm.chain_top({"levels": ["y_01", "y_02", "y_03"]}, known))
+
+
+ANB_TOP = """x_01 = { # Rebuilt
+\tconstruction_time = very_slow_construction_time
+
+\tcan_construct = {
+\t\thas_x = yes
+\t}
+
+\tis_enabled = {
+\t\thas_y = yes
+\t}
+
+\tcost_gold = 2000
+
+\tprovince_modifier = {
+\t\tfort_level = 6
+\t}
+
+\tai_value = {
+\t\tbase = 100
+\t}
+
+\ttype = special
+
+\tflag = holy_building
+}
+"""
+
+
+class UpperLevelUnitTests(unittest.TestCase):
+    def setUp(self):
+        import tempfile
+        self.tmp = tempfile.TemporaryDirectory()
+        self.root = Path(self.tmp.name)
+        (self.root / "common" / "buildings").mkdir(parents=True)
+        (self.root / "common" / "buildings" / "anb.txt").write_text(ANB_TOP, encoding="utf-8")
+        self.m = fake(province_modifier={"fort_level": 2}, character_modifier={"diplomacy": 1}, cost=1000, days=3600)
+        self.m.update(gate="culture = culture:x", eu4_key="x", levels=["x_01", "aov_x_02", "aov_x_03"])
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def upper(self, level, key, nxt):
+        return bm.upper_level(self.m, level, key, nxt, "x_01", self.root, {}, [])
+
+    def test_copy_renamed_merged_and_chained(self):
+        text = self.upper(2, "aov_x_02", "aov_x_03")
+        body = block(text, "aov_x_02")
+        self.assertIn("\t\tfort_level = 8\n", body)
+        self.assertIn("\t\tdiplomacy = 1\n", body)
+        self.assertIn("\tcost_gold = 1000 ", body)
+        self.assertIn("\tconstruction_time = 3600 ", body)
+        self.assertIn("\tnext_building = aov_x_03 ", body)
+        self.assertIn("\tflag = holy_building", body)
+        self.assertNotIn("x_01 = {", text)
+
+    def test_gate_goes_into_can_construct_only(self):
+        body = block(self.upper(2, "aov_x_02", "aov_x_03"), "aov_x_02")
+        cc = re.search(r"^\tcan_construct = \{\n(.*?)^\t\}", body, re.M | re.S).group(1)
+        self.assertIn("has_x = yes", cc)
+        self.assertIn("text = aov_monument_x_gate", cc)
+        ie = re.search(r"^\tis_enabled = \{\n(.*?)^\t\}", body, re.M | re.S).group(1)
+        self.assertNotIn("aov_monument_x_gate", ie)
+        self.assertIn("has_y = yes", ie)
+
+    def test_ai_guard_added_to_anbennar_ai_value(self):
+        body = block(self.upper(3, "aov_x_03", None), "aov_x_03")
+        ai = re.search(r"^\tai_value = \{\n(.*?)^\t\}", body, re.M | re.S).group(1)
+        self.assertIn("base = 100", ai)
+        self.assertIn("free_building_slots > 0", ai)
+        self.assertNotIn("next_building", body)
+        self.assertEqual(body.count("{"), body.count("}"))
+
+
+@unittest.skipUnless(LIVE, "Anbennar CK3 not present")
+class AiValueAndEffectTests(unittest.TestCase):
+    def test_every_generated_level_has_vanilla_ai_guard(self):
+        for key in new_level_keys():
+            ai = re.search(r"^\tai_value = \{\n(.*?)^\t\}", block(B, key), re.M | re.S)
+            self.assertTrue(ai, key)
+            self.assertIn("free_building_slots > 0", ai.group(1), key)
+            self.assertIn("factor = 0", ai.group(1), key)
+
+    def test_preference_modifier_by_category(self):
+        known = bm.anbennar_keys()
+        for m in MONUMENTS:
+            if bm.chain_top(m, known):
+                continue
+            ai = re.search(r"^\tai_value = \{\n(.*?)^\t\}", block(B, m["levels"][0]), re.M | re.S).group(1)
+            wanted = bm.AI_PREFERENCE.get(m["category"])
+            if wanted:
+                self.assertIn(f"{wanted} = yes", ai, m["eu4_key"])
+            else:
+                self.assertNotIn("_modifier = yes", ai, m["eu4_key"])
+
+    def test_overridden_anbennar_levels_keep_anbennar_ai_value(self):
+        base = bm.anbennar_definition(ANBENNAR, "castanorian_citadel_bal_ouord_02")
+        ai = re.search(r"^\tai_value = \{\n(.*?)^\t\}", base, re.M | re.S).group(0)
+        self.assertIn(ai, block(overrides(), "castanorian_citadel_bal_ouord_02"))
+
+    def test_every_level_has_an_effect(self):
+        """Final review I2: no level of any monument is an empty building."""
+        for text in (B, overrides()):
+            for key, body in re.findall(r"^(\w+) = \{\n(.*?)^\}", text, re.M | re.S):
+                self.assertRegex(body, r"(?m)^\t(province_modifier|county_modifier|character_modifier|on_complete) = \{",
+                                 key)
+
+    def test_palaces_have_effects(self):
+        for key in ("castle_dameris_01", "castle_dameris_02", "castle_dameris_03",
+                    "aov_monument_palace_of_unity_01", "aov_monument_palace_of_unity_03"):
+            self.assertIn("character_modifier = {", block(B, key), key)
+        self.assertIn("diplomacy = 2", block(B, "castle_dameris_03"))
+
+
+class ValidationTests(unittest.TestCase):
+    """Final review I5: render_all validates the data and names the monument."""
+
+    def good(self, **fields):
+        m = fake(county_modifier={"tax_mult": 0.1})
+        m.update(barony="b_x", eu4_key="x")
+        m.update(fields)
+        return m
+
+    def assertRejected(self, monuments, text):
+        with self.assertRaises(bm.GeneratorError) as e:
+            bm.validate(monuments, set())
+        self.assertIn("monument x", str(e.exception))
+        self.assertIn(text, str(e.exception))
+
+    def test_good_data_passes(self):
+        bm.validate([self.good()], set())
+
+    def test_missing_barony_or_province(self):
+        self.assertRejected([self.good(barony=None)], "no barony")
+        self.assertRejected([self.good(province=None)], "no barony or province")
+
+    def test_duplicate_province(self):
+        other = self.good(eu4_key="y")
+        self.assertRejected([other, self.good()], "province 1 already holds y")
+
+    def test_empty_name_or_desc(self):
+        self.assertRejected([self.good(name=" ")], "empty name")
+        self.assertRejected([self.good(desc="")], "empty desc")
+
+    def test_unknown_category(self):
+        self.assertRejected([self.good(category="spaceport")], "category 'spaceport'")
+
+    def test_unmapped_modifier_key(self):
+        m = fake(county_modifier={"made_up_mult": 0.1})
+        m.update(barony="b_x")
+        self.assertRejected([m], "made_up_mult")
+        bm.validate([m], set(), {"made_up_mult"})  # a hand key is accepted
+
+    def test_level_without_effect(self):
+        self.assertRejected([fake() | {"barony": "b_x"}], "level 1 has no effect")
+        m = fake() | {"barony": "b_x", "levels": ["anb_01", "x_02", "x_03"]}
+        bm.validate([m], {"anb_01"})  # Anbennar chains carry Anbennar's effects
+
+    def test_on_complete_counts_as_effect(self):
+        bm.validate([fake(on_complete="add_gold = 1") | {"barony": "b_x"}], set())
+
+    @unittest.skipUnless(LIVE, "Anbennar CK3 not present")
+    def test_render_all_validates(self):
+        from unittest import mock
+        bad = [self.good(barony=None)]
+        with mock.patch.object(bm, "load_monuments", return_value=bad):
+            with self.assertRaises(bm.GeneratorError):
+                bm.render_all("cannor")
+
+    def test_hand_keys(self):
+        self.assertIn("vassal_opinion", bm.hand_keys("cannor"))
+        self.assertEqual(bm.hand_keys("nowhere"), set())
+
 
 
 @unittest.skipUnless(LIVE and eu4_monuments.EU4_ROOTS["anbennar"].is_dir(), "EU4 Anbennar art not installed")

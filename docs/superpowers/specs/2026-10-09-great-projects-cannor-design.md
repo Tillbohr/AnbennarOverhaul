@@ -174,8 +174,15 @@ Anbennar-update steps.
    commented `# start = N` province.
 5. One-off EU4 effects inside a conditional `if`/`else` are not translated (listed in each tier's `dropped`);
    courtier one-offs use `gender_female_chance = 50`.
-6. Overrides of Anbennar levels do not add the EU4 culture gate (it would switch off Anbennar's own effects); the
-   new upper levels keep it. The gate is wrapped in a `custom_tooltip` ("Built and used by: ...").
+6. Overrides of Anbennar levels do not add the EU4 culture gate (it would switch off Anbennar's own effects). The
+   gate is wrapped in a `custom_tooltip` ("Built and used by: ...", naming the CK3 cultures, heritages and faiths
+   it checks). Revised after the final review: a CK3 upgrade replaces the previous level's effects, so the new
+   upper levels (`aov_monument_<k>_02/_03`) of the 16 chains that start with an Anbennar building are copies of
+   the chain's top Anbennar level (its last Anbennar-keyed level) with the key renamed, the EU4 tier merged as in
+   item 7, `cost_gold`/`construction_time` from the tier and `next_building` set (none at level 3). They keep
+   Anbennar's `is_enabled`, flags, `effect_desc`, `show_disabled`, `type_icon` and `ai_value`; the EU4 gate goes
+   into `can_construct` only (appended to Anbennar's, or a new block), never `is_enabled`. New monuments keep the
+   gate in both. Consequence: the citadels sum Anbennar's fort level 6 (or 8) with EU4's, up to 10-12 at level 3.
 7. A modifier key already in an Anbennar block becomes one summed line (named values resolved from
    `00_building_values.txt`).
 8. Balance guard: no level above fort_level 4 or county tax_mult 0.3 (Morgurax and Humac's Tomb capped in the hand
@@ -183,3 +190,19 @@ Anbennar-update steps.
 9. Paintings also come from EU4 sprite definitions (`GFX_great_project_<key>`); 51 of 81 monuments have one; ruins
    stages never show it.
 10. Quotes in names and descriptions become `'` in loc.
+11. Effect guard: every level of every monument has an effect (a modifier or an `on_complete`); levels of chains
+    that start with an Anbennar building carry Anbennar's effects. `build_monuments.py` validates the data before
+    writing (barony/province, duplicate province, name/desc, icon category, modifier keys that are translation-table
+    targets or hand keys, the effect guard) and raises `GeneratorError` naming the monument. Castle Dameris gets
+    hand tiers translated from the EU4 event modifiers its `on_upgraded` adds (imperial authority -> prestige,
+    favours -> vassal opinion, diplomatic reputation -> diplomacy); Palace of Unity, Ascajar (level 1) and the
+    Moonmount Library (level 1) get modest hand tiers (see their notes).
+12. Generated levels use vanilla's special-building `ai_value` (base 100, `culture_likely_to_fortify_modifier` for
+    fortresses and castles, `ai_pious_building_preference_modifier` for temples, factor 0 while
+    `free_building_slots > 0`); copies of Anbennar levels keep Anbennar's `ai_value` plus that guard; Anbennar's own
+    levels are unchanged.
+13. EU4 gate atoms inside `NOT`/`NOR` are not mapped (noted per monument); the gate is built from the positive
+    atoms only. One-off effects reward `barony.holder` (as vanilla building `on_complete` does). Monuments that start
+    unbuilt prefer a free barony of their county with a holding in Anbennar's history (Palace of Unity
+    `b_elvendocks`, Lorentaine Mage Academy `b_rosionn`); the Dragonhoard keeps `b_zenturomai` (no free barony of
+    Soxun Kobildzex has a holding) and is reported by the importer.

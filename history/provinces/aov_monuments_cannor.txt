@@ -226,7 +226,7 @@
 	}
 }
 
-1021 = {
+1023 = {
 	1000.1.1 = {
 		special_building_slot = aov_monument_lorentaine_mage_academy_01
 	}
@@ -300,7 +300,7 @@
 	}
 }
 
-924 = {
+925 = {
 	1000.1.1 = {
 		special_building_slot = aov_monument_palace_of_unity_01
 	}
