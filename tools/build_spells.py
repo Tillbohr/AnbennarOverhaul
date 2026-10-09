@@ -279,50 +279,54 @@ def sgref(name: str, call: str) -> str:
     return f"GetScriptedGui('{name}').{call}( {ROOT} )"
 
 
+def text_at(x: int, y: int, text: str, max_width: int, fmt: str = "", visible: str = "") -> str:
+    """One line of card text at a fixed position."""
+    return ("\ttext_single = {\n"
+            + (f'\t\tvisible = "{visible}"\n' if visible else "")
+            + f'\t\tposition = {{ {x} {y} }}\n\t\ttext = "{text}"\n'
+            + (f'\t\tdefault_format = "{fmt}"\n' if fmt else "")
+            + f"\t\tmax_width = {max_width}\n\t\talign = left|nobaseline\n\t}}\n")
+
+
 def card(s) -> str:
-    """One spell: icon in its level frame, name and facts, Cast button (or the portrait hint). 480 px wide."""
+    """One spell, laid out like an EU4 spell slot: the 290x64 plate and the 64x76 level frame at the origin and the
+    60x60 icon at +2,+2, all unscaled; the name on the plate's banner, the facts under it, the effect line below the
+    plate, and the Cast button (or the portrait hint) right of the plate. 480 x 88."""
     k, c, lvl = s["key"], s["school"], s["level"]
     if s["slot"]:
-        icon = (f'\t\t\ticon = {{\n\t\t\t\tparentanchor = center\n\t\t\t\tsize = {{ 52 52 }}\n'
-                f'\t\t\t\ttexture = "{ART_DIR}/spell_slot_{s["slot"]}.dds"\n\t\t\t\tframesize = {{ 60 60 }}\n'
-                f'\t\t\t\tframe = {SCHOOLS.index(c) + 1}\n\t\t\t}}\n')
+        icon = (f'\ticon = {{\n\t\tposition = {{ 2 2 }}\n\t\tsize = {{ 60 60 }}\n'
+                f'\t\ttexture = "{ART_DIR}/spell_slot_{s["slot"]}.dds"\n\t\tframesize = {{ 60 60 }}\n'
+                f'\t\tframe = {SCHOOLS.index(c) + 1}\n\t}}\n')
     else:
-        icon = (f'\t\t\ticon = {{\n\t\t\t\tparentanchor = center\n\t\t\t\tsize = {{ 40 40 }}\n'
-                f'\t\t\t\ttexture = "{ART_DIR}/school_{c}.dds"\n\t\t\t}}\n')
+        icon = (f'\ticon = {{\n\t\tposition = {{ 12 12 }}\n\t\tsize = {{ 40 40 }}\n'
+                f'\t\ttexture = "{ART_DIR}/school_{c}.dds"\n\t}}\n')
     if window_spell(s):
         sg = f"aov_spell_{k}_sgui"
-        action = (f"\t\tbutton_standard = {{\n\t\t\tsize = {{ 110 32 }}\n\t\t\ttext = \"AOV_SPELL_CAST\"\n"
-                  f"\t\t\tenabled = \"[{sgref(sg, 'IsValid')}]\"\n"
-                  f"\t\t\ttooltip = \"[{sgref(sg, 'BuildTooltip')}]\"\n"
-                  f"\t\t\tonclick = \"[{sgref(sg, 'Execute')}]\"\n\t\t}}\n")
+        action = (f"\tbutton_standard = {{\n\t\tparentanchor = right\n\t\tposition = {{ -6 16 }}\n"
+                  f"\t\tsize = {{ 110 32 }}\n\t\ttext = \"AOV_SPELL_CAST\"\n"
+                  f"\t\tenabled = \"[{sgref(sg, 'IsValid')}]\"\n"
+                  f"\t\ttooltip = \"[{sgref(sg, 'BuildTooltip')}]\"\n"
+                  f"\t\tonclick = \"[{sgref(sg, 'Execute')}]\"\n\t}}\n")
     else:
-        action = ("\t\ttext_multi = {\n\t\t\tsize = { 110 0 }\n\t\t\tmax_width = 110\n\t\t\tautoresize = yes\n"
-                  "\t\t\ttext = \"AOV_SPELL_CAST_FROM_PORTRAIT\"\n\t\t\tdefault_format = \"#weak\"\n\t\t}\n")
+        action = ("\ttext_multi = {\n\t\tparentanchor = right\n\t\tposition = { -6 16 }\n"
+                  "\t\tsize = { 110 0 }\n\t\tmax_width = 110\n\t\tautoresize = yes\n"
+                  "\t\ttext = \"AOV_SPELL_CAST_FROM_PORTRAIT\"\n\t\tdefault_format = \"#weak\"\n\t}\n")
+    on_cd = f"GetPlayer.MakeScope.Var( 'aov_spell_{k}_cd' ).IsSet"
     return (
         f"widget = {{\n"
         f'\tname = "aov_spell_card_{k}"\n'
-        f"\tsize = {{ 480 76 }}\n"
+        f"\tsize = {{ 480 88 }}\n"
         f'\ttooltip = "aov_spell_{k}_tt"\n\n'
-        f"\tbackground = {{\n\t\ttexture = \"{ART_DIR}/spell_plate.dds\"\n\t\tspriteType = Corneredstretched\n"
-        f"\t\tspriteborder = {{ 70 12 }}\n\t\talpha = 0.6\n\t}}\n\n"
-        f"\thbox = {{\n\t\tmargin = {{ 6 0 }}\n\t\tspacing = 8\n\n"
-        f"\t\twidget = {{\n\t\t\tsize = {{ 64 76 }}\n\n"
+        f'\ticon = {{\n\t\tposition = {{ 0 0 }}\n\t\tsize = {{ 290 64 }}\n\t\ttexture = "{ART_DIR}/spell_plate.dds"\n\t}}\n'
         + icon
-        + f'\t\t\ticon = {{\n\t\t\t\tsize = {{ 64 76 }}\n\t\t\t\ttexture = "{ART_DIR}/spell_frames.dds"\n'
-          f"\t\t\t\tframesize = {{ 64 76 }}\n\t\t\t\tframe = {lvl + 1}\n\t\t\t}}\n\t\t}}\n\n"
-        f"\t\tvbox = {{\n\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\tspacing = 2\n\n"
-        f'\t\t\ttext_single = {{\n\t\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\t\ttext = "aov_spell_{k}"\n'
-        f'\t\t\t\tdefault_format = "#T"\n\t\t\t\tmax_width = 270\n\t\t\t\talign = left|nobaseline\n\t\t\t}}\n'
-        f'\t\t\ttext_single = {{\n\t\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\t\ttext = "aov_spell_{k}_facts"\n'
-        f'\t\t\t\tdefault_format = "#weak"\n\t\t\t\tmax_width = 270\n\t\t\t\talign = left|nobaseline\n\t\t\t}}\n'
-        f'\t\t\ttext_single = {{\n\t\t\t\tvisible = "[Not( GetPlayer.MakeScope.Var( \'aov_spell_{k}_cd\' ).IsSet )]"\n'
-        f'\t\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\t\ttext = "aov_spell_{k}_desc"\n\t\t\t\tmax_width = 270\n'
-        f'\t\t\t\talign = left|nobaseline\n\t\t\t}}\n'
-        f'\t\t\ttext_single = {{\n\t\t\t\tvisible = "[GetPlayer.MakeScope.Var( \'aov_spell_{k}_cd\' ).IsSet]"\n'
-        f'\t\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\t\ttext = "AOV_SPELL_ON_COOLDOWN"\n\t\t\t\tmax_width = 270\n'
-        f'\t\t\t\talign = left|nobaseline\n\t\t\t}}\n\t\t}}\n\n'
-        + action
-        + "\t}\n}\n"
+        + f'\ticon = {{\n\t\tposition = {{ 0 0 }}\n\t\tsize = {{ 64 76 }}\n\t\ttexture = "{ART_DIR}/spell_frames.dds"\n'
+          f"\t\tframesize = {{ 64 76 }}\n\t\tframe = {lvl + 1}\n\t}}\n\n"
+        + text_at(72, 8, f"aov_spell_{k}", 205, "#T")
+        + text_at(72, 38, f"aov_spell_{k}_facts", 280, "#weak")
+        + text_at(72, 66, f"aov_spell_{k}_desc", 400, visible=f"[Not( {on_cd} )]")
+        + text_at(72, 66, "AOV_SPELL_ON_COOLDOWN", 400, visible=f"[{on_cd}]")
+        + "\n" + action
+        + "}\n"
     )
 
 

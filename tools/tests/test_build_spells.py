@@ -259,6 +259,28 @@ class GeneratedTests(unittest.TestCase):
                 self.assertIn(f'texture = "gfx/interface/icons/aov_magic/spell_slot_{s["slot"]}.dds"', card, k)
                 self.assertIn(f"frame = {bs.SCHOOLS.index(s['school']) + 1}", card, k)
 
+    def test_gui_card_layout_matches_eu4_slot(self):
+        """EU4 draws the 290x64 plate and the 64x76 level frame at the slot origin and the 60x60 icon at +2,+2,
+        all unscaled; the Cast button sits right of the plate."""
+        text = bs.gui(SPELLS)
+        self.assertNotIn("Corneredstretched", text)
+        for s in SPELLS:
+            k = s["key"]
+            card = text.split(f'name = "aov_spell_card_{k}"')[1].split('name = "aov_spell_card_')[0].split("type aov_magic_school_")[0]
+            plate = card.split('texture = "gfx/interface/icons/aov_magic/spell_plate.dds"')[0].rsplit("icon = {", 1)[1]
+            self.assertIn("position = { 0 0 }", plate, k)
+            self.assertIn("size = { 290 64 }", plate, k)
+            if s["slot"]:
+                icon = card.split(f'spell_slot_{s["slot"]}.dds"')[0].rsplit("icon = {", 1)[1]
+                self.assertIn("position = { 2 2 }", icon, k)
+                self.assertIn("size = { 60 60 }", icon, k)
+            frame = card.split('spell_frames.dds"')[0].rsplit("icon = {", 1)[1]
+            self.assertIn("position = { 0 0 }", frame, k)
+            self.assertIn("size = { 64 76 }", frame, k)
+            action = card.split("button_standard = {" if s["type"] != "targeted" else "text_multi = {")[1]
+            self.assertIn("parentanchor = right", action, k)
+            self.assertIn("position = { -6 16 }", action, k)
+
     def test_gui_cards_fit(self):
         for w in re.findall(r"aov_spell_card_[a-z_]+\"\n\t*size = \{ (\d+) ", bs.gui(SPELLS)):
             self.assertLessEqual(int(w), 480)

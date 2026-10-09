@@ -172,6 +172,10 @@ class LocTests(unittest.TestCase):
         rep = read("localization/replace/english/aov_magic_lifestyle_replace_l_english.yml")
         self.assertIn(' magic_duelist_focus: "Battle Mage Focus"', rep)
         self.assertRegex(rep, r"(?m)^ magic_duelist_focus_effect_desc:")
+        # Anbennar's placeholder lifestyle text is replaced
+        self.assertRegex(rep, r'(?m)^ magic_lifestyle_desc: "Magic is a discipline before it is a gift\.')
+        self.assertRegex(rep, r'(?m)^ game_concept_magic_lifestyle_desc: "The \$game_concept_magic_lifestyle\$ is open only')
+        self.assertNotIn("all that you can", rep)
 
 
 class MasteryTests(unittest.TestCase):
