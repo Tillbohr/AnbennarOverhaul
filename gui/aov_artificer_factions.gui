@@ -111,7 +111,8 @@ types AovArtificerFactions
 		}
 	}
 
-	# A faction: coat of arms, leader, influence bar, Make Amends
+	# A faction: coat of arms, leader, influence bar, Make Amends.
+	# Rows must fit 480 px (the Factions tab's width inside a card); wider rows are clipped.
 	type aov_faction_card = vbox {
 		layoutpolicy_horizontal = expanding
 		margin = { 14 12 }
@@ -148,7 +149,7 @@ types AovArtificerFactions
 					using = Font_Type_Flavor
 					using = Font_Size_Medium
 					default_format = "#T"
-					max_width = 380
+					max_width = 270
 					align = left|nobaseline
 
 					block "faction_name" {}
@@ -158,14 +159,14 @@ types AovArtificerFactions
 					visible = "[Title.HasHolder]"
 					layoutpolicy_horizontal = expanding
 					text = "AOV_FACTION_LEADER"
-					max_width = 380
+					max_width = 270
 					align = left|nobaseline
 				}
 
 				text_single = {
 					visible = "[Not( Title.HasHolder )]"
 					layoutpolicy_horizontal = expanding
-					max_width = 380
+					max_width = 270
 					align = left|nobaseline
 
 					block "vacant_text" {}
@@ -173,8 +174,8 @@ types AovArtificerFactions
 
 				text_multi = {
 					layoutpolicy_horizontal = expanding
-					size = { 380 0 }
-					max_width = 380
+					size = { 270 0 }
+					max_width = 270
 					autoresize = yes
 					default_format = "#weak"
 
@@ -192,7 +193,7 @@ types AovArtificerFactions
 			spacing = 8
 
 			text_single = {
-				max_width = 380
+				max_width = 290
 				align = left|nobaseline
 
 				block "status" {}

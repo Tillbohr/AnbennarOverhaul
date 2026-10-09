@@ -290,6 +290,19 @@ class ReviewFixTests(unittest.TestCase):
         ev = block(read("events/aov_artificer_faction_events.txt"), "aov_artificer_factions.1")
         self.assertEqual(ev.count("aov_election_is_open_trigger = yes"), 3)
 
+    def test_card_rows_fit_the_factions_tab(self):
+        # Width inside a card: main tab 655 - Window_Margins 80 - body margin 20 - Scrollbox_Margins 35
+        # - content margin 12 - card margin 28 = 480. Wider rows get clipped (no horizontal scrolling).
+        budget = 480
+        gui = read("gui/aov_artificer_factions.gui")
+        card = gui.split("type aov_faction_card = vbox {")[1]
+        header, footer = card.split("aov_influence_bar = {")
+        text_width = max(int(w) for w in re.findall(r"max_width = (\d+)", header))
+        self.assertLessEqual(72 + 10 + 110 + 10 + text_width, budget)      # coat of arms, portrait, text column
+        status = int(re.search(r"max_width = (\d+)", footer).group(1))
+        button = int(re.search(r"size = \{ (\d+) \d+ \}", footer).group(1))
+        self.assertLessEqual(status + 8 + button, budget)                 # status text, Make Amends
+
     def test_portrait_slot_fits_portrait_head(self):
         gui = read("gui/aov_artificer_factions.gui")
         self.assertIn("size = { 110 120 }", gui)
