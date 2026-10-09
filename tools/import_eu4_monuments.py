@@ -294,18 +294,27 @@ def _statements(text):
 _SCOPES = {"owner", "hidden_effect", "if", "else_if", "else"}
 
 
-def _leaves(text):
-    """Effect statements of a snippet, with scope/condition blocks (owner, hidden_effect, if/else) opened up and
-    their `limit` skipped. ONE_OFF texts are written in the monument's province scope and name the holder
-    themselves, so the wrapper scope is not needed to translate an effect."""
+def _leaves(text, condition=""):
+    """(effect statement, condition) pairs of a snippet. Scope blocks (owner, hidden_effect) and if/else blocks are
+    opened up; ONE_OFF texts are written in the monument's province scope and name the holder themselves, so the
+    wrapper scope is not needed. The condition is "" for an unconditional effect, else the text of the enclosing
+    non-empty `limit`s (an `else`/`else_if` is always conditional)."""
     leaves = []
     for statement in _statements(text):
         key = re.match(r"[A-Za-z0-9_.:]+", statement).group(0)
         brace = statement.find("{")
         if key in _SCOPES and brace != -1:
-            leaves += _leaves(statement[brace + 1:statement.rfind("}")])
+            body = statement[brace + 1:statement.rfind("}")]
+            inner = condition
+            if key in ("if", "else_if", "else"):
+                limits = [_short(st[st.find("{") + 1:st.rfind("}")]) for st in _statements(body)
+                          if st.startswith("limit") and "{" in st]
+                limit = " ".join(l for l in limits if l)
+                if limit or key != "if":
+                    inner = "; ".join(c for c in (condition, f"{key} {limit}".strip()) if c)
+            leaves += _leaves(body, inner)
         elif key != "limit":
-            leaves.append(statement)
+            leaves.append((statement, condition))
     return leaves
 
 
@@ -346,14 +355,16 @@ def translate_tier(tier):
                 result[key] = value
         blocks[name] = result
     effects = []
-    for statement in _leaves(tier.on_upgraded):
-        for pattern, effect in tr.ONE_OFF:
+    for statement, condition in _leaves(tier.on_upgraded):
+        effect = None
+        for pattern, candidate in (() if condition else tr.ONE_OFF):
             if re.search(pattern, statement):
+                effect = candidate
                 break
-        else:
-            effect = None
         if effect:
             effects.append(effect)
+        elif condition:
+            dropped.append(f"on_upgraded: {condition}: {_short(statement)}")
         else:
             dropped.append(f"on_upgraded: {_short(statement)}")
     return {

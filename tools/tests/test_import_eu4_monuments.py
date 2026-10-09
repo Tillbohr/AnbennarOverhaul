@@ -223,11 +223,25 @@ class ConversionTests(unittest.TestCase):
     def test_scope_blocks_are_split_into_effects(self):
         t = imp.translate_tier(Tier(0, 0, {}, {}, {}, (
             "owner = { add_estate_loyalty = { estate = estate_mages loyalty = 5 } add_prestige = 10 }\n"
-            "if = { limit = { has_x = yes } hidden_effect = { owner = { add_treasury = 100 set_country_flag = f } } }")))
+            "if = { hidden_effect = { owner = { add_treasury = 100 set_country_flag = f } } }")))
         self.assertIn("add_prestige = 50", t["on_complete"])
         self.assertIn("add_prestige = 100", t["on_complete"])
         self.assertIn("add_gold = 40", t["on_complete"])
         self.assertEqual(t["dropped"], ["on_upgraded: set_country_flag = f"])
+
+    def test_gated_effects_are_dropped_with_their_condition(self):  # Bal Dostan tier 1
+        t = imp.translate_tier(Tier(0, 0, {}, {}, {}, (
+            "owner = { add_estate_loyalty = { estate = estate_nobles loyalty = 5 }\n"
+            "if = { limit = { has_estate = estate_castonath_patricians } "
+            "add_estate_loyalty = { estate = estate_castonath_patricians loyalty = 15 } }\n"
+            "if = { limit = { has_estate = estate_vampires } "
+            "add_estate_loyalty = { estate = estate_vampires loyalty = 5 } }\n"
+            "if = { limit = { has_x = yes } add_prestige = 10 } else = { add_prestige = 15 } }")))
+        self.assertEqual(t["on_complete"], "county.holder = { add_prestige = 50 }")
+        self.assertEqual(len(t["dropped"]), 4)
+        self.assertTrue(t["dropped"][0].startswith("on_upgraded: if has_estate = estate_castonath_patricians: add_estate"))
+        self.assertTrue(t["dropped"][1].startswith("on_upgraded: if has_estate = estate_vampires: add_estate"))
+        self.assertTrue(t["dropped"][3].startswith("on_upgraded: else: add_prestige = 15"))
 
     def test_dropped_text_is_not_truncated(self):
         long = "custom_tooltip = " + "x" * 200
