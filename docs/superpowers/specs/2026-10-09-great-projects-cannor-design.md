@@ -46,7 +46,7 @@ Cannor = EU4 superregions `western_cannor_superregion`, `escann_superregion`, `g
 | Group | Count | Output |
 |---|---|---|
 | New monuments | 64 | New buildings `aov_monument_<eu4key>_01/_02/_03`, including Palace of Unity (`palace_of_unity`) in a second Anbenncóst barony |
-| Anbennar placeholders that are EU4 projects | 3 chains | Temple of the Highest Moon (same-key override of `temple_highest_moon_01`), Lorenan's Rest (same-key override of `lorenans_rest_01`), and EU4's Imperial Palace (`imperial_palace_anbenncost`) defined under Anbennar's commented-out keys `imperial_palace_anbennar_01/_02/_03` (its `castle_dameris_*` keys stay unused: no EU4 source) |
+| Anbennar placeholders that are EU4 projects | 3 chains | Temple of the Highest Moon (same-key override of `temple_highest_moon_01`), Lorenan's Rest (same-key override of `lorenans_rest_01`), and EU4's Imperial Palace (`imperial_palace_anbenncost`) as **Castle Dameris** (the Imperial Palace did not exist yet in 1022): Anbennar's commented-out keys `castle_dameris_01/_02` plus a new `castle_dameris_03`, all three levels named "Castle Dameris". Anbennar's reserved `imperial_palace_anbennar_*` keys stay unused, for its later Imperial Palace content |
 | Anbennar's full implementations | 14 | Same-key overrides plus new upper levels (below): `castanorian_citadel_*` (Bal Dostan, Bal Mire, Bal Ouord, Bal Vroren, Bal Hyl, Bal Vertesk, North, South), `calasandur_castle_*` (Aelcandar, Escandar, Calascandar), `castle_bladeskeep_*`, `lake_palace_*`, `holy_site_the_necropolis_01` |
 | Canals | 1 | Excluded (Marrhold Tunnel) |
 
@@ -82,7 +82,7 @@ The exact per-project list (EU4 key, CK3 key, barony, start level, art) is the i
 - When two monuments share a county (Oldhaven, Moonmount, Portnamm, Westport, Anbenncóst, the North Citadel,
   Bladeskeep, the Viswalls, Soxun Kobildzex), the second takes the next barony of that county without a special slot.
 - A barony that already has an Anbennar `special_building_slot` is never reused for a new monument; the 14, the
-  Temple of the Highest Moon and Lorenan's Rest use Anbennar's existing placement. The Imperial Palace has none in
+  Temple of the Highest Moon and Lorenan's Rest use Anbennar's existing placement. Castle Dameris has none in
   Anbennar, so it gets a new slot in Anbenncóst's capital barony, and Palace of Unity the next Anbenncóst barony.
 - Kobildzex Guild of Trapsmiths and the Dragonhoard (EU4 "Deeb Kobilderd", no CK3 title): county `c_soxun_kobildzex`.
 - Every placement the importer cannot resolve is listed in its report and must be set by hand in the data before
@@ -121,7 +121,7 @@ The exact per-project list (EU4 key, CK3 key, barony, start level, art) is the i
 | File | Content |
 |---|---|
 | `common/buildings/aov_monuments_cannor.txt` | New monument buildings, all levels |
-| `common/buildings/zz_aov_monument_overrides_cannor.txt` | The 14 and the two placeholder overrides (Highest Moon, Lorenan's Rest): Anbennar's definitions copied with the EU4 effects and `next_building` inserted; plus `imperial_palace_anbennar_01/_02/_03`, new definitions under Anbennar's reserved keys |
+| `common/buildings/zz_aov_monument_overrides_cannor.txt` | The 14 and the two placeholder overrides (Highest Moon, Lorenan's Rest): Anbennar's definitions copied with the EU4 effects and `next_building` inserted; plus `castle_dameris_01/_02/_03` (EU4's Imperial Palace), new definitions under Anbennar's reserved keys |
 | `history/provinces/aov_monuments_cannor.txt` | `special_building_slot` (and level 1 where it existed before 1022) per new monument |
 | `localization/english/aov_monuments_cannor_l_english.yml` | Building names and descriptions (`building_<key>`, `building_<key>_desc`) |
 | `common/customizable_localization/aov_monument_illustration.txt` | `AovMonumentIllustration` (province scope): one entry per monument with art, `has_building_or_higher` on its level 1 → loc key holding the picture path |
