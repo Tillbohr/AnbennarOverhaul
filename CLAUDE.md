@@ -105,8 +105,9 @@ inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error
   When a holder dies (`common/on_action/aov_artificer_faction_on_actions.txt`) the title is destroyed and
   `aov_election_open` (`common/scripted_effects/aov_artificer_election_effects.txt`) picks three gnome candidates;
   every artificer nation votes, weighted by influence level (players via event `aov_artificer_factions.1`), and
-  the count after 30 days grants the title to the winner, who stays their liege's vassal. Vacant titles are filled
-  at game start and yearly. **Influence** per ruler and faction (`aov_influence_<f>`, 0-100, start 40): sponsoring
+  the count after 30 days grants the title to the winner, who stays their liege's vassal. A gnome holds at most
+  one faction title; a faction title gained any other way (Grant Titles, inheritance) is destroyed and re-elected
+  (`on_title_gain`, title variable `aov_elected_holder`). Vacant titles are filled at game start and yearly. **Influence** per ruler and faction (`aov_influence_<f>`, 0-100, start 40): sponsoring
   +20 / rivals -10, +1/quarter while their research runs, -1/quarter above 40, ±1-2/quarter from the leader's
   opinion, Make Amends (100 gold, +10, up to 40). Levels Hostile/Displeased/Neutral/Favored/Exalted give modifiers
   `aov_<f>_<level>` and set research cost (100/75/50/38/25) and time (+25%/+25%/-/-/-25%). Values in

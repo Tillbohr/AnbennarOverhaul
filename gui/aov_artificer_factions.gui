@@ -131,7 +131,7 @@ types AovArtificerFactions
 			coa_title_medium = {}
 
 			widget = {
-				size = { 70 80 }
+				size = { 110 120 }
 
 				portrait_head = {
 					datacontext = "[Title.GetHolder]"

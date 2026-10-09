@@ -48,6 +48,7 @@ aov_artificer_factions.1 = {
 		trigger = {
 			exists = scope:aov_candidate_1
 			aov_election_has_voted_trigger = no
+			aov_election_is_open_trigger = yes
 		}
 		highlight_portrait = scope:aov_candidate_1
 		aov_election_vote_in_event = { CANDIDATE = scope:aov_candidate_1 }
@@ -58,6 +59,7 @@ aov_artificer_factions.1 = {
 		trigger = {
 			exists = scope:aov_candidate_2
 			aov_election_has_voted_trigger = no
+			aov_election_is_open_trigger = yes
 		}
 		highlight_portrait = scope:aov_candidate_2
 		aov_election_vote_in_event = { CANDIDATE = scope:aov_candidate_2 }
@@ -68,6 +70,7 @@ aov_artificer_factions.1 = {
 		trigger = {
 			exists = scope:aov_candidate_3
 			aov_election_has_voted_trigger = no
+			aov_election_is_open_trigger = yes
 		}
 		highlight_portrait = scope:aov_candidate_3
 		aov_election_vote_in_event = { CANDIDATE = scope:aov_candidate_3 }
@@ -113,5 +116,15 @@ aov_artificer_factions.3 = {
 
 	immediate = {
 		aov_election_resolve_in_event = yes
+	}
+}
+
+# Hidden: reopen an election whose winner already held a faction title
+aov_artificer_factions.4 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		aov_election_open_in_event = yes
 	}
 }

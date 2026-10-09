@@ -280,6 +280,10 @@ aov_artificery_inherit = {
 		set_variable = { name = aov_research_sponsor value = scope:aov_predecessor.var:aov_research_sponsor }
 		set_variable = { name = aov_research_quarters_left value = scope:aov_predecessor.var:aov_research_quarters_left }
 		if = {
+			limit = { scope:aov_predecessor = { has_variable = aov_research_paid } }
+			set_variable = { name = aov_research_paid value = scope:aov_predecessor.var:aov_research_paid }
+		}
+		if = {
 			limit = { scope:aov_predecessor = { has_variable = aov_research_category } }
 			set_variable = { name = aov_research_category value = scope:aov_predecessor.var:aov_research_category }
 		}

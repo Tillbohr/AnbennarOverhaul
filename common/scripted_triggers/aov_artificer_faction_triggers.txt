@@ -65,3 +65,21 @@ aov_election_has_voted_trigger = {
 		}
 	}
 }
+
+# Event with scope:aov_election_faction: that election is still open
+aov_election_is_open_trigger = {
+	OR = {
+		AND = {
+			scope:aov_election_faction = flag:brillites
+			exists = global_var:aov_election_open_brillites
+		}
+		AND = {
+			scope:aov_election_faction = flag:mechanists
+			exists = global_var:aov_election_open_mechanists
+		}
+		AND = {
+			scope:aov_election_faction = flag:technomancers
+			exists = global_var:aov_election_open_technomancers
+		}
+	}
+}

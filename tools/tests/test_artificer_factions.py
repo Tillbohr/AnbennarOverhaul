@@ -232,5 +232,68 @@ class FactionsTabTests(unittest.TestCase):
             self.assertIn(x, gui)
 
 
+class ReviewFixTests(unittest.TestCase):
+    """Findings of the final branch review."""
+
+    def eff(self, name):
+        return block(read("common/scripted_effects/aov_artificer_election_effects.txt"), name)
+
+    def test_ai_vote_uses_the_voter_not_root(self):
+        b = self.eff("aov_election_ai_vote")
+        self.assertIn("save_scope_as = aov_voter", b)
+        self.assertIn("is_courtier_of = scope:aov_voter", b)
+        self.assertNotIn("is_courtier_of = root", b)
+        self.assertIn("clear_saved_scope = aov_ai_choice", b)
+
+    def test_heir_inherits_the_paid_amount(self):
+        b = block(read("common/scripted_effects/aov_artificery_research_effects.txt"), "aov_artificery_inherit")
+        self.assertIn("set_variable = { name = aov_research_paid value = scope:aov_predecessor.var:aov_research_paid }", b)
+
+    def test_yearly_counts_overdue_elections_and_dying_leader_is_not_the_counter(self):
+        yearly = block(read("common/on_action/aov_artificer_faction_on_actions.txt"), "aov_artificer_factions_yearly")
+        self.assertIn("aov_elections_resolve_overdue = yes", yearly)
+        overdue = self.eff("aov_elections_resolve_overdue")
+        for f in FACTIONS:
+            self.assertIn(f"aov_election_resolve = {{ FACTION = {f} }}", overdue)
+        self.assertRegex(self.eff("aov_election_open"),
+                         r"ordered_ruler = \{\s*limit = \{\s*aov_artificer_nation_trigger = yes\s*NOT = \{ has_character_flag = aov_dying_faction_leader \}")
+
+    def test_grant_keeps_the_winner_under_their_liege(self):
+        b = self.eff("aov_faction_grant_title")
+        self.assertIn("save_scope_as = aov_winner_liege", b)
+        self.assertIn("change_liege = { liege = scope:aov_winner_liege change = scope:aov_liege_change }", b)
+
+    def test_title_given_away_reopens_the_election(self):
+        text = read("common/on_action/aov_artificer_faction_on_actions.txt")
+        self.assertIn("on_title_gain = {\n\ton_actions = { aov_artificer_factions_on_title_gain }", text)
+        b = block(text, "aov_artificer_factions_on_title_gain")
+        self.assertIn("var:aov_elected_holder = root", b)
+        self.assertIn("destroy_title = scope:title", b)
+        self.assertIn("set_variable = { name = aov_elected_holder value = $WINNER$ }", self.eff("aov_faction_grant_title"))
+
+    def test_one_gnome_cannot_win_two_titles(self):
+        b = self.eff("aov_election_open")
+        self.assertIn("aov_court_pool_$FACTION$", b)
+        self.assertIn("aov_world_pool_$FACTION$", b)
+        grant = b.split("NOT = { any_ruler = { aov_artificer_nation_trigger = yes } }")[1]
+        self.assertIn("limit = { aov_faction_candidate_trigger = yes }", grant.split("aov_faction_grant_title")[0])
+        # User rule: a single gnome holds at most one faction title, whatever path gives it
+        g = self.eff("aov_faction_grant_title")
+        self.assertIn("NOT = { any_held_title = { aov_is_artificer_faction_title = yes } }", g)
+        # Reopened through a hidden event: aov_election_open itself calls the grant, and scripted effects cannot recurse
+        self.assertIn("trigger_event = { id = aov_artificer_factions.4 days = 1 }", g)
+        self.assertNotIn("aov_election_open = { FACTION = $FACTION$ }", g)
+
+    def test_stale_votes_cleared_and_late_votes_refused(self):
+        b = self.eff("aov_election_open")
+        self.assertRegex(b, r"every_in_global_list = \{\s*variable = aov_candidates_\$FACTION\$\s*remove_variable = aov_votes_\$FACTION\$")
+        ev = block(read("events/aov_artificer_faction_events.txt"), "aov_artificer_factions.1")
+        self.assertEqual(ev.count("aov_election_is_open_trigger = yes"), 3)
+
+    def test_portrait_slot_fits_portrait_head(self):
+        gui = read("gui/aov_artificer_factions.gui")
+        self.assertIn("size = { 110 120 }", gui)
+
+
 if __name__ == "__main__":
     unittest.main()

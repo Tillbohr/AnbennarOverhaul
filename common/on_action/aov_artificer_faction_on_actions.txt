@@ -10,27 +10,7 @@ aov_artificer_factions_quarterly = {
 	effect = {
 		aov_faction_init = yes
 		aov_factions_quarterly = yes
-		if = {
-			limit = {
-				exists = global_var:aov_election_open_brillites
-				NOT = { exists = global_var:aov_election_running_brillites }
-			}
-			aov_election_resolve = { FACTION = brillites }
-		}
-		if = {
-			limit = {
-				exists = global_var:aov_election_open_mechanists
-				NOT = { exists = global_var:aov_election_running_mechanists }
-			}
-			aov_election_resolve = { FACTION = mechanists }
-		}
-		if = {
-			limit = {
-				exists = global_var:aov_election_open_technomancers
-				NOT = { exists = global_var:aov_election_running_technomancers }
-			}
-			aov_election_resolve = { FACTION = technomancers }
-		}
+		aov_elections_resolve_overdue = yes
 	}
 }
 
@@ -44,6 +24,10 @@ on_game_start_after_lobby = {
 
 yearly_global_pulse = {
 	on_actions = { aov_artificer_factions_yearly }
+}
+
+on_title_gain = {
+	on_actions = { aov_artificer_factions_on_title_gain }
 }
 
 # Root = dying character: their faction title goes vacant and an election opens
@@ -78,5 +62,46 @@ aov_artificer_factions_game_start = {
 }
 
 aov_artificer_factions_yearly = {
-	effect = { aov_elections_fill_vacant = yes }
+	effect = {
+		aov_elections_resolve_overdue = yes
+		aov_elections_fill_vacant = yes
+	}
+}
+
+# Root = new holder, scope:title. Only the elected holder may hold a faction title: one given away
+# (e.g. Grant Titles) or inherited goes vacant and is elected again.
+aov_artificer_factions_on_title_gain = {
+	trigger = {
+		scope:title = { aov_is_artificer_faction_title = yes }
+		NOT = {
+			scope:title = {
+				has_variable = aov_elected_holder
+				var:aov_elected_holder = root
+			}
+		}
+	}
+	effect = {
+		destroy_title = scope:title
+		if = {
+			limit = {
+				scope:title = title:d_brillites
+				NOT = { exists = global_var:aov_election_open_brillites }
+			}
+			aov_election_open = { FACTION = brillites }
+		}
+		if = {
+			limit = {
+				scope:title = title:d_mechanists
+				NOT = { exists = global_var:aov_election_open_mechanists }
+			}
+			aov_election_open = { FACTION = mechanists }
+		}
+		if = {
+			limit = {
+				scope:title = title:d_technomancers
+				NOT = { exists = global_var:aov_election_open_technomancers }
+			}
+			aov_election_open = { FACTION = technomancers }
+		}
+	}
 }
