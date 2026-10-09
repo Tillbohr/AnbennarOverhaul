@@ -1,0 +1,26 @@
+﻿# Anbennar Overhaul: single-object override of Anbennar's title_revocation_standard_can_pick_title_trigger
+# (common/scripted_triggers/00_interaction_triggers.txt). Copied verbatim plus the faction-title exclusion;
+# re-copy after every Anbennar update.
+
+title_revocation_standard_can_pick_title_trigger = {
+	is_contested = no
+	custom_description = {
+		text = "revoke_title_not_noble_family_title"
+		is_noble_family_title = no
+	}
+	NOT = {
+		recent_history = {
+			type = granted
+			years = 1
+		}
+	}
+	custom_description = {
+		text = "character_interactions_not_rel_head_title"
+		is_head_of_faith = no
+	}
+	# Anbennar Overhaul: the artificer faction titles are held for life
+	custom_description = {
+		text = "aov_revoke_not_artificer_faction_title"
+		aov_is_artificer_faction_title = no
+	}
+}

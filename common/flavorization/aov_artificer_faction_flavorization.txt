@@ -1,0 +1,49 @@
+﻿# Anbennar Overhaul: holder titles of the artificer factions
+
+aov_spark_primarch = {
+	type = character
+	gender = male
+	special = holder
+	priority = 150
+	titles = { d_brillites }
+}
+
+aov_spark_primarch_female = {
+	type = character
+	gender = female
+	special = holder
+	priority = 150
+	titles = { d_brillites }
+}
+
+aov_guildmaster_mechanist = {
+	type = character
+	gender = male
+	special = holder
+	priority = 150
+	titles = { d_mechanists }
+}
+
+aov_guildmaster_mechanist_female = {
+	type = character
+	gender = female
+	special = holder
+	priority = 150
+	titles = { d_mechanists }
+}
+
+aov_arch_technomancer = {
+	type = character
+	gender = male
+	special = holder
+	priority = 150
+	titles = { d_technomancers }
+}
+
+aov_arch_technomancer_female = {
+	type = character
+	gender = female
+	special = holder
+	priority = 150
+	titles = { d_technomancers }
+}

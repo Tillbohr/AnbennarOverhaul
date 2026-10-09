@@ -1,0 +1,18 @@
+﻿l_english:
+ # Titles
+ d_brillites_article: "the "
+ d_brillites: "Brillite Circle"
+ d_brillites_adj: "Brillite"
+ d_mechanists_article: "the "
+ d_mechanists: "Mechanist Guild"
+ d_mechanists_adj: "Mechanist"
+ d_technomancers_article: "the "
+ d_technomancers: "Technomancer Conclave"
+ d_technomancers_adj: "Technomancer"
+ aov_spark_primarch: "Spark-Primarch"
+ aov_spark_primarch_female: "Spark-Primarch"
+ aov_guildmaster_mechanist: "Guildmaster Mechanist"
+ aov_guildmaster_mechanist_female: "Guildmaster Mechanist"
+ aov_arch_technomancer: "Arch-Technomancer"
+ aov_arch_technomancer_female: "Arch-Technomancer"
+ aov_revoke_not_artificer_faction_title: "Is not the leadership of an artificer faction"

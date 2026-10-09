@@ -1,0 +1,10 @@
+﻿# Anbennar Overhaul: artificer factions
+
+# Title scope: one of the three artificer faction titles
+aov_is_artificer_faction_title = {
+	OR = {
+		this = title:d_brillites
+		this = title:d_mechanists
+		this = title:d_technomancers
+	}
+}
