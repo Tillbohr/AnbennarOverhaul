@@ -34,6 +34,20 @@ FOCUS_OF = {
     "evocation": "magic_duelist_focus", "conjuration": "magic_duelist_focus", "necromancy": "magic_mindweaving_focus",
     "enchantment": "magic_mindweaving_focus", "illusion": "magic_mindweaving_focus",
 }
+STUDY_PERK = {
+    "divination": "aov_diviners_eye_perk", "abjuration": "aov_warding_glyphs_perk", "transmutation": "aov_transmuters_craft_perk",
+    "evocation": "aov_spark_of_battle_perk", "conjuration": "aov_summoners_circle_perk", "enchantment": "aov_silver_tongue_perk",
+    "illusion": "aov_veil_perk", "necromancy": "aov_grave_whispers_perk",
+}
+COST_PERK = {
+    "divination": "aov_read_the_stars_perk", "abjuration": "aov_spellguard_perk", "transmutation": "aov_ley_lines_perk",
+    "evocation": "aov_overchannel_perk", "conjuration": "aov_conjured_provisions_perk", "enchantment": "aov_hearts_desire_perk",
+    "illusion": "aov_mirror_image_perk", "necromancy": "aov_deathless_will_perk",
+}
+YEARS_PERK = {
+    "divination": "aov_prescience_perk", "evocation": "aov_firestorm_tactics_perk", "conjuration": "aov_bound_elementals_perk",
+    "enchantment": "aov_lasting_charm_perk", "illusion": "aov_grand_illusion_perk",
+}
 PERK_FILES = {
     "aov_arcane_scholar": "common/lifestyle_perks/aov_magic_arcane_scholar_perks.txt",
     "aov_battle_mage": "common/lifestyle_perks/aov_magic_battle_mage_perks.txt",
@@ -170,3 +184,57 @@ class MasteryTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class BonusLayerTests(unittest.TestCase):
+    def v(self):
+        return read("common/script_values/aov_magic_lifestyle_values.txt")
+
+    def test_school_values_name_their_perks(self):
+        for s in SCHOOLS:
+            self.assertIn(f"has_perk = {STUDY_PERK[s]}", block(self.v(), f"aov_study_mult_{s}"))
+            self.assertIn(f"has_focus = {FOCUS_OF[s]}", block(self.v(), f"aov_study_mult_{s}"))
+            self.assertIn("has_trait = arcane_scholar", block(self.v(), f"aov_study_mult_{s}"))
+            self.assertIn(f"has_perk = {COST_PERK[s]}", block(self.v(), f"aov_cost_cut_{s}"))
+            if s in YEARS_PERK:
+                self.assertIn(f"has_perk = {YEARS_PERK[s]}", block(self.v(), f"aov_years_mult_{s}"))
+            else:
+                self.assertEqual(block(self.v(), f"aov_years_mult_{s}").strip(), "value = 1")
+
+    def test_bonus_layer_reads_only_perks_traits_focuses(self):
+        refs = set(re.findall(r"has_(?:perk|trait|focus) = (\w+)", self.v()))
+        self.assertTrue(refs <= set(all_perks()) | set(TRAIT_OF.values()) | set(FOCUS_OF.values()))
+        self.assertNotIn("var:", self.v())
+
+    def test_mana_and_dark_magic(self):
+        self.assertIn("has_perk = aov_arcane_reservoir_perk", block(self.v(), "aov_mana_max_bonus"))
+        self.assertIn("has_trait = arcane_scholar", block(self.v(), "aov_mana_max_bonus"))
+        b = block(self.v(), "aov_mana_refill_mult")
+        self.assertIn("has_perk = aov_ley_lines_perk", b)
+        self.assertIn("is_at_war = yes", b)
+        self.assertIn("has_perk = aov_grave_whispers_perk", block(self.v(), "aov_dark_magic_mult"))
+        self.assertIn("has_trait = battle_mage", block(self.v(), "aov_cost_cut_war"))
+        self.assertIn("has_trait = mindweaver", block(self.v(), "aov_cost_cut_targeted"))
+
+
+class WiringTests(unittest.TestCase):
+    def test_values_use_layer(self):
+        v = read("common/script_values/aov_magic_values.txt")
+        self.assertIn("add = aov_mana_max_bonus", block(v, "aov_mana_max"))
+        self.assertIn("multiply = aov_mana_refill_mult", block(v, "aov_mana_refill_month"))
+        for s in SCHOOLS:
+            self.assertIn(f"multiply = aov_study_mult_{s}", block(v, f"aov_study_gain_{s}_month"))
+
+    def test_quarterly_uses_per_school_gain(self):
+        b = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_magic_quarterly")
+        for s in SCHOOLS:
+            self.assertIn(f"aov_study_gain_{s}_month", b)
+
+    def test_dark_magic_scaled(self):
+        b = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_dark_magic_roll")
+        self.assertEqual(b.count("multiply = aov_dark_magic_mult"), 2)
+
+    def test_mana_spend_clamps(self):
+        b = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_mana_spend")
+        self.assertIn("subtract = $AMOUNT$", b)
+        self.assertIn("min = 0", b)

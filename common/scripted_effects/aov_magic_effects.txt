@@ -16,6 +16,16 @@ aov_mana_change = {
 	clamp_variable = { name = aov_mana min = 0 max = aov_mana_max }
 }
 
+# AMOUNT: number or scope value; spends mana, staying within 0..max
+aov_mana_spend = {
+	if = {
+		limit = { NOT = { has_variable = aov_mana } }
+		set_variable = { name = aov_mana value = aov_mana_max }
+	}
+	change_variable = { name = aov_mana subtract = $AMOUNT$ }
+	clamp_variable = { name = aov_mana min = 0 max = aov_mana_max }
+}
+
 aov_study_set = {
 	set_variable = { name = aov_studying value = flag:$SCHOOL$ }
 }
@@ -51,17 +61,17 @@ aov_magic_quarterly = {
 		}
 	}
 	aov_mana_change = { AMOUNT = scope:aov_refill_quarter }
-	save_temporary_scope_value_as = {
-		name = aov_study_quarter
-		value = {
-			value = aov_study_gain_month
-			multiply = 3
-		}
-	}
 	if = {
 		limit = {
 			aov_is_studying = { SCHOOL = abjuration }
 			aov_school_abjuration_level < 3
+		}
+		save_temporary_scope_value_as = {
+			name = aov_study_quarter
+			value = {
+				value = aov_study_gain_abjuration_month
+				multiply = 3
+			}
 		}
 		aov_school_add_progress = { SCHOOL = abjuration AMOUNT = scope:aov_study_quarter }
 	}
@@ -70,12 +80,26 @@ aov_magic_quarterly = {
 			aov_is_studying = { SCHOOL = conjuration }
 			aov_school_conjuration_level < 3
 		}
+		save_temporary_scope_value_as = {
+			name = aov_study_quarter
+			value = {
+				value = aov_study_gain_conjuration_month
+				multiply = 3
+			}
+		}
 		aov_school_add_progress = { SCHOOL = conjuration AMOUNT = scope:aov_study_quarter }
 	}
 	if = {
 		limit = {
 			aov_is_studying = { SCHOOL = divination }
 			aov_school_divination_level < 3
+		}
+		save_temporary_scope_value_as = {
+			name = aov_study_quarter
+			value = {
+				value = aov_study_gain_divination_month
+				multiply = 3
+			}
 		}
 		aov_school_add_progress = { SCHOOL = divination AMOUNT = scope:aov_study_quarter }
 	}
@@ -84,12 +108,26 @@ aov_magic_quarterly = {
 			aov_is_studying = { SCHOOL = enchantment }
 			aov_school_enchantment_level < 3
 		}
+		save_temporary_scope_value_as = {
+			name = aov_study_quarter
+			value = {
+				value = aov_study_gain_enchantment_month
+				multiply = 3
+			}
+		}
 		aov_school_add_progress = { SCHOOL = enchantment AMOUNT = scope:aov_study_quarter }
 	}
 	if = {
 		limit = {
 			aov_is_studying = { SCHOOL = evocation }
 			aov_school_evocation_level < 3
+		}
+		save_temporary_scope_value_as = {
+			name = aov_study_quarter
+			value = {
+				value = aov_study_gain_evocation_month
+				multiply = 3
+			}
 		}
 		aov_school_add_progress = { SCHOOL = evocation AMOUNT = scope:aov_study_quarter }
 	}
@@ -98,6 +136,13 @@ aov_magic_quarterly = {
 			aov_is_studying = { SCHOOL = illusion }
 			aov_school_illusion_level < 3
 		}
+		save_temporary_scope_value_as = {
+			name = aov_study_quarter
+			value = {
+				value = aov_study_gain_illusion_month
+				multiply = 3
+			}
+		}
 		aov_school_add_progress = { SCHOOL = illusion AMOUNT = scope:aov_study_quarter }
 	}
 	if = {
@@ -105,12 +150,26 @@ aov_magic_quarterly = {
 			aov_is_studying = { SCHOOL = necromancy }
 			aov_school_necromancy_level < 3
 		}
+		save_temporary_scope_value_as = {
+			name = aov_study_quarter
+			value = {
+				value = aov_study_gain_necromancy_month
+				multiply = 3
+			}
+		}
 		aov_school_add_progress = { SCHOOL = necromancy AMOUNT = scope:aov_study_quarter }
 	}
 	if = {
 		limit = {
 			aov_is_studying = { SCHOOL = transmutation }
 			aov_school_transmutation_level < 3
+		}
+		save_temporary_scope_value_as = {
+			name = aov_study_quarter
+			value = {
+				value = aov_study_gain_transmutation_month
+				multiply = 3
+			}
 		}
 		aov_school_add_progress = { SCHOOL = transmutation AMOUNT = scope:aov_study_quarter }
 	}
@@ -125,7 +184,10 @@ aov_dark_magic_roll = {
 			faith = { has_doctrine_parameter = witchcraft_illegal }
 		}
 		random = {
-			chance = 25
+			chance = {
+				value = 25
+				multiply = aov_dark_magic_mult
+			}
 			add_trait = forbidden_magic_practitioner
 		}
 	}
@@ -135,7 +197,10 @@ aov_dark_magic_roll = {
 			faith = { has_doctrine_parameter = witchcraft_shunned }
 		}
 		random = {
-			chance = 10
+			chance = {
+				value = 10
+				multiply = aov_dark_magic_mult
+			}
 			add_trait = forbidden_magic_practitioner
 		}
 	}

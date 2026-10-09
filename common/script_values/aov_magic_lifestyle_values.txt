@@ -1,0 +1,169 @@
+﻿# Anbennar Overhaul: magic lifestyle bonus layer. Character scope (the mage).
+# The only place that reads magic perks, traits and focuses; the school code reads these values.
+
+# Study multiplier per school: 1 + 0.25 focus + 0.25 perk + 0.10 Arcane Scholar trait (at most 1.6)
+aov_study_mult_abjuration = {
+	value = 1
+	if = { limit = { has_focus = magic_arcane_study_focus } add = 0.25 }
+	if = { limit = { has_perk = aov_warding_glyphs_perk } add = 0.25 }
+	if = { limit = { has_trait = arcane_scholar } add = 0.1 }
+}
+
+aov_study_mult_conjuration = {
+	value = 1
+	if = { limit = { has_focus = magic_duelist_focus } add = 0.25 }
+	if = { limit = { has_perk = aov_summoners_circle_perk } add = 0.25 }
+	if = { limit = { has_trait = arcane_scholar } add = 0.1 }
+}
+
+aov_study_mult_divination = {
+	value = 1
+	if = { limit = { has_focus = magic_arcane_study_focus } add = 0.25 }
+	if = { limit = { has_perk = aov_diviners_eye_perk } add = 0.25 }
+	if = { limit = { has_trait = arcane_scholar } add = 0.1 }
+}
+
+aov_study_mult_enchantment = {
+	value = 1
+	if = { limit = { has_focus = magic_mindweaving_focus } add = 0.25 }
+	if = { limit = { has_perk = aov_silver_tongue_perk } add = 0.25 }
+	if = { limit = { has_trait = arcane_scholar } add = 0.1 }
+}
+
+aov_study_mult_evocation = {
+	value = 1
+	if = { limit = { has_focus = magic_duelist_focus } add = 0.25 }
+	if = { limit = { has_perk = aov_spark_of_battle_perk } add = 0.25 }
+	if = { limit = { has_trait = arcane_scholar } add = 0.1 }
+}
+
+aov_study_mult_illusion = {
+	value = 1
+	if = { limit = { has_focus = magic_mindweaving_focus } add = 0.25 }
+	if = { limit = { has_perk = aov_veil_perk } add = 0.25 }
+	if = { limit = { has_trait = arcane_scholar } add = 0.1 }
+}
+
+aov_study_mult_necromancy = {
+	value = 1
+	if = { limit = { has_focus = magic_mindweaving_focus } add = 0.25 }
+	if = { limit = { has_perk = aov_grave_whispers_perk } add = 0.25 }
+	if = { limit = { has_trait = arcane_scholar } add = 0.1 }
+}
+
+aov_study_mult_transmutation = {
+	value = 1
+	if = { limit = { has_focus = magic_arcane_study_focus } add = 0.25 }
+	if = { limit = { has_perk = aov_transmuters_craft_perk } add = 0.25 }
+	if = { limit = { has_trait = arcane_scholar } add = 0.1 }
+}
+
+# Mana cost reduction per school (0.25 per perk; the cost never drops below half the base)
+aov_cost_cut_abjuration = {
+	value = 0
+	if = { limit = { has_perk = aov_spellguard_perk } add = 0.25 }
+}
+
+aov_cost_cut_conjuration = {
+	value = 0
+	if = { limit = { has_perk = aov_conjured_provisions_perk } add = 0.25 }
+}
+
+aov_cost_cut_divination = {
+	value = 0
+	if = { limit = { has_perk = aov_read_the_stars_perk } add = 0.25 }
+}
+
+aov_cost_cut_enchantment = {
+	value = 0
+	if = { limit = { has_perk = aov_hearts_desire_perk } add = 0.25 }
+}
+
+aov_cost_cut_evocation = {
+	value = 0
+	if = { limit = { has_perk = aov_overchannel_perk } add = 0.25 }
+}
+
+aov_cost_cut_illusion = {
+	value = 0
+	if = { limit = { has_perk = aov_mirror_image_perk } add = 0.25 }
+}
+
+aov_cost_cut_necromancy = {
+	value = 0
+	if = { limit = { has_perk = aov_deathless_will_perk } add = 0.25 }
+}
+
+aov_cost_cut_transmutation = {
+	value = 0
+	if = { limit = { has_perk = aov_ley_lines_perk } add = 0.25 }
+}
+
+# Mana cost reduction by spell type
+aov_cost_cut_war = {
+	value = 0
+	if = { limit = { has_trait = battle_mage } add = 0.25 }
+}
+
+aov_cost_cut_targeted = {
+	value = 0
+	if = { limit = { has_trait = mindweaver } add = 0.25 }
+}
+
+# Duration multiplier per school (lasting spells; 1 where the school has no duration perk)
+aov_years_mult_abjuration = {
+	value = 1
+}
+
+aov_years_mult_conjuration = {
+	value = 1
+	if = { limit = { has_perk = aov_bound_elementals_perk } add = 0.5 }
+}
+
+aov_years_mult_divination = {
+	value = 1
+	if = { limit = { has_perk = aov_prescience_perk } add = 0.5 }
+}
+
+aov_years_mult_enchantment = {
+	value = 1
+	if = { limit = { has_perk = aov_lasting_charm_perk } add = 0.5 }
+}
+
+aov_years_mult_evocation = {
+	value = 1
+	if = { limit = { has_perk = aov_firestorm_tactics_perk } add = 0.5 }
+}
+
+aov_years_mult_illusion = {
+	value = 1
+	if = { limit = { has_perk = aov_grand_illusion_perk } add = 0.5 }
+}
+
+aov_years_mult_necromancy = {
+	value = 1
+}
+
+aov_years_mult_transmutation = {
+	value = 1
+}
+
+# Added to the maximum mana
+aov_mana_max_bonus = {
+	value = 0
+	if = { limit = { has_perk = aov_arcane_reservoir_perk } add = 50 }
+	if = { limit = { has_trait = arcane_scholar } add = 50 }
+}
+
+# Multiplier on the monthly mana refill: Ley Lines +25%, Battle Meditation +100% while at war
+aov_mana_refill_mult = {
+	value = 1
+	if = { limit = { has_perk = aov_ley_lines_perk } add = 0.25 }
+	if = { limit = { has_perk = aov_battle_meditation_perk is_at_war = yes } add = 1 }
+}
+
+# Multiplier on the Forbidden Magic chance
+aov_dark_magic_mult = {
+	value = 1
+	if = { limit = { has_perk = aov_grave_whispers_perk } multiply = 0.5 }
+}

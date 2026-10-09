@@ -16,16 +16,17 @@ aov_mana = {
 	}
 }
 
-# 100 + 50 per affinity level
+# 100 + 50 per affinity level + perk/trait bonus (aov_magic_lifestyle_values.txt)
 aov_mana_max = {
 	value = 100
 	add = {
 		value = aov_affinity_level
 		multiply = 50
 	}
+	add = aov_mana_max_bonus
 }
 
-# Per month: 5 + Learning / 2 + 2 per affinity level (applied quarterly x 3)
+# Per month: (5 + Learning / 2 + 2 per affinity level) x aov_mana_refill_mult (applied quarterly x 3)
 aov_mana_refill_month = {
 	value = 5
 	add = {
@@ -36,15 +37,77 @@ aov_mana_refill_month = {
 		value = aov_affinity_level
 		multiply = 2
 	}
+	multiply = aov_mana_refill_mult
 }
 
-# Study per month: Learning + 5 per affinity level (applied quarterly x 3)
+# Study per month: Learning + 5 per affinity level, before the per-school multiplier (applied quarterly x 3)
 aov_study_gain_month = {
 	value = learning
 	add = {
 		value = aov_affinity_level
 		multiply = 5
 	}
+}
+
+# Abjuration study per month, with perks, focus and trait
+aov_study_gain_abjuration_month = {
+	value = aov_study_gain_month
+	multiply = aov_study_mult_abjuration
+}
+
+# Conjuration study per month, with perks, focus and trait
+aov_study_gain_conjuration_month = {
+	value = aov_study_gain_month
+	multiply = aov_study_mult_conjuration
+}
+
+# Divination study per month, with perks, focus and trait
+aov_study_gain_divination_month = {
+	value = aov_study_gain_month
+	multiply = aov_study_mult_divination
+}
+
+# Enchantment study per month, with perks, focus and trait
+aov_study_gain_enchantment_month = {
+	value = aov_study_gain_month
+	multiply = aov_study_mult_enchantment
+}
+
+# Evocation study per month, with perks, focus and trait
+aov_study_gain_evocation_month = {
+	value = aov_study_gain_month
+	multiply = aov_study_mult_evocation
+}
+
+# Illusion study per month, with perks, focus and trait
+aov_study_gain_illusion_month = {
+	value = aov_study_gain_month
+	multiply = aov_study_mult_illusion
+}
+
+# Necromancy study per month, with perks, focus and trait
+aov_study_gain_necromancy_month = {
+	value = aov_study_gain_month
+	multiply = aov_study_mult_necromancy
+}
+
+# Transmutation study per month, with perks, focus and trait
+aov_study_gain_transmutation_month = {
+	value = aov_study_gain_month
+	multiply = aov_study_mult_transmutation
+}
+
+# Study per month in the school being studied (0 if none)
+aov_study_gain_current_month = {
+	value = 0
+	if = { limit = { aov_is_studying = { SCHOOL = abjuration } } value = aov_study_gain_abjuration_month }
+	if = { limit = { aov_is_studying = { SCHOOL = conjuration } } value = aov_study_gain_conjuration_month }
+	if = { limit = { aov_is_studying = { SCHOOL = divination } } value = aov_study_gain_divination_month }
+	if = { limit = { aov_is_studying = { SCHOOL = enchantment } } value = aov_study_gain_enchantment_month }
+	if = { limit = { aov_is_studying = { SCHOOL = evocation } } value = aov_study_gain_evocation_month }
+	if = { limit = { aov_is_studying = { SCHOOL = illusion } } value = aov_study_gain_illusion_month }
+	if = { limit = { aov_is_studying = { SCHOOL = necromancy } } value = aov_study_gain_necromancy_month }
+	if = { limit = { aov_is_studying = { SCHOOL = transmutation } } value = aov_study_gain_transmutation_month }
 }
 
 aov_school_abjuration_progress = {
