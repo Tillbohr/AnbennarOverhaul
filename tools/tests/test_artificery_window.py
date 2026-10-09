@@ -44,6 +44,16 @@ class ArtificeryWindowTests(unittest.TestCase):
         self.assertIn("aov_research_brillites_sgui", popup)
         self.assertEqual(popup.count("{"), popup.count("}"))
 
+    def test_research_popup_uses_title_holders_and_faction_costs(self):
+        popup = (WINDOW.parent / "aov_window_artificery_research.gui").read_text(encoding="utf-8-sig")
+        self.assertNotIn('datacontext = "[GetPlayer]"', popup)
+        for f in ("brillites", "mechanists", "technomancers"):
+            self.assertIn(f"GetTitleByKey('d_{f}').GetHolder", popup)
+            self.assertIn(f"AOV_RESEARCH_COST_{f.upper()}", popup)
+        gen = (WINDOW.parent / "aov_inventions_generated.gui").read_text(encoding="utf-8-sig")
+        self.assertIn("AOV_RESEARCH_COST_TECHNOMANCERS", gen)
+        self.assertNotIn('"AOV_RESEARCH_COST"', gen)
+
 
 if __name__ == "__main__":
     unittest.main()

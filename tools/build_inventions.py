@@ -455,7 +455,7 @@ def offer_option(i) -> str:
         f"\t\tspacing = 8\n\n"
         f'\t\ticon = {{\n\t\t\tsize = {{ 34 32 }}\n\t\t\ttexture = "{ICON_DIR}/{i["icon"]}"\n\t\t}}\n\n'
         f'\t\ttext_single = {{\n\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\ttext = "aov_invention_{k}"\n\t\t\tmax_width = 330\n\t\t\talign = left|nobaseline\n\t\t}}\n\n'
-        f'\t\ttext_single = {{\n\t\t\ttext = "AOV_RESEARCH_COST"\n\t\t\talign = right|nobaseline\n\t\t}}\n'
+        f'\t\ttext_single = {{\n\t\t\ttext = "AOV_RESEARCH_COST_TECHNOMANCERS"\n\t\t\talign = right|nobaseline\n\t\t}}\n'
         f"\t}}\n"
         f"}}\n"
     )

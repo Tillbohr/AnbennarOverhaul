@@ -79,7 +79,10 @@
  AOV_RESEARCH_OPTION_FIELD_ECONOMIC: "The Economic field"
  AOV_RESEARCH_OPTION_FIELD_MILITARY: "The Military field"
  AOV_RESEARCH_OPTION_FIELD_SOCIETY: "The Society field"
- AOV_RESEARCH_COST: "@gold_icon! 50"
+ AOV_RESEARCH_COST_BRILLITES: "@gold_icon! [GetPlayer.MakeScope.ScriptValue('aov_research_cost_brillites')|0]"
+ AOV_RESEARCH_COST_MECHANISTS: "@gold_icon! [GetPlayer.MakeScope.ScriptValue('aov_research_cost_mechanists')|0]"
+ AOV_RESEARCH_COST_TECHNOMANCERS: "@gold_icon! [GetPlayer.MakeScope.ScriptValue('aov_research_cost_technomancers')|0]"
+ AOV_RESEARCH_LEADER_VACANT: "Vacant"
  aov_artificery_not_researching_tt: "No research project is under way"
  aov_artificery_research_gold_brillites_tt: "Has at least @gold_icon! [ROOT.Char.MakeScope.ScriptValue('aov_research_cost_brillites')|0] gold"
  aov_artificery_research_gold_mechanists_tt: "Has at least @gold_icon! [ROOT.Char.MakeScope.ScriptValue('aov_research_cost_mechanists')|0] gold"
@@ -92,7 +95,7 @@
  aov_artificery.1.a: "Put it to use at once."
  aov_artificery.1.b: "Store the plans for now."
  aov_artificery.2.t: "Research Abandoned"
- aov_artificery.2.desc: "The [ROOT.Char.Custom('AovLastSponsorName')] report that nothing in their field is left for them to discover. The @gold_icon! 50 gold sponsorship has been returned."
+ aov_artificery.2.desc: "The [ROOT.Char.Custom('AovLastSponsorName')] report that nothing in their field is left for them to discover. The @gold_icon! [ROOT.Char.MakeScope.Var('aov_research_paid').GetValue|0] gold sponsorship has been returned."
  aov_artificery.2.a: "A pity."
 
  # Invention men-at-arms

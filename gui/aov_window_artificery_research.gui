@@ -64,8 +64,7 @@ window = {
 	}
 
 	### FACTION LEADERS
-	# Placeholder: the artificer factions are not implemented yet, so every leader is the player.
-	# Replace each datacontext with the faction's leader once the factions exist.
+	# The leaders of the three artificer faction titles (a vacant title shows an empty plate)
 	widget = {
 		parentanchor = bottom|right
 		position = { -45 -22 }
@@ -73,7 +72,14 @@ window = {
 
 		hbox = {
 			aov_research_leader = {
-				datacontext = "[GetPlayer]"
+				datacontext = "[GetTitleByKey('d_brillites').GetHolder]"
+
+				blockoverride "has_leader" {
+					visible = "[GetTitleByKey('d_brillites').HasHolder]"
+				}
+				blockoverride "vacant" {
+					visible = "[Not( GetTitleByKey('d_brillites').HasHolder )]"
+				}
 
 				blockoverride "faction" {
 					visible = "[Or( GetVariableSystem.HasValue( 'aov_research_hover', 'brillites' ), GetVariableSystem.HasValue( 'aov_research_faction', 'brillites' ) )]"
@@ -87,7 +93,14 @@ window = {
 			}
 
 			aov_research_leader = {
-				datacontext = "[GetPlayer]"
+				datacontext = "[GetTitleByKey('d_mechanists').GetHolder]"
+
+				blockoverride "has_leader" {
+					visible = "[GetTitleByKey('d_mechanists').HasHolder]"
+				}
+				blockoverride "vacant" {
+					visible = "[Not( GetTitleByKey('d_mechanists').HasHolder )]"
+				}
 
 				blockoverride "faction" {
 					visible = "[Or( GetVariableSystem.HasValue( 'aov_research_hover', 'mechanists' ), GetVariableSystem.HasValue( 'aov_research_faction', 'mechanists' ) )]"
@@ -101,7 +114,14 @@ window = {
 			}
 
 			aov_research_leader = {
-				datacontext = "[GetPlayer]"
+				datacontext = "[GetTitleByKey('d_technomancers').GetHolder]"
+
+				blockoverride "has_leader" {
+					visible = "[GetTitleByKey('d_technomancers').HasHolder]"
+				}
+				blockoverride "vacant" {
+					visible = "[Not( GetTitleByKey('d_technomancers').HasHolder )]"
+				}
 
 				blockoverride "faction" {
 					visible = "[Or( GetVariableSystem.HasValue( 'aov_research_hover', 'technomancers' ), GetVariableSystem.HasValue( 'aov_research_faction', 'technomancers' ) )]"
@@ -214,7 +234,7 @@ window = {
 						text = "AOV_RESEARCH_OPTION_BRILLITES"
 					}
 					blockoverride "cost" {
-						text = "AOV_RESEARCH_COST"
+						text = "AOV_RESEARCH_COST_BRILLITES"
 					}
 				}
 
@@ -230,7 +250,7 @@ window = {
 						text = "AOV_RESEARCH_OPTION_MECHANISTS"
 					}
 					blockoverride "cost" {
-						text = "AOV_RESEARCH_COST"
+						text = "AOV_RESEARCH_COST_MECHANISTS"
 					}
 				}
 
@@ -246,7 +266,7 @@ window = {
 						text = "AOV_RESEARCH_OPTION_TECHNOMANCERS"
 					}
 					blockoverride "cost" {
-						text = "AOV_RESEARCH_COST"
+						text = "AOV_RESEARCH_COST_TECHNOMANCERS"
 					}
 				}
 
@@ -274,7 +294,7 @@ window = {
 						text = "AOV_RESEARCH_OPTION_FIELD_ECONOMIC"
 					}
 					blockoverride "cost" {
-						text = "AOV_RESEARCH_COST"
+						text = "AOV_RESEARCH_COST_MECHANISTS"
 					}
 				}
 
@@ -288,7 +308,7 @@ window = {
 						text = "AOV_RESEARCH_OPTION_FIELD_MILITARY"
 					}
 					blockoverride "cost" {
-						text = "AOV_RESEARCH_COST"
+						text = "AOV_RESEARCH_COST_MECHANISTS"
 					}
 				}
 
@@ -302,7 +322,7 @@ window = {
 						text = "AOV_RESEARCH_OPTION_FIELD_SOCIETY"
 					}
 					blockoverride "cost" {
-						text = "AOV_RESEARCH_COST"
+						text = "AOV_RESEARCH_COST_MECHANISTS"
 					}
 				}
 
@@ -505,6 +525,7 @@ types AovResearchEvent
 		}
 
 		portrait_button = {
+			block "has_leader" {}
 			parentanchor = bottom|hcenter
 			position = { 0 -40 }
 			size = { 320 470 }
@@ -524,6 +545,7 @@ types AovResearchEvent
 			spacing = 2
 
 			text_single = {
+				block "has_leader" {}
 				parentanchor = hcenter
 				text = "[Character.GetShortUINameNoTooltip]"
 				max_width = 170
@@ -539,6 +561,18 @@ types AovResearchEvent
 				using = Background_Nameplate
 
 				block "role" {}
+			}
+
+			text_single = {
+				block "vacant" {
+					visible = no
+				}
+				parentanchor = hcenter
+				text = "AOV_RESEARCH_LEADER_VACANT"
+				max_width = 180
+				align = nobaseline|center
+				default_format = "#weak"
+				using = Background_Nameplate
 			}
 		}
 	}
