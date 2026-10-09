@@ -51,7 +51,7 @@ SPELLS = [
           "Bread and arrows appear where the quartermasters swore there were none.",
           modifier="supply_limit_mult = 0.25\narmy_maintenance_mult = -0.1"),
     spell("summon_elementals", "conjuration", 2, 4, "war", "Summon Elementals",
-          "A free army of conjured elementals appears at your capital for 3 years",
+          "A free army of conjured elementals appears at your capital for the spell's duration",
           "Stone and flame take shape and march at their summoner's word.",
           effect="aov_summon_elementals = yes"),
     spell("aid_construction", "conjuration", 2, 5, "realm", "Aid Construction", "Buildings 30% faster and 20% cheaper",

@@ -3,499 +3,548 @@
 # Character scope (the caster); targeted spells have the target as scope:recipient.
 
 aov_spell_combat_ward_cast = {
-	custom_tooltip = AOV_SPELL_COST_25
+	custom_tooltip = aov_spell_combat_ward_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -25 }
+		aov_mana_spend = { AMOUNT = aov_spell_combat_ward_cost }
 		aov_school_add_progress = { SCHOOL = abjuration AMOUNT = 25 }
-		set_variable = { name = aov_spell_combat_ward_cd years = 1 }
+		add_magic_lifestyle_xp = 25
+		set_variable = { name = aov_spell_combat_ward_cd years = aov_spell_combat_ward_years }
 	}
-	add_character_modifier = { modifier = aov_spell_combat_ward years = 1 }
+	add_character_modifier = { modifier = aov_spell_combat_ward years = aov_spell_combat_ward_years }
 }
 
 aov_spell_ward_cast = {
-	custom_tooltip = AOV_SPELL_COST_50
+	custom_tooltip = aov_spell_ward_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -50 }
+		aov_mana_spend = { AMOUNT = aov_spell_ward_cost }
 		aov_school_add_progress = { SCHOOL = abjuration AMOUNT = 50 }
-		set_variable = { name = aov_spell_ward_cd years = 2 }
+		add_magic_lifestyle_xp = 50
+		set_variable = { name = aov_spell_ward_cd years = aov_spell_ward_years }
 	}
 	scope:recipient = { add_character_modifier = { modifier = aov_spell_ward_target years = 2 } }
 }
 
 aov_spell_protected_journey_cast = {
-	custom_tooltip = AOV_SPELL_COST_50
+	custom_tooltip = aov_spell_protected_journey_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -50 }
+		aov_mana_spend = { AMOUNT = aov_spell_protected_journey_cost }
 		aov_school_add_progress = { SCHOOL = abjuration AMOUNT = 50 }
-		set_variable = { name = aov_spell_protected_journey_cd years = 2 }
+		add_magic_lifestyle_xp = 50
+		set_variable = { name = aov_spell_protected_journey_cd years = aov_spell_protected_journey_years }
 	}
-	add_character_modifier = { modifier = aov_spell_protected_journey years = 2 }
+	add_character_modifier = { modifier = aov_spell_protected_journey years = aov_spell_protected_journey_years }
 }
 
 aov_spell_mass_ward_cast = {
-	custom_tooltip = AOV_SPELL_COST_100
+	custom_tooltip = aov_spell_mass_ward_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -100 }
+		aov_mana_spend = { AMOUNT = aov_spell_mass_ward_cost }
 		aov_school_add_progress = { SCHOOL = abjuration AMOUNT = 100 }
-		set_variable = { name = aov_spell_mass_ward_cd years = 3 }
+		add_magic_lifestyle_xp = 100
+		set_variable = { name = aov_spell_mass_ward_cd years = aov_spell_mass_ward_years }
 	}
-	add_character_modifier = { modifier = aov_spell_mass_ward years = 3 }
+	add_character_modifier = { modifier = aov_spell_mass_ward years = aov_spell_mass_ward_years }
 }
 
 aov_spell_mage_armor_cast = {
-	custom_tooltip = AOV_SPELL_COST_100
+	custom_tooltip = aov_spell_mage_armor_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -100 }
+		aov_mana_spend = { AMOUNT = aov_spell_mage_armor_cost }
 		aov_school_add_progress = { SCHOOL = abjuration AMOUNT = 100 }
-		set_variable = { name = aov_spell_mage_armor_cd years = 3 }
+		add_magic_lifestyle_xp = 100
+		set_variable = { name = aov_spell_mage_armor_cd years = aov_spell_mage_armor_years }
 	}
-	add_character_modifier = { modifier = aov_spell_mage_armor years = 3 }
+	add_character_modifier = { modifier = aov_spell_mage_armor years = aov_spell_mage_armor_years }
 }
 
 aov_spell_field_of_forbiddance_cast = {
-	custom_tooltip = AOV_SPELL_COST_200
+	custom_tooltip = aov_spell_field_of_forbiddance_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -200 }
+		aov_mana_spend = { AMOUNT = aov_spell_field_of_forbiddance_cost }
 		aov_school_add_progress = { SCHOOL = abjuration AMOUNT = 200 }
-		set_variable = { name = aov_spell_field_of_forbiddance_cd years = 5 }
+		add_magic_lifestyle_xp = 200
+		set_variable = { name = aov_spell_field_of_forbiddance_cd years = aov_spell_field_of_forbiddance_years }
 	}
-	add_character_modifier = { modifier = aov_spell_field_of_forbiddance years = 5 }
+	add_character_modifier = { modifier = aov_spell_field_of_forbiddance years = aov_spell_field_of_forbiddance_years }
 }
 
 aov_spell_summon_familiars_cast = {
-	custom_tooltip = AOV_SPELL_COST_25
+	custom_tooltip = aov_spell_summon_familiars_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -25 }
+		aov_mana_spend = { AMOUNT = aov_spell_summon_familiars_cost }
 		aov_school_add_progress = { SCHOOL = conjuration AMOUNT = 25 }
-		set_variable = { name = aov_spell_summon_familiars_cd years = 1 }
+		add_magic_lifestyle_xp = 25
+		set_variable = { name = aov_spell_summon_familiars_cd years = aov_spell_summon_familiars_years }
 	}
-	add_character_modifier = { modifier = aov_spell_summon_familiars years = 1 }
+	add_character_modifier = { modifier = aov_spell_summon_familiars years = aov_spell_summon_familiars_years }
 }
 
 aov_spell_summon_animals_cast = {
-	custom_tooltip = AOV_SPELL_COST_50
+	custom_tooltip = aov_spell_summon_animals_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -50 }
+		aov_mana_spend = { AMOUNT = aov_spell_summon_animals_cost }
 		aov_school_add_progress = { SCHOOL = conjuration AMOUNT = 50 }
-		set_variable = { name = aov_spell_summon_animals_cd years = 2 }
+		add_magic_lifestyle_xp = 50
+		set_variable = { name = aov_spell_summon_animals_cd years = aov_spell_summon_animals_years }
 	}
-	add_character_modifier = { modifier = aov_spell_summon_animals years = 2 }
+	add_character_modifier = { modifier = aov_spell_summon_animals years = aov_spell_summon_animals_years }
 }
 
 aov_spell_conjure_supplies_cast = {
-	custom_tooltip = AOV_SPELL_COST_50
+	custom_tooltip = aov_spell_conjure_supplies_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -50 }
+		aov_mana_spend = { AMOUNT = aov_spell_conjure_supplies_cost }
 		aov_school_add_progress = { SCHOOL = conjuration AMOUNT = 50 }
-		set_variable = { name = aov_spell_conjure_supplies_cd years = 2 }
+		add_magic_lifestyle_xp = 50
+		set_variable = { name = aov_spell_conjure_supplies_cd years = aov_spell_conjure_supplies_years }
 	}
-	add_character_modifier = { modifier = aov_spell_conjure_supplies years = 2 }
+	add_character_modifier = { modifier = aov_spell_conjure_supplies years = aov_spell_conjure_supplies_years }
 }
 
 aov_spell_summon_elementals_cast = {
-	custom_tooltip = AOV_SPELL_COST_100
+	custom_tooltip = aov_spell_summon_elementals_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -100 }
+		aov_mana_spend = { AMOUNT = aov_spell_summon_elementals_cost }
 		aov_school_add_progress = { SCHOOL = conjuration AMOUNT = 100 }
-		set_variable = { name = aov_spell_summon_elementals_cd years = 3 }
+		add_magic_lifestyle_xp = 100
+		set_variable = { name = aov_spell_summon_elementals_cd years = aov_spell_summon_elementals_years }
 	}
 	aov_summon_elementals = yes
 }
 
 aov_spell_aid_construction_cast = {
-	custom_tooltip = AOV_SPELL_COST_100
+	custom_tooltip = aov_spell_aid_construction_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -100 }
+		aov_mana_spend = { AMOUNT = aov_spell_aid_construction_cost }
 		aov_school_add_progress = { SCHOOL = conjuration AMOUNT = 100 }
-		set_variable = { name = aov_spell_aid_construction_cd years = 3 }
+		add_magic_lifestyle_xp = 100
+		set_variable = { name = aov_spell_aid_construction_cd years = aov_spell_aid_construction_years }
 	}
-	add_character_modifier = { modifier = aov_spell_aid_construction years = 3 }
+	add_character_modifier = { modifier = aov_spell_aid_construction years = aov_spell_aid_construction_years }
 }
 
 aov_spell_extraplanar_contact_cast = {
-	custom_tooltip = AOV_SPELL_COST_200
+	custom_tooltip = aov_spell_extraplanar_contact_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -200 }
+		aov_mana_spend = { AMOUNT = aov_spell_extraplanar_contact_cost }
 		aov_school_add_progress = { SCHOOL = conjuration AMOUNT = 200 }
-		set_variable = { name = aov_spell_extraplanar_contact_cd years = 5 }
+		add_magic_lifestyle_xp = 200
+		set_variable = { name = aov_spell_extraplanar_contact_cd years = aov_spell_extraplanar_contact_years }
 	}
 	trigger_event = aov_magic.20
 }
 
 aov_spell_guidance_cast = {
-	custom_tooltip = AOV_SPELL_COST_25
+	custom_tooltip = aov_spell_guidance_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -25 }
+		aov_mana_spend = { AMOUNT = aov_spell_guidance_cost }
 		aov_school_add_progress = { SCHOOL = divination AMOUNT = 25 }
-		set_variable = { name = aov_spell_guidance_cd years = 1 }
+		add_magic_lifestyle_xp = 25
+		set_variable = { name = aov_spell_guidance_cd years = aov_spell_guidance_years }
 	}
-	add_character_modifier = { modifier = aov_spell_guidance years = 1 }
+	add_character_modifier = { modifier = aov_spell_guidance years = aov_spell_guidance_years }
 }
 
 aov_spell_eye_for_talent_cast = {
-	custom_tooltip = AOV_SPELL_COST_50
+	custom_tooltip = aov_spell_eye_for_talent_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -50 }
+		aov_mana_spend = { AMOUNT = aov_spell_eye_for_talent_cost }
 		aov_school_add_progress = { SCHOOL = divination AMOUNT = 50 }
-		set_variable = { name = aov_spell_eye_for_talent_cd years = 2 }
+		add_magic_lifestyle_xp = 50
+		set_variable = { name = aov_spell_eye_for_talent_cd years = aov_spell_eye_for_talent_years }
 	}
 	aov_eye_for_talent = yes
 }
 
 aov_spell_deposit_divination_cast = {
-	custom_tooltip = AOV_SPELL_COST_50
+	custom_tooltip = aov_spell_deposit_divination_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -50 }
+		aov_mana_spend = { AMOUNT = aov_spell_deposit_divination_cost }
 		aov_school_add_progress = { SCHOOL = divination AMOUNT = 50 }
-		set_variable = { name = aov_spell_deposit_divination_cd years = 2 }
+		add_magic_lifestyle_xp = 50
+		set_variable = { name = aov_spell_deposit_divination_cd years = aov_spell_deposit_divination_years }
 	}
-	add_character_modifier = { modifier = aov_spell_deposit_divination years = 2 }
+	add_character_modifier = { modifier = aov_spell_deposit_divination years = aov_spell_deposit_divination_years }
 	aov_deposit_divination = yes
 }
 
 aov_spell_scry_cast = {
-	custom_tooltip = AOV_SPELL_COST_100
+	custom_tooltip = aov_spell_scry_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -100 }
+		aov_mana_spend = { AMOUNT = aov_spell_scry_cost }
 		aov_school_add_progress = { SCHOOL = divination AMOUNT = 100 }
-		set_variable = { name = aov_spell_scry_cd years = 3 }
+		add_magic_lifestyle_xp = 100
+		set_variable = { name = aov_spell_scry_cd years = aov_spell_scry_years }
 	}
 	aov_scry_reveal = yes
 }
 
 aov_spell_manipulated_fortune_cast = {
-	custom_tooltip = AOV_SPELL_COST_100
+	custom_tooltip = aov_spell_manipulated_fortune_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -100 }
+		aov_mana_spend = { AMOUNT = aov_spell_manipulated_fortune_cost }
 		aov_school_add_progress = { SCHOOL = divination AMOUNT = 100 }
-		set_variable = { name = aov_spell_manipulated_fortune_cd years = 3 }
+		add_magic_lifestyle_xp = 100
+		set_variable = { name = aov_spell_manipulated_fortune_cd years = aov_spell_manipulated_fortune_years }
 	}
-	add_character_modifier = { modifier = aov_spell_manipulated_fortune years = 3 }
+	add_character_modifier = { modifier = aov_spell_manipulated_fortune years = aov_spell_manipulated_fortune_years }
 }
 
 aov_spell_foresight_cast = {
-	custom_tooltip = AOV_SPELL_COST_200
+	custom_tooltip = aov_spell_foresight_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -200 }
+		aov_mana_spend = { AMOUNT = aov_spell_foresight_cost }
 		aov_school_add_progress = { SCHOOL = divination AMOUNT = 200 }
-		set_variable = { name = aov_spell_foresight_cd years = 5 }
+		add_magic_lifestyle_xp = 200
+		set_variable = { name = aov_spell_foresight_cd years = aov_spell_foresight_years }
 	}
-	add_character_modifier = { modifier = aov_spell_foresight years = 5 }
+	add_character_modifier = { modifier = aov_spell_foresight years = aov_spell_foresight_years }
 }
 
 aov_spell_enchanting_envoy_cast = {
-	custom_tooltip = AOV_SPELL_COST_25
+	custom_tooltip = aov_spell_enchanting_envoy_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -25 }
+		aov_mana_spend = { AMOUNT = aov_spell_enchanting_envoy_cost }
 		aov_school_add_progress = { SCHOOL = enchantment AMOUNT = 25 }
-		set_variable = { name = aov_spell_enchanting_envoy_cd years = 1 }
+		add_magic_lifestyle_xp = 25
+		set_variable = { name = aov_spell_enchanting_envoy_cd years = aov_spell_enchanting_envoy_years }
 	}
-	add_character_modifier = { modifier = aov_spell_enchanting_envoy years = 1 }
+	add_character_modifier = { modifier = aov_spell_enchanting_envoy years = aov_spell_enchanting_envoy_years }
 }
 
 aov_spell_heartstring_cast = {
-	custom_tooltip = AOV_SPELL_COST_50
+	custom_tooltip = aov_spell_heartstring_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -50 }
+		aov_mana_spend = { AMOUNT = aov_spell_heartstring_cost }
 		aov_school_add_progress = { SCHOOL = enchantment AMOUNT = 50 }
-		set_variable = { name = aov_spell_heartstring_cd years = 2 }
+		add_magic_lifestyle_xp = 50
+		set_variable = { name = aov_spell_heartstring_cd years = aov_spell_heartstring_years }
 	}
 	scope:recipient = { add_opinion = { target = root modifier = aov_charmed_opinion years = 2 } }
 }
 
 aov_spell_command_animals_cast = {
-	custom_tooltip = AOV_SPELL_COST_50
+	custom_tooltip = aov_spell_command_animals_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -50 }
+		aov_mana_spend = { AMOUNT = aov_spell_command_animals_cost }
 		aov_school_add_progress = { SCHOOL = enchantment AMOUNT = 50 }
-		set_variable = { name = aov_spell_command_animals_cd years = 2 }
+		add_magic_lifestyle_xp = 50
+		set_variable = { name = aov_spell_command_animals_cd years = aov_spell_command_animals_years }
 	}
-	add_character_modifier = { modifier = aov_spell_command_animals years = 2 }
+	add_character_modifier = { modifier = aov_spell_command_animals years = aov_spell_command_animals_years }
 }
 
 aov_spell_thoughtweave_cast = {
-	custom_tooltip = AOV_SPELL_COST_100
+	custom_tooltip = aov_spell_thoughtweave_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -100 }
+		aov_mana_spend = { AMOUNT = aov_spell_thoughtweave_cost }
 		aov_school_add_progress = { SCHOOL = enchantment AMOUNT = 100 }
-		set_variable = { name = aov_spell_thoughtweave_cd years = 3 }
+		add_magic_lifestyle_xp = 100
+		set_variable = { name = aov_spell_thoughtweave_cd years = aov_spell_thoughtweave_years }
 	}
 }
 
 aov_spell_enchanting_embassy_cast = {
-	custom_tooltip = AOV_SPELL_COST_100
+	custom_tooltip = aov_spell_enchanting_embassy_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -100 }
+		aov_mana_spend = { AMOUNT = aov_spell_enchanting_embassy_cost }
 		aov_school_add_progress = { SCHOOL = enchantment AMOUNT = 100 }
-		set_variable = { name = aov_spell_enchanting_embassy_cd years = 3 }
+		add_magic_lifestyle_xp = 100
+		set_variable = { name = aov_spell_enchanting_embassy_cd years = aov_spell_enchanting_embassy_years }
 	}
-	add_character_modifier = { modifier = aov_spell_enchanting_embassy years = 3 }
+	add_character_modifier = { modifier = aov_spell_enchanting_embassy years = aov_spell_enchanting_embassy_years }
 }
 
 aov_spell_dominate_to_surrender_cast = {
-	custom_tooltip = AOV_SPELL_COST_200
+	custom_tooltip = aov_spell_dominate_to_surrender_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -200 }
+		aov_mana_spend = { AMOUNT = aov_spell_dominate_to_surrender_cost }
 		aov_school_add_progress = { SCHOOL = enchantment AMOUNT = 200 }
-		set_variable = { name = aov_spell_dominate_to_surrender_cd years = 5 }
+		add_magic_lifestyle_xp = 200
+		set_variable = { name = aov_spell_dominate_to_surrender_cd years = aov_spell_dominate_to_surrender_years }
 	}
 }
 
 aov_spell_fireball_cast = {
-	custom_tooltip = AOV_SPELL_COST_25
+	custom_tooltip = aov_spell_fireball_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -25 }
+		aov_mana_spend = { AMOUNT = aov_spell_fireball_cost }
 		aov_school_add_progress = { SCHOOL = evocation AMOUNT = 25 }
-		set_variable = { name = aov_spell_fireball_cd years = 1 }
+		add_magic_lifestyle_xp = 25
+		set_variable = { name = aov_spell_fireball_cd years = aov_spell_fireball_years }
 	}
-	add_character_modifier = { modifier = aov_spell_fireball years = 1 }
+	add_character_modifier = { modifier = aov_spell_fireball years = aov_spell_fireball_years }
 }
 
 aov_spell_shock_and_awe_cast = {
-	custom_tooltip = AOV_SPELL_COST_50
+	custom_tooltip = aov_spell_shock_and_awe_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -50 }
+		aov_mana_spend = { AMOUNT = aov_spell_shock_and_awe_cost }
 		aov_school_add_progress = { SCHOOL = evocation AMOUNT = 50 }
-		set_variable = { name = aov_spell_shock_and_awe_cd years = 2 }
+		add_magic_lifestyle_xp = 50
+		set_variable = { name = aov_spell_shock_and_awe_cd years = aov_spell_shock_and_awe_years }
 	}
-	add_character_modifier = { modifier = aov_spell_shock_and_awe years = 2 }
+	add_character_modifier = { modifier = aov_spell_shock_and_awe years = aov_spell_shock_and_awe_years }
 }
 
 aov_spell_flaming_munitions_cast = {
-	custom_tooltip = AOV_SPELL_COST_50
+	custom_tooltip = aov_spell_flaming_munitions_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -50 }
+		aov_mana_spend = { AMOUNT = aov_spell_flaming_munitions_cost }
 		aov_school_add_progress = { SCHOOL = evocation AMOUNT = 50 }
-		set_variable = { name = aov_spell_flaming_munitions_cd years = 2 }
+		add_magic_lifestyle_xp = 50
+		set_variable = { name = aov_spell_flaming_munitions_cd years = aov_spell_flaming_munitions_years }
 	}
-	add_character_modifier = { modifier = aov_spell_flaming_munitions years = 2 }
+	add_character_modifier = { modifier = aov_spell_flaming_munitions years = aov_spell_flaming_munitions_years }
 }
 
 aov_spell_meteor_swarm_cast = {
-	custom_tooltip = AOV_SPELL_COST_100
+	custom_tooltip = aov_spell_meteor_swarm_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -100 }
+		aov_mana_spend = { AMOUNT = aov_spell_meteor_swarm_cost }
 		aov_school_add_progress = { SCHOOL = evocation AMOUNT = 100 }
-		set_variable = { name = aov_spell_meteor_swarm_cd years = 3 }
+		add_magic_lifestyle_xp = 100
+		set_variable = { name = aov_spell_meteor_swarm_cd years = aov_spell_meteor_swarm_years }
 	}
-	add_character_modifier = { modifier = aov_spell_meteor_swarm years = 3 }
+	add_character_modifier = { modifier = aov_spell_meteor_swarm years = aov_spell_meteor_swarm_years }
 }
 
 aov_spell_tearfall_cast = {
-	custom_tooltip = AOV_SPELL_COST_100
+	custom_tooltip = aov_spell_tearfall_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -100 }
+		aov_mana_spend = { AMOUNT = aov_spell_tearfall_cost }
 		aov_school_add_progress = { SCHOOL = evocation AMOUNT = 100 }
-		set_variable = { name = aov_spell_tearfall_cd years = 3 }
+		add_magic_lifestyle_xp = 100
+		set_variable = { name = aov_spell_tearfall_cd years = aov_spell_tearfall_years }
 	}
-	add_character_modifier = { modifier = aov_spell_tearfall years = 3 }
+	add_character_modifier = { modifier = aov_spell_tearfall years = aov_spell_tearfall_years }
 }
 
 aov_spell_elemental_fury_cast = {
-	custom_tooltip = AOV_SPELL_COST_200
+	custom_tooltip = aov_spell_elemental_fury_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -200 }
+		aov_mana_spend = { AMOUNT = aov_spell_elemental_fury_cost }
 		aov_school_add_progress = { SCHOOL = evocation AMOUNT = 200 }
-		set_variable = { name = aov_spell_elemental_fury_cd years = 5 }
+		add_magic_lifestyle_xp = 200
+		set_variable = { name = aov_spell_elemental_fury_cd years = aov_spell_elemental_fury_years }
 	}
-	add_character_modifier = { modifier = aov_spell_elemental_fury years = 5 }
+	add_character_modifier = { modifier = aov_spell_elemental_fury years = aov_spell_elemental_fury_years }
 }
 
 aov_spell_invisibility_cast = {
-	custom_tooltip = AOV_SPELL_COST_25
+	custom_tooltip = aov_spell_invisibility_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -25 }
+		aov_mana_spend = { AMOUNT = aov_spell_invisibility_cost }
 		aov_school_add_progress = { SCHOOL = illusion AMOUNT = 25 }
-		set_variable = { name = aov_spell_invisibility_cd years = 1 }
+		add_magic_lifestyle_xp = 25
+		set_variable = { name = aov_spell_invisibility_cd years = aov_spell_invisibility_years }
 	}
-	add_character_modifier = { modifier = aov_spell_invisibility years = 1 }
+	add_character_modifier = { modifier = aov_spell_invisibility years = aov_spell_invisibility_years }
 }
 
 aov_spell_fear_and_loathing_cast = {
-	custom_tooltip = AOV_SPELL_COST_50
+	custom_tooltip = aov_spell_fear_and_loathing_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -50 }
+		aov_mana_spend = { AMOUNT = aov_spell_fear_and_loathing_cost }
 		aov_school_add_progress = { SCHOOL = illusion AMOUNT = 50 }
-		set_variable = { name = aov_spell_fear_and_loathing_cd years = 2 }
+		add_magic_lifestyle_xp = 50
+		set_variable = { name = aov_spell_fear_and_loathing_cd years = aov_spell_fear_and_loathing_years }
 	}
-	add_character_modifier = { modifier = aov_spell_fear_and_loathing years = 2 }
+	add_character_modifier = { modifier = aov_spell_fear_and_loathing years = aov_spell_fear_and_loathing_years }
 }
 
 aov_spell_bread_and_circuses_cast = {
-	custom_tooltip = AOV_SPELL_COST_50
+	custom_tooltip = aov_spell_bread_and_circuses_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -50 }
+		aov_mana_spend = { AMOUNT = aov_spell_bread_and_circuses_cost }
 		aov_school_add_progress = { SCHOOL = illusion AMOUNT = 50 }
-		set_variable = { name = aov_spell_bread_and_circuses_cd years = 2 }
+		add_magic_lifestyle_xp = 50
+		set_variable = { name = aov_spell_bread_and_circuses_cd years = aov_spell_bread_and_circuses_years }
 	}
-	add_character_modifier = { modifier = aov_spell_bread_and_circuses years = 2 }
+	add_character_modifier = { modifier = aov_spell_bread_and_circuses years = aov_spell_bread_and_circuses_years }
 }
 
 aov_spell_assimilation_program_cast = {
-	custom_tooltip = AOV_SPELL_COST_100
+	custom_tooltip = aov_spell_assimilation_program_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -100 }
+		aov_mana_spend = { AMOUNT = aov_spell_assimilation_program_cost }
 		aov_school_add_progress = { SCHOOL = illusion AMOUNT = 100 }
-		set_variable = { name = aov_spell_assimilation_program_cd years = 3 }
+		add_magic_lifestyle_xp = 100
+		set_variable = { name = aov_spell_assimilation_program_cd years = aov_spell_assimilation_program_years }
 	}
-	add_character_modifier = { modifier = aov_spell_assimilation_program years = 3 }
+	add_character_modifier = { modifier = aov_spell_assimilation_program years = aov_spell_assimilation_program_years }
 	aov_assimilation_program = yes
 }
 
 aov_spell_shadows_in_the_night_cast = {
-	custom_tooltip = AOV_SPELL_COST_100
+	custom_tooltip = aov_spell_shadows_in_the_night_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -100 }
+		aov_mana_spend = { AMOUNT = aov_spell_shadows_in_the_night_cost }
 		aov_school_add_progress = { SCHOOL = illusion AMOUNT = 100 }
-		set_variable = { name = aov_spell_shadows_in_the_night_cd years = 3 }
+		add_magic_lifestyle_xp = 100
+		set_variable = { name = aov_spell_shadows_in_the_night_cd years = aov_spell_shadows_in_the_night_years }
 	}
-	add_character_modifier = { modifier = aov_spell_shadows_in_the_night years = 3 }
+	add_character_modifier = { modifier = aov_spell_shadows_in_the_night years = aov_spell_shadows_in_the_night_years }
 }
 
 aov_spell_lead_the_crowds_cast = {
-	custom_tooltip = AOV_SPELL_COST_200
+	custom_tooltip = aov_spell_lead_the_crowds_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -200 }
+		aov_mana_spend = { AMOUNT = aov_spell_lead_the_crowds_cost }
 		aov_school_add_progress = { SCHOOL = illusion AMOUNT = 200 }
-		set_variable = { name = aov_spell_lead_the_crowds_cd years = 5 }
+		add_magic_lifestyle_xp = 200
+		set_variable = { name = aov_spell_lead_the_crowds_cd years = aov_spell_lead_the_crowds_years }
 	}
-	add_character_modifier = { modifier = aov_spell_lead_the_crowds years = 5 }
+	add_character_modifier = { modifier = aov_spell_lead_the_crowds years = aov_spell_lead_the_crowds_years }
 }
 
 aov_spell_false_life_cast = {
-	custom_tooltip = AOV_SPELL_COST_25
+	custom_tooltip = aov_spell_false_life_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -25 }
+		aov_mana_spend = { AMOUNT = aov_spell_false_life_cost }
 		aov_school_add_progress = { SCHOOL = necromancy AMOUNT = 25 }
-		set_variable = { name = aov_spell_false_life_cd years = 1 }
+		add_magic_lifestyle_xp = 25
+		set_variable = { name = aov_spell_false_life_cd years = aov_spell_false_life_years }
 	}
-	add_character_modifier = { modifier = aov_spell_false_life years = 1 }
+	add_character_modifier = { modifier = aov_spell_false_life years = aov_spell_false_life_years }
 	aov_dark_magic_roll = yes
 }
 
 aov_spell_steal_vitality_cast = {
-	custom_tooltip = AOV_SPELL_COST_50
+	custom_tooltip = aov_spell_steal_vitality_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -50 }
+		aov_mana_spend = { AMOUNT = aov_spell_steal_vitality_cost }
 		aov_school_add_progress = { SCHOOL = necromancy AMOUNT = 50 }
-		set_variable = { name = aov_spell_steal_vitality_cd years = 2 }
+		add_magic_lifestyle_xp = 50
+		set_variable = { name = aov_spell_steal_vitality_cd years = aov_spell_steal_vitality_years }
 	}
-	add_character_modifier = { modifier = aov_spell_steal_vitality years = 2 }
+	add_character_modifier = { modifier = aov_spell_steal_vitality years = aov_spell_steal_vitality_years }
 	scope:recipient = { add_character_modifier = { modifier = aov_spell_steal_vitality_victim years = 2 } }
 	aov_dark_magic_roll = yes
 }
 
 aov_spell_contagion_cast = {
-	custom_tooltip = AOV_SPELL_COST_50
+	custom_tooltip = aov_spell_contagion_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -50 }
+		aov_mana_spend = { AMOUNT = aov_spell_contagion_cost }
 		aov_school_add_progress = { SCHOOL = necromancy AMOUNT = 50 }
-		set_variable = { name = aov_spell_contagion_cd years = 2 }
+		add_magic_lifestyle_xp = 50
+		set_variable = { name = aov_spell_contagion_cd years = aov_spell_contagion_years }
 	}
 	scope:recipient = { if = { limit = { NOT = { has_trait = ill } } add_trait = ill } }
 	aov_dark_magic_roll = yes
 }
 
 aov_spell_speak_with_dead_cast = {
-	custom_tooltip = AOV_SPELL_COST_100
+	custom_tooltip = aov_spell_speak_with_dead_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -100 }
+		aov_mana_spend = { AMOUNT = aov_spell_speak_with_dead_cost }
 		aov_school_add_progress = { SCHOOL = necromancy AMOUNT = 100 }
-		set_variable = { name = aov_spell_speak_with_dead_cd years = 3 }
+		add_magic_lifestyle_xp = 100
+		set_variable = { name = aov_spell_speak_with_dead_cd years = aov_spell_speak_with_dead_years }
 	}
 	aov_speak_with_dead = yes
 	aov_dark_magic_roll = yes
 }
 
 aov_spell_remove_pain_cast = {
-	custom_tooltip = AOV_SPELL_COST_100
+	custom_tooltip = aov_spell_remove_pain_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -100 }
+		aov_mana_spend = { AMOUNT = aov_spell_remove_pain_cost }
 		aov_school_add_progress = { SCHOOL = necromancy AMOUNT = 100 }
-		set_variable = { name = aov_spell_remove_pain_cd years = 3 }
+		add_magic_lifestyle_xp = 100
+		set_variable = { name = aov_spell_remove_pain_cd years = aov_spell_remove_pain_years }
 	}
 	aov_remove_pain = yes
 	aov_dark_magic_roll = yes
 }
 
 aov_spell_chronophage_cast = {
-	custom_tooltip = AOV_SPELL_COST_200
+	custom_tooltip = aov_spell_chronophage_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -200 }
+		aov_mana_spend = { AMOUNT = aov_spell_chronophage_cost }
 		aov_school_add_progress = { SCHOOL = necromancy AMOUNT = 200 }
-		set_variable = { name = aov_spell_chronophage_cd years = 5 }
+		add_magic_lifestyle_xp = 200
+		set_variable = { name = aov_spell_chronophage_cd years = aov_spell_chronophage_years }
 	}
-	add_character_modifier = { modifier = aov_spell_chronophage years = 5 }
+	add_character_modifier = { modifier = aov_spell_chronophage years = aov_spell_chronophage_years }
 	aov_dark_magic_roll = yes
 }
 
 aov_spell_longstrider_cast = {
-	custom_tooltip = AOV_SPELL_COST_25
+	custom_tooltip = aov_spell_longstrider_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -25 }
+		aov_mana_spend = { AMOUNT = aov_spell_longstrider_cost }
 		aov_school_add_progress = { SCHOOL = transmutation AMOUNT = 25 }
-		set_variable = { name = aov_spell_longstrider_cd years = 1 }
+		add_magic_lifestyle_xp = 25
+		set_variable = { name = aov_spell_longstrider_cd years = aov_spell_longstrider_years }
 	}
-	add_character_modifier = { modifier = aov_spell_longstrider years = 1 }
+	add_character_modifier = { modifier = aov_spell_longstrider years = aov_spell_longstrider_years }
 }
 
 aov_spell_plant_growth_cast = {
-	custom_tooltip = AOV_SPELL_COST_50
+	custom_tooltip = aov_spell_plant_growth_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -50 }
+		aov_mana_spend = { AMOUNT = aov_spell_plant_growth_cost }
 		aov_school_add_progress = { SCHOOL = transmutation AMOUNT = 50 }
-		set_variable = { name = aov_spell_plant_growth_cd years = 2 }
+		add_magic_lifestyle_xp = 50
+		set_variable = { name = aov_spell_plant_growth_cd years = aov_spell_plant_growth_years }
 	}
-	add_character_modifier = { modifier = aov_spell_plant_growth years = 2 }
+	add_character_modifier = { modifier = aov_spell_plant_growth years = aov_spell_plant_growth_years }
 }
 
 aov_spell_mass_enlarge_cast = {
-	custom_tooltip = AOV_SPELL_COST_50
+	custom_tooltip = aov_spell_mass_enlarge_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -50 }
+		aov_mana_spend = { AMOUNT = aov_spell_mass_enlarge_cost }
 		aov_school_add_progress = { SCHOOL = transmutation AMOUNT = 50 }
-		set_variable = { name = aov_spell_mass_enlarge_cd years = 2 }
+		add_magic_lifestyle_xp = 50
+		set_variable = { name = aov_spell_mass_enlarge_cd years = aov_spell_mass_enlarge_years }
 	}
-	add_character_modifier = { modifier = aov_spell_mass_enlarge years = 2 }
+	add_character_modifier = { modifier = aov_spell_mass_enlarge years = aov_spell_mass_enlarge_years }
 }
 
 aov_spell_enhance_ability_cast = {
-	custom_tooltip = AOV_SPELL_COST_50
+	custom_tooltip = aov_spell_enhance_ability_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -50 }
+		aov_mana_spend = { AMOUNT = aov_spell_enhance_ability_cost }
 		aov_school_add_progress = { SCHOOL = transmutation AMOUNT = 50 }
-		set_variable = { name = aov_spell_enhance_ability_cd years = 2 }
+		add_magic_lifestyle_xp = 50
+		set_variable = { name = aov_spell_enhance_ability_cd years = aov_spell_enhance_ability_years }
 	}
 }
 
 aov_spell_transmute_to_gold_cast = {
-	custom_tooltip = AOV_SPELL_COST_100
+	custom_tooltip = aov_spell_transmute_to_gold_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -100 }
+		aov_mana_spend = { AMOUNT = aov_spell_transmute_to_gold_cost }
 		aov_school_add_progress = { SCHOOL = transmutation AMOUNT = 100 }
-		set_variable = { name = aov_spell_transmute_to_gold_cd years = 3 }
+		add_magic_lifestyle_xp = 100
+		set_variable = { name = aov_spell_transmute_to_gold_cd years = aov_spell_transmute_to_gold_years }
 	}
 	aov_transmute_to_gold = yes
 }
 
 aov_spell_reshape_terrain_cast = {
-	custom_tooltip = AOV_SPELL_COST_100
+	custom_tooltip = aov_spell_reshape_terrain_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -100 }
+		aov_mana_spend = { AMOUNT = aov_spell_reshape_terrain_cost }
 		aov_school_add_progress = { SCHOOL = transmutation AMOUNT = 100 }
-		set_variable = { name = aov_spell_reshape_terrain_cd years = 3 }
+		add_magic_lifestyle_xp = 100
+		set_variable = { name = aov_spell_reshape_terrain_cd years = aov_spell_reshape_terrain_years }
 	}
-	add_character_modifier = { modifier = aov_spell_reshape_terrain years = 3 }
+	add_character_modifier = { modifier = aov_spell_reshape_terrain years = aov_spell_reshape_terrain_years }
 }
 
 aov_spell_rite_of_conception_cast = {
-	custom_tooltip = AOV_SPELL_COST_200
+	custom_tooltip = aov_spell_rite_of_conception_cost_tt
 	hidden_effect = {
-		aov_mana_change = { AMOUNT = -200 }
+		aov_mana_spend = { AMOUNT = aov_spell_rite_of_conception_cost }
 		aov_school_add_progress = { SCHOOL = transmutation AMOUNT = 200 }
-		set_variable = { name = aov_spell_rite_of_conception_cd years = 5 }
+		add_magic_lifestyle_xp = 200
+		set_variable = { name = aov_spell_rite_of_conception_cd years = aov_spell_rite_of_conception_years }
 	}
-	add_character_modifier = { modifier = aov_spell_rite_of_conception years = 5 }
+	add_character_modifier = { modifier = aov_spell_rite_of_conception years = aov_spell_rite_of_conception_years }
 }
 
 # AI (aov_magic_ai_quarterly): one castable window spell; war spells weigh more

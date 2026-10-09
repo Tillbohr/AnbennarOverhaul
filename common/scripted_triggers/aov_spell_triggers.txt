@@ -19,8 +19,8 @@ aov_spell_combat_ward_castable = {
 		aov_spell_combat_ward_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_25
-		aov_mana >= 25
+		text = aov_spell_combat_ward_req_mana
+		aov_mana >= aov_spell_combat_ward_cost
 	}
 }
 
@@ -41,8 +41,8 @@ aov_spell_ward_castable = {
 		aov_spell_ward_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_50
-		aov_mana >= 50
+		text = aov_spell_ward_req_mana
+		aov_mana >= aov_spell_ward_cost
 	}
 }
 
@@ -63,8 +63,8 @@ aov_spell_protected_journey_castable = {
 		aov_spell_protected_journey_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_50
-		aov_mana >= 50
+		text = aov_spell_protected_journey_req_mana
+		aov_mana >= aov_spell_protected_journey_cost
 	}
 }
 
@@ -85,8 +85,8 @@ aov_spell_mass_ward_castable = {
 		aov_spell_mass_ward_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_100
-		aov_mana >= 100
+		text = aov_spell_mass_ward_req_mana
+		aov_mana >= aov_spell_mass_ward_cost
 	}
 }
 
@@ -107,8 +107,8 @@ aov_spell_mage_armor_castable = {
 		aov_spell_mage_armor_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_100
-		aov_mana >= 100
+		text = aov_spell_mage_armor_req_mana
+		aov_mana >= aov_spell_mage_armor_cost
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_WAR
@@ -133,8 +133,8 @@ aov_spell_field_of_forbiddance_castable = {
 		aov_spell_field_of_forbiddance_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_200
-		aov_mana >= 200
+		text = aov_spell_field_of_forbiddance_req_mana
+		aov_mana >= aov_spell_field_of_forbiddance_cost
 	}
 }
 
@@ -155,8 +155,8 @@ aov_spell_summon_familiars_castable = {
 		aov_spell_summon_familiars_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_25
-		aov_mana >= 25
+		text = aov_spell_summon_familiars_req_mana
+		aov_mana >= aov_spell_summon_familiars_cost
 	}
 }
 
@@ -177,8 +177,8 @@ aov_spell_summon_animals_castable = {
 		aov_spell_summon_animals_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_50
-		aov_mana >= 50
+		text = aov_spell_summon_animals_req_mana
+		aov_mana >= aov_spell_summon_animals_cost
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_WAR
@@ -203,8 +203,8 @@ aov_spell_conjure_supplies_castable = {
 		aov_spell_conjure_supplies_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_50
-		aov_mana >= 50
+		text = aov_spell_conjure_supplies_req_mana
+		aov_mana >= aov_spell_conjure_supplies_cost
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_WAR
@@ -229,8 +229,8 @@ aov_spell_summon_elementals_castable = {
 		aov_spell_summon_elementals_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_100
-		aov_mana >= 100
+		text = aov_spell_summon_elementals_req_mana
+		aov_mana >= aov_spell_summon_elementals_cost
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_WAR
@@ -255,8 +255,8 @@ aov_spell_aid_construction_castable = {
 		aov_spell_aid_construction_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_100
-		aov_mana >= 100
+		text = aov_spell_aid_construction_req_mana
+		aov_mana >= aov_spell_aid_construction_cost
 	}
 }
 
@@ -277,8 +277,8 @@ aov_spell_extraplanar_contact_castable = {
 		aov_spell_extraplanar_contact_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_200
-		aov_mana >= 200
+		text = aov_spell_extraplanar_contact_req_mana
+		aov_mana >= aov_spell_extraplanar_contact_cost
 	}
 }
 
@@ -299,8 +299,8 @@ aov_spell_guidance_castable = {
 		aov_spell_guidance_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_25
-		aov_mana >= 25
+		text = aov_spell_guidance_req_mana
+		aov_mana >= aov_spell_guidance_cost
 	}
 }
 
@@ -321,8 +321,8 @@ aov_spell_eye_for_talent_castable = {
 		aov_spell_eye_for_talent_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_50
-		aov_mana >= 50
+		text = aov_spell_eye_for_talent_req_mana
+		aov_mana >= aov_spell_eye_for_talent_cost
 	}
 }
 
@@ -343,8 +343,8 @@ aov_spell_deposit_divination_castable = {
 		aov_spell_deposit_divination_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_50
-		aov_mana >= 50
+		text = aov_spell_deposit_divination_req_mana
+		aov_mana >= aov_spell_deposit_divination_cost
 	}
 }
 
@@ -365,8 +365,8 @@ aov_spell_scry_castable = {
 		aov_spell_scry_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_100
-		aov_mana >= 100
+		text = aov_spell_scry_req_mana
+		aov_mana >= aov_spell_scry_cost
 	}
 }
 
@@ -387,8 +387,8 @@ aov_spell_manipulated_fortune_castable = {
 		aov_spell_manipulated_fortune_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_100
-		aov_mana >= 100
+		text = aov_spell_manipulated_fortune_req_mana
+		aov_mana >= aov_spell_manipulated_fortune_cost
 	}
 }
 
@@ -409,8 +409,8 @@ aov_spell_foresight_castable = {
 		aov_spell_foresight_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_200
-		aov_mana >= 200
+		text = aov_spell_foresight_req_mana
+		aov_mana >= aov_spell_foresight_cost
 	}
 }
 
@@ -431,8 +431,8 @@ aov_spell_enchanting_envoy_castable = {
 		aov_spell_enchanting_envoy_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_25
-		aov_mana >= 25
+		text = aov_spell_enchanting_envoy_req_mana
+		aov_mana >= aov_spell_enchanting_envoy_cost
 	}
 }
 
@@ -453,8 +453,8 @@ aov_spell_heartstring_castable = {
 		aov_spell_heartstring_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_50
-		aov_mana >= 50
+		text = aov_spell_heartstring_req_mana
+		aov_mana >= aov_spell_heartstring_cost
 	}
 }
 
@@ -475,8 +475,8 @@ aov_spell_command_animals_castable = {
 		aov_spell_command_animals_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_50
-		aov_mana >= 50
+		text = aov_spell_command_animals_req_mana
+		aov_mana >= aov_spell_command_animals_cost
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_WAR
@@ -501,8 +501,8 @@ aov_spell_thoughtweave_castable = {
 		aov_spell_thoughtweave_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_100
-		aov_mana >= 100
+		text = aov_spell_thoughtweave_req_mana
+		aov_mana >= aov_spell_thoughtweave_cost
 	}
 }
 
@@ -523,8 +523,8 @@ aov_spell_enchanting_embassy_castable = {
 		aov_spell_enchanting_embassy_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_100
-		aov_mana >= 100
+		text = aov_spell_enchanting_embassy_req_mana
+		aov_mana >= aov_spell_enchanting_embassy_cost
 	}
 }
 
@@ -545,8 +545,8 @@ aov_spell_dominate_to_surrender_castable = {
 		aov_spell_dominate_to_surrender_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_200
-		aov_mana >= 200
+		text = aov_spell_dominate_to_surrender_req_mana
+		aov_mana >= aov_spell_dominate_to_surrender_cost
 	}
 }
 
@@ -567,8 +567,8 @@ aov_spell_fireball_castable = {
 		aov_spell_fireball_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_25
-		aov_mana >= 25
+		text = aov_spell_fireball_req_mana
+		aov_mana >= aov_spell_fireball_cost
 	}
 }
 
@@ -589,8 +589,8 @@ aov_spell_shock_and_awe_castable = {
 		aov_spell_shock_and_awe_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_50
-		aov_mana >= 50
+		text = aov_spell_shock_and_awe_req_mana
+		aov_mana >= aov_spell_shock_and_awe_cost
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_WAR
@@ -615,8 +615,8 @@ aov_spell_flaming_munitions_castable = {
 		aov_spell_flaming_munitions_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_50
-		aov_mana >= 50
+		text = aov_spell_flaming_munitions_req_mana
+		aov_mana >= aov_spell_flaming_munitions_cost
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_WAR
@@ -641,8 +641,8 @@ aov_spell_meteor_swarm_castable = {
 		aov_spell_meteor_swarm_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_100
-		aov_mana >= 100
+		text = aov_spell_meteor_swarm_req_mana
+		aov_mana >= aov_spell_meteor_swarm_cost
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_WAR
@@ -667,8 +667,8 @@ aov_spell_tearfall_castable = {
 		aov_spell_tearfall_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_100
-		aov_mana >= 100
+		text = aov_spell_tearfall_req_mana
+		aov_mana >= aov_spell_tearfall_cost
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_WAR
@@ -693,8 +693,8 @@ aov_spell_elemental_fury_castable = {
 		aov_spell_elemental_fury_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_200
-		aov_mana >= 200
+		text = aov_spell_elemental_fury_req_mana
+		aov_mana >= aov_spell_elemental_fury_cost
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_WAR
@@ -719,8 +719,8 @@ aov_spell_invisibility_castable = {
 		aov_spell_invisibility_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_25
-		aov_mana >= 25
+		text = aov_spell_invisibility_req_mana
+		aov_mana >= aov_spell_invisibility_cost
 	}
 }
 
@@ -741,8 +741,8 @@ aov_spell_fear_and_loathing_castable = {
 		aov_spell_fear_and_loathing_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_50
-		aov_mana >= 50
+		text = aov_spell_fear_and_loathing_req_mana
+		aov_mana >= aov_spell_fear_and_loathing_cost
 	}
 }
 
@@ -763,8 +763,8 @@ aov_spell_bread_and_circuses_castable = {
 		aov_spell_bread_and_circuses_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_50
-		aov_mana >= 50
+		text = aov_spell_bread_and_circuses_req_mana
+		aov_mana >= aov_spell_bread_and_circuses_cost
 	}
 }
 
@@ -785,8 +785,8 @@ aov_spell_assimilation_program_castable = {
 		aov_spell_assimilation_program_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_100
-		aov_mana >= 100
+		text = aov_spell_assimilation_program_req_mana
+		aov_mana >= aov_spell_assimilation_program_cost
 	}
 }
 
@@ -807,8 +807,8 @@ aov_spell_shadows_in_the_night_castable = {
 		aov_spell_shadows_in_the_night_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_100
-		aov_mana >= 100
+		text = aov_spell_shadows_in_the_night_req_mana
+		aov_mana >= aov_spell_shadows_in_the_night_cost
 	}
 }
 
@@ -829,8 +829,8 @@ aov_spell_lead_the_crowds_castable = {
 		aov_spell_lead_the_crowds_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_200
-		aov_mana >= 200
+		text = aov_spell_lead_the_crowds_req_mana
+		aov_mana >= aov_spell_lead_the_crowds_cost
 	}
 }
 
@@ -851,8 +851,8 @@ aov_spell_false_life_castable = {
 		aov_spell_false_life_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_25
-		aov_mana >= 25
+		text = aov_spell_false_life_req_mana
+		aov_mana >= aov_spell_false_life_cost
 	}
 }
 
@@ -873,8 +873,8 @@ aov_spell_steal_vitality_castable = {
 		aov_spell_steal_vitality_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_50
-		aov_mana >= 50
+		text = aov_spell_steal_vitality_req_mana
+		aov_mana >= aov_spell_steal_vitality_cost
 	}
 }
 
@@ -895,8 +895,8 @@ aov_spell_contagion_castable = {
 		aov_spell_contagion_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_50
-		aov_mana >= 50
+		text = aov_spell_contagion_req_mana
+		aov_mana >= aov_spell_contagion_cost
 	}
 }
 
@@ -917,8 +917,8 @@ aov_spell_speak_with_dead_castable = {
 		aov_spell_speak_with_dead_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_100
-		aov_mana >= 100
+		text = aov_spell_speak_with_dead_req_mana
+		aov_mana >= aov_spell_speak_with_dead_cost
 	}
 }
 
@@ -939,8 +939,8 @@ aov_spell_remove_pain_castable = {
 		aov_spell_remove_pain_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_100
-		aov_mana >= 100
+		text = aov_spell_remove_pain_req_mana
+		aov_mana >= aov_spell_remove_pain_cost
 	}
 }
 
@@ -961,8 +961,8 @@ aov_spell_chronophage_castable = {
 		aov_spell_chronophage_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_200
-		aov_mana >= 200
+		text = aov_spell_chronophage_req_mana
+		aov_mana >= aov_spell_chronophage_cost
 	}
 }
 
@@ -983,8 +983,8 @@ aov_spell_longstrider_castable = {
 		aov_spell_longstrider_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_25
-		aov_mana >= 25
+		text = aov_spell_longstrider_req_mana
+		aov_mana >= aov_spell_longstrider_cost
 	}
 }
 
@@ -1005,8 +1005,8 @@ aov_spell_plant_growth_castable = {
 		aov_spell_plant_growth_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_50
-		aov_mana >= 50
+		text = aov_spell_plant_growth_req_mana
+		aov_mana >= aov_spell_plant_growth_cost
 	}
 }
 
@@ -1027,8 +1027,8 @@ aov_spell_mass_enlarge_castable = {
 		aov_spell_mass_enlarge_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_50
-		aov_mana >= 50
+		text = aov_spell_mass_enlarge_req_mana
+		aov_mana >= aov_spell_mass_enlarge_cost
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_WAR
@@ -1053,8 +1053,8 @@ aov_spell_enhance_ability_castable = {
 		aov_spell_enhance_ability_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_50
-		aov_mana >= 50
+		text = aov_spell_enhance_ability_req_mana
+		aov_mana >= aov_spell_enhance_ability_cost
 	}
 }
 
@@ -1075,8 +1075,8 @@ aov_spell_transmute_to_gold_castable = {
 		aov_spell_transmute_to_gold_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_100
-		aov_mana >= 100
+		text = aov_spell_transmute_to_gold_req_mana
+		aov_mana >= aov_spell_transmute_to_gold_cost
 	}
 }
 
@@ -1097,8 +1097,8 @@ aov_spell_reshape_terrain_castable = {
 		aov_spell_reshape_terrain_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_100
-		aov_mana >= 100
+		text = aov_spell_reshape_terrain_req_mana
+		aov_mana >= aov_spell_reshape_terrain_cost
 	}
 }
 
@@ -1119,8 +1119,8 @@ aov_spell_rite_of_conception_castable = {
 		aov_spell_rite_of_conception_ready = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_MANA_200
-		aov_mana >= 200
+		text = aov_spell_rite_of_conception_req_mana
+		aov_mana >= aov_spell_rite_of_conception_cost
 	}
 }
 

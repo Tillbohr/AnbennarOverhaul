@@ -160,11 +160,24 @@ def modifiers(spells: list) -> str:
     return "\n".join(out)
 
 
+def values(spells: list) -> str:
+    """Per-spell cost (mana) and duration (years) as script values, read through the caster's bonus layer."""
+    out = [HEADER, "# Character scope (the caster). Cost cuts and duration multipliers: aov_magic_lifestyle_values.txt\n"]
+    for s in spells:
+        k, c, lvl = s["key"], s["school"], s["level"]
+        extra = f"\tsubtract = aov_cost_cut_{s['type']}\n" if s["type"] in ("war", "targeted") else ""
+        out.append(
+            f"aov_spell_{k}_cost = {{\n\tvalue = 1\n\tsubtract = aov_cost_cut_{c}\n{extra}"
+            f"\tmin = 0.5\n\tmultiply = {COSTS[lvl]}\n\tadd = 0.5\n\tfloor = yes\n}}\n"
+            f"aov_spell_{k}_years = {{\n\tvalue = {YEARS[lvl]}\n\tmultiply = aov_years_mult_{c}\n\tadd = 0.5\n\tfloor = yes\n}}\n"
+        )
+    return "\n".join(out)
+
+
 def triggers(spells: list) -> str:
     out = [HEADER, "# Character scope (the caster).\n"]
     for s in spells:
         k, c, lvl = s["key"], s["school"], s["level"]
-        cost = COSTS[lvl]
         war = (f"\tcustom_tooltip = {{\n\t\ttext = AOV_SPELL_REQ_WAR\n\t\tis_at_war = yes\n\t}}\n" if s["type"] == "war" else "")
         out.append(
             f"aov_spell_{k}_known = {{\n\taov_school_level_at_least = {{ SCHOOL = {c} LEVEL = {lvl} }}\n}}\n"
@@ -173,7 +186,7 @@ def triggers(spells: list) -> str:
             f"\taov_is_mage = yes\n"
             f"\tcustom_tooltip = {{\n\t\ttext = AOV_SPELL_REQ_{c.upper()}_{lvl}\n\t\taov_spell_{k}_known = yes\n\t}}\n"
             f"\tcustom_tooltip = {{\n\t\ttext = AOV_SPELL_REQ_READY\n\t\taov_spell_{k}_ready = yes\n\t}}\n"
-            f"\tcustom_tooltip = {{\n\t\ttext = AOV_SPELL_REQ_MANA_{cost}\n\t\taov_mana >= {cost}\n\t}}\n"
+            f"\tcustom_tooltip = {{\n\t\ttext = aov_spell_{k}_req_mana\n\t\taov_mana >= aov_spell_{k}_cost\n\t}}\n"
             f"{war}}}\n"
         )
     castable = "\n".join(f"\t\taov_spell_{s['key']}_castable = yes" for s in spells if window_spell(s))
@@ -185,17 +198,18 @@ def effects(spells: list) -> str:
     out = [HEADER, "# Character scope (the caster); targeted spells have the target as scope:recipient.\n"]
     for s in spells:
         k, c, lvl = s["key"], s["school"], s["level"]
-        cost, years = COSTS[lvl], YEARS[lvl]
+        base = COSTS[lvl]
         lines = [
-            f"\tcustom_tooltip = AOV_SPELL_COST_{cost}",
+            f"\tcustom_tooltip = aov_spell_{k}_cost_tt",
             f"\thidden_effect = {{",
-            f"\t\taov_mana_change = {{ AMOUNT = -{cost} }}",
-            f"\t\taov_school_add_progress = {{ SCHOOL = {c} AMOUNT = {cost} }}",
-            f"\t\tset_variable = {{ name = aov_spell_{k}_cd years = {years} }}",
+            f"\t\taov_mana_spend = {{ AMOUNT = aov_spell_{k}_cost }}",
+            f"\t\taov_school_add_progress = {{ SCHOOL = {c} AMOUNT = {base} }}",
+            f"\t\tadd_magic_lifestyle_xp = {base}",
+            f"\t\tset_variable = {{ name = aov_spell_{k}_cd years = aov_spell_{k}_years }}",
             f"\t}}",
         ]
         if lasting(s):
-            lines.append(f"\tadd_character_modifier = {{ modifier = aov_spell_{k} years = {years} }}")
+            lines.append(f"\tadd_character_modifier = {{ modifier = aov_spell_{k} years = aov_spell_{k}_years }}")
         if s["effect"].strip():
             lines.append(body(s["effect"], 1))
         if c == "necromancy":
@@ -254,6 +268,7 @@ def interactions(spells: list) -> str:
 
 TYPE_LOC = {"self": "AOV_SPELL_TYPE_SELF", "realm": "AOV_SPELL_TYPE_REALM", "war": "AOV_SPELL_TYPE_WAR",
             "targeted": "AOV_SPELL_TYPE_TARGETED"}
+TYPE_LABEL = {"self": "Self", "realm": "Realm", "war": "War", "targeted": "Targeted"}
 ROOT = "GuiScope.SetRoot( GetPlayer.MakeScope ).End"
 
 
@@ -295,7 +310,7 @@ def card(s) -> str:
         f"\t\tvbox = {{\n\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\tspacing = 2\n\n"
         f'\t\t\ttext_single = {{\n\t\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\t\ttext = "aov_spell_{k}"\n'
         f'\t\t\t\tdefault_format = "#T"\n\t\t\t\tmax_width = 270\n\t\t\t\talign = left|nobaseline\n\t\t\t}}\n'
-        f'\t\t\ttext_single = {{\n\t\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\t\ttext = "AOV_SPELL_FACTS_{lvl}_{s["type"].upper()}"\n'
+        f'\t\t\ttext_single = {{\n\t\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\t\ttext = "aov_spell_{k}_facts"\n'
         f'\t\t\t\tdefault_format = "#weak"\n\t\t\t\tmax_width = 270\n\t\t\t\talign = left|nobaseline\n\t\t\t}}\n'
         f'\t\t\ttext_single = {{\n\t\t\t\tvisible = "[Not( GetPlayer.MakeScope.Var( \'aov_spell_{k}_cd\' ).IsSet )]"\n'
         f'\t\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\t\ttext = "aov_spell_{k}_desc"\n\t\t\t\tmax_width = 270\n'
@@ -354,8 +369,14 @@ def loc(spells: list) -> str:
         out.append(f' aov_spell_{k}_desc: "{s["desc"]}"')
         out.append(f' aov_spell_{k}_flavour: "#F {s["flavour"]}#!"')
         effects_text = (f"[GetModifier('aov_spell_{k}').GetDescWithEffects]" if lasting(s) else f"$aov_spell_{k}_desc$")
-        out.append(f' aov_spell_{k}_tt: "#T $aov_spell_{k}$#!\\n#weak $AOV_SCHOOL_{s["school"].upper()}$, $AOV_SPELL_FACTS_{s["level"]}_{s["type"].upper()}$#!'
+        out.append(f' aov_spell_{k}_tt: "#T $aov_spell_{k}$#!\\n#weak $AOV_SCHOOL_{s["school"].upper()}$, $aov_spell_{k}_facts$#!'
                    f'\\n\\n{effects_text}\\n\\n$aov_spell_{k}_flavour$"')
+        player = "GetPlayer.MakeScope.ScriptValue"
+        cost = f"#V [{player}('aov_spell_{k}_cost')|0]#!"
+        years = f"#V [{player}('aov_spell_{k}_years')|0]#!"
+        out.append(f' aov_spell_{k}_facts: "Level {s["level"]} · {cost} mana · {TYPE_LABEL[s["type"]]} · {years} years"')
+        out.append(f' aov_spell_{k}_req_mana: "Has at least {cost} mana"')
+        out.append(f' aov_spell_{k}_cost_tt: "Costs {cost} mana"')
         if s["interaction"] == f"aov_spell_{k}_interaction":
             out.append(f' aov_spell_{k}_interaction: "Cast {s["name"]}"')
             out.append(f' aov_spell_{k}_interaction_desc: "{s["desc"]}"')
@@ -363,18 +384,13 @@ def loc(spells: list) -> str:
     for c in SCHOOLS:
         for lvl in range(4):
             out.append(f' AOV_SPELL_REQ_{c.upper()}_{lvl}: "Knows $AOV_SCHOOL_{c.upper()}$ at level {lvl} or higher"')
-    for lvl in range(4):
-        for t, label in (("SELF", "Self"), ("REALM", "Realm"), ("WAR", "War"), ("TARGETED", "Targeted")):
-            out.append(f' AOV_SPELL_FACTS_{lvl}_{t}: "Level {lvl} · {COSTS[lvl]} mana · {label} · {YEARS[lvl]} year{"s" if YEARS[lvl] > 1 else ""}"')
-    for cost in COSTS:
-        out.append(f' AOV_SPELL_REQ_MANA_{cost}: "Has at least #V {cost}#! mana"')
-        out.append(f' AOV_SPELL_COST_{cost}: "Costs #V {cost}#! mana"')
     return "\n".join(out) + "\n"
 
 
 def render_all(spells: list) -> dict:
     return {
         "common/modifiers/aov_spell_modifiers.txt": modifiers(spells),
+        "common/script_values/aov_spell_values.txt": values(spells),
         "common/scripted_triggers/aov_spell_triggers.txt": triggers(spells),
         "common/scripted_effects/aov_spell_effects.txt": effects(spells),
         "common/scripted_guis/aov_spell_sgui.txt": sguis(spells),

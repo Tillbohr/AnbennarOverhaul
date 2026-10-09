@@ -138,7 +138,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_0_SELF"
+						text = "aov_spell_combat_ward_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -216,7 +216,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_1_TARGETED"
+						text = "aov_spell_ward_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -294,7 +294,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_1_SELF"
+						text = "aov_spell_protected_journey_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -372,7 +372,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_2_REALM"
+						text = "aov_spell_mass_ward_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -450,7 +450,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_2_WAR"
+						text = "aov_spell_mage_armor_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -528,7 +528,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_3_REALM"
+						text = "aov_spell_field_of_forbiddance_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -696,7 +696,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_0_SELF"
+						text = "aov_spell_summon_familiars_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -774,7 +774,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_1_WAR"
+						text = "aov_spell_summon_animals_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -852,7 +852,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_1_WAR"
+						text = "aov_spell_conjure_supplies_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -930,7 +930,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_2_WAR"
+						text = "aov_spell_summon_elementals_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -1008,7 +1008,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_2_REALM"
+						text = "aov_spell_aid_construction_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -1086,7 +1086,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_3_SELF"
+						text = "aov_spell_extraplanar_contact_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -1254,7 +1254,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_0_SELF"
+						text = "aov_spell_guidance_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -1332,7 +1332,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_1_SELF"
+						text = "aov_spell_eye_for_talent_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -1410,7 +1410,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_1_REALM"
+						text = "aov_spell_deposit_divination_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -1488,7 +1488,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_2_TARGETED"
+						text = "aov_spell_scry_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -1566,7 +1566,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_2_SELF"
+						text = "aov_spell_manipulated_fortune_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -1644,7 +1644,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_3_SELF"
+						text = "aov_spell_foresight_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -1812,7 +1812,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_0_SELF"
+						text = "aov_spell_enchanting_envoy_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -1890,7 +1890,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_1_TARGETED"
+						text = "aov_spell_heartstring_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -1968,7 +1968,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_1_WAR"
+						text = "aov_spell_command_animals_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -2046,7 +2046,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_2_TARGETED"
+						text = "aov_spell_thoughtweave_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -2124,7 +2124,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_2_REALM"
+						text = "aov_spell_enchanting_embassy_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -2202,7 +2202,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_3_TARGETED"
+						text = "aov_spell_dominate_to_surrender_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -2370,7 +2370,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_0_SELF"
+						text = "aov_spell_fireball_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -2448,7 +2448,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_1_WAR"
+						text = "aov_spell_shock_and_awe_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -2526,7 +2526,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_1_WAR"
+						text = "aov_spell_flaming_munitions_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -2604,7 +2604,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_2_WAR"
+						text = "aov_spell_meteor_swarm_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -2682,7 +2682,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_2_WAR"
+						text = "aov_spell_tearfall_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -2760,7 +2760,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_3_WAR"
+						text = "aov_spell_elemental_fury_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -2928,7 +2928,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_0_SELF"
+						text = "aov_spell_invisibility_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -3006,7 +3006,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_1_REALM"
+						text = "aov_spell_fear_and_loathing_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -3084,7 +3084,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_1_REALM"
+						text = "aov_spell_bread_and_circuses_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -3162,7 +3162,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_2_REALM"
+						text = "aov_spell_assimilation_program_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -3240,7 +3240,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_2_SELF"
+						text = "aov_spell_shadows_in_the_night_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -3318,7 +3318,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_3_REALM"
+						text = "aov_spell_lead_the_crowds_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -3486,7 +3486,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_0_SELF"
+						text = "aov_spell_false_life_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -3564,7 +3564,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_1_TARGETED"
+						text = "aov_spell_steal_vitality_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -3642,7 +3642,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_1_TARGETED"
+						text = "aov_spell_contagion_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -3720,7 +3720,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_2_SELF"
+						text = "aov_spell_speak_with_dead_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -3798,7 +3798,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_2_SELF"
+						text = "aov_spell_remove_pain_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -3876,7 +3876,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_3_SELF"
+						text = "aov_spell_chronophage_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -4044,7 +4044,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_0_SELF"
+						text = "aov_spell_longstrider_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -4122,7 +4122,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_1_REALM"
+						text = "aov_spell_plant_growth_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -4200,7 +4200,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_1_WAR"
+						text = "aov_spell_mass_enlarge_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -4276,7 +4276,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_1_TARGETED"
+						text = "aov_spell_enhance_ability_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -4354,7 +4354,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_2_SELF"
+						text = "aov_spell_transmute_to_gold_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -4432,7 +4432,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_2_REALM"
+						text = "aov_spell_reshape_terrain_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline
@@ -4510,7 +4510,7 @@ types AovMagic
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "AOV_SPELL_FACTS_3_SELF"
+						text = "aov_spell_rite_of_conception_facts"
 						default_format = "#weak"
 						max_width = 270
 						align = left|nobaseline

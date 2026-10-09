@@ -127,7 +127,7 @@ class ReviewFixTests(unittest.TestCase):
 
     def test_elementals_refund_without_capital(self):
         b = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_summon_elementals")
-        self.assertIn("aov_mana_change = { AMOUNT = 100 }", b)
+        self.assertIn("aov_mana_change = { AMOUNT = aov_spell_summon_elementals_cost }", b)
         self.assertIn("remove_variable = aov_spell_summon_elementals_cd", b)
 
 

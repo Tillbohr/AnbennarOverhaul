@@ -295,7 +295,7 @@ aov_assimilation_program = {
 
 ### Special spells (Task 4). Caster scope.
 
-# Summon Elementals: a free army at the capital, bound to the caster's war, removed after 3 years (aov_magic.10)
+# Summon Elementals: a free army at the capital, bound to the caster's war, removed when the spell's duration ends (aov_magic.10)
 aov_summon_elementals = {
 	if = {
 		limit = {
@@ -316,11 +316,11 @@ aov_summon_elementals = {
 			save_scope_as = aov_new_elementals
 		}
 		set_variable = { name = aov_elemental_army value = scope:aov_new_elementals }
-		trigger_event = { id = aov_magic.10 years = 3 }
+		trigger_event = { id = aov_magic.10 years = aov_spell_summon_elementals_years }
 	}
 	else = {
 		# No capital to summon at: the spell fizzles and costs nothing
-		aov_mana_change = { AMOUNT = 100 }
+		aov_mana_change = { AMOUNT = aov_spell_summon_elementals_cost }
 		remove_variable = aov_spell_summon_elementals_cd
 	}
 }
