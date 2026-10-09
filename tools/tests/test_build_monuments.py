@@ -146,11 +146,66 @@ BASE_ON_COMPLETE = """x_01 = {
 @unittest.skipUnless(LIVE, "Anbennar CK3 not present")
 class OverrideTests(unittest.TestCase):
     def test_override_keeps_every_anbennar_line(self):
-        base = bm.anbennar_definition(ANBENNAR, "castanorian_citadel_bal_ouord_02")
-        ours = block(overrides(), "castanorian_citadel_bal_ouord_02")
-        for line in body_lines(base):
-            if not line.strip().startswith("next_building"):
-                self.assertIn(line, ours)
+        known = bm.anbennar_keys()
+        for key in (k for m in MONUMENTS for k in m["levels"] if k in known):
+            base = bm.anbennar_definition(ANBENNAR, key)
+            ours = block(overrides(), key)
+            our_keys = {l.split("=")[0].strip() for l in ours.splitlines() if "=" in l}
+            for line in body_lines(base):
+                if line.strip().startswith("next_building"):
+                    continue
+                if line in ours.splitlines() or line.strip() in (l.strip() for l in ours.splitlines()):
+                    continue
+                # a line the generator merged (summed) is compared by key
+                self.assertIn(line.split("=")[0].strip(), our_keys, f"{key}: {line}")
+                self.assertTrue(re.match(r"\t\t\w+ = ", line), f"{key}: only modifier lines may be merged: {line}")
+
+    def test_no_override_block_repeats_a_modifier_key(self):
+        known = bm.anbennar_keys()
+        for key in (k for m in MONUMENTS for k in m["levels"] if k in known):
+            ours = block(overrides(), key)
+            for name in bm.BLOCKS:
+                m = re.search(rf"^\t{name} = \{{\n(.*?)^\t\}}", ours, re.M | re.S)
+                if m:
+                    keys = re.findall(r"^\t\t(\w+) = ", m.group(1), re.M)
+                    self.assertEqual(len(keys), len(set(keys)), f"{key} {name}: {keys}")
+
+    def test_merge_sums_named_value(self):
+        values = bm.parse_values("@base = 2\n@step = 2\n@t1 = @[base]\n@t3 = @[t1 + step + step]\n"
+                                 "good_building_fort_level_tier_3 = @[t3]\n")
+        base = "x_01 = {\n\tprovince_modifier = {\n\t\tfort_level = good_building_fort_level_tier_3\n\t}\n\n\ttype = special\n}\n"
+        tier = {"province_modifier": {"fort_level": 1}, "county_modifier": {}, "character_modifier": {}, "on_complete": ""}
+        out = bm.override(base, "x_01", tier, None, 1, values)
+        self.assertEqual(out.count("fort_level"), 2)  # the summed line and its comment
+        self.assertIn("\t\tfort_level = 7\n", out)
+        self.assertNotIn("fort_level = good_building", out)
+        self.assertIn("# Anbennar Overhaul: EU4 tier 1 (+1 to good_building_fort_level_tier_3 = 6)", out)
+
+    def test_merge_sums_numeric_value(self):
+        base = "x_01 = {\n\tcounty_modifier = {\n\t\ttax_mult = 0.2 # old\n\t}\n\n\ttype = special\n}\n"
+        tier = {"province_modifier": {}, "county_modifier": {"tax_mult": 0.05, "development_growth": 0.1},
+                "character_modifier": {}, "on_complete": ""}
+        out = bm.override(base, "x_01", tier, None, 2, {})
+        self.assertIn("\t\ttax_mult = 0.25\n", out)
+        self.assertEqual(out.count("tax_mult ="), 1)
+        self.assertIn("\t\tdevelopment_growth = 0.1\n", out)
+        self.assertEqual(out.count("county_modifier = {"), 1)
+
+    def test_unresolvable_value_keeps_anbennar_line(self):
+        base = "x_01 = {\n\tprovince_modifier = {\n\t\tfort_level = mystery_value\n\t}\n\n\ttype = special\n}\n"
+        tier = {"province_modifier": {"fort_level": 1}, "county_modifier": {}, "character_modifier": {}, "on_complete": ""}
+        warnings = []
+        out = bm.override(base, "x_01", tier, None, 3, {}, warnings)
+        self.assertIn("\t\tfort_level = mystery_value\n", out)
+        self.assertNotIn("fort_level = 1", out)
+        self.assertIn("# Anbennar Overhaul: EU4 tier 3 fort_level mystery_value not added (unknown name mystery_value)", out)
+        self.assertEqual(len(warnings), 1)
+
+    def test_one_line_block_is_rejected(self):
+        base = "x_01 = {\n\tprovince_modifier = { fort_level = 1 }\n\n\ttype = special\n}\n"
+        tier = {"province_modifier": {"fort_level": 1}, "county_modifier": {}, "character_modifier": {}, "on_complete": ""}
+        with self.assertRaises(bm.GeneratorError):
+            bm.override(base, "x_01", tier, None, 1, {})
 
     def test_override_adds_tier_effects_and_extends_chain(self):
         ours = block(overrides(), "castanorian_citadel_bal_ouord_02")
@@ -204,7 +259,7 @@ class OverrideTests(unittest.TestCase):
         ours = block(overrides(), "lake_palace_01")
         self.assertEqual(ours.count("next_building"), 1)
         self.assertIn("next_building = lake_palace_02", ours)
-        self.assertIn("next_building = ", block(overrides(), "lake_palace_02"))
+        self.assertIn("next_building = aov_monument_the_lake_palace_03", block(overrides(), "lake_palace_02"))
 
     def test_override_adds_missing_block_before_type(self):
         tier = {"province_modifier": {}, "county_modifier": {"development_growth": 0.1},
