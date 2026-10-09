@@ -10,5 +10,73 @@ aov_artificer_factions_quarterly = {
 	effect = {
 		aov_faction_init = yes
 		aov_factions_quarterly = yes
+		if = {
+			limit = {
+				exists = global_var:aov_election_open_brillites
+				NOT = { exists = global_var:aov_election_running_brillites }
+			}
+			aov_election_resolve = { FACTION = brillites }
+		}
+		if = {
+			limit = {
+				exists = global_var:aov_election_open_mechanists
+				NOT = { exists = global_var:aov_election_running_mechanists }
+			}
+			aov_election_resolve = { FACTION = mechanists }
+		}
+		if = {
+			limit = {
+				exists = global_var:aov_election_open_technomancers
+				NOT = { exists = global_var:aov_election_running_technomancers }
+			}
+			aov_election_resolve = { FACTION = technomancers }
+		}
 	}
+}
+
+on_death = {
+	on_actions = { aov_artificer_factions_on_death }
+}
+
+on_game_start_after_lobby = {
+	on_actions = { aov_artificer_factions_game_start }
+}
+
+yearly_global_pulse = {
+	on_actions = { aov_artificer_factions_yearly }
+}
+
+# Root = dying character: their faction title goes vacant and an election opens
+aov_artificer_factions_on_death = {
+	trigger = { any_held_title = { aov_is_artificer_faction_title = yes } }
+	effect = {
+		add_character_flag = aov_dying_faction_leader
+		if = {
+			limit = { has_title = title:d_brillites }
+			set_global_variable = { name = aov_late_leader_brillites value = root }
+			destroy_title = title:d_brillites
+			aov_election_open = { FACTION = brillites }
+		}
+		if = {
+			limit = { has_title = title:d_mechanists }
+			set_global_variable = { name = aov_late_leader_mechanists value = root }
+			destroy_title = title:d_mechanists
+			aov_election_open = { FACTION = mechanists }
+		}
+		if = {
+			limit = { has_title = title:d_technomancers }
+			set_global_variable = { name = aov_late_leader_technomancers value = root }
+			destroy_title = title:d_technomancers
+			aov_election_open = { FACTION = technomancers }
+		}
+	}
+}
+
+# Fill vacant titles (game start, and yearly in case nobody could stand)
+aov_artificer_factions_game_start = {
+	effect = { aov_elections_fill_vacant = yes }
+}
+
+aov_artificer_factions_yearly = {
+	effect = { aov_elections_fill_vacant = yes }
 }

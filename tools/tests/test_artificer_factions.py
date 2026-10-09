@@ -148,5 +148,59 @@ class DriftTests(unittest.TestCase):
         self.assertIn("gold > 300", b)
 
 
+class ElectionTests(unittest.TestCase):
+    def eff(self, name):
+        return block(read("common/scripted_effects/aov_artificer_election_effects.txt"), name)
+
+    def test_open_picks_exactly_three_with_world_fallback(self):
+        b = self.eff("aov_election_open")
+        self.assertIn("aov_election_clear = { FACTION = $FACTION$ }", b)
+        self.assertIn("clear_global_variable_list = aov_candidates_$FACTION$", self.eff("aov_election_clear"))
+        self.assertIn("max = 3", b)
+        self.assertIn("order_by = aov_candidate_score_$FACTION$", b)
+        self.assertIn("every_living_character", b)          # top-up from anywhere
+        self.assertIn("name = aov_election_running_$FACTION$ days = 30", b)
+        self.assertIn("trigger_event = aov_artificer_factions.1", b)
+
+    def test_vote_adds_weight_and_marks_voter(self):
+        b = self.eff("aov_election_cast_vote")
+        self.assertIn("save_temporary_scope_value_as = { name = aov_vote_weight value = aov_vote_weight_$FACTION$ }", b)
+        self.assertIn("add = scope:aov_vote_weight", b)
+        self.assertIn("set_variable = aov_voted_$FACTION$", b)
+
+    def test_resolve_skips_dead_candidates(self):
+        self.assertIn("is_alive = yes", self.eff("aov_election_resolve"))
+
+    def test_resolve_skips_current_holders(self):
+        self.assertIn("aov_faction_candidate_trigger = yes", self.eff("aov_election_resolve"))
+        b = block(read("common/scripted_triggers/aov_artificer_faction_triggers.txt"), "aov_faction_candidate_trigger")
+        self.assertIn("any_held_title = { aov_is_artificer_faction_title = yes }", b)
+
+    def test_auto_votes_only_for_living_eligible_voters(self):
+        b = self.eff("aov_election_resolve")
+        self.assertRegex(b, r"every_ruler = \{\s*limit = \{\s*aov_artificer_nation_trigger = yes\s*NOT = \{ has_variable = aov_voted_\$FACTION\$ \}")
+
+    def test_vote_event_shows_three_candidates_and_highlights(self):
+        ev = read("events/aov_artificer_faction_events.txt")
+        b = block(ev, "aov_artificer_factions.1")
+        for slot in ("lower_left_portrait", "lower_center_portrait", "lower_right_portrait"):
+            self.assertIn(slot, b)
+        for n in (1, 2, 3):
+            self.assertIn(f"highlight_portrait = scope:aov_candidate_{n}", b)
+        self.assertIn("theme = aov_artificery", b)
+
+    def test_on_death_and_game_start(self):
+        text = read("common/on_action/aov_artificer_faction_on_actions.txt")
+        self.assertIn("on_death = {\n\ton_actions = { aov_artificer_factions_on_death }", text)
+        self.assertIn("on_game_start_after_lobby = {\n\ton_actions = { aov_artificer_factions_game_start }", text)
+        self.assertIn("yearly_global_pulse = {\n\ton_actions = { aov_artificer_factions_yearly }", text)
+
+    def test_grant_uses_title_change(self):
+        b = self.eff("aov_faction_grant_title")
+        self.assertIn("create_title_and_vassal_change", b)
+        self.assertIn("change_title_holder = { holder = $WINNER$ change = scope:aov_change }", b)
+        self.assertIn("resolve_title_and_vassal_change = scope:aov_change", b)
+
+
 if __name__ == "__main__":
     unittest.main()

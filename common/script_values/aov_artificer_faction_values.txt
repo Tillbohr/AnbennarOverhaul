@@ -197,3 +197,72 @@ aov_opinion_drift_technomancers = {
 	}
 }
 
+
+# Election score: Learning x 2 + the faction's skill
+aov_candidate_score_brillites = {
+	value = learning
+	multiply = 2
+	add = diplomacy
+}
+
+aov_candidate_score_mechanists = {
+	value = learning
+	multiply = 2
+	add = stewardship
+}
+
+aov_candidate_score_technomancers = {
+	value = learning
+	multiply = 2
+	add = martial
+}
+
+# Count order: weighted votes first, score breaks ties
+aov_election_tally_brillites = {
+	value = 0
+	if = {
+		limit = { has_variable = aov_votes_brillites }
+		value = var:aov_votes_brillites
+		multiply = 1000
+	}
+	add = aov_candidate_score_brillites
+}
+
+aov_election_tally_mechanists = {
+	value = 0
+	if = {
+		limit = { has_variable = aov_votes_mechanists }
+		value = var:aov_votes_mechanists
+		multiply = 1000
+	}
+	add = aov_candidate_score_mechanists
+}
+
+aov_election_tally_technomancers = {
+	value = 0
+	if = {
+		limit = { has_variable = aov_votes_technomancers }
+		value = var:aov_votes_technomancers
+		multiply = 1000
+	}
+	add = aov_candidate_score_technomancers
+}
+
+# World-wide top-up: unlanded before landed, then score
+aov_election_topup_order_brillites = {
+	value = aov_candidate_score_brillites
+	if = { limit = { is_ruler = no } add = 1000 }
+}
+
+# World-wide top-up: unlanded before landed, then score
+aov_election_topup_order_mechanists = {
+	value = aov_candidate_score_mechanists
+	if = { limit = { is_ruler = no } add = 1000 }
+}
+
+# World-wide top-up: unlanded before landed, then score
+aov_election_topup_order_technomancers = {
+	value = aov_candidate_score_technomancers
+	if = { limit = { is_ruler = no } add = 1000 }
+}
+
