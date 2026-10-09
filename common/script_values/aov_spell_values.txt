@@ -685,21 +685,6 @@ aov_spell_mass_enlarge_years = {
 	floor = yes
 }
 
-aov_spell_enhance_ability_cost = {
-	value = 1
-	subtract = aov_cost_cut_transmutation
-	subtract = aov_cost_cut_targeted
-	min = 0.5
-	multiply = 50
-	add = 0.5
-	floor = yes
-}
-aov_spell_enhance_ability_years = {
-	value = 2
-	add = 0.5
-	floor = yes
-}
-
 aov_spell_transmute_to_gold_cost = {
 	value = 1
 	subtract = aov_cost_cut_transmutation

@@ -169,7 +169,7 @@ reads perks, traits and focuses for magic purposes:
 | `common/script_values/aov_magic_values.txt` | `aov_mana_max` adds `aov_mana_max_bonus`; `aov_mana_refill_month` multiplies by `aov_mana_refill_mult`; study gain per school multiplies by `aov_study_mult_<school>` |
 | `common/scripted_effects/aov_magic_effects.txt` | study tick uses the per-school gain; dark-magic roll uses `aov_dark_magic_mult`; mastery sync adds perks and sets `magic_lifestyle_total_points`; casting adds `add_magic_lifestyle_xp`; the Summon Elementals army is removed after `aov_spell_summon_elementals_years` instead of a fixed 3 years, so Bound Elementals extends it |
 | `tools/build_spells.py` | new generated `common/script_values/aov_spell_values.txt` with `aov_spell_<key>_cost` and `aov_spell_<key>_years` per spell; cast effects, castable triggers, generated interactions, AI casting, GUI cards and loc use them instead of fixed numbers; cost/duration tooltips become per-spell keys showing the live value; school progress from casting stays at the base cost |
-| `common/character_interactions/zz_aov_spell_overrides.txt` | no change: Compel, Dominate and Enhance Ability call the generated `_castable`/`_cast` blocks, so they pick up the cost values |
+| `common/character_interactions/zz_aov_spell_overrides.txt` | no change: Compel and Dominate call the generated `_castable`/`_cast` blocks, so they pick up the cost values |
 | `tools/tests/test_build_spells.py` | expects the values file and no fixed costs in casts, triggers or interactions |
 
 ### New hand-written files

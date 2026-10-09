@@ -46,7 +46,7 @@
  AOV_SPELL_REQ_NOT_FORBIDDEN: "The target is not protected by a Field of Forbiddance"
  start_compel_interaction_desc: "Thoughtweave (Enchantment, level 2): weave a compulsion into the target's thoughts. Costs #V 100#! mana."
  start_dominate_interaction_desc: "Dominate to Surrender (Enchantment, level 3): bend the target's will to yours. Costs #V 200#! mana."
- anb_enhance_ability_interaction_desc: "Enhance Ability (Transmutation, level 1): refine one of the target's skills. Costs #V 50#! mana."
+ anb_enhance_ability_interaction_desc: "Enhance Ability is not part of Anbennar Overhaul's magic."
 
  # Magic window
  AOV_MAGIC_BUTTON: "Magic"

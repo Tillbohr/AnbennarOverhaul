@@ -3647,69 +3647,6 @@ types AovMagic
 		}
 
 		widget = {
-			name = "aov_spell_card_enhance_ability"
-			size = { 480 88 }
-			tooltip = "aov_spell_enhance_ability_tt"
-
-			icon = {
-				position = { 0 0 }
-				size = { 290 64 }
-				texture = "gfx/interface/icons/aov_magic/spell_plate.dds"
-			}
-			icon = {
-				position = { 12 12 }
-				size = { 40 40 }
-				texture = "gfx/interface/icons/aov_magic/school_transmutation.dds"
-			}
-			icon = {
-				position = { 0 0 }
-				size = { 64 76 }
-				texture = "gfx/interface/icons/aov_magic/spell_frames.dds"
-				framesize = { 64 76 }
-				frame = 2
-			}
-
-			text_single = {
-				position = { 72 8 }
-				text = "aov_spell_enhance_ability"
-				default_format = "#T"
-				max_width = 205
-				align = left|nobaseline
-			}
-			text_single = {
-				position = { 72 38 }
-				text = "aov_spell_enhance_ability_facts"
-				default_format = "#weak"
-				max_width = 280
-				align = left|nobaseline
-			}
-			text_single = {
-				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_enhance_ability_cd' ).IsSet )]"
-				position = { 72 66 }
-				text = "aov_spell_enhance_ability_desc"
-				max_width = 400
-				align = left|nobaseline
-			}
-			text_single = {
-				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_enhance_ability_cd' ).IsSet]"
-				position = { 72 66 }
-				text = "AOV_SPELL_ON_COOLDOWN"
-				max_width = 400
-				align = left|nobaseline
-			}
-
-			text_multi = {
-				parentanchor = right
-				position = { -6 16 }
-				size = { 110 0 }
-				max_width = 110
-				autoresize = yes
-				text = "AOV_SPELL_CAST_FROM_PORTRAIT"
-				default_format = "#weak"
-			}
-		}
-
-		widget = {
 			name = "aov_spell_card_transmute_to_gold"
 			size = { 480 88 }
 			tooltip = "aov_spell_transmute_to_gold_tt"

@@ -6,7 +6,8 @@ which will feed school knowledge. Sub-project 3 is an optional balance and AI pa
 
 ## Goal
 
-Give Anbennar's mages eight schools of magic to study and 49 spells to cast. Spells are adapted from EU4 Anbennar
+Give Anbennar's mages eight schools of magic to study and 49 spells to cast (48 since Enhance Ability was removed on
+2026-10-09: Anbennar's interaction is hidden by a never-shown stub override). Spells are adapted from EU4 Anbennar
 to CK3 terms. The Magic window works like the Artificery window: a mana bar, a study project, and one tab per school
 listing its spells with Cast buttons. Anbennar's existing Compel, Dominate and Enhance Ability spells become part of
 the system.
@@ -167,7 +168,7 @@ deviation recorded.
 | 0 | Longstrider | S | +20% army movement, +25% travel speed |
 | 1 | Plant Growth | R | Faster capital development, +20% supply limit |
 | 1 | Mass Enlarge | W | +15% men-at-arms toughness and damage |
-| 1 | Enhance Ability | T | Anbennar's Enhance Ability scheme |
+| 1 | ~~Enhance Ability~~ | — | Removed 2026-10-09 (hidden stub override of `anb_enhance_ability_interaction`) |
 | 2 | Transmute to Gold | S | Gold = Learning x 15, +20 stress (one-off) |
 | 2 | Reshape Terrain | R | +4 defensive advantage |
 | 3 | Rite of Conception | S | +50% fertility; a child born to the caster while it lasts gains Magical Affinity 1 with 50% chance |

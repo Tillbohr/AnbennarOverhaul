@@ -156,7 +156,6 @@ class SpellOverrideTests(unittest.TestCase):
     OVERRIDES = (
         ("start_compel_interaction", "anb_spellcasting_infin_spells.txt", "thoughtweave"),
         ("start_dominate_interaction", "anb_spellcasting_infin_spells.txt", "dominate_to_surrender"),
-        ("anb_enhance_ability_interaction", "anb_spellcasting_interactions_enchantment.txt", "enhance_ability"),
     )
 
     def over(self):
@@ -181,6 +180,36 @@ class SpellOverrideTests(unittest.TestCase):
             self.assertIn("scope:recipient = { aov_spell_target_allowed = yes }", block(self.over(), name))
         t = block(read("common/scripted_triggers/aov_magic_triggers.txt"), "aov_spell_target_allowed")
         self.assertIn("has_character_modifier = aov_spell_field_of_forbiddance", t)
+
+
+class EnhanceAbilityRemovedTests(unittest.TestCase):
+    """Enhance Ability is removed from the game. Anbennar's interaction is the only way to start its scheme, so a
+    never-shown full override hides it whatever its body becomes. The base-mod scan fails after an Anbennar update
+    that renames the interaction or adds another way to start the scheme."""
+    BASE = MOD.parent / "anbennar-ck3-dev-master"
+    KEY = "anb_enhance_ability_interaction"
+    SCHEME = "anb_enhance_ability_spell"
+
+    def test_override_hides_interaction(self):
+        b = block(read("common/character_interactions/zz_aov_spell_overrides.txt"), self.KEY)
+        self.assertIn("is_shown = { always = no }", b)
+        self.assertNotIn("start_scheme", b)
+        self.assertNotIn("aov_spell_enhance_ability", read("common/character_interactions/zz_aov_spell_overrides.txt"))
+
+    def test_base_mod_has_no_other_way_in(self):
+        defined, entry_points = [], []
+        for root in ("common", "events"):
+            for path in (self.BASE / root).rglob("*.txt"):
+                text = path.read_text(encoding="utf-8-sig", errors="replace")
+                definition = re.compile(rf"^{self.KEY} = \{{\n.*?\n^\}}", re.M | re.S)
+                if definition.search(text):
+                    defined.append(path.name)
+                    text = definition.sub("", text)
+                rel = path.relative_to(self.BASE).as_posix()
+                if self.KEY in text or (self.SCHEME in text and "scheme_types" not in rel):
+                    entry_points.append(rel)
+        self.assertTrue(defined, f"Anbennar no longer defines {self.KEY}: find its new key and hide that instead")
+        self.assertEqual(entry_points, [], "new ways into Enhance Ability: hide them in zz_aov_spell_overrides.txt")
 
 
 if __name__ == "__main__":

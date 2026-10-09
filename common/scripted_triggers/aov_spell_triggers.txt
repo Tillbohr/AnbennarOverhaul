@@ -1036,28 +1036,6 @@ aov_spell_mass_enlarge_castable = {
 	}
 }
 
-aov_spell_enhance_ability_known = {
-	aov_school_level_at_least = { SCHOOL = transmutation LEVEL = 1 }
-}
-aov_spell_enhance_ability_ready = {
-	NOT = { has_variable = aov_spell_enhance_ability_cd }
-}
-aov_spell_enhance_ability_castable = {
-	aov_is_mage = yes
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_TRANSMUTATION_1
-		aov_spell_enhance_ability_known = yes
-	}
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_READY
-		aov_spell_enhance_ability_ready = yes
-	}
-	custom_tooltip = {
-		text = aov_spell_enhance_ability_req_mana
-		aov_mana >= aov_spell_enhance_ability_cost
-	}
-}
-
 aov_spell_transmute_to_gold_known = {
 	aov_school_level_at_least = { SCHOOL = transmutation LEVEL = 2 }
 }

@@ -49,12 +49,11 @@ def block(text, name):
 
 
 class DataTests(unittest.TestCase):
-    def test_forty_nine_spells_in_eight_schools(self):
-        self.assertEqual(len(SPELLS), 49)
+    def test_forty_eight_spells_in_eight_schools(self):
+        self.assertEqual(len(SPELLS), 48)
         counts = collections.Counter(s["school"] for s in SPELLS)
         self.assertEqual(set(counts), set(bs.SCHOOLS))
-        self.assertEqual(counts["transmutation"], 7)
-        self.assertTrue(all(counts[c] == 6 for c in bs.SCHOOLS if c != "transmutation"))
+        self.assertTrue(all(counts[c] == 6 for c in bs.SCHOOLS))
 
     def test_slots_match_levels(self):
         level_of_slot = {1: 0, 2: 1, 3: 1, 4: 2, 5: 2, 6: 3}
@@ -69,13 +68,12 @@ class DataTests(unittest.TestCase):
         by = {s["key"]: s for s in SPELLS}
         self.assertEqual(by["thoughtweave"]["interaction"], "start_compel_interaction")
         self.assertEqual(by["dominate_to_surrender"]["interaction"], "start_dominate_interaction")
-        self.assertEqual(by["enhance_ability"]["interaction"], "anb_enhance_ability_interaction")
-        self.assertEqual((by["enhance_ability"]["school"], by["enhance_ability"]["level"]), ("transmutation", 1))
+        self.assertNotIn("enhance_ability", by)  # removed from the game (zz_aov_spell_overrides.txt)
 
     def test_types(self):
         targeted = {s["key"] for s in SPELLS if s["type"] == "targeted"}
         self.assertEqual(targeted, {"ward", "heartstring", "thoughtweave", "dominate_to_surrender", "scry",
-                                    "steal_vitality", "contagion", "enhance_ability"})
+                                    "steal_vitality", "contagion"})
         for s in SPELLS:
             if s["type"] in ("self", "realm", "war"):
                 self.assertTrue(s["modifier"].strip() or s["effect"].strip(), s["key"])
@@ -245,7 +243,7 @@ class GeneratedTests(unittest.TestCase):
         self.assertTrue(balanced(text))
         for c in bs.SCHOOLS:
             self.assertIn(f"type aov_magic_school_{c} = vbox {{", text)
-        self.assertEqual(len(re.findall(r'name = "aov_spell_card_[a-z_]+"', text)), 49)
+        self.assertEqual(len(re.findall(r'name = "aov_spell_card_[a-z_]+"', text)), 48)
         for s in SPELLS:
             k = s["key"]
             card = text.split(f'name = "aov_spell_card_{k}"')[1].split('name = "aov_spell_card_')[0].split("type aov_magic_school_")[0]

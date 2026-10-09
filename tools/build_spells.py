@@ -65,7 +65,7 @@ def validate(spells: list) -> None:
             raise GeneratorError(f"{k}: unknown type {s['type']}")
         if s["level"] not in (0, 1, 2, 3):
             raise GeneratorError(f"{k}: bad level {s['level']}")
-        if s["slot"] and LEVEL_OF_SLOT.get(s["slot"]) != s["level"]:
+        if LEVEL_OF_SLOT.get(s["slot"]) != s["level"]:
             raise GeneratorError(f"{k}: slot {s['slot']} does not match level {s['level']}")
         if s["scales_duration"] and not (s["modifier"].strip() or k == "summon_elementals"):
             raise GeneratorError(f"{k}: scales_duration without a lasting effect")
@@ -293,13 +293,9 @@ def card(s) -> str:
     60x60 icon at +2,+2, all unscaled; the name on the plate's banner, the facts under it, the effect line below the
     plate, and the Cast button (or the portrait hint) right of the plate. 480 x 88."""
     k, c, lvl = s["key"], s["school"], s["level"]
-    if s["slot"]:
-        icon = (f'\ticon = {{\n\t\tposition = {{ 2 2 }}\n\t\tsize = {{ 60 60 }}\n'
-                f'\t\ttexture = "{ART_DIR}/spell_slot_{s["slot"]}.dds"\n\t\tframesize = {{ 60 60 }}\n'
-                f'\t\tframe = {SCHOOLS.index(c) + 1}\n\t}}\n')
-    else:
-        icon = (f'\ticon = {{\n\t\tposition = {{ 12 12 }}\n\t\tsize = {{ 40 40 }}\n'
-                f'\t\ttexture = "{ART_DIR}/school_{c}.dds"\n\t}}\n')
+    icon = (f'\ticon = {{\n\t\tposition = {{ 2 2 }}\n\t\tsize = {{ 60 60 }}\n'
+            f'\t\ttexture = "{ART_DIR}/spell_slot_{s["slot"]}.dds"\n\t\tframesize = {{ 60 60 }}\n'
+            f'\t\tframe = {SCHOOLS.index(c) + 1}\n\t}}\n')
     if window_spell(s):
         sg = f"aov_spell_{k}_sgui"
         action = (f"\tbutton_standard = {{\n\t\tparentanchor = right\n\t\tposition = {{ -6 16 }}\n"

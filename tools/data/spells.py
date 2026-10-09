@@ -3,12 +3,12 @@
 Adapted from EU4 Anbennar (school, level, icon slot, theme); effects are CK3 terms
 (docs/superpowers/specs/2026-10-08-magic-schools-design.md).
 
-slot: EU4 icon slot within the school (1 = level 0, 2-3 = level 1, 4-5 = level 2, 6 = level 3; 0 = no EU4 icon).
+slot: EU4 icon slot within the school (1 = level 0, 2-3 = level 1, 4-5 = level 2, 6 = level 3).
 type: self | realm | war (castable only at war) | targeted (a character interaction).
 modifier: character modifier body on the caster for the duration ("" for one-off spells).
 effect: one-off script run on cast, in the caster's scope; targeted spells have the target as scope:recipient.
 scales_duration: the duration perks (aov_years_mult_<school>) apply; default = has a lasting modifier.
-interaction: targeted spells only; Anbennar's own interaction for Compel, Dominate and Enhance Ability.
+interaction: targeted spells only; Anbennar's own interaction for Compel and Dominate.
 """
 
 
@@ -184,9 +184,6 @@ SPELLS = [
     spell("mass_enlarge", "transmutation", 1, 3, "war", "Mass Enlarge", "+15% men-at-arms toughness and damage",
           "Soldiers grown a head taller and twice as broad.",
           modifier="maa_toughness_mult = 0.15\nmaa_damage_mult = 0.15"),
-    spell("enhance_ability", "transmutation", 1, 0, "targeted", "Enhance Ability", "Boost one of the target's skills",
-          "Flesh and mind alike can be refined.",
-          interaction="anb_enhance_ability_interaction"),
     spell("transmute_to_gold", "transmutation", 2, 4, "self", "Transmute to Gold", "Gold equal to Learning x 15, +20 stress",
           "Alchemy breaks things down and builds them anew, gold included.",
           effect="aov_transmute_to_gold = yes"),

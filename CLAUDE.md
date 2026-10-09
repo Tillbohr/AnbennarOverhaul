@@ -65,11 +65,14 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 
 1. Replace `../anbennar-ck3-dev-master` with the new Anbennar release.
 2. Run `python -I tools/build_holdings_override.py` and `python -I tools/build_hud_override.py` and `python -I tools/build_lifestyle_override.py`.
-3. Run tiger (below) and fix anything that references renamed Anbennar content.
+3. Run tiger and the tool tests (below) and fix anything that references renamed Anbennar content. The tests fail if
+   Anbennar renames `anb_enhance_ability_interaction` or adds another way to start its Enhance Ability scheme (removed
+   from the game; see `EnhanceAbilityRemovedTests`).
 4. Re-copy Anbennar's `title_revocation_standard_can_pick_title_trigger` (`common/scripted_triggers/00_interaction_triggers.txt`)
    into `common/scripted_triggers/zz_aov_interaction_triggers.txt`, keeping the `# Anbennar Overhaul` faction-title exclusion.
-5. Re-copy Anbennar's `start_compel_interaction`, `start_dominate_interaction` and `anb_enhance_ability_interaction` into
-   `common/character_interactions/zz_aov_spell_overrides.txt`, keeping the `# Anbennar Overhaul` lines.
+5. Re-copy Anbennar's `start_compel_interaction` and `start_dominate_interaction` into
+   `common/character_interactions/zz_aov_spell_overrides.txt`, keeping the `# Anbennar Overhaul` lines. Its
+   `anb_enhance_ability_interaction` is a never-shown stub and needs no re-copy.
 6. Test in game; check `database_conflicts.log` for overhaul keys now also defined by Anbennar (notably `magic_duelist_focus`, which `zz_aov_magic_focuses.txt` must keep overriding).
 
 After a CK3 patch, rerun `python -I tools/build_hud_override.py` and `python -I tools/build_lifestyle_override.py` too: their sources are the game's `hud.gui` and `window_character_lifestyle.gui` (when Anbennar ships no copy).
@@ -125,11 +128,11 @@ inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error
 - **Magic schools:** eight schools (Abjuration, Conjuration, Divination, Enchantment, Evocation, Illusion, Necromancy,
   Transmutation) for mages (`has_magical_affinity`, Anbennar). Mana (100 + 50 per affinity level, refilled quarterly at
   3x the monthly rate), per-school knowledge levels 0-3 (300/800/2000 progress) from studying one chosen school and
-  from casting; `magic_mastery` = sum of levels. 49 spells in `tools/data/spells.py` (spec
+  from casting; `magic_mastery` = sum of levels. 48 spells in `tools/data/spells.py` (spec
   `docs/superpowers/specs/2026-10-08-magic-schools-design.md`): self/realm/war spells cast from the Magic window
   (`gui/aov_window_magic.gui`, HUD tab below Artificery, generated pages `gui/aov_magic_generated.gui`), targeted
-  spells as interactions in Anbennar's Spells category (Compel, Dominate, Enhance Ability overridden to need mana and
-  knowledge). Necromancy risks Forbidden Magic Practitioner under witchcraft-illegal/shunned faiths. Hand-written
+  spells as interactions in Anbennar's Spells category (Compel, Dominate overridden to need mana and knowledge;
+  Anbennar's Enhance Ability is removed from the game by a hidden stub override). Necromancy risks Forbidden Magic Practitioner under witchcraft-illegal/shunned faiths. Hand-written
   logic in `aov_magic_*` files; Summon Elementals spawns an army removed after the spell's duration (`aov_spell_summon_elementals_years`, extended by Bound Elementals).
 - **Magic lifestyle:** fills the "Known gaps" magic-lifestyle skeleton listed in the base mod's CLAUDE.md (which cannot be edited). Anbennar's stub `magic_lifestyle` made full: three trees of 9 perks (Arcane Scholar, Battle Mage,
   Mindweaver; `common/lifestyle_perks/aov_magic_*_perks.txt`), each ending in a trait

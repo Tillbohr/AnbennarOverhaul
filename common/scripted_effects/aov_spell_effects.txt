@@ -504,16 +504,6 @@ aov_spell_mass_enlarge_cast = {
 	add_character_modifier = { modifier = aov_spell_mass_enlarge years = aov_spell_mass_enlarge_years }
 }
 
-aov_spell_enhance_ability_cast = {
-	custom_tooltip = aov_spell_enhance_ability_cost_tt
-	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_enhance_ability_cost }
-		aov_school_add_progress = { SCHOOL = transmutation AMOUNT = 50 }
-		add_magic_lifestyle_xp = 50
-		set_variable = { name = aov_spell_enhance_ability_cd years = aov_spell_enhance_ability_years }
-	}
-}
-
 aov_spell_transmute_to_gold_cast = {
 	custom_tooltip = aov_spell_transmute_to_gold_cost_tt
 	hidden_effect = {
