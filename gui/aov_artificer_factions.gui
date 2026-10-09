@@ -22,13 +22,14 @@ types AovArtificerFactions
 			block "bar_tooltip" {}
 		}
 
-		# Spacers 15 / 15 / 30 / 25 / 15 put the markers at 15%, 30%, 60% and 85%
+		# Spacers 15 / 15 / 30 / 25 / 15 put the markers at 15%, 30%, 60% and 85%.
+		# The no_anchor marker: widget_level_marker's parentanchor = center would shift them by half the bar.
 		hbox = {
 			widget = {
 				layoutpolicy_horizontal = expanding
 				layoutstretchfactor_horizontal = 15
 			}
-			widget_level_marker = {
+			widget_level_marker_no_anchor = {
 				scale = 0.75
 
 				blockoverride "visible_active" {
@@ -48,7 +49,7 @@ types AovArtificerFactions
 				layoutpolicy_horizontal = expanding
 				layoutstretchfactor_horizontal = 15
 			}
-			widget_level_marker = {
+			widget_level_marker_no_anchor = {
 				scale = 0.75
 
 				blockoverride "visible_active" {
@@ -68,7 +69,7 @@ types AovArtificerFactions
 				layoutpolicy_horizontal = expanding
 				layoutstretchfactor_horizontal = 30
 			}
-			widget_level_marker = {
+			widget_level_marker_no_anchor = {
 				scale = 0.75
 
 				blockoverride "visible_active" {
@@ -88,7 +89,7 @@ types AovArtificerFactions
 				layoutpolicy_horizontal = expanding
 				layoutstretchfactor_horizontal = 25
 			}
-			widget_level_marker = {
+			widget_level_marker_no_anchor = {
 				scale = 0.75
 
 				blockoverride "visible_active" {

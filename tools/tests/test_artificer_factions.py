@@ -227,7 +227,9 @@ class FactionsTabTests(unittest.TestCase):
     def test_bar_markers_at_thresholds(self):
         gui = read("gui/aov_artificer_factions.gui")
         self.assertIn("type aov_influence_bar", gui)
-        self.assertEqual(gui.count("widget_level_marker = {"), 4)
+        # widget_level_marker has parentanchor = center, which offsets markers in an hbox by half its width
+        self.assertEqual(gui.count("widget_level_marker_no_anchor = {"), 4)
+        self.assertNotIn("widget_level_marker = {", gui)
         for x in ("15%", "30%", "60%", "85%"):
             self.assertIn(x, gui)
 
