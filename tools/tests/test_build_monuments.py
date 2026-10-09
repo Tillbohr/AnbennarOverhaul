@@ -5,6 +5,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # python -I does not add the tools folder
 import build_monuments as bm  # noqa: E402
+import eu4_monuments  # noqa: E402
 from data.monuments.cannor import MONUMENTS  # noqa: E402
 
 LIVE = bm.ANBENNAR_CK3.is_dir()
@@ -282,6 +283,32 @@ class OverrideTests(unittest.TestCase):
     def test_upper_chain_levels_use_tier_one_icon(self):
         self.assertIn('type_icon = "icon_structure_the_citadel_of_aleppo.dds"',
                       block(B, "aov_monument_bal_ouord_02"))
+
+
+
+
+@unittest.skipUnless(LIVE and eu4_monuments.EU4_ROOTS["anbennar"].is_dir(), "EU4 Anbennar art not installed")
+class ArtTests(unittest.TestCase):
+    def test_art_written_for_monuments_with_paintings(self):
+        from build_spells import read_bgra
+        files = bm.render_art("cannor")
+        for m in MONUMENTS:
+            if m["art"]:
+                w, h, _ = read_bgra(files[f"gfx/interface/illustrations/aov_monuments/{m['eu4_key']}.dds"])
+                self.assertEqual((w, h), (300, 150))
+
+    def test_custom_loc_entry_per_monument_with_art(self):
+        cl = FILES["common/customizable_localization/aov_monument_illustration.txt"]
+        self.assertIn("type = province", cl)
+        for m in MONUMENTS:
+            if m["art"]:
+                self.assertIn(f"has_building_or_higher = {m['levels'][0]}", cl)
+                self.assertIn(f"localization_key = aov_monument_art_{m['eu4_key']}", cl)
+        self.assertIn("fallback = yes", cl)
+
+    def test_art_loc_holds_texture_path(self):
+        key = next(m["eu4_key"] for m in MONUMENTS if m["art"])
+        self.assertIn(f' aov_monument_art_{key}: "gfx/interface/illustrations/aov_monuments/{key}.dds"', L)
 
 
 if __name__ == "__main__":

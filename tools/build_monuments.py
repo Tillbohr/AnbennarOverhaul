@@ -17,6 +17,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # python -I does not add the script's folder
 from data.monuments import translation  # noqa: E402
+import eu4_monuments  # noqa: E402
+from build_spells import read_bgra, write_bgra  # noqa: E402
 
 SUBMOD = Path(__file__).resolve().parent.parent
 ANBENNAR_CK3 = SUBMOD.parent / "anbennar-ck3-dev-master"
@@ -28,6 +30,7 @@ DROPPED_NOTE = " Some effects of the original Europa Universalis IV project have
 
 
 NL = "\n"
+ART_DIR = "gfx/interface/illustrations/aov_monuments"
 
 
 class GeneratorError(Exception):
@@ -319,9 +322,40 @@ def loc(monuments: list, known: set, root: Path = ANBENNAR_CK3) -> str:
             if key in known and f" building_type_{key}_desc:" not in anb_loc:
                 out.append(f' building_type_{key}_desc: "$building_{key}_desc$"')
     for m in monuments:
+        if m["art"]:
+            out.append(f' aov_monument_art_{m["eu4_key"]}: "{ART_DIR}/{m["eu4_key"]}.dds"')
+    out.append(' aov_monument_art_none: ""')
+    for m in monuments:
         if m["gate"]:
             out.append(f' aov_monument_{m["eu4_key"]}_gate: "{q("Built and used by: " + m["gate_desc"])}"')
     return "\n".join(out) + "\n"
+
+
+def illustration(monuments: list) -> str:
+    """Custom loc AovMonumentIllustration: the texture path of the painting for the province's monument, else empty."""
+    out = [HEADER, "AovMonumentIllustration = {", "\ttype = province", ""]
+    for m in monuments:
+        if m["art"]:
+            out += ["\ttext = {", "\t\ttrigger = {", f"\t\t\thas_building_or_higher = {m['levels'][0]}", "\t\t}",
+                    f"\t\tlocalization_key = aov_monument_art_{m['eu4_key']}", "\t}", ""]
+    out += ["\ttext = {", "\t\tfallback = yes", "\t\tlocalization_key = aov_monument_art_none", "\t}", "}", ""]
+    return NL.join(out)
+
+
+def render_art(region: str, roots=None) -> dict:
+    """Published path -> uncompressed BGRA DDS of each monument's EU4 painting (EU4 size)."""
+    roots = roots or eu4_monuments.EU4_ROOTS
+    out = {}
+    for m in load_monuments(region):
+        if not m["art"]:
+            continue
+        src = eu4_monuments.art_file(roots, m["eu4_key"])
+        if src is None:
+            raise GeneratorError(f"EU4 painting for {m['eu4_key']} not found ({m['art']})")
+        data = src.read_bytes()
+        w, h, px = eu4_monuments.decode_dxt1(data) if data[84:88] == b"DXT1" else read_bgra(data)  # a few are already BGRA
+        out[f"{ART_DIR}/{m['eu4_key']}.dds"] = write_bgra(w, h, bytes(px))
+    return out
 
 
 def render_all(region: str, root: Path = ANBENNAR_CK3) -> dict:
@@ -332,6 +366,7 @@ def render_all(region: str, root: Path = ANBENNAR_CK3) -> dict:
         f"common/buildings/zz_aov_monument_overrides_{region}.txt": overrides(monuments, known, root),
         f"history/provinces/aov_monuments_{region}.txt": history(monuments, known),
         f"localization/english/aov_monuments_{region}_l_english.yml": loc(monuments, known, root),
+        "common/customizable_localization/aov_monument_illustration.txt": illustration(monuments),
     }
 
 
@@ -349,9 +384,14 @@ def main() -> None:
     try:
         files = render_all(args.region)
         write_all(files, SUBMOD)
+        art = render_art(args.region)
+        for rel, data in art.items():
+            out = SUBMOD / rel
+            out.parent.mkdir(parents=True, exist_ok=True)
+            out.write_bytes(data)
     except GeneratorError as e:
         sys.exit(f"error: {e}")
-    print(f"wrote {len(files)} files")
+    print(f"wrote {len(files)} files and {len(art)} paintings")
 
 
 if __name__ == "__main__":
