@@ -152,6 +152,9 @@ class ConversionTests(unittest.TestCase):
         self.assertEqual(imp.start_level(starting_tier=1, year=1), 1)
         self.assertEqual(imp.start_level(starting_tier=1, year=1300), 0)
         self.assertEqual(imp.start_level(starting_tier=0, year=1), 0)
+        self.assertEqual(imp.start_level(starting_tier=1, year=1021), 1)
+        self.assertEqual(imp.start_level(starting_tier=1, year=1022), 0)
+        self.assertEqual(imp.start_level(starting_tier=2, year=1022), 0)
 
     def test_levels_for_kinds(self):
         self.assertEqual(imp.default_levels("toncodden_lighthouse"), [
@@ -217,6 +220,20 @@ class ConversionTests(unittest.TestCase):
         self.assertIn("add_piety = 50", t["on_complete"])
         self.assertEqual(len(t["dropped"]), 2)
 
+    def test_scope_blocks_are_split_into_effects(self):
+        t = imp.translate_tier(Tier(0, 0, {}, {}, {}, (
+            "owner = { add_estate_loyalty = { estate = estate_mages loyalty = 5 } add_prestige = 10 }\n"
+            "if = { limit = { has_x = yes } hidden_effect = { owner = { add_treasury = 100 set_country_flag = f } } }")))
+        self.assertIn("add_prestige = 50", t["on_complete"])
+        self.assertIn("add_prestige = 100", t["on_complete"])
+        self.assertIn("add_gold = 40", t["on_complete"])
+        self.assertEqual(t["dropped"], ["on_upgraded: set_country_flag = f"])
+
+    def test_dropped_text_is_not_truncated(self):
+        long = "custom_tooltip = " + "x" * 200
+        t = imp.translate_tier(Tier(0, 0, {}, {}, {}, long))
+        self.assertEqual(t["dropped"], ["on_upgraded: " + long])
+
     def test_gate_translation(self):
         gate, desc, notes = imp.translate_gate(
             "culture = castanorian\nculture_group = lencori\ntag = A80", {"castanorian": "Castanorian"})
@@ -251,7 +268,18 @@ class LiveTests(unittest.TestCase):
                  if m["eu4_key"] in ("kobildzan_kobildzex_guild_of_trapsmiths", "the_dragonhoard")}
         self.assertEqual(len(soxun), 2)
         self.assertTrue(all(b and b in soxun_baronies for b in soxun.values()))
-        self.assertEqual(len({m["barony"] for m in data["MONUMENTS"]}), len(data["MONUMENTS"]))
+        placed = [m["barony"] for m in data["MONUMENTS"] if m["barony"]]
+        self.assertEqual(len(set(placed)), len(placed))
+        unplaced = {m["eu4_key"] for m in data["MONUMENTS"] if not m["barony"]}
+        reported = {line.split(":")[0] for line in data["REPORT"]
+                    if "has no free barony" in line or "no CK3 title" in line or "is not free" in line}
+        self.assertEqual(unplaced, reported)
+
+    def test_new_buildings_avoid_anbennar_slots(self):
+        slots = imp.anbennar_slots(ANBENNAR_CK3)
+        for m in self.data["MONUMENTS"]:
+            if m["barony"] and m["eu4_key"] not in imp.CHAINS:
+                self.assertNotIn(m["province"], slots, m["eu4_key"])
 
     def test_mission_monuments_are_present(self):
         keys = {m["eu4_key"] for m in self.data["MONUMENTS"]}

@@ -25,7 +25,7 @@ from data.monuments import translation as tr  # noqa: E402
 
 REPO = Path(__file__).resolve().parent.parent
 DEFAULT_ANBENNAR_CK3 = REPO.parent / "anbennar-ck3-dev-master"
-START_YEAR = 1022  # Anbennar CK3 bookmark; monuments dated later are not built yet
+START_YEAR = 1022  # Anbennar CK3 bookmark; monuments dated 1022 or later are not built yet
 CANAL = "canal: no CK3 canal mechanic"
 EXTRA_NAMES = {"imperial_palace_anbenncost": "Castle Dameris"}
 
@@ -90,7 +90,7 @@ def match_title(name, titles):
 
 
 def start_level(starting_tier, year):
-    return 1 if starting_tier >= 1 and year <= START_YEAR else 0
+    return 1 if starting_tier >= 1 and year < START_YEAR else 0
 
 
 def default_levels(key):
@@ -291,9 +291,26 @@ def _statements(text):
     return statements
 
 
-def _short(text, limit=70):
-    text = re.sub(r"\s+", " ", text).strip()
-    return text if len(text) <= limit else text[:limit - 3] + "..."
+_SCOPES = {"owner", "hidden_effect", "if", "else_if", "else"}
+
+
+def _leaves(text):
+    """Effect statements of a snippet, with scope/condition blocks (owner, hidden_effect, if/else) opened up and
+    their `limit` skipped. ONE_OFF texts are written in the monument's province scope and name the holder
+    themselves, so the wrapper scope is not needed to translate an effect."""
+    leaves = []
+    for statement in _statements(text):
+        key = re.match(r"[A-Za-z0-9_.:]+", statement).group(0)
+        brace = statement.find("{")
+        if key in _SCOPES and brace != -1:
+            leaves += _leaves(statement[brace + 1:statement.rfind("}")])
+        elif key != "limit":
+            leaves.append(statement)
+    return leaves
+
+
+def _short(text):
+    return re.sub(r"\s+", " ", text).strip()
 
 
 def _number(value):
@@ -329,7 +346,7 @@ def translate_tier(tier):
                 result[key] = value
         blocks[name] = result
     effects = []
-    for statement in _statements(tier.on_upgraded):
+    for statement in _leaves(tier.on_upgraded):
         for pattern, effect in tr.ONE_OFF:
             if re.search(pattern, statement):
                 break
