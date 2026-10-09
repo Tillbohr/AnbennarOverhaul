@@ -22,7 +22,7 @@ aov_election_open = {
 	}
 	# Fewer than three at artificer courts: the best gnomes anywhere, unlanded first
 	if = {
-		limit = { global_variable_list_size = { name = aov_candidates_$FACTION$ value < 3 } }
+		limit = { aov_election_candidates_below = { FACTION = $FACTION$ COUNT = 3 } }
 		every_living_character = {
 			limit = {
 				aov_faction_candidate_trigger = yes
@@ -32,7 +32,7 @@ aov_election_open = {
 		}
 		while = {
 			limit = {
-				global_variable_list_size = { name = aov_candidates_$FACTION$ value < 3 }
+				aov_election_candidates_below = { FACTION = $FACTION$ COUNT = 3 }
 				any_in_list = {
 					list = aov_world_pool_$FACTION$
 					aov_faction_candidate_trigger = yes
@@ -56,7 +56,7 @@ aov_election_open = {
 		remove_variable = aov_votes_$FACTION$
 	}
 	if = {
-		limit = { global_variable_list_size = { name = aov_candidates_$FACTION$ value = 0 } }
+		limit = { aov_election_candidates_below = { FACTION = $FACTION$ COUNT = 1 } }
 		# No gnomes at all: stays vacant, the yearly pulse retries
 	}
 	else_if = {
@@ -101,6 +101,11 @@ aov_election_cast_vote = {
 	save_temporary_scope_value_as = { name = aov_vote_weight value = aov_vote_weight_$FACTION$ }
 	set_variable = aov_voted_$FACTION$
 	$CANDIDATE$ = {
+		# change_variable does nothing on a variable that does not exist yet
+		if = {
+			limit = { NOT = { has_variable = aov_votes_$FACTION$ } }
+			set_variable = { name = aov_votes_$FACTION$ value = 0 }
+		}
 		change_variable = { name = aov_votes_$FACTION$ add = scope:aov_vote_weight }
 	}
 }

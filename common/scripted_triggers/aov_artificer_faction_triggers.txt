@@ -83,3 +83,12 @@ aov_election_is_open_trigger = {
 		}
 	}
 }
+
+# Fewer than COUNT election candidates. The candidate list does not exist while it is empty, and
+# global_variable_list_size errors on a missing list (vanilla guards it the same way, 00_laamp_triggers.txt)
+aov_election_candidates_below = {
+	OR = {
+		NOT = { has_global_variable_list = aov_candidates_$FACTION$ }
+		global_variable_list_size = { name = aov_candidates_$FACTION$ value < $COUNT$ }
+	}
+}
