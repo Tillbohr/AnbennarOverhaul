@@ -1,0 +1,579 @@
+﻿######################################################
+############ ARTIFICERY RESEARCH POPUP ###############
+######################################################
+# Opened by the Research button in the Inventions tab (GUI variable aov_research_popup).
+# Drawn like a character event (vanilla gui/event_windows/character_event.gui): university hall background,
+# crafting theme icon, description and options on the left, one leader per artificer faction on the right.
+# GUI variables: aov_research_stage (unset = choose a faction; mechanists; technomancers; tech_<field>),
+# aov_research_faction (the faction being dealt with), aov_research_hover (the faction whose option is hovered).
+
+window = {
+	name = "aov_artificery_research_window"
+	parentanchor = center
+	widgetanchor = center
+	size = { 1120 585 }
+	layer = events
+	movable = no
+	allow_outside = yes
+
+	visible = "[And( GetVariableSystem.Exists( 'aov_research_popup' ), And( GetVariableSystem.Exists( 'aov_artificery_window' ), GetScriptedGui('aov_artificery_available').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ) )]"
+
+	state = {
+		name = _show
+		using = Animation_FadeIn_Standard
+		duration = 0.7
+
+		start_sound = {
+			soundeffect = "event:/SFX/Events/Panels/sfx_event_panel_large"
+		}
+	}
+
+	state = {
+		name = _hide
+		using = Animation_FadeOut_Standard
+	}
+
+	event_window_dimmer_widget = {}
+
+	widget = {
+		size = { 100% 100% }
+		using = Window_Background
+		using = Window_Decoration_Frontend_Flat
+	}
+
+	# Background picture
+	margin_widget = {
+		size = { 100% 100% }
+		margin = { 40 20 }
+		alwaystransparent = yes
+
+		widget = {
+			size = { 100% 100% }
+
+			background = {
+				texture = "gfx/interface/illustrations/event_scenes/bp2_university.dds"
+				fittype = centercrop
+
+				modify_texture = {
+					name = mask
+					texture = "gfx/interface/window_event/mask_event_image_large.dds"
+					blend_mode = alphamultiply
+				}
+			}
+		}
+	}
+
+	### FACTION LEADERS
+	# The leaders of the three artificer faction titles (a vacant title shows an empty plate)
+	widget = {
+		parentanchor = bottom|right
+		position = { -45 -22 }
+		size = { 570 500 }
+
+		hbox = {
+			aov_research_leader = {
+				datacontext = "[GetTitleByKey('d_brillites').GetHolder]"
+
+				blockoverride "has_leader" {
+					visible = "[GetTitleByKey('d_brillites').HasHolder]"
+				}
+				blockoverride "vacant" {
+					visible = "[Not( GetTitleByKey('d_brillites').HasHolder )]"
+				}
+
+				blockoverride "faction" {
+					visible = "[Or( GetVariableSystem.HasValue( 'aov_research_hover', 'brillites' ), GetVariableSystem.HasValue( 'aov_research_faction', 'brillites' ) )]"
+				}
+				blockoverride "animation" {
+					portrait_texture = "[Character.GetAnimatedPortrait('environment_event_standard', 'camera_event_center', 'happiness', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+				}
+				blockoverride "role" {
+					text = "AOV_RESEARCH_LEADER_BRILLITES"
+				}
+			}
+
+			aov_research_leader = {
+				datacontext = "[GetTitleByKey('d_mechanists').GetHolder]"
+
+				blockoverride "has_leader" {
+					visible = "[GetTitleByKey('d_mechanists').HasHolder]"
+				}
+				blockoverride "vacant" {
+					visible = "[Not( GetTitleByKey('d_mechanists').HasHolder )]"
+				}
+
+				blockoverride "faction" {
+					visible = "[Or( GetVariableSystem.HasValue( 'aov_research_hover', 'mechanists' ), GetVariableSystem.HasValue( 'aov_research_faction', 'mechanists' ) )]"
+				}
+				blockoverride "animation" {
+					portrait_texture = "[Character.GetAnimatedPortrait('environment_event_standard', 'camera_event_center', 'personality_rational', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+				}
+				blockoverride "role" {
+					text = "AOV_RESEARCH_LEADER_MECHANISTS"
+				}
+			}
+
+			aov_research_leader = {
+				datacontext = "[GetTitleByKey('d_technomancers').GetHolder]"
+
+				blockoverride "has_leader" {
+					visible = "[GetTitleByKey('d_technomancers').HasHolder]"
+				}
+				blockoverride "vacant" {
+					visible = "[Not( GetTitleByKey('d_technomancers').HasHolder )]"
+				}
+
+				blockoverride "faction" {
+					visible = "[Or( GetVariableSystem.HasValue( 'aov_research_hover', 'technomancers' ), GetVariableSystem.HasValue( 'aov_research_faction', 'technomancers' ) )]"
+				}
+				blockoverride "animation" {
+					portrait_texture = "[Character.GetAnimatedPortrait('environment_event_standard', 'camera_event_center', 'scheme', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+				}
+				blockoverride "role" {
+					text = "AOV_RESEARCH_LEADER_TECHNOMANCERS"
+				}
+			}
+		}
+	}
+
+	### DESCRIPTION AND OPTIONS
+	widget = {
+		position = { 40 82 }
+		size = { 500 478 }
+
+		# Translucent text backdrop from the vanilla character event
+		widget = {
+			size = { 100% 100% }
+
+			background = {
+				texture = "gfx/interface/component_tiles/tile_window_background_no_edge.dds"
+				spriteType = Corneredtiled
+				spriteborder = { 18 0 }
+				texture_density = 2
+				alpha = 0.7
+
+				modify_texture = {
+					texture = "gfx/interface/component_overlay/overlay_effect.dds"
+					blend_mode = overlay
+				}
+
+				modify_texture = {
+					texture = "gfx/interface/component_masks/mask_event_text.dds"
+					blend_mode = alphamultiply
+					alpha = 1
+				}
+			}
+		}
+
+		vbox = {
+			margin = { 10 10 }
+			margin_bottom = 12
+			spacing = 5
+
+			# Description, one per stage
+			text_multi = {
+				visible = "[Not( GetVariableSystem.Exists( 'aov_research_stage' ) )]"
+				layoutpolicy_horizontal = expanding
+				size = { 470 0 }
+				max_width = 470
+				autoresize = yes
+				margin = { 10 4 }
+				fontsize = 16
+				text = "AOV_RESEARCH_EVENT_DESC"
+			}
+
+			text_multi = {
+				visible = "[GetVariableSystem.HasValue( 'aov_research_stage', 'mechanists' )]"
+				layoutpolicy_horizontal = expanding
+				size = { 470 0 }
+				max_width = 470
+				autoresize = yes
+				margin = { 10 4 }
+				fontsize = 16
+				text = "AOV_RESEARCH_EVENT_DESC_MECHANISTS"
+			}
+
+			text_multi = {
+				visible = "[GetVariableSystem.HasValue( 'aov_research_stage', 'technomancers' )]"
+				layoutpolicy_horizontal = expanding
+				size = { 470 0 }
+				max_width = 470
+				autoresize = yes
+				margin = { 10 4 }
+				fontsize = 16
+				text = "AOV_RESEARCH_EVENT_DESC_TECHNOMANCERS"
+			}
+
+			text_multi = {
+				visible = "[Or( GetVariableSystem.HasValue( 'aov_research_stage', 'tech_economic' ), Or( GetVariableSystem.HasValue( 'aov_research_stage', 'tech_military' ), GetVariableSystem.HasValue( 'aov_research_stage', 'tech_society' ) ) )]"
+				layoutpolicy_horizontal = expanding
+				size = { 470 0 }
+				max_width = 470
+				autoresize = yes
+				margin = { 10 4 }
+				fontsize = 16
+				text = "AOV_RESEARCH_EVENT_DESC_PROPOSALS"
+			}
+
+			expand = {}
+
+			# Choose a faction
+			vbox = {
+				visible = "[Not( GetVariableSystem.Exists( 'aov_research_stage' ) )]"
+				spacing = 4
+
+				aov_research_option = {
+					enabled = "[GetScriptedGui('aov_research_brillites_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					tooltip = "[GetScriptedGui('aov_research_brillites_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetScriptedGui('aov_research_brillites_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetVariableSystem.Clear( 'aov_research_popup' )]"
+					onmousehierarchyenter = "[GetVariableSystem.Set( 'aov_research_hover', 'brillites' )]"
+					onmousehierarchyleave = "[GetVariableSystem.Clear( 'aov_research_hover' )]"
+
+					blockoverride "text" {
+						text = "AOV_RESEARCH_OPTION_BRILLITES"
+					}
+					blockoverride "cost" {
+						text = "AOV_RESEARCH_COST_BRILLITES"
+					}
+				}
+
+				aov_research_option = {
+					enabled = "[GetScriptedGui('aov_research_can_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					tooltip = "[GetScriptedGui('aov_research_can_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetVariableSystem.Set( 'aov_research_stage', 'mechanists' )]"
+					onclick = "[GetVariableSystem.Set( 'aov_research_faction', 'mechanists' )]"
+					onmousehierarchyenter = "[GetVariableSystem.Set( 'aov_research_hover', 'mechanists' )]"
+					onmousehierarchyleave = "[GetVariableSystem.Clear( 'aov_research_hover' )]"
+
+					blockoverride "text" {
+						text = "AOV_RESEARCH_OPTION_MECHANISTS"
+					}
+					blockoverride "cost" {
+						text = "AOV_RESEARCH_COST_MECHANISTS"
+					}
+				}
+
+				aov_research_option = {
+					enabled = "[GetScriptedGui('aov_research_can_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					tooltip = "[GetScriptedGui('aov_research_can_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetVariableSystem.Set( 'aov_research_stage', 'technomancers' )]"
+					onclick = "[GetVariableSystem.Set( 'aov_research_faction', 'technomancers' )]"
+					onmousehierarchyenter = "[GetVariableSystem.Set( 'aov_research_hover', 'technomancers' )]"
+					onmousehierarchyleave = "[GetVariableSystem.Clear( 'aov_research_hover' )]"
+
+					blockoverride "text" {
+						text = "AOV_RESEARCH_OPTION_TECHNOMANCERS"
+					}
+					blockoverride "cost" {
+						text = "AOV_RESEARCH_COST_TECHNOMANCERS"
+					}
+				}
+
+				aov_research_option = {
+					onclick = "[GetVariableSystem.Clear( 'aov_research_popup' )]"
+
+					blockoverride "text" {
+						text = "AOV_RESEARCH_OPTION_LEAVE"
+					}
+				}
+			}
+
+			# Mechanists: choose the field
+			vbox = {
+				visible = "[GetVariableSystem.HasValue( 'aov_research_stage', 'mechanists' )]"
+				spacing = 4
+
+				aov_research_option = {
+					enabled = "[GetScriptedGui('aov_research_mechanists_economic_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					tooltip = "[GetScriptedGui('aov_research_mechanists_economic_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetScriptedGui('aov_research_mechanists_economic_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetVariableSystem.Clear( 'aov_research_popup' )]"
+
+					blockoverride "text" {
+						text = "AOV_RESEARCH_OPTION_FIELD_ECONOMIC"
+					}
+					blockoverride "cost" {
+						text = "AOV_RESEARCH_COST_MECHANISTS"
+					}
+				}
+
+				aov_research_option = {
+					enabled = "[GetScriptedGui('aov_research_mechanists_military_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					tooltip = "[GetScriptedGui('aov_research_mechanists_military_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetScriptedGui('aov_research_mechanists_military_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetVariableSystem.Clear( 'aov_research_popup' )]"
+
+					blockoverride "text" {
+						text = "AOV_RESEARCH_OPTION_FIELD_MILITARY"
+					}
+					blockoverride "cost" {
+						text = "AOV_RESEARCH_COST_MECHANISTS"
+					}
+				}
+
+				aov_research_option = {
+					enabled = "[GetScriptedGui('aov_research_mechanists_society_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					tooltip = "[GetScriptedGui('aov_research_mechanists_society_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetScriptedGui('aov_research_mechanists_society_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetVariableSystem.Clear( 'aov_research_popup' )]"
+
+					blockoverride "text" {
+						text = "AOV_RESEARCH_OPTION_FIELD_SOCIETY"
+					}
+					blockoverride "cost" {
+						text = "AOV_RESEARCH_COST_MECHANISTS"
+					}
+				}
+
+				aov_research_option_back = {}
+			}
+
+			# Technomancers: choose the field; viewing it rolls their proposals
+			vbox = {
+				visible = "[GetVariableSystem.HasValue( 'aov_research_stage', 'technomancers' )]"
+				spacing = 4
+
+				aov_research_option = {
+					enabled = "[GetScriptedGui('aov_research_technomancers_economic_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					tooltip = "[GetScriptedGui('aov_research_technomancers_economic_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetScriptedGui('aov_research_technomancers_economic_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetVariableSystem.Set( 'aov_research_stage', 'tech_economic' )]"
+
+					blockoverride "text" {
+						text = "AOV_RESEARCH_OPTION_FIELD_ECONOMIC"
+					}
+				}
+
+				aov_research_option = {
+					enabled = "[GetScriptedGui('aov_research_technomancers_military_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					tooltip = "[GetScriptedGui('aov_research_technomancers_military_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetScriptedGui('aov_research_technomancers_military_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetVariableSystem.Set( 'aov_research_stage', 'tech_military' )]"
+
+					blockoverride "text" {
+						text = "AOV_RESEARCH_OPTION_FIELD_MILITARY"
+					}
+				}
+
+				aov_research_option = {
+					enabled = "[GetScriptedGui('aov_research_technomancers_society_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					tooltip = "[GetScriptedGui('aov_research_technomancers_society_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetScriptedGui('aov_research_technomancers_society_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetVariableSystem.Set( 'aov_research_stage', 'tech_society' )]"
+
+					blockoverride "text" {
+						text = "AOV_RESEARCH_OPTION_FIELD_SOCIETY"
+					}
+				}
+
+				aov_research_option_back = {}
+			}
+
+			# Technomancers: their proposals in the chosen field (generated in gui/aov_inventions_generated.gui)
+			vbox = {
+				visible = "[GetVariableSystem.HasValue( 'aov_research_stage', 'tech_economic' )]"
+				spacing = 4
+
+				aov_inventions_offers_economic = {}
+
+				aov_research_option_back = {
+					blockoverride "back" {
+						onclick = "[GetVariableSystem.Set( 'aov_research_stage', 'technomancers' )]"
+					}
+				}
+			}
+
+			vbox = {
+				visible = "[GetVariableSystem.HasValue( 'aov_research_stage', 'tech_military' )]"
+				spacing = 4
+
+				aov_inventions_offers_military = {}
+
+				aov_research_option_back = {
+					blockoverride "back" {
+						onclick = "[GetVariableSystem.Set( 'aov_research_stage', 'technomancers' )]"
+					}
+				}
+			}
+
+			vbox = {
+				visible = "[GetVariableSystem.HasValue( 'aov_research_stage', 'tech_society' )]"
+				spacing = 4
+
+				aov_inventions_offers_society = {}
+
+				aov_research_option_back = {
+					blockoverride "back" {
+						onclick = "[GetVariableSystem.Set( 'aov_research_stage', 'technomancers' )]"
+					}
+				}
+			}
+		}
+	}
+
+	### HEADER: theme banner, title and icon
+	widget = {
+		size = { 100% 70 }
+
+		icon = {
+			name = "theme_header"
+			position = { 24 20 }
+			size = { 1072 57 }
+			texture = "gfx/interface/window_event/event_header_yellow.dds"
+		}
+
+		text_single = {
+			name = "title"
+			parentanchor = vcenter
+			position = { 128 7 }
+			fontsize = 29
+			fontsize_min = 16
+			text = "AOV_RESEARCH_EVENT_TITLE"
+			default_format = "#high;glow_color:{0.1,0.1,0.1,1.0}"
+			using = Font_Type_Flavor
+			max_width = 900
+
+			background = {
+				using = Background_Area_Dark
+				margin_left = 50
+				margin_right = 130
+				margin_top = 5
+				margin_bottom = 20
+				alpha = 0.3
+
+				modify_texture = {
+					texture = "gfx/interface/component_masks/mask_holding_illustration.dds"
+					blend_mode = alphamultiply
+				}
+			}
+		}
+
+		icon = {
+			name = "theme_icon"
+			parentanchor = vcenter
+			position = { 28 10 }
+			size = { 90 90 }
+			texture = "gfx/interface/icons/event_types/type_inspiration.dds"
+		}
+	}
+
+	# Escape closes the popup
+	button = {
+		size = { 0 0 }
+		shortcut = "close_window"
+		onclick = "[GetVariableSystem.Clear( 'aov_research_popup' )]"
+	}
+}
+
+types AovResearchEvent
+{
+	# An event option: label on the left, cost on the right
+	type aov_research_option = button_event_standard {
+		size = { 460 38 }
+
+		hbox = {
+			margin_left = 14
+			margin_right = 14
+			spacing = 8
+
+			text_single = {
+				layoutpolicy_horizontal = expanding
+				max_width = 360
+				align = left|nobaseline
+
+				block "text" {}
+			}
+
+			text_single = {
+				align = right|nobaseline
+
+				block "cost" {
+					visible = no
+				}
+			}
+		}
+	}
+
+	type aov_research_option_back = aov_research_option {
+		block "back" {
+			onclick = "[GetVariableSystem.Clear( 'aov_research_stage' )]"
+			onclick = "[GetVariableSystem.Clear( 'aov_research_faction' )]"
+		}
+
+		blockoverride "text" {
+			text = "AOV_RESEARCH_OPTION_BACK"
+		}
+	}
+
+	# A faction leader standing in the event scene, with a nameplate
+	type aov_research_leader = widget {
+		size = { 190 500 }
+		allow_outside = yes
+
+		# Glow behind the leader whose faction is hovered or chosen
+		icon = {
+			parentanchor = bottom|hcenter
+			position = { 0 -40 }
+			size = { 260 440 }
+			color = { 0.9 0.8 0.6 0.6 }
+			using = Background_Portrait_Glow
+
+			block "faction" {
+				visible = no
+			}
+		}
+
+		portrait_button = {
+			block "has_leader" {}
+			parentanchor = bottom|hcenter
+			position = { 0 -40 }
+			size = { 320 470 }
+			using = portrait_base
+			mask = "gfx/portraits/portrait_mask_event.dds"
+			effectname = "NoHighlight"
+
+			block "animation" {
+				portrait_texture = "[Character.GetAnimatedPortrait('environment_event_standard', 'camera_event_center', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+			}
+		}
+
+		# Nameplate, like the vanilla event's
+		flowcontainer = {
+			parentanchor = bottom|hcenter
+			direction = vertical
+			spacing = 2
+
+			text_single = {
+				block "has_leader" {}
+				parentanchor = hcenter
+				text = "[Character.GetShortUINameNoTooltip]"
+				max_width = 170
+				align = nobaseline|center
+				using = Background_Nameplate
+			}
+
+			text_single = {
+				parentanchor = hcenter
+				max_width = 180
+				align = nobaseline|center
+				default_format = "#weak"
+				using = Background_Nameplate
+
+				block "role" {}
+			}
+
+			text_single = {
+				block "vacant" {
+					visible = no
+				}
+				parentanchor = hcenter
+				text = "AOV_RESEARCH_LEADER_VACANT"
+				max_width = 180
+				align = nobaseline|center
+				default_format = "#weak"
+				using = Background_Nameplate
+			}
+		}
+	}
+}

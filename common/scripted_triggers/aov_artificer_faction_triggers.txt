@@ -1,0 +1,85 @@
+﻿# Anbennar Overhaul: artificer factions
+
+# Title scope: one of the three artificer faction titles
+aov_is_artificer_faction_title = {
+	OR = {
+		this = title:d_brillites
+		this = title:d_mechanists
+		this = title:d_technomancers
+	}
+}
+
+# Character scope: the ruler's influence level with a faction
+aov_influence_is_hostile_brillites = { aov_influence_level_brillites = 0 }
+aov_influence_is_displeased_brillites = { aov_influence_level_brillites = 1 }
+aov_influence_is_neutral_brillites = { aov_influence_level_brillites = 2 }
+aov_influence_is_favored_brillites = { aov_influence_level_brillites = 3 }
+aov_influence_is_exalted_brillites = { aov_influence_level_brillites = 4 }
+aov_influence_is_hostile_mechanists = { aov_influence_level_mechanists = 0 }
+aov_influence_is_displeased_mechanists = { aov_influence_level_mechanists = 1 }
+aov_influence_is_neutral_mechanists = { aov_influence_level_mechanists = 2 }
+aov_influence_is_favored_mechanists = { aov_influence_level_mechanists = 3 }
+aov_influence_is_exalted_mechanists = { aov_influence_level_mechanists = 4 }
+aov_influence_is_hostile_technomancers = { aov_influence_level_technomancers = 0 }
+aov_influence_is_displeased_technomancers = { aov_influence_level_technomancers = 1 }
+aov_influence_is_neutral_technomancers = { aov_influence_level_technomancers = 2 }
+aov_influence_is_favored_technomancers = { aov_influence_level_technomancers = 3 }
+aov_influence_is_exalted_technomancers = { aov_influence_level_technomancers = 4 }
+
+# Character scope: can stand for (and win) an artificer faction election
+aov_faction_candidate_trigger = {
+	is_alive = yes
+	has_trait = race_gnome
+	is_adult = yes
+	is_imprisoned = no
+	NOT = { has_character_flag = aov_dying_faction_leader }
+	NOT = { any_held_title = { aov_is_artificer_faction_title = yes } }
+}
+
+# A candidate from an artificer court (unlanded); the world-wide top-up may also take landed gnomes
+aov_faction_candidate_unlanded_trigger = {
+	aov_faction_candidate_trigger = yes
+	is_ruler = no
+}
+
+# Character scope: votes in artificer faction elections
+aov_artificer_nation_trigger = {
+	is_ruler = yes
+	can_use_artificery_trigger = yes
+}
+
+# Root = voter, in an event with scope:aov_election_faction: has already voted in that election
+aov_election_has_voted_trigger = {
+	OR = {
+		AND = {
+			scope:aov_election_faction = flag:brillites
+			has_variable = aov_voted_brillites
+		}
+		AND = {
+			scope:aov_election_faction = flag:mechanists
+			has_variable = aov_voted_mechanists
+		}
+		AND = {
+			scope:aov_election_faction = flag:technomancers
+			has_variable = aov_voted_technomancers
+		}
+	}
+}
+
+# Event with scope:aov_election_faction: that election is still open
+aov_election_is_open_trigger = {
+	OR = {
+		AND = {
+			scope:aov_election_faction = flag:brillites
+			exists = global_var:aov_election_open_brillites
+		}
+		AND = {
+			scope:aov_election_faction = flag:mechanists
+			exists = global_var:aov_election_open_mechanists
+		}
+		AND = {
+			scope:aov_election_faction = flag:technomancers
+			exists = global_var:aov_election_open_technomancers
+		}
+	}
+}

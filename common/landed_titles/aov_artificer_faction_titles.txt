@@ -1,0 +1,38 @@
+﻿# Anbennar Overhaul: the three artificer factions. Landless duchies held for life; a new holder is elected
+# when the holder dies (common/scripted_effects/aov_artificer_election_effects.txt).
+
+d_brillites = {
+	landless = yes
+	color = { 120 40 160 }
+	definite_form = yes
+	ruler_uses_title_name = no
+
+	no_automatic_claims = yes
+	can_use_nomadic_naming = no
+
+	capital = c_nimscodd
+}
+
+d_mechanists = {
+	landless = yes
+	color = { 110 110 120 }
+	definite_form = yes
+	ruler_uses_title_name = no
+
+	no_automatic_claims = yes
+	can_use_nomadic_naming = no
+
+	capital = c_nimscodd
+}
+
+d_technomancers = {
+	landless = yes
+	color = { 30 50 150 }
+	definite_form = yes
+	ruler_uses_title_name = no
+
+	no_automatic_claims = yes
+	can_use_nomadic_naming = no
+
+	capital = c_nimscodd
+}

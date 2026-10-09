@@ -1,0 +1,130 @@
+﻿namespace = aov_artificer_factions
+
+# Vote panel: sent to every player nation when an election opens (scope:aov_election_faction = flag:<faction>)
+aov_artificer_factions.1 = {
+	type = character_event
+	title = aov_artificer_factions.1.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:aov_election_faction = flag:brillites }
+				desc = aov_artificer_factions.1.desc.brillites
+			}
+			triggered_desc = {
+				trigger = { scope:aov_election_faction = flag:mechanists }
+				desc = aov_artificer_factions.1.desc.mechanists
+			}
+			triggered_desc = {
+				trigger = { scope:aov_election_faction = flag:technomancers }
+				desc = aov_artificer_factions.1.desc.technomancers
+			}
+		}
+		triggered_desc = {
+			trigger = { exists = scope:aov_candidate_1 }
+			desc = aov_artificer_factions.1.candidate_1
+		}
+		triggered_desc = {
+			trigger = { exists = scope:aov_candidate_2 }
+			desc = aov_artificer_factions.1.candidate_2
+		}
+		triggered_desc = {
+			trigger = { exists = scope:aov_candidate_3 }
+			desc = aov_artificer_factions.1.candidate_3
+		}
+	}
+	theme = aov_artificery
+	left_portrait = root
+	right_portrait = scope:aov_late_leader
+	lower_left_portrait = scope:aov_candidate_1
+	lower_center_portrait = scope:aov_candidate_2
+	lower_right_portrait = scope:aov_candidate_3
+
+	immediate = {
+		aov_election_load_scopes = yes
+	}
+
+	option = {
+		name = aov_artificer_factions.1.a
+		trigger = {
+			exists = scope:aov_candidate_1
+			aov_election_has_voted_trigger = no
+			aov_election_is_open_trigger = yes
+		}
+		highlight_portrait = scope:aov_candidate_1
+		aov_election_vote_in_event = { CANDIDATE = scope:aov_candidate_1 }
+	}
+
+	option = {
+		name = aov_artificer_factions.1.b
+		trigger = {
+			exists = scope:aov_candidate_2
+			aov_election_has_voted_trigger = no
+			aov_election_is_open_trigger = yes
+		}
+		highlight_portrait = scope:aov_candidate_2
+		aov_election_vote_in_event = { CANDIDATE = scope:aov_candidate_2 }
+	}
+
+	option = {
+		name = aov_artificer_factions.1.c
+		trigger = {
+			exists = scope:aov_candidate_3
+			aov_election_has_voted_trigger = no
+			aov_election_is_open_trigger = yes
+		}
+		highlight_portrait = scope:aov_candidate_3
+		aov_election_vote_in_event = { CANDIDATE = scope:aov_candidate_3 }
+	}
+
+	# Already voted (or nobody to vote for)
+	option = {
+		name = aov_artificer_factions.1.d
+		trigger = {
+			OR = {
+				aov_election_has_voted_trigger = yes
+				NOR = {
+					exists = scope:aov_candidate_1
+					exists = scope:aov_candidate_2
+					exists = scope:aov_candidate_3
+				}
+			}
+		}
+	}
+}
+
+# Result: sent to every nation (scope:aov_winner, scope:aov_election_faction)
+aov_artificer_factions.2 = {
+	type = character_event
+	title = aov_artificer_factions.2.t
+	desc = aov_artificer_factions.2.desc
+	theme = aov_artificery
+	left_portrait = scope:aov_winner
+
+	immediate = {
+		aov_election_load_scopes = yes
+	}
+
+	option = {
+		name = aov_artificer_factions.2.a
+	}
+}
+
+# Hidden: count the votes 30 days after the election opened
+aov_artificer_factions.3 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		aov_election_resolve_in_event = yes
+	}
+}
+
+# Hidden: reopen an election whose winner already held a faction title
+aov_artificer_factions.4 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		aov_election_open_in_event = yes
+	}
+}

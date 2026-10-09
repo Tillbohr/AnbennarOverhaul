@@ -1,0 +1,15 @@
+﻿# Anbennar Overhaul: artificery events (faction elections); same look as the research popup
+aov_artificery = {
+	icon = {
+		reference = "gfx/interface/icons/event_types/type_inspiration.dds"
+	}
+	header_background = {
+		reference = "gfx/interface/window_event/event_header_yellow.dds"
+	}
+	sound = {
+		reference = "event:/SFX/Events/Themes/sfx_event_theme_type_learning"
+	}
+	background = {
+		reference = bp2_university
+	}
+}

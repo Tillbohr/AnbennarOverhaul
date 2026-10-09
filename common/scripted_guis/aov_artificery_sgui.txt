@@ -1,0 +1,8 @@
+﻿# Artificery tab: shown for characters that pass can_use_artificery_trigger.
+# Read by the HUD button (gui/hud.gui, generated) and the window (gui/aov_window_artificery.gui).
+aov_artificery_available = {
+	scope = character
+	is_shown = {
+		can_use_artificery_trigger = yes
+	}
+}

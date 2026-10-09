@@ -1,0 +1,44 @@
+﻿# Anbennar Overhaul: Artificery inventions on_actions, appended to vanilla on_actions.
+
+quarterly_playable_pulse = {
+	on_actions = { aov_artificery_quarterly }
+}
+
+on_death = {
+	on_actions = { aov_artificery_on_death }
+}
+
+# Root = character
+aov_artificery_quarterly = {
+	trigger = {
+		OR = {
+			can_use_artificery_trigger = yes
+			aov_artificery_has_state = yes
+		}
+	}
+	effect = {
+		aov_artificery_update_dormancy = yes
+		if = {
+			limit = { can_use_artificery_trigger = yes }
+			aov_artificery_tick_research = yes
+			aov_artificery_enforce_slot_max = yes
+			aov_artificery_ai_quarterly = yes
+		}
+	}
+}
+
+# Root = dying character; their state passes to the player heir, else the primary heir
+aov_artificery_on_death = {
+	trigger = { aov_artificery_has_state = yes }
+	effect = {
+		save_scope_as = aov_predecessor
+		if = {
+			limit = { exists = player_heir }
+			player_heir = { aov_artificery_inherit = yes }
+		}
+		else_if = {
+			limit = { exists = primary_heir }
+			primary_heir = { aov_artificery_inherit = yes }
+		}
+	}
+}

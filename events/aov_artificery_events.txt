@@ -1,0 +1,35 @@
+﻿namespace = aov_artificery
+
+# Research finished: var:aov_last_discovered was discovered, sponsored by var:aov_last_sponsor
+aov_artificery.1 = {
+	type = character_event
+	title = aov_artificery.1.t
+	desc = aov_artificery.1.desc
+	theme = learning
+	left_portrait = root
+
+	option = {
+		name = aov_artificery.1.a
+		trigger = { aov_artificery_has_free_slot = yes }
+		aov_inventions_activate_last_discovered = yes
+		ai_chance = { base = 100 }
+	}
+
+	option = {
+		name = aov_artificery.1.b
+		ai_chance = { base = 0 }
+	}
+}
+
+# Research finished but nothing was left to discover: refunded
+aov_artificery.2 = {
+	type = character_event
+	title = aov_artificery.2.t
+	desc = aov_artificery.2.desc
+	theme = learning
+	left_portrait = root
+
+	option = {
+		name = aov_artificery.2.a
+	}
+}

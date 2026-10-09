@@ -1,0 +1,461 @@
+﻿# Anbennar Overhaul: artificer faction elections. FACTION = brillites | mechanists | technomancers.
+# State (global): list aov_candidates_<f>, aov_election_open_<f>, timed aov_election_running_<f> (30 days),
+# aov_late_leader_<f>; candidates carry aov_votes_<f>, voters aov_voted_<f>.
+
+# Picks three candidates and opens the vote (or grants the title at once when nobody can vote)
+aov_election_open = {
+	aov_election_clear = { FACTION = $FACTION$ }
+	every_ruler = {
+		limit = { aov_artificer_nation_trigger = yes }
+		every_courtier = {
+			limit = { aov_faction_candidate_unlanded_trigger = yes }
+			add_to_temporary_list = aov_court_pool_$FACTION$
+		}
+	}
+	ordered_in_list = {
+		list = aov_court_pool_$FACTION$
+		limit = { aov_faction_candidate_trigger = yes }
+		order_by = aov_candidate_score_$FACTION$
+		max = 3
+		check_range_bounds = no
+		add_to_global_variable_list = { name = aov_candidates_$FACTION$ target = this }
+	}
+	# Fewer than three at artificer courts: the best gnomes anywhere, unlanded first
+	if = {
+		limit = { global_variable_list_size = { name = aov_candidates_$FACTION$ value < 3 } }
+		every_living_character = {
+			limit = {
+				aov_faction_candidate_trigger = yes
+				NOT = { is_target_in_global_variable_list = { name = aov_candidates_$FACTION$ target = this } }
+			}
+			add_to_temporary_list = aov_world_pool_$FACTION$
+		}
+		while = {
+			limit = {
+				global_variable_list_size = { name = aov_candidates_$FACTION$ value < 3 }
+				any_in_list = {
+					list = aov_world_pool_$FACTION$
+					aov_faction_candidate_trigger = yes
+					NOT = { is_target_in_global_variable_list = { name = aov_candidates_$FACTION$ target = this } }
+				}
+			}
+			ordered_in_list = {
+				list = aov_world_pool_$FACTION$
+				limit = {
+					aov_faction_candidate_trigger = yes
+					NOT = { is_target_in_global_variable_list = { name = aov_candidates_$FACTION$ target = this } }
+				}
+				order_by = aov_election_topup_order_$FACTION$
+				add_to_global_variable_list = { name = aov_candidates_$FACTION$ target = this }
+			}
+		}
+	}
+	# Votes left on candidates by panels answered after an earlier count
+	every_in_global_list = {
+		variable = aov_candidates_$FACTION$
+		remove_variable = aov_votes_$FACTION$
+	}
+	if = {
+		limit = { global_variable_list_size = { name = aov_candidates_$FACTION$ value = 0 } }
+		# No gnomes at all: stays vacant, the yearly pulse retries
+	}
+	else_if = {
+		limit = { NOT = { any_ruler = { aov_artificer_nation_trigger = yes } } }
+		ordered_in_global_list = {
+			variable = aov_candidates_$FACTION$
+			limit = { aov_faction_candidate_trigger = yes }
+			order_by = aov_candidate_score_$FACTION$
+			save_scope_as = aov_winner
+		}
+		aov_election_clear = { FACTION = $FACTION$ }
+		aov_faction_grant_title = { FACTION = $FACTION$ WINNER = scope:aov_winner }
+	}
+	else = {
+		set_global_variable = { name = aov_election_open_$FACTION$ value = flag:$FACTION$ }
+		set_global_variable = { name = aov_election_running_$FACTION$ days = 30 value = flag:$FACTION$ }
+		save_scope_value_as = { name = aov_election_faction value = flag:$FACTION$ }
+		# Players vote through the event panel; AI nations vote at once by the same rule the event's AI would use
+		every_ruler = {
+			limit = { aov_artificer_nation_trigger = yes }
+			if = {
+				limit = { is_ai = no }
+				trigger_event = aov_artificer_factions.1
+			}
+			else = {
+				aov_election_ai_vote = { FACTION = $FACTION$ }
+			}
+		}
+		ordered_ruler = {
+			limit = {
+				aov_artificer_nation_trigger = yes
+				NOT = { has_character_flag = aov_dying_faction_leader }
+			}
+			order_by = aov_vote_weight_$FACTION$
+			trigger_event = { id = aov_artificer_factions.3 days = 30 }
+		}
+	}
+}
+
+# Root = voter
+aov_election_cast_vote = {
+	save_temporary_scope_value_as = { name = aov_vote_weight value = aov_vote_weight_$FACTION$ }
+	set_variable = aov_voted_$FACTION$
+	$CANDIDATE$ = {
+		change_variable = { name = aov_votes_$FACTION$ add = scope:aov_vote_weight }
+	}
+}
+
+# Root = voter: their own courtier if one stands, else the best score
+aov_election_ai_vote = {
+	save_scope_as = aov_voter
+	clear_saved_scope = aov_ai_choice
+	if = {
+		limit = {
+			any_in_global_list = {
+				variable = aov_candidates_$FACTION$
+				aov_faction_candidate_trigger = yes
+				is_courtier_of = scope:aov_voter
+			}
+		}
+		ordered_in_global_list = {
+			variable = aov_candidates_$FACTION$
+			limit = {
+				aov_faction_candidate_trigger = yes
+				is_courtier_of = scope:aov_voter
+			}
+			order_by = aov_candidate_score_$FACTION$
+			save_scope_as = aov_ai_choice
+		}
+	}
+	else_if = {
+		limit = {
+			any_in_global_list = {
+				variable = aov_candidates_$FACTION$
+				aov_faction_candidate_trigger = yes
+			}
+		}
+		ordered_in_global_list = {
+			variable = aov_candidates_$FACTION$
+			limit = { aov_faction_candidate_trigger = yes }
+			order_by = aov_candidate_score_$FACTION$
+			save_scope_as = aov_ai_choice
+		}
+	}
+	if = {
+		limit = { exists = scope:aov_ai_choice }
+		aov_election_cast_vote = { FACTION = $FACTION$ CANDIDATE = scope:aov_ai_choice }
+	}
+}
+
+# The count, 30 days after the election opened (event aov_artificer_factions.3 or the quarterly pulse)
+aov_election_resolve = {
+	if = {
+		limit = { exists = global_var:aov_election_open_$FACTION$ }
+		# Players who did not answer vote by the AI rule; nations that died or lost their academy do not vote
+		every_ruler = {
+			limit = {
+				aov_artificer_nation_trigger = yes
+				NOT = { has_variable = aov_voted_$FACTION$ }
+			}
+			aov_election_ai_vote = { FACTION = $FACTION$ }
+		}
+		if = {
+			limit = {
+				any_in_global_list = {
+					variable = aov_candidates_$FACTION$
+					is_alive = yes
+					aov_faction_candidate_trigger = yes
+				}
+			}
+			ordered_in_global_list = {
+				variable = aov_candidates_$FACTION$
+				limit = {
+					is_alive = yes
+					aov_faction_candidate_trigger = yes
+				}
+				order_by = aov_election_tally_$FACTION$
+				save_scope_as = aov_winner
+			}
+			aov_election_clear = { FACTION = $FACTION$ }
+			aov_faction_grant_title = { FACTION = $FACTION$ WINNER = scope:aov_winner }
+			save_scope_value_as = { name = aov_election_faction value = flag:$FACTION$ }
+			every_ruler = {
+				limit = { aov_artificer_nation_trigger = yes }
+				trigger_event = aov_artificer_factions.2
+			}
+		}
+		else = {
+			# Every candidate died or became ineligible: start over
+			aov_election_open = { FACTION = $FACTION$ }
+		}
+	}
+}
+
+aov_election_clear = {
+	every_in_global_list = {
+		variable = aov_candidates_$FACTION$
+		remove_variable = aov_votes_$FACTION$
+	}
+	clear_global_variable_list = aov_candidates_$FACTION$
+	every_ruler = {
+		limit = { has_variable = aov_voted_$FACTION$ }
+		remove_variable = aov_voted_$FACTION$
+	}
+	remove_global_variable = aov_election_open_$FACTION$
+	remove_global_variable = aov_election_running_$FACTION$
+}
+
+# Grants the title to the winner (vanilla k_fashion pattern, introduce_court_fashion_events.txt).
+# A gnome holds at most one faction title: a winner who already holds one gets nothing and the election reopens.
+aov_faction_grant_title = {
+	if = {
+		limit = {
+			$WINNER$ = {
+				is_alive = yes
+				NOT = { any_held_title = { aov_is_artificer_faction_title = yes } }
+			}
+		}
+		$WINNER$ = {
+			if = {
+				limit = { exists = liege NOT = { liege = this } }
+				liege = { save_scope_as = aov_winner_liege }
+			}
+		}
+		# on_title_gain accepts only the elected holder (aov_artificer_factions_on_title_gain)
+		title:d_$FACTION$ = { set_variable = { name = aov_elected_holder value = $WINNER$ } }
+		create_title_and_vassal_change = {
+			type = created
+			save_scope_as = aov_change
+			add_claim_on_loss = no
+		}
+		title:d_$FACTION$ = {
+			change_title_holder = { holder = $WINNER$ change = scope:aov_change }
+		}
+		resolve_title_and_vassal_change = scope:aov_change
+		# The winner stays their liege's vassal when the liege outranks a duchy (vanilla middle_east_decisions_events.txt)
+		if = {
+			limit = {
+				exists = scope:aov_winner_liege
+				scope:aov_winner_liege = { highest_held_title_tier > tier_duchy }
+				$WINNER$ = { NOT = { liege = scope:aov_winner_liege } }
+			}
+			create_title_and_vassal_change = {
+				type = created
+				save_scope_as = aov_liege_change
+				add_claim_on_loss = no
+			}
+			$WINNER$ = {
+				change_liege = { liege = scope:aov_winner_liege change = scope:aov_liege_change }
+			}
+			resolve_title_and_vassal_change = scope:aov_liege_change
+		}
+		remove_global_variable = aov_late_leader_$FACTION$
+	}
+	else = {
+		save_scope_value_as = { name = aov_election_faction value = flag:$FACTION$ }
+		random_ruler = {
+			trigger_event = { id = aov_artificer_factions.4 days = 1 }
+		}
+	}
+}
+
+# Event scope: candidates, title and late leader of the election in scope:aov_election_faction
+aov_election_load_scopes = {
+	if = {
+		limit = { scope:aov_election_faction = flag:brillites }
+		ordered_in_global_list = {
+			variable = aov_candidates_brillites
+			order_by = aov_candidate_score_brillites
+			position = 0
+			check_range_bounds = no
+			save_scope_as = aov_candidate_1
+		}
+		ordered_in_global_list = {
+			variable = aov_candidates_brillites
+			order_by = aov_candidate_score_brillites
+			position = 1
+			check_range_bounds = no
+			save_scope_as = aov_candidate_2
+		}
+		ordered_in_global_list = {
+			variable = aov_candidates_brillites
+			order_by = aov_candidate_score_brillites
+			position = 2
+			check_range_bounds = no
+			save_scope_as = aov_candidate_3
+		}
+		title:d_brillites = { save_scope_as = aov_election_title }
+		if = {
+			limit = { exists = global_var:aov_late_leader_brillites }
+			global_var:aov_late_leader_brillites = { save_scope_as = aov_late_leader }
+		}
+	}
+	else_if = {
+		limit = { scope:aov_election_faction = flag:mechanists }
+		ordered_in_global_list = {
+			variable = aov_candidates_mechanists
+			order_by = aov_candidate_score_mechanists
+			position = 0
+			check_range_bounds = no
+			save_scope_as = aov_candidate_1
+		}
+		ordered_in_global_list = {
+			variable = aov_candidates_mechanists
+			order_by = aov_candidate_score_mechanists
+			position = 1
+			check_range_bounds = no
+			save_scope_as = aov_candidate_2
+		}
+		ordered_in_global_list = {
+			variable = aov_candidates_mechanists
+			order_by = aov_candidate_score_mechanists
+			position = 2
+			check_range_bounds = no
+			save_scope_as = aov_candidate_3
+		}
+		title:d_mechanists = { save_scope_as = aov_election_title }
+		if = {
+			limit = { exists = global_var:aov_late_leader_mechanists }
+			global_var:aov_late_leader_mechanists = { save_scope_as = aov_late_leader }
+		}
+	}
+	else_if = {
+		limit = { scope:aov_election_faction = flag:technomancers }
+		ordered_in_global_list = {
+			variable = aov_candidates_technomancers
+			order_by = aov_candidate_score_technomancers
+			position = 0
+			check_range_bounds = no
+			save_scope_as = aov_candidate_1
+		}
+		ordered_in_global_list = {
+			variable = aov_candidates_technomancers
+			order_by = aov_candidate_score_technomancers
+			position = 1
+			check_range_bounds = no
+			save_scope_as = aov_candidate_2
+		}
+		ordered_in_global_list = {
+			variable = aov_candidates_technomancers
+			order_by = aov_candidate_score_technomancers
+			position = 2
+			check_range_bounds = no
+			save_scope_as = aov_candidate_3
+		}
+		title:d_technomancers = { save_scope_as = aov_election_title }
+		if = {
+			limit = { exists = global_var:aov_late_leader_technomancers }
+			global_var:aov_late_leader_technomancers = { save_scope_as = aov_late_leader }
+		}
+	}
+}
+
+# Event option: root votes for CANDIDATE in the election in scope:aov_election_faction
+aov_election_vote_in_event = {
+	if = {
+		limit = { scope:aov_election_faction = flag:brillites }
+		custom_tooltip = aov_vote_weight_brillites_tt
+		hidden_effect = { aov_election_cast_vote = { FACTION = brillites CANDIDATE = $CANDIDATE$ } }
+	}
+	else_if = {
+		limit = { scope:aov_election_faction = flag:mechanists }
+		custom_tooltip = aov_vote_weight_mechanists_tt
+		hidden_effect = { aov_election_cast_vote = { FACTION = mechanists CANDIDATE = $CANDIDATE$ } }
+	}
+	else_if = {
+		limit = { scope:aov_election_faction = flag:technomancers }
+		custom_tooltip = aov_vote_weight_technomancers_tt
+		hidden_effect = { aov_election_cast_vote = { FACTION = technomancers CANDIDATE = $CANDIDATE$ } }
+	}
+}
+
+# Hidden event aov_artificer_factions.4: reopen an election whose winner could not take the title
+aov_election_open_in_event = {
+	if = {
+		limit = { scope:aov_election_faction = flag:brillites }
+		if = {
+			limit = { NOT = { exists = title:d_brillites.holder } }
+			aov_election_open = { FACTION = brillites }
+		}
+	}
+	else_if = {
+		limit = { scope:aov_election_faction = flag:mechanists }
+		if = {
+			limit = { NOT = { exists = title:d_mechanists.holder } }
+			aov_election_open = { FACTION = mechanists }
+		}
+	}
+	else_if = {
+		limit = { scope:aov_election_faction = flag:technomancers }
+		if = {
+			limit = { NOT = { exists = title:d_technomancers.holder } }
+			aov_election_open = { FACTION = technomancers }
+		}
+	}
+}
+
+# Hidden event aov_artificer_factions.3
+aov_election_resolve_in_event = {
+	if = {
+		limit = { scope:aov_election_faction = flag:brillites }
+		aov_election_resolve = { FACTION = brillites }
+	}
+	else_if = {
+		limit = { scope:aov_election_faction = flag:mechanists }
+		aov_election_resolve = { FACTION = mechanists }
+	}
+	else_if = {
+		limit = { scope:aov_election_faction = flag:technomancers }
+		aov_election_resolve = { FACTION = technomancers }
+	}
+}
+
+# A vacant title with no election under way gets one
+aov_elections_fill_vacant = {
+	if = {
+		limit = {
+			NOT = { exists = title:d_brillites.holder }
+			NOT = { exists = global_var:aov_election_open_brillites }
+		}
+		aov_election_open = { FACTION = brillites }
+	}
+	if = {
+		limit = {
+			NOT = { exists = title:d_mechanists.holder }
+			NOT = { exists = global_var:aov_election_open_mechanists }
+		}
+		aov_election_open = { FACTION = mechanists }
+	}
+	if = {
+		limit = {
+			NOT = { exists = title:d_technomancers.holder }
+			NOT = { exists = global_var:aov_election_open_technomancers }
+		}
+		aov_election_open = { FACTION = technomancers }
+	}
+}
+
+# Count any election whose 30 days are over but whose count event was lost (its ruler died)
+aov_elections_resolve_overdue = {
+	if = {
+		limit = {
+			exists = global_var:aov_election_open_brillites
+			NOT = { exists = global_var:aov_election_running_brillites }
+		}
+		aov_election_resolve = { FACTION = brillites }
+	}
+	if = {
+		limit = {
+			exists = global_var:aov_election_open_mechanists
+			NOT = { exists = global_var:aov_election_running_mechanists }
+		}
+		aov_election_resolve = { FACTION = mechanists }
+	}
+	if = {
+		limit = {
+			exists = global_var:aov_election_open_technomancers
+			NOT = { exists = global_var:aov_election_running_technomancers }
+		}
+		aov_election_resolve = { FACTION = technomancers }
+	}
+}

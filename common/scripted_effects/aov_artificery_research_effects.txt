@@ -1,0 +1,303 @@
+﻿# Artificery inventions: research, slots, dormancy, AI and inheritance. Character scope (the ruler).
+# Per-invention effects are generated: common/scripted_effects/aov_invention_effects.txt.
+
+# Pays the sponsor's influence-scaled cost and time (common/script_values/aov_artificer_faction_values.txt)
+aov_artificery_start_research_common = {
+	set_variable = { name = aov_research_paid value = aov_research_cost_$SPONSOR$ }
+	add_gold = {
+		value = aov_research_cost_$SPONSOR$
+		multiply = -1
+	}
+	set_variable = { name = aov_research_sponsor value = flag:$SPONSOR$ }
+	set_variable = { name = aov_research_quarters_left value = aov_research_quarters_$SPONSOR$ }
+	custom_tooltip = aov_sponsor_influence_$SPONSOR$_tt
+	hidden_effect = { aov_faction_sponsor_shift_$SPONSOR$ = yes }
+}
+
+aov_artificery_start_brillites_research = {
+	aov_artificery_start_research_common = { SPONSOR = brillites }
+}
+
+aov_artificery_start_mechanists_research = {
+	aov_artificery_start_research_common = { SPONSOR = mechanists }
+	set_variable = { name = aov_research_category value = flag:$CATEGORY$ }
+}
+
+aov_artificery_start_technomancers_research = {
+	aov_artificery_start_research_common = { SPONSOR = technomancers }
+	set_variable = { name = aov_research_category value = flag:$CATEGORY$ }
+	set_variable = { name = aov_research_target value = flag:$TARGET$ }
+}
+
+aov_artificery_clear_research = {
+	remove_variable = aov_research_sponsor
+	remove_variable = aov_research_category
+	remove_variable = aov_research_target
+	remove_variable = aov_research_quarters_left
+	remove_variable = aov_tech_offer_economic_1
+	remove_variable = aov_tech_offer_economic_2
+	remove_variable = aov_tech_offer_economic_3
+	remove_variable = aov_tech_offer_military_1
+	remove_variable = aov_tech_offer_military_2
+	remove_variable = aov_tech_offer_military_3
+	remove_variable = aov_tech_offer_society_1
+	remove_variable = aov_tech_offer_society_2
+	remove_variable = aov_tech_offer_society_3
+	remove_variable = aov_tech_offers_rolled_economic
+	remove_variable = aov_tech_offers_rolled_military
+	remove_variable = aov_tech_offers_rolled_society
+}
+
+# Discover per sponsor; refund if nothing could be discovered
+aov_artificery_complete_research = {
+	remove_variable = aov_last_discovered
+	set_variable = { name = aov_last_sponsor value = var:aov_research_sponsor }
+	if = {
+		limit = { var:aov_research_sponsor = flag:brillites aov_inventions_any_discoverable = yes }
+		aov_inventions_discover_random = yes
+	}
+	else_if = {
+		limit = { var:aov_research_sponsor = flag:mechanists }
+		if = {
+			limit = { var:aov_research_category = flag:economic aov_inventions_economic_discoverable = yes }
+			aov_inventions_discover_random_economic = yes
+		}
+		else_if = {
+			limit = { var:aov_research_category = flag:military aov_inventions_military_discoverable = yes }
+			aov_inventions_discover_random_military = yes
+		}
+		else_if = {
+			limit = { var:aov_research_category = flag:society aov_inventions_society_discoverable = yes }
+			aov_inventions_discover_random_society = yes
+		}
+	}
+	else_if = {
+		limit = { var:aov_research_sponsor = flag:technomancers }
+		aov_inventions_discover_research_target = yes
+	}
+	aov_artificery_clear_research = yes
+	if = {
+		limit = { has_variable = aov_last_discovered }
+		trigger_event = aov_artificery.1
+	}
+	else = {
+		add_gold = var:aov_research_paid
+		trigger_event = aov_artificery.2
+	}
+}
+
+# Quarterly, only while eligible
+aov_artificery_tick_research = {
+	if = {
+		limit = { aov_artificery_is_researching = yes }
+		change_variable = { name = aov_research_quarters_left add = -1 }
+		if = {
+			limit = { var:aov_research_quarters_left <= 0 }
+			aov_artificery_complete_research = yes
+		}
+	}
+}
+
+aov_artificery_start_slot_cooldown = {
+	if = {
+		limit = { NOT = { has_variable = aov_slot_cd_1 } }
+		set_variable = { name = aov_slot_cd_1 years = 1 }
+	}
+	else_if = {
+		limit = { NOT = { has_variable = aov_slot_cd_2 } }
+		set_variable = { name = aov_slot_cd_2 years = 1 }
+	}
+	else_if = {
+		limit = { NOT = { has_variable = aov_slot_cd_3 } }
+		set_variable = { name = aov_slot_cd_3 years = 1 }
+	}
+	else_if = {
+		limit = { NOT = { has_variable = aov_slot_cd_4 } }
+		set_variable = { name = aov_slot_cd_4 years = 1 }
+	}
+	else_if = {
+		limit = { NOT = { has_variable = aov_slot_cd_5 } }
+		set_variable = { name = aov_slot_cd_5 years = 1 }
+	}
+}
+
+aov_artificery_enforce_slot_max = {
+	while = {
+		limit = { aov_invention_active_count > aov_invention_slots_max }
+		aov_inventions_deactivate_newest = yes
+	}
+}
+
+# Ineligible rulers keep their state but lose the modifiers; restored once eligible again
+aov_artificery_update_dormancy = {
+	if = {
+		limit = {
+			has_variable = aov_artificery_dormant
+			can_use_artificery_trigger = yes
+		}
+		remove_variable = aov_artificery_dormant
+		aov_inventions_resume_all = yes
+		aov_faction_refresh_modifiers = yes
+	}
+	else_if = {
+		limit = {
+			NOT = { has_variable = aov_artificery_dormant }
+			NOT = { can_use_artificery_trigger = yes }
+			aov_artificery_has_state = yes
+		}
+		set_variable = aov_artificery_dormant
+		aov_inventions_suspend_all = yes
+		aov_faction_remove_modifiers = yes
+	}
+}
+
+# AI: a field chosen at random among those with something to discover
+aov_artificery_ai_sponsor_mechanists = {
+	random_list = {
+		1 = {
+			trigger = { aov_inventions_economic_discoverable = yes }
+			aov_artificery_start_mechanists_research = { CATEGORY = economic }
+		}
+		1 = {
+			trigger = { aov_inventions_military_discoverable = yes }
+			aov_artificery_start_mechanists_research = { CATEGORY = military }
+		}
+		1 = {
+			trigger = { aov_inventions_society_discoverable = yes }
+			aov_artificery_start_mechanists_research = { CATEGORY = society }
+		}
+	}
+}
+
+aov_artificery_ai_sponsor_technomancers = {
+	random_list = {
+		1 = {
+			trigger = { aov_inventions_economic_discoverable = yes }
+			aov_inventions_roll_offers_economic = yes
+			aov_inventions_ai_start_technomancers_economic = yes
+		}
+		1 = {
+			trigger = { aov_inventions_military_discoverable = yes }
+			aov_inventions_roll_offers_military = yes
+			aov_inventions_ai_start_technomancers_military = yes
+		}
+		1 = {
+			trigger = { aov_inventions_society_discoverable = yes }
+			aov_inventions_roll_offers_society = yes
+			aov_inventions_ai_start_technomancers_society = yes
+		}
+	}
+}
+
+aov_artificery_ai_research = {
+	# Win back a Displeased or Hostile faction first
+	if = {
+		limit = {
+			aov_influence_level_brillites <= 1
+			aov_artificery_can_sponsor = { FACTION = brillites }
+		}
+		aov_artificery_start_brillites_research = yes
+	}
+	else_if = {
+		limit = {
+			aov_influence_level_mechanists <= 1
+			aov_artificery_can_sponsor = { FACTION = mechanists }
+		}
+		aov_artificery_ai_sponsor_mechanists = yes
+	}
+	else_if = {
+		limit = {
+			aov_influence_level_technomancers <= 1
+			aov_artificery_can_sponsor = { FACTION = technomancers }
+		}
+		aov_artificery_ai_sponsor_technomancers = yes
+	}
+	else = {
+		random_list = {
+			50 = {
+				trigger = { aov_artificery_can_sponsor = { FACTION = brillites } }
+				aov_artificery_start_brillites_research = yes
+			}
+			30 = {
+				trigger = { aov_artificery_can_sponsor = { FACTION = mechanists } }
+				aov_artificery_ai_sponsor_mechanists = yes
+			}
+			20 = {
+				trigger = { aov_artificery_can_sponsor = { FACTION = technomancers } }
+				aov_artificery_ai_sponsor_technomancers = yes
+			}
+		}
+	}
+}
+
+aov_artificery_ai_quarterly = {
+	if = {
+		limit = { is_ai = yes }
+		if = {
+			limit = { aov_artificery_can_start_research = yes }
+			aov_artificery_ai_research = yes
+		}
+		if = {
+			limit = {
+				aov_influence_level_brillites = 0
+				gold > 300
+			}
+			aov_faction_make_amends = { FACTION = brillites }
+		}
+		if = {
+			limit = {
+				aov_influence_level_mechanists = 0
+				gold > 300
+			}
+			aov_faction_make_amends = { FACTION = mechanists }
+		}
+		if = {
+			limit = {
+				aov_influence_level_technomancers = 0
+				gold > 300
+			}
+			aov_faction_make_amends = { FACTION = technomancers }
+		}
+		while = {
+			limit = {
+				aov_invention_slots_free > 0
+				aov_inventions_any_activatable = yes
+			}
+			aov_inventions_ai_activate_best = yes
+		}
+	}
+}
+
+# Heir scope; scope:aov_predecessor is the dead ruler
+aov_artificery_inherit = {
+	aov_inventions_inherit = yes
+	aov_factions_inherit = yes
+	if = {
+		limit = {
+			NOT = { aov_artificery_is_researching = yes }
+			scope:aov_predecessor = { aov_artificery_is_researching = yes }
+		}
+		set_variable = { name = aov_research_sponsor value = scope:aov_predecessor.var:aov_research_sponsor }
+		set_variable = { name = aov_research_quarters_left value = scope:aov_predecessor.var:aov_research_quarters_left }
+		if = {
+			limit = { scope:aov_predecessor = { has_variable = aov_research_paid } }
+			set_variable = { name = aov_research_paid value = scope:aov_predecessor.var:aov_research_paid }
+		}
+		if = {
+			limit = { scope:aov_predecessor = { has_variable = aov_research_category } }
+			set_variable = { name = aov_research_category value = scope:aov_predecessor.var:aov_research_category }
+		}
+		if = {
+			limit = { scope:aov_predecessor = { has_variable = aov_research_target } }
+			set_variable = { name = aov_research_target value = scope:aov_predecessor.var:aov_research_target }
+		}
+	}
+	# Cooldowns restart at a full year: CK3 cannot read how long a timed variable has left
+	if = { limit = { scope:aov_predecessor = { has_variable = aov_slot_cd_1 } } aov_artificery_start_slot_cooldown = yes }
+	if = { limit = { scope:aov_predecessor = { has_variable = aov_slot_cd_2 } } aov_artificery_start_slot_cooldown = yes }
+	if = { limit = { scope:aov_predecessor = { has_variable = aov_slot_cd_3 } } aov_artificery_start_slot_cooldown = yes }
+	if = { limit = { scope:aov_predecessor = { has_variable = aov_slot_cd_4 } } aov_artificery_start_slot_cooldown = yes }
+	if = { limit = { scope:aov_predecessor = { has_variable = aov_slot_cd_5 } } aov_artificery_start_slot_cooldown = yes }
+	aov_artificery_update_dormancy = yes
+	aov_artificery_enforce_slot_max = yes
+}

@@ -1,0 +1,22 @@
+﻿# Artificery: sponsor and category names from flag variables (invention names are generated: aov_invention_custom_loc.txt)
+
+AovResearchSponsorName = {
+	type = character
+	text = { trigger = { has_variable = aov_research_sponsor var:aov_research_sponsor = flag:brillites } localization_key = AOV_SPONSOR_BRILLITES }
+	text = { trigger = { has_variable = aov_research_sponsor var:aov_research_sponsor = flag:mechanists } localization_key = AOV_SPONSOR_MECHANISTS }
+	text = { trigger = { has_variable = aov_research_sponsor var:aov_research_sponsor = flag:technomancers } localization_key = AOV_SPONSOR_TECHNOMANCERS }
+}
+
+AovLastSponsorName = {
+	type = character
+	text = { trigger = { has_variable = aov_last_sponsor var:aov_last_sponsor = flag:brillites } localization_key = AOV_SPONSOR_BRILLITES }
+	text = { trigger = { has_variable = aov_last_sponsor var:aov_last_sponsor = flag:mechanists } localization_key = AOV_SPONSOR_MECHANISTS }
+	text = { trigger = { has_variable = aov_last_sponsor var:aov_last_sponsor = flag:technomancers } localization_key = AOV_SPONSOR_TECHNOMANCERS }
+}
+
+AovResearchCategoryName = {
+	type = character
+	text = { trigger = { has_variable = aov_research_category var:aov_research_category = flag:economic } localization_key = AOV_CATEGORY_ECONOMIC }
+	text = { trigger = { has_variable = aov_research_category var:aov_research_category = flag:military } localization_key = AOV_CATEGORY_MILITARY }
+	text = { trigger = { has_variable = aov_research_category var:aov_research_category = flag:society } localization_key = AOV_CATEGORY_SOCIETY }
+}

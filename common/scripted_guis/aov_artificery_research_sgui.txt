@@ -1,0 +1,111 @@
+﻿# Artificery research popup and Inventions tab panel. Per-invention sGUIs are generated: aov_invention_sgui.txt.
+
+aov_research_can_start_sgui = {
+	scope = character
+	is_valid = { aov_artificery_can_start_research = yes }
+}
+
+aov_research_running_sgui = {
+	scope = character
+	is_shown = { aov_artificery_is_researching = yes }
+}
+
+aov_research_has_target_sgui = {
+	scope = character
+	is_shown = { has_variable = aov_research_target }
+}
+
+aov_research_has_category_sgui = {
+	scope = character
+	is_shown = {
+		has_variable = aov_research_category
+		NOT = { has_variable = aov_research_target }
+	}
+}
+
+aov_research_brillites_sgui = {
+	scope = character
+	is_valid = { aov_artificery_can_sponsor = { FACTION = brillites } }
+	effect = { aov_artificery_start_brillites_research = yes }
+}
+
+aov_research_mechanists_economic_sgui = {
+	scope = character
+	is_valid = {
+		aov_artificery_can_sponsor = { FACTION = mechanists }
+		custom_tooltip = { text = aov_artificery_category_discoverable_tt aov_inventions_economic_discoverable = yes }
+	}
+	effect = { aov_artificery_start_mechanists_research = { CATEGORY = economic } }
+}
+
+aov_research_mechanists_military_sgui = {
+	scope = character
+	is_valid = {
+		aov_artificery_can_sponsor = { FACTION = mechanists }
+		custom_tooltip = { text = aov_artificery_category_discoverable_tt aov_inventions_military_discoverable = yes }
+	}
+	effect = { aov_artificery_start_mechanists_research = { CATEGORY = military } }
+}
+
+aov_research_mechanists_society_sgui = {
+	scope = character
+	is_valid = {
+		aov_artificery_can_sponsor = { FACTION = mechanists }
+		custom_tooltip = { text = aov_artificery_category_discoverable_tt aov_inventions_society_discoverable = yes }
+	}
+	effect = { aov_artificery_start_mechanists_research = { CATEGORY = society } }
+}
+
+# Technomancers: viewing a category rolls its offers once per research cycle
+aov_research_technomancers_economic_sgui = {
+	scope = character
+	is_valid = {
+		aov_artificery_can_sponsor = { FACTION = technomancers }
+		custom_tooltip = { text = aov_artificery_category_discoverable_tt aov_inventions_economic_discoverable = yes }
+	}
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = aov_tech_offers_rolled_economic } }
+			aov_inventions_roll_offers_economic = yes
+		}
+	}
+}
+
+aov_research_technomancers_military_sgui = {
+	scope = character
+	is_valid = {
+		aov_artificery_can_sponsor = { FACTION = technomancers }
+		custom_tooltip = { text = aov_artificery_category_discoverable_tt aov_inventions_military_discoverable = yes }
+	}
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = aov_tech_offers_rolled_military } }
+			aov_inventions_roll_offers_military = yes
+		}
+	}
+}
+
+aov_research_technomancers_society_sgui = {
+	scope = character
+	is_valid = {
+		aov_artificery_can_sponsor = { FACTION = technomancers }
+		custom_tooltip = { text = aov_artificery_category_discoverable_tt aov_inventions_society_discoverable = yes }
+	}
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = aov_tech_offers_rolled_society } }
+			aov_inventions_roll_offers_society = yes
+		}
+	}
+}
+
+# Inventions tab: a tier tab is locked until the culture reaches its era
+aov_inventions_tier_2_unlocked_sgui = {
+	scope = character
+	is_shown = { culture = { has_cultural_era_or_later = culture_era_high_medieval } }
+}
+
+aov_inventions_tier_3_unlocked_sgui = {
+	scope = character
+	is_shown = { culture = { has_cultural_era_or_later = culture_era_late_medieval } }
+}
