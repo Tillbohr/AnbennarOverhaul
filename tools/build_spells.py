@@ -249,6 +249,100 @@ def interactions(spells: list) -> str:
     return "\n".join(out)
 
 
+TYPE_LOC = {"self": "AOV_SPELL_TYPE_SELF", "realm": "AOV_SPELL_TYPE_REALM", "war": "AOV_SPELL_TYPE_WAR",
+            "targeted": "AOV_SPELL_TYPE_TARGETED"}
+ROOT = "GuiScope.SetRoot( GetPlayer.MakeScope ).End"
+
+
+def sgref(name: str, call: str) -> str:
+    return f"GetScriptedGui('{name}').{call}( {ROOT} )"
+
+
+def card(s) -> str:
+    """One spell: icon in its level frame, name and facts, Cast button (or the portrait hint). 480 px wide."""
+    k, c, lvl = s["key"], s["school"], s["level"]
+    if s["slot"]:
+        icon = (f'\t\t\ticon = {{\n\t\t\t\tparentanchor = center\n\t\t\t\tsize = {{ 52 52 }}\n'
+                f'\t\t\t\ttexture = "{ART_DIR}/spell_slot_{s["slot"]}.dds"\n\t\t\t\tframesize = {{ 60 60 }}\n'
+                f'\t\t\t\tframe = {SCHOOLS.index(c) + 1}\n\t\t\t}}\n')
+    else:
+        icon = (f'\t\t\ticon = {{\n\t\t\t\tparentanchor = center\n\t\t\t\tsize = {{ 40 40 }}\n'
+                f'\t\t\t\ttexture = "{ART_DIR}/school_{c}.dds"\n\t\t\t}}\n')
+    if window_spell(s):
+        sg = f"aov_spell_{k}_sgui"
+        action = (f"\t\tbutton_standard = {{\n\t\t\tsize = {{ 110 32 }}\n\t\t\ttext = \"AOV_SPELL_CAST\"\n"
+                  f"\t\t\tenabled = \"[{sgref(sg, 'IsValid')}]\"\n"
+                  f"\t\t\ttooltip = \"[{sgref(sg, 'BuildTooltip')}]\"\n"
+                  f"\t\t\tonclick = \"[{sgref(sg, 'Execute')}]\"\n\t\t}}\n")
+    else:
+        action = ("\t\ttext_multi = {\n\t\t\tsize = { 110 0 }\n\t\t\tmax_width = 110\n\t\t\tautoresize = yes\n"
+                  "\t\t\ttext = \"AOV_SPELL_CAST_FROM_PORTRAIT\"\n\t\t\tdefault_format = \"#weak\"\n\t\t}\n")
+    return (
+        f"widget = {{\n"
+        f'\tname = "aov_spell_card_{k}"\n'
+        f"\tsize = {{ 480 76 }}\n"
+        f'\ttooltip = "aov_spell_{k}_tt"\n\n'
+        f"\tbackground = {{\n\t\ttexture = \"{ART_DIR}/spell_plate.dds\"\n\t\tspriteType = Corneredstretched\n"
+        f"\t\tspriteborder = {{ 70 12 }}\n\t\talpha = 0.6\n\t}}\n\n"
+        f"\thbox = {{\n\t\tmargin = {{ 6 0 }}\n\t\tspacing = 8\n\n"
+        f"\t\twidget = {{\n\t\t\tsize = {{ 64 76 }}\n\n"
+        + icon
+        + f'\t\t\ticon = {{\n\t\t\t\tsize = {{ 64 76 }}\n\t\t\t\ttexture = "{ART_DIR}/spell_frames.dds"\n'
+          f"\t\t\t\tframesize = {{ 64 76 }}\n\t\t\t\tframe = {lvl + 1}\n\t\t\t}}\n\t\t}}\n\n"
+        f"\t\tvbox = {{\n\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\tspacing = 2\n\n"
+        f'\t\t\ttext_single = {{\n\t\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\t\ttext = "aov_spell_{k}"\n'
+        f'\t\t\t\tdefault_format = "#T"\n\t\t\t\tmax_width = 270\n\t\t\t\talign = left|nobaseline\n\t\t\t}}\n'
+        f'\t\t\ttext_single = {{\n\t\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\t\ttext = "AOV_SPELL_FACTS_{lvl}_{s["type"].upper()}"\n'
+        f'\t\t\t\tdefault_format = "#weak"\n\t\t\t\tmax_width = 270\n\t\t\t\talign = left|nobaseline\n\t\t\t}}\n'
+        f'\t\t\ttext_single = {{\n\t\t\t\tvisible = "[Not( GetPlayer.MakeScope.Var( \'aov_spell_{k}_cd\' ).IsSet )]"\n'
+        f'\t\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\t\ttext = "aov_spell_{k}_desc"\n\t\t\t\tmax_width = 270\n'
+        f'\t\t\t\talign = left|nobaseline\n\t\t\t}}\n'
+        f'\t\t\ttext_single = {{\n\t\t\t\tvisible = "[GetPlayer.MakeScope.Var( \'aov_spell_{k}_cd\' ).IsSet]"\n'
+        f'\t\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\t\ttext = "AOV_SPELL_ON_COOLDOWN"\n\t\t\t\tmax_width = 270\n'
+        f'\t\t\t\talign = left|nobaseline\n\t\t\t}}\n\t\t}}\n\n'
+        + action
+        + "\t}\n}\n"
+    )
+
+
+def school_page(spells: list, c: str) -> str:
+    sg = f"aov_study_{c}_sgui"
+    header = (
+        f"hbox = {{\n\tlayoutpolicy_horizontal = expanding\n\tmargin = {{ 6 4 }}\n\tspacing = 10\n\n"
+        f'\ticon = {{\n\t\tsize = {{ 48 48 }}\n\t\ttexture = "{ART_DIR}/school_{c}.dds"\n\t}}\n\n'
+        f"\tvbox = {{\n\t\tlayoutpolicy_horizontal = expanding\n\t\tspacing = 4\n\n"
+        f"\t\thbox = {{\n\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\tspacing = 6\n\n"
+        f'\t\t\ttext_single = {{\n\t\t\t\ttext = "AOV_SCHOOL_{c.upper()}"\n\t\t\t\tusing = Font_Type_Flavor\n'
+        f'\t\t\t\tusing = Font_Size_Medium\n\t\t\t\tdefault_format = "#T"\n\t\t\t\talign = left|nobaseline\n\t\t\t}}\n\n'
+        + "".join(
+            f'\t\t\ticon = {{\n\t\t\t\tvisible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( \'aov_school_{c}_level\' ), \'(CFixedPoint){n}\' )]"\n'
+            f'\t\t\t\tsize = {{ 30 29 }}\n\t\t\t\ttexture = "{ART_DIR}/levels_strip.dds"\n\t\t\t\tframesize = {{ 42 41 }}\n\t\t\t\tframe = {n}\n'
+            f'\t\t\t\ttooltip = "AOV_SCHOOL_LEVEL_TT"\n\t\t\t}}\n' for n in (1, 2, 3))
+        + f"\n\t\t\texpand = {{}}\n\t\t}}\n\n"
+        f"\t\thbox = {{\n\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\tspacing = 8\n\n"
+        f"\t\t\tprogressbar_standard = {{\n\t\t\t\tsize = {{ 200 14 }}\n\t\t\t\tmin = 0\n\t\t\t\tmax = 100\n"
+        f"\t\t\t\tvalue = \"[FixedPointToFloat( GetPlayer.MakeScope.ScriptValue( 'aov_school_{c}_percent' ) )]\"\n"
+        f'\t\t\t\ttooltip = "AOV_SCHOOL_{c.upper()}_PROGRESS_TT"\n\t\t\t}}\n\n'
+        f'\t\t\ttext_single = {{\n\t\t\t\ttext = "AOV_SCHOOL_{c.upper()}_PROGRESS"\n\t\t\t\talign = left|nobaseline\n\t\t\t}}\n\n'
+        f"\t\t\texpand = {{}}\n\t\t}}\n\t}}\n\n"
+        f"\tbutton_standard = {{\n\t\tsize = {{ 140 32 }}\n"
+        f"\t\ttext = \"[SelectLocalization( {sgref(sg, 'IsShown')}, 'AOV_STUDYING', 'AOV_STUDY_THIS_SCHOOL' )]\"\n"
+        f"\t\tdown = \"[{sgref(sg, 'IsShown')}]\"\n"
+        f"\t\tenabled = \"[{sgref(sg, 'IsValid')}]\"\n"
+        f"\t\ttooltip = \"[{sgref(sg, 'BuildTooltip')}]\"\n"
+        f"\t\tonclick = \"[{sgref(sg, 'Execute')}]\"\n\t}}\n}}\n"
+    )
+    cards = "\n".join(card(s) for s in of_school(spells, c))
+    pad = lambda t, n: "".join(("\t" * n + l) if l.strip() else l for l in t.splitlines(True))  # noqa: E731
+    return (f"\ttype aov_magic_school_{c} = vbox {{\n\t\tlayoutpolicy_horizontal = expanding\n\t\tspacing = 6\n\n"
+            + pad(header, 2) + "\n" + pad(cards, 2) + "\t}\n")
+
+
+def gui(spells: list) -> str:
+    return (HEADER + "\ntypes AovMagic\n{\n"
+            + "\n".join(school_page(spells, c) for c in SCHOOLS) + "}\n")
+
+
 def loc(spells: list) -> str:
     out = ["l_english:", " # " + HEADER.strip("# \n")]
     for s in spells:
@@ -256,6 +350,9 @@ def loc(spells: list) -> str:
         out.append(f' aov_spell_{k}: "{s["name"]}"')
         out.append(f' aov_spell_{k}_desc: "{s["desc"]}"')
         out.append(f' aov_spell_{k}_flavour: "#F {s["flavour"]}#!"')
+        effects_text = (f"[GetModifier('aov_spell_{k}').GetDescWithEffects]" if lasting(s) else f"$aov_spell_{k}_desc$")
+        out.append(f' aov_spell_{k}_tt: "#T $aov_spell_{k}$#!\\n#weak $AOV_SCHOOL_{s["school"].upper()}$, $AOV_SPELL_FACTS_{s["level"]}_{s["type"].upper()}$#!'
+                   f'\\n\\n{effects_text}\\n\\n$aov_spell_{k}_flavour$"')
         if s["interaction"] == f"aov_spell_{k}_interaction":
             out.append(f' aov_spell_{k}_interaction: "Cast {s["name"]}"')
             out.append(f' aov_spell_{k}_interaction_desc: "{s["desc"]}"')
@@ -263,6 +360,9 @@ def loc(spells: list) -> str:
     for c in SCHOOLS:
         for lvl in range(4):
             out.append(f' AOV_SPELL_REQ_{c.upper()}_{lvl}: "Knows $AOV_SCHOOL_{c.upper()}$ at level {lvl} or higher"')
+    for lvl in range(4):
+        for t, label in (("SELF", "Self"), ("REALM", "Realm"), ("WAR", "War"), ("TARGETED", "Targeted")):
+            out.append(f' AOV_SPELL_FACTS_{lvl}_{t}: "Level {lvl} · {COSTS[lvl]} mana · {label} · {YEARS[lvl]} year{"s" if YEARS[lvl] > 1 else ""}"')
     for cost in COSTS:
         out.append(f' AOV_SPELL_REQ_MANA_{cost}: "Has at least #V {cost}#! mana"')
         out.append(f' AOV_SPELL_COST_{cost}: "Costs #V {cost}#! mana"')
@@ -276,6 +376,7 @@ def render_all(spells: list) -> dict:
         "common/scripted_effects/aov_spell_effects.txt": effects(spells),
         "common/scripted_guis/aov_spell_sgui.txt": sguis(spells),
         "common/character_interactions/aov_spell_interactions.txt": interactions(spells),
+        "gui/aov_magic_generated.gui": gui(spells),
         "localization/english/aov_spells_l_english.yml": loc(spells),
     }
 

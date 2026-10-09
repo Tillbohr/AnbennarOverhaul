@@ -1,0 +1,5 @@
+﻿# Anbennar Overhaul: Magic tab (gui/hud.gui, generated) and window (gui/aov_window_magic.gui)
+aov_magic_available = {
+	scope = character
+	is_shown = { aov_is_mage = yes }
+}

@@ -234,3 +234,66 @@ aov_magic_mastery_value = {
 	add = aov_school_necromancy_level
 	add = aov_school_transmutation_level
 }
+
+# Window bars (0-100)
+aov_mana_percent = {
+	value = aov_mana
+	multiply = 100
+	divide = aov_mana_max
+}
+
+aov_school_abjuration_percent = {
+	value = aov_school_abjuration_progress
+	multiply = 100
+	divide = aov_school_abjuration_next
+	max = 100
+}
+
+aov_school_conjuration_percent = {
+	value = aov_school_conjuration_progress
+	multiply = 100
+	divide = aov_school_conjuration_next
+	max = 100
+}
+
+aov_school_divination_percent = {
+	value = aov_school_divination_progress
+	multiply = 100
+	divide = aov_school_divination_next
+	max = 100
+}
+
+aov_school_enchantment_percent = {
+	value = aov_school_enchantment_progress
+	multiply = 100
+	divide = aov_school_enchantment_next
+	max = 100
+}
+
+aov_school_evocation_percent = {
+	value = aov_school_evocation_progress
+	multiply = 100
+	divide = aov_school_evocation_next
+	max = 100
+}
+
+aov_school_illusion_percent = {
+	value = aov_school_illusion_progress
+	multiply = 100
+	divide = aov_school_illusion_next
+	max = 100
+}
+
+aov_school_necromancy_percent = {
+	value = aov_school_necromancy_progress
+	multiply = 100
+	divide = aov_school_necromancy_next
+	max = 100
+}
+
+aov_school_transmutation_percent = {
+	value = aov_school_transmutation_progress
+	multiply = 100
+	divide = aov_school_transmutation_next
+	max = 100
+}

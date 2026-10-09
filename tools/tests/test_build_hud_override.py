@@ -91,6 +91,24 @@ class InsertTabTests(unittest.TestCase):
         self.assertEqual(bho.TEXTURE, "gfx/interface/skinned/hud_maintab/aov_maintab_artificery.dds")
         self.assertTrue((bho.SUBMOD / bho.TEXTURE).is_file())
 
+    def test_magic_tab_after_artificery(self):
+        out = bho.insert_tab(HUD)
+        art, magic = out.index('name = "tab_aov_artificery"'), out.index('name = "tab_aov_magic"')
+        self.assertLess(art, magic)
+        self.assertLess(magic, out.index(bho.END))
+        self.assertIn("GetScriptedGui('aov_magic_available').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )", out)
+        self.assertIn("GetVariableSystem.Toggle( 'aov_magic_window' )", out)
+        self.assertIn('tooltip = "AOV_MAGIC_BUTTON"', out)
+        self.assertEqual(bho.MAGIC_TEXTURE, "gfx/interface/skinned/hud_maintab/aov_maintab_magic.dds")
+        self.assertTrue((bho.SUBMOD / bho.MAGIC_TEXTURE).is_file())
+
+    def test_tabs_close_each_other(self):
+        out = bho.insert_tab(HUD)
+        art = out[out.index('name = "tab_aov_artificery"'):out.index('name = "tab_aov_magic"')]
+        magic = out[out.index('name = "tab_aov_magic"'):out.index(bho.END)]
+        self.assertIn("GetVariableSystem.Clear( 'aov_magic_window' )", art)
+        self.assertIn("GetVariableSystem.Clear( 'aov_artificery_window' )", magic)
+
     def test_block_braces_balance(self):
         self.assertEqual(sum(bho.brace_delta(l) for l in bho.insert_tab(HUD).split("\n")), 0)
 

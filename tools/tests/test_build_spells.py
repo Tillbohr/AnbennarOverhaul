@@ -193,9 +193,40 @@ class GeneratedTests(unittest.TestCase):
             self.assertIn(f" aov_spell_{k}_interaction:", lc)
             self.assertIn(f" aov_spell_{k}_interaction_desc:", lc)
 
+    def test_gui_school_pages_and_cards(self):
+        text = bs.gui(SPELLS)
+        self.assertTrue(balanced(text))
+        for c in bs.SCHOOLS:
+            self.assertIn(f"type aov_magic_school_{c} = vbox {{", text)
+        self.assertEqual(len(re.findall(r'name = "aov_spell_card_[a-z_]+"', text)), 49)
+        for s in SPELLS:
+            k = s["key"]
+            card = text.split(f'name = "aov_spell_card_{k}"')[1].split('name = "aov_spell_card_')[0].split("type aov_magic_school_")[0]
+            if s["type"] == "targeted":
+                self.assertNotIn("Execute", card, k)
+                self.assertIn("AOV_SPELL_CAST_FROM_PORTRAIT", card, k)
+            else:
+                self.assertIn(f"GetScriptedGui('aov_spell_{k}_sgui').Execute( {bs.ROOT} )", card, k)
+            self.assertIn(f'tooltip = "aov_spell_{k}_tt"', card, k)
+            if s["slot"]:
+                self.assertIn(f'texture = "gfx/interface/icons/aov_magic/spell_slot_{s["slot"]}.dds"', card, k)
+                self.assertIn(f"frame = {bs.SCHOOLS.index(s['school']) + 1}", card, k)
+
+    def test_gui_cards_fit(self):
+        for w in re.findall(r"aov_spell_card_[a-z_]+\"\n\t*size = \{ (\d+) ", bs.gui(SPELLS)):
+            self.assertLessEqual(int(w), 480)
+
+    def test_gui_school_header_study_button(self):
+        text = bs.gui(SPELLS)
+        for c in bs.SCHOOLS:
+            page = text.split(f"type aov_magic_school_{c} = vbox {{")[1].split("type aov_magic_school_")[0]
+            self.assertIn(f"GetScriptedGui('aov_study_{c}_sgui').Execute( {bs.ROOT} )", page)
+            self.assertIn(f'texture = "gfx/interface/icons/aov_magic/school_{c}.dds"', page)
+
     def test_render_all_paths(self):
         self.assertEqual(set(bs.render_all(SPELLS)), {
             "common/character_interactions/aov_spell_interactions.txt",
+            "gui/aov_magic_generated.gui",
             "common/modifiers/aov_spell_modifiers.txt",
             "common/scripted_triggers/aov_spell_triggers.txt",
             "common/scripted_effects/aov_spell_effects.txt",
