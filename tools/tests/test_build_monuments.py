@@ -31,6 +31,19 @@ def new_level_keys():
     return [k for m in MONUMENTS for k in m["levels"] if k not in known]
 
 
+ANBENNAR = bm.ANBENNAR_CK3
+OVR = "common/buildings/zz_aov_monument_overrides_cannor.txt"
+
+
+def overrides():
+    return FILES[OVR]
+
+
+def body_lines(text):
+    lines = text.splitlines()
+    return [l for l in lines[1:-1] if l.strip()]
+
+
 def fake(**tier):
     t = {"province_modifier": {}, "county_modifier": {}, "character_modifier": {}, "on_complete": "",
          "cost": 100, "days": 900, "dropped": ["x: y"]}
@@ -112,6 +125,108 @@ class BuildMonumentTests(unittest.TestCase):
             m = re.fullmatch(r' [\w]+: "(.*)"', line)
             self.assertTrue(m, line)
             self.assertNotIn('"', m.group(1), line)
+
+
+BASE_PLAIN = """x_01 = {
+\tcost_gold = 1
+
+\ttype = special
+}
+"""
+BASE_ON_COMPLETE = """x_01 = {
+\ton_complete = {
+\t\tadd_gold = 1
+\t}
+
+\ttype = special
+}
+"""
+
+
+@unittest.skipUnless(LIVE, "Anbennar CK3 not present")
+class OverrideTests(unittest.TestCase):
+    def test_override_keeps_every_anbennar_line(self):
+        base = bm.anbennar_definition(ANBENNAR, "castanorian_citadel_bal_ouord_02")
+        ours = block(overrides(), "castanorian_citadel_bal_ouord_02")
+        for line in body_lines(base):
+            if not line.strip().startswith("next_building"):
+                self.assertIn(line, ours)
+
+    def test_override_adds_tier_effects_and_extends_chain(self):
+        ours = block(overrides(), "castanorian_citadel_bal_ouord_02")
+        self.assertIn("# Anbennar Overhaul", ours)
+        self.assertIn("next_building = aov_monument_bal_ouord_02", ours)
+        self.assertIn("aov_monument_bal_ouord_03", bm.render_all("cannor")["common/buildings/aov_monuments_cannor.txt"])
+
+    def test_existing_modifier_block_is_extended_not_duplicated(self):
+        ours = block(overrides(), "castanorian_citadel_bal_ouord_02")
+        self.assertEqual(ours.count("character_modifier = {"), 1)
+        self.assertEqual(ours.count("province_modifier = {"), 1)
+
+    def test_inserted_lines_are_inside_the_block(self):
+        ours = block(overrides(), "castanorian_citadel_bal_ouord_02")
+        m = re.search(r"^\tprovince_modifier = \{\n(.*?)^\t\}", ours, re.M | re.S)
+        self.assertIn("garrison_size = 0.15", m.group(1))
+        self.assertIn("defender_holding_advantage", m.group(1))
+
+    def test_overrides_file_is_brace_balanced(self):
+        code = "\n".join(l.split("#", 1)[0] for l in overrides().splitlines())
+        self.assertEqual(code.count("{"), code.count("}"))
+        for key in (k for m in MONUMENTS for k in m["levels"] if k in bm.anbennar_keys()):
+            blk = block(overrides(), key)
+            depth = 0
+            for l in blk.splitlines():
+                depth += l.split("#", 1)[0].count("{") - l.split("#", 1)[0].count("}")
+                self.assertGreaterEqual(depth, 0, key)
+            self.assertEqual(depth, 0, key)
+
+    def test_ruins_stage_untouched(self):
+        self.assertNotIn("castanorian_citadel_bal_ouord_01 = {", overrides())
+
+    def test_missing_anbennar_key_errors(self):
+        with self.assertRaises(bm.GeneratorError):
+            bm.anbennar_definition(ANBENNAR, "castanorian_citadel_bal_nowhere_02")
+
+    def test_castle_dameris_defined_fresh(self):
+        files = bm.render_all("cannor")
+        for k in ("castle_dameris_01", "castle_dameris_02", "castle_dameris_03"):
+            self.assertTrue(any(re.search(rf"^{k} = \{{", t, re.M) for t in files.values()), k)
+        self.assertNotIn("castle_dameris_01 = {", overrides())
+
+    def test_every_anbennar_level_overridden_once(self):
+        known = bm.anbennar_keys()
+        expected = [k for m in MONUMENTS for k in m["levels"] if k in known]
+        self.assertEqual(len(expected), 17)
+        for k in expected:
+            self.assertEqual(len(re.findall(rf"^{k} = \{{", overrides(), re.M)), 1, k)
+
+    def test_next_building_replaced(self):
+        ours = block(overrides(), "lake_palace_01")
+        self.assertEqual(ours.count("next_building"), 1)
+        self.assertIn("next_building = lake_palace_02", ours)
+        self.assertIn("next_building = ", block(overrides(), "lake_palace_02"))
+
+    def test_override_adds_missing_block_before_type(self):
+        tier = {"province_modifier": {}, "county_modifier": {"development_growth": 0.1},
+                "character_modifier": {}, "on_complete": "add_gold = 1"}
+        out = bm.override(BASE_PLAIN, "x_01", tier, None, 2)
+        self.assertLess(out.index("county_modifier"), out.index("type = special"))
+        self.assertIn("# Anbennar Overhaul: EU4 tier 2", out)
+        self.assertIn("on_complete = {", out)
+        self.assertNotIn("next_building", out)
+
+    def test_override_appends_inside_existing_on_complete(self):
+        tier = {"province_modifier": {}, "county_modifier": {}, "character_modifier": {}, "on_complete": "add_gold = 2"}
+        out = bm.override(BASE_ON_COMPLETE, "x_01", tier, None, 1)
+        self.assertEqual(out.count("on_complete = {"), 1)
+        self.assertIn("add_gold = 1", out)
+        self.assertIn("add_gold = 2", out)
+        self.assertLess(out.index("add_gold = 2"), out.index("type = special"))
+        self.assertLess(out.index("add_gold = 2"), out.rindex("\t}"))
+
+    def test_upper_chain_levels_use_tier_one_icon(self):
+        self.assertIn('type_icon = "icon_structure_the_citadel_of_aleppo.dds"',
+                      block(B, "aov_monument_bal_ouord_02"))
 
 
 if __name__ == "__main__":

@@ -4,7 +4,9 @@ Source: tools/data/monuments/<region>.py (monument data) and translation.py (ico
 
     python -I tools/build_monuments.py --region cannor
 
-Only building levels whose key Anbennar does not define are written here.
+Building levels whose key Anbennar does not define are written to aov_monuments_<region>.txt. Levels Anbennar does
+define are re-emitted, with the EU4 tier lines inserted, in zz_aov_monument_overrides_<region>.txt (single-object
+overrides that load after Anbennar); they copy Anbennar's current definition, so rerun after an Anbennar update.
 """
 
 import argparse
@@ -38,6 +40,100 @@ def anbennar_keys(root: Path = ANBENNAR_CK3) -> set:
     return keys
 
 
+def strip_comment(line: str) -> str:
+    return line.split("#", 1)[0]
+
+
+def anbennar_definition(root, key: str) -> str:
+    """Anbennar's text for building `key`, from `key = {` to the matching `}` (raises GeneratorError if absent)."""
+    head = re.compile(rf"^{re.escape(key)}\s*=\s*\{{")
+    for f in sorted((Path(root) / "common" / "buildings").glob("*.txt")):
+        lines = f.read_text(encoding="utf-8-sig").splitlines()
+        for i, line in enumerate(lines):
+            if head.match(line):
+                depth = 0
+                for j in range(i, len(lines)):
+                    code = strip_comment(lines[j])
+                    depth += code.count("{") - code.count("}")
+                    if depth <= 0:
+                        return NL.join(lines[i:j + 1]) + NL
+                raise GeneratorError(f"unbalanced braces in Anbennar building {key}")
+    raise GeneratorError(f"Anbennar building {key} not found in common/buildings")
+
+
+def depths_of(lines: list) -> list:
+    """Brace depth before each line."""
+    out, depth = [], 0
+    for line in lines:
+        out.append(depth)
+        code = strip_comment(line)
+        depth += code.count("{") - code.count("}")
+    return out
+
+
+def find_block(lines: list, name: str):
+    """(start, closing-brace) line indexes of the depth-1 block `name = {`, or None."""
+    depths = depths_of(lines)
+    for i, line in enumerate(lines):
+        if depths[i] == 1 and re.match(rf"\t{name}\s*=\s*\{{", line):
+            for j in range(i + 1, len(lines)):
+                if depths[j] == 1:
+                    return i, j - 1  # j is the line after the closing brace
+    return None
+
+
+def insert_point(lines: list) -> int:
+    """Index of the depth-1 `type = ` line (new blocks go before it); falls back to the closing brace."""
+    depths = depths_of(lines)
+    for i, line in enumerate(lines):
+        if depths[i] == 1 and re.match(r"\ttype\s*=", line):
+            return i
+    return len(lines) - 1
+
+
+def override(base_text: str, key: str, tier: dict, next_key, n: int) -> str:
+    """Anbennar's definition of `key` with the EU4 tier `n` effects inserted and next_building set."""
+    lines = base_text.rstrip(NL).split(NL)
+    lines[0] = f"{key} = {{"  # drop any trailing comment on the opening line
+    note = f"# Anbennar Overhaul: EU4 tier {n}"
+    for name in BLOCKS:
+        mods = tier[name]
+        if not mods:
+            continue
+        found = find_block(lines, name)
+        if found:
+            start, end = found
+            existing = NL.join(strip_comment(l) for l in lines[start + 1:end])
+            new = [f"\t\t{note}"]
+            for k, v in mods.items():
+                if re.search(rf"^\s*{re.escape(k)}\s*=", existing, re.M):
+                    new.append(f"\t\t# {k} is also set above; CK3 sums duplicate modifier lines")
+                new.append(f"\t\t{k} = {num(v)}")
+            lines[end:end] = new
+        else:
+            at = insert_point(lines)
+            lines[at:at] = [f"\t{name} = {{", f"\t\t{note}"] + [f"\t\t{k} = {num(v)}" for k, v in mods.items()] + ["\t}", ""]
+    if tier["on_complete"].strip():
+        found = find_block(lines, "on_complete")
+        body = [f"\t\t{note}", f"\t\t{tier['on_complete'].strip()}"]
+        if found:
+            lines[found[1]:found[1]] = body
+        else:
+            at = insert_point(lines)
+            lines[at:at] = ["\ton_complete = {"] + body + ["\t}", ""]
+    if next_key:
+        depths = depths_of(lines)
+        line = f"\tnext_building = {next_key} {note}"
+        for i, l in enumerate(lines):
+            if depths[i] == 1 and re.match(r"\tnext_building\s*=", l):
+                lines[i] = line
+                break
+        else:
+            at = insert_point(lines)
+            lines[at:at] = [line, ""]
+    return NL.join(lines) + NL
+
+
 def load_monuments(region: str) -> list:
     return importlib.import_module(f"data.monuments.{region}").MONUMENTS
 
@@ -47,10 +143,11 @@ def num(v) -> str:
     return "0" if s in ("", "-0") else s
 
 
-def building(m: dict, level: int, key: str, next_key) -> str:
+def building(m: dict, level: int, key: str, next_key, icon=None) -> str:
     tier = m["tiers"][level - 1]
+    icon = icon or translation.ICONS[m["category"]]
     out = [f"{key} = {{", f"\tconstruction_time = {tier['days']}", "",
-           f'\ttype_icon = "{translation.ICONS[m["category"]]}"', "",
+           f'\ttype_icon = "{icon}"', "",
            "\tcan_construct_potential = {", "\t\tbuilding_requirement_tribal = no", "\t}", ""]
     if m["gate"]:
         tt = f"aov_monument_{m['eu4_key']}_gate"
@@ -81,8 +178,29 @@ def written_levels(monuments: list, known: set):
                 yield m, i + 1, key, (keys[i + 1] if i + 1 < len(keys) else None)
 
 
-def buildings(monuments: list, known: set) -> str:
-    return HEADER + "\n" + "\n".join(building(*a) for a in written_levels(monuments, known))
+def chain_icon(m: dict, known: set, root):
+    """type_icon of the chain's tier-1 Anbennar level, or None when the chain starts with a new building."""
+    first = m["levels"][0]
+    if first not in known:
+        return None
+    found = re.search(r'type_icon\s*=\s*"([^"]+)"', anbennar_definition(root, first))
+    return found.group(1) if found else None
+
+
+def buildings(monuments: list, known: set, root: Path = ANBENNAR_CK3) -> str:
+    return HEADER + "\n" + "\n".join(building(m, lvl, key, nxt, chain_icon(m, known, root))
+                                     for m, lvl, key, nxt in written_levels(monuments, known))
+
+
+def overrides(monuments: list, known: set, root: Path = ANBENNAR_CK3) -> str:
+    out = [HEADER]
+    for m in monuments:
+        keys = m["levels"]
+        for i, key in enumerate(keys):
+            if key in known:
+                nxt = keys[i + 1] if i + 1 < len(keys) else None
+                out.append(override(anbennar_definition(root, key), key, m["tiers"][i], nxt, i + 1))
+    return "\n".join(out)
 
 
 def history(monuments: list, known: set) -> str:
@@ -103,7 +221,7 @@ def q(text: str) -> str:
     return text.replace('"', "'")
 
 
-def loc(monuments: list, known: set) -> str:
+def loc(monuments: list, known: set, root: Path = ANBENNAR_CK3) -> str:
     out = ["l_english:"]
     for m, level, key, _ in written_levels(monuments, known):
         name = m["name"] if m["levels"][0] == "castle_dameris_01" else m["name"] + ROMAN[level]
@@ -113,6 +231,11 @@ def loc(monuments: list, known: set) -> str:
     for m, level, key, _ in written_levels(monuments, known):  # tiger wants a type name for every level key
         out.append(f' building_type_{key}: "$building_{key}$"')
         out.append(f' building_type_{key}_desc: "$building_{key}_desc$"')
+    anb_loc = NL.join(f.read_text(encoding="utf-8-sig") for f in (Path(root) / "localization" / "english").glob("*.yml"))
+    for m in monuments:  # tiger wants a type description for overridden keys too; fill Anbennar's gaps
+        for key in m["levels"]:
+            if key in known and f" building_type_{key}_desc:" not in anb_loc:
+                out.append(f' building_type_{key}_desc: "$building_{key}_desc$"')
     for m in monuments:
         if m["gate"]:
             out.append(f' aov_monument_{m["eu4_key"]}_gate: "{q("Built and used by: " + m["gate_desc"])}"')
@@ -123,9 +246,10 @@ def render_all(region: str, root: Path = ANBENNAR_CK3) -> dict:
     monuments = load_monuments(region)
     known = anbennar_keys(root)
     return {
-        f"common/buildings/aov_monuments_{region}.txt": buildings(monuments, known),
+        f"common/buildings/aov_monuments_{region}.txt": buildings(monuments, known, root),
+        f"common/buildings/zz_aov_monument_overrides_{region}.txt": overrides(monuments, known, root),
         f"history/provinces/aov_monuments_{region}.txt": history(monuments, known),
-        f"localization/english/aov_monuments_{region}_l_english.yml": loc(monuments, known),
+        f"localization/english/aov_monuments_{region}_l_english.yml": loc(monuments, known, root),
     }
 
 

@@ -93,7 +93,7 @@ aov_monument_adenica_longlance_knights_academy_03 = {
 aov_monument_aelcandar_02 = {
 	construction_time = 1800
 
-	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
+	type_icon = "icon_structure_alhambra.dds"
 
 	can_construct_potential = {
 		building_requirement_tribal = no
@@ -140,7 +140,7 @@ aov_monument_aelcandar_02 = {
 aov_monument_aelcandar_03 = {
 	construction_time = 1800
 
-	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
+	type_icon = "icon_structure_alhambra.dds"
 
 	can_construct_potential = {
 		building_requirement_tribal = no
@@ -1681,7 +1681,7 @@ aov_monument_black_iron_mine_03 = {
 aov_monument_bladeskeep_monument_02 = {
 	construction_time = 1800
 
-	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
+	type_icon = "icon_structure_bladeskeep.dds"
 
 	can_construct_potential = {
 		building_requirement_tribal = no
@@ -1706,7 +1706,7 @@ aov_monument_bladeskeep_monument_02 = {
 aov_monument_bladeskeep_monument_03 = {
 	construction_time = 1800
 
-	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
+	type_icon = "icon_structure_bladeskeep.dds"
 
 	can_construct_potential = {
 		building_requirement_tribal = no
@@ -1886,7 +1886,7 @@ aov_monument_blaiddscal_academy_monument_03 = {
 aov_monument_calascandar_02 = {
 	construction_time = 1800
 
-	type_icon = "icon_structure_visegrad_castle.dds"
+	type_icon = "icon_structure_alhambra.dds"
 
 	can_construct_potential = {
 		building_requirement_tribal = no
@@ -1915,7 +1915,7 @@ aov_monument_calascandar_02 = {
 aov_monument_calascandar_03 = {
 	construction_time = 1800
 
-	type_icon = "icon_structure_visegrad_castle.dds"
+	type_icon = "icon_structure_alhambra.dds"
 
 	can_construct_potential = {
 		building_requirement_tribal = no
@@ -2370,7 +2370,7 @@ aov_monument_damish_temple_moonmount_library_03 = {
 aov_monument_damish_temple_temple_of_the_highest_moon_02 = {
 	construction_time = 3600
 
-	type_icon = "icon_structure_notre_dame.dds"
+	type_icon = "icon_structure_sumela_monastery.dds"
 
 	can_construct_potential = {
 		building_requirement_tribal = no
@@ -2419,7 +2419,7 @@ aov_monument_damish_temple_temple_of_the_highest_moon_02 = {
 aov_monument_damish_temple_temple_of_the_highest_moon_03 = {
 	construction_time = 7200
 
-	type_icon = "icon_structure_notre_dame.dds"
+	type_icon = "icon_structure_sumela_monastery.dds"
 
 	can_construct_potential = {
 		building_requirement_tribal = no
@@ -3374,7 +3374,7 @@ aov_monument_elikhander_sphinx_03 = {
 aov_monument_escandar_02 = {
 	construction_time = 1800
 
-	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
+	type_icon = "icon_structure_alhambra.dds"
 
 	can_construct_potential = {
 		building_requirement_tribal = no
@@ -3402,7 +3402,7 @@ aov_monument_escandar_02 = {
 aov_monument_escandar_03 = {
 	construction_time = 1800
 
-	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
+	type_icon = "icon_structure_alhambra.dds"
 
 	can_construct_potential = {
 		building_requirement_tribal = no
@@ -4921,7 +4921,7 @@ aov_monument_konwell_the_imperial_archives_03 = {
 aov_monument_lorenans_rest_02 = {
 	construction_time = 1800
 
-	type_icon = "icon_structure_tomb_of_cyrus.dds"
+	type_icon = "icon_structure_cilician_gates.dds"
 
 	can_construct_potential = {
 		building_requirement_tribal = no
@@ -4965,7 +4965,7 @@ aov_monument_lorenans_rest_02 = {
 aov_monument_lorenans_rest_03 = {
 	construction_time = 1800
 
-	type_icon = "icon_structure_tomb_of_cyrus.dds"
+	type_icon = "icon_structure_cilician_gates.dds"
 
 	can_construct_potential = {
 		building_requirement_tribal = no
@@ -8428,7 +8428,7 @@ aov_monument_the_lake_palace_03 = {
 aov_monument_the_necropolis_02 = {
 	construction_time = 1800
 
-	type_icon = "icon_structure_tomb_of_cyrus.dds"
+	type_icon = "icon_structure_mahabodhi_temple.dds"
 
 	can_construct_potential = {
 		building_requirement_tribal = no
@@ -8480,7 +8480,7 @@ aov_monument_the_necropolis_02 = {
 aov_monument_the_necropolis_03 = {
 	construction_time = 1800
 
-	type_icon = "icon_structure_tomb_of_cyrus.dds"
+	type_icon = "icon_structure_mahabodhi_temple.dds"
 
 	can_construct_potential = {
 		building_requirement_tribal = no
