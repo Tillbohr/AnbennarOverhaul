@@ -118,6 +118,17 @@ class SpecialSpellTests(unittest.TestCase):
         self.assertIn("aov_extraplanar_price = yes", b)
 
 
+class AiTests(unittest.TestCase):
+    def test_ai_studies_and_casts(self):
+        b = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_magic_ai_quarterly")
+        self.assertIn("is_ai = yes", b)
+        for school in ("enchantment", "evocation", "transmutation", "illusion", "divination"):
+            self.assertIn(f"aov_study_set = {{ SCHOOL = {school} }}", b)
+        self.assertIn("aov_magic_ai_any_castable = yes", b)
+        self.assertIn("aov_magic_ai_cast_random = yes", b)
+        self.assertIn("aov_magic_ai_quarterly = yes", block(read("common/on_action/aov_magic_on_actions.txt"), "aov_magic_quarterly_pulse"))
+
+
 class SpellOverrideTests(unittest.TestCase):
     OVERRIDES = (
         ("start_compel_interaction", "anb_spellcasting_infin_spells.txt", "thoughtweave"),

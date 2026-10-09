@@ -176,6 +176,8 @@ def triggers(spells: list) -> str:
             f"\tcustom_tooltip = {{\n\t\ttext = AOV_SPELL_REQ_MANA_{cost}\n\t\taov_mana >= {cost}\n\t}}\n"
             f"{war}}}\n"
         )
+    castable = "\n".join(f"\t\taov_spell_{s['key']}_castable = yes" for s in spells if window_spell(s))
+    out.append(f"# AI: some window spell can be cast\naov_magic_ai_any_castable = {{\n\tOR = {{\n{castable}\n\t}}\n}}\n")
     return "\n".join(out)
 
 
@@ -199,6 +201,12 @@ def effects(spells: list) -> str:
         if c == "necromancy":
             lines.append("\taov_dark_magic_roll = yes")
         out.append(f"aov_spell_{k}_cast = {{\n" + "\n".join(lines) + "\n}\n")
+    options = "\n".join(
+        f"\t\t{30 if s['type'] == 'war' else 10} = {{\n\t\t\ttrigger = {{ aov_spell_{s['key']}_castable = yes }}\n"
+        f"\t\t\taov_spell_{s['key']}_cast = yes\n\t\t}}"
+        for s in spells if window_spell(s))
+    out.append("# AI (aov_magic_ai_quarterly): one castable window spell; war spells weigh more\n"
+               f"aov_magic_ai_cast_random = {{\n\trandom_list = {{\n{options}\n\t}}\n}}\n")
     return "\n".join(out)
 
 

@@ -162,6 +162,18 @@ class GeneratedTests(unittest.TestCase):
             for lvl in range(4):
                 self.assertIn(f" AOV_SPELL_REQ_{c.upper()}_{lvl}:", lc)
 
+    def test_ai_casts_window_spells_only(self):
+        b = block(bs.effects(SPELLS), "aov_magic_ai_cast_random")
+        for s in SPELLS:
+            if s["type"] == "targeted":
+                self.assertNotIn(f"aov_spell_{s['key']}_cast", b)
+            else:
+                self.assertIn(f"trigger = {{ aov_spell_{s['key']}_castable = yes }}", b)
+        self.assertIn("30 = {", b)  # war spells weigh more
+        t = block(bs.triggers(SPELLS), "aov_magic_ai_any_castable")
+        self.assertIn("aov_spell_guidance_castable = yes", t)
+        self.assertNotIn("aov_spell_heartstring_castable", t)
+
     def test_generated_interactions(self):
         text = bs.interactions(SPELLS)
         self.assertTrue(balanced(text))

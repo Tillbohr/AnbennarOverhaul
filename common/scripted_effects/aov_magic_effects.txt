@@ -323,3 +323,87 @@ aov_extraplanar_price = {
 		}
 	}
 }
+
+### AI (quarterly, aov_magic_on_actions.txt)
+
+aov_magic_ai_quarterly = {
+	if = {
+		limit = { is_ai = yes }
+		# Study the school that fits the best skill; once it is mastered, any unmastered school
+		if = {
+			limit = { NOT = { has_variable = aov_studying } }
+			if = {
+				limit = { diplomacy >= martial diplomacy >= stewardship diplomacy >= intrigue diplomacy >= learning }
+				aov_study_set = { SCHOOL = enchantment }
+			}
+			else_if = {
+				limit = { martial >= stewardship martial >= intrigue martial >= learning }
+				aov_study_set = { SCHOOL = evocation }
+			}
+			else_if = {
+				limit = { stewardship >= intrigue stewardship >= learning }
+				aov_study_set = { SCHOOL = transmutation }
+			}
+			else_if = {
+				limit = { intrigue >= learning }
+				aov_study_set = { SCHOOL = illusion }
+			}
+			else = {
+				aov_study_set = { SCHOOL = divination }
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					AND = { aov_is_studying = { SCHOOL = abjuration } aov_school_abjuration_level >= 3 }
+					AND = { aov_is_studying = { SCHOOL = conjuration } aov_school_conjuration_level >= 3 }
+					AND = { aov_is_studying = { SCHOOL = divination } aov_school_divination_level >= 3 }
+					AND = { aov_is_studying = { SCHOOL = enchantment } aov_school_enchantment_level >= 3 }
+					AND = { aov_is_studying = { SCHOOL = evocation } aov_school_evocation_level >= 3 }
+					AND = { aov_is_studying = { SCHOOL = illusion } aov_school_illusion_level >= 3 }
+					AND = { aov_is_studying = { SCHOOL = necromancy } aov_school_necromancy_level >= 3 }
+					AND = { aov_is_studying = { SCHOOL = transmutation } aov_school_transmutation_level >= 3 }
+				}
+			}
+			random_list = {
+				1 = {
+					trigger = { aov_school_abjuration_level < 3 }
+					aov_study_set = { SCHOOL = abjuration }
+				}
+				1 = {
+					trigger = { aov_school_conjuration_level < 3 }
+					aov_study_set = { SCHOOL = conjuration }
+				}
+				1 = {
+					trigger = { aov_school_divination_level < 3 }
+					aov_study_set = { SCHOOL = divination }
+				}
+				1 = {
+					trigger = { aov_school_enchantment_level < 3 }
+					aov_study_set = { SCHOOL = enchantment }
+				}
+				1 = {
+					trigger = { aov_school_evocation_level < 3 }
+					aov_study_set = { SCHOOL = evocation }
+				}
+				1 = {
+					trigger = { aov_school_illusion_level < 3 }
+					aov_study_set = { SCHOOL = illusion }
+				}
+				1 = {
+					trigger = { aov_school_necromancy_level < 3 }
+					aov_study_set = { SCHOOL = necromancy }
+				}
+				1 = {
+					trigger = { aov_school_transmutation_level < 3 }
+					aov_study_set = { SCHOOL = transmutation }
+				}
+			}
+		}
+		# Cast one spell
+		if = {
+			limit = { aov_magic_ai_any_castable = yes }
+			aov_magic_ai_cast_random = yes
+		}
+	}
+}

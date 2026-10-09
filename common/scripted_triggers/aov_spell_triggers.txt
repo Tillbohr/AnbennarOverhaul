@@ -1123,3 +1123,50 @@ aov_spell_rite_of_conception_castable = {
 		aov_mana >= 200
 	}
 }
+
+# AI: some window spell can be cast
+aov_magic_ai_any_castable = {
+	OR = {
+		aov_spell_combat_ward_castable = yes
+		aov_spell_protected_journey_castable = yes
+		aov_spell_mass_ward_castable = yes
+		aov_spell_mage_armor_castable = yes
+		aov_spell_field_of_forbiddance_castable = yes
+		aov_spell_summon_familiars_castable = yes
+		aov_spell_summon_animals_castable = yes
+		aov_spell_conjure_supplies_castable = yes
+		aov_spell_summon_elementals_castable = yes
+		aov_spell_aid_construction_castable = yes
+		aov_spell_extraplanar_contact_castable = yes
+		aov_spell_guidance_castable = yes
+		aov_spell_eye_for_talent_castable = yes
+		aov_spell_deposit_divination_castable = yes
+		aov_spell_manipulated_fortune_castable = yes
+		aov_spell_foresight_castable = yes
+		aov_spell_enchanting_envoy_castable = yes
+		aov_spell_command_animals_castable = yes
+		aov_spell_enchanting_embassy_castable = yes
+		aov_spell_fireball_castable = yes
+		aov_spell_shock_and_awe_castable = yes
+		aov_spell_flaming_munitions_castable = yes
+		aov_spell_meteor_swarm_castable = yes
+		aov_spell_tearfall_castable = yes
+		aov_spell_elemental_fury_castable = yes
+		aov_spell_invisibility_castable = yes
+		aov_spell_fear_and_loathing_castable = yes
+		aov_spell_bread_and_circuses_castable = yes
+		aov_spell_assimilation_program_castable = yes
+		aov_spell_shadows_in_the_night_castable = yes
+		aov_spell_lead_the_crowds_castable = yes
+		aov_spell_false_life_castable = yes
+		aov_spell_speak_with_dead_castable = yes
+		aov_spell_remove_pain_castable = yes
+		aov_spell_chronophage_castable = yes
+		aov_spell_longstrider_castable = yes
+		aov_spell_plant_growth_castable = yes
+		aov_spell_mass_enlarge_castable = yes
+		aov_spell_transmute_to_gold_castable = yes
+		aov_spell_reshape_terrain_castable = yes
+		aov_spell_rite_of_conception_castable = yes
+	}
+}
