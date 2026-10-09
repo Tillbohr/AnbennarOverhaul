@@ -1,7 +1,6 @@
-# Magic lifestyle: design
+﻿# Magic lifestyle: design
 
-Date: 2026-10-08. Status: approved in chat (tree layout, perk role, focuses, capstone traits, art, perk list,
-architecture); awaiting written-spec review.
+Date: 2026-10-08. Status: built.
 Sub-project 2 of 3 of the magic system. Sub-project 1 (schools and spells,
 `2026-10-08-magic-schools-design.md`) is built. Sub-project 3 is an optional balance and AI pass.
 

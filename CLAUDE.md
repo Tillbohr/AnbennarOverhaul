@@ -1,4 +1,4 @@
-# Anbennar Overhaul — project notes
+﻿# Anbennar Overhaul — project notes
 
 Submod for the Anbennar CK3 total conversion. **All new content goes here; the base Anbennar mod
 (`../anbennar-ck3-dev-master`) stays an unmodified upstream copy** so the overhaul can be laid over any
@@ -70,7 +70,7 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
    into `common/scripted_triggers/zz_aov_interaction_triggers.txt`, keeping the `# Anbennar Overhaul` faction-title exclusion.
 5. Re-copy Anbennar's `start_compel_interaction`, `start_dominate_interaction` and `anb_enhance_ability_interaction` into
    `common/character_interactions/zz_aov_spell_overrides.txt`, keeping the `# Anbennar Overhaul` lines.
-6. Test in game; check `database_conflicts.log` for overhaul keys now also defined by Anbennar.
+6. Test in game; check `database_conflicts.log` for overhaul keys now also defined by Anbennar (notably `magic_duelist_focus`, which `zz_aov_magic_focuses.txt` must keep overriding).
 
 After a CK3 patch, rerun `python -I tools/build_hud_override.py` and `python -I tools/build_lifestyle_override.py` too: their sources are the game's `hud.gui` and `window_character_lifestyle.gui` (when Anbennar ships no copy).
 
@@ -130,5 +130,14 @@ inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error
   (`gui/aov_window_magic.gui`, HUD tab below Artificery, generated pages `gui/aov_magic_generated.gui`), targeted
   spells as interactions in Anbennar's Spells category (Compel, Dominate, Enhance Ability overridden to need mana and
   knowledge). Necromancy risks Forbidden Magic Practitioner under witchcraft-illegal/shunned faiths. Hand-written
-  logic in `aov_magic_*` files; Summon Elementals spawns an army removed after 3 years. Sub-project 2 (the magic
-  lifestyle) is not built yet.
+  logic in `aov_magic_*` files; Summon Elementals spawns an army removed after 3 years.
+- **Magic lifestyle:** Anbennar's stub `magic_lifestyle` made full: three trees of 9 perks (Arcane Scholar, Battle Mage,
+  Mindweaver; `common/lifestyle_perks/aov_magic_*_perks.txt`), each ending in a trait
+  (`common/traits/aov_magic_lifestyle_traits.txt`), and three focuses (`common/focuses/zz_aov_magic_focuses.txt`;
+  Anbennar's `magic_duelist_focus` is overridden as Battle Mage, name via `localization/replace/`). Perks feed magic only
+  through `common/script_values/aov_magic_lifestyle_values.txt` (the bonus layer: study rate, spell cost and duration,
+  mana, dark-magic risk), so tune balance there. Spell cost and duration are per-caster values
+  `aov_spell_<k>_cost` / `_years` generated into `common/script_values/aov_spell_values.txt`; casting also grants
+  magic lifestyle XP. `magic_mastery` = school levels + magic perks. Art and the lifestyle window override come from
+  `tools/build_magic_lifestyle_art.py` and `tools/build_lifestyle_override.py`. Spec
+  `docs/superpowers/specs/2026-10-08-magic-lifestyle-design.md`.
