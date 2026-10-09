@@ -11,8 +11,8 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 
 - Start Claude Code **in this folder**. `.claude/settings.local.json` (machine-specific, git-ignored) grants
   access to the base mod, game install, Workshop mods, logs and ck3-tiger.
-- Local git repo on `main`, `core.autocrlf=false`; `.gitattributes` keeps `.txt`/`.yml`/`.mod` bytes exact
-  (UTF-8 BOM + LF) and sends `.tga`/`.psd` to Git LFS. No remote yet.
+- Git repo on `main` → https://github.com/Tillbohr/AnbennarOverhaul (public), `core.autocrlf=false`;
+  `.gitattributes` keeps `.txt`/`.yml`/`.mod` bytes exact (UTF-8 BOM + LF) and sends `.tga`/`.psd` to Git LFS.
 - Base mod is read-only in practice: read it for reference, never write to it.
 
 | Task | Command |
@@ -90,3 +90,11 @@ inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error
   Mechanists (10 y, chosen field) or Technomancers (15 y, chosen invention), 50 gold each; tiers gated by culture
   era; 3/4/5 slots with a 1-year cooldown; state in ruler variables, inherited by the heir; dormant while
   ineligible. Logic in `aov_artificery_research_*` files and `common/on_action/aov_inventions_on_actions.txt`.
+- **Inventions tab UI:** EU4-style. Tier I/II/III tabs (variable `aov_inventions_tier`, unset = I), each with
+  Society/Economic/Military sections of invention boxes (generated types `aov_inventions_tier_<n>`). Clicking a box
+  runs `aov_inv_<key>_toggle_sgui` (activate, or deactivate with the slot cooldown); hovering shows
+  `aov_invention_<key>_tooltip` (name, field/tier, description, effects, status).
+- **Research popup:** `gui/aov_window_artificery_research.gui`, drawn like a character event (`bp2_university`
+  background, `type_inspiration` icon). Three faction leaders stand on the right; they are **placeholders showing
+  the player** until the factions system exists (swap each `aov_research_leader` datacontext). Steps use GUI
+  variable `aov_research_stage` (unset → `mechanists` / `technomancers` → `tech_<field>` proposals).

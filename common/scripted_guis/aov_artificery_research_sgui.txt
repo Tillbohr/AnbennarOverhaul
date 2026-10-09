@@ -98,3 +98,14 @@ aov_research_technomancers_society_sgui = {
 		}
 	}
 }
+
+# Inventions tab: a tier tab is locked until the culture reaches its era
+aov_inventions_tier_2_unlocked_sgui = {
+	scope = character
+	is_shown = { culture = { has_cultural_era_or_later = culture_era_high_medieval } }
+}
+
+aov_inventions_tier_3_unlocked_sgui = {
+	scope = character
+	is_shown = { culture = { has_cultural_era_or_later = culture_era_late_medieval } }
+}

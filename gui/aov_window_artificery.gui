@@ -188,50 +188,100 @@ window = {
 							text = "AOV_RESEARCH_BUTTON"
 							enabled = "[GetScriptedGui('aov_research_can_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 							tooltip = "[GetScriptedGui('aov_research_can_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							onclick = "[GetVariableSystem.Clear( 'aov_research_stage' )]"
+							onclick = "[GetVariableSystem.Clear( 'aov_research_faction' )]"
+							onclick = "[GetVariableSystem.Clear( 'aov_research_hover' )]"
 							onclick = "[GetVariableSystem.Set( 'aov_research_popup', 'open' )]"
 						}
 					}
 
-					# Category filters: pressed = shown
+					# Tier tabs, like EU4's inventions menu (variable aov_inventions_tier, unset = tier 1)
 					hbox = {
+						name = "aov_inventions_tier_tabs"
 						layoutpolicy_horizontal = expanding
-						spacing = 6
 
-						button_standard = {
-							size = { 150 30 }
-							text = "AOV_FILTER_ECONOMIC"
-							tooltip = "AOV_FILTER_TT"
-							down = "[Not( GetVariableSystem.Exists( 'aov_filter_hide_economic' ) )]"
-							onclick = "[GetVariableSystem.Toggle( 'aov_filter_hide_economic' )]"
+						button_tab = {
+							name = "aov_inventions_tab_tier_1"
+							onclick = "[GetVariableSystem.Clear( 'aov_inventions_tier' )]"
+							down = "[Not( GetVariableSystem.Exists( 'aov_inventions_tier' ) )]"
+							alwaystransparent = "[Not( GetVariableSystem.Exists( 'aov_inventions_tier' ) )]"
+							tooltip = "AOV_INVENTIONS_TIER_1"
+
+							blockoverride "tab_label"
+							{
+								text = "AOV_INVENTIONS_TAB_TIER_1"
+								max_width = 180
+							}
 						}
 
-						button_standard = {
-							size = { 150 30 }
-							text = "AOV_FILTER_MILITARY"
-							tooltip = "AOV_FILTER_TT"
-							down = "[Not( GetVariableSystem.Exists( 'aov_filter_hide_military' ) )]"
-							onclick = "[GetVariableSystem.Toggle( 'aov_filter_hide_military' )]"
+						button_tab = {
+							name = "aov_inventions_tab_tier_2"
+							onclick = "[GetVariableSystem.Set( 'aov_inventions_tier', '2' )]"
+							down = "[GetVariableSystem.HasValue( 'aov_inventions_tier', '2' )]"
+							alwaystransparent = "[GetVariableSystem.HasValue( 'aov_inventions_tier', '2' )]"
+							tooltip = "AOV_INVENTIONS_TIER_2"
+
+							blockoverride "tab_label"
+							{
+								text = "AOV_INVENTIONS_TAB_TIER_2"
+								max_width = 180
+							}
 						}
 
-						button_standard = {
-							size = { 150 30 }
-							text = "AOV_FILTER_SOCIETY"
-							tooltip = "AOV_FILTER_TT"
-							down = "[Not( GetVariableSystem.Exists( 'aov_filter_hide_society' ) )]"
-							onclick = "[GetVariableSystem.Toggle( 'aov_filter_hide_society' )]"
-						}
+						button_tab = {
+							name = "aov_inventions_tab_tier_3"
+							onclick = "[GetVariableSystem.Set( 'aov_inventions_tier', '3' )]"
+							down = "[GetVariableSystem.HasValue( 'aov_inventions_tier', '3' )]"
+							alwaystransparent = "[GetVariableSystem.HasValue( 'aov_inventions_tier', '3' )]"
+							tooltip = "AOV_INVENTIONS_TIER_3"
 
-						expand = {}
+							blockoverride "tab_label"
+							{
+								text = "AOV_INVENTIONS_TAB_TIER_3"
+								max_width = 180
+							}
+						}
 					}
 
+					text_single = {
+						visible = "[And( GetVariableSystem.HasValue( 'aov_inventions_tier', '2' ), Not( GetScriptedGui('aov_inventions_tier_2_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ) )]"
+						layoutpolicy_horizontal = expanding
+						text = "AOV_INVENTIONS_TIER_LOCKED_2"
+						align = center|nobaseline
+					}
+
+					text_single = {
+						visible = "[And( GetVariableSystem.HasValue( 'aov_inventions_tier', '3' ), Not( GetScriptedGui('aov_inventions_tier_3_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ) )]"
+						layoutpolicy_horizontal = expanding
+						text = "AOV_INVENTIONS_TIER_LOCKED_3"
+						align = center|nobaseline
+					}
+
+					# Society, Economic and Military boxes of the selected tier; click a box to activate or deactivate it
 					scrollbox = {
 						layoutpolicy_horizontal = expanding
 						layoutpolicy_vertical = expanding
 
 						blockoverride "scrollbox_content"
 						{
-							aov_inventions_list = {
+							vbox = {
 								layoutpolicy_horizontal = expanding
+								margin = { 6 6 }
+
+								aov_inventions_tier_1 = {
+									visible = "[Not( GetVariableSystem.Exists( 'aov_inventions_tier' ) )]"
+									layoutpolicy_horizontal = expanding
+								}
+
+								aov_inventions_tier_2 = {
+									visible = "[GetVariableSystem.HasValue( 'aov_inventions_tier', '2' )]"
+									layoutpolicy_horizontal = expanding
+								}
+
+								aov_inventions_tier_3 = {
+									visible = "[GetVariableSystem.HasValue( 'aov_inventions_tier', '3' )]"
+									layoutpolicy_horizontal = expanding
+								}
 							}
 						}
 					}

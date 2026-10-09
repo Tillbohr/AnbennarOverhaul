@@ -26,6 +26,26 @@ aov_inv_arcane_battery_capital_complex_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_arcane_battery_capital_complex_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_arcane_battery_capital_complex_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_arcane_battery_capital_complex_active = yes } }
+			aov_invention_arcane_battery_capital_complex_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_arcane_battery_capital_complex_active = yes }
+			aov_invention_arcane_battery_capital_complex_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_arcane_battery_capital_complex_activate = yes }
+	}
+}
 aov_inv_arcane_battery_capital_complex_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_arcane_battery_capital_complex_offered = yes aov_invention_arcane_battery_capital_complex_discoverable = yes }
@@ -65,6 +85,26 @@ aov_inv_automated_translator_deactivate_sgui = {
 	effect = {
 		aov_invention_automated_translator_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_automated_translator_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_automated_translator_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_automated_translator_active = yes } }
+			aov_invention_automated_translator_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_automated_translator_active = yes }
+			aov_invention_automated_translator_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_automated_translator_activate = yes }
 	}
 }
 aov_inv_automated_translator_offered_sgui = {
@@ -108,6 +148,26 @@ aov_inv_market_mender_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_market_mender_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_market_mender_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_market_mender_active = yes } }
+			aov_invention_market_mender_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_market_mender_active = yes }
+			aov_invention_market_mender_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_market_mender_activate = yes }
+	}
+}
 aov_inv_market_mender_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_market_mender_offered = yes aov_invention_market_mender_discoverable = yes }
@@ -147,6 +207,26 @@ aov_inv_plane_of_water_teleporter_deactivate_sgui = {
 	effect = {
 		aov_invention_plane_of_water_teleporter_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_plane_of_water_teleporter_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_plane_of_water_teleporter_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_plane_of_water_teleporter_active = yes } }
+			aov_invention_plane_of_water_teleporter_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_plane_of_water_teleporter_active = yes }
+			aov_invention_plane_of_water_teleporter_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_plane_of_water_teleporter_activate = yes }
 	}
 }
 aov_inv_plane_of_water_teleporter_offered_sgui = {
@@ -190,6 +270,26 @@ aov_inv_self_cleaning_parchment_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_self_cleaning_parchment_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_self_cleaning_parchment_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_self_cleaning_parchment_active = yes } }
+			aov_invention_self_cleaning_parchment_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_self_cleaning_parchment_active = yes }
+			aov_invention_self_cleaning_parchment_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_self_cleaning_parchment_activate = yes }
+	}
+}
 aov_inv_self_cleaning_parchment_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_self_cleaning_parchment_offered = yes aov_invention_self_cleaning_parchment_discoverable = yes }
@@ -229,6 +329,26 @@ aov_inv_spell_in_a_box_deactivate_sgui = {
 	effect = {
 		aov_invention_spell_in_a_box_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_spell_in_a_box_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_spell_in_a_box_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_spell_in_a_box_active = yes } }
+			aov_invention_spell_in_a_box_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_spell_in_a_box_active = yes }
+			aov_invention_spell_in_a_box_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_spell_in_a_box_activate = yes }
 	}
 }
 aov_inv_spell_in_a_box_offered_sgui = {
@@ -272,6 +392,26 @@ aov_inv_brass_prosthesis_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_brass_prosthesis_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_brass_prosthesis_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_brass_prosthesis_active = yes } }
+			aov_invention_brass_prosthesis_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_brass_prosthesis_active = yes }
+			aov_invention_brass_prosthesis_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_brass_prosthesis_activate = yes }
+	}
+}
 aov_inv_brass_prosthesis_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_brass_prosthesis_offered = yes aov_invention_brass_prosthesis_discoverable = yes }
@@ -311,6 +451,26 @@ aov_inv_chi_cultivation_deactivate_sgui = {
 	effect = {
 		aov_invention_chi_cultivation_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_chi_cultivation_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_chi_cultivation_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_chi_cultivation_active = yes } }
+			aov_invention_chi_cultivation_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_chi_cultivation_active = yes }
+			aov_invention_chi_cultivation_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_chi_cultivation_activate = yes }
 	}
 }
 aov_inv_chi_cultivation_offered_sgui = {
@@ -354,6 +514,26 @@ aov_inv_gene_food_cultivation_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_gene_food_cultivation_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_gene_food_cultivation_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_gene_food_cultivation_active = yes } }
+			aov_invention_gene_food_cultivation_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_gene_food_cultivation_active = yes }
+			aov_invention_gene_food_cultivation_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_gene_food_cultivation_activate = yes }
+	}
+}
 aov_inv_gene_food_cultivation_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_gene_food_cultivation_offered = yes aov_invention_gene_food_cultivation_discoverable = yes }
@@ -393,6 +573,26 @@ aov_inv_growth_beans_deactivate_sgui = {
 	effect = {
 		aov_invention_growth_beans_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_growth_beans_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_growth_beans_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_growth_beans_active = yes } }
+			aov_invention_growth_beans_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_growth_beans_active = yes }
+			aov_invention_growth_beans_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_growth_beans_activate = yes }
 	}
 }
 aov_inv_growth_beans_offered_sgui = {
@@ -436,6 +636,26 @@ aov_inv_subterrenes_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_subterrenes_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_subterrenes_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_subterrenes_active = yes } }
+			aov_invention_subterrenes_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_subterrenes_active = yes }
+			aov_invention_subterrenes_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_subterrenes_activate = yes }
+	}
+}
 aov_inv_subterrenes_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_subterrenes_offered = yes aov_invention_subterrenes_discoverable = yes }
@@ -475,6 +695,26 @@ aov_inv_vendorless_stall_deactivate_sgui = {
 	effect = {
 		aov_invention_vendorless_stall_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_vendorless_stall_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_vendorless_stall_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_vendorless_stall_active = yes } }
+			aov_invention_vendorless_stall_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_vendorless_stall_active = yes }
+			aov_invention_vendorless_stall_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_vendorless_stall_activate = yes }
 	}
 }
 aov_inv_vendorless_stall_offered_sgui = {
@@ -518,6 +758,26 @@ aov_inv_elemental_locomotives_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_elemental_locomotives_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_elemental_locomotives_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_elemental_locomotives_active = yes } }
+			aov_invention_elemental_locomotives_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_elemental_locomotives_active = yes }
+			aov_invention_elemental_locomotives_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_elemental_locomotives_activate = yes }
+	}
+}
 aov_inv_elemental_locomotives_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_elemental_locomotives_offered = yes aov_invention_elemental_locomotives_discoverable = yes }
@@ -557,6 +817,26 @@ aov_inv_pathway_transmutation_deactivate_sgui = {
 	effect = {
 		aov_invention_pathway_transmutation_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_pathway_transmutation_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_pathway_transmutation_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_pathway_transmutation_active = yes } }
+			aov_invention_pathway_transmutation_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_pathway_transmutation_active = yes }
+			aov_invention_pathway_transmutation_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_pathway_transmutation_activate = yes }
 	}
 }
 aov_inv_pathway_transmutation_offered_sgui = {
@@ -600,6 +880,26 @@ aov_inv_prefabricated_city_constructors_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_prefabricated_city_constructors_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_prefabricated_city_constructors_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_prefabricated_city_constructors_active = yes } }
+			aov_invention_prefabricated_city_constructors_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_prefabricated_city_constructors_active = yes }
+			aov_invention_prefabricated_city_constructors_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_prefabricated_city_constructors_activate = yes }
+	}
+}
 aov_inv_prefabricated_city_constructors_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_prefabricated_city_constructors_offered = yes aov_invention_prefabricated_city_constructors_discoverable = yes }
@@ -639,6 +939,26 @@ aov_inv_t_wave_transceivers_deactivate_sgui = {
 	effect = {
 		aov_invention_t_wave_transceivers_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_t_wave_transceivers_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_t_wave_transceivers_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_t_wave_transceivers_active = yes } }
+			aov_invention_t_wave_transceivers_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_t_wave_transceivers_active = yes }
+			aov_invention_t_wave_transceivers_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_t_wave_transceivers_activate = yes }
 	}
 }
 aov_inv_t_wave_transceivers_offered_sgui = {
@@ -682,6 +1002,26 @@ aov_inv_ancestral_golems_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_ancestral_golems_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_ancestral_golems_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_ancestral_golems_active = yes } }
+			aov_invention_ancestral_golems_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_ancestral_golems_active = yes }
+			aov_invention_ancestral_golems_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_ancestral_golems_activate = yes }
+	}
+}
 aov_inv_ancestral_golems_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_ancestral_golems_offered = yes aov_invention_ancestral_golems_discoverable = yes }
@@ -721,6 +1061,26 @@ aov_inv_artificer_exo_arms_deactivate_sgui = {
 	effect = {
 		aov_invention_artificer_exo_arms_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_artificer_exo_arms_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_artificer_exo_arms_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_artificer_exo_arms_active = yes } }
+			aov_invention_artificer_exo_arms_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_artificer_exo_arms_active = yes }
+			aov_invention_artificer_exo_arms_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_artificer_exo_arms_activate = yes }
 	}
 }
 aov_inv_artificer_exo_arms_offered_sgui = {
@@ -764,6 +1124,26 @@ aov_inv_box_of_holding_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_box_of_holding_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_box_of_holding_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_box_of_holding_active = yes } }
+			aov_invention_box_of_holding_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_box_of_holding_active = yes }
+			aov_invention_box_of_holding_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_box_of_holding_activate = yes }
+	}
+}
 aov_inv_box_of_holding_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_box_of_holding_offered = yes aov_invention_box_of_holding_discoverable = yes }
@@ -803,6 +1183,26 @@ aov_inv_commercial_sky_galleons_deactivate_sgui = {
 	effect = {
 		aov_invention_commercial_sky_galleons_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_commercial_sky_galleons_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_commercial_sky_galleons_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_commercial_sky_galleons_active = yes } }
+			aov_invention_commercial_sky_galleons_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_commercial_sky_galleons_active = yes }
+			aov_invention_commercial_sky_galleons_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_commercial_sky_galleons_activate = yes }
 	}
 }
 aov_inv_commercial_sky_galleons_offered_sgui = {
@@ -846,6 +1246,26 @@ aov_inv_magic_missile_deployer_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_magic_missile_deployer_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_magic_missile_deployer_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_magic_missile_deployer_active = yes } }
+			aov_invention_magic_missile_deployer_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_magic_missile_deployer_active = yes }
+			aov_invention_magic_missile_deployer_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_magic_missile_deployer_activate = yes }
+	}
+}
 aov_inv_magic_missile_deployer_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_magic_missile_deployer_offered = yes aov_invention_magic_missile_deployer_discoverable = yes }
@@ -885,6 +1305,26 @@ aov_inv_portable_turrets_deactivate_sgui = {
 	effect = {
 		aov_invention_portable_turrets_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_portable_turrets_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_portable_turrets_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_portable_turrets_active = yes } }
+			aov_invention_portable_turrets_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_portable_turrets_active = yes }
+			aov_invention_portable_turrets_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_portable_turrets_activate = yes }
 	}
 }
 aov_inv_portable_turrets_offered_sgui = {
@@ -928,6 +1368,26 @@ aov_inv_sparkdrive_rifles_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_sparkdrive_rifles_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_sparkdrive_rifles_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_sparkdrive_rifles_active = yes } }
+			aov_invention_sparkdrive_rifles_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_sparkdrive_rifles_active = yes }
+			aov_invention_sparkdrive_rifles_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_sparkdrive_rifles_activate = yes }
+	}
+}
 aov_inv_sparkdrive_rifles_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_sparkdrive_rifles_offered = yes aov_invention_sparkdrive_rifles_discoverable = yes }
@@ -967,6 +1427,26 @@ aov_inv_sunbeam_armaments_deactivate_sgui = {
 	effect = {
 		aov_invention_sunbeam_armaments_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_sunbeam_armaments_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_sunbeam_armaments_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_sunbeam_armaments_active = yes } }
+			aov_invention_sunbeam_armaments_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_sunbeam_armaments_active = yes }
+			aov_invention_sunbeam_armaments_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_sunbeam_armaments_activate = yes }
 	}
 }
 aov_inv_sunbeam_armaments_offered_sgui = {
@@ -1010,6 +1490,26 @@ aov_inv_vorpal_bullets_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_vorpal_bullets_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_vorpal_bullets_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_vorpal_bullets_active = yes } }
+			aov_invention_vorpal_bullets_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_vorpal_bullets_active = yes }
+			aov_invention_vorpal_bullets_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_vorpal_bullets_activate = yes }
+	}
+}
 aov_inv_vorpal_bullets_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_vorpal_bullets_offered = yes aov_invention_vorpal_bullets_discoverable = yes }
@@ -1049,6 +1549,26 @@ aov_inv_arcane_blaster_deactivate_sgui = {
 	effect = {
 		aov_invention_arcane_blaster_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_arcane_blaster_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_arcane_blaster_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_arcane_blaster_active = yes } }
+			aov_invention_arcane_blaster_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_arcane_blaster_active = yes }
+			aov_invention_arcane_blaster_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_arcane_blaster_activate = yes }
 	}
 }
 aov_inv_arcane_blaster_offered_sgui = {
@@ -1092,6 +1612,26 @@ aov_inv_avatar_supersoldier_serum_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_avatar_supersoldier_serum_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_avatar_supersoldier_serum_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_avatar_supersoldier_serum_active = yes } }
+			aov_invention_avatar_supersoldier_serum_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_avatar_supersoldier_serum_active = yes }
+			aov_invention_avatar_supersoldier_serum_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_avatar_supersoldier_serum_activate = yes }
+	}
+}
 aov_inv_avatar_supersoldier_serum_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_avatar_supersoldier_serum_offered = yes aov_invention_avatar_supersoldier_serum_discoverable = yes }
@@ -1131,6 +1671,26 @@ aov_inv_balloonboost_packs_deactivate_sgui = {
 	effect = {
 		aov_invention_balloonboost_packs_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_balloonboost_packs_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_balloonboost_packs_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_balloonboost_packs_active = yes } }
+			aov_invention_balloonboost_packs_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_balloonboost_packs_active = yes }
+			aov_invention_balloonboost_packs_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_balloonboost_packs_activate = yes }
 	}
 }
 aov_inv_balloonboost_packs_offered_sgui = {
@@ -1174,6 +1734,26 @@ aov_inv_coddorran_powered_exosuit_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_coddorran_powered_exosuit_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_coddorran_powered_exosuit_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_coddorran_powered_exosuit_active = yes } }
+			aov_invention_coddorran_powered_exosuit_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_coddorran_powered_exosuit_active = yes }
+			aov_invention_coddorran_powered_exosuit_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_coddorran_powered_exosuit_activate = yes }
+	}
+}
 aov_inv_coddorran_powered_exosuit_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_coddorran_powered_exosuit_offered = yes aov_invention_coddorran_powered_exosuit_discoverable = yes }
@@ -1213,6 +1793,26 @@ aov_inv_gu_boats_deactivate_sgui = {
 	effect = {
 		aov_invention_gu_boats_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_gu_boats_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_gu_boats_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_gu_boats_active = yes } }
+			aov_invention_gu_boats_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_gu_boats_active = yes }
+			aov_invention_gu_boats_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_gu_boats_activate = yes }
 	}
 }
 aov_inv_gu_boats_offered_sgui = {
@@ -1256,6 +1856,26 @@ aov_inv_lullaby_cannon_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_lullaby_cannon_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_lullaby_cannon_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_lullaby_cannon_active = yes } }
+			aov_invention_lullaby_cannon_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_lullaby_cannon_active = yes }
+			aov_invention_lullaby_cannon_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_lullaby_cannon_activate = yes }
+	}
+}
 aov_inv_lullaby_cannon_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_lullaby_cannon_offered = yes aov_invention_lullaby_cannon_discoverable = yes }
@@ -1295,6 +1915,26 @@ aov_inv_prototype_tanks_deactivate_sgui = {
 	effect = {
 		aov_invention_prototype_tanks_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_prototype_tanks_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_prototype_tanks_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_prototype_tanks_active = yes } }
+			aov_invention_prototype_tanks_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_prototype_tanks_active = yes }
+			aov_invention_prototype_tanks_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_prototype_tanks_activate = yes }
 	}
 }
 aov_inv_prototype_tanks_offered_sgui = {
@@ -1338,6 +1978,26 @@ aov_inv_wandlocks_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_wandlocks_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_wandlocks_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_wandlocks_active = yes } }
+			aov_invention_wandlocks_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_wandlocks_active = yes }
+			aov_invention_wandlocks_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_wandlocks_activate = yes }
+	}
+}
 aov_inv_wandlocks_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_wandlocks_offered = yes aov_invention_wandlocks_discoverable = yes }
@@ -1377,6 +2037,26 @@ aov_inv_war_golems_deactivate_sgui = {
 	effect = {
 		aov_invention_war_golems_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_war_golems_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_war_golems_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_war_golems_active = yes } }
+			aov_invention_war_golems_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_war_golems_active = yes }
+			aov_invention_war_golems_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_war_golems_activate = yes }
 	}
 }
 aov_inv_war_golems_offered_sgui = {
@@ -1420,6 +2100,26 @@ aov_inv_artillery_autoloader_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_artillery_autoloader_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_artillery_autoloader_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_artillery_autoloader_active = yes } }
+			aov_invention_artillery_autoloader_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_artillery_autoloader_active = yes }
+			aov_invention_artillery_autoloader_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_artillery_autoloader_activate = yes }
+	}
+}
 aov_inv_artillery_autoloader_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_artillery_autoloader_offered = yes aov_invention_artillery_autoloader_discoverable = yes }
@@ -1459,6 +2159,26 @@ aov_inv_bioartificed_ascension_deactivate_sgui = {
 	effect = {
 		aov_invention_bioartificed_ascension_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_bioartificed_ascension_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_bioartificed_ascension_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_bioartificed_ascension_active = yes } }
+			aov_invention_bioartificed_ascension_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_bioartificed_ascension_active = yes }
+			aov_invention_bioartificed_ascension_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_bioartificed_ascension_activate = yes }
 	}
 }
 aov_inv_bioartificed_ascension_offered_sgui = {
@@ -1502,6 +2222,26 @@ aov_inv_black_damestear_bullets_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_black_damestear_bullets_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_black_damestear_bullets_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_black_damestear_bullets_active = yes } }
+			aov_invention_black_damestear_bullets_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_black_damestear_bullets_active = yes }
+			aov_invention_black_damestear_bullets_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_black_damestear_bullets_activate = yes }
+	}
+}
 aov_inv_black_damestear_bullets_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_black_damestear_bullets_offered = yes aov_invention_black_damestear_bullets_discoverable = yes }
@@ -1541,6 +2281,26 @@ aov_inv_damestear_reactor_megacannon_deactivate_sgui = {
 	effect = {
 		aov_invention_damestear_reactor_megacannon_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_damestear_reactor_megacannon_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_damestear_reactor_megacannon_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_damestear_reactor_megacannon_active = yes } }
+			aov_invention_damestear_reactor_megacannon_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_damestear_reactor_megacannon_active = yes }
+			aov_invention_damestear_reactor_megacannon_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_damestear_reactor_megacannon_activate = yes }
 	}
 }
 aov_inv_damestear_reactor_megacannon_offered_sgui = {
@@ -1584,6 +2344,26 @@ aov_inv_demonflame_flamethrowers_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_demonflame_flamethrowers_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_demonflame_flamethrowers_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_demonflame_flamethrowers_active = yes } }
+			aov_invention_demonflame_flamethrowers_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_demonflame_flamethrowers_active = yes }
+			aov_invention_demonflame_flamethrowers_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_demonflame_flamethrowers_activate = yes }
+	}
+}
 aov_inv_demonflame_flamethrowers_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_demonflame_flamethrowers_offered = yes aov_invention_demonflame_flamethrowers_discoverable = yes }
@@ -1623,6 +2403,26 @@ aov_inv_military_sky_galleons_deactivate_sgui = {
 	effect = {
 		aov_invention_military_sky_galleons_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_military_sky_galleons_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_military_sky_galleons_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_military_sky_galleons_active = yes } }
+			aov_invention_military_sky_galleons_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_military_sky_galleons_active = yes }
+			aov_invention_military_sky_galleons_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_military_sky_galleons_activate = yes }
 	}
 }
 aov_inv_military_sky_galleons_offered_sgui = {
@@ -1666,6 +2466,26 @@ aov_inv_naval_mageshields_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_naval_mageshields_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_naval_mageshields_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_naval_mageshields_active = yes } }
+			aov_invention_naval_mageshields_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_naval_mageshields_active = yes }
+			aov_invention_naval_mageshields_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_naval_mageshields_activate = yes }
+	}
+}
 aov_inv_naval_mageshields_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_naval_mageshields_offered = yes aov_invention_naval_mageshields_discoverable = yes }
@@ -1705,6 +2525,26 @@ aov_inv_personal_mageshields_deactivate_sgui = {
 	effect = {
 		aov_invention_personal_mageshields_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_personal_mageshields_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_personal_mageshields_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_personal_mageshields_active = yes } }
+			aov_invention_personal_mageshields_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_personal_mageshields_active = yes }
+			aov_invention_personal_mageshields_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_personal_mageshields_activate = yes }
 	}
 }
 aov_inv_personal_mageshields_offered_sgui = {
@@ -1748,6 +2588,26 @@ aov_inv_apparitional_communicator_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_apparitional_communicator_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_apparitional_communicator_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_apparitional_communicator_active = yes } }
+			aov_invention_apparitional_communicator_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_apparitional_communicator_active = yes }
+			aov_invention_apparitional_communicator_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_apparitional_communicator_activate = yes }
+	}
+}
 aov_inv_apparitional_communicator_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_apparitional_communicator_offered = yes aov_invention_apparitional_communicator_discoverable = yes }
@@ -1787,6 +2647,26 @@ aov_inv_centipedal_chests_deactivate_sgui = {
 	effect = {
 		aov_invention_centipedal_chests_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_centipedal_chests_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_centipedal_chests_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_centipedal_chests_active = yes } }
+			aov_invention_centipedal_chests_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_centipedal_chests_active = yes }
+			aov_invention_centipedal_chests_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_centipedal_chests_activate = yes }
 	}
 }
 aov_inv_centipedal_chests_offered_sgui = {
@@ -1830,6 +2710,26 @@ aov_inv_conversation_calibrator_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_conversation_calibrator_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_conversation_calibrator_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_conversation_calibrator_active = yes } }
+			aov_invention_conversation_calibrator_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_conversation_calibrator_active = yes }
+			aov_invention_conversation_calibrator_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_conversation_calibrator_activate = yes }
+	}
+}
 aov_inv_conversation_calibrator_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_conversation_calibrator_offered = yes aov_invention_conversation_calibrator_discoverable = yes }
@@ -1869,6 +2769,26 @@ aov_inv_fey_spray_deactivate_sgui = {
 	effect = {
 		aov_invention_fey_spray_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_fey_spray_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_fey_spray_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_fey_spray_active = yes } }
+			aov_invention_fey_spray_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_fey_spray_active = yes }
+			aov_invention_fey_spray_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_fey_spray_activate = yes }
 	}
 }
 aov_inv_fey_spray_offered_sgui = {
@@ -1912,6 +2832,26 @@ aov_inv_living_mirrors_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_living_mirrors_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_living_mirrors_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_living_mirrors_active = yes } }
+			aov_invention_living_mirrors_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_living_mirrors_active = yes }
+			aov_invention_living_mirrors_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_living_mirrors_activate = yes }
+	}
+}
 aov_inv_living_mirrors_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_living_mirrors_offered = yes aov_invention_living_mirrors_discoverable = yes }
@@ -1951,6 +2891,26 @@ aov_inv_mystic_ciphers_deactivate_sgui = {
 	effect = {
 		aov_invention_mystic_ciphers_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_mystic_ciphers_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_mystic_ciphers_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_mystic_ciphers_active = yes } }
+			aov_invention_mystic_ciphers_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_mystic_ciphers_active = yes }
+			aov_invention_mystic_ciphers_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_mystic_ciphers_activate = yes }
 	}
 }
 aov_inv_mystic_ciphers_offered_sgui = {
@@ -1994,6 +2954,26 @@ aov_inv_sending_stones_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_sending_stones_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_sending_stones_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_sending_stones_active = yes } }
+			aov_invention_sending_stones_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_sending_stones_active = yes }
+			aov_invention_sending_stones_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_sending_stones_activate = yes }
+	}
+}
 aov_inv_sending_stones_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_sending_stones_offered = yes aov_invention_sending_stones_discoverable = yes }
@@ -2033,6 +3013,26 @@ aov_inv_viewcatcher_deactivate_sgui = {
 	effect = {
 		aov_invention_viewcatcher_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_viewcatcher_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_viewcatcher_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_viewcatcher_active = yes } }
+			aov_invention_viewcatcher_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_viewcatcher_active = yes }
+			aov_invention_viewcatcher_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_viewcatcher_activate = yes }
 	}
 }
 aov_inv_viewcatcher_offered_sgui = {
@@ -2076,6 +3076,26 @@ aov_inv_arithmatons_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_arithmatons_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_arithmatons_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_arithmatons_active = yes } }
+			aov_invention_arithmatons_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_arithmatons_active = yes }
+			aov_invention_arithmatons_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_arithmatons_activate = yes }
+	}
+}
 aov_inv_arithmatons_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_arithmatons_offered = yes aov_invention_arithmatons_discoverable = yes }
@@ -2115,6 +3135,26 @@ aov_inv_empire_engine_deactivate_sgui = {
 	effect = {
 		aov_invention_empire_engine_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_empire_engine_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_empire_engine_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_empire_engine_active = yes } }
+			aov_invention_empire_engine_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_empire_engine_active = yes }
+			aov_invention_empire_engine_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_empire_engine_activate = yes }
 	}
 }
 aov_inv_empire_engine_offered_sgui = {
@@ -2158,6 +3198,26 @@ aov_inv_game_of_khet_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_game_of_khet_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_game_of_khet_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_game_of_khet_active = yes } }
+			aov_invention_game_of_khet_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_game_of_khet_active = yes }
+			aov_invention_game_of_khet_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_game_of_khet_activate = yes }
+	}
+}
 aov_inv_game_of_khet_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_game_of_khet_offered = yes aov_invention_game_of_khet_discoverable = yes }
@@ -2197,6 +3257,26 @@ aov_inv_mirage_detector_3000_deactivate_sgui = {
 	effect = {
 		aov_invention_mirage_detector_3000_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_mirage_detector_3000_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_mirage_detector_3000_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_mirage_detector_3000_active = yes } }
+			aov_invention_mirage_detector_3000_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_mirage_detector_3000_active = yes }
+			aov_invention_mirage_detector_3000_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_mirage_detector_3000_activate = yes }
 	}
 }
 aov_inv_mirage_detector_3000_offered_sgui = {
@@ -2240,6 +3320,26 @@ aov_inv_remedial_tinctures_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_remedial_tinctures_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_remedial_tinctures_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_remedial_tinctures_active = yes } }
+			aov_invention_remedial_tinctures_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_remedial_tinctures_active = yes }
+			aov_invention_remedial_tinctures_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_remedial_tinctures_activate = yes }
+	}
+}
 aov_inv_remedial_tinctures_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_remedial_tinctures_offered = yes aov_invention_remedial_tinctures_discoverable = yes }
@@ -2279,6 +3379,26 @@ aov_inv_think_thought_transmitters_deactivate_sgui = {
 	effect = {
 		aov_invention_think_thought_transmitters_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_think_thought_transmitters_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_think_thought_transmitters_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_think_thought_transmitters_active = yes } }
+			aov_invention_think_thought_transmitters_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_think_thought_transmitters_active = yes }
+			aov_invention_think_thought_transmitters_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_think_thought_transmitters_activate = yes }
 	}
 }
 aov_inv_think_thought_transmitters_offered_sgui = {
@@ -2322,6 +3442,26 @@ aov_inv_bureaucratizer_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_bureaucratizer_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_bureaucratizer_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_bureaucratizer_active = yes } }
+			aov_invention_bureaucratizer_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_bureaucratizer_active = yes }
+			aov_invention_bureaucratizer_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_bureaucratizer_activate = yes }
+	}
+}
 aov_inv_bureaucratizer_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_bureaucratizer_offered = yes aov_invention_bureaucratizer_discoverable = yes }
@@ -2361,6 +3501,26 @@ aov_inv_crierless_crier_device_deactivate_sgui = {
 	effect = {
 		aov_invention_crierless_crier_device_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_crierless_crier_device_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_crierless_crier_device_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_crierless_crier_device_active = yes } }
+			aov_invention_crierless_crier_device_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_crierless_crier_device_active = yes }
+			aov_invention_crierless_crier_device_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_crierless_crier_device_activate = yes }
 	}
 }
 aov_inv_crierless_crier_device_offered_sgui = {
@@ -2404,6 +3564,26 @@ aov_inv_negotiation_nexus_deactivate_sgui = {
 		aov_artificery_start_slot_cooldown = yes
 	}
 }
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_negotiation_nexus_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_negotiation_nexus_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_negotiation_nexus_active = yes } }
+			aov_invention_negotiation_nexus_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_negotiation_nexus_active = yes }
+			aov_invention_negotiation_nexus_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_negotiation_nexus_activate = yes }
+	}
+}
 aov_inv_negotiation_nexus_offered_sgui = {
 	scope = character
 	is_shown = { aov_invention_negotiation_nexus_offered = yes aov_invention_negotiation_nexus_discoverable = yes }
@@ -2443,6 +3623,26 @@ aov_inv_runethought_network_deactivate_sgui = {
 	effect = {
 		aov_invention_runethought_network_deactivate = yes
 		aov_artificery_start_slot_cooldown = yes
+	}
+}
+# Clicking the invention box: activate, or deactivate if active
+aov_inv_runethought_network_toggle_sgui = {
+	scope = character
+	is_valid = {
+		aov_invention_runethought_network_discovered = yes
+		trigger_if = {
+			limit = { NOT = { aov_invention_runethought_network_active = yes } }
+			aov_invention_runethought_network_available = yes
+			aov_artificery_has_free_slot = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { aov_invention_runethought_network_active = yes }
+			aov_invention_runethought_network_deactivate = yes
+			aov_artificery_start_slot_cooldown = yes
+		}
+		else = { aov_invention_runethought_network_activate = yes }
 	}
 }
 aov_inv_runethought_network_offered_sgui = {

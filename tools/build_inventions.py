@@ -279,6 +279,7 @@ def loc(invs: list) -> str:
         out.append(f' aov_invention_{k}: "{i["name"]}"')
         out.append(f' aov_invention_{k}_desc: "{i["desc"]}"')
         out.append(f' aov_invention_{k}_tt: "#T $aov_invention_{k}$#!\\n#weak $AOV_CATEGORY_{i["category"].upper()}$, $AOV_TIER_{i["tier"]}$#!\\n\\n$aov_invention_{k}_desc$"')
+        out.append(f' aov_invention_{k}_subtitle: "$AOV_CATEGORY_{i["category"].upper()}$, $AOV_TIER_{i["tier"]}$"')
     return "\n".join(out) + "\n"
 
 
@@ -304,6 +305,15 @@ def sguis(invs: list) -> str:
             f"aov_inv_{k}_deactivate_sgui = {{\n\tscope = character\n"
             f"\tis_shown = {{ aov_invention_{k}_active = yes }}\n"
             f"\teffect = {{\n\t\taov_invention_{k}_deactivate = yes\n\t\taov_artificery_start_slot_cooldown = yes\n\t}}\n}}\n"
+            f"# Clicking the invention box: activate, or deactivate if active\n"
+            f"aov_inv_{k}_toggle_sgui = {{\n\tscope = character\n"
+            f"\tis_valid = {{\n\t\taov_invention_{k}_discovered = yes\n"
+            f"\t\ttrigger_if = {{\n\t\t\tlimit = {{ NOT = {{ aov_invention_{k}_active = yes }} }}\n"
+            f"\t\t\taov_invention_{k}_available = yes\n\t\t\taov_artificery_has_free_slot = yes\n\t\t}}\n\t}}\n"
+            f"\teffect = {{\n"
+            f"\t\tif = {{\n\t\t\tlimit = {{ aov_invention_{k}_active = yes }}\n"
+            f"\t\t\taov_invention_{k}_deactivate = yes\n\t\t\taov_artificery_start_slot_cooldown = yes\n\t\t}}\n"
+            f"\t\telse = {{ aov_invention_{k}_activate = yes }}\n\t}}\n}}\n"
             f"aov_inv_{k}_offered_sgui = {{\n\tscope = character\n\tis_shown = {{ aov_invention_{k}_offered = yes aov_invention_{k}_discoverable = yes }}\n}}\n"
             f"aov_inv_{k}_research_sgui = {{\n\tscope = character\n"
             f"\tis_valid = {{ aov_artificery_can_start_research = yes aov_invention_{k}_discoverable = yes }}\n"
@@ -314,81 +324,153 @@ def sguis(invs: list) -> str:
     return "\n".join(out)
 
 
-def sg_button(k: str, s: str, text: str, extra: str = "") -> str:
+SECTIONS = ("society", "economic", "military")  # EU4 order
+PER_ROW = 5
+
+
+def ind(text: str, n: int) -> str:
+    pad = "\t" * n
+    return "".join(pad + line if line.strip() else line for line in text.splitlines(True))
+
+
+def shown(k: str, s: str) -> str:
+    return f"{sg(k, s)}.IsShown( {ROOT} )"
+
+
+def valid(k: str, s: str) -> str:
+    return f"{sg(k, s)}.IsValid( {ROOT} )"
+
+
+def tooltip_type(i) -> str:
+    k, t = i["key"], i["tier"]
+    paras = [
+        ("", f"aov_invention_{k}_desc"),
+        ("", f"[{sg(k, 'effects')}.BuildTooltip( {ROOT} )]"),
+        (f"Not( {shown(k, 'unlocked')} )", f"AOV_INV_LOCKED_TIER_{t}_TT"),
+        (shown(k, "undiscovered"), "AOV_INV_UNDISCOVERED_TT"),
+        (f"And( {shown(k, 'activate')}, {valid(k, 'activate')} )", "AOV_INV_CLICK_ACTIVATE"),
+        (f"And( {shown(k, 'activate')}, Not( {valid(k, 'activate')} ) )", "AOV_INV_NO_FREE_SLOT"),
+        (shown(k, "deactivate"), "AOV_INV_CLICK_DEACTIVATE"),
+    ]
+    body = "".join(
+        "cooltip_paragraph = {\n" + (f'\tvisible = "[{vis}]"\n' if vis else "") + f'\ttext = "{text}"\n}}\n'
+        for vis, text in paras
+    )
     return (
-        f"\t\t\t\tbutton_standard = {{\n"
-        f"\t\t\t\t\tvisible = \"[{sg(k, s)}.IsShown( {ROOT} )]\"\n"
-        f"\t\t\t\t\tsize = {{ 120 30 }}\n"
-        f"\t\t\t\t\ttext = \"{text}\"\n"
-        f"\t\t\t\t\tenabled = \"[{sg(k, s)}.IsValid( {ROOT} )]\"\n"
-        f"\t\t\t\t\tonclick = \"[{sg(k, s)}.Execute( {ROOT} )]\"\n{extra}"
-        f"\t\t\t\t\ttooltip = \"[{sg(k, s)}.BuildTooltip( {ROOT} )]\"\n"
-        f"\t\t\t\t}}\n"
+        f"type aov_invention_{k}_tooltip = object_tooltip_pop_out {{\n"
+        f'\tblockoverride "title_text" {{\n\t\ttext = "aov_invention_{k}"\n\t\tdefault_format = "#T"\n\t}}\n\n'
+        f'\tblockoverride "subtitle_text" {{\n\t\ttext = "aov_invention_{k}_subtitle"\n\t}}\n\n'
+        f'\tblockoverride "concept_link" {{\n\t\tvisible = no\n\t}}\n\n'
+        f'\tblockoverride "main_description" {{\n\t\tvbox = {{\n\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\tspacing = 8\n\n'
+        + ind(body, 3)
+        + "\t\t}\n\t}\n}\n"
     )
 
 
-def row(i) -> str:
-    k, c, t = i["key"], i["category"], i["tier"]
-    status = lambda vis, text, tt="": (  # noqa: E731
-        f"\t\t\t\ttext_single = {{\n\t\t\t\t\tvisible = \"[{vis}]\"\n\t\t\t\t\ttext = \"{text}\"\n"
-        + (f"\t\t\t\t\ttooltip = \"{tt}\"\n" if tt else "") + "\t\t\t\t\talign = right|nobaseline\n\t\t\t\t}\n"
+def box(i) -> str:
+    """EU4-style invention box: click to activate, click again to deactivate."""
+    k = i["key"]
+    tex = f"{ICON_DIR}/{i['icon']}"
+    discovered = f"Or( {shown(k, 'activate')}, {shown(k, 'deactivate')} )"
+    greyed = lambda vis, alpha: (  # noqa: E731
+        f"\t\ticon = {{\n"
+        f'\t\t\tvisible = "[{vis}]"\n'
+        f"\t\t\tparentanchor = center\n"
+        f"\t\t\tsize = {{ 63 60 }}\n"
+        f'\t\t\ttexture = "{tex}"\n'
+        f'\t\t\teffectname = "GreyedOut"\n'
+        f"\t\t\talpha = {alpha}\n"
+        f"\t\t}}\n"
     )
     return (
-        f"\t\twidget = {{\n"
-        f"\t\t\tname = \"aov_inv_row_{k}\"\n"
-        f"\t\t\tvisible = \"[And( {sg(k, 'visible')}.IsShown( {ROOT} ), Not( GetVariableSystem.Exists( 'aov_filter_hide_{c}' ) ) )]\"\n"
-        f"\t\t\tlayoutpolicy_horizontal = expanding\n"
-        f"\t\t\tsize = {{ 0 46 }}\n\n"
-        f"\t\t\thbox = {{\n"
-        f"\t\t\t\tsize = {{ 100% 100% }}\n"
-        f"\t\t\t\tmargin = {{ 6 2 }}\n"
-        f"\t\t\t\tspacing = 8\n\n"
-        f"\t\t\t\ticon = {{\n\t\t\t\t\tsize = {{ 44 42 }}\n\t\t\t\t\ttexture = \"{ICON_DIR}/{i['icon']}\"\n\t\t\t\t\ttooltip = \"aov_invention_{k}_tt\"\n\t\t\t\t}}\n"
-        f"\t\t\t\ttext_single = {{\n\t\t\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\t\t\ttext = \"aov_invention_{k}\"\n\t\t\t\t\ttooltip = \"[{sg(k, 'effects')}.BuildTooltip( {ROOT} )]\"\n\t\t\t\t\talign = left|nobaseline\n\t\t\t\t}}\n"
-        + status(f"Not( {sg(k, 'unlocked')}.IsShown( {ROOT} ) )", "AOV_INV_STATUS_LOCKED", f"AOV_INV_LOCKED_TIER_{t}_TT")
-        + status(f"{sg(k, 'undiscovered')}.IsShown( {ROOT} )", "AOV_INV_STATUS_UNDISCOVERED", "AOV_INV_UNDISCOVERED_TT")
-        + status(f"{sg(k, 'deactivate')}.IsShown( {ROOT} )", "AOV_INV_STATUS_ACTIVE")
-        + sg_button(k, "activate", "AOV_INV_ACTIVATE")
-        + sg_button(k, "deactivate", "AOV_INV_DEACTIVATE")
-        + "\t\t\t}\n\t\t}\n"
+        f"widget = {{\n"
+        f'\tname = "aov_inv_box_{k}"\n'
+        f'\tvisible = "[{shown(k, "visible")}]"\n'
+        f"\tsize = {{ 72 70 }}\n\n"
+        f"\tselection_glow = {{\n"
+        f'\t\tvisible = "[{shown(k, "deactivate")}]"\n'
+        f"\t}}\n\n"
+        f"\tbutton_standard_clean = {{\n"
+        f"\t\tsize = {{ 100% 100% }}\n"
+        f'\t\tdown = "[{shown(k, "deactivate")}]"\n'
+        f'\t\tonclick = "[{sg(k, "toggle")}.Execute( {ROOT} )]"\n\n'
+        f"\t\ttooltipwidget = {{\n\t\t\taov_invention_{k}_tooltip = {{}}\n\t\t}}\n\n"
+        f"\t\ticon = {{\n"
+        f'\t\t\tvisible = "[{discovered}]"\n'
+        f"\t\t\tparentanchor = center\n"
+        f"\t\t\tsize = {{ 63 60 }}\n"
+        f'\t\t\ttexture = "{tex}"\n'
+        f"\t\t}}\n\n"
+        f"\t\t# Undiscovered\n"
+        + greyed(shown(k, "undiscovered"), "0.6")
+        + f"\n\t\t# Locked: the tier's era is not reached yet\n"
+        + greyed(f"Not( {shown(k, 'unlocked')} )", "0.25")
+        + f"\t}}\n"
+        f"}}\n"
     )
 
 
-def offer_row(i) -> str:
+def section(invs: list, tier: int, category: str) -> str:
+    """A framed group of boxes with a header, like EU4's Society/Economic/Military Inventions."""
+    members = of(invs, category, tier)
+    rows = []
+    for n in range(0, len(members), PER_ROW):
+        rows.append("hbox = {\n\tspacing = 6\n\n" + ind("\n".join(box(i) for i in members[n:n + PER_ROW]), 1) + "}\n")
+    return (
+        f"vbox = {{\n"
+        f'\tname = "aov_inventions_t{tier}_{category}"\n'
+        f"\tlayoutpolicy_horizontal = expanding\n"
+        f"\tmargin = {{ 12 10 }}\n"
+        f"\tmargin_bottom = 14\n"
+        f"\tspacing = 6\n\n"
+        f"\tbackground = {{\n\t\tusing = Background_Area_With_Header\n\t}}\n\n"
+        f"\ttext_single = {{\n"
+        f'\t\ttext = "AOV_INVENTIONS_SECTION_{category.upper()}"\n'
+        f"\t\tusing = Font_Type_Flavor\n"
+        f"\t\tusing = Font_Size_Medium\n"
+        f'\t\tdefault_format = "#T"\n'
+        f"\t\tmargin_bottom = 6\n"
+        f"\t\talign = center|nobaseline\n"
+        f"\t}}\n\n"
+        + ind("\n".join(rows), 1)
+        + "}\n"
+    )
+
+
+def offer_option(i) -> str:
+    """A Technomancer proposal, drawn as an event option."""
     k = i["key"]
     return (
-        f"\t\thbox = {{\n"
-        f"\t\t\tname = \"aov_inv_offer_{k}\"\n"
-        f"\t\t\tvisible = \"[{sg(k, 'offered')}.IsShown( {ROOT} )]\"\n"
-        f"\t\t\tlayoutpolicy_horizontal = expanding\n"
-        f"\t\t\tspacing = 8\n\n"
-        f"\t\t\ticon = {{\n\t\t\t\tsize = {{ 44 42 }}\n\t\t\t\ttexture = \"{ICON_DIR}/{i['icon']}\"\n\t\t\t\ttooltip = \"aov_invention_{k}_tt\"\n\t\t\t}}\n"
-        f"\t\t\ttext_single = {{\n\t\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\t\ttext = \"aov_invention_{k}\"\n\t\t\t\ttooltip = \"[{sg(k, 'effects')}.BuildTooltip( {ROOT} )]\"\n\t\t\t\talign = left|nobaseline\n\t\t\t}}\n"
-        f"\t\t\tbutton_standard = {{\n"
-        f"\t\t\t\tsize = {{ 170 30 }}\n"
-        f"\t\t\t\ttext = \"AOV_RESEARCH_START\"\n"
-        f"\t\t\t\tenabled = \"[{sg(k, 'research')}.IsValid( {ROOT} )]\"\n"
-        f"\t\t\t\tonclick = \"[{sg(k, 'research')}.Execute( {ROOT} )]\"\n"
-        f"\t\t\t\tonclick = \"[GetVariableSystem.Clear( 'aov_research_popup' )]\"\n"
-        f"\t\t\t\ttooltip = \"[{sg(k, 'research')}.BuildTooltip( {ROOT} )]\"\n"
-        f"\t\t\t}}\n"
-        f"\t\t}}\n"
+        f"button_event_standard = {{\n"
+        f'\tname = "aov_inv_offer_{k}"\n'
+        f'\tvisible = "[{shown(k, "offered")}]"\n'
+        f"\tsize = {{ 460 38 }}\n"
+        f'\tenabled = "[{valid(k, "research")}]"\n'
+        f'\tonclick = "[{sg(k, "research")}.Execute( {ROOT} )]"\n'
+        f"\tonclick = \"[GetVariableSystem.Clear( 'aov_research_popup' )]\"\n\n"
+        f"\ttooltipwidget = {{\n\t\taov_invention_{k}_tooltip = {{}}\n\t}}\n\n"
+        f"\thbox = {{\n"
+        f"\t\tmargin_left = 8\n"
+        f"\t\tmargin_right = 12\n"
+        f"\t\tspacing = 8\n\n"
+        f'\t\ticon = {{\n\t\t\tsize = {{ 34 32 }}\n\t\t\ttexture = "{ICON_DIR}/{i["icon"]}"\n\t\t}}\n\n'
+        f'\t\ttext_single = {{\n\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\ttext = "aov_invention_{k}"\n\t\t\tmax_width = 330\n\t\t\talign = left|nobaseline\n\t\t}}\n\n'
+        f'\t\ttext_single = {{\n\t\t\ttext = "AOV_RESEARCH_COST"\n\t\t\talign = right|nobaseline\n\t\t}}\n'
+        f"\t}}\n"
+        f"}}\n"
     )
 
 
 def gui(invs: list) -> str:
-    parts = [HEADER, "types AovInventions\n{\n", "\ttype aov_inventions_list = vbox {\n\t\tspacing = 2\n\n"]
+    parts = [HEADER, "\ntypes AovInventions\n{\n"]
+    parts.append("\t# Hover tooltip of an invention's box and Technomancer proposal\n")
+    parts.extend(ind(tooltip_type(i), 1) + "\n" for i in invs)
     for t in (1, 2, 3):
-        parts.append(
-            f"\t\ttext_single = {{\n\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\tmargin_top = 8\n"
-            f"\t\t\ttext = \"AOV_INVENTIONS_TIER_{t}\"\n\t\t\tdefault_format = \"#T\"\n\t\t\talign = left|nobaseline\n\t\t}}\n\n"
-        )
-        parts.extend(row(i) + "\n" for i in of(invs, tier=t))
-    parts.append("\t}\n\n")
+        body = "\n".join(section(invs, t, c) for c in SECTIONS)
+        parts.append(f"\t# Tier {t} tab of the Inventions tab\n\ttype aov_inventions_tier_{t} = vbox {{\n\t\tspacing = 10\n\n" + ind(body, 2) + "\t}\n\n")
     for c in CATEGORIES:
-        parts.append(f"\ttype aov_inventions_offers_{c} = vbox {{\n\t\tspacing = 4\n\n")
-        parts.extend(offer_row(i) + "\n" for i in of(invs, c))
-        parts.append("\t}\n\n")
+        body = "\n".join(offer_option(i) for i in of(invs, c))
+        parts.append(f"\t# Technomancer proposals in the {c} field\n\ttype aov_inventions_offers_{c} = vbox {{\n\t\tspacing = 4\n\n" + ind(body, 2) + "\t}\n\n")
     parts.append("}\n")
     return "".join(parts)
 

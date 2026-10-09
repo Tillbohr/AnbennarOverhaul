@@ -218,62 +218,101 @@ class ScriptOutputTests(unittest.TestCase):
 
 
 class GuiOutputTests(unittest.TestCase):
-    def test_eight_sguis_per_invention(self):
+    def test_nine_sguis_per_invention(self):
         names = top_level_blocks(bi.sguis(INVENTIONS))
-        self.assertEqual(len(names), 8 * 60)
+        self.assertEqual(len(names), 9 * 60)
         for k in KEYS:
-            for s in ("visible", "unlocked", "undiscovered", "activate", "deactivate", "offered", "research", "effects"):
+            for s in ("visible", "unlocked", "undiscovered", "activate", "deactivate", "toggle", "offered", "research", "effects"):
                 self.assertIn(f"aov_inv_{k}_{s}_sgui", names)
 
+    def sgui_block(self, name):
+        return re.search(rf"^{name} = \{{\n(.*?)\n\}}", bi.sguis(INVENTIONS), re.M | re.S).group(1)
+
     def test_deactivate_starts_cooldown(self):
-        text = bi.sguis(INVENTIONS)
-        block = re.search(r"^aov_inv_sparkdrive_rifles_deactivate_sgui = \{\n(.*?)\n\}", text, re.M | re.S).group(1)
-        self.assertIn("aov_artificery_start_slot_cooldown = yes", block)
+        self.assertIn("aov_artificery_start_slot_cooldown = yes", self.sgui_block("aov_inv_sparkdrive_rifles_deactivate_sgui"))
+
+    def test_toggle_activates_or_deactivates_with_cooldown(self):
+        block = self.sgui_block("aov_inv_sparkdrive_rifles_toggle_sgui")
+        self.assertIn("aov_invention_sparkdrive_rifles_discovered = yes", block)
+        self.assertRegex(block, r"trigger_if = \{\s*limit = \{ NOT = \{ aov_invention_sparkdrive_rifles_active = yes \} \}"
+                                r"\s*aov_invention_sparkdrive_rifles_available = yes\s*aov_artificery_has_free_slot = yes")
+        self.assertRegex(block, r"aov_invention_sparkdrive_rifles_deactivate = yes\s*aov_artificery_start_slot_cooldown = yes")
+        self.assertIn("else = { aov_invention_sparkdrive_rifles_activate = yes }", block)
 
     def test_gui_balanced_with_types(self):
         text = bi.gui(INVENTIONS)
         self.assertTrue(balanced(text))
-        for t in ("aov_inventions_list", "aov_inventions_offers_economic", "aov_inventions_offers_military", "aov_inventions_offers_society"):
+        for t in ("aov_inventions_tier_1", "aov_inventions_tier_2", "aov_inventions_tier_3",
+                  "aov_inventions_offers_economic", "aov_inventions_offers_military", "aov_inventions_offers_society"):
             self.assertIn(f"type {t} = vbox {{", text)
+        for k in KEYS:
+            self.assertIn(f"type aov_invention_{k}_tooltip = object_tooltip_pop_out {{", text)
 
-    def test_row_visibility_uses_visible_sgui_and_category_filter(self):
+    def tier_body(self, t):
+        text = bi.gui(INVENTIONS)
+        return text.split(f"type aov_inventions_tier_{t} = vbox {{")[1].split("\n\t}\n")[0]
+
+    def test_tiers_have_society_economic_military_sections_of_their_boxes(self):
+        for t in (1, 2, 3):
+            body = self.tier_body(t)
+            names = re.findall(r'name = "aov_inventions_t\d_([a-z]+)"', body)
+            self.assertEqual(names, ["society", "economic", "military"])
+            for c in bi.CATEGORIES:
+                section = body.split(f'name = "aov_inventions_t{t}_{c}"')[1].split('name = "aov_inventions_t')[0]
+                listed = re.findall(r'name = "aov_inv_box_([a-z0-9_]+)"', section)
+                self.assertEqual(listed, [i["key"] for i in INVENTIONS if i["category"] == c and i["tier"] == t])
+
+    def test_rows_hold_at_most_five_boxes(self):
+        for t in (1, 2, 3):
+            for row in self.tier_body(t).split("hbox = {")[1:]:
+                self.assertLessEqual(row.count('name = "aov_inv_box_'), bi.PER_ROW)
+
+    def box(self, k):
+        text = bi.gui(INVENTIONS)
+        return text.split(f'name = "aov_inv_box_{k}"')[1].split('name = "aov_inv_box_')[0]
+
+    def test_box_click_toggles_and_hover_shows_invention_tooltip(self):
+        for i in INVENTIONS:
+            k = i["key"]
+            b = self.box(k)
+            self.assertIn(f"aov_inv_{k}_visible_sgui", b.split("\n")[1])
+            self.assertIn(f"onclick = \"[GetScriptedGui('aov_inv_{k}_toggle_sgui').Execute( {bi.ROOT} )]\"", b)
+            self.assertRegex(b, rf"tooltipwidget = \{{\s*aov_invention_{k}_tooltip = \{{\}}")
+            self.assertIn(f"gfx/interface/icons/aov_inventions/{i['icon']}", b)
+            self.assertIn(f"down = \"[GetScriptedGui('aov_inv_{k}_deactivate_sgui').IsShown( {bi.ROOT} )]\"", b)
+
+    def test_tooltip_has_name_description_effects_and_status(self):
         text = bi.gui(INVENTIONS)
         for i in INVENTIONS:
-            k, c = i["key"], i["category"]
-            row = re.search(rf'name = "aov_inv_row_{k}"\n(.*?)\n\t\t\t\}}\n\t\t\}}', text, re.S)
-            self.assertIsNotNone(row, k)
-            self.assertIn(f"aov_inv_{k}_visible_sgui", row.group(1))
-            self.assertIn(f"GetVariableSystem.Exists( 'aov_filter_hide_{c}' )", row.group(1))
-            self.assertIn(f"gfx/interface/icons/aov_inventions/{i['icon']}", row.group(1))
+            k = i["key"]
+            tt = text.split(f"type aov_invention_{k}_tooltip = object_tooltip_pop_out {{")[1].split("\n\t}\n")[0]
+            self.assertIn(f'text = "aov_invention_{k}"', tt)
+            self.assertIn(f'text = "aov_invention_{k}_subtitle"', tt)
+            self.assertIn(f'text = "aov_invention_{k}_desc"', tt)
+            self.assertIn(f"[GetScriptedGui('aov_inv_{k}_effects_sgui').BuildTooltip( {bi.ROOT} )]", tt)
+            for key in (f"AOV_INV_LOCKED_TIER_{i['tier']}_TT", "AOV_INV_UNDISCOVERED_TT", "AOV_INV_CLICK_ACTIVATE",
+                        "AOV_INV_NO_FREE_SLOT", "AOV_INV_CLICK_DEACTIVATE"):
+                self.assertIn(f'text = "{key}"', tt)
 
     def test_effects_sgui_adds_the_invention_modifier(self):
-        text = bi.sguis(INVENTIONS)
         for k in KEYS:
-            block = re.search(rf"^aov_inv_{k}_effects_sgui = \{{\n(.*?)\n\}}", text, re.M | re.S).group(1)
+            block = self.sgui_block(f"aov_inv_{k}_effects_sgui")
             self.assertIn(f"add_character_modifier = {{ modifier = aov_invention_{k} }}", block)
             self.assertNotIn("is_shown", block)
 
-    def test_names_show_effects_tooltip_in_rows_and_offers(self):
-        # Spec: each row's tooltip has the description and the effects; the name shows the effects
-        text = bi.gui(INVENTIONS)
-        for k in KEYS:
-            tt = f"tooltip = \"[GetScriptedGui('aov_inv_{k}_effects_sgui').BuildTooltip( {bi.ROOT} )]\""
-            self.assertEqual(text.count(tt), 2, k)
-
-    def test_rows_grouped_under_tier_headers(self):
-        text = bi.gui(INVENTIONS)
-        list_body = text.split("type aov_inventions_list = vbox {")[1].split("type aov_inventions_offers_economic")[0]
-        h2, h3 = list_body.index("AOV_INVENTIONS_TIER_2"), list_body.index("AOV_INVENTIONS_TIER_3")
-        for i in INVENTIONS:
-            pos = list_body.index(f'name = "aov_inv_row_{i["key"]}"')
-            self.assertEqual(1 + (pos > h2) + (pos > h3), i["tier"], i["key"])
-
-    def test_offers_only_list_their_category(self):
+    def test_offers_only_list_their_category_and_use_the_tooltip(self):
         text = bi.gui(INVENTIONS)
         for c in bi.CATEGORIES:
             body = text.split(f"type aov_inventions_offers_{c} = vbox {{")[1].split("type aov_inventions_offers_")[0]
             listed = set(re.findall(r'name = "aov_inv_offer_([a-z0-9_]+)"', body))
             self.assertEqual(listed, {i["key"] for i in INVENTIONS if i["category"] == c})
+            for k in listed:
+                self.assertIn(f"aov_invention_{k}_tooltip = {{}}", body)
+                self.assertIn(f"GetScriptedGui('aov_inv_{k}_research_sgui').Execute", body)
+
+    def test_subtitle_loc(self):
+        lc = bi.loc(INVENTIONS)
+        self.assertIn(' aov_invention_sparkdrive_rifles_subtitle: "$AOV_CATEGORY_MILITARY$, $AOV_TIER_1$"', lc)
 
     def test_render_all_paths(self):
         files = bi.render_all(INVENTIONS)

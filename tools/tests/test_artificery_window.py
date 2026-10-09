@@ -16,23 +16,33 @@ class ArtificeryWindowTests(unittest.TestCase):
         text = WINDOW.read_text(encoding="utf-8-sig")
         self.assertIn("using = Window_Background", text)
 
-    def test_inventions_tab_has_list_and_no_placeholder(self):
+    def test_inventions_tab_has_tier_tabs_and_tier_grids(self):
         text = WINDOW.read_text(encoding="utf-8-sig")
-        self.assertIn("aov_inventions_list = {", text)
         self.assertNotIn("AOV_ARTIFICERY_INVENTIONS_PLACEHOLDER", text)
-        for c in ("economic", "military", "society"):
-            self.assertIn(f"GetVariableSystem.Toggle( 'aov_filter_hide_{c}' )", text)
+        self.assertNotIn("aov_filter_hide_", text)
+        for t in (1, 2, 3):
+            self.assertIn(f"aov_inventions_tier_{t} = {{", text)
+            self.assertIn(f'text = "AOV_INVENTIONS_TAB_TIER_{t}"', text)
+        for t in (2, 3):
+            self.assertIn(f"GetVariableSystem.Set( 'aov_inventions_tier', '{t}' )", text)
+            self.assertIn(f"aov_inventions_tier_{t}_unlocked_sgui", text)
 
-    def test_research_popup_registered_and_offers_per_category(self):
+    def test_research_popup_is_an_event_style_window(self):
         root = WINDOW.parent
         reg = (root / "scripted_widgets" / "aov_scripted_widgets.txt").read_text(encoding="utf-8-sig")
         self.assertIn("gui/aov_window_artificery_research.gui = aov_artificery_research_window", reg)
         popup = (root / "aov_window_artificery_research.gui").read_text(encoding="utf-8-sig")
+        self.assertIn("gfx/interface/illustrations/event_scenes/", popup)
+        self.assertIn("gfx/interface/icons/event_types/type_inspiration.dds", popup)
+        self.assertEqual(popup.count("aov_research_leader = {"), 3)
+        for f in ("brillites", "mechanists", "technomancers"):
+            self.assertIn(f'text = "AOV_RESEARCH_LEADER_{f.upper()}"', popup)
         for c in ("economic", "military", "society"):
-            self.assertIn(f"aov_inventions_offers_{c} = {{", popup)
+            self.assertIn(f"aov_inventions_offers_{c} = {{}}", popup)
             self.assertIn(f"aov_research_mechanists_{c}_sgui", popup)
             self.assertIn(f"aov_research_technomancers_{c}_sgui", popup)
         self.assertIn("aov_research_brillites_sgui", popup)
+        self.assertEqual(popup.count("{"), popup.count("}"))
 
 
 if __name__ == "__main__":
