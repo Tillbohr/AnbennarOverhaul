@@ -718,7 +718,7 @@ class ArtTests(unittest.TestCase):
 @unittest.skipUnless(LIVE, "needs Anbennar CK3")
 class RegionTests(unittest.TestCase):
     def test_regions(self):
-        self.assertEqual(bm.REGIONS, ("cannor", "dwarovar"))
+        self.assertEqual(bm.REGIONS, ("cannor", "dwarovar", "bulwar", "salahad", "deepwoods"))
 
     def test_dwarovar_files(self):
         files = bm.render_all("dwarovar")
@@ -728,6 +728,17 @@ class RegionTests(unittest.TestCase):
         self.assertNotIn("common/buildings/zz_aov_monument_overrides_dwarovar.txt", files)  # no Anbennar levels
         self.assertNotIn("common/customizable_localization/aov_monument_illustration.txt", files)  # shared
         self.assertIn("aov_monument_khugdihr_bank_03 = {", files["common/buildings/aov_monuments_dwarovar.txt"])
+
+    def test_southern_region_files(self):
+        """Bulwar, Salahad and the Deepwoods have no Anbennar monument levels, so no overrides file."""
+        last = {"bulwar": "aov_monument_ash_palace_03", "salahad": "aov_monument_koroshesh_library_03",
+                "deepwoods": "aov_monument_mines_of_yfelorr_03"}
+        for region, key in last.items():
+            files = bm.render_all(region)
+            self.assertEqual(set(files), {f"common/buildings/aov_monuments_{region}.txt",
+                                          f"history/provinces/aov_monuments_{region}.txt",
+                                          f"localization/english/aov_monuments_{region}_l_english.yml"}, region)
+            self.assertIn(f"{key} = {{", files[f"common/buildings/aov_monuments_{region}.txt"])
 
     def test_shared_illustration_covers_every_region(self):
         cl = bm.render_shared()["common/customizable_localization/aov_monument_illustration.txt"]
@@ -749,7 +760,8 @@ class RegionTests(unittest.TestCase):
             bm.load_monuments = real
 
     def test_written_files_are_fresh(self):
-        files = {**bm.render_all("dwarovar"), **bm.render_shared()}
+        files = {k: v for region in bm.REGIONS[1:] for k, v in bm.render_all(region).items()}
+        files.update(bm.render_shared())
         for rel, text in files.items():
             self.assertEqual((bm.SUBMOD / rel).read_bytes().decode("utf-8-sig"), text.replace("\r\n", "\n"), rel)
 

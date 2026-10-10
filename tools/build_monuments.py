@@ -2,7 +2,7 @@
 
 Source: tools/data/monuments/<region>.py (monument data) and translation.py (icons). Rerun after editing them:
 
-    python -I tools/build_monuments.py [--region cannor|dwarovar]   (default: every region)
+    python -I tools/build_monuments.py [--region cannor|dwarovar|bulwar|salahad|deepwoods]   (default: every region)
 
 Building levels whose key Anbennar does not define are written to aov_monuments_<region>.txt. Levels Anbennar does
 define are re-emitted, with the EU4 tier lines inserted, in zz_aov_monument_overrides_<region>.txt (single-object
@@ -37,7 +37,7 @@ DROPPED_NOTE = " Some effects of the original Europa Universalis IV project have
 
 NL = "\n"
 ART_DIR = "gfx/interface/illustrations/aov_monuments"
-REGIONS = ("cannor", "dwarovar")
+REGIONS = ("cannor", "dwarovar", "bulwar", "salahad", "deepwoods")
 SHARED = "common/customizable_localization/aov_monument_illustration.txt"
 
 

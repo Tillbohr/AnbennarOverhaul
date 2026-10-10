@@ -396,6 +396,118 @@ AovMonumentIllustration = {
 	}
 
 	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_dasmati_halls_of_reverence_01
+		}
+		localization_key = aov_monument_art_dasmati_halls_of_reverence
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_ebbusubtu_01
+		}
+		localization_key = aov_monument_art_ebbusubtu
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_eduz_ginakku_01
+		}
+		localization_key = aov_monument_art_eduz_ginakku
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_eka_idulnazzar_01
+		}
+		localization_key = aov_monument_art_eka_idulnazzar
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_mount_lazzaward_01
+		}
+		localization_key = aov_monument_art_mount_lazzaward
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_ovdal_tungr_port_hold_01
+		}
+		localization_key = aov_monument_art_ovdal_tungr_port_hold
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_queens_throne_01
+		}
+		localization_key = aov_monument_art_queens_throne
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_deshak_temple_of_the_elements_01
+		}
+		localization_key = aov_monument_art_deshak_temple_of_the_elements
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_ekha_harbor_01
+		}
+		localization_key = aov_monument_art_ekha_harbor
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_koroshesh_grain_port_01
+		}
+		localization_key = aov_monument_art_koroshesh_grain_port
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_zornartakel_naval_harbor_01
+		}
+		localization_key = aov_monument_art_zornartakel_naval_harbor
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_ciranmyna_the_shimmering_city_01
+		}
+		localization_key = aov_monument_art_ciranmyna_the_shimmering_city
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_eternal_pillar_1_01
+		}
+		localization_key = aov_monument_art_eternal_pillar_1
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_eternal_pillar_2_01
+		}
+		localization_key = aov_monument_art_eternal_pillar_2
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_eternal_pillar_5_01
+		}
+		localization_key = aov_monument_art_eternal_pillar_5
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_eternal_pillar_6_01
+		}
+		localization_key = aov_monument_art_eternal_pillar_6
+	}
+
+	text = {
 		fallback = yes
 		localization_key = aov_monument_art_none
 	}

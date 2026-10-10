@@ -110,6 +110,10 @@ class Eu4MonumentsTests(unittest.TestCase):
         self.assertEqual((sup[67], sup[68], sup[70]), ("s_superregion", "s_superregion", "t_superregion"))
         self.assertNotIn(1, sup)
 
+    def test_loc_line_falls_back_to_windows_1252(self):
+        self.assertEqual(em._decode_line("Ebbušubtu".encode("utf-8")), "Ebbušubtu")
+        self.assertEqual(em._decode_line(b"Ebbu\x9aubtu"), "Ebbušubtu")  # a cp1252 line in a UTF-8 file
+
     def test_loc_and_art_precedence(self):
         roots = fixture_roots()
         write(roots["anbennar"] / "localisation/x_l_english.yml", ' l_english:\n k:0 "A"\n only_a:0 "Z"\n', "utf-8-sig")

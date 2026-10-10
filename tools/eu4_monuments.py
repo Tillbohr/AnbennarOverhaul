@@ -233,12 +233,20 @@ def load_projects(roots):
 _LOC_LINE = re.compile(r'^\s*([A-Za-z0-9_.\-]+):\d*\s*"(.*)"\s*(?:#.*)?$')
 
 
+def _decode_line(raw):
+    """A loc line as UTF-8; some EU4 Anbennar lines are Windows-1252 (e.g. `Ebbu\\x9aubtu`) inside UTF-8 files."""
+    try:
+        return raw.decode("utf-8")
+    except UnicodeDecodeError:
+        return raw.decode("cp1252", errors="replace")
+
+
 def _loc_pairs(root):
     folder = root / "localisation"
     if not folder.is_dir():
         return
     for path in sorted(folder.rglob("*_l_english.yml")):
-        for line in path.read_bytes().decode("utf-8-sig", errors="replace").split("\n"):
+        for line in map(_decode_line, path.read_bytes().removeprefix(b"\xef\xbb\xbf").split(b"\n")):
             m = _LOC_LINE.match(line.rstrip("\r"))
             if m:
                 yield m.group(1), m.group(2)

@@ -2780,14 +2780,16 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
             {'province_modifier': {'build_speed': -0.165, 'monthly_income': 0.5},
              'county_modifier': {'levy_reinforcement_rate': 0.125, 'levy_size': 0.0825},
              'character_modifier': {'embarkation_cost_mult': -0.15},
-             'on_complete': '',
+             'on_complete': 'barony.holder = { save_scope_as = aov_monument_patron create_character = { '
+                            'employer = scope:aov_monument_patron culture = '
+                            'scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = '
+                            '{ 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 '
+                            'martial = { 14 18 } random_traits = yes } }',
              'cost': 2000,
              'days': 7200,
              'dropped': ['flagship_morale: EU4 ship design/flagships; CK3 has no navies',
                          'number_of_cannons_flagship_modifier: EU4 ship design/flagships; CK3 has no navies',
                          'max_flagships: EU4 ship design/flagships; CK3 has no navies',
-                         'on_upgraded: define_admiral = { name = "Reinhard von Lohengramm" trait = '
-                         'naval_gunner_personality fire = 6 shock = 8 manuever = 8 siege = 1 }',
                          'on_upgraded: add_permanent_province_modifier = { name = '
                          'neckcliffe_journey_across_the_sea_of_stars duration = 9125 }']}],
   'art': 'gfx/interface/great_projects/great_project_neckcliffe_the_imperial_dockyard.dds',
