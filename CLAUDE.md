@@ -159,6 +159,6 @@ inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error
   (`HAND`, re-applied on every run; `tiers` merge key by key), so edit the hand file, never `cannor.py`. Rebuild:
   `import_eu4_monuments.py --region cannor`, then `build_monuments.py --region cannor`, then
   `build_county_view_override.py` (paintings in the county view). Dropped modifiers and one-offs are listed per tier
-  (`dropped`); 10 gates stay open (EU4 gates on tags/flags/legacies); balance caps on the EU4 tiers: fort_level 4, county tax_mult 0.3 (summed with Anbennar's values, the citadels reach fort_level 10-12 at level 3).
+  (`dropped`); 10 gates stay open (EU4 gates on tags/flags/legacies); balance caps on the EU4 tiers: fort_level 4, county tax_mult 0.3; a summed fort_level stops at max(8, Anbennar's value), the rest goes to `defender_holding_advantage`; upgrades cost and take at least what the level they replace did; hand field `gate_mode: "or"` (Necropolis) makes the EU4 gate an alternative to Anbennar's `can_construct` on upper levels.
   The Middle Dwarovar (dwarven monuments) and the rest of the map are sub-projects 2 and 3, reusing this framework.
   Spec `docs/superpowers/specs/2026-10-09-great-projects-cannor-design.md`.

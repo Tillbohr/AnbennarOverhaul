@@ -364,9 +364,10 @@ calasandur_castle_calascandar_01 = {
 	}
 	max_garrison = good_building_max_garrison_tier_4
 	province_modifier = {
-		defender_holding_advantage = normal_building_advantage_tier_4
-		# Anbennar Overhaul: EU4 tier 1 (+1 to good_building_fort_level_tier_4 = 8)
-		fort_level = 9
+		# Anbennar Overhaul: EU4 tier 1 (+1 to normal_building_advantage_tier_4 = 8)
+		defender_holding_advantage = 9
+		# Anbennar Overhaul: EU4 tier 1 (+1 to good_building_fort_level_tier_4 = 8, capped at 8; 1 moved to defender_holding_advantage)
+		fort_level = 8
 	}
 	county_modifier = {
 		development_growth = 0.2
@@ -731,9 +732,10 @@ castanorian_citadel_north_citadel_01 = {
 	}
 	max_garrison = good_building_max_garrison_tier_4
 	province_modifier = {
-		defender_holding_advantage = normal_building_advantage_tier_4
-		# Anbennar Overhaul: EU4 tier 1 (+1 to good_building_fort_level_tier_4 = 8)
-		fort_level = 9
+		# Anbennar Overhaul: EU4 tier 1 (+1 to normal_building_advantage_tier_4 = 8)
+		defender_holding_advantage = 9
+		# Anbennar Overhaul: EU4 tier 1 (+1 to good_building_fort_level_tier_4 = 8, capped at 8; 1 moved to defender_holding_advantage)
+		fort_level = 8
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -776,9 +778,10 @@ castanorian_citadel_south_citadel_01 = {
 	}
 	max_garrison = good_building_max_garrison_tier_4
 	province_modifier = {
-		defender_holding_advantage = normal_building_advantage_tier_4
-		# Anbennar Overhaul: EU4 tier 1 (+1 to good_building_fort_level_tier_4 = 8)
-		fort_level = 9
+		# Anbennar Overhaul: EU4 tier 1 (+1 to normal_building_advantage_tier_4 = 8)
+		defender_holding_advantage = 9
+		# Anbennar Overhaul: EU4 tier 1 (+1 to good_building_fort_level_tier_4 = 8, capped at 8; 1 moved to defender_holding_advantage)
+		fort_level = 8
 	}
 	county_modifier = {
 		development_growth = 0.2

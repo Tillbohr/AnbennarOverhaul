@@ -104,7 +104,7 @@ aov_monument_adenica_longlance_knights_academy_03 = {
 
 # Anbennar Overhaul: Anbennar's calasandur_castle_aelcandar_01 with EU4 tier 2 merged in
 aov_monument_aelcandar_02 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 2 (1800), not below calasandur_castle_aelcandar_01
 
 	type_icon = "icon_structure_alhambra.dds"
 	
@@ -125,7 +125,7 @@ aov_monument_aelcandar_02 = {
 		}
 	}
 	
-	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 2 (1000), not below calasandur_castle_aelcandar_01
 
 	character_modifier = {
 		monthly_prestige = 0.2
@@ -159,7 +159,7 @@ aov_monument_aelcandar_02 = {
 
 # Anbennar Overhaul: Anbennar's calasandur_castle_aelcandar_01 with EU4 tier 3 merged in
 aov_monument_aelcandar_03 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 3 (1800), not below aov_monument_aelcandar_02
 
 	type_icon = "icon_structure_alhambra.dds"
 	
@@ -190,9 +190,10 @@ aov_monument_aelcandar_03 = {
 	}
 	max_garrison = good_building_max_garrison_tier_3
 	province_modifier = {
-		defender_holding_advantage = normal_building_advantage_tier_3
-		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6)
-		fort_level = 10
+		# Anbennar Overhaul: EU4 tier 3 (+2 to normal_building_advantage_tier_3 = 6)
+		defender_holding_advantage = 8
+		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6, capped at 8; 2 moved to defender_holding_advantage)
+		fort_level = 8
 	}
 	county_modifier = {
 		development_growth = 0.2
@@ -617,7 +618,7 @@ aov_monument_ascajar_03 = {
 
 # Anbennar Overhaul: Anbennar's castanorian_citadel_bal_dostan_01 with EU4 tier 2 merged in
 aov_monument_bal_dostan_02 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 2 (1800), not below castanorian_citadel_bal_dostan_01
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
 	
@@ -631,7 +632,7 @@ aov_monument_bal_dostan_02 = {
 		}
 	}
 	
-	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 2 (1000), not below castanorian_citadel_bal_dostan_01
 
 	character_modifier = {
 		monthly_prestige = 0.1
@@ -669,7 +670,7 @@ aov_monument_bal_dostan_02 = {
 
 # Anbennar Overhaul: Anbennar's castanorian_citadel_bal_dostan_01 with EU4 tier 3 merged in
 aov_monument_bal_dostan_03 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 3 (1800), not below aov_monument_bal_dostan_02
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
 	
@@ -715,7 +716,7 @@ aov_monument_bal_dostan_03 = {
 
 # Anbennar Overhaul: Anbennar's castanorian_citadel_bal_hyl_01 with EU4 tier 2 merged in
 aov_monument_bal_hyl_02 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 2 (1800), not below castanorian_citadel_bal_hyl_01
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
 	
@@ -736,7 +737,7 @@ aov_monument_bal_hyl_02 = {
 		}
 	}
 	
-	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 2 (1000), not below castanorian_citadel_bal_hyl_01
 
 	character_modifier = {
 		monthly_prestige = 0.1
@@ -770,7 +771,7 @@ aov_monument_bal_hyl_02 = {
 
 # Anbennar Overhaul: Anbennar's castanorian_citadel_bal_hyl_01 with EU4 tier 3 merged in
 aov_monument_bal_hyl_03 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 3 (1800), not below aov_monument_bal_hyl_02
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
 	
@@ -801,9 +802,10 @@ aov_monument_bal_hyl_03 = {
 	}
 	max_garrison = good_building_max_garrison_tier_3
 	province_modifier = {
-		defender_holding_advantage = normal_building_advantage_tier_3
-		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6)
-		fort_level = 10
+		# Anbennar Overhaul: EU4 tier 3 (+2 to normal_building_advantage_tier_3 = 6)
+		defender_holding_advantage = 8
+		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6, capped at 8; 2 moved to defender_holding_advantage)
+		fort_level = 8
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -823,7 +825,7 @@ aov_monument_bal_hyl_03 = {
 
 # Anbennar Overhaul: Anbennar's castanorian_citadel_bal_mire_02 with EU4 tier 2 merged in
 aov_monument_bal_mire_02 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 2 (1800), not below castanorian_citadel_bal_mire_02
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
 	
@@ -837,7 +839,7 @@ aov_monument_bal_mire_02 = {
 		}
 	}
 	
-	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 2 (1000), not below castanorian_citadel_bal_mire_02
 
 	character_modifier = {
 		monthly_prestige = 0.1
@@ -873,7 +875,7 @@ aov_monument_bal_mire_02 = {
 
 # Anbennar Overhaul: Anbennar's castanorian_citadel_bal_mire_02 with EU4 tier 3 merged in
 aov_monument_bal_mire_03 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 3 (1800), not below aov_monument_bal_mire_02
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
 	
@@ -898,9 +900,10 @@ aov_monument_bal_mire_03 = {
 	}
 	max_garrison = good_building_max_garrison_tier_3
 	province_modifier = {
-		defender_holding_advantage = normal_building_advantage_tier_3
-		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6)
-		fort_level = 10
+		# Anbennar Overhaul: EU4 tier 3 (+2 to normal_building_advantage_tier_3 = 6)
+		defender_holding_advantage = 8
+		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6, capped at 8; 2 moved to defender_holding_advantage)
+		fort_level = 8
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -920,7 +923,7 @@ aov_monument_bal_mire_03 = {
 
 # Anbennar Overhaul: Anbennar's castanorian_citadel_bal_ouord_02 with EU4 tier 2 merged in
 aov_monument_bal_ouord_02 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 2 (1800), not below castanorian_citadel_bal_ouord_02
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
 	
@@ -941,7 +944,7 @@ aov_monument_bal_ouord_02 = {
 		}
 	}
 	
-	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 2 (1000), not below castanorian_citadel_bal_ouord_02
 
 	character_modifier = {
 		monthly_prestige = 0.1
@@ -975,7 +978,7 @@ aov_monument_bal_ouord_02 = {
 
 # Anbennar Overhaul: Anbennar's castanorian_citadel_bal_ouord_02 with EU4 tier 3 merged in
 aov_monument_bal_ouord_03 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 3 (1800), not below aov_monument_bal_ouord_02
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
 	
@@ -1006,9 +1009,10 @@ aov_monument_bal_ouord_03 = {
 	}
 	max_garrison = good_building_max_garrison_tier_3
 	province_modifier = {
-		defender_holding_advantage = normal_building_advantage_tier_3
-		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6)
-		fort_level = 10
+		# Anbennar Overhaul: EU4 tier 3 (+2 to normal_building_advantage_tier_3 = 6)
+		defender_holding_advantage = 8
+		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6, capped at 8; 2 moved to defender_holding_advantage)
+		fort_level = 8
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -1028,7 +1032,7 @@ aov_monument_bal_ouord_03 = {
 
 # Anbennar Overhaul: Anbennar's castanorian_citadel_bal_vertesk_01 with EU4 tier 2 merged in
 aov_monument_bal_vertesk_02 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 2 (1800), not below castanorian_citadel_bal_vertesk_01
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
 	
@@ -1049,7 +1053,7 @@ aov_monument_bal_vertesk_02 = {
 		}
 	}
 	
-	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 2 (1000), not below castanorian_citadel_bal_vertesk_01
 
 	character_modifier = {
 		monthly_prestige = 0.1
@@ -1082,7 +1086,7 @@ aov_monument_bal_vertesk_02 = {
 
 # Anbennar Overhaul: Anbennar's castanorian_citadel_bal_vertesk_01 with EU4 tier 3 merged in
 aov_monument_bal_vertesk_03 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 3 (1800), not below aov_monument_bal_vertesk_02
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
 	
@@ -1112,9 +1116,10 @@ aov_monument_bal_vertesk_03 = {
 	}
 	max_garrison = good_building_max_garrison_tier_3
 	province_modifier = {
-		defender_holding_advantage = normal_building_advantage_tier_3
-		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6)
-		fort_level = 10
+		# Anbennar Overhaul: EU4 tier 3 (+2 to normal_building_advantage_tier_3 = 6)
+		defender_holding_advantage = 8
+		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6, capped at 8; 2 moved to defender_holding_advantage)
+		fort_level = 8
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -1134,7 +1139,7 @@ aov_monument_bal_vertesk_03 = {
 
 # Anbennar Overhaul: Anbennar's castanorian_citadel_bal_vroren_02 with EU4 tier 2 merged in
 aov_monument_bal_vroren_02 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 2 (1800), not below castanorian_citadel_bal_vroren_02
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
 	
@@ -1155,7 +1160,7 @@ aov_monument_bal_vroren_02 = {
 		}
 	}
 	
-	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 2 (1000), not below castanorian_citadel_bal_vroren_02
 
 	character_modifier = {
 		monthly_prestige = 0.1
@@ -1188,7 +1193,7 @@ aov_monument_bal_vroren_02 = {
 
 # Anbennar Overhaul: Anbennar's castanorian_citadel_bal_vroren_02 with EU4 tier 3 merged in
 aov_monument_bal_vroren_03 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 3 (1800), not below aov_monument_bal_vroren_02
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
 	
@@ -1219,9 +1224,10 @@ aov_monument_bal_vroren_03 = {
 	}
 	max_garrison = good_building_max_garrison_tier_3
 	province_modifier = {
-		defender_holding_advantage = normal_building_advantage_tier_3
-		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6)
-		fort_level = 10
+		# Anbennar Overhaul: EU4 tier 3 (+2 to normal_building_advantage_tier_3 = 6)
+		defender_holding_advantage = 8
+		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6, capped at 8; 2 moved to defender_holding_advantage)
+		fort_level = 8
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -1958,7 +1964,7 @@ aov_monument_black_iron_mine_03 = {
 
 # Anbennar Overhaul: Anbennar's castle_bladeskeep_02 with EU4 tier 2 merged in
 aov_monument_bladeskeep_monument_02 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 2 (1800), not below castle_bladeskeep_02
 
 	type_icon = "icon_structure_bladeskeep.dds"
 	
@@ -1966,7 +1972,7 @@ aov_monument_bladeskeep_monument_02 = {
 		building_requirement_tribal = no
 	}
 	
-	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 2 (1000), not below castle_bladeskeep_02
 	
 	character_modifier = {
 		monthly_dynasty_prestige_mult = 0.05
@@ -2003,7 +2009,7 @@ aov_monument_bladeskeep_monument_02 = {
 
 # Anbennar Overhaul: Anbennar's castle_bladeskeep_02 with EU4 tier 3 merged in
 aov_monument_bladeskeep_monument_03 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 3 (1800), not below aov_monument_bladeskeep_monument_02
 
 	type_icon = "icon_structure_bladeskeep.dds"
 	
@@ -2230,7 +2236,7 @@ aov_monument_blaiddscal_academy_monument_03 = {
 
 # Anbennar Overhaul: Anbennar's calasandur_castle_calascandar_01 with EU4 tier 2 merged in
 aov_monument_calascandar_02 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 2 (1800), not below calasandur_castle_calascandar_01
 
 	type_icon = "icon_structure_alhambra.dds"
 	
@@ -2244,7 +2250,7 @@ aov_monument_calascandar_02 = {
 		}
 	}
 	
-	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 2 (1000), not below calasandur_castle_calascandar_01
 
 	character_modifier = {
 		monthly_prestige = 0.3
@@ -2254,9 +2260,10 @@ aov_monument_calascandar_02 = {
 	}
 	max_garrison = good_building_max_garrison_tier_4
 	province_modifier = {
-		defender_holding_advantage = normal_building_advantage_tier_4
-		# Anbennar Overhaul: EU4 tier 2 (+2 to good_building_fort_level_tier_4 = 8)
-		fort_level = 10
+		# Anbennar Overhaul: EU4 tier 2 (+2 to normal_building_advantage_tier_4 = 8)
+		defender_holding_advantage = 10
+		# Anbennar Overhaul: EU4 tier 2 (+2 to good_building_fort_level_tier_4 = 8, capped at 8; 2 moved to defender_holding_advantage)
+		fort_level = 8
 	}
 	county_modifier = {
 		development_growth = 0.2
@@ -2279,7 +2286,7 @@ aov_monument_calascandar_02 = {
 
 # Anbennar Overhaul: Anbennar's calasandur_castle_calascandar_01 with EU4 tier 3 merged in
 aov_monument_calascandar_03 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 3 (1800), not below aov_monument_calascandar_02
 
 	type_icon = "icon_structure_alhambra.dds"
 	
@@ -2303,9 +2310,10 @@ aov_monument_calascandar_03 = {
 	}
 	max_garrison = good_building_max_garrison_tier_4
 	province_modifier = {
-		defender_holding_advantage = normal_building_advantage_tier_4
-		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_4 = 8)
-		fort_level = 12
+		# Anbennar Overhaul: EU4 tier 3 (+4 to normal_building_advantage_tier_4 = 8)
+		defender_holding_advantage = 12
+		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_4 = 8, capped at 8; 4 moved to defender_holding_advantage)
+		fort_level = 8
 	}
 	county_modifier = {
 		development_growth = 0.2
@@ -3892,7 +3900,7 @@ aov_monument_elikhander_sphinx_03 = {
 
 # Anbennar Overhaul: Anbennar's calasandur_castle_escandar_01 with EU4 tier 2 merged in
 aov_monument_escandar_02 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 2 (1800), not below calasandur_castle_escandar_01
 
 	type_icon = "icon_structure_alhambra.dds"
 	
@@ -3906,7 +3914,7 @@ aov_monument_escandar_02 = {
 		}
 	}
 	
-	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 2 (1000), not below calasandur_castle_escandar_01
 
 	character_modifier = {
 		monthly_prestige = 0.2
@@ -3939,7 +3947,7 @@ aov_monument_escandar_02 = {
 
 # Anbennar Overhaul: Anbennar's calasandur_castle_escandar_01 with EU4 tier 3 merged in
 aov_monument_escandar_03 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 3 (1800), not below aov_monument_escandar_02
 
 	type_icon = "icon_structure_alhambra.dds"
 	
@@ -3962,9 +3970,10 @@ aov_monument_escandar_03 = {
 	}
 	max_garrison = good_building_max_garrison_tier_3
 	province_modifier = {
-		defender_holding_advantage = normal_building_advantage_tier_3
-		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6)
-		fort_level = 10
+		# Anbennar Overhaul: EU4 tier 3 (+2 to normal_building_advantage_tier_3 = 6)
+		defender_holding_advantage = 8
+		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6, capped at 8; 2 moved to defender_holding_advantage)
+		fort_level = 8
 	}
 	county_modifier = {
 		development_growth = 0.2
@@ -9477,7 +9486,7 @@ aov_monument_the_dragonhoard_03 = {
 # Anbennar Overhaul: Anbennar's lake_palace_02 with EU4 tier 3 merged in
 aov_monument_the_lake_palace_03 = {
 	
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
+	construction_time = slow_construction_time # Anbennar Overhaul: EU4 tier 3 (1800), not below lake_palace_02
 
 	type_icon = "icon_structure_doges_palace.dds"
 	
@@ -9546,7 +9555,7 @@ aov_monument_the_lake_palace_03 = {
 # Anbennar Overhaul: Anbennar's holy_site_the_necropolis_01 with EU4 tier 2 merged in
 aov_monument_the_necropolis_02 = {
 	
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 2 (1800), not below holy_site_the_necropolis_01
 
 	type_icon = "icon_structure_mahabodhi_temple.dds"
 	
@@ -9568,19 +9577,19 @@ aov_monument_the_necropolis_02 = {
 					is_holy_site_of = scope:holder.faith
 				}
 			}
+			# Anbennar Overhaul: EU4 culture gate, an alternative to Anbennar's
+			scope:holder = {
+				custom_tooltip = {
+					text = aov_monument_the_necropolis_gate
+					faith.religion = religion:cannorian_pantheon_religion
+				}
+			}
 		}
 		# scope:holder = {
 		# 	culture = {
 		# 		has_innovation = innovation_crop_rotation
 		# 	}
 		# }
-		# Anbennar Overhaul: EU4 culture gate
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_the_necropolis_gate
-				faith.religion = religion:cannorian_pantheon_religion
-			}
-		}
 	}
 	
 	is_enabled = {
@@ -9653,7 +9662,7 @@ aov_monument_the_necropolis_02 = {
 # Anbennar Overhaul: Anbennar's holy_site_the_necropolis_01 with EU4 tier 3 merged in
 aov_monument_the_necropolis_03 = {
 	
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 3 (1800), not below aov_monument_the_necropolis_02
 
 	type_icon = "icon_structure_mahabodhi_temple.dds"
 	
@@ -9675,19 +9684,19 @@ aov_monument_the_necropolis_03 = {
 					is_holy_site_of = scope:holder.faith
 				}
 			}
+			# Anbennar Overhaul: EU4 culture gate, an alternative to Anbennar's
+			scope:holder = {
+				custom_tooltip = {
+					text = aov_monument_the_necropolis_gate
+					faith.religion = religion:cannorian_pantheon_religion
+				}
+			}
 		}
 		# scope:holder = {
 		# 	culture = {
 		# 		has_innovation = innovation_crop_rotation
 		# 	}
 		# }
-		# Anbennar Overhaul: EU4 culture gate
-		scope:holder = {
-			custom_tooltip = {
-				text = aov_monument_the_necropolis_gate
-				faith.religion = religion:cannorian_pantheon_religion
-			}
-		}
 	}
 	
 	is_enabled = {
@@ -9752,7 +9761,7 @@ aov_monument_the_necropolis_03 = {
 
 # Anbennar Overhaul: Anbennar's castanorian_citadel_north_citadel_01 with EU4 tier 2 merged in
 aov_monument_the_north_citadel_02 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 2 (1800), not below castanorian_citadel_north_citadel_01
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
 	
@@ -9773,7 +9782,7 @@ aov_monument_the_north_citadel_02 = {
 		}
 	}
 	
-	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 2 (1000), not below castanorian_citadel_north_citadel_01
 
 	character_modifier = {
 		monthly_prestige = 0.3
@@ -9782,9 +9791,10 @@ aov_monument_the_north_citadel_02 = {
 	}
 	max_garrison = good_building_max_garrison_tier_4
 	province_modifier = {
-		defender_holding_advantage = normal_building_advantage_tier_4
-		# Anbennar Overhaul: EU4 tier 2 (+1 to good_building_fort_level_tier_4 = 8)
-		fort_level = 9
+		# Anbennar Overhaul: EU4 tier 2 (+1 to normal_building_advantage_tier_4 = 8)
+		defender_holding_advantage = 9
+		# Anbennar Overhaul: EU4 tier 2 (+1 to good_building_fort_level_tier_4 = 8, capped at 8; 1 moved to defender_holding_advantage)
+		fort_level = 8
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -9807,7 +9817,7 @@ aov_monument_the_north_citadel_02 = {
 
 # Anbennar Overhaul: Anbennar's castanorian_citadel_north_citadel_01 with EU4 tier 3 merged in
 aov_monument_the_north_citadel_03 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 3 (1800), not below aov_monument_the_north_citadel_02
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
 	
@@ -9837,9 +9847,10 @@ aov_monument_the_north_citadel_03 = {
 	}
 	max_garrison = good_building_max_garrison_tier_4
 	province_modifier = {
-		defender_holding_advantage = normal_building_advantage_tier_4
-		# Anbennar Overhaul: EU4 tier 3 (+1 to good_building_fort_level_tier_4 = 8)
-		fort_level = 9
+		# Anbennar Overhaul: EU4 tier 3 (+1 to normal_building_advantage_tier_4 = 8)
+		defender_holding_advantage = 9
+		# Anbennar Overhaul: EU4 tier 3 (+1 to good_building_fort_level_tier_4 = 8, capped at 8; 1 moved to defender_holding_advantage)
+		fort_level = 8
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -9954,7 +9965,7 @@ aov_monument_the_north_citadel_morgurax_monument_03 = {
 
 # Anbennar Overhaul: Anbennar's castanorian_citadel_south_citadel_01 with EU4 tier 2 merged in
 aov_monument_the_south_citadel_02 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 2
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 2 (1800), not below castanorian_citadel_south_citadel_01
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
 	
@@ -9968,7 +9979,7 @@ aov_monument_the_south_citadel_02 = {
 		}
 	}
 	
-	cost_gold = 1000 # Anbennar Overhaul: EU4 tier 2
+	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 2 (1000), not below castanorian_citadel_south_citadel_01
 
 	character_modifier = {
 		# Anbennar Overhaul: EU4 tier 2 (+0.25 to 0.3 = 0.3)
@@ -9980,9 +9991,10 @@ aov_monument_the_south_citadel_02 = {
 	}
 	max_garrison = good_building_max_garrison_tier_4
 	province_modifier = {
-		defender_holding_advantage = normal_building_advantage_tier_4
-		# Anbennar Overhaul: EU4 tier 2 (+1 to good_building_fort_level_tier_4 = 8)
-		fort_level = 9
+		# Anbennar Overhaul: EU4 tier 2 (+1 to normal_building_advantage_tier_4 = 8)
+		defender_holding_advantage = 9
+		# Anbennar Overhaul: EU4 tier 2 (+1 to good_building_fort_level_tier_4 = 8, capped at 8; 1 moved to defender_holding_advantage)
+		fort_level = 8
 	}
 	county_modifier = {
 		development_growth = 0.2
@@ -10010,7 +10022,7 @@ aov_monument_the_south_citadel_02 = {
 
 # Anbennar Overhaul: Anbennar's castanorian_citadel_south_citadel_01 with EU4 tier 3 merged in
 aov_monument_the_south_citadel_03 = {
-	construction_time = 1800 # Anbennar Overhaul: EU4 tier 3
+	construction_time = very_slow_construction_time # Anbennar Overhaul: EU4 tier 3 (1800), not below aov_monument_the_south_citadel_02
 
 	type_icon = "icon_structure_the_citadel_of_aleppo.dds"
 	
@@ -10036,9 +10048,10 @@ aov_monument_the_south_citadel_03 = {
 	}
 	max_garrison = good_building_max_garrison_tier_4
 	province_modifier = {
-		defender_holding_advantage = normal_building_advantage_tier_4
-		# Anbennar Overhaul: EU4 tier 3 (+1 to good_building_fort_level_tier_4 = 8)
-		fort_level = 9
+		# Anbennar Overhaul: EU4 tier 3 (+1 to normal_building_advantage_tier_4 = 8)
+		defender_holding_advantage = 9
+		# Anbennar Overhaul: EU4 tier 3 (+1 to good_building_fort_level_tier_4 = 8, capped at 8; 1 moved to defender_holding_advantage)
+		fort_level = 8
 	}
 	county_modifier = {
 		development_growth = 0.2

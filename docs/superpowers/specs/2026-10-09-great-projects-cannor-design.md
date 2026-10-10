@@ -182,7 +182,7 @@ Anbennar-update steps.
    item 7, `cost_gold`/`construction_time` from the tier and `next_building` set (none at level 3). They keep
    Anbennar's `is_enabled`, flags, `effect_desc`, `show_disabled`, `type_icon` and `ai_value`; the EU4 gate goes
    into `can_construct` only (appended to Anbennar's, or a new block), never `is_enabled`. New monuments keep the
-   gate in both. Consequence: the citadels sum Anbennar's fort level 6 (or 8) with EU4's, up to 10-12 at level 3.
+   gate in both. Consequence: the citadels sum Anbennar's fort level 6 (or 8) with EU4's (capped since, item 14).
 7. A modifier key already in an Anbennar block becomes one summed line (named values resolved from
    `00_building_values.txt`).
 8. Balance guard: no level above fort_level 4 or county tax_mult 0.3 (Morgurax and Humac's Tomb capped in the hand
@@ -206,3 +206,18 @@ Anbennar-update steps.
     unbuilt prefer a free barony of their county with a holding in Anbennar's history (Palace of Unity
     `b_elvendocks`, Lorentaine Mage Academy `b_rosionn`); the Dragonhoard keeps `b_zenturomai` (no free barony of
     Soxun Kobildzex has a holding) and is reported by the importer.
+14. Balance follow-ups to the final review (three items parked in PR #3):
+    - **Fort-level cap.** A summed `fort_level` stops at max(8, Anbennar's own resolved value for that level; 8 is
+      vanilla's strongest special building, `alamut_castle_02`). The surplus is added 1:1 to
+      `defender_holding_advantage` on the same level (Anbennar's fort-level and advantage tiers carry the same
+      numbers). The citadels' upper levels and Calascandar, North and South Citadel level 1 now have fort_level 8
+      and +1 to +4 holding advantage. `FORT_LEVEL_CAP` in `build_monuments.py`; a test checks every level of the
+      written building files.
+    - **Upgrade cost.** New upper levels cost max(EU4 tier cost, cost of the level they upgrade from) and take the
+      longer construction time (Anbennar's raw value, such as `very_slow_construction_time`, is kept when it wins),
+      so citadel and castle upgrades cost 2000 gold, not 1000. Levels with no cost line (Anbennar's pre-built
+      Temple of the Highest Moon and Lorenan's Rest) set no floor.
+    - **Necropolis.** Hand field `gate_mode: "or"`: on the new upper levels the EU4 gate (Cannorian Pantheon) is one
+      more alternative inside Anbennar's `OR` (pantheon or holy site of the holder's faith) instead of an extra
+      requirement, so a holy-site holder of another faith who can build level 1 can also upgrade it. Other gated
+      chains keep the gate as a requirement.
