@@ -1,8 +1,8 @@
-"""Generate the new Cannor monument buildings, province history and localization.
+"""Generate the great-project monument buildings, province history and localization, region by region.
 
 Source: tools/data/monuments/<region>.py (monument data) and translation.py (icons). Rerun after editing them:
 
-    python -I tools/build_monuments.py --region cannor
+    python -I tools/build_monuments.py [--region cannor|dwarovar]   (default: every region)
 
 Building levels whose key Anbennar does not define are written to aov_monuments_<region>.txt. Levels Anbennar does
 define are re-emitted, with the EU4 tier lines inserted, in zz_aov_monument_overrides_<region>.txt (single-object
@@ -11,7 +11,8 @@ The new upper levels of a chain that starts with an Anbennar building are copies
 (an upgrade replaces the previous level's effects in CK3), with that EU4 tier merged in the same way.
 
 The data is validated first (placement, names, icons, modifier keys, an effect on every level); any problem raises
-GeneratorError naming the monument.
+GeneratorError naming the monument. The illustration custom loc is shared by every region, so it is always
+built from all of them (render_shared), which also checks that no province holds monuments from two regions.
 """
 
 import argparse
@@ -36,6 +37,8 @@ DROPPED_NOTE = " Some effects of the original Europa Universalis IV project have
 
 NL = "\n"
 ART_DIR = "gfx/interface/illustrations/aov_monuments"
+REGIONS = ("cannor", "dwarovar")
+SHARED = "common/customizable_localization/aov_monument_illustration.txt"
 
 
 # ai_value of every generated level: vanilla's special-building pattern (00_special_buildings.txt), base 100, the
@@ -543,16 +546,32 @@ def validate(monuments: list, known: set, extra_keys=()) -> None:
 
 
 def render_all(region: str, root: Path = ANBENNAR_CK3) -> dict:
+    """The region's own files. The overrides file only exists for a region that extends Anbennar levels."""
     monuments = load_monuments(region)
     known = anbennar_keys(root)
     validate(monuments, known, hand_keys(region))
-    return {
+    files = {
         f"common/buildings/aov_monuments_{region}.txt": buildings(monuments, known, root),
-        f"common/buildings/zz_aov_monument_overrides_{region}.txt": overrides(monuments, known, root),
         f"history/provinces/aov_monuments_{region}.txt": history(monuments, known),
         f"localization/english/aov_monuments_{region}_l_english.yml": loc(monuments, known, root),
-        "common/customizable_localization/aov_monument_illustration.txt": illustration(monuments),
     }
+    if any(level in known for m in monuments for level in m["levels"]):
+        files[f"common/buildings/zz_aov_monument_overrides_{region}.txt"] = overrides(monuments, known, root)
+    return files
+
+
+def render_shared(regions=REGIONS) -> dict:
+    """Files shared by every region: the illustration custom loc. Raises GeneratorError when one province holds
+    monuments from two regions."""
+    monuments, seen = [], {}
+    for region in regions:
+        for m in load_monuments(region):
+            if m["province"] in seen:
+                raise GeneratorError(f"monument {m['eu4_key']} ({region}): province {m['province']} already holds "
+                                     f"{seen[m['province']]}")
+            seen[m["province"]] = f"{m['eu4_key']} ({region})"
+            monuments.append(m)
+    return {SHARED: illustration(monuments)}
 
 
 def write_all(files: dict, root: Path) -> None:
@@ -564,12 +583,15 @@ def write_all(files: dict, root: Path) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--region", default="cannor")
+    parser.add_argument("--region", choices=REGIONS, help="one region (default: every region)")
     args = parser.parse_args()
     try:
-        files = render_all(args.region)
+        files, art = {}, {}
+        for region in [args.region] if args.region else REGIONS:
+            files.update(render_all(region))
+            art.update(render_art(region))
+        files.update(render_shared())
         write_all(files, SUBMOD)
-        art = render_art(args.region)
         for rel, data in art.items():
             out = SUBMOD / rel
             out.parent.mkdir(parents=True, exist_ok=True)

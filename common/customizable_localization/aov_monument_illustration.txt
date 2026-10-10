@@ -361,6 +361,41 @@ AovMonumentIllustration = {
 	}
 
 	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_gor_ozumbrog_the_topaz_throne_01
+		}
+		localization_key = aov_monument_art_gor_ozumbrog_the_topaz_throne
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_hehodovar_school_of_architecture_01
+		}
+		localization_key = aov_monument_art_hehodovar_school_of_architecture
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_khugdihr_bank_01
+		}
+		localization_key = aov_monument_art_khugdihr_bank
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_seghdihr_home_of_the_seg_band_01
+		}
+		localization_key = aov_monument_art_seghdihr_home_of_the_seg_band
+	}
+
+	text = {
+		trigger = {
+			has_building_or_higher = aov_monument_verkal_gulan_golden_delve_01
+		}
+		localization_key = aov_monument_art_verkal_gulan_golden_delve
+	}
+
+	text = {
 		fallback = yes
 		localization_key = aov_monument_art_none
 	}

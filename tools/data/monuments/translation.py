@@ -201,6 +201,15 @@ MODIFIERS = {
     "reduced_liberty_desire_on_other_continent": Drop(_TRADE),
     "interest": Drop("EU4 loans; CK3 has no interest"),
     "monthly_gold_inflation_modifier": Drop("EU4 inflation; no CK3 equivalent"),
+    # Middle Dwarovar (Dwarven Monuments): inflation and corruption have no CK3 system; upgrade cost -> build cost
+    "inflation_reduction": Drop("EU4 inflation; no CK3 equivalent"),
+    "inflation_action_cost": Drop("EU4 inflation; no CK3 equivalent"),
+    "yearly_corruption": Drop("EU4 corruption; no CK3 equivalent"),
+    "great_project_upgrade_cost": Row("build_gold_cost", 1, H),  # -10% monument upgrades -> -10% building cost
+    "meritocracy": Drop(_GOVERNMENT),
+    # Subjects: +50%..150% vassal force limit -> +5..15% vassal levies; -10..30% subject liberty -> +5..15 opinion
+    "vassal_forcelimit_bonus": Row("vassal_levy_contribution_mult", 0.1, H),
+    "liberty_desire_from_subject_development": Row("vassal_opinion", -50, H),
 
     # --- Country: army size and upkeep. Force limit/manpower -> levies; regiment costs -> MaA upkeep (1:1).
     "land_forcelimit_modifier": Row("levy_size", 1, H),
@@ -313,6 +322,16 @@ ONE_OFF = [
     (r"add_country_modifier\s*=", None),
 ]
 
+# EU4 scripted triggers used in gates: regex -> the gate atoms the trigger checks (each mapped through CULTURES),
+# or None = a requirement with no CK3 equivalent, kept as a note. From Dwarven Monuments'
+# common/scripted_triggers/dwarven_monuments_scripted_triggers.txt (its province-modifier branches are dropped).
+SCRIPTED_GATES = {
+    r"\bdwarven_monuments_has_acceptable_culture_or_race\s*=\s*yes": (
+        "culture_group:dwarven", "culture_group:goblin", "culture_group:kobold", "culture_group:orcish",
+        "culture:mossmouth_ogre"),
+    r"\bdwarven_monuments_has_dig_level_\d+_or_higher\s*=\s*yes": None,  # hold dig level: no CK3 hold digging yet
+}
+
 CULTURES = {
     # Cultures Anbennar CK3 also has under the same key.
     "culture:castanorian": "culture = culture:castanorian",
@@ -379,6 +398,7 @@ CULTURES = {
         "OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman }"),
     "culture_group:goblin": None,  # no goblin cultures in CK3
     "culture_group:orcish": None,  # no orc cultures in CK3
+    "culture:mossmouth_ogre": None,  # no ogre cultures in CK3
     "culture_group:centaur": None,  # no centaur cultures in CK3
     # Religions -> CK3 religion, or the CK3 faith where EU4's religion is a single faith.
     "religion_group:cannorian": "faith.religion = religion:cannorian_pantheon_religion",
