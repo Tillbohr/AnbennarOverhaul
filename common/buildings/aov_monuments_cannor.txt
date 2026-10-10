@@ -7153,6 +7153,10 @@ aov_monument_neckcliffe_the_imperial_dockyard_03 = {
 		embarkation_cost_mult = -0.15
 	}
 
+	on_complete = {
+		barony.holder = { save_scope_as = aov_monument_patron create_character = { employer = scope:aov_monument_patron culture = scope:aov_monument_patron.culture faith = scope:aov_monument_patron.faith age = { 30 50 } gender_female_chance = 50 dynasty = none trait = education_martial_3 martial = { 14 18 } random_traits = yes } }
+	}
+
 	ai_value = {
 		base = 100
 		modifier = { # Fill all building slots before going for special buildings

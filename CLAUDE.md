@@ -24,7 +24,7 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 | Rebuild HUD override | `python -I tools/build_hud_override.py` |
 | Rebuild lifestyle window override | `python -I tools/build_lifestyle_override.py` |
 | Rebuild county view override | `python -I tools/build_county_view_override.py` |
-| Import EU4 monuments | `python -I tools/import_eu4_monuments.py --region cannor` / `--region dwarovar` (needs the EU4 Anbennar, Cannorian and Dwarven Monuments mods installed; rewrites `tools/data/monuments/<region>.py`) |
+| Import EU4 monuments | `python -I tools/import_eu4_monuments.py --region <name>` (`cannor`, `dwarovar`, `bulwar`, `salahad`, `deepwoods`; needs the EU4 Anbennar, Cannorian and Dwarven Monuments mods installed; rewrites `tools/data/monuments/<region>.py`) |
 | Rebuild monuments | `python -I tools/build_monuments.py` (every region; `--region <name>` for one, the shared illustration file is always rebuilt from all) |
 | Run tool tests | `python -I -m unittest discover -s tools/tests -v` |
 | Rebuild inventions | `python -I tools/build_inventions.py` (needs EU4 Anbennar installed for icons) |
@@ -67,6 +67,7 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 | `gfx/interface/icons/{lifestyles,focuses,traits,lifestyles_perks,lifestyle_tree_backgrounds}/` magic files, `gfx/interface/illustrations/lifestyles_background/magic_lifestyle.dds`, `gfx/interface/progressbars/aov_progress_magic*.dds` | `python -I tools/build_magic_lifestyle_art.py` | Magic lifestyle art (18 DDS files) composed from EU4 Anbennar magic art and uncompressed vanilla files; the output list is `OUTPUTS` in the script. |
 | `common/buildings/zz_aov_monument_overrides_cannor.txt` (with `common/buildings/aov_monuments_cannor.txt`, `history/provinces/aov_monuments_cannor.txt`, `localization/english/aov_monuments_cannor_l_english.yml`) | `python -I tools/build_monuments.py` | Cannor great-project buildings from `tools/data/monuments/cannor.py`. The `zz_` file re-emits the 17 Anbennar monument levels (copied from Anbennar's current definitions) with the EU4 tier modifiers, `on_complete` and `next_building` inserted, marked `# Anbennar Overhaul: EU4 tier <n>`; Anbennar's own triggers are untouched. The new upper levels of those chains (in `aov_monuments_cannor.txt`) are copies of the chain's top Anbennar level with the EU4 tier merged the same way (EU4 culture gate in `can_construct` only), because a CK3 upgrade replaces the previous level's effects. The script validates the data first and stops on a placement, name, icon, modifier-key or empty-level problem. |
 | `common/buildings/aov_monuments_dwarovar.txt`, `history/provinces/aov_monuments_dwarovar.txt`, `localization/english/aov_monuments_dwarovar_l_english.yml` | `python -I tools/build_monuments.py` | Middle Dwarovar great-project buildings from `tools/data/monuments/dwarovar.py` (no Anbennar levels, so no overrides file). |
+| `common/buildings/aov_monuments_<region>.txt`, `history/provinces/aov_monuments_<region>.txt`, `localization/english/aov_monuments_<region>_l_english.yml` for `bulwar`, `salahad`, `deepwoods` | `python -I tools/build_monuments.py` | Great-project buildings of the rest of the map from `tools/data/monuments/<region>.py` (no Anbennar levels, so no overrides files). |
 
 ## Updating to a new Anbennar version
 
@@ -168,5 +169,14 @@ inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error
   Anbennar buildings there). The other 48 Serpentspine projects are `EXCLUDED` with a reason: holds not on the CK3
   map, EU4 dungeons (left for the Dwarven Hold Digging system), Insyaa mission monuments on a placeholder province,
   tunnel canals. Dwarven Monuments gates expand its `dwarven_monuments_has_acceptable_culture_or_race` trigger
-  (`translation.SCRIPTED_GATES`) to Dwarven/Kobold; its dig-level requirement waits for hold digging. The rest of
-  the map is sub-project 3.
+  (`translation.SCRIPTED_GATES`) to Dwarven/Kobold; its dig-level requirement waits for hold digging.
+- **Great projects (rest of the map):** regions `bulwar` (12 built), `salahad` (10: North Salahad with Akasik and
+  Kheterata, South Salahad's Krahgradir) and `deepwoods` (6) of the same framework, each with `<region>.py` +
+  `<region>_hand.py`; all new monuments, no Anbennar chains. EU4 puts the Dragon Coast in western Cannor, so its 6
+  projects were built with Cannor. Excluded with a reason: projects whose EU4 province has no CK3 title (5 of the 9
+  Black Demesne Eternal Pillars, Djinnakah, Esuvrem), dungeons (Hero's Gate, Jorkad Dam, the Skewered Drake), canals
+  (the Fey Portal, the Great Merfolk Canal) and EU4 event variants (`VARIANTS`: Befouled Aur-Kes-Akasik). Hand
+  fixes: icon categories, balance caps (Ash Palace domain limit, Ebbusubtu piety, Oasis of Water Dreams, Anzarzax
+  supply, Pillars' tax), the Grand Library keeps one-barony Koroshesh and the Grain Port goes to Kaashesh (same
+  duchy), a written Pillar of Eternity description. The importer cleans EU4 text (Sarhal descriptions' dash rule
+  and literal `\n`, typographic quotes and dashes) and reads Windows-1252 lines in EU4 loc files.

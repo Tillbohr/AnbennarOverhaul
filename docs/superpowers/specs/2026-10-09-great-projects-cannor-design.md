@@ -221,3 +221,34 @@ Anbennar-update steps.
       more alternative inside Anbennar's `OR` (pantheon or holy site of the holder's faith) instead of an extra
       requirement, so a holy-site holder of another faith who can build level 1 can also upgrade it. Other gated
       chains keep the gate as a requirement.
+
+## Sub-project 3: the rest of the map (built)
+
+Regions `bulwar` (EU4 `bulwar_superregion`), `salahad` (`north_salahad_superregion` with Akasik and Kheterata,
+`south_salahad_superregion`, `djinnakah_superregion`) and `deepwoods` (`deepwoods_superregion`,
+`deepwoods_portal_superregion`), all `on_map_only`. No other EU4 superregion has a project whose province matches a
+CK3 title. The Dragon Coast is EU4's `dragon_coast_region` inside `western_cannor_superregion`, so its 6 projects
+were already built with Cannor.
+
+| Region | Built | Excluded |
+|---|---|---|
+| Bulwar | 12 | Hero's Gate, Jorkad Dam, Queen's Throne (Skewered Drake): dungeons |
+| Salahad | 10 | Esuvrem, Arskitse: no CK3 title; Great Merfolk Canal: canal; Befouled Aur-Kes-Akasik: event variant |
+| Deepwoods | 6 | Eternal Pillars 3, 4, 7, 8, 9: no CK3 title; Deepwoods Fey Portal: canal |
+
+Changes to the framework:
+
+1. `VARIANTS` in the importer: an EU4 project that an event swaps in for another in the same province is excluded
+   ("variant of <base>"). Explicit, because a key-prefix rule would also catch real second monuments (Morgurax).
+2. EU4 text cleaning in the importer: the Sarhal descriptions' opening dash rule and literal `\n` are dropped, and
+   typographic quotes and dashes become ASCII (Cannor needed hand descriptions for this). EU4 loc lines that are not
+   UTF-8 are read as Windows-1252.
+3. Translation rows for the new EU4 keys (trade value, friendly movement, imperial mandate, harpy queendom power,
+   Jaddari fervor, mages estate, siege ability, ...) and gate rows for Bulwari, gnollish, harpy, Akasi, Fangaulan
+   and elven groups and the Bulwari, Xhazobkult and Akasi religions; Haless, ogre and orc atoms are ignored.
+4. EU4 admirals and planetouched generals become a martial courtier, like generals. This also adds one to the
+   Imperial Dockyard of Neckcliffe (Cannor) at level 3.
+5. Hand fixes: Koroshesh is a one-barony county, so the Grand Library (built in 1022) keeps it and the Grain Port is
+   placed in Kaashesh (same duchy, coastal on the EU4 map); balance caps on the Ash Palace (domain limit 1/2/2, not
+   4/7/10), Ebbusubtu (piety 0.5/0.75/1), the Oasis of Water Dreams and the Eternal Pillars (tax 0.3), Arzax Eklu
+   (supply 0.5, not 10.25); a written description for the Pillars of Eternity (EU4 has none).

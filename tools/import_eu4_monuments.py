@@ -1,6 +1,6 @@
 """Import EU4 Anbennar great projects (monuments) as CK3 special building data.
 
-    python -I tools/import_eu4_monuments.py --region cannor [--anbennar-ck3 PATH]
+    python -I tools/import_eu4_monuments.py --region cannor|dwarovar|bulwar|salahad|deepwoods [--anbennar-ck3 PATH]
 
 Reads the EU4 projects (tools/eu4_monuments.py), translates them with tools/data/monuments/translation.py,
 places each on a CK3 barony and writes tools/data/monuments/<region>.py. Fields in
@@ -38,10 +38,17 @@ REGIONS = {
     "cannor": {"superregions": em.CANNOR, "on_map_only": False},
     "dwarovar": {"superregions": ("west_serpentspine_superregion", "east_serpentspine_superregion"),
                  "on_map_only": True},
+    # Sub-project 3. EU4 puts the Dragon Coast in western Cannor (built with Cannor) and Kheterata in north
+    # Salahad; the Djinnakah projects (Jasiir Jadid) have no CK3 title.
+    "bulwar": {"superregions": ("bulwar_superregion",), "on_map_only": True},
+    "salahad": {"superregions": ("north_salahad_superregion", "south_salahad_superregion", "djinnakah_superregion"),
+                "on_map_only": True},
+    "deepwoods": {"superregions": ("deepwoods_superregion", "deepwoods_portal_superregion"), "on_map_only": True},
 }
 
 
 PLACEHOLDER = "mission monument without a real location: its commented EU4 start is a placeholder shared by others"
+VARIANT = "variant of {base}: an EU4 event turns that project into this one; built as {base}"
 
 
 def placeholder_starts(projects):
@@ -50,12 +57,20 @@ def placeholder_starts(projects):
     return {start for start, n in counts.items() if n > 1}
 
 
+# EU4 projects that an event swaps in for another project in the same province (not separate monuments).
+VARIANTS = {
+    "aur_kes_akasik_S90": "aur_kes_akasik",  # Befouled Aur-Kes-Akasik (Tajan's S90 event)
+}
+
+
 def exclusion(project, region, place_name, titles, placeholder_starts=frozenset()):
     """Why `project` is not built in `region` (an EXCLUDED reason), or None when it is built."""
     if project.type == "canal":
         return CANAL
     if project.file == DUNGEON_FILE:
         return DUNGEON
+    if project.key in VARIANTS:
+        return VARIANT.format(base=VARIANTS[project.key])
     if project.mission and project.start in placeholder_starts:
         return PLACEHOLDER
     if REGIONS[region]["on_map_only"] and not match_title(place_name, titles):
@@ -547,8 +562,17 @@ def merge(monument, hand):
 
 # --- Run ---------------------------------------------------------------------------------------------------------
 
+_TYPOGRAPHY = str.maketrans({"‘": "'", "’": "'", "“": "'", "”": "'", "´": "'",
+                             "–": "-", "—": " - "})
+
+
 def _clean(text):
-    return re.sub(r"§.", "", text).strip()
+    """EU4 loc text as one plain line: no colour codes, no opening dash rule (the Sarhal descriptions start with
+    `-----\\n`), line breaks as spaces, typographic quotes and dashes as ASCII."""
+    text = re.sub(r"§.", "", text).strip()
+    text = re.sub(r"^-{3,}\s*(?:\\n\s*)*", "", text)
+    text = re.sub(r"\s*(?:\\n\s*)+", " ", text).translate(_TYPOGRAPHY)
+    return re.sub(r" {2,}", " ", text).strip()
 
 
 def build(project, place_name, loc, art, ck3=None):

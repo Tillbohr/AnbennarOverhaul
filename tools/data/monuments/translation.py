@@ -273,6 +273,52 @@ MODIFIERS = {
     "flagship_morale": Drop(_SHIPS),
     "max_flagships": Drop(_SHIPS),
     "number_of_cannons_flagship_modifier": Drop(_SHIPS),
+
+    # --- Bulwar, Salahad, Deepwoods (sub-project 3).
+    # Province/area: local trade value as trade power (tax at 0.3); friendly movement (oases, roads) -> supply;
+    # faster recruitment -> faster levy reinforcement; institution growth -> development (+10 -> +0.1).
+    "trade_value_modifier": Row("tax_mult", 0.3, C),
+    "local_friendly_movement_speed": Row("supply_limit_mult", 0.5, C),
+    "regiment_recruit_speed": Row("levy_reinforcement_rate", -1, C),
+    "institution_growth": Row("development_growth_factor", 0.01, C),
+    "local_gold_depletion_chance_modifier": Drop("EU4 gold mine depletion; no CK3 equivalent"),
+    # Country: realm mechanics with a CK3 neighbour. Imperial mandate (+0.05) and the harpy queendom's power
+    # (+0.45) -> prestige; Jaddari fervor -> piety; an accepted culture -> +10 opinion from other cultures
+    # (cultural_acceptance_gain_mult is a culture modifier only).
+    "imperial_mandate": Row("monthly_prestige", 10, H),
+    "monthly_harpylen_queendom_power": Row("monthly_prestige", 2, H),
+    "monthly_fervor_increase": Row("monthly_piety", 0.5, H),
+    "num_accepted_cultures": Row("different_culture_opinion", 10, H),
+    "global_heathen_missionary_strength": Row("faith_conversion_piety_cost_mult", -5, H),
+    "diplomats": Row("diplomacy", 1, H),
+    "ahati_loyalty_modifier": Row("vassal_opinion", 25, H),  # Kheterata's Ahati estate ~ its nobles
+    "vassal_income": Row("vassal_tax_contribution_mult", 0.5, H),
+    "yearly_innovativeness": Row("monthly_learning_lifestyle_xp_gain_mult", 0.2, H),
+    # Mages estate: experience and mana -> magic lifestyle XP (+50 mana -> +10%).
+    "mages_estate_experience_mod": Row("monthly_magic_lifestyle_xp_gain_mult", 0.5, H),
+    "mages_mana_capacity": Row("monthly_magic_lifestyle_xp_gain_mult", 0.002, H),
+    "max_estate_spell_levels": Drop(_ESTATES),
+    # Army: siege ability -> faster siege phases; artillery cost -> siege weapon upkeep; mercenary manpower ->
+    # cheaper mercenaries (+20% -> -10%).
+    "siege_ability": Row("siege_phase_time", -1, H),
+    "artillery_cost": Row("siege_weapon_maintenance_mult", 1, H),
+    "mercenary_manpower": Row("mercenary_hire_cost_mult", -0.5, H),
+    # Navy: fleet size/cost and transports -> embarkation, as above.
+    "naval_forcelimit": Row("embarkation_cost_mult", -0.01, H),  # flat +25 ships -> -25%
+    "global_ship_cost": Row("embarkation_cost_mult", 1, H),
+    "transport_cost": Row("embarkation_cost_mult", 1, H),
+    "transport_hull_size_modifier": Drop(_SHIPS),
+    "flagship_durability": Drop(_SHIPS),
+    "navy_tradition_decay": Drop(_SHIPS),
+    "disengagement_chance": Drop(_SHIPS),
+    "trade_steering": Drop(_TRADE),
+    "development_cost_in_primary_culture": Drop("EU4 development cost by culture; CK3 development growth is a "
+                                                "county modifier"),
+    "establish_order_cost": Drop("EU4 subject interaction; no CK3 equivalent"),
+    "free_dip_policy": Drop("EU4 policies; no CK3 equivalent"),
+    "institution_spread_from_true_faith": Drop("EU4 institutions; no CK3 equivalent"),
+    "candidate_random_bonus": Drop("EU4 republican elections; no CK3 equivalent"),
+    "monarch_power_tribute": Drop("EU4 tributaries; no CK3 equivalent"),
 }
 
 
@@ -307,8 +353,8 @@ ONE_OFF = [
     (_ADVISOR.format(types="spymaster"), _courtier("intrigue", "intrigue")),
     (_ADVISOR.format(types="commandant|army_organiser|army_reformer|grand_captain|navigator"),
      _courtier("martial", "martial")),
-    # A named EU4 general -> a martial courtier (a commander for the holder).
-    (r"define_general\s*=", _courtier("martial", "martial")),
+    # A named EU4 general, planetouched general or admiral -> a martial courtier (a commander for the holder).
+    (r"define_(?:planetouched_)?general\s*=|define_admiral\s*=", _courtier("martial", "martial")),
     # Estate loyalty -> prestige (church: piety) = 50 x loyalty / 5.
     *[(_LOYALTY.format(estate="estate_church", n=n), _gain("piety", 10 * n)) for n in (5, 10, 15, 20, 30)],
     *[(_LOYALTY.format(estate=r"\w+", n=n), _gain("prestige", 10 * n)) for n in (5, 10, 15, 20, 30)],
@@ -429,6 +475,48 @@ CULTURES = {
     "flag:has_dismantled_the_hre": None,
     "flag:no_longer_monstrous": None,
     "flag:semi_monstrous": None,
+
+    # --- Bulwar, Salahad, Deepwoods (sub-project 3).
+    "culture_group:bulwari": "culture = { has_cultural_pillar = heritage_bulwari }",
+    "culture_group:gnollish": "culture = { has_cultural_pillar = heritage_gnollish }",
+    "culture_group:harpy": "culture = { has_cultural_pillar = heritage_harpy }",
+    "culture_group:akasi": "culture = { has_cultural_pillar = heritage_akasi }",
+    "culture_group:west_sarhaly": "culture = { has_cultural_pillar = heritage_fangaulan }",
+    "culture:sun_elf": "culture = culture:sun_elvish",
+    "culture:wood_elf": "culture = culture:wood_elvish",
+    "culture:delta_gnome": "culture = culture:delta_gnomish",
+    # Later elven offshoots (desert, dawn) -> elven heritage; Sorrowmane gnolls -> gnollish heritage.
+    "culture:desert_elf": "culture = { has_cultural_pillar = heritage_elven }",
+    "culture:dawn_elf": "culture = { has_cultural_pillar = heritage_elven }",
+    "culture:sorrowmane_gnoll": "culture = { has_cultural_pillar = heritage_gnollish }",
+    "culture:zanlibi": None,  # Haless (EU4 Trollsbayer group): no CK3 equivalent
+    "culture:dunesole_ogre": None,  # no ogre cultures in CK3
+    "culture:green_orc": None,  # no orc cultures in CK3
+    "culture:emerald_orc": None,
+    "culture:karakhanbari_orc": None,
+    "religion_group:bulwari": "faith.religion = religion:bulwari_sun_cults_religion",
+    "religion:old_bulwari_sun_cult": "faith.religion = religion:bulwari_sun_cults_religion",
+    "religion:the_jadd": None,  # the Jadd arises centuries after 1022
+    "religion:xhazobkult": "faith.religion = religion:xhazobkult_religion",
+    "religion:mother_akasik": "faith = faith:mother_akasik",
+    "religion:kvangahga": None,  # gnollish religion with no CK3 faith
+    "religion:fangaulan_pantheon": None,  # no Fangaulan faith in CK3
+    "religion:yudunyovi": None,  # Haless (EU4 Triunic group): no CK3 equivalent
+    "tag:F29": None,
+    "tag:F52": None,
+    "tag:F74": None,
+    "tag:F78": None,
+    "tag:F98": None,
+    "tag:H81": None,
+    "tag:U17": None,
+    "flag:ash_palace_enabled": None,
+    "flag:eduz_mission_bypass_flag": None,
+    "flag:zokka_lazzaward_flag": None,
+    "flag:hyti_love_lahmas": None,
+    "flag:allow_lazzaward_usage": None,
+    "flag:zokka_library_flag": None,
+    "flag:mb_yle_mine_flg": None,
+    "flag:S90_tajan_unlock": None,
 }
 
 ICONS = {

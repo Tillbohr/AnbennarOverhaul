@@ -1,3 +1,4 @@
+import importlib
 import re
 import sys
 import unittest
@@ -95,6 +96,15 @@ def top_level_statements(text):
 def cannor_projects():
     supers = em.province_superregions(em.EU4_ROOTS["anbennar"])
     return [p for p in em.load_projects(em.EU4_ROOTS).values() if supers.get(p.start) in em.CANNOR]
+
+
+LATER_REGIONS = ("dwarovar", "bulwar", "salahad", "deepwoods")
+
+
+def built_projects(region):
+    """The EU4 projects a later region builds (its excluded projects, e.g. dungeons, are never translated)."""
+    keys = {m["eu4_key"] for m in importlib.import_module(f"data.monuments.{region}").MONUMENTS}
+    return [p for k, p in em.load_projects(em.EU4_ROOTS).items() if k in keys]
 
 
 class GateAtomsTests(unittest.TestCase):
@@ -217,13 +227,23 @@ class TranslationTableTests(unittest.TestCase):
             for atom in gate_atoms(p.gate):  # "culture:castanorian", "tag:A80", ...
                 self.assertTrue(atom in tr.CULTURES, f"{p.key}: {atom}")
 
+    @unittest.skipUnless(EU4_PRESENT, "needs EU4 mods")
+    def test_every_later_region_key_is_covered(self):
+        for region in LATER_REGIONS:
+            for p in built_projects(region):
+                for t in p.tiers:
+                    for k in (*t.province, *t.area, *t.country):
+                        self.assertTrue(k in tr.MODIFIERS, f"{region} {p.key}: {k}")
+                for atom in gate_atoms(p.gate):
+                    self.assertTrue(atom in tr.CULTURES, f"{region} {p.key}: {atom}")
+
     @unittest.skipUnless(EU4_PRESENT and CK3_PRESENT, "needs EU4 mods, CK3 and Anbennar CK3")
     def test_ck3_keys_fit_the_block_they_land_in(self):
         """province rows -> province_/county_modifier, area -> county_modifier, country -> character_modifier.
 
         Area rows must fit county_modifier: duchy_capital_county_modifier is for duchy_capital buildings only."""
         used = modifier_keys_by_block(GAME / "common", ANBENNAR / "common")
-        for p in cannor_projects():
+        for p in cannor_projects() + [p for region in LATER_REGIONS for p in built_projects(region)]:
             for t in p.tiers:
                 for blocks, keys in ((("province",), t.province), (("area",), t.area), (("country",), t.country)):
                     for k in keys:

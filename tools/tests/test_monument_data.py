@@ -86,26 +86,47 @@ class CannorMonumentTests(unittest.TestCase):
 
 
 
-class DwarovarMonumentTests(unittest.TestCase):
-    """The same data checks as Cannor, for the Middle Dwarovar."""
+class RegionMonumentTests(unittest.TestCase):
+    """The same data checks as Cannor, for the regions after it (no Anbennar chains there)."""
+
+    COUNTS = {"dwarovar": 5, "bulwar": 12, "salahad": 10, "deepwoods": 6}
 
     def test_complete_clean_and_translated(self):
-        from data.monuments.dwarovar import MONUMENTS as DWAROVAR
-        self.assertEqual(len(DWAROVAR), 5)
-        for m in DWAROVAR:
-            self.assertTrue(m["barony"] and m["province"] and m["name"] and m["desc"], m["eu4_key"])
-            self.assertIn(m["category"], tr.ICONS, m["eu4_key"])
-            for field in ("name", "desc"):
-                for dirty in DIRTY_TEXT:
-                    self.assertNotIn(dirty, m[field], f"{m['eu4_key']} {field}")
-            for tier in m["tiers"]:
-                self.assertFalse([d for d in tier["dropped"] if d.endswith("not in the translation table")],
-                                 m["eu4_key"])
-                for block in ("province_modifier", "county_modifier"):
-                    self.assertLessEqual(tier[block].get("fort_level", 0), MAX_FORT_LEVEL, m["eu4_key"])
-                self.assertLessEqual(tier["county_modifier"].get("tax_mult", 0), MAX_COUNTY_TAX_MULT, m["eu4_key"])
-            if not m["gate"] and any(n.startswith("gate atom") for n in m["notes"]):
-                self.assertTrue(any(n.startswith("Gate decision:") for n in m["notes"]), m["eu4_key"])
+        for region, count in self.COUNTS.items():
+            monuments = bm.load_monuments(region)
+            self.assertEqual(len(monuments), count, region)
+            for m in monuments:
+                self.assertTrue(m["barony"] and m["province"] and m["name"] and m["desc"], m["eu4_key"])
+                self.assertIn(m["category"], tr.ICONS, m["eu4_key"])
+                self.assertEqual(bool(m["gate"]), bool(m["gate_desc"]), m["eu4_key"])
+                for field in ("name", "desc"):
+                    for dirty in DIRTY_TEXT:
+                        self.assertNotIn(dirty, m[field], f"{m['eu4_key']} {field}")
+                    self.assertNotIn("  ", m[field], f"{m['eu4_key']} {field}")
+                for level, tier in enumerate(m["tiers"], 1):
+                    self.assertFalse([d for d in tier["dropped"] if d.endswith("not in the translation table")],
+                                     m["eu4_key"])
+                    for block in ("province_modifier", "county_modifier"):
+                        self.assertLessEqual(tier[block].get("fort_level", 0), MAX_FORT_LEVEL, m["eu4_key"])
+                    self.assertLessEqual(tier["county_modifier"].get("tax_mult", 0), MAX_COUNTY_TAX_MULT,
+                                         m["eu4_key"])
+                    has = any(tier[b] for b in bm.BLOCKS) or tier["on_complete"].strip()
+                    self.assertTrue(has, f"{m['eu4_key']} level {level}")
+                if not m["gate"] and any(n.startswith("gate atom") for n in m["notes"]):
+                    self.assertTrue(any(n.startswith("Gate decision:") for n in m["notes"]), m["eu4_key"])
+
+    @unittest.skipUnless(LIVE, "needs Anbennar CK3")
+    def test_baronies_unique_real_and_free(self):
+        provinces = []
+        for region in self.COUNTS:
+            for m in bm.load_monuments(region):
+                self.assertEqual(CK3_PROVINCE_OF[m["barony"]], m["province"], m["eu4_key"])
+                self.assertNotIn(m["province"], ANBENNAR_SLOT_PROVINCES, m["eu4_key"])
+                self.assertTrue(m["levels"][0].startswith("aov_monument_"), m["eu4_key"])
+                provinces.append(m["province"])
+        provinces += [m["province"] for m in MONUMENTS]
+        self.assertEqual(len(provinces), len(set(provinces)))
+
 
 if __name__ == "__main__":
     unittest.main()

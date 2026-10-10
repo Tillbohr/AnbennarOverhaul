@@ -253,6 +253,19 @@ class ConversionTests(unittest.TestCase):
         self.assertIn("add_piety = 50", t["on_complete"])
         self.assertEqual(len(t["dropped"]), 2)
 
+    def test_generals_and_admirals_become_martial_courtiers(self):
+        for effect in ('define_admiral = { name = "Sevrund Shalebeard" fire = 8 }',
+                       "define_planetouched_general = { shock = 6 fire = 4 }", "define_general = { shock = 3 }"):
+            t = imp.translate_tier(Tier(0, 0, {}, {}, {}, effect))
+            self.assertIn("trait = education_martial_3", t["on_complete"], effect)
+            self.assertEqual(t["dropped"], [], effect)
+
+    def test_clean_normalises_eu4_text(self):
+        # Sarhal descriptions open with a dash rule and use literal \n, typographic quotes and dashes
+        raw = "--------------\\nFew are as famous—or infamous—as “Krah”.\\n\\nHe’s §Ybold§!."
+        self.assertEqual(imp._clean(raw), "Few are as famous - or infamous - as 'Krah'. He's bold.")
+        self.assertEqual(imp._clean("Plain text"), "Plain text")
+
     def test_scope_blocks_are_split_into_effects(self):
         t = imp.translate_tier(Tier(0, 0, {}, {}, {}, (
             "owner = { add_estate_loyalty = { estate = estate_mages loyalty = 5 } add_prestige = 10 }\n"
@@ -399,6 +412,17 @@ class RegionTests(unittest.TestCase):
         self.assertEqual(imp.REGIONS["cannor"]["superregions"], em.CANNOR)
         self.assertEqual(imp.REGIONS["dwarovar"]["superregions"],
                          ("west_serpentspine_superregion", "east_serpentspine_superregion"))
+        self.assertEqual(imp.REGIONS["bulwar"]["superregions"], ("bulwar_superregion",))
+        self.assertIn("north_salahad_superregion", imp.REGIONS["salahad"]["superregions"])  # with Kheterata
+        self.assertIn("deepwoods_superregion", imp.REGIONS["deepwoods"]["superregions"])
+        self.assertTrue(all(imp.REGIONS[r]["on_map_only"] for r in ("bulwar", "salahad", "deepwoods")))
+
+    def test_event_variant_is_excluded(self):
+        self.assertEqual(imp.exclusion(self.proj("aur_kes_akasik_S90"), "salahad", "Desh-Al-Deshak",
+                                       {"deshaldeshak": "c_desh_al_deshak"}),
+                         imp.VARIANT.format(base="aur_kes_akasik"))
+        self.assertIsNone(imp.exclusion(self.proj("aur_kes_akasik"), "salahad", "Desh-Al-Deshak",
+                                        {"deshaldeshak": "c_desh_al_deshak"}))
 
     def test_dwarovar_exclusions(self):
         titles = {"seghdihr": "c_seghdihr"}
@@ -450,6 +474,45 @@ class DwarovarLiveTests(unittest.TestCase):
         self.assertTrue(all(provinces))
         self.assertEqual(len(set(provinces)), len(provinces))
         self.assertFalse(set(provinces) & set(slots))
+
+@unittest.skipUnless(LIVE, "needs EU4 and Anbennar CK3")
+class LaterRegionLiveTests(unittest.TestCase):
+    """Bulwar, Salahad (with Kheterata) and the Deepwoods."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.data = {region: imp.run(region) for region in ("bulwar", "salahad", "deepwoods")}
+
+    def test_every_project_accounted_for(self):
+        supers = em.province_superregions(em.EU4_ROOTS["anbennar"])
+        projects = em.load_projects(em.EU4_ROOTS)
+        reasons = {imp.DUNGEON, imp.CANAL, imp.OFF_MAP, imp.PLACEHOLDER, imp.VARIANT.format(base="aur_kes_akasik")}
+        for region, data in self.data.items():
+            wanted = {k for k, p in projects.items() if supers.get(p.start) in imp.REGIONS[region]["superregions"]}
+            self.assertEqual({m["eu4_key"] for m in data["MONUMENTS"]} | set(data["EXCLUDED"]), wanted, region)
+            self.assertTrue(set(data["EXCLUDED"].values()) <= reasons, region)
+            self.assertTrue(all(m["barony"] for m in data["MONUMENTS"]), region)
+        self.assertEqual(len(self.data["bulwar"]["MONUMENTS"]), 12)
+        self.assertEqual(len(self.data["salahad"]["MONUMENTS"]), 10)
+        self.assertEqual(len(self.data["deepwoods"]["MONUMENTS"]), 6)
+
+    def test_koroshesh_projects_share_the_duchy(self):
+        by = {m["eu4_key"]: m for m in self.data["salahad"]["MONUMENTS"]}
+        self.assertEqual(by["koroshesh_library"]["barony"], "b_koroshesh")
+        self.assertEqual(by["koroshesh_grain_port"]["barony"], "b_kaashesh")
+
+    def test_dragon_coast_is_built_with_cannor(self):
+        # EU4 puts the Dragon Coast in western Cannor, so its projects are Cannor monuments
+        from data.monuments import cannor
+        keys = {m["eu4_key"] for m in cannor.MONUMENTS}
+        self.assertTrue({"nimscodd_academy", "toncodden_lighthouse", "the_dragonhoard"} <= keys)
+
+    def test_placed_on_free_baronies(self):
+        slots = imp.anbennar_slots(ANBENNAR_CK3)
+        provinces = [m["province"] for data in self.data.values() for m in data["MONUMENTS"]]
+        self.assertEqual(len(set(provinces)), len(provinces))
+        self.assertFalse(set(provinces) & set(slots))
+
 
 if __name__ == "__main__":
     unittest.main()
