@@ -23,6 +23,9 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 | Rebuild holdings override | `python -I tools/build_holdings_override.py` |
 | Rebuild HUD override | `python -I tools/build_hud_override.py` |
 | Rebuild lifestyle window override | `python -I tools/build_lifestyle_override.py` |
+| Rebuild county view override | `python -I tools/build_county_view_override.py` |
+| Import EU4 monuments (Cannor) | `python -I tools/import_eu4_monuments.py --region cannor` (needs the EU4 Anbennar, Cannorian and Dwarven Monuments mods installed; rewrites `tools/data/monuments/cannor.py`) |
+| Rebuild Cannor monuments | `python -I tools/build_monuments.py --region cannor` |
 | Run tool tests | `python -I -m unittest discover -s tools/tests -v` |
 | Rebuild inventions | `python -I tools/build_inventions.py` (needs EU4 Anbennar installed for icons) |
 | Rebuild spells | `python -I tools/build_spells.py` (needs EU4 Anbennar installed for magic art) |
@@ -57,14 +60,17 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 | `common/holdings/00_holdings.txt` | `python -I tools/build_holdings_override.py` | Holdings are whole-file only. The script copies Anbennar's file and inserts the `ADDITIONS` (marked `# Anbennar Overhaul`). Never edit the output by hand. |
 | `gui/hud.gui` | `python -I tools/build_hud_override.py` | The main tab bar is whole-file only. The script copies Anbennar's `gui/hud.gui` if it has one, else the game's, and inserts the Artificery tab after `tab_situation` (marked `# Anbennar Overhaul`). Never edit the output by hand. |
 | `gui/window_character_lifestyle.gui` | `python -I tools/build_lifestyle_override.py` | The lifestyle window is whole-file only. The script copies Anbennar's `gui/window_character_lifestyle.gui` if it has one, else the game's, and adds a `magic_lifestyle` copy after each of the three `wanderer_lifestyle` blocks (XP bar background, progress bar, unspent-points icon) using the magic art (marked `# Anbennar Overhaul: magic lifestyle`). Never edit the output by hand. |
+| `gui/window_county_view.gui` | `python -I tools/build_county_view_override.py` | The county view is whole-file only. The script copies Anbennar's `gui/window_county_view.gui` if it has one, else the game's, and adds a second holding-illustration `background` after the vanilla one that draws the EU4 monument painting (marked `# Anbennar Overhaul: monument painting`). Never edit the output by hand. |
+| `gfx/interface/illustrations/aov_monuments/*.dds`, `common/customizable_localization/aov_monument_illustration.txt` | `python -I tools/build_monuments.py --region cannor` | EU4 monument paintings (uncompressed BGRA, 300x150) and custom loc `AovMonumentIllustration` (province scope; returns the painting path via loc keys `aov_monument_art_<eu4key>`), read by the county view override. |
 | `common/modifiers/aov_invention_modifiers.txt`, `common/scripted_triggers/aov_invention_triggers.txt`, `common/script_values/aov_invention_values.txt`, `common/scripted_effects/aov_invention_effects.txt`, `common/scripted_guis/aov_invention_sgui.txt`, `common/customizable_localization/aov_invention_custom_loc.txt`, `gui/aov_inventions_generated.gui`, `localization/english/aov_inventions_l_english.yml`, `gfx/interface/icons/aov_inventions/` | `python -I tools/build_inventions.py` | One block per invention, generated from `tools/data/inventions.py` (edit the data, then rerun). |
 | `common/modifiers/aov_spell_modifiers.txt`, `common/scripted_triggers/aov_spell_triggers.txt`, `common/scripted_effects/aov_spell_effects.txt`, `common/scripted_guis/aov_spell_sgui.txt`, `common/character_interactions/aov_spell_interactions.txt`, `gui/aov_magic_generated.gui`, `localization/english/aov_spells_l_english.yml`, `gfx/interface/icons/aov_magic/`, `gfx/interface/skinned/hud_maintab/aov_maintab_magic.dds` | `python -I tools/build_spells.py` | One block per spell, generated from `tools/data/spells.py` (edit the data, then rerun). |
 | `gfx/interface/icons/{lifestyles,focuses,traits,lifestyles_perks,lifestyle_tree_backgrounds}/` magic files, `gfx/interface/illustrations/lifestyles_background/magic_lifestyle.dds`, `gfx/interface/progressbars/aov_progress_magic*.dds` | `python -I tools/build_magic_lifestyle_art.py` | Magic lifestyle art (18 DDS files) composed from EU4 Anbennar magic art and uncompressed vanilla files; the output list is `OUTPUTS` in the script. |
+| `common/buildings/zz_aov_monument_overrides_cannor.txt` (with `common/buildings/aov_monuments_cannor.txt`, `history/provinces/aov_monuments_cannor.txt`, `localization/english/aov_monuments_cannor_l_english.yml`) | `python -I tools/build_monuments.py --region cannor` | Cannor great-project buildings from `tools/data/monuments/cannor.py`. The `zz_` file re-emits the 17 Anbennar monument levels (copied from Anbennar's current definitions) with the EU4 tier modifiers, `on_complete` and `next_building` inserted, marked `# Anbennar Overhaul: EU4 tier <n>`; Anbennar's own triggers are untouched. The new upper levels of those chains (in `aov_monuments_cannor.txt`) are copies of the chain's top Anbennar level with the EU4 tier merged the same way (EU4 culture gate in `can_construct` only), because a CK3 upgrade replaces the previous level's effects. The script validates the data first and stops on a placement, name, icon, modifier-key or empty-level problem. |
 
 ## Updating to a new Anbennar version
 
 1. Replace `../anbennar-ck3-dev-master` with the new Anbennar release.
-2. Run `python -I tools/build_holdings_override.py` and `python -I tools/build_hud_override.py` and `python -I tools/build_lifestyle_override.py`.
+2. Run `python -I tools/build_holdings_override.py` and `python -I tools/build_hud_override.py` and `python -I tools/build_lifestyle_override.py` and `python -I tools/build_county_view_override.py`, and `python -I tools/build_monuments.py --region cannor` (the monument overrides copy Anbennar's current definitions; it errors naming any monument key Anbennar no longer defines).
 3. Run tiger and the tool tests (below) and fix anything that references renamed Anbennar content. The tests fail if
    Anbennar renames `anb_enhance_ability_interaction` or adds another way to start its Enhance Ability scheme (removed
    from the game; see `EnhanceAbilityRemovedTests`).
@@ -75,7 +81,7 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
    `anb_enhance_ability_interaction` is a never-shown stub and needs no re-copy.
 6. Test in game; check `database_conflicts.log` for overhaul keys now also defined by Anbennar (notably `magic_duelist_focus`, which `zz_aov_magic_focuses.txt` must keep overriding).
 
-After a CK3 patch, rerun `python -I tools/build_hud_override.py` and `python -I tools/build_lifestyle_override.py` too: their sources are the game's `hud.gui` and `window_character_lifestyle.gui` (when Anbennar ships no copy).
+After a CK3 patch, rerun `python -I tools/build_hud_override.py`, `python -I tools/build_lifestyle_override.py` and `python -I tools/build_county_view_override.py` too: their sources are the game's `hud.gui`, `window_character_lifestyle.gui` and `window_county_view.gui` (when Anbennar ships no copy).
 
 ## Validation
 
@@ -145,3 +151,14 @@ inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error
   magic lifestyle XP. `magic_mastery` = school levels + magic perks. Art and the lifestyle window override come from
   `tools/build_magic_lifestyle_art.py` and `tools/build_lifestyle_override.py`. Spec
   `docs/superpowers/specs/2026-10-08-magic-lifestyle-design.md`.
+- **Great projects (Cannor):** the EU4 Anbennar great projects in Cannor (81 monuments, 3 levels each) as CK3 special
+  buildings: new `aov_monument_<eu4key>_01/_02/_03` chains, 17 Anbennar levels re-emitted with EU4 tiers
+  (`zz_aov_monument_overrides_cannor.txt`), and Castle Dameris (`castle_dameris_01/_02/_03`, generated into
+  `aov_monuments_cannor.txt`). Effects come from EU4 through the table `tools/data/monuments/translation.py`; the
+  importer writes `tools/data/monuments/cannor.py` and merges hand fixes from `tools/data/monuments/cannor_hand.py`
+  (`HAND`, re-applied on every run; `tiers` merge key by key), so edit the hand file, never `cannor.py`. Rebuild:
+  `import_eu4_monuments.py --region cannor`, then `build_monuments.py --region cannor`, then
+  `build_county_view_override.py` (paintings in the county view). Dropped modifiers and one-offs are listed per tier
+  (`dropped`); 10 gates stay open (EU4 gates on tags/flags/legacies); balance caps on the EU4 tiers: fort_level 4, county tax_mult 0.3; a summed fort_level stops at max(8, Anbennar's value), the rest goes to `defender_holding_advantage`; upgrades cost and take at least what the level they replace did; hand field `gate_mode: "or"` (Necropolis) makes the EU4 gate an alternative to Anbennar's `can_construct` on upper levels.
+  The Middle Dwarovar (dwarven monuments) and the rest of the map are sub-projects 2 and 3, reusing this framework.
+  Spec `docs/superpowers/specs/2026-10-09-great-projects-cannor-design.md`.
