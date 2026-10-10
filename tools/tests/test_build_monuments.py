@@ -367,16 +367,43 @@ class UpperLevelTests(unittest.TestCase):
         self.assertIn("aov_monument_bal_ouord_gate", cc)
 
     def test_cost_time_and_chain_from_tier(self):
+        """Cost and time come from the tier, but never below the level upgraded from (follow-up to PR #3)."""
+        values = bm.load_values()
         for m, top in override_chains():
             for i, key in enumerate(m["levels"]):
                 if key in bm.anbennar_keys():
                     continue
-                text = block(B, key)
+                text, prev = block(B, key), level_text(m["levels"][i - 1])
                 tier = m["tiers"][i]
-                self.assertRegex(text, rf"(?m)^\tcost_gold = {tier['cost']}\b", key)
-                self.assertRegex(text, rf"(?m)^\tconstruction_time = {tier['days']}\b", key)
+                for name, field in bm.UPGRADE_FIELDS.items():
+                    ours = bm.resolve(bm.line_value(f"x = {{\n{text}}}", name), values)
+                    raw = bm.line_value(f"x = {{\n{prev}}}", name)  # None: a level with no cost or time line
+                    before = bm.resolve(raw, values) if raw else 0
+                    self.assertEqual(ours, max(float(tier[field]), before), f"{key} {name}")
                 nxt = re.findall(r"(?m)^\tnext_building = (\w+)", text)
                 self.assertEqual(nxt, m["levels"][i + 1:i + 2], key)
+
+    def test_upgrades_cost_at_least_anbennar_level_one(self):
+        for key in ("aov_monument_calascandar_02", "aov_monument_calascandar_03"):
+            self.assertRegex(block(B, key), r"(?m)^\tcost_gold = 2000 ", key)
+            self.assertRegex(block(B, key), r"(?m)^\tconstruction_time = very_slow_construction_time ", key)
+
+    def test_necropolis_upper_levels_take_either_gate(self):
+        """A holy-site holder of another faith may build level 1, so must be able to upgrade it: the EU4 gate is an
+        alternative inside Anbennar's OR, not an extra requirement (follow-up to PR #3)."""
+        gate = "\t\t\tscope:holder = {\n\t\t\t\tcustom_tooltip = {\n\t\t\t\t\ttext = aov_monument_the_necropolis_gate"
+        for key in ("aov_monument_the_necropolis_02", "aov_monument_the_necropolis_03"):
+            cc = re.search(r"^\tcan_construct = \{\n(.*?)^\t\}", block(B, key), re.M | re.S).group(1)
+            code = [l for l in cc.splitlines() if l.split("#", 1)[0].strip()]
+            self.assertEqual(code[0], "\t\tOR = {", key)
+            self.assertEqual(code[-1], "\t\t}", key)
+            self.assertFalse([l for l in code[1:-1] if re.match(r"\t\t\S", l)], key)  # the OR is the only statement
+            self.assertIn("is_holy_site_of = scope:holder.faith", cc, key)
+            self.assertIn(gate, cc, key)
+
+    def test_other_gates_stay_requirements(self):
+        cc = re.search(r"^\tcan_construct = \{\n(.*?)^\t\}", block(B, "aov_monument_bal_ouord_02"), re.M | re.S).group(1)
+        self.assertIn("\t\tscope:holder = {\n\t\t\tcustom_tooltip = {\n\t\t\t\ttext = aov_monument_bal_ouord_gate", cc)
 
     def test_lake_palace_top_copies_level_two(self):
         text = block(B, "aov_monument_the_lake_palace_03")
@@ -439,8 +466,8 @@ class UpperLevelUnitTests(unittest.TestCase):
         body = block(text, "aov_x_02")
         self.assertIn("\t\tfort_level = 8\n", body)
         self.assertIn("\t\tdiplomacy = 1\n", body)
-        self.assertIn("\tcost_gold = 1000 ", body)
-        self.assertIn("\tconstruction_time = 3600 ", body)
+        self.assertIn("\tcost_gold = 2000 ", body)  # not below x_01's 2000
+        self.assertIn("\tconstruction_time = 3600 ", body)  # x_01's very_slow_construction_time is unknown here
         self.assertIn("\tnext_building = aov_x_03 ", body)
         self.assertIn("\tflag = holy_building", body)
         self.assertNotIn("x_01 = {", text)
@@ -461,6 +488,107 @@ class UpperLevelUnitTests(unittest.TestCase):
         self.assertIn("free_building_slots > 0", ai)
         self.assertNotIn("next_building", body)
         self.assertEqual(body.count("{"), body.count("}"))
+
+    def test_upgrade_value_floor(self):
+        values = {"very_slow_construction_time": "2190"}
+        self.m["tiers"][2] = dict(self.m["tiers"][1], cost=3000, days=900)
+        two = bm.upgrade_value(self.m, 2, "cost_gold", "x_01", self.root, values, [])
+        self.assertEqual(two, ("2000", 2000.0, " (1000), not below x_01"))
+        days = bm.upgrade_value(self.m, 2, "construction_time", "x_01", self.root, values, [])
+        self.assertEqual(days, ("3600", 3600.0, ""))  # the tier is slower than x_01
+        self.assertEqual(bm.upgrade_value(self.m, 3, "cost_gold", "x_01", self.root, values, [])[:2], ("3000", 3000.0))
+        self.assertEqual(bm.upgrade_value(self.m, 3, "construction_time", "x_01", self.root, values, []),
+                         ("3600", 3600.0, " (900), not below aov_x_02"))  # floored by the generated level 2
+
+    def test_unresolvable_upgrade_floor_warns(self):
+        warnings = []
+        self.assertEqual(bm.upgrade_value(self.m, 2, "construction_time", "x_01", self.root, {}, warnings)[:2],
+                         ("3600", 3600.0))
+        self.assertEqual(len(warnings), 1)
+
+    def test_gate_mode_or_wraps_plain_can_construct(self):
+        self.m["gate_mode"] = "or"
+        body = block(self.upper(2, "aov_x_02", "aov_x_03"), "aov_x_02")
+        cc = re.search(r"^\tcan_construct = \{\n(.*?)^\t\}", body, re.M | re.S).group(1)
+        self.assertRegex(cc, r"^\t\tOR = \{\n\t\t\tAND = \{\n\t\t\t\thas_x = yes\n\t\t\t\}\n")
+        self.assertIn("\t\t\tscope:holder = {\n\t\t\t\tcustom_tooltip = {\n\t\t\t\t\ttext = aov_monument_x_gate", cc)
+        self.assertEqual(body.count("{"), body.count("}"))
+
+    def test_gate_mode_or_joins_existing_or(self):
+        anb = ANB_TOP.replace("\t\thas_x = yes\n", "\t\tOR = {\n\t\t\thas_x = yes\n\t\t\thas_z = yes\n\t\t}\n\t\t# has_w = yes\n")
+        (self.root / "common" / "buildings" / "anb.txt").write_text(anb, encoding="utf-8")
+        self.m["gate_mode"] = "or"
+        body = block(self.upper(2, "aov_x_02", "aov_x_03"), "aov_x_02")
+        cc = re.search(r"^\tcan_construct = \{\n(.*?)^\t\}", body, re.M | re.S).group(1)
+        self.assertIn("\t\t\thas_z = yes\n\t\t\t# Anbennar Overhaul: EU4 culture gate, an alternative to Anbennar's\n"
+                      "\t\t\tscope:holder = {", cc)
+        self.assertIn("\t\t\t}\n\t\t}\n\t\t# has_w = yes\n", cc)
+        self.assertNotIn("AND", cc)
+
+    def test_gate_mode_or_needs_can_construct(self):
+        anb = re.sub(r"\tcan_construct = \{\n.*?\n\t\}\n", "", ANB_TOP, flags=re.S)
+        (self.root / "common" / "buildings" / "anb.txt").write_text(anb, encoding="utf-8")
+        self.m["gate_mode"] = "or"
+        with self.assertRaises(bm.GeneratorError):
+            self.upper(2, "aov_x_02", "aov_x_03")
+
+
+class FortLevelCapTests(unittest.TestCase):
+    """Follow-up to PR #3: merged fort levels stop at max(8, Anbennar's value); the rest becomes holding advantage."""
+    VALUES = bm.parse_values("good_building_fort_level_tier_3 = 6\nadv = 6\n")
+    TIER = {"province_modifier": {"fort_level": 4}, "county_modifier": {}, "character_modifier": {}, "on_complete": ""}
+
+    def test_surplus_moves_to_existing_advantage(self):
+        base = ("x_01 = {\n\tprovince_modifier = {\n\t\tdefender_holding_advantage = adv\n"
+                "\t\tfort_level = good_building_fort_level_tier_3\n\t}\n\n\ttype = special\n}\n")
+        out = bm.override(base, "x_01", self.TIER, None, 3, self.VALUES)
+        self.assertIn("\t\tfort_level = 8\n", out)
+        self.assertIn("\t\tdefender_holding_advantage = 8\n", out)
+        self.assertIn("capped at 8; 2 moved to defender_holding_advantage", out)
+        self.assertEqual(out.count("defender_holding_advantage ="), 1)
+
+    def test_surplus_added_when_no_advantage(self):
+        base = "x_01 = {\n\tprovince_modifier = {\n\t\tfort_level = 7\n\t}\n\n\ttype = special\n}\n"
+        out = bm.override(base, "x_01", self.TIER, None, 3, {})
+        self.assertIn("\t\tfort_level = 8\n", out)
+        self.assertIn("\t\tdefender_holding_advantage = 3\n", out)
+        self.assertLess(out.index("defender_holding_advantage"), out.index("type = special"))
+
+    def test_anbennar_value_above_cap_is_kept(self):
+        base = "x_01 = {\n\tprovince_modifier = {\n\t\tfort_level = 10\n\t}\n\n\ttype = special\n}\n"
+        out = bm.override(base, "x_01", self.TIER, None, 3, {})
+        self.assertIn("\t\tfort_level = 10\n", out)
+        self.assertIn("\t\tdefender_holding_advantage = 4\n", out)
+
+    def test_tier_advantage_sums_with_surplus(self):
+        tier = dict(self.TIER, province_modifier={"defender_holding_advantage": 1, "fort_level": 4})
+        base = "x_01 = {\n\tprovince_modifier = {\n\t\tfort_level = 6\n\t}\n\n\ttype = special\n}\n"
+        out = bm.override(base, "x_01", tier, None, 3, {})
+        self.assertEqual(out.count("defender_holding_advantage ="), 1)
+        self.assertIn("\t\tdefender_holding_advantage = 3\n", out)
+
+    @unittest.skipUnless(LIVE, "Anbennar CK3 not present")
+    def test_generated_fort_levels_within_cap(self):
+        """Every level in the written building files: resolved fort_level <= max(8, Anbennar's value for the level)."""
+        values, known, checked = bm.load_values(), bm.anbennar_keys(), 0
+        files = {rel: (bm.SUBMOD / rel).read_text(encoding="utf-8-sig") for rel in (
+            "common/buildings/aov_monuments_cannor.txt", OVR)}
+        for m in MONUMENTS:
+            top = bm.chain_top(m, known)
+            for key in m["levels"]:
+                rel = OVR if key in known else "common/buildings/aov_monuments_cannor.txt"
+                ours = modifiers(block(files[rel], key)).get(("province_modifier", "fort_level"))
+                if ours is None:
+                    continue
+                source = key if key in known else top
+                anb = modifiers(bm.anbennar_definition(ANBENNAR, source)).get(("province_modifier", "fort_level")) \
+                    if source else None
+                cap = max(bm.FORT_LEVEL_CAP, bm.resolve(anb, values) if anb else 0)
+                self.assertLessEqual(bm.resolve(ours, values), cap, key)
+                checked += 1
+        self.assertGreater(checked, 40)
+        self.assertRegex(block(files["common/buildings/aov_monuments_cannor.txt"], "aov_monument_calascandar_03"),
+                         r"(?m)^\t\tfort_level = 8$")
 
 
 @unittest.skipUnless(LIVE, "Anbennar CK3 not present")

@@ -117,6 +117,10 @@ def insert_point(lines: list) -> int:
 
 
 NUMBER = re.compile(r"-?\d+(\.\d+)?")
+# Highest fort_level a merged level may reach unless Anbennar's own value is higher: vanilla's strongest special
+# building (alamut_castle_02) has 8. The rest goes to SURPLUS_KEY on the same level.
+FORT_LEVEL_CAP = 8
+SURPLUS_KEY = "defender_holding_advantage"
 
 
 def parse_values(text: str) -> dict:
@@ -172,21 +176,30 @@ def resolve(raw: str, values: dict, seen=()) -> float:
 
 
 def merge_modifier(lines: list, name: str, k: str, v, values: dict, note: str, warnings: list, key: str):
-    """If the modifier block already has `k`, sum into that line (True) or leave it with a comment (also True); else False."""
+    """If the modifier block already has `k`, sum into that line (True) or leave it with a comment (also True); else False.
+    A summed fort_level is capped at max(FORT_LEVEL_CAP, Anbennar's value); the surplus goes to
+    defender_holding_advantage in the same block (Anbennar's fort level and advantage tiers have the same numbers)."""
     start, end = find_block(lines, name)
     for i in range(start + 1, end):
         m = re.match(rf"(\s*){re.escape(k)}\s*=\s*([^#\s]+)", lines[i])
         if m:
             indent, old = m.group(1), m.group(2)
             try:
-                total = resolve(old, values) + float(v)
+                base = resolve(old, values)
             except ValueError as e:
                 msg = f"{k} {old} not added ({e})"
                 warnings.append(f"{key} tier {note.rsplit(' ', 1)[1]}: {msg}")
                 lines[i + 1:i + 1] = [f"{indent}{note} {msg}"]
                 return True
-            lines[i:i + 1] = [f"{indent}{note} (+{num(v)} to {old} = {num(total - float(v))})",
+            total, surplus, capped = base + float(v), 0.0, ""
+            if k == "fort_level" and total > max(FORT_LEVEL_CAP, base):
+                surplus, total = total - max(FORT_LEVEL_CAP, base), max(FORT_LEVEL_CAP, base)
+                capped = f", capped at {num(total)}; {num(surplus)} moved to {SURPLUS_KEY}"
+            lines[i:i + 1] = [f"{indent}{note} (+{num(v)} to {old} = {num(base)}{capped})",
                               f"{indent}{k} = {num(total)}"]
+            if surplus and not merge_modifier(lines, name, SURPLUS_KEY, surplus, values, note, warnings, key):
+                end = find_block(lines, name)[1]
+                lines[end:end] = [f"{indent}{note} (fort_level above {num(total)})", f"{indent}{SURPLUS_KEY} = {num(surplus)}"]
             return True
     return False
 
@@ -204,13 +217,12 @@ def override(base_text: str, key: str, tier: dict, next_key, n: int, values=None
             continue
         found = find_block(lines, name)
         if found:
-            new = []
+            noted = False
             for k, v in mods.items():
                 if not merge_modifier(lines, name, k, v, values, note, warnings, key):
-                    new.append(f"\t\t{k} = {num(v)}")
-            if new:
-                end = find_block(lines, name)[1]
-                lines[end:end] = [f"\t\t{note}"] + new
+                    end = find_block(lines, name)[1]
+                    lines[end:end] = ([] if noted else [f"\t\t{note}"]) + [f"\t\t{k} = {num(v)}"]
+                    noted = True
         else:
             at = insert_point(lines)
             lines[at:at] = [f"\t{name} = {{", f"\t\t{note}"] + [f"\t\t{k} = {num(v)}" for k, v in mods.items()] + ["\t}", ""]
@@ -299,22 +311,77 @@ def set_line(lines: list, name: str, value, note: str) -> None:
     lines[1:1] = [line]
 
 
+UPGRADE_FIELDS = {"cost_gold": "cost", "construction_time": "days"}
+
+
+def line_value(text: str, name: str):
+    """Raw value of the depth-1 `name = value` line of a building definition, or None."""
+    lines = text.split(NL)
+    depths = depths_of(lines)
+    for i, l in enumerate(lines):
+        m = re.match(rf"\t{name}\s*=\s*([^#\s]+)", l)
+        if depths[i] == 1 and m:
+            return m.group(1)
+    return None
+
+
+def upgrade_value(m: dict, level: int, name: str, top: str, root, values: dict, warnings: list):
+    """(raw, number, note) for `name` (cost_gold or construction_time) of new upper level `level`: the EU4 tier's
+    value, but never below that of the level it upgrades from (an upgrade must not be cheaper or quicker than the
+    building it replaces; Anbennar's citadels cost 2000 gold, the EU4 tiers 1000)."""
+    tier_value = m["tiers"][level - 1][UPGRADE_FIELDS[name]]
+    prev = m["levels"][level - 2]
+    if level - 2 <= m["levels"].index(top):
+        raw = line_value(anbennar_definition(root, prev), name)
+        try:
+            floor = (raw, resolve(raw, values)) if raw else None
+        except ValueError as e:
+            warnings.append(f"{m['levels'][level - 1]}: {name} of {prev} ({raw}) ignored ({e})")
+            floor = None
+    else:
+        floor = upgrade_value(m, level - 1, name, top, root, values, warnings)[:2]
+    if floor and floor[1] > float(tier_value):
+        return floor[0], floor[1], f" ({num(tier_value)}), not below {prev}"
+    return num(tier_value), float(tier_value), ""
+
+
+def or_gate(lines: list, found: tuple, m: dict) -> None:
+    """Add the EU4 gate to can_construct (`found` = its start and closing line) as one more alternative: inside the
+    block's only statement when that is an OR, else as OR = { AND = { <Anbennar's triggers> } <gate> }."""
+    start, end = found
+    depths = depths_of(lines)
+    gate = ["\t\t\t# Anbennar Overhaul: EU4 culture gate, an alternative to Anbennar's"] + ["\t" + l for l in gate_body(m)]
+    heads = [i for i in range(start + 1, end) if depths[i] == 2 and strip_comment(lines[i]).strip()]
+    if len(heads) == 1 and re.match(r"\t\tOR\s*=\s*\{\s*$", strip_comment(lines[heads[0]])):
+        close = next(j for j in range(heads[0] + 1, end) if depths[j + 1] == 2)  # the OR's closing line
+        lines[close:close] = gate
+        return
+    body = ["\t\t" + l if l.strip() else l for l in lines[start + 1:end]]
+    lines[start + 1:end] = ["\t\tOR = {", "\t\t\tAND = {"] + body + ["\t\t\t}"] + gate + ["\t\t}"]
+
+
 def upper_level(m: dict, level: int, key: str, next_key, top: str, root, values: dict, warnings: list) -> str:
     """A new upper level of an Anbennar chain: Anbennar's `top` level renamed, with EU4 tier `level` merged as in
-    override(), cost and time from the tier, next_building set (removed at the end of the chain), the EU4 gate
-    added to can_construct only (is_enabled would also switch off Anbennar's own effects), and vanilla's
-    free-building-slot guard added to Anbennar's ai_value."""
+    override(), cost and time from the tier (not below the previous level's), next_building set (removed at the end
+    of the chain), the EU4 gate added to can_construct only (is_enabled would also switch off Anbennar's own
+    effects; as an extra requirement, or as an alternative to Anbennar's when the monument's gate_mode is "or"),
+    and vanilla's free-building-slot guard added to Anbennar's ai_value."""
     tier = m["tiers"][level - 1]
     note = f"# Anbennar Overhaul: EU4 tier {level}"
     lines = override(anbennar_definition(root, top), key, tier, next_key, level, values, warnings).rstrip(NL).split(NL)
     if not next_key:
         depths = depths_of(lines)
         lines = [l for i, l in enumerate(lines) if not (depths[i] == 1 and re.match(r"\tnext_building\s*=", l))]
-    set_line(lines, "cost_gold", tier["cost"], note)
-    set_line(lines, "construction_time", tier["days"], note)
+    for name in UPGRADE_FIELDS:
+        raw, _, why = upgrade_value(m, level, name, top, root, values, warnings)
+        set_line(lines, name, raw, note + why)
     if m["gate"]:
         found = find_block(lines, "can_construct")
-        if found:
+        if m.get("gate_mode") == "or":
+            if not found:
+                raise GeneratorError(f"monument {m['eu4_key']}: gate_mode or needs a can_construct on {top}")
+            or_gate(lines, found, m)
+        elif found:
             lines[found[1]:found[1]] = ["\t\t# Anbennar Overhaul: EU4 culture gate"] + gate_body(m)
         else:
             at = insert_point(lines)
