@@ -575,7 +575,7 @@ class ArtTests(unittest.TestCase):
                 self.assertEqual((w, h), (300, 150))
 
     def test_custom_loc_entry_per_monument_with_art(self):
-        cl = FILES["common/customizable_localization/aov_monument_illustration.txt"]
+        cl = bm.render_shared()["common/customizable_localization/aov_monument_illustration.txt"]
         self.assertIn("type = province", cl)
         for m in MONUMENTS:
             if m["art"]:
@@ -586,6 +586,45 @@ class ArtTests(unittest.TestCase):
     def test_art_loc_holds_texture_path(self):
         key = next(m["eu4_key"] for m in MONUMENTS if m["art"])
         self.assertIn(f' aov_monument_art_{key}: "gfx/interface/illustrations/aov_monuments/{key}.dds"', L)
+
+@unittest.skipUnless(LIVE, "needs Anbennar CK3")
+class RegionTests(unittest.TestCase):
+    def test_regions(self):
+        self.assertEqual(bm.REGIONS, ("cannor", "dwarovar"))
+
+    def test_dwarovar_files(self):
+        files = bm.render_all("dwarovar")
+        self.assertIn("common/buildings/aov_monuments_dwarovar.txt", files)
+        self.assertIn("history/provinces/aov_monuments_dwarovar.txt", files)
+        self.assertIn("localization/english/aov_monuments_dwarovar_l_english.yml", files)
+        self.assertNotIn("common/buildings/zz_aov_monument_overrides_dwarovar.txt", files)  # no Anbennar levels
+        self.assertNotIn("common/customizable_localization/aov_monument_illustration.txt", files)  # shared
+        self.assertIn("aov_monument_khugdihr_bank_03 = {", files["common/buildings/aov_monuments_dwarovar.txt"])
+
+    def test_shared_illustration_covers_every_region(self):
+        cl = bm.render_shared()["common/customizable_localization/aov_monument_illustration.txt"]
+        for region in bm.REGIONS:
+            for m in bm.load_monuments(region):
+                if m["art"]:
+                    self.assertIn(f"localization_key = aov_monument_art_{m['eu4_key']}", cl)
+        self.assertEqual(cl.count("fallback = yes"), 1)
+
+    def test_province_unique_across_regions(self):
+        real = bm.load_monuments
+        cannor = real("cannor")
+        clash = [dict(real("dwarovar")[0], province=cannor[0]["province"])]
+        bm.load_monuments = lambda r: cannor if r == "cannor" else clash
+        try:
+            with self.assertRaises(bm.GeneratorError):
+                bm.render_shared()
+        finally:
+            bm.load_monuments = real
+
+    def test_written_files_are_fresh(self):
+        files = {**bm.render_all("dwarovar"), **bm.render_shared()}
+        for rel, text in files.items():
+            self.assertEqual((bm.SUBMOD / rel).read_bytes().decode("utf-8-sig"), text.replace("\r\n", "\n"), rel)
+
 
 
 if __name__ == "__main__":

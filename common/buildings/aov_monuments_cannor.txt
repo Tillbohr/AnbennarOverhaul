@@ -8281,6 +8281,24 @@ aov_monument_rubyhold_academy_01 = {
 		building_requirement_tribal = no
 	}
 
+	can_construct = {
+		scope:holder = {
+			custom_tooltip = {
+				text = aov_monument_rubyhold_academy_gate
+				OR = { culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
+			}
+		}
+	}
+
+	is_enabled = {
+		scope:holder = {
+			custom_tooltip = {
+				text = aov_monument_rubyhold_academy_gate
+				OR = { culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
+			}
+		}
+	}
+
 	cost_gold = 400
 
 	county_modifier = {
@@ -8315,6 +8333,24 @@ aov_monument_rubyhold_academy_02 = {
 		building_requirement_tribal = no
 	}
 
+	can_construct = {
+		scope:holder = {
+			custom_tooltip = {
+				text = aov_monument_rubyhold_academy_gate
+				OR = { culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
+			}
+		}
+	}
+
+	is_enabled = {
+		scope:holder = {
+			custom_tooltip = {
+				text = aov_monument_rubyhold_academy_gate
+				OR = { culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
+			}
+		}
+	}
+
 	cost_gold = 1400
 
 	county_modifier = {
@@ -8347,6 +8383,24 @@ aov_monument_rubyhold_academy_03 = {
 
 	can_construct_potential = {
 		building_requirement_tribal = no
+	}
+
+	can_construct = {
+		scope:holder = {
+			custom_tooltip = {
+				text = aov_monument_rubyhold_academy_gate
+				OR = { culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
+			}
+		}
+	}
+
+	is_enabled = {
+		scope:holder = {
+			custom_tooltip = {
+				text = aov_monument_rubyhold_academy_gate
+				OR = { culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
+			}
+		}
 	}
 
 	cost_gold = 2800
@@ -8687,7 +8741,7 @@ aov_monument_silverforge_strongbellow_academy_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_silverforge_strongbellow_academy_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
 			}
 		}
 	}
@@ -8696,7 +8750,7 @@ aov_monument_silverforge_strongbellow_academy_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_silverforge_strongbellow_academy_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
 			}
 		}
 	}
@@ -8742,7 +8796,7 @@ aov_monument_silverforge_strongbellow_academy_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_silverforge_strongbellow_academy_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
 			}
 		}
 	}
@@ -8751,7 +8805,7 @@ aov_monument_silverforge_strongbellow_academy_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_silverforge_strongbellow_academy_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
 			}
 		}
 	}
@@ -8798,7 +8852,7 @@ aov_monument_silverforge_strongbellow_academy_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_silverforge_strongbellow_academy_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
 			}
 		}
 	}
@@ -8807,7 +8861,7 @@ aov_monument_silverforge_strongbellow_academy_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_silverforge_strongbellow_academy_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
 			}
 		}
 	}

@@ -304,6 +304,18 @@ class ConversionTests(unittest.TestCase):
         self.assertEqual(len(notes), 2)
         self.assertTrue(all("negated" in n for n in notes))
 
+    def test_scripted_gates_expand_to_atoms(self):
+        # Dwarven Monuments gate through its own scripted triggers: the culture one expands to its atoms; the dig
+        # level one has no CK3 equivalent yet (hold digging) and is noted
+        body = """AND = { custom_trigger_tooltip = { dwarven_monuments_has_dig_level_2_or_higher = yes }
+                  custom_trigger_tooltip = { dwarven_monuments_has_acceptable_culture_or_race = yes } }"""
+        gate, desc, notes = imp.translate_gate(body, {})
+        self.assertEqual(gate, "OR = { culture = { has_cultural_pillar = heritage_dwarven } "
+                               "culture = { has_cultural_pillar = heritage_kobold } }")
+        self.assertIn("gate atom culture_group:goblin ignored (no CK3 equivalent)", notes)
+        self.assertTrue(any("dig level" in n for n in notes), notes)
+        self.assertFalse([n for n in notes if n.endswith("not in the translation table")], notes)
+
     def test_gate_desc_uses_ck3_names(self):  # final review 6
         ck3 = {"moon_elvish": "Moon Elvish", "heritage_damesheader_name": "Damesheader",
                "cannorian_pantheon_religion": "Cannorian Pantheon", "blue_reachman": "Blue Reachman",
@@ -374,6 +386,70 @@ class LiveTests(unittest.TestCase):
                 self.assertEqual(set(t), {"province_modifier", "county_modifier", "character_modifier",
                                           "on_complete", "cost", "days", "dropped"})
 
+
+
+class RegionTests(unittest.TestCase):
+    """Which EU4 projects a region builds, and why the others are left out."""
+
+    def proj(self, key, file="dwarven.txt", type_="monument"):
+        return em.Project(key=key, source="dwarven", file=file, start=1, year=1, type=type_, starting_tier=1,
+                          gate="", tiers=[em.Tier(), em.Tier(), em.Tier()])
+
+    def test_regions(self):
+        self.assertEqual(imp.REGIONS["cannor"]["superregions"], em.CANNOR)
+        self.assertEqual(imp.REGIONS["dwarovar"]["superregions"],
+                         ("west_serpentspine_superregion", "east_serpentspine_superregion"))
+
+    def test_dwarovar_exclusions(self):
+        titles = {"seghdihr": "c_seghdihr"}
+        classify = lambda p, name: imp.exclusion(p, "dwarovar", name, titles)  # noqa: E731
+        self.assertIsNone(classify(self.proj("seghdihr_home"), "Seghdihr"))
+        self.assertEqual(classify(self.proj("dd_x", file=imp.DUNGEON_FILE), "Seghdihr"), imp.DUNGEON)
+        self.assertEqual(classify(self.proj("t", type_="canal"), "Seghdihr"), imp.CANAL)
+        self.assertEqual(classify(self.proj("amlharaz_assembly"), "Amlharaz"), imp.OFF_MAP)
+
+    def test_mission_monument_on_shared_placeholder_is_excluded(self):
+        # EU4's Insyaa mission monuments all carry `# start = 2864`, a placeholder, not a location
+        p = self.proj("fires_beneath")
+        p.mission, p.start = True, 2864
+        self.assertEqual(imp.exclusion(p, "dwarovar", "Dwarovrod | 1 |", {"dwarovrod1": "c_dwarovrod1"},
+                                       placeholder_starts={2864}), imp.PLACEHOLDER)
+        self.assertEqual(imp.placeholder_starts([p, p]), {2864})
+        self.assertEqual(imp.placeholder_starts([p]), set())
+
+    def test_cannor_keeps_unmatched_projects(self):
+        # Cannor places unmatched projects through COUNTY_OVERRIDES / hand baronies, so it never excludes them
+        self.assertIsNone(imp.exclusion(self.proj("the_dragonhoard"), "cannor", "Deeb Kobilderd", {}))
+
+
+@unittest.skipUnless(LIVE, "needs EU4 and Anbennar CK3")
+class DwarovarLiveTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.data = imp.run("dwarovar")
+
+    def test_five_hold_monuments(self):
+        self.assertEqual({m["eu4_key"] for m in self.data["MONUMENTS"]}, {
+            "seghdihr_home_of_the_seg_band", "verkal_gulan_golden_delve", "hehodovar_school_of_architecture",
+            "gor_ozumbrog_the_topaz_throne", "khugdihr_bank"})
+
+    def test_every_serpentspine_project_accounted_for(self):
+        supers = em.province_superregions(em.EU4_ROOTS["anbennar"])
+        region = {k for k, p in em.load_projects(em.EU4_ROOTS).items()
+                  if supers.get(p.start) in imp.REGIONS["dwarovar"]["superregions"]}
+        self.assertEqual({m["eu4_key"] for m in self.data["MONUMENTS"]} | set(self.data["EXCLUDED"]), region)
+        reasons = set(self.data["EXCLUDED"].values())
+        self.assertTrue(reasons <= {imp.DUNGEON, imp.CANAL, imp.OFF_MAP, imp.PLACEHOLDER}, reasons)
+        for key in ("deepest", "fires_beneath", "fluvial_waterworks", "grasswhirlpool"):
+            self.assertEqual(self.data["EXCLUDED"][key], imp.PLACEHOLDER, key)
+        self.assertTrue(all(v == imp.DUNGEON for k, v in self.data["EXCLUDED"].items() if k.startswith("dd_")))
+
+    def test_placed_on_free_baronies(self):
+        slots = imp.anbennar_slots(ANBENNAR_CK3)
+        provinces = [m["province"] for m in self.data["MONUMENTS"]]
+        self.assertTrue(all(provinces))
+        self.assertEqual(len(set(provinces)), len(provinces))
+        self.assertFalse(set(provinces) & set(slots))
 
 if __name__ == "__main__":
     unittest.main()
