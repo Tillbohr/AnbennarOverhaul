@@ -1,6 +1,8 @@
 """Hand-made fields for the Cannor great projects; kept verbatim across re-imports of cannor.py.
 
-HAND[eu4_key] may replace barony, category, desc, levels, gate, gate_desc and notes wholesale, and may hold
+HAND[eu4_key] may replace barony, category, desc, levels, gate, gate_desc and notes wholesale, may set gate_mode
+("or": on the new upper levels of an Anbennar chain the EU4 gate is an alternative to Anbennar's can_construct
+instead of an extra requirement), and may hold
 `tiers`: a list of 3 dicts (block name -> {ck3 key: value}) merged over the imported tier blocks key by key
 (a value of None removes the key).
 """
@@ -498,7 +500,8 @@ HAND = {'aelcandar': {'desc': 'Aelcandar, another great work by Calasandur the M
                             'has been hewn into the stone over the millennia, creating a veritable '
                             'labyrinth. It is rumored that even the Neratic priesthood is not entirely '
                             'familiar with the full extent of this maze, filled with corseted corpses, some '
-                            'of whom seem to be aware of every sign of movement disturbing their rest.'},
+                            'of whom seem to be aware of every sign of movement disturbing their rest.',
+                    'gate_mode': 'or'},
  'the_north_citadel': {'desc': 'Built at the base of the Trialmount, the North Citadel served as the court '
                                "of Castanor's emperors for centuries. It was from here that they would begin "
                                'their journey up the Trialmount, undertaking the Trials of Castan, and it '
