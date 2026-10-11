@@ -1,8 +1,88 @@
 ﻿# Anbennar Overhaul: dwarven hold effects.
 
-# Province scope. Task 6 (the Delving Campaign activity) extends this to also end the hold's running campaign.
+# Province scope. Ends the hold's running Delving Campaign, if any; its progress is lost.
 aov_hold_end_campaign_effect = {
 	remove_variable = aov_dig_in_progress
+	save_temporary_scope_as = aov_ending_hold
+	every_activity = {
+		limit = {
+			has_activity_type = activity_hold_dig
+			activity_location = scope:aov_ending_hold
+		}
+		save_temporary_scope_as = aov_ending_campaign
+		activity_host = { invalidate_activity = scope:aov_ending_campaign }
+	}
+}
+
+# Activity scope (a Delving Campaign at its breakthrough). Adds the campaign's progress to the hold; on reaching
+# the target the hold rises one level, keeping the surplus.
+aov_hold_apply_campaign_effect = {
+	save_scope_as = dig_activity
+	var:aov_dig_hold = {
+		save_scope_as = hold_province
+		barony = { save_scope_as = hold_title }
+		if = {
+			limit = { NOT = { has_variable = aov_dig_progress } }
+			set_variable = { name = aov_dig_progress value = 0 }
+		}
+		change_variable = { name = aov_dig_progress add = scope:dig_activity.var:aov_campaign_progress }
+		save_scope_value_as = { name = aov_campaign_gain value = scope:dig_activity.var:aov_campaign_progress }
+		if = {
+			limit = {
+				aov_hold_level < 10
+				var:aov_dig_progress >= aov_dig_target
+			}
+			change_variable = { name = aov_dig_progress subtract = aov_dig_target }
+			if = {
+				limit = { aov_hold_level = 1 }
+				add_building = dwarven_hold_02
+			}
+			else_if = {
+				limit = { aov_hold_level = 2 }
+				add_building = dwarven_hold_03
+			}
+			else_if = {
+				limit = { aov_hold_level = 3 }
+				add_building = dwarven_hold_04
+			}
+			else_if = {
+				limit = { aov_hold_level = 4 }
+				add_building = dwarven_hold_05
+			}
+			else_if = {
+				limit = { aov_hold_level = 5 }
+				add_building = dwarven_hold_06
+			}
+			else_if = {
+				limit = { aov_hold_level = 6 }
+				add_building = dwarven_hold_07
+			}
+			else_if = {
+				limit = { aov_hold_level = 7 }
+				add_building = dwarven_hold_08
+			}
+			else_if = {
+				limit = { aov_hold_level = 8 }
+				add_building = dwarven_hold_09
+			}
+			else_if = {
+				limit = { aov_hold_level = 9 }
+				add_building = dwarven_hold_10
+			}
+			scope:dig_activity.activity_host = { trigger_event = aov_hold_dig.100 }
+		}
+		else = {
+			save_scope_value_as = {
+				name = aov_dig_remaining
+				value = {
+					value = aov_dig_target
+					subtract = var:aov_dig_progress
+				}
+			}
+			scope:dig_activity.activity_host = { trigger_event = aov_hold_dig.101 }
+		}
+		remove_variable = aov_dig_in_progress
+	}
 }
 
 # Province scope, a hold just conquered by a non-dwarf. Scope:previous_holder is the loser, if any.

@@ -1,0 +1,70 @@
+﻿namespace = aov_hold_dig
+
+# Breakthrough at a hold: the Delving Campaign raised it one level (scope:hold_province, scope:hold_title).
+aov_hold_dig.100 = {
+	type = character_event
+	title = aov_hold_dig.100.t
+	desc = {
+		desc = aov_hold_dig.100.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:aov_discovery = flag:gems }
+				desc = aov_hold_dig.100.desc.gems
+			}
+			triggered_desc = {
+				trigger = { scope:aov_discovery = flag:vein }
+				desc = aov_hold_dig.100.desc.vein
+			}
+			desc = aov_hold_dig.100.desc.lore
+		}
+	}
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	immediate = {
+		random_list = {
+			1 = { save_scope_value_as = { name = aov_discovery value = flag:gems } }
+			1 = { save_scope_value_as = { name = aov_discovery value = flag:vein } }
+			1 = { save_scope_value_as = { name = aov_discovery value = flag:lore } }
+		}
+	}
+
+	option = {
+		name = aov_hold_dig.100.a
+		if = {
+			limit = { scope:aov_discovery = flag:gems }
+			add_gold = {
+				value = scope:hold_province.aov_hold_level
+				multiply = 25
+			}
+		}
+		else_if = {
+			limit = { scope:aov_discovery = flag:vein }
+			scope:hold_province.county = {
+				add_county_modifier = {
+					modifier = aov_hold_rich_vein
+					years = 10
+				}
+			}
+		}
+		else = {
+			add_learning_lifestyle_xp = 500
+		}
+	}
+}
+
+# The campaign ended without a new level (scope:hold_province, scope:hold_title, scope:aov_campaign_gain,
+# scope:aov_dig_remaining).
+aov_hold_dig.101 = {
+	type = character_event
+	title = aov_hold_dig.101.t
+	desc = aov_hold_dig.101.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	option = {
+		name = aov_hold_dig.101.a
+	}
+}

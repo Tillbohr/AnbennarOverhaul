@@ -1,0 +1,341 @@
+﻿# Anbennar Overhaul: the Delving Campaign, a dwarven ruler's dig to raise a hold one level.
+# Spec: docs/superpowers/specs/2026-10-10-dwarven-hold-digging-design.md ("Digging: the Delving Campaign").
+# Pace and investment factors and costs mirror tools/data/holds.py (PACE, INVESTMENT, PHASE_MONTHS).
+# Art: vanilla copies under gfx/interface/icons/{activities,activity_phases,activity_option_categories}/ and
+# gfx/interface/illustrations/activity_header_backgrounds/ (activity_survey, imperial_examination_phase_examination,
+# pilgrimage_phase_solo, imperial_examination_phase_assembly, tour_phase_tour_grounds,
+# roaming_option_travel_length, inspection_option_allocated_funds); the background is vanilla fp3_cave.
+
+activity_hold_dig = {
+	# Root = the character who would host.
+	is_shown = {
+		is_dwarvish_culture = yes
+		is_landed = yes
+		any_held_title = {
+			tier = tier_barony
+			title_province ?= { aov_is_hold = yes }
+		}
+	}
+
+	can_always_plan = no
+
+	# Root = the host. A working hold below level 10 that the host holds and can pay for.
+	can_start = {
+		save_temporary_scope_as = digger
+		is_at_war = no
+		custom_tooltip = {
+			text = aov_hold_dig_can_start_hold_tt
+			any_held_title = {
+				tier = tier_barony
+				title_province ?= {
+					aov_can_dig_at = yes
+					scope:digger.gold >= aov_dig_campaign_cost
+				}
+			}
+		}
+	}
+
+	can_start_showing_failures_only = {
+		is_available_adult = yes
+	}
+
+	# Root = the activity. War alone does not end a running campaign.
+	is_valid = {
+		scope:host = { is_alive = yes }
+		activity_location = {
+			aov_hold_is_working = yes
+			barony.holder = scope:host
+			is_occupied = no
+			NOT = {
+				any_army_in_location = { is_army_in_siege = yes }
+			}
+		}
+	}
+
+	# Root = the activity. The campaign ends early and its progress is lost.
+	on_invalidated = {
+		var:aov_dig_hold ?= { remove_variable = aov_dig_in_progress }
+	}
+
+	on_host_death = {
+		var:aov_dig_hold ?= { remove_variable = aov_dig_in_progress }
+	}
+
+	province_filter = domain
+	ai_province_filter = domain
+	max_province_icons = 3
+
+	# Root = the province, scope:host = the host.
+	is_location_valid = {
+		scope:host = { save_temporary_scope_as = digger }
+		aov_can_dig_at = yes
+		barony.holder = scope:host
+	}
+
+	province_score = {
+		value = 10
+	}
+
+	ai_will_select_province = {
+		value = 10
+	}
+
+	cost = {
+		gold = {
+			value = 0
+			if = {
+				limit = { exists = scope:province }
+				add = {
+					value = scope:province.aov_dig_campaign_cost
+					desc = aov_hold_dig_base_cost
+				}
+			}
+		}
+	}
+
+	# The cheapest hold the host could dig at (500, the level 10 cost, is an upper bound).
+	ui_predicted_cost = {
+		gold = {
+			value = 500
+			every_held_title = {
+				limit = {
+					tier = tier_barony
+					title_province ?= {
+						aov_hold_is_working = yes
+						aov_hold_level < 10
+					}
+				}
+				max = title_province.aov_dig_campaign_cost
+			}
+		}
+	}
+
+	options = {
+		aov_dig_pace = {
+			aov_dig_pace_careful = {
+				ai_will_do = {
+					value = 10
+					if = {
+						limit = { has_trait = craven }
+						add = 20
+					}
+				}
+			}
+			aov_dig_pace_steady = {
+				default = yes
+				ai_will_do = { value = 30 }
+			}
+			aov_dig_pace_reckless = {
+				ai_will_do = {
+					value = 10
+					if = {
+						limit = { has_trait = impatient }
+						add = 20
+					}
+				}
+			}
+		}
+		aov_dig_investment = {
+			aov_dig_investment_none = {
+				default = yes
+				ai_will_do = { value = 30 }
+			}
+			aov_dig_investment_generous = {
+				cost = {
+					gold = {
+						add = {
+							value = 100
+							desc = aov_dig_investment_generous
+						}
+					}
+				}
+				ai_will_do = {
+					value = 0
+					if = {
+						limit = { gold >= 600 }
+						add = 20
+					}
+				}
+			}
+			aov_dig_investment_lavish = {
+				cost = {
+					gold = {
+						add = {
+							value = 250
+							desc = aov_dig_investment_lavish
+						}
+					}
+				}
+				ai_will_do = {
+					value = 0
+					if = {
+						limit = { gold >= 1500 }
+						add = 20
+					}
+				}
+			}
+		}
+	}
+
+	phases = {
+		aov_dig_survey = {
+			is_predefined = yes
+			order = 1
+			location_source = pickable
+
+			on_phase_active = {
+				if = {
+					limit = { this = scope:host }
+					scope:activity = { progress_activity_phase_after = { months = 3 } }
+					if = {
+						limit = { is_ai = no }
+						trigger_event = { on_action = aov_hold_dig_survey_pulse days = { 30 60 } }
+					}
+				}
+			}
+		}
+		aov_dig_excavation = {
+			is_predefined = yes
+			order = 2
+			location_source = pickable
+
+			on_phase_active = {
+				if = {
+					limit = { this = scope:host }
+					scope:activity = { progress_activity_phase_after = { months = 12 } }
+					if = {
+						limit = { is_ai = no }
+						trigger_event = { on_action = aov_hold_dig_excavation_pulse days = { 30 60 } }
+					}
+				}
+			}
+		}
+		aov_dig_shoring = {
+			is_predefined = yes
+			order = 3
+			location_source = pickable
+
+			on_phase_active = {
+				if = {
+					limit = { this = scope:host }
+					scope:activity = { progress_activity_phase_after = { months = 6 } }
+					if = {
+						limit = { is_ai = no }
+						trigger_event = { on_action = aov_hold_dig_shoring_pulse days = { 30 60 } }
+					}
+				}
+			}
+		}
+		aov_dig_breakthrough = {
+			is_predefined = yes
+			order = 4
+			location_source = pickable
+
+			on_phase_active = {
+				if = {
+					limit = { this = scope:host }
+					scope:activity = { progress_activity_phase_after = { months = 1 } }
+					scope:activity = { aov_hold_apply_campaign_effect = yes }
+				}
+			}
+		}
+	}
+
+	# Root = the activity. Progress = the host's base x pace x investment.
+	on_start = {
+		set_variable = { name = aov_campaign_progress value = scope:host.aov_dig_campaign_base }
+		if = {
+			limit = {
+				has_activity_option = { category = aov_dig_pace option = aov_dig_pace_careful }
+			}
+			change_variable = { name = aov_campaign_progress multiply = 0.75 }
+		}
+		else_if = {
+			limit = {
+				has_activity_option = { category = aov_dig_pace option = aov_dig_pace_reckless }
+			}
+			change_variable = { name = aov_campaign_progress multiply = 1.35 }
+		}
+		if = {
+			limit = {
+				has_activity_option = { category = aov_dig_investment option = aov_dig_investment_generous }
+			}
+			change_variable = { name = aov_campaign_progress multiply = 1.25 }
+		}
+		else_if = {
+			limit = {
+				has_activity_option = { category = aov_dig_investment option = aov_dig_investment_lavish }
+			}
+			change_variable = { name = aov_campaign_progress multiply = 1.5 }
+		}
+		set_variable = { name = aov_dig_hold value = activity_location }
+		activity_location = {
+			set_variable = aov_dig_in_progress
+		}
+	}
+
+	# Root = the evaluating character. Never spends below twice the campaign's cost.
+	ai_will_do = {
+		value = 0
+		if = {
+			limit = {
+				save_temporary_scope_as = digger
+				any_held_title = {
+					tier = tier_barony
+					title_province ?= {
+						aov_can_dig_at = yes
+						scope:digger.gold >= { value = aov_dig_campaign_cost multiply = 2 }
+					}
+				}
+			}
+			add = 20
+			add = stewardship
+			if = {
+				limit = { has_trait = diligent }
+				add = 20
+			}
+			if = {
+				limit = { has_trait = greedy }
+				add = 10
+			}
+			if = {
+				limit = { has_trait = lazy }
+				add = -20
+			}
+		}
+	}
+
+	ai_check_interval = 12
+
+	max_guests = 0
+	allow_zero_guest_invites = yes
+	open_invite = no
+
+	host_intents = {
+		intents = { reduce_stress_intent }
+		default = reduce_stress_intent
+	}
+
+	guest_intents = {
+		intents = { reduce_stress_intent }
+		default = reduce_stress_intent
+	}
+
+	background = {
+		texture = "gfx/interface/illustrations/event_scenes/fp3_cave.dds"
+		environment = "environment_event_sittingroom"
+		ambience = "event:/SFX/Events/Backgrounds/dungeon"
+	}
+
+	window_characters = {
+		host = {
+			camera = camera_body
+
+			effect = {
+				scope:host = { add_to_list = characters }
+			}
+
+			animation = idle
+		}
+	}
+}

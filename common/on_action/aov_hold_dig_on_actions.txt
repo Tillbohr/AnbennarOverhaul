@@ -1,0 +1,12 @@
+﻿# Anbennar Overhaul: Delving Campaign event pulses. Root = the host (players only), scheduled by the
+# activity's first three phases (common/activities/activity_types/aov_hold_dig.txt). Each pulse picks one
+# event for its phase; the events are added with the dig events (events/aov_hold_dig_events.txt).
+
+aov_hold_dig_survey_pulse = {
+}
+
+aov_hold_dig_excavation_pulse = {
+}
+
+aov_hold_dig_shoring_pulse = {
+}
