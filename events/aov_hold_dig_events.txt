@@ -1,5 +1,488 @@
 ﻿namespace = aov_hold_dig
 
+# Random dig events, one per pulse, player campaigns only (root = the host, activity = involved_activity;
+# progress changes are capped at 20 either way). Chosen by common/on_action/aov_hold_dig_on_actions.txt.
+aov_hold_dig.1 = {
+	type = character_event
+	title = aov_hold_dig.1.t
+	desc = aov_hold_dig.1.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = involved_activity
+		involved_activity = { has_activity_type = activity_hold_dig }
+		involved_activity = { has_variable = aov_campaign_progress }
+	}
+
+	immediate = {
+		involved_activity = { save_scope_as = activity }
+		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+	}
+
+	option = {
+		name = aov_hold_dig.1.a
+		scope:activity = { change_variable = { name = aov_campaign_progress add = 10 } }
+	}
+
+	option = {
+		name = aov_hold_dig.1.b
+		trigger = { gold >= 60 }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = 60
+		scope:activity = { change_variable = { name = aov_campaign_progress add = 16 } }
+	}
+
+	option = {
+		name = aov_hold_dig.1.c
+		scope:activity = { change_variable = { name = aov_campaign_progress add = 3 } }
+		add_prestige = 25
+	}
+}
+
+aov_hold_dig.2 = {
+	type = character_event
+	title = aov_hold_dig.2.t
+	desc = aov_hold_dig.2.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = involved_activity
+		involved_activity = { has_activity_type = activity_hold_dig }
+		involved_activity = { has_variable = aov_campaign_progress }
+	}
+
+	immediate = {
+		involved_activity = { save_scope_as = activity }
+		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+	}
+
+	option = {
+		name = aov_hold_dig.2.a
+		trigger = { gold >= 80 }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = 80
+		scope:activity = { change_variable = { name = aov_campaign_progress add = -2 } }
+		scope:activity = { aov_dig_floor_progress = yes }
+	}
+
+	option = {
+		name = aov_hold_dig.2.b
+		scope:activity = { change_variable = { name = aov_campaign_progress add = -8 } }
+		scope:activity = { aov_dig_floor_progress = yes }
+	}
+
+	option = {
+		name = aov_hold_dig.2.c
+		scope:activity = { change_variable = { name = aov_campaign_progress add = -15 } }
+		add_prestige = 20
+		scope:activity = { aov_dig_floor_progress = yes }
+	}
+}
+
+aov_hold_dig.3 = {
+	type = character_event
+	title = aov_hold_dig.3.t
+	desc = aov_hold_dig.3.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = involved_activity
+		involved_activity = { has_activity_type = activity_hold_dig }
+		involved_activity = { has_variable = aov_campaign_progress }
+	}
+
+	immediate = {
+		involved_activity = { save_scope_as = activity }
+		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+	}
+
+	option = {
+		name = aov_hold_dig.3.a
+		trigger = { gold >= 70 }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = 70
+		scope:activity = { change_variable = { name = aov_campaign_progress add = 12 } }
+	}
+
+	option = {
+		name = aov_hold_dig.3.b
+		scope:activity = { change_variable = { name = aov_campaign_progress add = 14 } }
+		add_prestige = -25
+	}
+
+	option = {
+		name = aov_hold_dig.3.c
+		scope:activity = { change_variable = { name = aov_campaign_progress add = 4 } }
+		add_prestige = 15
+	}
+}
+
+aov_hold_dig.4 = {
+	type = character_event
+	title = aov_hold_dig.4.t
+	desc = aov_hold_dig.4.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = involved_activity
+		involved_activity = { has_activity_type = activity_hold_dig }
+		involved_activity = { has_variable = aov_campaign_progress }
+	}
+
+	immediate = {
+		involved_activity = { save_scope_as = activity }
+		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+	}
+
+	option = {
+		name = aov_hold_dig.4.a
+		add_gold = 120
+	}
+
+	option = {
+		name = aov_hold_dig.4.b
+		scope:activity = { change_variable = { name = aov_campaign_progress add = 15 } }
+	}
+
+	option = {
+		name = aov_hold_dig.4.c
+		add_gold = 50
+		scope:activity = { change_variable = { name = aov_campaign_progress add = 7 } }
+	}
+}
+
+aov_hold_dig.5 = {
+	type = character_event
+	title = aov_hold_dig.5.t
+	desc = aov_hold_dig.5.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = involved_activity
+		involved_activity = { has_activity_type = activity_hold_dig }
+		involved_activity = { has_variable = aov_campaign_progress }
+	}
+
+	immediate = {
+		involved_activity = { save_scope_as = activity }
+		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+	}
+
+	option = {
+		name = aov_hold_dig.5.a
+		trigger = { gold >= 100 }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = 100
+		scope:activity = { change_variable = { name = aov_campaign_progress add = -3 } }
+		scope:activity = { aov_dig_floor_progress = yes }
+	}
+
+	option = {
+		name = aov_hold_dig.5.b
+		scope:activity = { change_variable = { name = aov_campaign_progress add = -10 } }
+		scope:activity = { aov_dig_floor_progress = yes }
+	}
+
+	option = {
+		name = aov_hold_dig.5.c
+		scope:activity = { change_variable = { name = aov_campaign_progress add = -18 } }
+		scope:activity = { aov_dig_floor_progress = yes }
+	}
+}
+
+aov_hold_dig.6 = {
+	type = character_event
+	title = aov_hold_dig.6.t
+	desc = aov_hold_dig.6.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = involved_activity
+		involved_activity = { has_activity_type = activity_hold_dig }
+		involved_activity = { has_variable = aov_campaign_progress }
+	}
+
+	immediate = {
+		involved_activity = { save_scope_as = activity }
+		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+	}
+
+	option = {
+		name = aov_hold_dig.6.a
+		trigger = { gold >= 120 }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = 120
+		scope:activity = { change_variable = { name = aov_campaign_progress add = 2 } }
+	}
+
+	option = {
+		name = aov_hold_dig.6.b
+		scope:activity = { change_variable = { name = aov_campaign_progress add = -14 } }
+		add_prestige = -20
+		scope:activity = { aov_dig_floor_progress = yes }
+	}
+
+	option = {
+		name = aov_hold_dig.6.c
+		scope:activity = { change_variable = { name = aov_campaign_progress add = -6 } }
+		add_prestige = 20
+		scope:activity = { aov_dig_floor_progress = yes }
+	}
+}
+
+aov_hold_dig.7 = {
+	type = character_event
+	title = aov_hold_dig.7.t
+	desc = aov_hold_dig.7.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = involved_activity
+		involved_activity = { has_activity_type = activity_hold_dig }
+		involved_activity = { has_variable = aov_campaign_progress }
+	}
+
+	immediate = {
+		involved_activity = { save_scope_as = activity }
+		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+	}
+
+	option = {
+		name = aov_hold_dig.7.a
+		scope:activity = { change_variable = { name = aov_campaign_progress add = 12 } }
+	}
+
+	option = {
+		name = aov_hold_dig.7.b
+		scope:activity = { change_variable = { name = aov_campaign_progress add = 16 } }
+		add_prestige = -30
+	}
+
+	option = {
+		name = aov_hold_dig.7.c
+		scope:activity = { change_variable = { name = aov_campaign_progress add = 4 } }
+	}
+}
+
+aov_hold_dig.8 = {
+	type = character_event
+	title = aov_hold_dig.8.t
+	desc = aov_hold_dig.8.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = involved_activity
+		involved_activity = { has_activity_type = activity_hold_dig }
+		involved_activity = { has_variable = aov_campaign_progress }
+	}
+
+	immediate = {
+		involved_activity = { save_scope_as = activity }
+		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+	}
+
+	option = {
+		name = aov_hold_dig.8.a
+		duel = {
+			skill = prowess
+			value = 14
+			50 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = 3.5
+					min = -49
+				}
+				desc = aov_hold_dig.8.a.success
+				scope:activity = { change_variable = { name = aov_campaign_progress add = 14 } }
+				add_prestige = 25
+			}
+			50 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = -3.5
+					min = -49
+				}
+				desc = aov_hold_dig.8.a.failure
+				scope:activity = { change_variable = { name = aov_campaign_progress add = -12 } }
+				scope:activity = { aov_dig_floor_progress = yes }
+			}
+		}
+	}
+
+	option = {
+		name = aov_hold_dig.8.b
+		duel = {
+			skill = martial
+			value = 12
+			50 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = 3.5
+					min = -49
+				}
+				desc = aov_hold_dig.8.b.success
+				scope:activity = { change_variable = { name = aov_campaign_progress add = 12 } }
+				add_prestige = 25
+			}
+			50 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = -3.5
+					min = -49
+				}
+				desc = aov_hold_dig.8.b.failure
+				scope:activity = { change_variable = { name = aov_campaign_progress add = -10 } }
+				scope:activity = { aov_dig_floor_progress = yes }
+			}
+		}
+	}
+
+	option = {
+		name = aov_hold_dig.8.c
+		scope:activity = { change_variable = { name = aov_campaign_progress add = -6 } }
+		scope:activity = { aov_dig_floor_progress = yes }
+	}
+}
+
+aov_hold_dig.9 = {
+	type = character_event
+	title = aov_hold_dig.9.t
+	desc = aov_hold_dig.9.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = involved_activity
+		involved_activity = { has_activity_type = activity_hold_dig }
+		involved_activity = { has_variable = aov_campaign_progress }
+	}
+
+	immediate = {
+		involved_activity = { save_scope_as = activity }
+		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+	}
+
+	option = {
+		name = aov_hold_dig.9.a
+		trigger = { gold >= 100 }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = 100
+		scope:activity = { change_variable = { name = aov_campaign_progress add = -4 } }
+		add_prestige = 20
+		scope:activity = { aov_dig_floor_progress = yes }
+	}
+
+	option = {
+		name = aov_hold_dig.9.b
+		scope:activity = { change_variable = { name = aov_campaign_progress add = -16 } }
+		scope:activity = { aov_dig_floor_progress = yes }
+	}
+
+	option = {
+		name = aov_hold_dig.9.c
+		scope:activity = { change_variable = { name = aov_campaign_progress add = -10 } }
+		add_prestige = -20
+		scope:activity = { aov_dig_floor_progress = yes }
+	}
+}
+
+aov_hold_dig.10 = {
+	type = character_event
+	title = aov_hold_dig.10.t
+	desc = aov_hold_dig.10.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = involved_activity
+		involved_activity = { has_activity_type = activity_hold_dig }
+		involved_activity = { has_variable = aov_campaign_progress }
+	}
+
+	immediate = {
+		involved_activity = { save_scope_as = activity }
+		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+	}
+
+	option = {
+		name = aov_hold_dig.10.a
+		trigger = { gold >= 150 }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = 150
+		scope:activity = { change_variable = { name = aov_campaign_progress add = 18 } }
+	}
+
+	option = {
+		name = aov_hold_dig.10.b
+		scope:activity = { change_variable = { name = aov_campaign_progress add = 10 } }
+		add_learning_lifestyle_xp = 150
+	}
+
+	option = {
+		name = aov_hold_dig.10.c
+		scope:activity = { change_variable = { name = aov_campaign_progress add = 3 } }
+	}
+}
+
+aov_hold_dig.11 = {
+	type = character_event
+	title = aov_hold_dig.11.t
+	desc = aov_hold_dig.11.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = involved_activity
+		involved_activity = { has_activity_type = activity_hold_dig }
+		involved_activity = { has_variable = aov_campaign_progress }
+	}
+
+	immediate = {
+		involved_activity = { save_scope_as = activity }
+		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+	}
+
+	option = {
+		name = aov_hold_dig.11.a
+		trigger = { gold >= 90 }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = 90
+		scope:activity = { change_variable = { name = aov_campaign_progress add = 2 } }
+	}
+
+	option = {
+		name = aov_hold_dig.11.b
+		scope:activity = { change_variable = { name = aov_campaign_progress add = -10 } }
+		scope:activity = { aov_dig_floor_progress = yes }
+	}
+
+	option = {
+		name = aov_hold_dig.11.c
+		scope:activity = { change_variable = { name = aov_campaign_progress add = -5 } }
+		add_prestige = -15
+		scope:activity = { aov_dig_floor_progress = yes }
+	}
+}
+
 # Breakthrough at a hold: the Delving Campaign raised it one level (scope:hold_province, scope:hold_title).
 aov_hold_dig.100 = {
 	type = character_event
