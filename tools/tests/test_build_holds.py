@@ -91,6 +91,49 @@ class ValueAndLocTests(unittest.TestCase):
                 self.assertIn(f" {k}:0 \"", loc)
 
 
+class SetupTests(unittest.TestCase):
+    def block_for(self, name):
+        t = bh.render_setup()
+        m = re.search(r"\t# " + re.escape(name) + r"\n(.*?)\n\t\}\n", t, re.S)
+        return m.group(1)
+
+    def test_setup_covers_every_hold(self):
+        t = bh.render_setup()
+        for h in holds.HOLDS:
+            self.assertIn(f"title:{h['barony']}.title_province", t)
+        self.assertEqual(t.count("set_variable = aov_hold_ruined"), 1)
+        self.assertEqual(t.count("aov_dig_progress"), len(holds.HOLDS))
+        self.assertIn("add_building = dwarven_hold_02", self.block_for("Rubyhold"))
+        self.assertNotIn("add_building = dwarven_hold_02", self.block_for("Anvilwright"))
+        self.assertIn("aov_ruined_hold", self.block_for("Khugdihr"))
+
+    def test_conversion_keeps_special_buildings(self):
+        t = bh.render_setup()
+        self.assertNotIn("remove_building", t)
+        self.assertNotIn("special_building", t)
+        self.assertEqual(t.count("set_holding_type"), len(holds.HOLDS))
+        # the setup text never mentions a special building, so the history slots of the baronies stay as they are
+        self.assertNotIn("special_building_slot", t)
+
+    def test_game_start_hooks_setup(self):
+        t = (SUBMOD / "common/on_action/aov_hold_on_actions.txt").read_text(encoding="utf-8-sig")
+        self.assertRegex(t, r"on_game_start = \{\s*on_actions = \{ aov_hold_game_start \}")
+        self.assertRegex(t, r"aov_hold_game_start = \{\s*effect = \{\s*aov_hold_setup_effect = yes")
+
+    def test_modifiers_match_data(self):
+        t = bh.render_modifiers()
+        for k, v in holds.RUINED_MODIFIER.items():
+            self.assertIn(f"{k} = {bh.fmt(v)}", t)
+        for key in ("aov_ruined_hold", "aov_restoring_hold", "aov_hold_rich_vein"):
+            self.assertIn(f"{key} = {{", t)
+            self.assertIn(f" {key}_desc:0", bh.render_loc())
+
+    def test_triggers_defined(self):
+        t = (SUBMOD / "common/scripted_triggers/aov_hold_triggers.txt").read_text(encoding="utf-8-sig")
+        for k in ("aov_is_hold", "aov_hold_is_ruined", "aov_hold_is_working", "aov_can_dig_at"):
+            self.assertIn(f"{k} = {{", t)
+
+
 @unittest.skipUnless(LIVE, "Anbennar CK3 not present")
 class FreshTests(unittest.TestCase):
     def test_written_files_are_fresh(self):

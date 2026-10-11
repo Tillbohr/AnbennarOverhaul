@@ -1,0 +1,11 @@
+﻿# Anbennar Overhaul: dwarven hold on_actions, appended to vanilla on_actions.
+
+on_game_start = {
+	on_actions = { aov_hold_game_start }
+}
+
+aov_hold_game_start = {
+	effect = {
+		aov_hold_setup_effect = yes
+	}
+}

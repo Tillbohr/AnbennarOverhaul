@@ -21,6 +21,8 @@ ICON = "icon_building_ramparts.dds"
 BUILDINGS_PATH = "common/buildings/aov_dwarven_holds.txt"
 VALUES_PATH = "common/script_values/aov_hold_values.txt"
 LOC_PATH = "localization/english/aov_holds_l_english.yml"
+SETUP_PATH = "common/scripted_effects/aov_hold_setup_effects.txt"
+MODIFIERS_PATH = "common/modifiers/aov_hold_modifiers.txt"
 
 LEVEL_PROVINCE = ("fort_level", "defender_holding_advantage", "garrison_size", "building_slot_add")
 LEVEL_COUNTY = ("levy_size", "tax_mult")
@@ -153,8 +155,40 @@ HOLDING_LOC = [
 ]
 
 
+def render_modifiers() -> str:
+    ruined = "".join(f"\t{k} = {fmt(v)}\n" for k, v in holds.RUINED_MODIFIER.items())
+    return (HEADER + "\n"
+            f"aov_ruined_hold = {{\n\ticon = economy_negative\n{ruined}}}\n\n"
+            "# Province modifier while a ruined hold is being restored; the effects come from the restoration.\n"
+            "aov_restoring_hold = {\n\ticon = economy_positive\n}\n\n"
+            "# County modifier from a rich vein found while digging.\n"
+            "aov_hold_rich_vein = {\n\ticon = economy_positive\n\ttax_mult = 0.1\n}\n")
+
+
+def render_setup() -> str:
+    blocks = []
+    for h in holds.HOLDS:
+        lines = [f"\t# {h['name']}", f"\ttitle:{h['barony']}.title_province = {{",
+                 "\t\tset_holding_type = dwarven_hold_holding"]
+        lines += [f"\t\tadd_building = {level_key(n)}" for n in range(2, h["start_level"] + 1)]
+        lines.append("\t\tset_variable = { name = aov_dig_progress value = 0 }")
+        if h["ruined"]:
+            lines += ["\t\tset_variable = aov_hold_ruined",
+                      "\t\tcounty = { add_county_modifier = { modifier = aov_ruined_hold } }"]
+        lines.append("\t}")
+        blocks.append("\n".join(lines))
+    return (HEADER + "\n# Converts the nine dwarven holds at game start. Special buildings are left alone.\n"
+            "aov_hold_setup_effect = {\n" + "\n".join(blocks) + "\n}\n")
+
+
 def loc_lines():
     out = list(HOLDING_LOC)
+    out += [' aov_ruined_hold:0 "Ruined Hold"',
+            ' aov_ruined_hold_desc:0 "The halls lie broken and empty, and the county gains little from them."',
+            ' aov_restoring_hold:0 "Hold Under Restoration"',
+            ' aov_restoring_hold_desc:0 "Dwarven masons are clearing and rebuilding the halls of this hold."',
+            ' aov_hold_rich_vein:0 "Rich Vein"',
+            ' aov_hold_rich_vein_desc:0 "The diggers struck a rich vein of ore."']
     for n in range(1, 11):
         key = level_key(n)
         desc = next(d for r, d in BAND_DESCS if n in r)
@@ -175,7 +209,8 @@ def render_loc() -> str:
 
 
 def render_all(root: Path = ANBENNAR) -> dict:
-    return {BUILDINGS_PATH: render_buildings(root), VALUES_PATH: render_values(), LOC_PATH: render_loc()}
+    return {BUILDINGS_PATH: render_buildings(root), VALUES_PATH: render_values(), LOC_PATH: render_loc(),
+            SETUP_PATH: render_setup(), MODIFIERS_PATH: render_modifiers()}
 
 
 def write_all(files: dict, root: Path = SUBMOD) -> None:
