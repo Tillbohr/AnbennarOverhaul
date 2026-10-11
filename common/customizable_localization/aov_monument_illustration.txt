@@ -508,6 +508,13 @@ AovMonumentIllustration = {
 	}
 
 	text = {
+		trigger = {
+			aov_hold_is_ruined = yes
+		}
+		localization_key = aov_monument_art_ruined_hold
+	}
+
+	text = {
 		fallback = yes
 		localization_key = aov_monument_art_none
 	}

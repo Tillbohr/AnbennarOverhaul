@@ -716,7 +716,7 @@ class ArtTests(unittest.TestCase):
         lines = bm.painting_backgrounds(bm.all_monuments())
         painted = len([m for m in bm.all_monuments() if m["art"]])
         self.assertEqual(bm.PAINTING_MARGIN_BOTTOM, 63)
-        self.assertEqual(lines.count("\tmargin_bottom = 63"), painted)
+        self.assertEqual(lines.count("\tmargin_bottom = 63"), painted + len(bm.EXTRA_ART))
         self.assertLessEqual(bm.MASK_FADE["top"], 0.06)
         self.assertEqual(bm.FRAME_CROP, 7)
 
@@ -804,7 +804,7 @@ class ArtTests(unittest.TestCase):
         self.assertNotIn("template", gui)
         self.assertNotIn("gui/aov_monument_paintings.gui", bm.render_shared())
         painted = [m for region in bm.REGIONS for m in bm.load_monuments(region) if m["art"]]
-        self.assertEqual(gui.count("background = {"), len(painted))
+        self.assertEqual(gui.count("background = {"), len(painted) + len(bm.EXTRA_ART))
         for m in painted:
             key = m["eu4_key"]
             self.assertIn(f'texture = "gfx/interface/illustrations/aov_monuments/{key}.dds"', gui)
@@ -812,6 +812,18 @@ class ArtTests(unittest.TestCase):
                           f"Localize('aov_monument_art_{key}') )]", gui)
         self.assertNotIn('texture = "[', gui)
         self.assertEqual(gui.count("{"), gui.count("}"))
+
+    def test_monument_painting_before_ruined_entry(self):
+        cl = bm.render_shared()[bm.SHARED]
+        self.assertLess(cl.index("aov_monument_art_khugdihr_bank"), cl.index("aov_monument_art_ruined_hold"))
+        self.assertLess(cl.index("aov_monument_art_ruined_hold"), cl.index("fallback = yes"))
+        self.assertIn("aov_hold_is_ruined = yes", cl)
+        self.assertEqual(bm.render_shared()[bm.SHARED_LOC].count(" aov_monument_art_ruined_hold:"), 1)
+
+    def test_ruined_background_uses_vanilla_art(self):
+        gui = "\n".join(bm.painting_backgrounds(bm.all_monuments()))
+        self.assertIn('texture = "gfx/interface/illustrations/event_scenes/tgp_ruined_holding.dds"', gui)
+        self.assertIn("Localize('aov_monument_art_ruined_hold')", gui)
 
 @unittest.skipUnless(LIVE, "needs Anbennar CK3")
 class RegionTests(unittest.TestCase):

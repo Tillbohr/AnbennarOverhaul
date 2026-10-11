@@ -24,6 +24,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # python -I does not add the script's folder
 from data.monuments import translation  # noqa: E402
+from data import holds  # noqa: E402
 import eu4_monuments  # noqa: E402
 from build_spells import read_bgra, write_bgra  # noqa: E402
 
@@ -54,6 +55,9 @@ PAINTING_MARGIN_BOTTOM = 63
 FRAME_CROP = 7  # the 6 px frame and the row of DXT1 bleed next to it
 STRIP_END = 150
 STRIP_ROWS = {7: 0.2, 8: 0.06, 9: 0.78, **{y: 1.0 for y in range(10, 29)}, 29: 0.71}
+# Pictures that are not monument paintings: (key, province trigger, texture). They come after every monument entry in
+# the custom loc (a monument painting wins, e.g. ruined Khugdihr) and may use a texture outside ART_DIR.
+EXTRA_ART = [("ruined_hold", "aov_hold_is_ruined = yes", holds.RUINED_ART)]
 CUSTOM = "HoldingView.GetProvince.Custom('AovMonumentIllustration')"
 
 
@@ -498,6 +502,9 @@ def illustration(monuments: list) -> str:
         if m["art"]:
             out += ["\ttext = {", "\t\ttrigger = {", f"\t\t\thas_building_or_higher = {m['levels'][0]}", "\t\t}",
                     f"\t\tlocalization_key = aov_monument_art_{m['eu4_key']}", "\t}", ""]
+    for key, trigger, _ in EXTRA_ART:
+        out += ["\ttext = {", "\t\ttrigger = {", f"\t\t\t{trigger}", "\t\t}",
+                f"\t\tlocalization_key = aov_monument_art_{key}", "\t}", ""]
     out += ["\ttext = {", "\t\tfallback = yes", "\t\tlocalization_key = aov_monument_art_none", "\t}", "}", ""]
     return NL.join(out)
 
@@ -506,6 +513,7 @@ def illustration_loc(monuments: list) -> str:
     """The art loc keys of every region, defined once (a key in each region's file is a duplicate-key error)."""
     out = ["l_english:"]
     out += [f' aov_monument_art_{m["eu4_key"]}: "{ART_DIR}/{m["eu4_key"]}.dds"' for m in monuments if m["art"]]
+    out += [f' aov_monument_art_{key}: "{texture}"' for key, _, texture in EXTRA_ART]
     out.append(' aov_monument_art_none: ""')
     return NL.join(out) + NL
 
@@ -517,20 +525,19 @@ def painting_backgrounds(monuments: list) -> list:
     never taken from the custom loc; the comparison against Localize() follows Princes of Darkness' Custom() checks.
     Inline, not a `using` template: template backgrounds are drawn beneath every inline background, so the panel's
     dark background and the vanilla art covered them. Drawn at full alpha through the lighter PAINTING_MASK."""
+    arts = [(m["eu4_key"], f'{ART_DIR}/{m["eu4_key"]}.dds') for m in monuments if m["art"]]
     out = []
-    for m in monuments:
-        if m["art"]:
-            key = m["eu4_key"]
-            out += ["background = {",
-                    f"\tvisible = \"[EqualTo_string( {CUSTOM}, Localize('aov_monument_art_{key}') )]\"",
-                    f'\ttexture = "{ART_DIR}/{key}.dds"',
-                    "\tfittype = start",  # anchored at the top: EU4 spires reach almost to the frame
-                    f"\tmargin_bottom = {PAINTING_MARGIN_BOTTOM}",
-                    "\tmodify_texture = {",
-                    f'\t\ttexture = "{PAINTING_MASK}"',
-                    "\t\tblend_mode = alphamultiply",
-                    "\t}",
-                    "}"]
+    for key, texture in arts + [(k, t) for k, _, t in EXTRA_ART]:
+        out += ["background = {",
+                f"	visible = \"[EqualTo_string( {CUSTOM}, Localize('aov_monument_art_{key}') )]\"",
+                f'	texture = "{texture}"',
+                "	fittype = start",  # anchored at the top: EU4 spires reach almost to the frame
+                f"	margin_bottom = {PAINTING_MARGIN_BOTTOM}",
+                "	modify_texture = {",
+                f'		texture = "{PAINTING_MASK}"',
+                "		blend_mode = alphamultiply",
+                "	}",
+                "}"]
     return out
 
 

@@ -1778,6 +1778,16 @@ window = {
 						blend_mode = alphamultiply
 					}
 				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_ruined_hold') )]"
+					texture = "gfx/interface/illustrations/event_scenes/tgp_ruined_holding.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
 
 				background = {
 					visible = "[Not(HoldingView.HasHolding)]"
