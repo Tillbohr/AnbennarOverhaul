@@ -42,6 +42,11 @@ class HoldRuinTests(unittest.TestCase):
         self.assertIn("aov_hold_ruin_effect = yes", block)
         self.assertIn("on_title_gain = {\n\ton_actions = { aov_hold_on_title_gain aov_hold_restoration_handover }", read("common/on_action/aov_hold_on_actions.txt"))
 
+    def test_ruin_requires_a_dwarven_previous_holder(self):
+        trigger = re.search(r"\ttrigger = \{\n(.*?)\n\t\}", on_action_block("aov_hold_on_title_gain"), re.S).group(1)
+        self.assertIn("exists = scope:previous_holder", trigger)
+        self.assertRegex(trigger, r"scope:previous_holder = \{\s*is_dwarvish_culture = yes\s*\}")
+
     def test_ruin_effect(self):
         text = read("common/scripted_effects/aov_hold_effects.txt")
         b = top_block(text, "aov_hold_ruin_effect")
@@ -66,6 +71,25 @@ class HoldRuinTests(unittest.TestCase):
         self.assertIn("aov_hold_ruin.2", d)
         eff = read("common/scripted_effects/aov_hold_effects.txt")
         self.assertIn(f"years = {holds.RESTORE['years']}", top_block(eff, "aov_hold_begin_restoration_effect"))
+
+    def test_restoration_cannot_be_paid_twice(self):
+        d = top_block(read("common/decisions/aov_hold_decisions.txt"), "aov_clear_ruins_decision")
+        shown = re.search(r"\tis_shown = \{\n(.*?)\n\t\}", d, re.S).group(1)
+        province = re.search(r"\t\t\ttitle_province = \{\n(.*?)\n\t\t\t\}", shown, re.S).group(1)
+        self.assertIn("NOT = { has_variable = aov_restore_pending }", province)
+        options = re.findall(r"^\toption = \{\n(.*?)^\t\}", event_block("aov_hold_ruin.2"), re.M | re.S)
+        self.assertEqual(len(options), len(holds.HOLDS))
+        for opt in options:
+            trigger = re.search(r"\t\ttrigger = \{\n(.*?)\n\t\t\}", opt, re.S).group(1)
+            self.assertIn("NOT = { has_variable = aov_restore_pending }", trigger)
+
+    def test_ai_restores_when_it_can_spare_the_cost(self):
+        d = top_block(read("common/decisions/aov_hold_decisions.txt"), "aov_clear_ruins_decision")
+        self.assertIn("ai_check_interval = 12", d)
+        ai = re.search(r"\tai_will_do = \{\n(.*?)\n\t\}", d, re.S).group(1)
+        self.assertGreater(int(re.search(r"base = (\d+)", ai).group(1)), 0)
+        self.assertIn(f"gold >= {2 * holds.RESTORE['gold']}", ai)
+        self.assertIn(f"prestige >= {holds.RESTORE['prestige']}", ai)
 
     def test_one_option_per_hold(self):
         ev = event_block("aov_hold_ruin.2")

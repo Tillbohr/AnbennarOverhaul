@@ -37,7 +37,7 @@
  aov_hold_dig.8.t:0 "Something in the Deep"
  aov_hold_dig.8.desc:0 "A low, wet growl echoes up from the lowest gallery of [hold.GetName]. The lamps gutter. Whatever lives down there has noticed the miners, and it is hungry."
  aov_hold_dig.8.a.success:0 "Your axe rings true and the beast flees howling back into the rock. The way lies open."
- aov_hold_dig.8.a.failure:0 "The beast's claws find the gaps in your armor. The crews drag you out, and the gallery is lost to the dark."
+ aov_hold_dig.8.a.failure:0 "The beast will not be drawn into the light. It retreats into the narrow galleries where no axe can follow, and the crews abandon the passage to the dark."
  aov_hold_dig.8.a:0 "Lead the charge yourself (Prowess)."
  aov_hold_dig.8.b.success:0 "The shield wall holds, and the creature breaks against it. The crews return to work."
  aov_hold_dig.8.b.failure:0 "The line shatters in the narrow tunnel and the crews flee. Days of work are lost."

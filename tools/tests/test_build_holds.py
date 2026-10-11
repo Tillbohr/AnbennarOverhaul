@@ -42,10 +42,38 @@ class HoldBuildingTests(unittest.TestCase):
         for n, lvl in enumerate(holds.LEVELS, 1):
             block = self.blocks[f"dwarven_hold_{n:02d}"]
             for name, val in lvl.items():
+                if isinstance(val, str):
+                    self.assertRegex(block, rf"\b{name} = {val}\n", msg=f"{n} {name}")
+                    continue
                 if not val:
                     self.assertNotIn(name, block)
                     continue
                 self.assertAlmostEqual(value(block, name), val, msg=f"{n} {name}")
+
+    def test_flat_values_placed_like_castles(self):
+        for n in range(1, 11):
+            block = self.blocks[f"dwarven_hold_{n:02d}"]
+            for name in ("levy", "max_garrison", "garrison_reinforcement_factor"):
+                self.assertRegex(block, rf"(?m)^\t{name} = \w+$", f"{n} {name}")
+            province = re.search(r"\tprovince_modifier = \{\n(.*?)\n\t\}", block, re.S).group(1)
+            self.assertIn("monthly_income = ", province, n)
+
+    def test_dwarven_buildings_switch_off_like_levels(self):
+        for key in BUILDING_KEYS:
+            enabled = re.search(r"\tis_enabled = \{\n(.*?)\n\t\}", self.blocks[key], re.S)
+            self.assertTrue(enabled, key)
+            self.assertRegex(enabled.group(1), r"scope:holder = \{\s*is_dwarvish_culture = yes\s*\}", key)
+            self.assertIn("NOT = { has_variable = aov_hold_ruined }", enabled.group(1), key)
+
+    def test_ai_builds_dwarven_buildings_but_never_levels(self):
+        for key in BUILDING_KEYS:
+            ai = re.search(r"\tai_value = \{\n(.*?)\n\t\}", self.blocks[key], re.S).group(1)
+            self.assertGreater(value(ai, "base"), 0, key)
+            self.assertIn("ai_general_building_modifier = yes", ai, key)
+            self.assertEqual("ai_tier_1_building_modifier = yes" in ai, key.endswith("_01"), key)
+        for n in range(1, 11):
+            ai = re.search(r"\tai_value = \{\n(.*?)\n\t\}", self.blocks[f"dwarven_hold_{n:02d}"], re.S).group(1)
+            self.assertEqual(value(ai, "base"), 0, n)
 
     def test_no_empty_blocks(self):
         self.assertNotRegex(self.text, r"_modifier = \{\s*\}")
@@ -74,6 +102,101 @@ class HoldBuildingTests(unittest.TestCase):
         self.assertIn("next_building = deep_mine_02", self.blocks["deep_mine_01"])
         self.assertNotIn("next_building", self.blocks["deep_mine_03"])
         self.assertIn("normal_building_tier_3_cost", self.blocks["runeforge_03"])
+
+
+FLAT_KEYS = ("levy", "max_garrison", "garrison_reinforcement_factor", "monthly_income")
+BUILDING_VALUES = "common/script_values/00_building_values.txt"
+
+
+def script_value_resolver(root):
+    """Resolve Anbennar's flat building script values (`name = @[expr]` over `@var = expr`) to numbers."""
+    text = (Path(root) / BUILDING_VALUES).read_text(encoding="utf-8-sig")
+    defs = {m.group(1): m.group(2).strip() for m in re.finditer(r"^(@?\w+) = ([^{#\n]+)", text, re.M)}
+
+    def resolve(name):
+        expr = defs[name]
+        if expr.startswith("@["):
+            expr = expr[2:-1]
+        elif expr.startswith("@"):
+            expr = expr[1:]
+
+        def sub(m):
+            ident = m.group(0)
+            return repr(resolve("@" + ident if "@" + ident in defs else ident))
+
+        expr = re.sub(r"\b[a-z_]\w*\b", sub, expr)
+        return eval(expr, {"__builtins__": {}})  # numbers and + - * / only
+
+    return resolve
+
+
+def castle_flat_values(root):
+    """castle_0N -> {flat key: script value name} from Anbennar's castle buildings."""
+    text = (Path(root) / bh.CASTLE_FILE).read_text(encoding="utf-8-sig")
+    out = {}
+    for key, body in parse_blocks(text).items():
+        if re.fullmatch(r"castle_0\d", key):
+            out[key] = {k: re.search(rf"\b{k} = (\w+)", body).group(1) for k in FLAT_KEYS}
+    return out
+
+
+@unittest.skipUnless(LIVE, "Anbennar CK3 not present")
+class FlatValueTests(unittest.TestCase):
+    def test_every_level_has_flat_values_at_least_its_castle(self):
+        resolve = script_value_resolver(bh.ANBENNAR_CK3)
+        castles = castle_flat_values(bh.ANBENNAR_CK3)
+        self.assertEqual(set(castles), {"castle_01", "castle_02", "castle_03", "castle_04"})
+        for n, lvl in enumerate(holds.LEVELS, 1):
+            castle = castles[holds.ASSET_BAND[n]]
+            for k in FLAT_KEYS:
+                self.assertIn(k, lvl, f"{n} {k}")
+                self.assertGreaterEqual(resolve(lvl[k]), resolve(castle[k]), f"level {n} {k}")
+
+    def test_flat_values_never_fall(self):
+        resolve = script_value_resolver(bh.ANBENNAR_CK3)
+        for k in FLAT_KEYS:
+            values = [resolve(lvl[k]) for lvl in holds.LEVELS]
+            self.assertEqual(values, sorted(values), k)
+
+
+CASTLE_LEVEL_TO_HOLD = {"01": 1, "02": 3, "03": 5, "04": 8}
+REQUIREMENT_TRIGGERS = ("building_requirement_castle_city_church",
+                        "building_requirement_castle_city_church_temple_citadel_tribe")
+REQUIREMENT_FILE = "common/scripted_triggers/00_building_requirement_triggers.txt"
+OVERRIDE_FILE = "common/scripted_triggers/zz_aov_building_requirement_triggers.txt"
+DWARVEN_BRANCH = re.compile(r"\t# Anbennar Overhaul[^\n]*\n\ttrigger_else_if = \{\n"
+                            r"\t\tlimit = \{ has_holding_type = dwarven_hold_holding \}\n.*?\n\t\}\n", re.S)
+
+
+@unittest.skipUnless(LIVE, "Anbennar CK3 not present")
+class BuildingRequirementOverrideTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        path = SUBMOD / OVERRIDE_FILE
+        cls.ours = parse_blocks(path.read_text(encoding="utf-8-sig")) if path.is_file() else {}
+        cls.base = parse_blocks((bh.ANBENNAR_CK3 / REQUIREMENT_FILE).read_text(encoding="utf-8-sig"))
+
+    def test_castle_level_triggers_are_all_overridden(self):
+        castle_level = {k for k, v in self.base.items() if "has_building_or_higher = castle_$LEVEL$" in v
+                        and "has_holding_type = castle_holding" in v}
+        self.assertEqual(castle_level, set(REQUIREMENT_TRIGGERS))
+        self.assertEqual(set(self.ours), set(REQUIREMENT_TRIGGERS))
+
+    def test_override_is_anbennar_plus_dwarven_branch(self):
+        for name in REQUIREMENT_TRIGGERS:
+            body = self.ours.get(name, "")
+            self.assertEqual(len(DWARVEN_BRANCH.findall(body)), 1, name)
+            self.assertEqual(DWARVEN_BRANCH.sub("", body), self.base[name], name)
+
+    def test_dwarven_branch_maps_castle_levels(self):
+        bands = {n for n, band in holds.ASSET_BAND.items() if band != holds.ASSET_BAND.get(n - 1)}
+        self.assertEqual(set(CASTLE_LEVEL_TO_HOLD.values()), bands)
+        for name in REQUIREMENT_TRIGGERS:
+            branch = DWARVEN_BRANCH.search(self.ours.get(name, ""))
+            self.assertTrue(branch, name)
+            found = re.findall(r"(?:limit = \{ \$LEVEL\$ >= (\d) \}\n\t+|trigger_else = \{\n\t+)"
+                               r"has_building_or_higher = dwarven_hold_(\d\d)", branch.group(0))
+            self.assertEqual({f"{int(lv or 1):02d}": int(hold) for lv, hold in found}, CASTLE_LEVEL_TO_HOLD, name)
 
 
 class ValueAndLocTests(unittest.TestCase):

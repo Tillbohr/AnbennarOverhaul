@@ -21,7 +21,7 @@ stages. Holds can be ruined by conquest and restored with a decision. The base m
 | Activity phases | Survey, Excavation, Shoring, Breakthrough: the dig's stages |
 | Events | EU4-style random events for the player during each phase change the campaign's progress |
 | Hold states | Working or ruined only. Infested holds are left to the Dwarovar situation (roadmap) |
-| Ruin | Only when a non-dwarf gains the hold barony by conquest |
+| Ruin | Only when a non-dwarf conquers a dwarf-held hold barony (the previous holder was dwarven) |
 | Restoring | Decision *Clear the Ruins of [Hold]*: gold and prestige, 5-year restoration, then working |
 | Situation | No situation in this spec. A region-wide Dwarovar crisis situation is roadmap item 1 |
 
@@ -83,10 +83,23 @@ Khugdihr's kobolds hold real holds but gain no level effects (below).
 previous level). A level-10 hold is a little stronger than a vanilla castle level 4 plus a strong special
 building, never above the great-projects balance guard (fort_level 8).
 
+Each level also gives a castle's flat values, as the same named script values castles use: `levy`, `max_garrison`,
+`garrison_reinforcement_factor` (building top level) and `monthly_income` (`province_modifier`). The castle of the
+level's art band (`ASSET_BAND`: levels 1-2 `castle_01`, 3-4 `castle_02`, 5-7 `castle_03`, 8-10 `castle_04`) is the
+floor; deeper levels step up within the band (`_FLAT_TIERS` in `tools/data/holds.py`). They are switched off with the
+level by `is_enabled`.
+
+Castle buildings (economy, military, fortification) can be built in a hold: Anbennar's holding-level requirement
+triggers `building_requirement_castle_city_church` and `building_requirement_castle_city_church_temple_citadel_tribe`
+are overridden (`common/scripted_triggers/zz_aov_building_requirement_triggers.txt`) with a `dwarven_hold_holding`
+branch that treats hold levels 1/3/5/8 as castle levels 01/02/03/04.
+
 ### Dwarven buildings
 
 Dwarven-only (`can_construct_potential`: dwarven heritage holder) and gated on the hold level
-(`can_construct`: `has_building_or_higher = dwarven_hold_0N`):
+(`can_construct`: `has_building_or_higher = dwarven_hold_0N`); `is_enabled` as the levels (dwarven holder, hold not
+ruined). The AI builds them like vanilla buildings (`ai_value` base 10/9/8 with the general, tier-1 and
+economy/military/piety preference modifiers):
 
 | Building | From level | Effect (level 1; 3 levels each, effects doubling and tripling) |
 |---|---|---|
@@ -155,14 +168,16 @@ fires *The Campaign Ends* with the progress made and the remaining target. Artif
 
 ## Ruined holds
 
-- **Ruin**: `on_title_gain` (appended on_action) where the title is a hold barony, the gain is by conquest, and the
-  new holder lacks dwarven heritage. Effects: `var:aov_hold_ruined` set, `aov_dig_progress` reset to 0, county
+- **Ruin**: `on_title_gain` (appended on_action) where the title is a hold barony, the gain is by conquest, the
+  new holder lacks dwarven heritage and the previous holder had it: a non-dwarf conquering a dwarf-held hold (a
+  non-dwarf taking a hold from another non-dwarf, as Marrhold's humans at start, does not ruin it). Effects: `var:aov_hold_ruined` set, `aov_dig_progress` reset to 0, county
   modifier `aov_ruined_hold` (`tax_mult` −0.5, `development_growth_factor` −0.5, `levy_size` −0.5), any campaign at
   the hold ends. The hold level is kept but disabled (`is_enabled` requires not ruined).
 - **Game start**: Khugdihr is ruined (level 1).
 - **Restoring**: decision *Clear the Ruins of [Hold]* (`common/decisions/aov_hold_decisions.txt`). Shown to a
-  dwarven-heritage ruler who personally holds a ruined hold with no restoration running; the decision's event lists
-  each such hold. Cost 300 gold and 200 prestige. Adds province modifier `aov_restoring_hold` for 5 years (no effect
+  dwarven-heritage ruler who personally holds a ruined hold with no restoration running or pending
+  (`var:aov_restore_pending`); the decision's event lists each such hold. Cost 300 gold and 200 prestige. The AI
+  checks it yearly and takes it when it has twice the gold cost and the prestige. Adds province modifier `aov_restoring_hold` for 5 years (no effect
   but the timer; tooltip "Restoration under way"), and schedules *[Hold] Restored* after 5 years, which clears the
   ruin variable and modifier. If the restorer loses the hold meanwhile, the restoration continues for the new holder
   only if they are dwarven; otherwise it is cancelled.

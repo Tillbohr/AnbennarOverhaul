@@ -360,7 +360,11 @@ dwarven_hold_01 = {
 	cost_gold = main_building_tier_1_cost
 	next_building = dwarven_hold_02
 
+	levy = normal_building_levy_tier_2
+	max_garrison = good_building_max_garrison_tier_1
+	garrison_reinforcement_factor = building_garrison_reinforcement_factor_tier_2
 	province_modifier = {
+		monthly_income = poor_building_tax_tier_2
 		fort_level = 2
 		defender_holding_advantage = 2
 		garrison_size = 0.1
@@ -725,7 +729,11 @@ dwarven_hold_02 = {
 	cost_gold = main_building_tier_1_cost
 	next_building = dwarven_hold_03
 
+	levy = normal_building_levy_tier_3
+	max_garrison = good_building_max_garrison_tier_2
+	garrison_reinforcement_factor = building_garrison_reinforcement_factor_tier_3
 	province_modifier = {
+		monthly_income = poor_building_tax_tier_3
 		fort_level = 2
 		defender_holding_advantage = 3
 		garrison_size = 0.2
@@ -1073,7 +1081,11 @@ dwarven_hold_03 = {
 	cost_gold = main_building_tier_1_cost
 	next_building = dwarven_hold_04
 
+	levy = normal_building_levy_tier_4
+	max_garrison = good_building_max_garrison_tier_3
+	garrison_reinforcement_factor = building_garrison_reinforcement_factor_tier_4
 	province_modifier = {
+		monthly_income = poor_building_tax_tier_4
 		fort_level = 3
 		defender_holding_advantage = 4
 		garrison_size = 0.3
@@ -1422,7 +1434,11 @@ dwarven_hold_04 = {
 	cost_gold = main_building_tier_1_cost
 	next_building = dwarven_hold_05
 
+	levy = normal_building_levy_tier_5
+	max_garrison = good_building_max_garrison_tier_4
+	garrison_reinforcement_factor = building_garrison_reinforcement_factor_tier_5
 	province_modifier = {
+		monthly_income = poor_building_tax_tier_5
 		fort_level = 3
 		defender_holding_advantage = 5
 		garrison_size = 0.4
@@ -1776,7 +1792,11 @@ dwarven_hold_05 = {
 	cost_gold = main_building_tier_1_cost
 	next_building = dwarven_hold_06
 
+	levy = normal_building_levy_tier_6
+	max_garrison = good_building_max_garrison_tier_5
+	garrison_reinforcement_factor = building_garrison_reinforcement_factor_tier_6
 	province_modifier = {
+		monthly_income = poor_building_tax_tier_6
 		fort_level = 4
 		defender_holding_advantage = 6
 		garrison_size = 0.5
@@ -2130,7 +2150,11 @@ dwarven_hold_06 = {
 	cost_gold = main_building_tier_1_cost
 	next_building = dwarven_hold_07
 
+	levy = normal_building_levy_tier_6
+	max_garrison = good_building_max_garrison_tier_6
+	garrison_reinforcement_factor = building_garrison_reinforcement_factor_tier_6
 	province_modifier = {
+		monthly_income = poor_building_tax_tier_6
 		fort_level = 4
 		defender_holding_advantage = 7
 		garrison_size = 0.6
@@ -2484,7 +2508,11 @@ dwarven_hold_07 = {
 	cost_gold = main_building_tier_1_cost
 	next_building = dwarven_hold_08
 
+	levy = normal_building_levy_tier_7
+	max_garrison = good_building_max_garrison_tier_6
+	garrison_reinforcement_factor = building_garrison_reinforcement_factor_tier_7
 	province_modifier = {
+		monthly_income = poor_building_tax_tier_7
 		fort_level = 5
 		defender_holding_advantage = 8
 		garrison_size = 0.7
@@ -2838,7 +2866,11 @@ dwarven_hold_08 = {
 	cost_gold = main_building_tier_1_cost
 	next_building = dwarven_hold_09
 
+	levy = normal_building_levy_tier_8
+	max_garrison = good_building_max_garrison_tier_7
+	garrison_reinforcement_factor = building_garrison_reinforcement_factor_tier_8
 	province_modifier = {
+		monthly_income = poor_building_tax_tier_8
 		fort_level = 5
 		defender_holding_advantage = 9
 		garrison_size = 0.8
@@ -3192,7 +3224,11 @@ dwarven_hold_09 = {
 	cost_gold = main_building_tier_1_cost
 	next_building = dwarven_hold_10
 
+	levy = normal_building_levy_tier_8
+	max_garrison = good_building_max_garrison_tier_7
+	garrison_reinforcement_factor = building_garrison_reinforcement_factor_tier_8
 	province_modifier = {
+		monthly_income = poor_building_tax_tier_8
 		fort_level = 6
 		defender_holding_advantage = 10
 		garrison_size = 0.9
@@ -3545,7 +3581,11 @@ dwarven_hold_10 = {
 
 	cost_gold = main_building_tier_1_cost
 
+	levy = normal_building_levy_tier_8
+	max_garrison = good_building_max_garrison_tier_8
+	garrison_reinforcement_factor = building_garrison_reinforcement_factor_tier_8
 	province_modifier = {
+		monthly_income = poor_building_tax_tier_8
 		fort_level = 6
 		defender_holding_advantage = 12
 		garrison_size = 1
@@ -3578,6 +3618,13 @@ deep_mine_01 = {
 		has_building_or_higher = dwarven_hold_03
 	}
 
+	is_enabled = {
+		scope:holder = {
+			is_dwarvish_culture = yes
+		}
+		NOT = { has_variable = aov_hold_ruined }
+	}
+
 	cost_gold = normal_building_tier_1_cost
 	next_building = deep_mine_02
 
@@ -3589,7 +3636,11 @@ deep_mine_01 = {
 	type_icon = "icon_building_ramparts.dds"
 
 	ai_value = {
-		base = 0
+		base = 10
+		ai_tier_1_building_modifier = yes
+		ai_general_building_modifier = yes
+		ai_tier_1_economical_building_preference_modifier = yes
+		directive_to_build_economy_modifier = yes
 	}
 }
 
@@ -3606,6 +3657,13 @@ deep_mine_02 = {
 		has_building_or_higher = dwarven_hold_03
 	}
 
+	is_enabled = {
+		scope:holder = {
+			is_dwarvish_culture = yes
+		}
+		NOT = { has_variable = aov_hold_ruined }
+	}
+
 	cost_gold = normal_building_tier_2_cost
 	next_building = deep_mine_03
 
@@ -3617,7 +3675,10 @@ deep_mine_02 = {
 	type_icon = "icon_building_ramparts.dds"
 
 	ai_value = {
-		base = 0
+		base = 9
+		ai_general_building_modifier = yes
+		ai_economical_building_preference_modifier = yes
+		directive_to_build_economy_modifier = yes
 	}
 }
 
@@ -3634,6 +3695,13 @@ deep_mine_03 = {
 		has_building_or_higher = dwarven_hold_03
 	}
 
+	is_enabled = {
+		scope:holder = {
+			is_dwarvish_culture = yes
+		}
+		NOT = { has_variable = aov_hold_ruined }
+	}
+
 	cost_gold = normal_building_tier_3_cost
 
 	county_modifier = {
@@ -3644,7 +3712,10 @@ deep_mine_03 = {
 	type_icon = "icon_building_ramparts.dds"
 
 	ai_value = {
-		base = 0
+		base = 8
+		ai_general_building_modifier = yes
+		ai_economical_building_preference_modifier = yes
+		directive_to_build_economy_modifier = yes
 	}
 }
 
@@ -3661,6 +3732,13 @@ runeforge_01 = {
 		has_building_or_higher = dwarven_hold_05
 	}
 
+	is_enabled = {
+		scope:holder = {
+			is_dwarvish_culture = yes
+		}
+		NOT = { has_variable = aov_hold_ruined }
+	}
+
 	cost_gold = normal_building_tier_1_cost
 	next_building = runeforge_02
 
@@ -3672,7 +3750,10 @@ runeforge_01 = {
 	type_icon = "icon_building_ramparts.dds"
 
 	ai_value = {
-		base = 0
+		base = 10
+		ai_tier_1_building_modifier = yes
+		ai_general_building_modifier = yes
+		directive_to_build_military_modifier = yes
 	}
 }
 
@@ -3689,6 +3770,13 @@ runeforge_02 = {
 		has_building_or_higher = dwarven_hold_05
 	}
 
+	is_enabled = {
+		scope:holder = {
+			is_dwarvish_culture = yes
+		}
+		NOT = { has_variable = aov_hold_ruined }
+	}
+
 	cost_gold = normal_building_tier_2_cost
 	next_building = runeforge_03
 
@@ -3700,7 +3788,9 @@ runeforge_02 = {
 	type_icon = "icon_building_ramparts.dds"
 
 	ai_value = {
-		base = 0
+		base = 9
+		ai_general_building_modifier = yes
+		directive_to_build_military_modifier = yes
 	}
 }
 
@@ -3717,6 +3807,13 @@ runeforge_03 = {
 		has_building_or_higher = dwarven_hold_05
 	}
 
+	is_enabled = {
+		scope:holder = {
+			is_dwarvish_culture = yes
+		}
+		NOT = { has_variable = aov_hold_ruined }
+	}
+
 	cost_gold = normal_building_tier_3_cost
 
 	character_modifier = {
@@ -3727,7 +3824,9 @@ runeforge_03 = {
 	type_icon = "icon_building_ramparts.dds"
 
 	ai_value = {
-		base = 0
+		base = 8
+		ai_general_building_modifier = yes
+		directive_to_build_military_modifier = yes
 	}
 }
 
@@ -3744,6 +3843,13 @@ hall_of_the_ancestors_01 = {
 		has_building_or_higher = dwarven_hold_07
 	}
 
+	is_enabled = {
+		scope:holder = {
+			is_dwarvish_culture = yes
+		}
+		NOT = { has_variable = aov_hold_ruined }
+	}
+
 	cost_gold = normal_building_tier_1_cost
 	next_building = hall_of_the_ancestors_02
 
@@ -3755,7 +3861,10 @@ hall_of_the_ancestors_01 = {
 	type_icon = "icon_building_ramparts.dds"
 
 	ai_value = {
-		base = 0
+		base = 10
+		ai_tier_1_building_modifier = yes
+		ai_general_building_modifier = yes
+		ai_tier_1_pious_building_preference_modifier = yes
 	}
 }
 
@@ -3772,6 +3881,13 @@ hall_of_the_ancestors_02 = {
 		has_building_or_higher = dwarven_hold_07
 	}
 
+	is_enabled = {
+		scope:holder = {
+			is_dwarvish_culture = yes
+		}
+		NOT = { has_variable = aov_hold_ruined }
+	}
+
 	cost_gold = normal_building_tier_2_cost
 	next_building = hall_of_the_ancestors_03
 
@@ -3783,7 +3899,9 @@ hall_of_the_ancestors_02 = {
 	type_icon = "icon_building_ramparts.dds"
 
 	ai_value = {
-		base = 0
+		base = 9
+		ai_general_building_modifier = yes
+		ai_pious_building_preference_modifier = yes
 	}
 }
 
@@ -3800,6 +3918,13 @@ hall_of_the_ancestors_03 = {
 		has_building_or_higher = dwarven_hold_07
 	}
 
+	is_enabled = {
+		scope:holder = {
+			is_dwarvish_culture = yes
+		}
+		NOT = { has_variable = aov_hold_ruined }
+	}
+
 	cost_gold = normal_building_tier_3_cost
 
 	character_modifier = {
@@ -3810,6 +3935,8 @@ hall_of_the_ancestors_03 = {
 	type_icon = "icon_building_ramparts.dds"
 
 	ai_value = {
-		base = 0
+		base = 8
+		ai_general_building_modifier = yes
+		ai_pious_building_preference_modifier = yes
 	}
 }

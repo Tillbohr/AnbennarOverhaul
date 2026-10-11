@@ -38,6 +38,7 @@ aov_hold_ruin.2 = {
 			title:b_marrhold.title_province = {
 				aov_hold_is_ruined = yes
 				NOT = { has_province_modifier = aov_restoring_hold }
+				NOT = { has_variable = aov_restore_pending }
 			}
 		}
 		title:b_marrhold.title_province = {
@@ -51,6 +52,7 @@ aov_hold_ruin.2 = {
 			title:b_anvilwright.title_province = {
 				aov_hold_is_ruined = yes
 				NOT = { has_province_modifier = aov_restoring_hold }
+				NOT = { has_variable = aov_restore_pending }
 			}
 		}
 		title:b_anvilwright.title_province = {
@@ -64,6 +66,7 @@ aov_hold_ruin.2 = {
 			title:b_gulandhum.title_province = {
 				aov_hold_is_ruined = yes
 				NOT = { has_province_modifier = aov_restoring_hold }
+				NOT = { has_variable = aov_restore_pending }
 			}
 		}
 		title:b_gulandhum.title_province = {
@@ -77,6 +80,7 @@ aov_hold_ruin.2 = {
 			title:b_kar_fimthrun.title_province = {
 				aov_hold_is_ruined = yes
 				NOT = { has_province_modifier = aov_restoring_hold }
+				NOT = { has_variable = aov_restore_pending }
 			}
 		}
 		title:b_kar_fimthrun.title_province = {
@@ -90,6 +94,7 @@ aov_hold_ruin.2 = {
 			title:b_irovar.title_province = {
 				aov_hold_is_ruined = yes
 				NOT = { has_province_modifier = aov_restoring_hold }
+				NOT = { has_variable = aov_restore_pending }
 			}
 		}
 		title:b_irovar.title_province = {
@@ -103,6 +108,7 @@ aov_hold_ruin.2 = {
 			title:b_hul_az_amekh.title_province = {
 				aov_hold_is_ruined = yes
 				NOT = { has_province_modifier = aov_restoring_hold }
+				NOT = { has_variable = aov_restore_pending }
 			}
 		}
 		title:b_hul_az_amekh.title_province = {
@@ -116,6 +122,7 @@ aov_hold_ruin.2 = {
 			title:b_kar_hargun.title_province = {
 				aov_hold_is_ruined = yes
 				NOT = { has_province_modifier = aov_restoring_hold }
+				NOT = { has_variable = aov_restore_pending }
 			}
 		}
 		title:b_kar_hargun.title_province = {
@@ -129,6 +136,7 @@ aov_hold_ruin.2 = {
 			title:b_topazhjardan.title_province = {
 				aov_hold_is_ruined = yes
 				NOT = { has_province_modifier = aov_restoring_hold }
+				NOT = { has_variable = aov_restore_pending }
 			}
 		}
 		title:b_topazhjardan.title_province = {
@@ -142,6 +150,7 @@ aov_hold_ruin.2 = {
 			title:b_aghatehargun.title_province = {
 				aov_hold_is_ruined = yes
 				NOT = { has_province_modifier = aov_restoring_hold }
+				NOT = { has_variable = aov_restore_pending }
 			}
 		}
 		title:b_aghatehargun.title_province = {

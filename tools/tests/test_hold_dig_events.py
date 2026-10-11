@@ -102,6 +102,14 @@ class DigEventTests(unittest.TestCase):
         self.assertRegex(body, r"duel = \{\s*skill = martial\s*value = \d+")
         self.assertEqual(len(re.findall(r"desc = aov_hold_dig\.8\.\w+\.(success|failure)", body)), 4)
 
+    def test_something_in_the_deep_failures_promise_no_wounds(self):
+        # the failure branches only cost progress, so their text must not describe the character being hurt
+        loc = read(LOC)
+        for opt in ("a", "b"):
+            line = re.search(rf"^ aov_hold_dig\.8\.{opt}\.failure:0 \"(.*)\"$", loc, re.M).group(1)
+            self.assertNotRegex(line.lower(), r"wound|claw|injur|blood|armou?r|drag you", opt)
+        self.assertNotIn("add_trait", blocks(read(EVENTS))["aov_hold_dig.8"])
+
     def test_costly_options_check_gold(self):
         for n, body in blocks(read(EVENTS)).items():
             for opt in re.findall(r"^\toption = \{\n(.*?)^\t\}", body, re.M | re.S):

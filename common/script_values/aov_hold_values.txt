@@ -58,7 +58,7 @@ aov_dig_campaign_cost = {
 	multiply = 50
 }
 
-# Character scope: monthly dig progress before pace and investment, which the activity applies.
+# Character scope: a dig campaign's whole progress before pace and investment, which the activity applies.
 aov_dig_campaign_base = {
 	value = 20
 	add = {

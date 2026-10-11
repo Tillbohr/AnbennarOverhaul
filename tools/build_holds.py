@@ -24,7 +24,8 @@ LOC_PATH = "localization/english/aov_holds_l_english.yml"
 SETUP_PATH = "common/scripted_effects/aov_hold_setup_effects.txt"
 MODIFIERS_PATH = "common/modifiers/aov_hold_modifiers.txt"
 
-LEVEL_PROVINCE = ("fort_level", "defender_holding_advantage", "garrison_size", "building_slot_add")
+LEVEL_FLAT = ("levy", "max_garrison", "garrison_reinforcement_factor")  # top level of the building, as in castles
+LEVEL_PROVINCE = ("monthly_income", "fort_level", "defender_holding_advantage", "garrison_size", "building_slot_add")
 LEVEL_COUNTY = ("levy_size", "tax_mult")
 
 BUILDING_NAMES = {"deep_mine": "Deep Mine", "runeforge": "Runeforge", "hall_of_the_ancestors": "Hall of the Ancestors"}
@@ -79,18 +80,32 @@ def level_key(n):
     return f"dwarven_hold_{n:02d}"
 
 
+# The hold levels and the dwarven buildings work only under a dwarven holder in an unruined hold.
+IS_ENABLED = ("\tis_enabled = {\n\t\tscope:holder = {\n\t\t\tis_dwarvish_culture = yes\n\t\t}\n"
+              "\t\tNOT = { has_variable = aov_hold_ruined }\n\t}\n\n")
+
+# The AI's build preference per dwarven building (level 1, upgrades): the scripted modifiers vanilla buildings of
+# that kind use.
+AI_PREFERENCE = {
+    "deep_mine": (("ai_tier_1_economical_building_preference_modifier", "directive_to_build_economy_modifier"),
+                  ("ai_economical_building_preference_modifier", "directive_to_build_economy_modifier")),
+    "runeforge": (("directive_to_build_military_modifier",), ("directive_to_build_military_modifier",)),
+    "hall_of_the_ancestors": (("ai_tier_1_pious_building_preference_modifier",),
+                              ("ai_pious_building_preference_modifier",)),
+}
+
+
 def render_level(n, assets):
     lvl = holds.LEVELS[n - 1]
     band = holds.ASSET_BAND[n]
     out = [f"{level_key(n)} = {{\n", "\tconstruction_time = slow_construction_time\n\n",
            "\tassets = {\n", "\n".join(assets[band]) + "\n", "\t}\n\n",
-           "\tcan_construct_potential = {\n\t\talways = no\n\t}\n\n",
-           "\tis_enabled = {\n\t\tscope:holder = {\n\t\t\tis_dwarvish_culture = yes\n\t\t}\n"
-           "\t\tNOT = { has_variable = aov_hold_ruined }\n\t}\n\n",
+           "\tcan_construct_potential = {\n\t\talways = no\n\t}\n\n", IS_ENABLED,
            "\tcost_gold = main_building_tier_1_cost\n"]
     if n < 10:
         out.append(f"\tnext_building = {level_key(n + 1)}\n")
     out.append("\n")
+    out += [f"\t{k} = {lvl[k]}\n" for k in LEVEL_FLAT]
     out.append(modifier_block("province_modifier", {k: lvl[k] for k in LEVEL_PROVINCE}))
     out.append(modifier_block("county_modifier", {k: lvl[k] for k in LEVEL_COUNTY}))
     out.append(f"\n\tflag = castle\n\n\ttype_icon = \"{ICON}\"\n\n\tai_value = {{\n\t\tbase = 0\n\t}}\n}}\n")
@@ -103,12 +118,18 @@ def render_dwarven_building(spec, n):
     out = [f"{key} = {{\n", "\tconstruction_time = standard_construction_time\n\n",
            "\tcan_construct_potential = {\n\t\tscope:holder = {\n\t\t\tis_dwarvish_culture = yes\n\t\t}\n\t}\n\n",
            f"\tcan_construct = {{\n\t\thas_building_or_higher = {level_key(spec['min_level'])}\n\t}}\n\n",
+           IS_ENABLED,
            f"\tcost_gold = normal_building_tier_{n}_cost\n"]
     if n < 3:
         out.append(f"\tnext_building = {spec['key']}_{n + 1:02d}\n")
     out.append("\n")
     out.append(modifier_block(spec["block"], effects))
-    out.append(f"\n\ttype_icon = \"{ICON}\"\n\n\tai_value = {{\n\t\tbase = 0\n\t}}\n}}\n")
+    first, upgrade = AI_PREFERENCE[spec["key"]]
+    ai = ("ai_tier_1_building_modifier", "ai_general_building_modifier", *first) if n == 1 else \
+        ("ai_general_building_modifier", *upgrade)
+    ai_lines = "".join(f"\t\t{m} = yes\n" for m in ai)
+    # base 10/9/8 as vanilla-like economy buildings (Anbennar's fungus farms)
+    out.append(f"\n\ttype_icon = \"{ICON}\"\n\n\tai_value = {{\n\t\tbase = {11 - n}\n{ai_lines}\t}}\n}}\n")
     return "".join(out)
 
 
@@ -135,7 +156,7 @@ def render_values() -> str:
             f"aov_dig_target = {{\n\tvalue = aov_hold_level\n\tadd = 1\n\tmultiply = {holds.DIG_TARGET_PER_LEVEL}\n}}\n\n"
             "# Province scope: gold cost of a dig campaign.\n"
             f"aov_dig_campaign_cost = {{\n\tvalue = aov_hold_level\n\tmultiply = {holds.CAMPAIGN_COST_PER_LEVEL}\n}}\n\n"
-            "# Character scope: monthly dig progress before pace and investment, which the activity applies.\n"
+            "# Character scope: a dig campaign's whole progress before pace and investment, which the activity applies.\n"
             f"aov_dig_campaign_base = {{\n\tvalue = {holds.CAMPAIGN_BASE}\n"
             "\tadd = {\n\t\tvalue = stewardship\n\t\tdivide = 2\n\t}\n"
             "\tadd = {\n\t\tvalue = learning\n\t\tdivide = 4\n\t}\n"

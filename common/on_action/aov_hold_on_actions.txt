@@ -14,7 +14,8 @@ aov_hold_game_start = {
 	}
 }
 
-# Root = new holder. A hold conquered by a non-dwarf falls into ruin (inheritance and gifts do not ruin it).
+# Root = new holder. A dwarf-held hold conquered by a non-dwarf falls into ruin (inheritance and gifts do not ruin
+# it, nor does a non-dwarf taking it from another non-dwarf).
 aov_hold_on_title_gain = {
 	trigger = {
 		scope:title.tier = tier_barony
@@ -29,6 +30,8 @@ aov_hold_on_title_gain = {
 			scope:transfer_type = flag:conquest_populist
 		}
 		NOT = { is_dwarvish_culture = yes }
+		exists = scope:previous_holder
+		scope:previous_holder = { is_dwarvish_culture = yes }
 	}
 	effect = {
 		scope:title.title_province = {
