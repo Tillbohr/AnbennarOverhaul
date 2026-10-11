@@ -140,8 +140,21 @@ def render_values() -> str:
             f"{traits}}}\n")
 
 
+HOLDING_LOC = [
+    ' dwarven_hold_holding:0 "Dwarven Hold"',
+    ' dwarven_hold_holding_build_speed:0 "Dwarven Hold [buildings|E] Construction Time"',
+    ' dwarven_hold_holding_build_gold_cost:0 "Dwarven Hold [buildings|E] Construction Cost"',
+    ' dwarven_hold_holding_build_piety_cost:0 "Dwarven Hold [buildings|E] Piety Cost"',
+    ' dwarven_hold_holding_build_prestige_cost:0 "Dwarven Hold [buildings|E] Prestige Cost"',
+    ' dwarven_hold_holding_holding_build_speed:0 "Dwarven Hold [holding|E] Construction Time"',
+    ' dwarven_hold_holding_holding_build_gold_cost:0 "Dwarven Hold [holding|E] Construction Cost"',
+    ' dwarven_hold_holding_holding_build_piety_cost:0 "Dwarven Hold [holding|E] Piety Cost"',
+    ' dwarven_hold_holding_holding_build_prestige_cost:0 "Dwarven Hold [holding|E] Prestige Cost"',
+]
+
+
 def loc_lines():
-    out = []
+    out = list(HOLDING_LOC)
     for n in range(1, 11):
         key = level_key(n)
         desc = next(d for r, d in BAND_DESCS if n in r)

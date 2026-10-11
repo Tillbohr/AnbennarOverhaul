@@ -1,4 +1,13 @@
 ﻿l_english:
+ dwarven_hold_holding:0 "Dwarven Hold"
+ dwarven_hold_holding_build_speed:0 "Dwarven Hold [buildings|E] Construction Time"
+ dwarven_hold_holding_build_gold_cost:0 "Dwarven Hold [buildings|E] Construction Cost"
+ dwarven_hold_holding_build_piety_cost:0 "Dwarven Hold [buildings|E] Piety Cost"
+ dwarven_hold_holding_build_prestige_cost:0 "Dwarven Hold [buildings|E] Prestige Cost"
+ dwarven_hold_holding_holding_build_speed:0 "Dwarven Hold [holding|E] Construction Time"
+ dwarven_hold_holding_holding_build_gold_cost:0 "Dwarven Hold [holding|E] Construction Cost"
+ dwarven_hold_holding_holding_build_piety_cost:0 "Dwarven Hold [holding|E] Piety Cost"
+ dwarven_hold_holding_holding_build_prestige_cost:0 "Dwarven Hold [holding|E] Prestige Cost"
  building_dwarven_hold_01:0 "Delved Hold (1)"
  building_dwarven_hold_01_desc:0 "A young hold, a few halls and passages cut into the rock."
  building_type_dwarven_hold_01:0 "Delved Hold (1)"

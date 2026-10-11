@@ -21,6 +21,7 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 | Validate (everything) | `python -I tools/validate.py --all` |
 | Accept current reports as baseline | `python -I tools/validate.py --baseline` (only after confirming they are inherited from Anbennar) |
 | Rebuild holdings override | `python -I tools/build_holdings_override.py` |
+| Rebuild governments override | `python -I tools/build_governments_override.py` |
 | Rebuild HUD override | `python -I tools/build_hud_override.py` |
 | Rebuild lifestyle window override | `python -I tools/build_lifestyle_override.py` |
 | Rebuild county view override | `python -I tools/build_county_view_override.py` |
@@ -57,7 +58,8 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 
 | File | Generator | Why |
 |---|---|---|
-| `common/holdings/00_holdings.txt` | `python -I tools/build_holdings_override.py` | Holdings are whole-file only. The script copies Anbennar's file and inserts the `ADDITIONS` (marked `# Anbennar Overhaul`). Never edit the output by hand. |
+| `common/holdings/00_holdings.txt` | `python -I tools/build_holdings_override.py` | Holdings are whole-file only. The script copies Anbennar's file, inserts the `ADDITIONS` (marked `# Anbennar Overhaul`) and appends the new `dwarven_hold_holding` (`NEW_HOLDINGS`: castle_holding's build list after `ADDITIONS` plus deep mine, runeforge and hall of the ancestors). Never edit the output by hand. |
+| `common/governments/00_government_types.txt`, `common/governments/01_japan_government_types.txt` | `python -I tools/build_governments_override.py` | Governments are whole-file only. The script copies Anbennar's two files and adds `dwarven_hold_holding` to `valid_holdings` of every government whose `primary_holding` or `valid_holdings` has `castle_holding` (creating the line after `primary_holding` when absent; changed lines marked `# Anbennar Overhaul`). Never edit the output by hand. |
 | `gui/hud.gui` | `python -I tools/build_hud_override.py` | The main tab bar is whole-file only. The script copies Anbennar's `gui/hud.gui` if it has one, else the game's, and inserts the Artificery tab after `tab_situation` (marked `# Anbennar Overhaul`). Never edit the output by hand. |
 | `gui/window_character_lifestyle.gui` | `python -I tools/build_lifestyle_override.py` | The lifestyle window is whole-file only. The script copies Anbennar's `gui/window_character_lifestyle.gui` if it has one, else the game's, and adds a `magic_lifestyle` copy after each of the three `wanderer_lifestyle` blocks (XP bar background, progress bar, unspent-points icon) using the magic art (marked `# Anbennar Overhaul: magic lifestyle`). Never edit the output by hand. |
 | `gui/window_county_view.gui` | `python -I tools/build_county_view_override.py` | The county view is whole-file only. The script copies Anbennar's `gui/window_county_view.gui` if it has one, else the game's, and inserts one `background` per EU4 monument painting (`build_monuments.painting_backgrounds`) inline right after the vanilla holding-illustration `background`, covering the holding panel down to the garrison box (`margin_bottom = 63`, above the building slot row) top-aligned (`fittype = start`, so the top is never trimmed; marked `# Anbennar Overhaul: monument painting`); the vanilla holding illustration's `visible` also requires an empty `AovMonumentIllustration`. Never use a `using` template for these: template backgrounds draw beneath every inline background (the panel's dark background covered them). Rerun after `build_monuments.py` when monuments change. Never edit the output by hand. |
@@ -72,7 +74,7 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 ## Updating to a new Anbennar version
 
 1. Replace `../anbennar-ck3-dev-master` with the new Anbennar release.
-2. Run `python -I tools/build_holdings_override.py` and `python -I tools/build_hud_override.py` and `python -I tools/build_lifestyle_override.py` and `python -I tools/build_county_view_override.py`, and `python -I tools/build_monuments.py` (the monument overrides copy Anbennar's current definitions; it errors naming any monument key Anbennar no longer defines).
+2. Run `python -I tools/build_holdings_override.py` and `python -I tools/build_governments_override.py` and `python -I tools/build_hud_override.py` and `python -I tools/build_lifestyle_override.py` and `python -I tools/build_county_view_override.py`, and `python -I tools/build_monuments.py` (the monument overrides copy Anbennar's current definitions; it errors naming any monument key Anbennar no longer defines).
 3. Run tiger and the tool tests (below) and fix anything that references renamed Anbennar content. The tests fail if
    Anbennar renames `anb_enhance_ability_interaction` or adds another way to start its Enhance Ability scheme (removed
    from the game; see `EnhanceAbilityRemovedTests`).
@@ -92,7 +94,7 @@ reports that are not in the baseline (it ends `fatal: 0, error: 0, ...` when cle
 base mod via its in-folder `descriptor.mod`; pointing it at the launcher's `../descriptor.mod` makes tiger load
 the whole `mod/` folder instead. Current baseline: 4 `temple_citadel_holding` modifier-format warnings,
 inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error in the generated `gui/hud.gui`
-(vanilla HUD code referring to a dynastic-cycle group that Anbennar's `tgp_dynastic_cycle.txt` drops).
+(vanilla HUD code referring to a dynastic-cycle group that Anbennar's `tgp_dynastic_cycle.txt` drops), and 5 missing `<government>_realm` localization warnings in the generated government files (celestial, steppe_admin, meritocratic, japan_administrative, japan_feudal; Anbennar and vanilla lack them too).
 
 ## Systems
 
