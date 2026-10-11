@@ -1044,7 +1044,7 @@ window = {
 				}
 
 				background = {
-					visible = "[HoldingView.HasHolding]"
+					visible = "[And( HoldingView.HasHolding, StringIsEmpty( HoldingView.GetProvince.Custom('AovMonumentIllustration') ) )]"
 					texture = "[HoldingView.GetHolding.GetIllustration]"
 					alpha = 0.8
 
@@ -1059,16 +1059,723 @@ window = {
 
 				# Anbennar Overhaul: monument painting
 				background = {
-					visible = "[Not( StringIsEmpty( HoldingView.GetProvince.Custom('AovMonumentIllustration') ) )]"
-					texture = "[HoldingView.GetProvince.Custom('AovMonumentIllustration')]"
-					alpha = 0.95
-
-					fittype = centercrop
-
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_adenica_longlance_knights_academy') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/adenica_longlance_knights_academy.dds"
+					fittype = start
+					margin_bottom = 63
 					modify_texture = {
-						texture = "gfx/interface/window_county/mask_holding_illustration.dds"
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
 						blend_mode = alphamultiply
-						alpha = 0.95
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_ancardia_escanni_academy_of_war') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/ancardia_escanni_academy_of_war.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_ara_temple') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/ara_temple.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_bal_dostan') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/bal_dostan.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_bal_hyl') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/bal_hyl.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_bal_mire') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/bal_mire.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_bal_vertesk') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/bal_vertesk.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_bal_vroren') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/bal_vroren.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_bayvic_grandest_city_of_the_reach') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/bayvic_grandest_city_of_the_reach.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_beepeck_the_largest_small_city') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/beepeck_the_largest_small_city.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_bjarnrik_staple_port_of_konungrhavn') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/bjarnrik_staple_port_of_konungrhavn.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_bladeskeep_monument') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/bladeskeep_monument.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_bladeskeep_shaded_monument') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/bladeskeep_shaded_monument.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_celmaldor_icewind_palace_of_commerce') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/celmaldor_icewind_palace_of_commerce.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_damescrown_grand_exchange') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/damescrown_grand_exchange.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_damish_temple_moonmount_library') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/damish_temple_moonmount_library.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_damish_temple_temple_of_the_highest_moon') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/damish_temple_temple_of_the_highest_moon.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_deranne_westport_gateway_to_aelantir') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/deranne_westport_gateway_to_aelantir.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_draculas_throne') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/draculas_throne.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_eborthil_toref_citadel') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/eborthil_toref_citadel.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_esthili_academy_of_magic') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/esthili_academy_of_magic.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_freecestir_mustering_grounds') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/freecestir_mustering_grounds.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_gawed_castle_gaweton') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/gawed_castle_gaweton.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_giberd_academy_of_engineering') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/giberd_academy_of_engineering.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_hammerhome_artificers_guild') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/hammerhome_artificers_guild.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_ibevar_temple_of_munas') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/ibevar_temple_of_munas.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_kazakesh_stingport') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/kazakesh_stingport.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_kobildzan_kobildzex_guild_of_trapsmiths') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/kobildzan_kobildzex_guild_of_trapsmiths.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_konwell_the_imperial_archives') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/konwell_the_imperial_archives.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_lorent_new_adea_naval_school') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/lorent_new_adea_naval_school.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_lorentaine_mage_academy') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/lorentaine_mage_academy.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_marrhold_gate_to_the_serpentspine') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/marrhold_gate_to_the_serpentspine.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_marrhold_the_feather_academy') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/marrhold_the_feather_academy.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_menibor_hall_of_the_gallant') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/menibor_hall_of_the_gallant.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_minara_temple') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/minara_temple.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_moonhaven_port_munas') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/moonhaven_port_munas.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_nathalaire_city_of_pirates') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/nathalaire_city_of_pirates.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_neckcliffe_the_imperial_dockyard') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/neckcliffe_the_imperial_dockyard.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_nimscodd_academy') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/nimscodd_academy.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_portnamm_portroy_merchants_guild') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/portnamm_portroy_merchants_guild.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_rubyhold_academy') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/rubyhold_academy.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_seinathil_institute_of_song') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/seinathil_institute_of_song.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_silvelar_silver_spires') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/silvelar_silver_spires.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_silverforge_strongbellow_academy') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/silverforge_strongbellow_academy.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_sorncell_deepwater_harbor') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/sorncell_deepwater_harbor.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_telgeir_vanbury_steel_foundry') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/telgeir_vanbury_steel_foundry.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_temple_of_ryala') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/temple_of_ryala.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_the_dragonhoard') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/the_dragonhoard.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_the_lake_palace') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/the_lake_palace.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_urviksten_ebonsteel_armory') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/urviksten_ebonsteel_armory.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_well_of_majesty') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/well_of_majesty.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_gor_ozumbrog_the_topaz_throne') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/gor_ozumbrog_the_topaz_throne.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_hehodovar_school_of_architecture') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/hehodovar_school_of_architecture.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_khugdihr_bank') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/khugdihr_bank.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_seghdihr_home_of_the_seg_band') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/seghdihr_home_of_the_seg_band.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_verkal_gulan_golden_delve') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/verkal_gulan_golden_delve.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_dasmati_halls_of_reverence') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/dasmati_halls_of_reverence.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_ebbusubtu') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/ebbusubtu.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_eduz_ginakku') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/eduz_ginakku.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_eka_idulnazzar') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/eka_idulnazzar.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_mount_lazzaward') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/mount_lazzaward.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_ovdal_tungr_port_hold') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/ovdal_tungr_port_hold.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_queens_throne') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/queens_throne.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_deshak_temple_of_the_elements') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/deshak_temple_of_the_elements.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_ekha_harbor') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/ekha_harbor.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_koroshesh_grain_port') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/koroshesh_grain_port.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_zornartakel_naval_harbor') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/zornartakel_naval_harbor.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_ciranmyna_the_shimmering_city') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/ciranmyna_the_shimmering_city.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_eternal_pillar_1') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/eternal_pillar_1.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_eternal_pillar_2') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/eternal_pillar_2.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_eternal_pillar_5') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/eternal_pillar_5.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_eternal_pillar_6') )]"
+					texture = "gfx/interface/illustrations/aov_monuments/eternal_pillar_6.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
 					}
 				}
 

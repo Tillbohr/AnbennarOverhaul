@@ -700,7 +700,79 @@ class ArtTests(unittest.TestCase):
         for m in MONUMENTS:
             if m["art"]:
                 w, h, _ = read_bgra(files[f"gfx/interface/illustrations/aov_monuments/{m['eu4_key']}.dds"])
-                self.assertEqual((w, h), (300, 150))
+                # EU4's 300x150 without its 6 px frame and the row of DXT1 bleed (286x136), upscaled 2x
+                self.assertEqual((w, h), (572, 272))
+
+    def test_painting_keeps_its_top(self):
+        """EU4 spires reach almost to the frame: anchor the painting at the top (fittype start, which vanilla uses
+        for wide art at the top of a tall area) and keep the mask's top fade short."""
+        gui = "\n".join(bm.painting_backgrounds(bm.all_monuments()))
+        self.assertIn("fittype = start", gui)
+        self.assertNotIn("centercrop", gui)
+
+    def test_painting_stops_above_the_building_slots(self):
+        """The painting covers the holding panel down to the garrison box, not behind the building slot row:
+        5 (holding_info margin) + 55 (widget_building_item) + 3 (spacing above the slots)."""
+        lines = bm.painting_backgrounds(bm.all_monuments())
+        painted = len([m for m in bm.all_monuments() if m["art"]])
+        self.assertEqual(bm.PAINTING_MARGIN_BOTTOM, 63)
+        self.assertEqual(lines.count("\tmargin_bottom = 63"), painted)
+        self.assertLessEqual(bm.MASK_FADE["top"], 0.06)
+        self.assertEqual(bm.FRAME_CROP, 7)
+
+    def test_frame_is_cropped(self):
+        w, h = 30, 24
+        px = bytearray(bytes([1, 1, 1, 255]) * (w * h))
+        px[(12 * w + 15) * 4:(12 * w + 15) * 4 + 4] = bytes([9, 9, 9, 255])  # one pixel inside the frame
+        cw, ch, out = bm.crop_frame(w, h, bytes(px))
+        self.assertEqual((cw, ch), (w - 2 * bm.FRAME_CROP, h - 2 * bm.FRAME_CROP))
+        x, y = 15 - bm.FRAME_CROP, 12 - bm.FRAME_CROP
+        self.assertEqual(out[(y * cw + x) * 4:(y * cw + x) * 4 + 4], bytes([9, 9, 9, 255]))
+
+    def test_title_strip_is_lifted(self):
+        """EU4 bakes a ~50% dark name plate into the top left of every painting (rows 9-29, fading out by x=150)."""
+        w, h = 300, 150
+        px = bm.lift_title_strip(w, h, bytes([50, 50, 50, 255]) * (w * h))
+        at = lambda x, y: px[(y * w + x) * 4]  # noqa: E731
+        self.assertEqual(at(18, 20), round(50 / 0.46))  # darkest part of the plate
+        self.assertGreater(at(18, 20), at(100, 20))  # the plate fades out to the right
+        self.assertGreater(at(100, 20), 50)
+        self.assertEqual((at(160, 20), at(18, 40), at(18, 5)), (50, 50, 50))  # outside the plate: unchanged
+        self.assertEqual(px[3::4], bytes([255]) * (w * h))  # alpha untouched
+        bright = bm.lift_title_strip(w, h, bytes([250, 250, 250, 255]) * (w * h))
+        self.assertEqual(bright[(20 * w + 18) * 4], 255)  # clamped
+
+    def test_upscale_2x_keeps_flat_colour_and_range(self):
+        flat = bytes([10, 20, 30, 255]) * (8 * 4)
+        w, h, px = bm.upscale_2x(8, 4, flat)
+        self.assertEqual((w, h), (16, 8))
+        self.assertEqual(px, bytes([10, 20, 30, 255]) * (16 * 8))
+        # a hard black/white edge: Lanczos rings, but values stay clamped to 0..255 and the far sides keep their colour
+        row = [0] * 4 + [255] * 4
+        edge = bytes(v for x in row for v in (x, x, x, 255)) * 2
+        w, h, px = bm.upscale_2x(8, 2, edge)
+        blues = list(px[0:w * 4:4])
+        self.assertEqual((blues[0], blues[-1]), (0, 255))
+        self.assertTrue(all(0 <= v <= 255 for v in px))
+        self.assertTrue(any(0 < v < 255 for v in blues[6:10]), blues)  # the edge is interpolated, not doubled
+
+    def test_painting_mask(self):
+        from build_spells import read_bgra
+        rel, data = next(iter(bm.painting_mask().items()))
+        self.assertEqual(rel, bm.PAINTING_MASK)
+        w, h, px = read_bgra(data)
+        self.assertEqual((w, h), (618, 311))  # vanilla mask_holding_illustration.dds size
+        alpha = lambda x, y: px[(y * w + x) * 4 + 3]  # noqa: E731
+        self.assertEqual(alpha(w // 2, h // 2), 242)  # 95% in the middle (vanilla's mask peaks at ~67%)
+        self.assertEqual((alpha(0, 0), alpha(w - 1, h - 1)), (0, 0))  # soft edges
+        mean = sum(px[3::4]) / (w * h)
+        self.assertGreater(mean, 180)  # vanilla's mask averages ~108
+
+    def test_paintings_use_lighter_mask_at_full_alpha(self):
+        gui = "\n".join(bm.painting_backgrounds(bm.all_monuments()))
+        self.assertIn(f'texture = "{bm.PAINTING_MASK}"', gui)
+        self.assertNotIn("mask_holding_illustration", gui)
+        self.assertNotIn("alpha = 0.95", gui)
 
     def test_custom_loc_entry_per_monument_with_art(self):
         cl = bm.render_shared()["common/customizable_localization/aov_monument_illustration.txt"]
@@ -711,9 +783,35 @@ class ArtTests(unittest.TestCase):
                 self.assertIn(f"localization_key = aov_monument_art_{m['eu4_key']}", cl)
         self.assertIn("fallback = yes", cl)
 
-    def test_art_loc_holds_texture_path(self):
-        key = next(m["eu4_key"] for m in MONUMENTS if m["art"])
-        self.assertIn(f' aov_monument_art_{key}: "gfx/interface/illustrations/aov_monuments/{key}.dds"', L)
+    def test_art_loc_is_shared_and_defined_once(self):
+        """One loc file holds every art key; a key in each region file is a duplicate-key error in game."""
+        shared = bm.render_shared()[bm.SHARED_LOC]
+        painted = [m for region in bm.REGIONS for m in bm.load_monuments(region) if m["art"]]
+        for m in painted:
+            key = m["eu4_key"]
+            self.assertEqual(shared.count(f" aov_monument_art_{key}:"), 1, key)
+        self.assertEqual(shared.count(" aov_monument_art_none:"), 1)
+        for region in bm.REGIONS:
+            region_loc = bm.render_all(region)[f"localization/english/aov_monuments_{region}_l_english.yml"]
+            self.assertNotIn("aov_monument_art_", region_loc, region)
+
+    def test_painting_backgrounds_use_static_textures(self):
+        """CK3 does not load a texture whose path comes from localized text (custom loc); each painting is its own
+        background with a fixed path, shown when the province's custom loc matches that monument's art key. They
+        are inline lines for the county view, not a template: backgrounds from a `using` template are drawn before
+        (beneath) every inline background, so the panel's dark background and the vanilla art covered them."""
+        gui = "\n".join(bm.painting_backgrounds(bm.all_monuments()))
+        self.assertNotIn("template", gui)
+        self.assertNotIn("gui/aov_monument_paintings.gui", bm.render_shared())
+        painted = [m for region in bm.REGIONS for m in bm.load_monuments(region) if m["art"]]
+        self.assertEqual(gui.count("background = {"), len(painted))
+        for m in painted:
+            key = m["eu4_key"]
+            self.assertIn(f'texture = "gfx/interface/illustrations/aov_monuments/{key}.dds"', gui)
+            self.assertIn(f"[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), "
+                          f"Localize('aov_monument_art_{key}') )]", gui)
+        self.assertNotIn('texture = "[', gui)
+        self.assertEqual(gui.count("{"), gui.count("}"))
 
 @unittest.skipUnless(LIVE, "needs Anbennar CK3")
 class RegionTests(unittest.TestCase):

@@ -17,6 +17,7 @@ built from all of them (render_shared), which also checks that no province holds
 
 import argparse
 import importlib
+import math
 import re
 import sys
 from pathlib import Path
@@ -39,6 +40,21 @@ NL = "\n"
 ART_DIR = "gfx/interface/illustrations/aov_monuments"
 REGIONS = ("cannor", "dwarovar", "bulwar", "salahad", "deepwoods")
 SHARED = "common/customizable_localization/aov_monument_illustration.txt"
+SHARED_LOC = "localization/english/aov_monument_illustration_l_english.yml"
+PAINTING_MASK = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+MASK_SIZE = (618, 311)  # vanilla gfx/interface/window_county/mask_holding_illustration.dds
+MASK_PEAK = 242  # 95% opacity in the middle
+MASK_FADE = {"left": 0.10, "right": 0.08, "top": 0.06, "bottom": 0.10}  # short at the top: spires reach it
+LANCZOS_A = 3
+# The painting ends at the garrison box, above the building slot row of the county view's holding panel:
+# holding_info margin 5 + widget_building_item 55 + spacing 3 (GUI units, so the same at any UI scale).
+PAINTING_MARGIN_BOTTOM = 63
+# Every EU4 great-project painting (300x150) has a 6 px black and gold frame and a ~50% dark name plate baked
+# into its top left (rows 9-29, fading out by x=150); vanilla's dim holding mask hid both.
+FRAME_CROP = 7  # the 6 px frame and the row of DXT1 bleed next to it
+STRIP_END = 150
+STRIP_ROWS = {7: 0.2, 8: 0.06, 9: 0.78, **{y: 1.0 for y in range(10, 29)}, 29: 0.71}
+CUSTOM = "HoldingView.GetProvince.Custom('AovMonumentIllustration')"
 
 
 # ai_value of every generated level: vanilla's special-building pattern (00_special_buildings.txt), base 100, the
@@ -249,6 +265,10 @@ def override(base_text: str, key: str, tier: dict, next_key, n: int, values=None
 
 def load_monuments(region: str) -> list:
     return importlib.import_module(f"data.monuments.{region}").MONUMENTS
+
+
+def all_monuments(regions=REGIONS) -> list:
+    return [m for region in regions for m in load_monuments(region)]
 
 
 def num(v) -> str:
@@ -466,17 +486,13 @@ def loc(monuments: list, known: set, root: Path = ANBENNAR_CK3) -> str:
             if key in known and f" building_type_{key}_desc:" not in anb_loc:
                 out.append(f' building_type_{key}_desc: "$building_{key}_desc$"')
     for m in monuments:
-        if m["art"]:
-            out.append(f' aov_monument_art_{m["eu4_key"]}: "{ART_DIR}/{m["eu4_key"]}.dds"')
-    out.append(' aov_monument_art_none: ""')
-    for m in monuments:
         if m["gate"]:
             out.append(f' aov_monument_{m["eu4_key"]}_gate: "{q("Built and used by: " + m["gate_desc"])}"')
     return "\n".join(out) + "\n"
 
 
 def illustration(monuments: list) -> str:
-    """Custom loc AovMonumentIllustration: the texture path of the painting for the province's monument, else empty."""
+    """Custom loc AovMonumentIllustration: the art loc key's text for the province's monument, else empty."""
     out = [HEADER, "AovMonumentIllustration = {", "\ttype = province", ""]
     for m in monuments:
         if m["art"]:
@@ -486,8 +502,146 @@ def illustration(monuments: list) -> str:
     return NL.join(out)
 
 
+def illustration_loc(monuments: list) -> str:
+    """The art loc keys of every region, defined once (a key in each region's file is a duplicate-key error)."""
+    out = ["l_english:"]
+    out += [f' aov_monument_art_{m["eu4_key"]}: "{ART_DIR}/{m["eu4_key"]}.dds"' for m in monuments if m["art"]]
+    out.append(' aov_monument_art_none: ""')
+    return NL.join(out) + NL
+
+
+def painting_backgrounds(monuments: list) -> list:
+    """GUI lines (unindented) that tools/build_county_view_override.py inserts inline after the holding illustration:
+    one background per painting with a fixed texture path, shown when the province's AovMonumentIllustration text is
+    that monument's art loc text. CK3 does not load a texture whose path comes from localized text, so the path is
+    never taken from the custom loc; the comparison against Localize() follows Princes of Darkness' Custom() checks.
+    Inline, not a `using` template: template backgrounds are drawn beneath every inline background, so the panel's
+    dark background and the vanilla art covered them. Drawn at full alpha through the lighter PAINTING_MASK."""
+    out = []
+    for m in monuments:
+        if m["art"]:
+            key = m["eu4_key"]
+            out += ["background = {",
+                    f"\tvisible = \"[EqualTo_string( {CUSTOM}, Localize('aov_monument_art_{key}') )]\"",
+                    f'\ttexture = "{ART_DIR}/{key}.dds"',
+                    "\tfittype = start",  # anchored at the top: EU4 spires reach almost to the frame
+                    f"\tmargin_bottom = {PAINTING_MARGIN_BOTTOM}",
+                    "\tmodify_texture = {",
+                    f'\t\ttexture = "{PAINTING_MASK}"',
+                    "\t\tblend_mode = alphamultiply",
+                    "\t}",
+                    "}"]
+    return out
+
+
+def _strip_factor(x: int) -> float:
+    """How much EU4's name plate darkens column x of a 300x150 painting: 0.46 at the left, back to 1 at x=150
+    (median over all 72 paintings, fitted to within ~0.03)."""
+    if x >= STRIP_END:
+        return 1.0
+    return 0.46 + 0.54 * (max(x - 18, 0) / (STRIP_END - 18)) ** 1.4
+
+
+def lift_title_strip(width: int, height: int, pixels: bytes) -> bytes:
+    """Undo the dark name plate EU4 bakes into the top left of every great-project painting (EU4 prints the
+    project's name there): divide the plate's rows by the darkening (STRIP_ROWS: share of the full darkening per
+    row; the plate's top and bottom rows are partly covered). Colour channels only, clamped to 255."""
+    px = bytearray(pixels)
+    for y, share in STRIP_ROWS.items():
+        if y >= height:
+            continue
+        for x in range(min(STRIP_END, width)):
+            factor = 1 - share * (1 - _strip_factor(x))
+            i = (y * width + x) * 4
+            for c in range(3):
+                px[i + c] = min(255, int(px[i + c] / factor + 0.5))
+    return bytes(px)
+
+
+def crop_frame(width: int, height: int, pixels: bytes) -> tuple:
+    """(width, height, BGRA) without EU4's black and gold frame (6 px): FRAME_CROP px off each side, which also drops
+    the picture row next to the frame, whose DXT1 blocks mix in frame colours. No more: spires reach the frame."""
+    m = FRAME_CROP
+    rows = [pixels[(y * width + m) * 4:(y * width + width - m) * 4] for y in range(m, height - m)]
+    return width - 2 * m, height - 2 * m, b"".join(rows)
+
+
+def _lanczos(x: float, a: int = LANCZOS_A) -> float:
+    if x == 0:
+        return 1.0
+    if abs(x) >= a:
+        return 0.0
+    px = math.pi * x
+    return a * math.sin(px) * math.sin(px / a) / (px * px)
+
+
+def _kernels() -> tuple:
+    """The two Lanczos kernels of an exact 2x upscale. Output pixel 2i sits at source i - 0.25 (taps i-3..i+2),
+    output pixel 2i+1 at source i + 0.25 (taps i-2..i+3); each kernel is normalised to sum 1."""
+    even = [_lanczos(-0.25 - d) for d in range(-LANCZOS_A, LANCZOS_A)]
+    odd = [_lanczos(0.25 - d) for d in range(-LANCZOS_A + 1, LANCZOS_A + 1)]
+    return [w / sum(even) for w in even], [w / sum(odd) for w in odd]
+
+
+def _upscale_line(values: list, kernels: tuple) -> list:
+    """One row or column of samples upscaled 2x (edges clamped)."""
+    n, a = len(values), LANCZOS_A
+    padded = [values[0]] * a + values + [values[-1]] * a  # padded[k + a] = values[k]
+    even_w, odd_w = kernels
+    even = [sum(w * v for w, v in zip(even_w, taps))
+            for taps in zip(*(padded[s:s + n] for s in range(0, 2 * a)))]  # padded index i + d + a, d = -a..a-1
+    odd = [sum(w * v for w, v in zip(odd_w, taps))
+           for taps in zip(*(padded[s:s + n] for s in range(1, 2 * a + 1)))]  # d = -a+1..a
+    out = [0.0] * (2 * n)
+    out[0::2], out[1::2] = even, odd
+    return out
+
+
+def upscale_2x(width: int, height: int, pixels: bytes) -> tuple:
+    """(2*width, 2*height, BGRA bytes): separable Lanczos-3 resampling, clamped to 0..255. The EU4 paintings are
+    300x150 and the county view panel ~600x320; this resamples better than the game's bilinear stretch, without
+    inventing detail."""
+    kernels = _kernels()
+    # Horizontal pass: rows[y][c] = channel c of source row y, 2*width samples.
+    rows = []
+    for y in range(height):
+        row = pixels[y * width * 4:(y + 1) * width * 4]
+        rows.append([_upscale_line(list(row[c::4]), kernels) for c in range(4)])
+    # Vertical pass on whole rows: output row 2i+p is the kernel-weighted sum of source rows around i.
+    w2, h2, a = 2 * width, 2 * height, LANCZOS_A
+    out = bytearray(w2 * h2 * 4)
+    clamp = lambda v: 0 if v < 0 else 255 if v > 255 else int(v + 0.5)  # noqa: E731
+    for i in range(height):
+        for parity, (weights, first) in enumerate(((kernels[0], -a), (kernels[1], -a + 1))):
+            sources = [rows[min(max(i + d, 0), height - 1)] for d in range(first, first + 2 * a)]
+            base = (2 * i + parity) * w2 * 4
+            for c in range(4):
+                mixed = [sum(w * v for w, v in zip(weights, column)) for column in zip(*(s[c] for s in sources))]
+                out[base + c:base + w2 * 4:4] = bytes(clamp(v) for v in mixed)
+    return w2, h2, bytes(out)
+
+
+def _smoothstep(t: float) -> float:
+    t = min(max(t, 0.0), 1.0)
+    return t * t * (3 - 2 * t)
+
+
+def painting_mask() -> dict:
+    """Published path -> the paintings' alpha mask: vanilla mask_holding_illustration.dds's size, MASK_PEAK in the
+    middle and a short smoothstep fade at each edge (MASK_FADE, a fraction of the side). Vanilla's mask peaks at
+    ~67% and averages ~42%, which left the paintings dim over the panel's dark background."""
+    w, h = MASK_SIZE
+    fx = [_smoothstep((x + 0.5) / (w * MASK_FADE["left"])) * _smoothstep((w - x - 0.5) / (w * MASK_FADE["right"]))
+          for x in range(w)]
+    fy = [_smoothstep((y + 0.5) / (h * MASK_FADE["top"])) * _smoothstep((h - y - 0.5) / (h * MASK_FADE["bottom"]))
+          for y in range(h)]
+    px = b"".join(bytes((255, 255, 255, int(MASK_PEAK * fx[x] * fy[y] + 0.5))) for y in range(h) for x in range(w))
+    return {PAINTING_MASK: write_bgra(w, h, px)}
+
+
 def render_art(region: str, roots=None) -> dict:
-    """Published path -> uncompressed BGRA DDS of each monument's EU4 painting (EU4 size)."""
+    """Published path -> uncompressed BGRA DDS of each monument's EU4 painting: name plate lifted, frame cropped
+    and upscaled 2x (lift_title_strip, crop_frame, upscale_2x)."""
     roots = roots or eu4_monuments.EU4_ROOTS
     out = {}
     for m in load_monuments(region):
@@ -498,7 +652,8 @@ def render_art(region: str, roots=None) -> dict:
             raise GeneratorError(f"EU4 painting for {m['eu4_key']} not found ({m['art']})")
         data = src.read_bytes()
         w, h, px = eu4_monuments.decode_dxt1(data) if data[84:88] == b"DXT1" else read_bgra(data)  # a few are already BGRA
-        out[f"{ART_DIR}/{m['eu4_key']}.dds"] = write_bgra(w, h, bytes(px))
+        w, h, px = crop_frame(w, h, lift_title_strip(w, h, bytes(px)))
+        out[f"{ART_DIR}/{m['eu4_key']}.dds"] = write_bgra(*upscale_2x(w, h, px))
     return out
 
 
@@ -561,8 +716,9 @@ def render_all(region: str, root: Path = ANBENNAR_CK3) -> dict:
 
 
 def render_shared(regions=REGIONS) -> dict:
-    """Files shared by every region: the illustration custom loc. Raises GeneratorError when one province holds
-    monuments from two regions."""
+    """Files shared by every region: the illustration custom loc and its loc keys (the county view's painting
+    backgrounds come from painting_backgrounds, via tools/build_county_view_override.py). Raises GeneratorError when
+    one province holds monuments from two regions."""
     monuments, seen = [], {}
     for region in regions:
         for m in load_monuments(region):
@@ -571,7 +727,7 @@ def render_shared(regions=REGIONS) -> dict:
                                      f"{seen[m['province']]}")
             seen[m["province"]] = f"{m['eu4_key']} ({region})"
             monuments.append(m)
-    return {SHARED: illustration(monuments)}
+    return {SHARED: illustration(monuments), SHARED_LOC: illustration_loc(monuments)}
 
 
 def write_all(files: dict, root: Path) -> None:
@@ -590,6 +746,7 @@ def main() -> None:
         for region in [args.region] if args.region else REGIONS:
             files.update(render_all(region))
             art.update(render_art(region))
+        art.update(painting_mask())
         files.update(render_shared())
         write_all(files, SUBMOD)
         for rel, data in art.items():

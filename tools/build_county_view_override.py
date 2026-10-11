@@ -1,10 +1,10 @@
 """Regenerate gui/window_county_view.gui for Anbennar Overhaul.
 
-The county view can only be changed by overriding the whole file, so the submod ships a copy with a second
-holding-illustration background after the vanilla one: it draws the EU4 monument painting when the province
-has a monument (custom loc AovMonumentIllustration, tools/build_monuments.py). The copy is taken from
-Anbennar's gui/window_county_view.gui if Anbennar ships one, otherwise from the game. Rerun this after every
-CK3 patch and Anbennar update:
+The county view can only be changed by overriding the whole file, so the submod ships a copy that adds the
+monument paintings over the holding panel: one background per EU4 painting (build_monuments.
+painting_backgrounds), shown when the province has that monument. The copy is taken from Anbennar's
+gui/window_county_view.gui if Anbennar ships one, otherwise from the game. Rerun this after every CK3 patch and
+Anbennar update, and after tools/build_monuments.py when the monument data changes:
 
     python -I tools/build_county_view_override.py [--anbennar PATH] [--game PATH]
 """
@@ -14,34 +14,29 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # python -I does not add the script's folder
+import build_monuments  # noqa: E402
 from build_hud_override import GeneratorError, brace_delta  # noqa: E402
 
 MARKER = "# Anbennar Overhaul"
 REL_PATH = Path("gui/window_county_view.gui")
 ANCHOR = "HoldingView.GetHolding.GetIllustration"
-CUSTOM = "HoldingView.GetProvince.Custom('AovMonumentIllustration')"
 
 SUBMOD = Path(__file__).resolve().parent.parent
 DEFAULT_ANBENNAR = SUBMOD.parent / "anbennar-ck3-dev-master"
 DEFAULT_GAME = Path("C:/Program Files (x86)/Steam/steamapps/common/Crusader Kings III/game")
 
-# Drawn over the holding illustration with the same mask; the custom loc is empty without a monument.
-BLOCK = [
-    f"{MARKER}: monument painting",
-    "background = {",
-    f"\tvisible = \"[Not( StringIsEmpty( {CUSTOM} ) )]\"",
-    f"\ttexture = \"[{CUSTOM}]\"",
-    "\talpha = 0.95",
-    "",
-    "\tfittype = centercrop",
-    "",
-    "\tmodify_texture = {",
-    '\t\ttexture = "gfx/interface/window_county/mask_holding_illustration.dds"',
-    "\t\tblend_mode = alphamultiply",
-    "\t\talpha = 0.95",
-    "\t}",
-    "}",
-]
+# The paintings are inline backgrounds right after the vanilla holding illustration, so they cover the holding
+# panel as the vanilla art does and draw above the panel's dark background. Never a `using` template: template
+# backgrounds are drawn beneath every inline background. They are top-aligned (fittype start), so the top of a
+# painting is never trimmed. The vanilla holding illustration is hidden where a painting shows.
+VANILLA_VISIBLE = "[HoldingView.HasHolding]"
+HIDDEN_UNDER_MONUMENT = ("[And( HoldingView.HasHolding, "
+                         "StringIsEmpty( HoldingView.GetProvince.Custom('AovMonumentIllustration') ) )]")
+
+
+def block() -> list:
+    """The inserted lines: a marker and one background per monument painting of every region."""
+    return [f"{MARKER}: monument painting"] + build_monuments.painting_backgrounds(build_monuments.all_monuments())
 
 
 def insert(text: str) -> str:
@@ -63,8 +58,12 @@ def insert(text: str) -> str:
             break
     else:
         raise GeneratorError("unbalanced braces in the holding illustration background")
+    visible = [i for i in range(start, end) if lines[i].strip() == f'visible = "{VANILLA_VISIBLE}"']
+    if len(visible) != 1:
+        raise GeneratorError(f"the holding illustration has no single 'visible = \"{VANILLA_VISIBLE}\"' line")
+    lines[visible[0]] = lines[visible[0]].replace(VANILLA_VISIBLE, HIDDEN_UNDER_MONUMENT)
     indent = lines[start][: len(lines[start]) - len(lines[start].lstrip("\t"))]
-    lines[end + 1:end + 1] = [""] + [indent + l if l else "" for l in BLOCK]
+    lines[end + 1:end + 1] = [""] + [indent + l if l else "" for l in block()]
     return "\n".join(lines)
 
 
