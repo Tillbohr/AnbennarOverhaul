@@ -94,6 +94,19 @@ class DelvingCampaignTests(unittest.TestCase):
                        "is_occupied = no", "is_army_in_siege = yes"):
             self.assertIn(needle, block)
 
+    def test_running_dig_checked_on_the_hold(self):
+        trig = parse_blocks(read("common/scripted_triggers/aov_hold_triggers.txt"))["aov_can_dig_at"]
+        digger = sub_block(trig, "scope:digger", 1)
+        self.assertNotIn("aov_dig_in_progress", digger)
+        self.assertRegex(trig, r"(?m)^\tNOT = \{ has_variable = aov_dig_in_progress \}$")
+        # A running campaign must not fail its own validity because of its own flag.
+        self.assertNotIn("aov_can_dig_at", is_valid_block(self.act))
+        for phase in phase_blocks(self.act).values():
+            self.assertNotIn("aov_can_dig_at", phase)
+        for hook in ("on_invalidated", "on_host_death"):
+            self.assertIn(f"\t{hook} = {{\n\t\tvar:aov_dig_hold ?= {{ remove_variable = aov_dig_in_progress }}\n\t}}",
+                          self.act)
+
     def test_host_and_location(self):
         self.assertIn("is_dwarvish_culture = yes", sub_block(self.act, "is_shown", 1))
         self.assertIn("aov_can_dig_at = yes", can_start_block(self.act))

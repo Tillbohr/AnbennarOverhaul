@@ -14,13 +14,14 @@ aov_hold_is_working = {
 	NOT = { has_province_modifier = aov_restoring_hold }
 }
 
-# Province scope, scope:digger is the character who would dig.
+# Province scope, scope:digger is the character who would dig. Planning only: a running campaign's own
+# aov_dig_in_progress fails this, so the activity's is_valid uses its own checks instead.
 aov_can_dig_at = {
 	aov_hold_is_working = yes
 	aov_hold_level < 10
+	NOT = { has_variable = aov_dig_in_progress }
 	barony.holder = scope:digger
 	scope:digger = {
 		is_dwarvish_culture = yes
-		NOT = { has_variable = aov_dig_in_progress }
 	}
 }
