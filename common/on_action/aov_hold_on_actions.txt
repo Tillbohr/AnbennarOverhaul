@@ -1,5 +1,9 @@
 ﻿# Anbennar Overhaul: dwarven hold on_actions, appended to vanilla on_actions.
 
+on_title_gain = {
+	on_actions = { aov_hold_on_title_gain aov_hold_restoration_handover }
+}
+
 on_game_start = {
 	on_actions = { aov_hold_game_start }
 }
@@ -7,5 +11,41 @@ on_game_start = {
 aov_hold_game_start = {
 	effect = {
 		aov_hold_setup_effect = yes
+	}
+}
+
+# Root = new holder. A hold conquered by a non-dwarf falls into ruin (inheritance and gifts do not ruin it).
+aov_hold_on_title_gain = {
+	trigger = {
+		scope:title.tier = tier_barony
+		scope:title.title_province = {
+			aov_is_hold = yes
+			NOT = { aov_hold_is_ruined = yes }
+		}
+		OR = {
+			scope:transfer_type = flag:conquest
+			scope:transfer_type = flag:conquest_claim
+			scope:transfer_type = flag:conquest_holy_war
+			scope:transfer_type = flag:conquest_populist
+		}
+		NOT = { is_dwarvish_culture = yes }
+	}
+	effect = {
+		scope:title.title_province = {
+			aov_hold_ruin_effect = yes
+		}
+	}
+}
+
+# Root = new holder. A restoration under way follows the hold to its new holder (also when the restorer dies).
+aov_hold_restoration_handover = {
+	trigger = {
+		scope:title.tier = tier_barony
+		scope:title.title_province = { has_variable = aov_restore_pending }
+	}
+	effect = {
+		scope:title.title_province = { save_scope_as = hold_province }
+		scope:title = { save_scope_as = hold_title }
+		trigger_event = { id = aov_hold_ruin.4 days = 1 }
 	}
 }

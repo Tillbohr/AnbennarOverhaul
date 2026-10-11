@@ -1,0 +1,43 @@
+﻿# Anbennar Overhaul: dwarven hold effects.
+
+# Province scope. Task 6 (the Delving Campaign activity) extends this to also end the hold's running campaign.
+aov_hold_end_campaign_effect = {
+	remove_variable = aov_dig_in_progress
+}
+
+# Province scope, a hold just conquered by a non-dwarf. Scope:previous_holder is the loser, if any.
+aov_hold_ruin_effect = {
+	set_variable = aov_hold_ruined
+	set_variable = { name = aov_dig_progress value = 0 }
+	aov_hold_end_campaign_effect = yes
+	save_scope_as = hold_province
+	barony = { save_scope_as = hold_title }
+	county = {
+		add_county_modifier = {
+			modifier = aov_ruined_hold
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:previous_holder
+			scope:previous_holder = { is_alive = yes }
+		}
+		scope:previous_holder = { trigger_event = aov_hold_ruin.1 }
+	}
+	barony.holder = { trigger_event = aov_hold_ruin.1 }
+}
+
+# Province scope, root is the restorer (the holder who paid). The restoration completes in
+# aov_hold_ruin.3 on whoever holds the hold then.
+aov_hold_begin_restoration_effect = {
+	add_province_modifier = {
+		modifier = aov_restoring_hold
+		years = 5
+	}
+	set_variable = aov_restore_pending
+	set_variable = { name = aov_restore_due years = 5 }
+	set_variable = { name = aov_restorer value = root }
+	save_scope_as = hold_province
+	barony = { save_scope_as = hold_title }
+	root = { trigger_event = { id = aov_hold_ruin.3 days = 1830 } }
+}

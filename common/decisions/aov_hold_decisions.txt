@@ -1,0 +1,40 @@
+﻿# Anbennar Overhaul: dwarven hold decisions.
+
+aov_clear_ruins_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_realm.dds"
+	}
+	decision_group_type = major
+	sort_order = 90
+	ai_check_interval = 0
+
+	is_shown = {
+		is_dwarvish_culture = yes
+		is_landed = yes
+		any_held_title = {
+			tier = tier_barony
+			title_province = {
+				aov_is_hold = yes
+				aov_hold_is_ruined = yes
+				NOT = { has_province_modifier = aov_restoring_hold }
+			}
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		is_available_adult = yes
+	}
+
+	cost = {
+		gold = 300
+		prestige = 200
+	}
+
+	effect = {
+		trigger_event = aov_hold_ruin.2
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
