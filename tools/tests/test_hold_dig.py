@@ -139,6 +139,18 @@ class HoldDigTests(unittest.TestCase):
         self.assertGreaterEqual(ev.count("aov_hold_start_dig_effect = yes"), 9)
         self.assertGreaterEqual(ev.count("remove_short_term_gold"), 9)
 
+    def test_picker_ai_weights_positive_and_reserve(self):
+        ev = event_block("aov_hold_delve.1")
+        opts = [o for o in ev.split("	option = {")[1:] if "aov_hold_delve.1.hold_" in o]
+        self.assertEqual(len(opts), 9)
+        for o in opts:
+            m = re.search(r"ai_chance = \{\s*base = (\d+)", o)
+            self.assertTrue(m and int(m.group(1)) >= 1, o)   # positive floor: never all zero
+            self.assertNotIn("subtract", o)
+            self.assertIn("divide = title:", o)   # inverse-cost weight favours cheap holds
+            self.assertRegex(o, r"trigger_if = \{\s*limit = \{ scope:digger = \{ is_ai = yes \} \}\s*scope:digger\.gold >= \{\s*value = aov_dig_cost\s*multiply = 2")
+        self.assertRegex(ev, r"aov_hold_delve\.1\.cancel\s*ai_chance = \{ base = 0 \}")
+
     def test_progress_desc_per_hold(self):
         d = decision_block("aov_delve_deeper_decision")
         self.assertGreaterEqual(d.count("triggered_desc"), 9)

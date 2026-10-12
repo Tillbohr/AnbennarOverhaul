@@ -17,6 +17,14 @@ aov_hold_delve.1 = {
 			title:b_marrhold.title_province = {
 				aov_can_dig_at = yes
 				scope:digger.gold >= aov_dig_cost
+				# The AI keeps as much gold again in reserve.
+				trigger_if = {
+					limit = { scope:digger = { is_ai = yes } }
+					scope:digger.gold >= {
+						value = aov_dig_cost
+						multiply = 2
+					}
+				}
 			}
 		}
 		title:b_marrhold.title_province = {
@@ -25,13 +33,12 @@ aov_hold_delve.1 = {
 			aov_hold_start_dig_effect = yes
 		}
 		ai_chance = {
-			base = 10
-			# Cheaper holds first: the cost is 150 x the target level.
+			base = 1
+			# Cheaper holds first (cost is 150 x the target level); always at least 1 so the AI can still pick a dear hold.
 			modifier = {
 				add = {
-					value = 20
-					subtract = title:b_marrhold.title_province.aov_dig_cost
-					multiply = 0.01
+					value = 1500
+					divide = title:b_marrhold.title_province.aov_dig_cost
 				}
 			}
 		}
@@ -45,6 +52,14 @@ aov_hold_delve.1 = {
 			title:b_anvilwright.title_province = {
 				aov_can_dig_at = yes
 				scope:digger.gold >= aov_dig_cost
+				# The AI keeps as much gold again in reserve.
+				trigger_if = {
+					limit = { scope:digger = { is_ai = yes } }
+					scope:digger.gold >= {
+						value = aov_dig_cost
+						multiply = 2
+					}
+				}
 			}
 		}
 		title:b_anvilwright.title_province = {
@@ -53,13 +68,12 @@ aov_hold_delve.1 = {
 			aov_hold_start_dig_effect = yes
 		}
 		ai_chance = {
-			base = 10
-			# Cheaper holds first: the cost is 150 x the target level.
+			base = 1
+			# Cheaper holds first (cost is 150 x the target level); always at least 1 so the AI can still pick a dear hold.
 			modifier = {
 				add = {
-					value = 20
-					subtract = title:b_anvilwright.title_province.aov_dig_cost
-					multiply = 0.01
+					value = 1500
+					divide = title:b_anvilwright.title_province.aov_dig_cost
 				}
 			}
 		}
@@ -73,6 +87,14 @@ aov_hold_delve.1 = {
 			title:b_gulandhum.title_province = {
 				aov_can_dig_at = yes
 				scope:digger.gold >= aov_dig_cost
+				# The AI keeps as much gold again in reserve.
+				trigger_if = {
+					limit = { scope:digger = { is_ai = yes } }
+					scope:digger.gold >= {
+						value = aov_dig_cost
+						multiply = 2
+					}
+				}
 			}
 		}
 		title:b_gulandhum.title_province = {
@@ -81,13 +103,12 @@ aov_hold_delve.1 = {
 			aov_hold_start_dig_effect = yes
 		}
 		ai_chance = {
-			base = 10
-			# Cheaper holds first: the cost is 150 x the target level.
+			base = 1
+			# Cheaper holds first (cost is 150 x the target level); always at least 1 so the AI can still pick a dear hold.
 			modifier = {
 				add = {
-					value = 20
-					subtract = title:b_gulandhum.title_province.aov_dig_cost
-					multiply = 0.01
+					value = 1500
+					divide = title:b_gulandhum.title_province.aov_dig_cost
 				}
 			}
 		}
@@ -101,6 +122,14 @@ aov_hold_delve.1 = {
 			title:b_kar_fimthrun.title_province = {
 				aov_can_dig_at = yes
 				scope:digger.gold >= aov_dig_cost
+				# The AI keeps as much gold again in reserve.
+				trigger_if = {
+					limit = { scope:digger = { is_ai = yes } }
+					scope:digger.gold >= {
+						value = aov_dig_cost
+						multiply = 2
+					}
+				}
 			}
 		}
 		title:b_kar_fimthrun.title_province = {
@@ -109,13 +138,12 @@ aov_hold_delve.1 = {
 			aov_hold_start_dig_effect = yes
 		}
 		ai_chance = {
-			base = 10
-			# Cheaper holds first: the cost is 150 x the target level.
+			base = 1
+			# Cheaper holds first (cost is 150 x the target level); always at least 1 so the AI can still pick a dear hold.
 			modifier = {
 				add = {
-					value = 20
-					subtract = title:b_kar_fimthrun.title_province.aov_dig_cost
-					multiply = 0.01
+					value = 1500
+					divide = title:b_kar_fimthrun.title_province.aov_dig_cost
 				}
 			}
 		}
@@ -129,6 +157,14 @@ aov_hold_delve.1 = {
 			title:b_irovar.title_province = {
 				aov_can_dig_at = yes
 				scope:digger.gold >= aov_dig_cost
+				# The AI keeps as much gold again in reserve.
+				trigger_if = {
+					limit = { scope:digger = { is_ai = yes } }
+					scope:digger.gold >= {
+						value = aov_dig_cost
+						multiply = 2
+					}
+				}
 			}
 		}
 		title:b_irovar.title_province = {
@@ -137,13 +173,12 @@ aov_hold_delve.1 = {
 			aov_hold_start_dig_effect = yes
 		}
 		ai_chance = {
-			base = 10
-			# Cheaper holds first: the cost is 150 x the target level.
+			base = 1
+			# Cheaper holds first (cost is 150 x the target level); always at least 1 so the AI can still pick a dear hold.
 			modifier = {
 				add = {
-					value = 20
-					subtract = title:b_irovar.title_province.aov_dig_cost
-					multiply = 0.01
+					value = 1500
+					divide = title:b_irovar.title_province.aov_dig_cost
 				}
 			}
 		}
@@ -157,6 +192,14 @@ aov_hold_delve.1 = {
 			title:b_hul_az_amekh.title_province = {
 				aov_can_dig_at = yes
 				scope:digger.gold >= aov_dig_cost
+				# The AI keeps as much gold again in reserve.
+				trigger_if = {
+					limit = { scope:digger = { is_ai = yes } }
+					scope:digger.gold >= {
+						value = aov_dig_cost
+						multiply = 2
+					}
+				}
 			}
 		}
 		title:b_hul_az_amekh.title_province = {
@@ -165,13 +208,12 @@ aov_hold_delve.1 = {
 			aov_hold_start_dig_effect = yes
 		}
 		ai_chance = {
-			base = 10
-			# Cheaper holds first: the cost is 150 x the target level.
+			base = 1
+			# Cheaper holds first (cost is 150 x the target level); always at least 1 so the AI can still pick a dear hold.
 			modifier = {
 				add = {
-					value = 20
-					subtract = title:b_hul_az_amekh.title_province.aov_dig_cost
-					multiply = 0.01
+					value = 1500
+					divide = title:b_hul_az_amekh.title_province.aov_dig_cost
 				}
 			}
 		}
@@ -185,6 +227,14 @@ aov_hold_delve.1 = {
 			title:b_kar_hargun.title_province = {
 				aov_can_dig_at = yes
 				scope:digger.gold >= aov_dig_cost
+				# The AI keeps as much gold again in reserve.
+				trigger_if = {
+					limit = { scope:digger = { is_ai = yes } }
+					scope:digger.gold >= {
+						value = aov_dig_cost
+						multiply = 2
+					}
+				}
 			}
 		}
 		title:b_kar_hargun.title_province = {
@@ -193,13 +243,12 @@ aov_hold_delve.1 = {
 			aov_hold_start_dig_effect = yes
 		}
 		ai_chance = {
-			base = 10
-			# Cheaper holds first: the cost is 150 x the target level.
+			base = 1
+			# Cheaper holds first (cost is 150 x the target level); always at least 1 so the AI can still pick a dear hold.
 			modifier = {
 				add = {
-					value = 20
-					subtract = title:b_kar_hargun.title_province.aov_dig_cost
-					multiply = 0.01
+					value = 1500
+					divide = title:b_kar_hargun.title_province.aov_dig_cost
 				}
 			}
 		}
@@ -213,6 +262,14 @@ aov_hold_delve.1 = {
 			title:b_topazhjardan.title_province = {
 				aov_can_dig_at = yes
 				scope:digger.gold >= aov_dig_cost
+				# The AI keeps as much gold again in reserve.
+				trigger_if = {
+					limit = { scope:digger = { is_ai = yes } }
+					scope:digger.gold >= {
+						value = aov_dig_cost
+						multiply = 2
+					}
+				}
 			}
 		}
 		title:b_topazhjardan.title_province = {
@@ -221,13 +278,12 @@ aov_hold_delve.1 = {
 			aov_hold_start_dig_effect = yes
 		}
 		ai_chance = {
-			base = 10
-			# Cheaper holds first: the cost is 150 x the target level.
+			base = 1
+			# Cheaper holds first (cost is 150 x the target level); always at least 1 so the AI can still pick a dear hold.
 			modifier = {
 				add = {
-					value = 20
-					subtract = title:b_topazhjardan.title_province.aov_dig_cost
-					multiply = 0.01
+					value = 1500
+					divide = title:b_topazhjardan.title_province.aov_dig_cost
 				}
 			}
 		}
@@ -241,6 +297,14 @@ aov_hold_delve.1 = {
 			title:b_aghatehargun.title_province = {
 				aov_can_dig_at = yes
 				scope:digger.gold >= aov_dig_cost
+				# The AI keeps as much gold again in reserve.
+				trigger_if = {
+					limit = { scope:digger = { is_ai = yes } }
+					scope:digger.gold >= {
+						value = aov_dig_cost
+						multiply = 2
+					}
+				}
 			}
 		}
 		title:b_aghatehargun.title_province = {
@@ -249,13 +313,12 @@ aov_hold_delve.1 = {
 			aov_hold_start_dig_effect = yes
 		}
 		ai_chance = {
-			base = 10
-			# Cheaper holds first: the cost is 150 x the target level.
+			base = 1
+			# Cheaper holds first (cost is 150 x the target level); always at least 1 so the AI can still pick a dear hold.
 			modifier = {
 				add = {
-					value = 20
-					subtract = title:b_aghatehargun.title_province.aov_dig_cost
-					multiply = 0.01
+					value = 1500
+					divide = title:b_aghatehargun.title_province.aov_dig_cost
 				}
 			}
 		}
