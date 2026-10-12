@@ -4,10 +4,13 @@
 """
 
 import re
+import sys
 import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent.parent
+sys.path.insert(0, str(ROOT / "tools"))  # python -I does not add the tools folder
+from data import holds  # noqa: E402
 
 
 def read(rel):
@@ -30,6 +33,14 @@ def effect_block(name):
 
 def on_action_block(name):
     return top_block(read("common/on_action/aov_hold_on_actions.txt"), name)
+
+
+def decision_block(name):
+    return top_block(read("common/decisions/aov_hold_decisions.txt"), name)
+
+
+def event_block(name):
+    return top_block(read("events/aov_hold_delve_events.txt"), name)
 
 
 class HoldDigTests(unittest.TestCase):
@@ -113,6 +124,30 @@ class HoldDigTests(unittest.TestCase):
             self.assertIn("scope:hold = { aov_hold_dig_running = yes }", ev)
         self.assertIn("scope:hold.aov_hold_level", top_block(events, "aov_hold_dig.100"))
         self.assertNotIn("hold_province", events)
+
+    def test_decision_gating_and_cost(self):
+        d = decision_block("aov_delve_deeper_decision")
+        self.assertIn("is_dwarvish_culture = yes", d)
+        self.assertIn("aov_can_dig_at", d)
+        self.assertIn("aov_dig_cost", d)
+
+    def test_picker_excludes_running_digs(self):
+        ev = event_block("aov_hold_delve.1")
+        for h in holds.HOLDS:
+            self.assertIn(f"title:{h['barony']}", ev)
+        self.assertGreaterEqual(ev.count("aov_can_dig_at = yes"), 9)
+        self.assertGreaterEqual(ev.count("aov_hold_start_dig_effect = yes"), 9)
+        self.assertGreaterEqual(ev.count("remove_short_term_gold"), 9)
+
+    def test_progress_desc_per_hold(self):
+        d = decision_block("aov_delve_deeper_decision")
+        self.assertGreaterEqual(d.count("triggered_desc"), 9)
+        self.assertIn("aov_hold_dig_running = yes", d)
+
+    def test_ai_reserve_and_cheapest_hold(self):
+        d = decision_block("aov_delve_deeper_decision")
+        self.assertIn("ai_check_interval = 12", d)
+        self.assertRegex(d, r"multiply = 2|2 \*|value = 2")
 
 
 if __name__ == "__main__":
