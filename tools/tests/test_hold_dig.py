@@ -131,6 +131,32 @@ class HoldDigTests(unittest.TestCase):
         self.assertIn("aov_can_dig_at", d)
         self.assertIn("aov_dig_cost", d)
 
+    def test_can_dig_excludes_occupied_holds(self):
+        self.assertIn("is_occupied = no", trigger_block("aov_can_dig_at"))
+
+    def test_decision_shows_both_failures_and_costs(self):
+        d = decision_block("aov_delve_deeper_decision")
+        valid = re.search(r"^\tis_valid = \{(.*?)\n\t\}", d, re.S | re.M).group(1)
+        self.assertEqual(valid.count("custom_description"), 2)
+        self.assertIn("text = aov_delve_deeper_no_hold", valid)
+        self.assertIn("text = aov_delve_deeper_no_gold", valid)
+        gold_part = valid.split("aov_delve_deeper_no_gold")[1]
+        self.assertIn("scope:digger.gold >= aov_dig_cost", gold_part)
+        self.assertNotIn("gold", valid.split("aov_delve_deeper_no_gold")[0].replace("no_gold", ""))
+        loc = read("localization/english/aov_hold_delve_l_english.yml")
+        for n in range(1, 10):
+            self.assertIn(f"desc = aov_delve_deeper_cost_{n}\n", d)
+            line = re.search(rf"^ aov_delve_deeper_cost_{n}:0 \"(.*)\"$", loc, re.M).group(1)
+            self.assertIn("ScriptValue('aov_dig_cost')", line)
+        self.assertIn(" aov_delve_deeper_no_gold:0 ", loc)
+
+    def test_ruin_event_tells_of_a_lost_dig(self):
+        e = effect_block("aov_hold_ruin_effect")
+        self.assertRegex(e, r"limit = \{ aov_hold_dig_running = yes \}\s*save_scope_value_as = \{ name = aov_lost_dig")
+        self.assertLess(e.index("aov_lost_dig"), e.index("aov_hold_end_dig_effect"))
+        self.assertIn("scope:aov_lost_dig", read("events/aov_hold_ruin_events.txt"))
+        self.assertIn(" aov_hold_ruin.1.desc.lost_dig:0 ", read("localization/english/aov_hold_ruin_l_english.yml"))
+
     def test_picker_excludes_running_digs(self):
         ev = event_block("aov_hold_delve.1")
         for h in holds.HOLDS:

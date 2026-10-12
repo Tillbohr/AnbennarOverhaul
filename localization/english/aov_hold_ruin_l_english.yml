@@ -2,6 +2,7 @@
  aov_hold_ruin.1.t:0 "A Hold in Ruins"
  aov_hold_ruin.1.desc.new:0 "The halls of [SCOPE.sTitle('hold_title').GetName] were taken by force, and in the sack its dwarven works were broken and abandoned. The hold lies in ruin until the Dwarves clear it."
  aov_hold_ruin.1.desc.old:0 "The halls of [SCOPE.sTitle('hold_title').GetName] have fallen to an invader, who has left them in ruins. Only the Dwarves can bring them back to life."
+ aov_hold_ruin.1.desc.lost_dig:0 "\n\nThe delving under way there was lost with it: the gold already spent and the progress made are gone."
  aov_hold_ruin.1.a:0 "A grim sight."
  aov_hold_ruin.2.t:0 "Clear the Ruins"
  aov_hold_ruin.2.desc:0 "Dwarven masons stand ready to clear the rubble and rebuild a ruined hold. The work will take years. Which hold shall they restore?"

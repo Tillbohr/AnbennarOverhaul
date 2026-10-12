@@ -13,6 +13,7 @@ aov_hold_dig.1 = {
 	trigger = {
 		exists = scope:hold
 		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
 	}
 
 	option = {
@@ -25,6 +26,7 @@ aov_hold_dig.1 = {
 		trigger = {
 			gold >= 60
 			scope:hold = { aov_hold_dig_running = yes }
+			scope:hold.barony.holder = root
 		}
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 60
@@ -49,6 +51,7 @@ aov_hold_dig.2 = {
 	trigger = {
 		exists = scope:hold
 		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
 	}
 
 	option = {
@@ -56,6 +59,7 @@ aov_hold_dig.2 = {
 		trigger = {
 			gold >= 80
 			scope:hold = { aov_hold_dig_running = yes }
+			scope:hold.barony.holder = root
 		}
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 80
@@ -85,6 +89,7 @@ aov_hold_dig.3 = {
 	trigger = {
 		exists = scope:hold
 		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
 	}
 
 	option = {
@@ -92,6 +97,7 @@ aov_hold_dig.3 = {
 		trigger = {
 			gold >= 70
 			scope:hold = { aov_hold_dig_running = yes }
+			scope:hold.barony.holder = root
 		}
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 70
@@ -122,10 +128,16 @@ aov_hold_dig.4 = {
 	trigger = {
 		exists = scope:hold
 		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
 	}
 
 	option = {
 		name = aov_hold_dig.4.a
+		trigger = {
+			scope:hold = { aov_hold_dig_running = yes }
+			scope:hold.barony.holder = root
+		}
+		show_as_unavailable = { always = yes }
 		add_gold = 120
 	}
 
@@ -136,6 +148,11 @@ aov_hold_dig.4 = {
 
 	option = {
 		name = aov_hold_dig.4.c
+		trigger = {
+			scope:hold = { aov_hold_dig_running = yes }
+			scope:hold.barony.holder = root
+		}
+		show_as_unavailable = { always = yes }
 		add_gold = 50
 		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 7 } }
 	}
@@ -152,6 +169,7 @@ aov_hold_dig.5 = {
 	trigger = {
 		exists = scope:hold
 		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
 	}
 
 	option = {
@@ -159,6 +177,7 @@ aov_hold_dig.5 = {
 		trigger = {
 			gold >= 100
 			scope:hold = { aov_hold_dig_running = yes }
+			scope:hold.barony.holder = root
 		}
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 100
@@ -187,6 +206,7 @@ aov_hold_dig.6 = {
 	trigger = {
 		exists = scope:hold
 		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
 	}
 
 	option = {
@@ -194,6 +214,7 @@ aov_hold_dig.6 = {
 		trigger = {
 			gold >= 120
 			scope:hold = { aov_hold_dig_running = yes }
+			scope:hold.barony.holder = root
 		}
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 120
@@ -224,6 +245,7 @@ aov_hold_dig.7 = {
 	trigger = {
 		exists = scope:hold
 		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
 	}
 
 	option = {
@@ -254,6 +276,7 @@ aov_hold_dig.8 = {
 	trigger = {
 		exists = scope:hold
 		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
 	}
 
 	option = {
@@ -327,6 +350,7 @@ aov_hold_dig.9 = {
 	trigger = {
 		exists = scope:hold
 		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
 	}
 
 	option = {
@@ -334,6 +358,7 @@ aov_hold_dig.9 = {
 		trigger = {
 			gold >= 100
 			scope:hold = { aov_hold_dig_running = yes }
+			scope:hold.barony.holder = root
 		}
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 100
@@ -364,6 +389,7 @@ aov_hold_dig.10 = {
 	trigger = {
 		exists = scope:hold
 		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
 	}
 
 	option = {
@@ -371,6 +397,7 @@ aov_hold_dig.10 = {
 		trigger = {
 			gold >= 150
 			scope:hold = { aov_hold_dig_running = yes }
+			scope:hold.barony.holder = root
 		}
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 150
@@ -400,6 +427,7 @@ aov_hold_dig.11 = {
 	trigger = {
 		exists = scope:hold
 		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
 	}
 
 	option = {
@@ -407,6 +435,7 @@ aov_hold_dig.11 = {
 		trigger = {
 			gold >= 90
 			scope:hold = { aov_hold_dig_running = yes }
+			scope:hold.barony.holder = root
 		}
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 90

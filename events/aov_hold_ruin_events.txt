@@ -12,6 +12,10 @@ aov_hold_ruin.1 = {
 			}
 			desc = aov_hold_ruin.1.desc.old
 		}
+		triggered_desc = {
+			trigger = { exists = scope:aov_lost_dig }
+			desc = aov_hold_ruin.1.desc.lost_dig
+		}
 	}
 	theme = war
 	override_background = { reference = tgp_ruined_holding }

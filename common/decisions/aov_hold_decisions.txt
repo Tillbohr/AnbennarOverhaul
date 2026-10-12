@@ -122,6 +122,78 @@ aov_delve_deeper_decision = {
 			}
 			desc = aov_delve_deeper_decision_desc_9
 		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_marrhold = { holder = root }
+				title:b_marrhold.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_1
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_anvilwright = { holder = root }
+				title:b_anvilwright.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_2
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_gulandhum = { holder = root }
+				title:b_gulandhum.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_3
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_kar_fimthrun = { holder = root }
+				title:b_kar_fimthrun.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_4
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_irovar = { holder = root }
+				title:b_irovar.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_5
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_hul_az_amekh = { holder = root }
+				title:b_hul_az_amekh.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_6
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_kar_hargun = { holder = root }
+				title:b_kar_hargun.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_7
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_topazhjardan = { holder = root }
+				title:b_topazhjardan.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_8
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_aghatehargun = { holder = root }
+				title:b_aghatehargun.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_9
+		}
 	}
 
 	is_shown = {
@@ -140,6 +212,13 @@ aov_delve_deeper_decision = {
 			text = aov_delve_deeper_no_hold
 			any_held_title = {
 				tier = tier_barony
+				title_province = { aov_can_dig_at = yes }
+			}
+		}
+		custom_description = {
+			text = aov_delve_deeper_no_gold
+			any_held_title = {
+				tier = tier_barony
 				title_province = {
 					aov_can_dig_at = yes
 					scope:digger.gold >= aov_dig_cost
@@ -152,7 +231,7 @@ aov_delve_deeper_decision = {
 		trigger_event = aov_hold_delve.1
 	}
 
-	# The AI digs when it can pay and keep as much gold again (2 x cost) in reserve, for the cheapest diggable hold.
+	# The AI digs when it can pay and keep as much gold again (2 x cost) in reserve.
 	ai_will_do = {
 		base = 100
 		modifier = {

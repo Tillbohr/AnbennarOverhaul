@@ -4,6 +4,7 @@
 """
 
 import re
+import sys
 import unittest
 from pathlib import Path
 
@@ -11,6 +12,9 @@ MOD = Path(__file__).resolve().parent.parent.parent
 EVENTS = "events/aov_hold_dig_events.txt"
 ON_ACTIONS = "common/on_action/aov_hold_dig_on_actions.txt"
 LOC = "localization/english/aov_hold_dig_events_l_english.yml"
+
+sys.path.insert(0, str(MOD / "tools"))  # python -I does not add the tools folder
+from data import holds  # noqa: E402
 
 
 def read(rel):
@@ -90,6 +94,26 @@ class DigRollTests(unittest.TestCase):
         self.assertIn("save_scope_as = hold", oa)
         for n in range(1, 12):
             self.assertIn(f"trigger_event = aov_hold_dig.{n}", oa)
+
+    def test_data_constants_drive_the_pulses(self):
+        self.assertIn(f"chance = {holds.EVENT_CHANCE}", on_action_block("aov_hold_dig_yearly"))
+        oa = on_action_block("aov_hold_dig_yearly")
+        for share in holds.STAGE_SHARES:
+            self.assertIn(str(share), oa)
+        quarterly = blocks(read("common/on_action/aov_hold_on_actions.txt"))["aov_hold_dig_quarterly"]
+        self.assertIn(f"MONTHS = {holds.TICK_MONTHS}", quarterly)
+
+    def test_events_need_the_holder(self):
+        for n, body in blocks(read(EVENTS)).items():
+            if not n.startswith("aov_hold_dig.") or n.endswith(".100"):
+                continue
+            top = re.search(r"^\ttrigger = \{(.*?)\n\t\}", body, re.S | re.M).group(1)
+            self.assertIn("scope:hold.barony.holder = root", top, n)
+            for opt in re.findall(r"^\toption = \{\n(.*?)^\t\}", body, re.M | re.S):
+                if re.search(r"remove_short_term_gold|add_gold", opt):
+                    trig = re.search(r"trigger = \{(.*?)\n\t\t\}", opt, re.S).group(1)
+                    self.assertIn("scope:hold.barony.holder = root", trig, n)
+                    self.assertIn("aov_hold_dig_running = yes", trig, n)
 
     def test_events_act_on_scope_hold(self):
         for n in range(1, 12):

@@ -169,6 +169,11 @@ aov_hold_end_dig_effect = {
 # Province scope, a hold just conquered by a non-dwarf. Scope:previous_holder is the loser, if any.
 aov_hold_ruin_effect = {
 	set_variable = aov_hold_ruined
+	# The ruin event says so when a paid dig was running.
+	if = {
+		limit = { aov_hold_dig_running = yes }
+		save_scope_value_as = { name = aov_lost_dig value = flag:yes }
+	}
 	aov_hold_end_dig_effect = yes
 	save_scope_as = hold_province
 	barony = { save_scope_as = hold_title }

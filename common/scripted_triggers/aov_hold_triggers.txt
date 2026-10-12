@@ -20,11 +20,12 @@ aov_hold_dig_running = {
 }
 
 # Province scope, scope:digger is the character who would dig: a working hold below level 10, not already being
-# dug, held by the digger, who is a dwarf.
+# dug, not occupied, held by the digger, who is a dwarf.
 aov_can_dig_at = {
 	aov_hold_is_working = yes
 	aov_hold_level < 10
 	NOT = { aov_hold_dig_running = yes }
+	is_occupied = no
 	barony.holder = scope:digger
 	scope:digger = {
 		is_dwarvish_culture = yes

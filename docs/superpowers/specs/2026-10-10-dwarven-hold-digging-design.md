@@ -147,7 +147,7 @@ on the hold).
   under a non-dwarf holder (e.g. by inheritance). Conquest by a non-dwarf ruins the hold (below), which ends the
   dig: progress and gold are lost. A dig cannot be cancelled.
 - **AI**: the decision has `ai_check_interval` 12 months; the AI takes it when its gold is at least 2 × the
-  hold's `aov_dig_cost`, picking its cheapest diggable hold.
+  hold's `aov_dig_cost`, favouring cheaper holds (weighted by 1 + 1500 / cost).
 - **Display**: the decision's tooltip lists the ruler's running digs as "[Hold]: X of Y months". Whether a province
   modifier's description can show the changing number is checked during planning (see Risks); the decision
   tooltip is the guaranteed place.
@@ -173,9 +173,9 @@ a skill check. Progress never drops below 0; a gain that reaches the level's mon
 
 - **Ruin**: `on_title_gain` (appended on_action) where the title is a hold barony, the gain is by conquest, the
   new holder lacks dwarven heritage and the previous holder had it: a non-dwarf conquering a dwarf-held hold (a
-  non-dwarf taking a hold from another non-dwarf, as Marrhold's humans at start, does not ruin it). Effects: `var:aov_hold_ruined` set, `aov_dig_progress` reset to 0, county
+  non-dwarf taking a hold from another non-dwarf, as Marrhold's humans at start, does not ruin it). Effects: `var:aov_hold_ruined` set, county
   modifier `aov_ruined_hold` (`tax_mult` −0.5, `development_growth_factor` −0.5, `levy_size` −0.5), any running dig
-  at the hold ends (progress and the paid gold are lost). The hold level is kept but disabled (`is_enabled` requires not ruined).
+  at the hold ends (variables and the *Delving* modifier removed, progress and the paid gold lost; the ruin event says so). The hold level is kept but disabled (`is_enabled` requires not ruined).
 - **Game start**: Khugdihr is ruined (level 1).
 - **Restoring**: decision *Clear the Ruins of [Hold]* (`common/decisions/aov_hold_decisions.txt`). Shown to a
   dwarven-heritage ruler who personally holds a ruined hold with no restoration running or pending

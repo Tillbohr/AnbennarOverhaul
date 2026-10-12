@@ -77,7 +77,7 @@ TICK_MONTHS = 3
 
 
 def dig_months(target):
-    """Months a dig to level `target` takes: 8 years for level 2, 4 more for each level after."""
+    """Months a dig to level `target` takes: 12 years for level 2, 4 more for each level after."""
     return 12 * (8 + 4 * (target - 1))
 
 
