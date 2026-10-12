@@ -135,9 +135,9 @@ on the hold).
 
 - **Length**: a dig to level N needs **`aov_dig_months` = 12 × (8 + 4 × (N − 1)) months** (144 months = 12 years
   for level 2 … 528 months = 44 years for level 10; about 250 years from level 1 to 10 dug back to back).
-- **Monthly tick**: a monthly on_action (appended, hold provinces only) adds 1 to `aov_dig_progress` on every hold
-  with a running dig, unless the hold is occupied or its holder lacks dwarven heritage (progress pauses; it does not
-  reset).
+- **Quarterly tick**: a quarterly tick of 3 months (`quarterly_playable_pulse`; a hold held by a non-playable baron
+  pauses) adds 3 to `aov_dig_progress` on every hold with a running dig, unless the hold is occupied or its holder
+  lacks dwarven heritage (progress pauses; it does not reset).
 - **Completion**: when `aov_dig_progress` ≥ `aov_dig_months` of the target level, the next level is built
   (`add_building = dwarven_hold_0N`, exactly one level), the dig variables and the *Delving* modifier are removed,
   and *Breakthrough at [Hold]* (`aov_hold_dig.100`) fires for the holder with one random discovery: gems (gold =
@@ -167,7 +167,7 @@ events. The event is picked from the dig's stage, by progress as a share of the 
 Events in a stage are equally likely (the activity's pace weighting is gone with the activity). Each event offers
 2-3 options that add or remove **months of progress** on the hold (up to ±18), cost or gain gold/prestige, or risk
 a skill check. Progress never drops below 0; a gain that reaches the level's months completes the level at once
-(the same completion as the monthly tick). Events name the hold ("the delving at [Hold]").
+(the same completion as the quarterly tick). Events name the hold ("the delving at [Hold]").
 
 ## Ruined holds
 
@@ -202,7 +202,7 @@ a skill check. Progress never drops below 0; a gain that reaches the level's mon
 (start dig, level up, end dig, ruin, restore), modifiers (`aov_ruined_hold`, `aov_restoring_hold`, the discovery
 modifier, `aov_delving_02..10`), the decisions (*Delve Deeper*, *Clear the Ruins*), the events
 (`events/aov_hold_dig_events.txt`, `events/aov_hold_ruin_events.txt`), the on_actions (game start, `on_title_gain`, the
-monthly dig tick, the yearly event roll), loc. Script values `aov_dig_cost` and `aov_dig_months` are generated.
+quarterly dig tick, the yearly event roll), loc. Script values `aov_dig_cost` and `aov_dig_months` are generated.
 
 ### Art
 
@@ -217,7 +217,7 @@ monthly dig tick, the yearly event roll), loc. Script values `aov_dig_cost` and 
 
 - Tool tests: every `HOLDS` title and barony exists in Anbennar and the barony belongs to the county; exactly one
   hold is ruined at start; the level chain is unbroken and every level has effects; dig cost and months rise with
-  the level; the decision is gated as above; the monthly tick pauses and levels up exactly once; event progress
+  the level; the decision is gated as above; the quarterly tick pauses and levels up exactly once; event progress
   changes are bounded months with the floor at 0; stage selection; nothing references the removed activity;
   generated files are fresh; the conversion effect covers exactly `HOLDS`; the government override
   adds the key to every castle-capable government and changes nothing else.
