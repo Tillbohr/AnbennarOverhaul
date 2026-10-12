@@ -22,7 +22,10 @@ aov_hold_dig.1 = {
 
 	option = {
 		name = aov_hold_dig.1.b
-		trigger = { gold >= 60 }
+		trigger = {
+			gold >= 60
+			scope:hold = { aov_hold_dig_running = yes }
+		}
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 60
 		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 16 } }
@@ -50,7 +53,10 @@ aov_hold_dig.2 = {
 
 	option = {
 		name = aov_hold_dig.2.a
-		trigger = { gold >= 80 }
+		trigger = {
+			gold >= 80
+			scope:hold = { aov_hold_dig_running = yes }
+		}
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 80
 		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -2 } }
@@ -83,7 +89,10 @@ aov_hold_dig.3 = {
 
 	option = {
 		name = aov_hold_dig.3.a
-		trigger = { gold >= 70 }
+		trigger = {
+			gold >= 70
+			scope:hold = { aov_hold_dig_running = yes }
+		}
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 70
 		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 12 } }
@@ -147,7 +156,10 @@ aov_hold_dig.5 = {
 
 	option = {
 		name = aov_hold_dig.5.a
-		trigger = { gold >= 100 }
+		trigger = {
+			gold >= 100
+			scope:hold = { aov_hold_dig_running = yes }
+		}
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 100
 		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -3 } }
@@ -179,7 +191,10 @@ aov_hold_dig.6 = {
 
 	option = {
 		name = aov_hold_dig.6.a
-		trigger = { gold >= 120 }
+		trigger = {
+			gold >= 120
+			scope:hold = { aov_hold_dig_running = yes }
+		}
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 120
 		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 2 } }
@@ -316,7 +331,10 @@ aov_hold_dig.9 = {
 
 	option = {
 		name = aov_hold_dig.9.a
-		trigger = { gold >= 100 }
+		trigger = {
+			gold >= 100
+			scope:hold = { aov_hold_dig_running = yes }
+		}
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 100
 		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -4 } }
@@ -350,7 +368,10 @@ aov_hold_dig.10 = {
 
 	option = {
 		name = aov_hold_dig.10.a
-		trigger = { gold >= 150 }
+		trigger = {
+			gold >= 150
+			scope:hold = { aov_hold_dig_running = yes }
+		}
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 150
 		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 18 } }
@@ -383,7 +404,10 @@ aov_hold_dig.11 = {
 
 	option = {
 		name = aov_hold_dig.11.a
-		trigger = { gold >= 90 }
+		trigger = {
+			gold >= 90
+			scope:hold = { aov_hold_dig_running = yes }
+		}
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 90
 		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 2 } }

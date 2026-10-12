@@ -9,6 +9,7 @@ from pathlib import Path
 
 MOD = Path(__file__).resolve().parent.parent.parent
 EVENTS = "events/aov_hold_dig_events.txt"
+ON_ACTIONS = "common/on_action/aov_hold_dig_on_actions.txt"
 LOC = "localization/english/aov_hold_dig_events_l_english.yml"
 
 
@@ -67,6 +68,49 @@ class DigEventTests(unittest.TestCase):
             for opt in re.findall(r"^\toption = \{\n(.*?)^\t\}", body, re.M | re.S):
                 for gold in re.findall(r"remove_short_term_gold = (\d+)", opt):
                     self.assertRegex(opt, rf"gold >= {gold}\b", n)
+
+
+def on_action_block(name):
+    return blocks(read(ON_ACTIONS))[name]
+
+
+class DigRollTests(unittest.TestCase):
+    def test_roll_skips_holds_without_dig(self):
+        oa = on_action_block("aov_hold_dig_yearly")
+        self.assertIn("aov_hold_dig_running = yes", oa)
+        self.assertIn("chance = 40", oa)
+        self.assertIn("is_ai = no", oa)
+        self.assertIn("is_dwarvish_culture = yes", oa)
+        self.assertRegex(read(ON_ACTIONS), r"yearly_playable_pulse = \{\s*on_actions = \{ aov_hold_dig_yearly \}")
+
+    def test_stage_selection(self):
+        oa = on_action_block("aov_hold_dig_yearly")
+        self.assertIn("0.25", oa)
+        self.assertIn("0.75", oa)
+        self.assertIn("save_scope_as = hold", oa)
+        for n in range(1, 12):
+            self.assertIn(f"trigger_event = aov_hold_dig.{n}", oa)
+
+    def test_events_act_on_scope_hold(self):
+        for n in range(1, 12):
+            ev = blocks(read(EVENTS))[f"aov_hold_dig.{n}"]
+            self.assertIn("scope:hold", ev)
+            self.assertNotIn("involved_activity", ev)
+            self.assertNotIn("aov_campaign_progress", ev)
+
+    def test_month_changes_bounded(self):
+        for m in re.finditer(r"MONTHS = (-?\d+)", read(EVENTS)):
+            self.assertLessEqual(abs(int(m.group(1))), 18)
+
+    def test_no_campaign_wording(self):
+        self.assertNotRegex(read(LOC).lower(), r"campaign")
+
+    def test_stale_event_cannot_charge(self):
+        for n, body in blocks(read(EVENTS)).items():
+            for opt in re.findall(r"^\toption = \{\n(.*?)^\t\}", body, re.M | re.S):
+                if "remove_short_term_gold" in opt:
+                    trig = re.search(r"trigger = \{(.*?)\n\t\t\}", opt, re.S).group(1)
+                    self.assertIn("aov_hold_dig_running = yes", trig, n)
 
 
 if __name__ == "__main__":
