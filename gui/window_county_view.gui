@@ -2380,6 +2380,30 @@ window = {
 							}
 						}
 					}
+
+					# Anbennar Overhaul: hold dig progress
+					hbox = {
+						visible = "[HoldingView.GetProvince.MakeScope.Var('aov_dig_target_level').IsSet]"
+						margin_bottom = 30
+
+						progressbar_standard = {
+							name = "aov_hold_dig_progress"
+							size = { 380 30 }
+							min = 0
+							max = 100
+							value = "[FixedPointToFloat( HoldingView.GetProvince.MakeScope.ScriptValue('aov_dig_percent') )]"
+							direction = horizontal
+							tooltip = "AOV_HOLD_DIG_PROGRESS_TT"
+
+							text_single = {
+								parentanchor = center
+								text = "AOV_HOLD_DIG_PROGRESS"
+								default_format = "#high"
+								align = nobaseline
+								using = Font_Size_Medium
+							}
+						}
+					}
 				}
 
 				hbox = {
