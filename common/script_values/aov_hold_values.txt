@@ -45,40 +45,31 @@ aov_hold_level = {
 	}
 }
 
-# Province scope: dig progress a hold needs for its next level.
-aov_dig_target = {
+# Province scope: the level a dig aims for: the variable aov_dig_target_level, else the next level.
+aov_dig_target_value = {
 	value = aov_hold_level
 	add = 1
-	multiply = 50
+	if = {
+		limit = { has_variable = aov_dig_target_level }
+		add = {
+			value = var:aov_dig_target_level
+			subtract = aov_hold_level
+			subtract = 1
+		}
+	}
 }
 
-# Province scope: gold cost of a dig campaign.
-aov_dig_campaign_cost = {
-	value = aov_hold_level
-	multiply = 50
+# Province scope: gold cost of a dig.
+aov_dig_cost = {
+	value = aov_dig_target_value
+	multiply = 150
 }
 
-# Character scope: a dig campaign's whole progress before pace and investment, which the activity applies.
-aov_dig_campaign_base = {
-	value = 20
-	add = {
-		value = stewardship
-		divide = 2
-	}
-	add = {
-		value = learning
-		divide = 4
-	}
-	if = {
-		limit = { has_trait = diligent }
-		add = 5
-	}
-	if = {
-		limit = { has_trait = architect }
-		add = 5
-	}
-	if = {
-		limit = { has_trait = lazy }
-		add = -5
-	}
+# Province scope: months a dig takes, 12 x (8 + 4 x (target - 1)).
+aov_dig_months = {
+	value = aov_dig_target_value
+	subtract = 1
+	multiply = 4
+	add = 8
+	multiply = 12
 }

@@ -202,9 +202,29 @@ class BuildingRequirementOverrideTests(unittest.TestCase):
 class ValueAndLocTests(unittest.TestCase):
     def test_values(self):
         v = bh.render_values()
-        for name in ("aov_hold_level", "aov_dig_target", "aov_dig_campaign_cost", "aov_dig_campaign_base"):
-            self.assertIn(f"{name} = {{", v)
+        self.assertIn("aov_hold_level = {", v)
         self.assertIn("has_building_or_higher = dwarven_hold_10", v)
+
+    def test_dig_months_and_cost(self):
+        self.assertEqual([holds.dig_months(n) for n in (2, 10)], [144, 528])
+        self.assertEqual(holds.DIG_COST_PER_LEVEL, 150)
+        v = bh.render_values()
+        for name in ("aov_dig_target_value", "aov_dig_cost", "aov_dig_months"):
+            self.assertIn(f"{name} = {{", v)
+        for gone in ("aov_dig_campaign_cost", "aov_dig_campaign_base", "aov_dig_target ="):
+            self.assertNotIn(gone, v)
+
+    def test_delving_modifiers(self):
+        m = bh.render_modifiers()
+        for n in range(2, 11):
+            self.assertIn(f"aov_delving_{n:02d} = {{", m)
+            self.assertIn(f" aov_delving_{n:02d}:0 \"Delving to Level {n}\"", bh.render_loc())
+        self.assertNotIn("aov_delving_01", m)
+
+    def test_removed_constants(self):
+        for name in ("PACE", "INVESTMENT", "PHASE_MONTHS", "CAMPAIGN_BASE", "CAMPAIGN_COST_PER_LEVEL",
+                     "TRAIT_BONUS", "DIG_TARGET_PER_LEVEL"):
+            self.assertFalse(hasattr(holds, name), name)
 
     def test_loc_for_every_level_and_building(self):
         loc = bh.render_loc()

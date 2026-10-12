@@ -70,13 +70,17 @@ DWARVEN_BUILDINGS = [
      "effects": {"monthly_prestige": 0.2, "monthly_piety": 0.2}},
 ]
 
-DIG_TARGET_PER_LEVEL = 50
-CAMPAIGN_COST_PER_LEVEL = 50
-CAMPAIGN_BASE = 20
-TRAIT_BONUS = {"diligent": 5, "architect": 5, "lazy": -5}
-PACE = {"careful": 0.75, "steady": 1.0, "reckless": 1.35}
-INVESTMENT = {"none": (0, 1.0), "generous": (100, 1.25), "lavish": (250, 1.5)}
-PHASE_MONTHS = {"survey": 3, "excavation": 12, "shoring": 6, "breakthrough": 1}
+DIG_COST_PER_LEVEL = 150
+EVENT_CHANCE = 40
+STAGE_SHARES = (0.25, 0.75)
+TICK_MONTHS = 3
+
+
+def dig_months(target):
+    """Months a dig to level `target` takes: 8 years for level 2, 4 more for each level after."""
+    return 12 * (8 + 4 * (target - 1))
+
+
 RESTORE = {"gold": 300, "prestige": 200, "years": 5}
 RUINED_MODIFIER = {"tax_mult": -0.5, "development_growth_factor": -0.5, "levy_size": -0.5}
 ASSET_BAND = {1: "castle_01", 2: "castle_01", 3: "castle_02", 4: "castle_02", 5: "castle_03", 6: "castle_03",

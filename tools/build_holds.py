@@ -146,21 +146,17 @@ def render_values() -> str:
     levels = "".join(
         f"\tif = {{\n\t\tlimit = {{ has_building_or_higher = {level_key(n)} }}\n\t\tadd = 1\n\t}}\n"
         for n in range(1, 11))
-    traits = "".join(
-        f"\tif = {{\n\t\tlimit = {{ has_trait = {t} }}\n\t\tadd = {b}\n\t}}\n"
-        for t, b in holds.TRAIT_BONUS.items())
     return (HEADER + "\n"
             "# Province scope: 1..10 from the dwarven hold building, 0 without one.\n"
             f"aov_hold_level = {{\n\tvalue = 0\n{levels}}}\n\n"
-            "# Province scope: dig progress a hold needs for its next level.\n"
-            f"aov_dig_target = {{\n\tvalue = aov_hold_level\n\tadd = 1\n\tmultiply = {holds.DIG_TARGET_PER_LEVEL}\n}}\n\n"
-            "# Province scope: gold cost of a dig campaign.\n"
-            f"aov_dig_campaign_cost = {{\n\tvalue = aov_hold_level\n\tmultiply = {holds.CAMPAIGN_COST_PER_LEVEL}\n}}\n\n"
-            "# Character scope: a dig campaign's whole progress before pace and investment, which the activity applies.\n"
-            f"aov_dig_campaign_base = {{\n\tvalue = {holds.CAMPAIGN_BASE}\n"
-            "\tadd = {\n\t\tvalue = stewardship\n\t\tdivide = 2\n\t}\n"
-            "\tadd = {\n\t\tvalue = learning\n\t\tdivide = 4\n\t}\n"
-            f"{traits}}}\n")
+            "# Province scope: the level a dig aims for: the variable aov_dig_target_level, else the next level.\n"
+            "aov_dig_target_value = {\n\tvalue = aov_hold_level\n\tadd = 1\n"
+            "\tif = {\n\t\tlimit = { has_variable = aov_dig_target_level }\n"
+            "\t\tadd = {\n\t\t\tvalue = var:aov_dig_target_level\n\t\t\tsubtract = aov_hold_level\n\t\t\tsubtract = 1\n\t\t}\n\t}\n}\n\n"
+            "# Province scope: gold cost of a dig.\n"
+            f"aov_dig_cost = {{\n\tvalue = aov_dig_target_value\n\tmultiply = {holds.DIG_COST_PER_LEVEL}\n}}\n\n"
+            "# Province scope: months a dig takes, 12 x (8 + 4 x (target - 1)).\n"
+            "aov_dig_months = {\n\tvalue = aov_dig_target_value\n\tsubtract = 1\n\tmultiply = 4\n\tadd = 8\n\tmultiply = 12\n}\n")
 
 
 HOLDING_LOC = [
@@ -183,7 +179,9 @@ def render_modifiers() -> str:
             "# Province modifier while a ruined hold is being restored; the effects come from the restoration.\n"
             "aov_restoring_hold = {\n\ticon = economy_positive\n}\n\n"
             "# County modifier from a rich vein found while digging.\n"
-            "aov_hold_rich_vein = {\n\ticon = economy_positive\n\ttax_mult = 0.1\n}\n")
+            "aov_hold_rich_vein = {\n\ticon = economy_positive\n\ttax_mult = 0.1\n}\n\n"
+            "# Province modifier while a dig to that level is under way; it has no effects.\n"
+            + "\n".join(f"aov_delving_{n:02d} = {{\n\ticon = economy_positive\n}}" for n in range(2, 11)) + "\n")
 
 
 def render_setup() -> str:
@@ -210,6 +208,9 @@ def loc_lines():
             ' aov_restoring_hold_desc:0 "Dwarven masons are clearing and rebuilding the halls of this hold."',
             ' aov_hold_rich_vein:0 "Rich Vein"',
             ' aov_hold_rich_vein_desc:0 "The diggers struck a rich vein of ore."']
+    for n in range(2, 11):
+        out += [f' aov_delving_{n:02d}:0 "Delving to Level {n}"',
+                f' aov_delving_{n:02d}_desc:0 "Dwarves are digging this hold deeper."']
     for n in range(1, 11):
         key = level_key(n)
         desc = next(d for r, d in BAND_DESCS if n in r)

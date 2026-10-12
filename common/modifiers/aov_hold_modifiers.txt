@@ -17,3 +17,32 @@ aov_hold_rich_vein = {
 	icon = economy_positive
 	tax_mult = 0.1
 }
+
+# Province modifier while a dig to that level is under way; it has no effects.
+aov_delving_02 = {
+	icon = economy_positive
+}
+aov_delving_03 = {
+	icon = economy_positive
+}
+aov_delving_04 = {
+	icon = economy_positive
+}
+aov_delving_05 = {
+	icon = economy_positive
+}
+aov_delving_06 = {
+	icon = economy_positive
+}
+aov_delving_07 = {
+	icon = economy_positive
+}
+aov_delving_08 = {
+	icon = economy_positive
+}
+aov_delving_09 = {
+	icon = economy_positive
+}
+aov_delving_10 = {
+	icon = economy_positive
+}
