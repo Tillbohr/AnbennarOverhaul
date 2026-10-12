@@ -58,3 +58,10 @@
  aov_hold_dig.11.a:0 "Buy timber from the surface merchants. (90 [gold|E])"
  aov_hold_dig.11.b:0 "Shorten the new galleries to save wood."
  aov_hold_dig.11.c:0 "Strip the hold's own roof beams."
+
+ aov_hold_dig.100.t:0 "Breakthrough at [hold.GetName]"
+ aov_hold_dig.100.desc:0 "The last wall gives way, and the new halls of [hold.GetName] open before us. The hold has risen to level #V [SCOPE.sProvince('hold').MakeScope.ScriptValue('aov_hold_level')|0]#!."
+ aov_hold_dig.100.desc.gems:0 " In the rubble the miners found a pocket of uncut gems."
+ aov_hold_dig.100.desc.vein:0 " Behind the wall runs a rich vein of ore that will fill the county's coffers for years."
+ aov_hold_dig.100.desc.lore:0 " The diggers broke into a sealed chamber of our ancestors, its walls carved with forgotten lore."
+ aov_hold_dig.100.a:0 "The deep rewards the patient."

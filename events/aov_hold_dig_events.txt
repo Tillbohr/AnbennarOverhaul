@@ -1,7 +1,7 @@
 ﻿namespace = aov_hold_dig
 
-# Random dig events, one per pulse, player campaigns only (root = the host, activity = involved_activity;
-# progress changes are capped at 20 either way). Chosen by common/on_action/aov_hold_dig_on_actions.txt.
+# Random dig events at a hold with a running dig (Delve Deeper). Root = the hold's holder, scope:hold = the hold
+# (province). Options add or remove months of dig progress, never below 0.
 aov_hold_dig.1 = {
 	type = character_event
 	title = aov_hold_dig.1.t
@@ -11,19 +11,13 @@ aov_hold_dig.1 = {
 	left_portrait = root
 
 	trigger = {
-		exists = involved_activity
-		involved_activity = { has_activity_type = activity_hold_dig }
-		involved_activity = { has_variable = aov_campaign_progress }
-	}
-
-	immediate = {
-		involved_activity = { save_scope_as = activity }
-		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
 	}
 
 	option = {
 		name = aov_hold_dig.1.a
-		scope:activity = { change_variable = { name = aov_campaign_progress add = 10 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 10 } }
 	}
 
 	option = {
@@ -31,12 +25,12 @@ aov_hold_dig.1 = {
 		trigger = { gold >= 60 }
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 60
-		scope:activity = { change_variable = { name = aov_campaign_progress add = 16 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 16 } }
 	}
 
 	option = {
 		name = aov_hold_dig.1.c
-		scope:activity = { change_variable = { name = aov_campaign_progress add = 3 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 3 } }
 		add_prestige = 25
 	}
 }
@@ -50,14 +44,8 @@ aov_hold_dig.2 = {
 	left_portrait = root
 
 	trigger = {
-		exists = involved_activity
-		involved_activity = { has_activity_type = activity_hold_dig }
-		involved_activity = { has_variable = aov_campaign_progress }
-	}
-
-	immediate = {
-		involved_activity = { save_scope_as = activity }
-		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
 	}
 
 	option = {
@@ -65,21 +53,18 @@ aov_hold_dig.2 = {
 		trigger = { gold >= 80 }
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 80
-		scope:activity = { change_variable = { name = aov_campaign_progress add = -2 } }
-		scope:activity = { aov_dig_floor_progress = yes }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -2 } }
 	}
 
 	option = {
 		name = aov_hold_dig.2.b
-		scope:activity = { change_variable = { name = aov_campaign_progress add = -8 } }
-		scope:activity = { aov_dig_floor_progress = yes }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -8 } }
 	}
 
 	option = {
 		name = aov_hold_dig.2.c
-		scope:activity = { change_variable = { name = aov_campaign_progress add = -15 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -15 } }
 		add_prestige = 20
-		scope:activity = { aov_dig_floor_progress = yes }
 	}
 }
 
@@ -92,14 +77,8 @@ aov_hold_dig.3 = {
 	left_portrait = root
 
 	trigger = {
-		exists = involved_activity
-		involved_activity = { has_activity_type = activity_hold_dig }
-		involved_activity = { has_variable = aov_campaign_progress }
-	}
-
-	immediate = {
-		involved_activity = { save_scope_as = activity }
-		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
 	}
 
 	option = {
@@ -107,18 +86,18 @@ aov_hold_dig.3 = {
 		trigger = { gold >= 70 }
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 70
-		scope:activity = { change_variable = { name = aov_campaign_progress add = 12 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 12 } }
 	}
 
 	option = {
 		name = aov_hold_dig.3.b
-		scope:activity = { change_variable = { name = aov_campaign_progress add = 14 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 14 } }
 		add_prestige = -25
 	}
 
 	option = {
 		name = aov_hold_dig.3.c
-		scope:activity = { change_variable = { name = aov_campaign_progress add = 4 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 4 } }
 		add_prestige = 15
 	}
 }
@@ -132,14 +111,8 @@ aov_hold_dig.4 = {
 	left_portrait = root
 
 	trigger = {
-		exists = involved_activity
-		involved_activity = { has_activity_type = activity_hold_dig }
-		involved_activity = { has_variable = aov_campaign_progress }
-	}
-
-	immediate = {
-		involved_activity = { save_scope_as = activity }
-		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
 	}
 
 	option = {
@@ -149,13 +122,13 @@ aov_hold_dig.4 = {
 
 	option = {
 		name = aov_hold_dig.4.b
-		scope:activity = { change_variable = { name = aov_campaign_progress add = 15 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 15 } }
 	}
 
 	option = {
 		name = aov_hold_dig.4.c
 		add_gold = 50
-		scope:activity = { change_variable = { name = aov_campaign_progress add = 7 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 7 } }
 	}
 }
 
@@ -168,14 +141,8 @@ aov_hold_dig.5 = {
 	left_portrait = root
 
 	trigger = {
-		exists = involved_activity
-		involved_activity = { has_activity_type = activity_hold_dig }
-		involved_activity = { has_variable = aov_campaign_progress }
-	}
-
-	immediate = {
-		involved_activity = { save_scope_as = activity }
-		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
 	}
 
 	option = {
@@ -183,20 +150,17 @@ aov_hold_dig.5 = {
 		trigger = { gold >= 100 }
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 100
-		scope:activity = { change_variable = { name = aov_campaign_progress add = -3 } }
-		scope:activity = { aov_dig_floor_progress = yes }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -3 } }
 	}
 
 	option = {
 		name = aov_hold_dig.5.b
-		scope:activity = { change_variable = { name = aov_campaign_progress add = -10 } }
-		scope:activity = { aov_dig_floor_progress = yes }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -10 } }
 	}
 
 	option = {
 		name = aov_hold_dig.5.c
-		scope:activity = { change_variable = { name = aov_campaign_progress add = -18 } }
-		scope:activity = { aov_dig_floor_progress = yes }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -18 } }
 	}
 }
 
@@ -209,14 +173,8 @@ aov_hold_dig.6 = {
 	left_portrait = root
 
 	trigger = {
-		exists = involved_activity
-		involved_activity = { has_activity_type = activity_hold_dig }
-		involved_activity = { has_variable = aov_campaign_progress }
-	}
-
-	immediate = {
-		involved_activity = { save_scope_as = activity }
-		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
 	}
 
 	option = {
@@ -224,21 +182,19 @@ aov_hold_dig.6 = {
 		trigger = { gold >= 120 }
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 120
-		scope:activity = { change_variable = { name = aov_campaign_progress add = 2 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 2 } }
 	}
 
 	option = {
 		name = aov_hold_dig.6.b
-		scope:activity = { change_variable = { name = aov_campaign_progress add = -14 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -14 } }
 		add_prestige = -20
-		scope:activity = { aov_dig_floor_progress = yes }
 	}
 
 	option = {
 		name = aov_hold_dig.6.c
-		scope:activity = { change_variable = { name = aov_campaign_progress add = -6 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -6 } }
 		add_prestige = 20
-		scope:activity = { aov_dig_floor_progress = yes }
 	}
 }
 
@@ -251,30 +207,24 @@ aov_hold_dig.7 = {
 	left_portrait = root
 
 	trigger = {
-		exists = involved_activity
-		involved_activity = { has_activity_type = activity_hold_dig }
-		involved_activity = { has_variable = aov_campaign_progress }
-	}
-
-	immediate = {
-		involved_activity = { save_scope_as = activity }
-		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
 	}
 
 	option = {
 		name = aov_hold_dig.7.a
-		scope:activity = { change_variable = { name = aov_campaign_progress add = 12 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 12 } }
 	}
 
 	option = {
 		name = aov_hold_dig.7.b
-		scope:activity = { change_variable = { name = aov_campaign_progress add = 16 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 16 } }
 		add_prestige = -30
 	}
 
 	option = {
 		name = aov_hold_dig.7.c
-		scope:activity = { change_variable = { name = aov_campaign_progress add = 4 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 4 } }
 	}
 }
 
@@ -287,14 +237,8 @@ aov_hold_dig.8 = {
 	left_portrait = root
 
 	trigger = {
-		exists = involved_activity
-		involved_activity = { has_activity_type = activity_hold_dig }
-		involved_activity = { has_variable = aov_campaign_progress }
-	}
-
-	immediate = {
-		involved_activity = { save_scope_as = activity }
-		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
 	}
 
 	option = {
@@ -309,7 +253,7 @@ aov_hold_dig.8 = {
 					min = -49
 				}
 				desc = aov_hold_dig.8.a.success
-				scope:activity = { change_variable = { name = aov_campaign_progress add = 14 } }
+				scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 14 } }
 				add_prestige = 25
 			}
 			50 = {
@@ -319,8 +263,7 @@ aov_hold_dig.8 = {
 					min = -49
 				}
 				desc = aov_hold_dig.8.a.failure
-				scope:activity = { change_variable = { name = aov_campaign_progress add = -12 } }
-				scope:activity = { aov_dig_floor_progress = yes }
+				scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -12 } }
 			}
 		}
 	}
@@ -337,7 +280,7 @@ aov_hold_dig.8 = {
 					min = -49
 				}
 				desc = aov_hold_dig.8.b.success
-				scope:activity = { change_variable = { name = aov_campaign_progress add = 12 } }
+				scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 12 } }
 				add_prestige = 25
 			}
 			50 = {
@@ -347,16 +290,14 @@ aov_hold_dig.8 = {
 					min = -49
 				}
 				desc = aov_hold_dig.8.b.failure
-				scope:activity = { change_variable = { name = aov_campaign_progress add = -10 } }
-				scope:activity = { aov_dig_floor_progress = yes }
+				scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -10 } }
 			}
 		}
 	}
 
 	option = {
 		name = aov_hold_dig.8.c
-		scope:activity = { change_variable = { name = aov_campaign_progress add = -6 } }
-		scope:activity = { aov_dig_floor_progress = yes }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -6 } }
 	}
 }
 
@@ -369,14 +310,8 @@ aov_hold_dig.9 = {
 	left_portrait = root
 
 	trigger = {
-		exists = involved_activity
-		involved_activity = { has_activity_type = activity_hold_dig }
-		involved_activity = { has_variable = aov_campaign_progress }
-	}
-
-	immediate = {
-		involved_activity = { save_scope_as = activity }
-		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
 	}
 
 	option = {
@@ -384,22 +319,19 @@ aov_hold_dig.9 = {
 		trigger = { gold >= 100 }
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 100
-		scope:activity = { change_variable = { name = aov_campaign_progress add = -4 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -4 } }
 		add_prestige = 20
-		scope:activity = { aov_dig_floor_progress = yes }
 	}
 
 	option = {
 		name = aov_hold_dig.9.b
-		scope:activity = { change_variable = { name = aov_campaign_progress add = -16 } }
-		scope:activity = { aov_dig_floor_progress = yes }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -16 } }
 	}
 
 	option = {
 		name = aov_hold_dig.9.c
-		scope:activity = { change_variable = { name = aov_campaign_progress add = -10 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -10 } }
 		add_prestige = -20
-		scope:activity = { aov_dig_floor_progress = yes }
 	}
 }
 
@@ -412,14 +344,8 @@ aov_hold_dig.10 = {
 	left_portrait = root
 
 	trigger = {
-		exists = involved_activity
-		involved_activity = { has_activity_type = activity_hold_dig }
-		involved_activity = { has_variable = aov_campaign_progress }
-	}
-
-	immediate = {
-		involved_activity = { save_scope_as = activity }
-		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
 	}
 
 	option = {
@@ -427,18 +353,18 @@ aov_hold_dig.10 = {
 		trigger = { gold >= 150 }
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 150
-		scope:activity = { change_variable = { name = aov_campaign_progress add = 18 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 18 } }
 	}
 
 	option = {
 		name = aov_hold_dig.10.b
-		scope:activity = { change_variable = { name = aov_campaign_progress add = 10 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 10 } }
 		add_learning_lifestyle_xp = 150
 	}
 
 	option = {
 		name = aov_hold_dig.10.c
-		scope:activity = { change_variable = { name = aov_campaign_progress add = 3 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 3 } }
 	}
 }
 
@@ -451,14 +377,8 @@ aov_hold_dig.11 = {
 	left_portrait = root
 
 	trigger = {
-		exists = involved_activity
-		involved_activity = { has_activity_type = activity_hold_dig }
-		involved_activity = { has_variable = aov_campaign_progress }
-	}
-
-	immediate = {
-		involved_activity = { save_scope_as = activity }
-		scope:activity.var:aov_dig_hold = { save_scope_as = hold }
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
 	}
 
 	option = {
@@ -466,24 +386,23 @@ aov_hold_dig.11 = {
 		trigger = { gold >= 90 }
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = 90
-		scope:activity = { change_variable = { name = aov_campaign_progress add = 2 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 2 } }
 	}
 
 	option = {
 		name = aov_hold_dig.11.b
-		scope:activity = { change_variable = { name = aov_campaign_progress add = -10 } }
-		scope:activity = { aov_dig_floor_progress = yes }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -10 } }
 	}
 
 	option = {
 		name = aov_hold_dig.11.c
-		scope:activity = { change_variable = { name = aov_campaign_progress add = -5 } }
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -5 } }
 		add_prestige = -15
-		scope:activity = { aov_dig_floor_progress = yes }
 	}
 }
 
-# Breakthrough at a hold: the Delving Campaign raised it one level (scope:hold_province, scope:hold_title).
+# Breakthrough at a hold: its dig raised it one level (scope:hold, the province). Sent by
+# aov_hold_check_dig_complete_effect.
 aov_hold_dig.100 = {
 	type = character_event
 	title = aov_hold_dig.100.t
@@ -518,13 +437,13 @@ aov_hold_dig.100 = {
 		if = {
 			limit = { scope:aov_discovery = flag:gems }
 			add_gold = {
-				value = scope:hold_province.aov_hold_level
+				value = scope:hold.aov_hold_level
 				multiply = 25
 			}
 		}
 		else_if = {
 			limit = { scope:aov_discovery = flag:vein }
-			scope:hold_province.county = {
+			scope:hold.county = {
 				add_county_modifier = {
 					modifier = aov_hold_rich_vein
 					years = 10
@@ -534,20 +453,5 @@ aov_hold_dig.100 = {
 		else = {
 			add_learning_lifestyle_xp = 500
 		}
-	}
-}
-
-# The campaign ended without a new level (scope:hold_province, scope:hold_title, scope:aov_campaign_gain,
-# scope:aov_dig_remaining).
-aov_hold_dig.101 = {
-	type = character_event
-	title = aov_hold_dig.101.t
-	desc = aov_hold_dig.101.desc
-	theme = stewardship
-	override_background = { reference = fp3_cave }
-	left_portrait = root
-
-	option = {
-		name = aov_hold_dig.101.a
 	}
 }

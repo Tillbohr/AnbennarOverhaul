@@ -52,3 +52,30 @@ aov_hold_restoration_handover = {
 		trigger_event = { id = aov_hold_ruin.4 days = 1 }
 	}
 }
+
+quarterly_playable_pulse = {
+	on_actions = { aov_hold_dig_quarterly }
+}
+
+# Root = a playable ruler. Each running dig at a hold the ruler holds advances 3 months (the finest global pulse is
+# quarterly). A dig pauses while its hold is occupied or its holder is not a dwarf.
+aov_hold_dig_quarterly = {
+	trigger = {
+		is_dwarvish_culture = yes
+	}
+	effect = {
+		every_held_title = {
+			limit = {
+				tier = tier_barony
+				title_province ?= {
+					aov_hold_is_working = yes
+					aov_hold_dig_running = yes
+					is_occupied = no
+				}
+			}
+			title_province = {
+				aov_hold_add_dig_progress_effect = { MONTHS = 3 }
+			}
+		}
+	}
+}

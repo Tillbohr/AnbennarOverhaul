@@ -1,9 +1,0 @@
-﻿# Anbennar Overhaul: helpers for the Delving Campaign events.
-
-# Scope: the Delving Campaign activity. A setback never drives the campaign's progress below 0.
-aov_dig_floor_progress = {
-	if = {
-		limit = { var:aov_campaign_progress < 0 }
-		set_variable = { name = aov_campaign_progress value = 0 }
-	}
-}

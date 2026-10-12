@@ -50,11 +50,12 @@ class HoldRuinTests(unittest.TestCase):
     def test_ruin_effect(self):
         text = read("common/scripted_effects/aov_hold_effects.txt")
         b = top_block(text, "aov_hold_ruin_effect")
-        for needle in ("aov_hold_ruined", "aov_dig_progress", "modifier = aov_ruined_hold",
-                       "aov_hold_end_campaign_effect = yes", "aov_hold_ruin.1"):
+        for needle in ("aov_hold_ruined", "modifier = aov_ruined_hold",
+                       "aov_hold_end_dig_effect = yes", "aov_hold_ruin.1"):
             self.assertIn(needle, b)
-        e = top_block(text, "aov_hold_end_campaign_effect")
-        self.assertIn("remove_variable = aov_dig_in_progress", e)
+        e = top_block(text, "aov_hold_end_dig_effect")
+        self.assertIn("remove_variable = aov_dig_progress", e)
+        self.assertIn("remove_variable = aov_dig_target_level", e)
 
     def test_restoration_follows_dwarven_holder(self):
         ev = event_block("aov_hold_ruin.3")
