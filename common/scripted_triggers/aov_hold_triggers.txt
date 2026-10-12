@@ -1,0 +1,33 @@
+﻿# Anbennar Overhaul: dwarven hold triggers. Province scope.
+
+aov_is_hold = {
+	has_holding_type = dwarven_hold_holding
+}
+
+aov_hold_is_ruined = {
+	has_variable = aov_hold_ruined
+}
+
+aov_hold_is_working = {
+	aov_is_hold = yes
+	NOT = { aov_hold_is_ruined = yes }
+	NOT = { has_province_modifier = aov_restoring_hold }
+}
+
+# A dig (Delve Deeper) is running at the hold.
+aov_hold_dig_running = {
+	has_variable = aov_dig_target_level
+}
+
+# Province scope, scope:digger is the character who would dig: a working hold below level 10, not already being
+# dug, not occupied, held by the digger, who is a dwarf.
+aov_can_dig_at = {
+	aov_hold_is_working = yes
+	aov_hold_level < 10
+	NOT = { aov_hold_dig_running = yes }
+	is_occupied = no
+	barony.holder = scope:digger
+	scope:digger = {
+		is_dwarvish_culture = yes
+	}
+}

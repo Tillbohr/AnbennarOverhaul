@@ -40,6 +40,19 @@ FIXTURE = """window = {
 \t\t\t\tminimumsize = { 171 0 }
 \t\t\t}
 \t\t}
+
+\t\t### CONSTRUCT NEW HOLDING & CONSTRUCTING PROGRESS
+\t\tvbox = {
+\t\t\thbox = {
+\t\t\t\tvisible = "[HoldingView.IsBeingConstructed]"
+\t\t\t\tmargin_bottom = 30
+
+\t\t\t\tvbox = {
+\t\t\t\t\tname = "constructing_holding"
+\t\t\t\t\tprogressbar_standard = { value = "[HoldingView.GetConstructionProgressForSlot('(int32)0')]" }
+\t\t\t\t}
+\t\t\t}
+\t\t}
 \t}
 }
 """
@@ -64,7 +77,7 @@ class CountyViewTests(unittest.TestCase):
         self.assertEqual(name_vbox(out).count("aov_monuments/"), 0)
         self.assertLess(out.index("HoldingView.GetHolding.GetIllustration"), out.index("aov_monuments/"))
         self.assertLess(out.rindex("aov_monuments/"), out.index("GetTerrain"))
-        self.assertEqual(out.count("fittype = start"), painted)
+        self.assertEqual(out.count("fittype = start"), painted + len(bm.EXTRA_ART))
         self.assertEqual(out.count("{"), out.count("}"))
 
     def test_no_texture_from_custom_loc(self):
@@ -85,6 +98,39 @@ class CountyViewTests(unittest.TestCase):
     def test_errors_without_anchor(self):
         with self.assertRaises(GeneratorError):
             cvo.insert(FIXTURE.replace("HoldingView.GetHolding.GetIllustration", "x"))
+
+    def test_dig_progress_bar_after_holding_construction(self):
+        """A running dig shows a large progress bar where vanilla shows a barony's construction (a hold is never
+        under construction), bound to the hold's dig variables."""
+        out = cvo.insert(FIXTURE)
+        self.assertEqual(out.count(cvo.MARKER + ": hold dig progress"), 1)
+        self.assertLess(out.index('name = "constructing_holding"'), out.index('name = "aov_hold_dig_progress"'))
+        dig = out[out.index(cvo.MARKER + ": hold dig progress"):]
+        self.assertIn('''visible = "[HoldingView.GetProvince.MakeScope.Var('aov_dig_target_level').IsSet]"''', dig)
+        self.assertIn("ScriptValue('aov_dig_percent')", dig)
+        self.assertIn('text = "AOV_HOLD_DIG_PROGRESS"', dig)
+        self.assertIn('tooltip = "AOV_HOLD_DIG_PROGRESS_TT"', dig)
+        # a sibling of vanilla's construction hbox, in the same vbox
+        before = out[:out.index(cvo.MARKER + ": hold dig progress")]
+        self.assertEqual(before.rstrip().split("\n")[-1].strip(), "}")
+        self.assertEqual(out.count("{"), out.count("}"))
+
+    def test_errors_without_construction_anchor(self):
+        with self.assertRaises(GeneratorError):
+            cvo.insert(FIXTURE.replace('name = "constructing_holding"', 'name = "x"'))
+
+    def test_dig_loc_and_values_exist(self):
+        """The bar's loc keys and the script values they read are defined, and the loc's tick matches the data."""
+        sys.path.insert(0, str(cvo.SUBMOD / "tools" / "data"))
+        import holds  # noqa: E402
+        loc = (cvo.SUBMOD / "localization/english/aov_hold_view_l_english.yml").read_text(encoding="utf-8-sig")
+        self.assertIn(" AOV_HOLD_DIG_PROGRESS:0 ", loc)
+        self.assertIn(" AOV_HOLD_DIG_PROGRESS_TT:0 ", loc)
+        self.assertIn(f"{holds.TICK_MONTHS} months each quarter", loc)
+        values = (cvo.SUBMOD / "common/script_values/aov_hold_view_values.txt").read_text(encoding="utf-8-sig")
+        self.assertRegex(values, r"(?m)^aov_dig_percent = \{")
+        self.assertRegex(values, r"(?m)^aov_dig_years_left = \{")
+        self.assertIn("ScriptValue('aov_dig_years_left')", loc)
 
     def test_errors_if_already_generated(self):
         with self.assertRaises(GeneratorError):
@@ -108,10 +154,16 @@ class GeneratedFileTests(unittest.TestCase):
         block = cvo.block()  # also fails when the monument data changed and the county view was not rebuilt
         end = start + len(block)
         self.assertEqual([l.strip() for l in lines[start:end]], [l.strip() for l in block])
-        # Drop the header, the blank line before the block and the block: what is left is Anbennar's file, byte for byte.
-        # The vanilla holding illustration's visible line is the one other change.
+        dig_start = next(i for i, l in enumerate(lines) if l.strip() == cvo.MARKER + ": hold dig progress")
+        dig_end = dig_start + len(cvo.dig_block())
+        self.assertEqual([l.strip() for l in lines[dig_start:dig_end]], [l.strip() for l in cvo.dig_block()])
+        self.assertLess(end, dig_start)
+        # Drop the header, the blank lines before the blocks and the blocks: what is left is Anbennar's file, byte for
+        # byte. The vanilla holding illustration's visible line is the one other change.
         self.assertEqual(lines[start - 1], "")
-        rest = "\n".join(lines[2:start - 1] + lines[end:])
+        self.assertEqual(lines[dig_start - 1], "")
+        rest = "\n".join(lines[2:start - 1] + lines[end:dig_start - 1] + lines[dig_end:])
         self.assertEqual(rest.count(cvo.HIDDEN_UNDER_MONUMENT), 1)
         self.assertEqual(rest.replace(cvo.HIDDEN_UNDER_MONUMENT, cvo.VANILLA_VISIBLE), src)
         self.assertEqual(out.count(cvo.MARKER + ": monument painting"), 1)
+        self.assertEqual(out.count(cvo.MARKER + ": hold dig progress"), 1)

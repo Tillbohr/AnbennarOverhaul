@@ -1,0 +1,68 @@
+﻿# Anbennar Overhaul: yearly roll for random dig events (Delve Deeper).
+
+yearly_playable_pulse = {
+	on_actions = { aov_hold_dig_yearly }
+}
+
+# Root = a playable ruler. Human dwarven rulers only. Each hold of theirs with a running dig has a 40% chance a year
+# of a dig event: Survey events (1-3) in the first quarter of the dig, Shoring events (9-11) in the last quarter,
+# Excavation events (4-8) between. The event runs on the ruler with scope:hold = the hold.
+aov_hold_dig_yearly = {
+	trigger = {
+		is_ai = no
+		is_dwarvish_culture = yes
+	}
+	effect = {
+		every_held_title = {
+			limit = {
+				tier = tier_barony
+				title_province ?= {
+					aov_hold_is_working = yes
+					aov_hold_dig_running = yes
+					is_occupied = no
+				}
+			}
+			random = {
+				chance = 40
+				title_province = {
+					save_scope_as = hold
+					if = {
+						limit = {
+							var:aov_dig_progress < {
+								value = aov_dig_months
+								multiply = 0.25
+							}
+						}
+						random_list = {
+							1 = { root = { trigger_event = aov_hold_dig.1 } }
+							1 = { root = { trigger_event = aov_hold_dig.2 } }
+							1 = { root = { trigger_event = aov_hold_dig.3 } }
+						}
+					}
+					else_if = {
+						limit = {
+							var:aov_dig_progress >= {
+								value = aov_dig_months
+								multiply = 0.75
+							}
+						}
+						random_list = {
+							1 = { root = { trigger_event = aov_hold_dig.9 } }
+							1 = { root = { trigger_event = aov_hold_dig.10 } }
+							1 = { root = { trigger_event = aov_hold_dig.11 } }
+						}
+					}
+					else = {
+						random_list = {
+							1 = { root = { trigger_event = aov_hold_dig.4 } }
+							1 = { root = { trigger_event = aov_hold_dig.5 } }
+							1 = { root = { trigger_event = aov_hold_dig.6 } }
+							1 = { root = { trigger_event = aov_hold_dig.7 } }
+							1 = { root = { trigger_event = aov_hold_dig.8 } }
+						}
+					}
+				}
+			}
+		}
+	}
+}

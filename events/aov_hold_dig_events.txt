@@ -1,0 +1,510 @@
+﻿namespace = aov_hold_dig
+
+# Random dig events at a hold with a running dig (Delve Deeper). Root = the hold's holder, scope:hold = the hold
+# (province). Options add or remove months of dig progress, never below 0.
+aov_hold_dig.1 = {
+	type = character_event
+	title = aov_hold_dig.1.t
+	desc = aov_hold_dig.1.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
+	}
+
+	option = {
+		name = aov_hold_dig.1.a
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 10 } }
+	}
+
+	option = {
+		name = aov_hold_dig.1.b
+		trigger = {
+			gold >= 60
+			scope:hold = { aov_hold_dig_running = yes }
+			scope:hold.barony.holder = root
+		}
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = 60
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 16 } }
+	}
+
+	option = {
+		name = aov_hold_dig.1.c
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 3 } }
+		add_prestige = 25
+	}
+}
+
+aov_hold_dig.2 = {
+	type = character_event
+	title = aov_hold_dig.2.t
+	desc = aov_hold_dig.2.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
+	}
+
+	option = {
+		name = aov_hold_dig.2.a
+		trigger = {
+			gold >= 80
+			scope:hold = { aov_hold_dig_running = yes }
+			scope:hold.barony.holder = root
+		}
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = 80
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -2 } }
+	}
+
+	option = {
+		name = aov_hold_dig.2.b
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -8 } }
+	}
+
+	option = {
+		name = aov_hold_dig.2.c
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -15 } }
+		add_prestige = 20
+	}
+}
+
+aov_hold_dig.3 = {
+	type = character_event
+	title = aov_hold_dig.3.t
+	desc = aov_hold_dig.3.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
+	}
+
+	option = {
+		name = aov_hold_dig.3.a
+		trigger = {
+			gold >= 70
+			scope:hold = { aov_hold_dig_running = yes }
+			scope:hold.barony.holder = root
+		}
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = 70
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 12 } }
+	}
+
+	option = {
+		name = aov_hold_dig.3.b
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 14 } }
+		add_prestige = -25
+	}
+
+	option = {
+		name = aov_hold_dig.3.c
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 4 } }
+		add_prestige = 15
+	}
+}
+
+aov_hold_dig.4 = {
+	type = character_event
+	title = aov_hold_dig.4.t
+	desc = aov_hold_dig.4.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
+	}
+
+	option = {
+		name = aov_hold_dig.4.a
+		trigger = {
+			scope:hold = { aov_hold_dig_running = yes }
+			scope:hold.barony.holder = root
+		}
+		show_as_unavailable = { always = yes }
+		add_gold = 120
+	}
+
+	option = {
+		name = aov_hold_dig.4.b
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 15 } }
+	}
+
+	option = {
+		name = aov_hold_dig.4.c
+		trigger = {
+			scope:hold = { aov_hold_dig_running = yes }
+			scope:hold.barony.holder = root
+		}
+		show_as_unavailable = { always = yes }
+		add_gold = 50
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 7 } }
+	}
+}
+
+aov_hold_dig.5 = {
+	type = character_event
+	title = aov_hold_dig.5.t
+	desc = aov_hold_dig.5.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
+	}
+
+	option = {
+		name = aov_hold_dig.5.a
+		trigger = {
+			gold >= 100
+			scope:hold = { aov_hold_dig_running = yes }
+			scope:hold.barony.holder = root
+		}
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = 100
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -3 } }
+	}
+
+	option = {
+		name = aov_hold_dig.5.b
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -10 } }
+	}
+
+	option = {
+		name = aov_hold_dig.5.c
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -18 } }
+	}
+}
+
+aov_hold_dig.6 = {
+	type = character_event
+	title = aov_hold_dig.6.t
+	desc = aov_hold_dig.6.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
+	}
+
+	option = {
+		name = aov_hold_dig.6.a
+		trigger = {
+			gold >= 120
+			scope:hold = { aov_hold_dig_running = yes }
+			scope:hold.barony.holder = root
+		}
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = 120
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 2 } }
+	}
+
+	option = {
+		name = aov_hold_dig.6.b
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -14 } }
+		add_prestige = -20
+	}
+
+	option = {
+		name = aov_hold_dig.6.c
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -6 } }
+		add_prestige = 20
+	}
+}
+
+aov_hold_dig.7 = {
+	type = character_event
+	title = aov_hold_dig.7.t
+	desc = aov_hold_dig.7.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
+	}
+
+	option = {
+		name = aov_hold_dig.7.a
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 12 } }
+	}
+
+	option = {
+		name = aov_hold_dig.7.b
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 16 } }
+		add_prestige = -30
+	}
+
+	option = {
+		name = aov_hold_dig.7.c
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 4 } }
+	}
+}
+
+aov_hold_dig.8 = {
+	type = character_event
+	title = aov_hold_dig.8.t
+	desc = aov_hold_dig.8.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
+	}
+
+	option = {
+		name = aov_hold_dig.8.a
+		duel = {
+			skill = prowess
+			value = 14
+			50 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = 3.5
+					min = -49
+				}
+				desc = aov_hold_dig.8.a.success
+				scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 14 } }
+				add_prestige = 25
+			}
+			50 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = -3.5
+					min = -49
+				}
+				desc = aov_hold_dig.8.a.failure
+				scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -12 } }
+			}
+		}
+	}
+
+	option = {
+		name = aov_hold_dig.8.b
+		duel = {
+			skill = martial
+			value = 12
+			50 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = 3.5
+					min = -49
+				}
+				desc = aov_hold_dig.8.b.success
+				scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 12 } }
+				add_prestige = 25
+			}
+			50 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = -3.5
+					min = -49
+				}
+				desc = aov_hold_dig.8.b.failure
+				scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -10 } }
+			}
+		}
+	}
+
+	option = {
+		name = aov_hold_dig.8.c
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -6 } }
+	}
+}
+
+aov_hold_dig.9 = {
+	type = character_event
+	title = aov_hold_dig.9.t
+	desc = aov_hold_dig.9.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
+	}
+
+	option = {
+		name = aov_hold_dig.9.a
+		trigger = {
+			gold >= 100
+			scope:hold = { aov_hold_dig_running = yes }
+			scope:hold.barony.holder = root
+		}
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = 100
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -4 } }
+		add_prestige = 20
+	}
+
+	option = {
+		name = aov_hold_dig.9.b
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -16 } }
+	}
+
+	option = {
+		name = aov_hold_dig.9.c
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -10 } }
+		add_prestige = -20
+	}
+}
+
+aov_hold_dig.10 = {
+	type = character_event
+	title = aov_hold_dig.10.t
+	desc = aov_hold_dig.10.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
+	}
+
+	option = {
+		name = aov_hold_dig.10.a
+		trigger = {
+			gold >= 150
+			scope:hold = { aov_hold_dig_running = yes }
+			scope:hold.barony.holder = root
+		}
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = 150
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 18 } }
+	}
+
+	option = {
+		name = aov_hold_dig.10.b
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 10 } }
+		add_learning_lifestyle_xp = 150
+	}
+
+	option = {
+		name = aov_hold_dig.10.c
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 3 } }
+	}
+}
+
+aov_hold_dig.11 = {
+	type = character_event
+	title = aov_hold_dig.11.t
+	desc = aov_hold_dig.11.desc
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	trigger = {
+		exists = scope:hold
+		scope:hold = { aov_hold_dig_running = yes }
+		scope:hold.barony.holder = root
+	}
+
+	option = {
+		name = aov_hold_dig.11.a
+		trigger = {
+			gold >= 90
+			scope:hold = { aov_hold_dig_running = yes }
+			scope:hold.barony.holder = root
+		}
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = 90
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = 2 } }
+	}
+
+	option = {
+		name = aov_hold_dig.11.b
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -10 } }
+	}
+
+	option = {
+		name = aov_hold_dig.11.c
+		scope:hold = { aov_hold_add_dig_progress_effect = { MONTHS = -5 } }
+		add_prestige = -15
+	}
+}
+
+# Breakthrough at a hold: its dig raised it one level (scope:hold, the province). Sent by
+# aov_hold_check_dig_complete_effect.
+aov_hold_dig.100 = {
+	type = character_event
+	title = aov_hold_dig.100.t
+	desc = {
+		desc = aov_hold_dig.100.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:aov_discovery = flag:gems }
+				desc = aov_hold_dig.100.desc.gems
+			}
+			triggered_desc = {
+				trigger = { scope:aov_discovery = flag:vein }
+				desc = aov_hold_dig.100.desc.vein
+			}
+			desc = aov_hold_dig.100.desc.lore
+		}
+	}
+	theme = stewardship
+	override_background = { reference = fp3_cave }
+	left_portrait = root
+
+	immediate = {
+		random_list = {
+			1 = { save_scope_value_as = { name = aov_discovery value = flag:gems } }
+			1 = { save_scope_value_as = { name = aov_discovery value = flag:vein } }
+			1 = { save_scope_value_as = { name = aov_discovery value = flag:lore } }
+		}
+	}
+
+	option = {
+		name = aov_hold_dig.100.a
+		if = {
+			limit = { scope:aov_discovery = flag:gems }
+			add_gold = {
+				value = scope:hold.aov_hold_level
+				multiply = 25
+			}
+		}
+		else_if = {
+			limit = { scope:aov_discovery = flag:vein }
+			scope:hold.county = {
+				add_county_modifier = {
+					modifier = aov_hold_rich_vein
+					years = 10
+				}
+			}
+		}
+		else = {
+			add_learning_lifestyle_xp = 500
+		}
+	}
+}

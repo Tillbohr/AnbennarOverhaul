@@ -10,7 +10,7 @@
       "fullpath": ".\\gui\\hud.gui",
       "length": 12,
       "line": "\t\t\tvisible = \"[And(GetSituation('dynastic_cycle').GetTopParticipantGroupByKey('other_rulers').IsCharacterParticipant( Character.Self ), Character.ShouldShowMerit)]\"",
-      "linenr": 1722,
+      "linenr": 1742,
       "path": "gui\\hud.gui",
       "stage": null,
       "tag": null
@@ -101,6 +101,111 @@
     }
   ],
   "message": "modifier format temple_citadel_holding_holding_build_prestige_cost not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\common\\governments\\00_government_types.txt",
+      "length": 20,
+      "line": "celestial_government = {",
+      "linenr": 733,
+      "path": "common\\governments\\00_government_types.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key celestial_government_realm",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\common\\governments\\00_government_types.txt",
+      "length": 23,
+      "line": "steppe_admin_government = {",
+      "linenr": 1026,
+      "path": "common\\governments\\00_government_types.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key steppe_admin_government_realm",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\common\\governments\\00_government_types.txt",
+      "length": 23,
+      "line": "meritocratic_government = { # e.g. Korea, Dai Viet",
+      "linenr": 1153,
+      "path": "common\\governments\\00_government_types.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key meritocratic_government_realm",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\common\\governments\\01_japan_government_types.txt",
+      "length": 31,
+      "line": "japan_administrative_government = { # Ritsuryo",
+      "linenr": 5,
+      "path": "common\\governments\\01_japan_government_types.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key japan_administrative_government_realm",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\common\\governments\\01_japan_government_types.txt",
+      "length": 23,
+      "line": "japan_feudal_government = { # Soryo",
+      "linenr": 96,
+      "path": "common\\governments\\01_japan_government_types.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key japan_feudal_government_realm",
   "severity": "warning",
   "wiki": null
 }

@@ -1778,6 +1778,16 @@ window = {
 						blend_mode = alphamultiply
 					}
 				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_ruined_hold') )]"
+					texture = "gfx/interface/illustrations/event_scenes/tgp_ruined_holding.dds"
+					fittype = start
+					margin_bottom = 63
+					modify_texture = {
+						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
+						blend_mode = alphamultiply
+					}
+				}
 
 				background = {
 					visible = "[Not(HoldingView.HasHolding)]"
@@ -2367,6 +2377,30 @@ window = {
 								onclick = "[HoldingView.CancelHoldingConstruction]"
 
 								tooltip = "CANCEL_HOLDING_CONSTRUCTION_TOOLTIP"
+							}
+						}
+					}
+
+					# Anbennar Overhaul: hold dig progress
+					hbox = {
+						visible = "[HoldingView.GetProvince.MakeScope.Var('aov_dig_target_level').IsSet]"
+						margin_bottom = 30
+
+						progressbar_standard = {
+							name = "aov_hold_dig_progress"
+							size = { 380 30 }
+							min = 0
+							max = 100
+							value = "[FixedPointToFloat( HoldingView.GetProvince.MakeScope.ScriptValue('aov_dig_percent') )]"
+							direction = horizontal
+							tooltip = "AOV_HOLD_DIG_PROGRESS_TT"
+
+							text_single = {
+								parentanchor = center
+								text = "AOV_HOLD_DIG_PROGRESS"
+								default_format = "#high"
+								align = nobaseline
+								using = Font_Size_Medium
 							}
 						}
 					}

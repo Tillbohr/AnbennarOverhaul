@@ -21,6 +21,8 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 | Validate (everything) | `python -I tools/validate.py --all` |
 | Accept current reports as baseline | `python -I tools/validate.py --baseline` (only after confirming they are inherited from Anbennar) |
 | Rebuild holdings override | `python -I tools/build_holdings_override.py` |
+| Rebuild dwarven holds | `python -I tools/build_holds.py` (copies Anbennar's castle assets into the hold levels) |
+| Rebuild governments override | `python -I tools/build_governments_override.py` |
 | Rebuild HUD override | `python -I tools/build_hud_override.py` |
 | Rebuild lifestyle window override | `python -I tools/build_lifestyle_override.py` |
 | Rebuild county view override | `python -I tools/build_county_view_override.py` |
@@ -57,11 +59,13 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 
 | File | Generator | Why |
 |---|---|---|
-| `common/holdings/00_holdings.txt` | `python -I tools/build_holdings_override.py` | Holdings are whole-file only. The script copies Anbennar's file and inserts the `ADDITIONS` (marked `# Anbennar Overhaul`). Never edit the output by hand. |
+| `common/holdings/00_holdings.txt` | `python -I tools/build_holdings_override.py` | Holdings are whole-file only. The script copies Anbennar's file, inserts the `ADDITIONS` (marked `# Anbennar Overhaul`) and appends the new `dwarven_hold_holding` (`NEW_HOLDINGS`: castle_holding's build list after `ADDITIONS` plus deep mine, runeforge and hall of the ancestors). Never edit the output by hand. |
+| `common/governments/00_government_types.txt`, `common/governments/01_japan_government_types.txt` | `python -I tools/build_governments_override.py` | Governments are whole-file only. The script copies Anbennar's two files and adds `dwarven_hold_holding` to `valid_holdings` of every government whose `primary_holding` or `valid_holdings` has `castle_holding` (creating the line after `primary_holding` when absent; changed lines marked `# Anbennar Overhaul`). Never edit the output by hand. |
+| `common/buildings/aov_dwarven_holds.txt`, `common/script_values/aov_hold_values.txt`, `common/scripted_effects/aov_hold_setup_effects.txt`, `common/modifiers/aov_hold_modifiers.txt`, `localization/english/aov_holds_l_english.yml` | `python -I tools/build_holds.py` | Dwarven hold data from `tools/data/holds.py` (edit the data, then rerun): the 10 `dwarven_hold_01..10` levels (castle assets copied from Anbennar) and the deep mine, runeforge and hall of the ancestors buildings; script values (dig cost and months per level, level numbers); the game-start setup effect (levels and ruin of the 9 holds); the level modifiers and the `aov_delving_02..10` dig markers; and their localization. |
 | `gui/hud.gui` | `python -I tools/build_hud_override.py` | The main tab bar is whole-file only. The script copies Anbennar's `gui/hud.gui` if it has one, else the game's, and inserts the Artificery tab after `tab_situation` (marked `# Anbennar Overhaul`). Never edit the output by hand. |
 | `gui/window_character_lifestyle.gui` | `python -I tools/build_lifestyle_override.py` | The lifestyle window is whole-file only. The script copies Anbennar's `gui/window_character_lifestyle.gui` if it has one, else the game's, and adds a `magic_lifestyle` copy after each of the three `wanderer_lifestyle` blocks (XP bar background, progress bar, unspent-points icon) using the magic art (marked `# Anbennar Overhaul: magic lifestyle`). Never edit the output by hand. |
-| `gui/window_county_view.gui` | `python -I tools/build_county_view_override.py` | The county view is whole-file only. The script copies Anbennar's `gui/window_county_view.gui` if it has one, else the game's, and inserts one `background` per EU4 monument painting (`build_monuments.painting_backgrounds`) inline right after the vanilla holding-illustration `background`, covering the holding panel down to the garrison box (`margin_bottom = 63`, above the building slot row) top-aligned (`fittype = start`, so the top is never trimmed; marked `# Anbennar Overhaul: monument painting`); the vanilla holding illustration's `visible` also requires an empty `AovMonumentIllustration`. Never use a `using` template for these: template backgrounds draw beneath every inline background (the panel's dark background covered them). Rerun after `build_monuments.py` when monuments change. Never edit the output by hand. |
-| `gfx/interface/illustrations/aov_monuments/*.dds`, `common/customizable_localization/aov_monument_illustration.txt`, `localization/english/aov_monument_illustration_l_english.yml`, `gfx/interface/window_county/aov_monument_painting_mask.dds` | `python -I tools/build_monuments.py` | EU4 monument paintings (uncompressed BGRA, 572x272: EU4's 300x150 with its baked-in dark name plate lifted (`lift_title_strip`), its 6 px frame and the bleed row next to it cropped (`crop_frame`) and a Lanczos-3 2x upscale (`upscale_2x`)), drawn at full alpha through a lighter generated mask (95% in the middle, short soft edges, drawn top-aligned (`fittype = start`, spires reach the frame); vanilla's holding mask peaks at ~67%); custom loc `AovMonumentIllustration` (province scope; the text of loc key `aov_monument_art_<eu4key>` for the province's monument, else empty; keys defined once in the shared loc file). The county view override draws each painting as a `background` with a fixed texture path, visible when `EqualTo_string(Custom('AovMonumentIllustration'), Localize('aov_monument_art_<eu4key>'))`. CK3 does not load a texture whose path comes from custom loc, so never bind `texture` to it. |
+| `gui/window_county_view.gui` | `python -I tools/build_county_view_override.py` | The county view is whole-file only. The script copies Anbennar's `gui/window_county_view.gui` if it has one, else the game's, and inserts one `background` per EU4 monument painting (`build_monuments.painting_backgrounds`) inline right after the vanilla holding-illustration `background`, covering the holding panel down to the garrison box (`margin_bottom = 63`, above the building slot row) top-aligned (`fittype = start`, so the top is never trimmed; marked `# Anbennar Overhaul: monument painting`); the vanilla holding illustration's `visible` also requires an empty `AovMonumentIllustration`. Never use a `using` template for these: template backgrounds draw beneath every inline background (the panel's dark background covered them). It also adds a dwarven hold's dig progress bar (`DIG_BLOCK`, marked `# Anbennar Overhaul: hold dig progress`) after vanilla's holding-construction bar, shown while the province has `aov_dig_target_level`; it reads `aov_dig_percent` and `aov_dig_years_left` (`common/script_values/aov_hold_view_values.txt`), text in `aov_hold_view_l_english.yml`. Rerun after `build_monuments.py` when monuments change. Never edit the output by hand. |
+| `gfx/interface/illustrations/aov_monuments/*.dds`, `common/customizable_localization/aov_monument_illustration.txt`, `localization/english/aov_monument_illustration_l_english.yml`, `gfx/interface/window_county/aov_monument_painting_mask.dds` | `python -I tools/build_monuments.py` | EU4 monument paintings (uncompressed BGRA, 572x272: EU4's 300x150 with its baked-in dark name plate lifted (`lift_title_strip`), its 6 px frame and the bleed row next to it cropped (`crop_frame`) and a Lanczos-3 2x upscale (`upscale_2x`)), drawn at full alpha through a lighter generated mask (95% in the middle, short soft edges, drawn top-aligned (`fittype = start`, spires reach the frame); vanilla's holding mask peaks at ~67%); custom loc `AovMonumentIllustration` (province scope; the text of loc key `aov_monument_art_<eu4key>` for the province's monument, else empty; keys defined once in the shared loc file). `EXTRA_ART` adds non-monument pictures after the monument entries: ruined holds (`aov_hold_is_ruined`) show vanilla's ruined-holding picture, and a monument painting takes priority. The county view override draws each painting as a `background` with a fixed texture path, visible when `EqualTo_string(Custom('AovMonumentIllustration'), Localize('aov_monument_art_<eu4key>'))`. CK3 does not load a texture whose path comes from custom loc, so never bind `texture` to it. |
 | `common/modifiers/aov_invention_modifiers.txt`, `common/scripted_triggers/aov_invention_triggers.txt`, `common/script_values/aov_invention_values.txt`, `common/scripted_effects/aov_invention_effects.txt`, `common/scripted_guis/aov_invention_sgui.txt`, `common/customizable_localization/aov_invention_custom_loc.txt`, `gui/aov_inventions_generated.gui`, `localization/english/aov_inventions_l_english.yml`, `gfx/interface/icons/aov_inventions/` | `python -I tools/build_inventions.py` | One block per invention, generated from `tools/data/inventions.py` (edit the data, then rerun). |
 | `common/modifiers/aov_spell_modifiers.txt`, `common/scripted_triggers/aov_spell_triggers.txt`, `common/scripted_effects/aov_spell_effects.txt`, `common/scripted_guis/aov_spell_sgui.txt`, `common/character_interactions/aov_spell_interactions.txt`, `gui/aov_magic_generated.gui`, `localization/english/aov_spells_l_english.yml`, `gfx/interface/icons/aov_magic/`, `gfx/interface/skinned/hud_maintab/aov_maintab_magic.dds` | `python -I tools/build_spells.py` | One block per spell, generated from `tools/data/spells.py` (edit the data, then rerun). |
 | `gfx/interface/icons/{lifestyles,focuses,traits,lifestyles_perks,lifestyle_tree_backgrounds}/` magic files, `gfx/interface/illustrations/lifestyles_background/magic_lifestyle.dds`, `gfx/interface/progressbars/aov_progress_magic*.dds` | `python -I tools/build_magic_lifestyle_art.py` | Magic lifestyle art (18 DDS files) composed from EU4 Anbennar magic art and uncompressed vanilla files; the output list is `OUTPUTS` in the script. |
@@ -72,16 +76,20 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 ## Updating to a new Anbennar version
 
 1. Replace `../anbennar-ck3-dev-master` with the new Anbennar release.
-2. Run `python -I tools/build_holdings_override.py` and `python -I tools/build_hud_override.py` and `python -I tools/build_lifestyle_override.py` and `python -I tools/build_county_view_override.py`, and `python -I tools/build_monuments.py` (the monument overrides copy Anbennar's current definitions; it errors naming any monument key Anbennar no longer defines).
+2. Run `python -I tools/build_holdings_override.py` and `python -I tools/build_holds.py` and `python -I tools/build_governments_override.py` and `python -I tools/build_hud_override.py` and `python -I tools/build_lifestyle_override.py` and `python -I tools/build_county_view_override.py`, and `python -I tools/build_monuments.py` (the monument overrides copy Anbennar's current definitions; it errors naming any monument key Anbennar no longer defines).
 3. Run tiger and the tool tests (below) and fix anything that references renamed Anbennar content. The tests fail if
    Anbennar renames `anb_enhance_ability_interaction` or adds another way to start its Enhance Ability scheme (removed
    from the game; see `EnhanceAbilityRemovedTests`).
 4. Re-copy Anbennar's `title_revocation_standard_can_pick_title_trigger` (`common/scripted_triggers/00_interaction_triggers.txt`)
    into `common/scripted_triggers/zz_aov_interaction_triggers.txt`, keeping the `# Anbennar Overhaul` faction-title exclusion.
-5. Re-copy Anbennar's `start_compel_interaction` and `start_dominate_interaction` into
+5. Re-copy Anbennar's `building_requirement_castle_city_church` and
+   `building_requirement_castle_city_church_temple_citadel_tribe` (`common/scripted_triggers/00_building_requirement_triggers.txt`)
+   into `common/scripted_triggers/zz_aov_building_requirement_triggers.txt`, keeping the `# Anbennar Overhaul` dwarven
+   hold branch (castle levels 01/02/03/04 = hold levels 1/3/5/8). `BuildingRequirementOverrideTests` fails until they match.
+6. Re-copy Anbennar's `start_compel_interaction` and `start_dominate_interaction` into
    `common/character_interactions/zz_aov_spell_overrides.txt`, keeping the `# Anbennar Overhaul` lines. Its
    `anb_enhance_ability_interaction` is a never-shown stub and needs no re-copy.
-6. Test in game; check `database_conflicts.log` for overhaul keys now also defined by Anbennar (notably `magic_duelist_focus`, which `zz_aov_magic_focuses.txt` must keep overriding).
+7. Test in game; check `database_conflicts.log` for overhaul keys now also defined by Anbennar (notably `magic_duelist_focus`, which `zz_aov_magic_focuses.txt` must keep overriding).
 
 After a CK3 patch, rerun `python -I tools/build_hud_override.py`, `python -I tools/build_lifestyle_override.py` and `python -I tools/build_county_view_override.py` too: their sources are the game's `hud.gui`, `window_character_lifestyle.gui` and `window_county_view.gui` (when Anbennar ships no copy).
 
@@ -92,7 +100,7 @@ reports that are not in the baseline (it ends `fatal: 0, error: 0, ...` when cle
 base mod via its in-folder `descriptor.mod`; pointing it at the launcher's `../descriptor.mod` makes tiger load
 the whole `mod/` folder instead. Current baseline: 4 `temple_citadel_holding` modifier-format warnings,
 inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error in the generated `gui/hud.gui`
-(vanilla HUD code referring to a dynastic-cycle group that Anbennar's `tgp_dynastic_cycle.txt` drops).
+(vanilla HUD code referring to a dynastic-cycle group that Anbennar's `tgp_dynastic_cycle.txt` drops), and 5 missing `<government>_realm` localization warnings in the generated government files (celestial, steppe_admin, meritocratic, japan_administrative, japan_feudal; Anbennar and vanilla lack them too). The baseline's `other_rulers` entry had its `linenr` refreshed from a stale 1722 to 1742 (same report, no new one).
 
 ## Systems
 
@@ -180,3 +188,26 @@ inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error
   supply, Pillars' tax), the Grand Library keeps one-barony Koroshesh and the Grain Port goes to Kaashesh (same
   duchy), a written Pillar of Eternity description. The importer cleans EU4 text (Sarhal descriptions' dash rule
   and literal `\n`, typographic quotes and dashes) and reads Windows-1252 lines in EU4 loc files.
+- **Dwarven holds:** the 9 EU4 dwarven holds on the CK3 map are baronies of the new `dwarven_hold_holding` (Khugdihr
+  starts ruined), with 10 levels `dwarven_hold_01..10`. Levels are raised only by digs; the level effects need a
+  dwarven holder and an unruined hold; each level gives a castle's flat levy, garrison and income (at least the castle
+  of its art band) on top of its multipliers. Castle buildings can be built in a hold: an override of Anbennar's
+  holding-level requirement triggers (`common/scripted_triggers/zz_aov_building_requirement_triggers.txt`) treats hold
+  levels 1/3/5/8 as castle levels 1-4. Three dwarven buildings (deep mine from level 3, runeforge 5, hall of the
+  ancestors 7), off under the same conditions as the levels. Dig with the **Delve Deeper** decision
+  (`aov_delve_deeper_decision` -> picker event `aov_hold_delve.1`): it pays `aov_dig_cost` = 150 x target level gold
+  up front and sets the hold province variables `aov_dig_target_level` and `aov_dig_progress` plus the marker modifier
+  `aov_delving_02..10`; the dig needs `aov_dig_months` = 12 x (8 + 4 x (N - 1)) months. The quarterly tick
+  `aov_hold_dig_quarterly` (`common/on_action/aov_hold_on_actions.txt`, on `quarterly_playable_pulse`) adds 3 months,
+  pauses while the hold is occupied, ruined or under a non-dwarf, and on completion adds exactly one level and fires
+  `aov_hold_dig.100`. Yearly (`aov_hold_dig_yearly`, `common/on_action/aov_hold_dig_on_actions.txt`,
+  `yearly_playable_pulse`) each digging hold of a dwarven player has a 40% chance of an EU4-style event by progress
+  share (under 25% events 1-3, 25-75% 4-8, 75% and over 9-11; `events/aov_hold_dig_events.txt`), whose options move
+  progress by up to 18 months, floor 0. The hold's county view shows a running dig as a progress bar ("Delving to
+  Level N: X / Y months", years left in the tooltip). The AI keeps 2x the cost in reserve. A non-dwarf conquering a
+  dwarf-held hold ruins it (`on_title_gain`, `common/on_action/aov_hold_on_actions.txt`;
+  `events/aov_hold_ruin_events.txt`); the *Clear the Ruins* decision (`aov_clear_ruins_decision`, 300 gold, 200
+  prestige, 5 years; the AI takes it with 600 gold) restores it; ruined holds show vanilla's ruined picture in the
+  county view (`EXTRA_ART` of `tools/build_monuments.py`). Data in `tools/data/holds.py`, generated by
+  `tools/build_holds.py`; hand-written logic in the `aov_hold_*` files (decisions, on_actions, effects, triggers,
+  `aov_hold_formats.txt`). Spec `docs/superpowers/specs/2026-10-10-dwarven-hold-digging-design.md`.
