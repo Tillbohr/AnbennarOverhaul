@@ -1,14 +1,15 @@
 # Dwarven hold digging (design)
 
-Date: 2026-10-10. Status: design approved, not built.
+Date: 2026-10-10. Status: built (PR #8); digging revised 2026-10-12 (activity replaced by Delve Deeper, see
+"Digging").
 Sub-project 1 of the dwarven mechanics. The others (roadmap at the end) get their own specs.
 
 ## Goal
 
 Dwarven rulers dig their holds deeper over generations, as in EU4 Anbennar's hold digging: long digs paced by
 random events the player answers. In CK3 a hold is its own holding type whose primary building is the hold level
-(like a castle level); digging happens in repeated **Delving Campaign** activities whose phases are the dig's
-stages. Holds can be ruined by conquest and restored with a decision. The base mod stays untouched.
+(like a castle level); a ruler pays to dig the next level, which takes many years while EU4-style events move
+the dig forward or back. Holds can be ruined by conquest and restored with a decision. The base mod stays untouched.
 
 ## Decisions taken
 
@@ -17,9 +18,9 @@ stages. Holds can be ruined by conquest and restored with a decision. The base m
 | What is a hold | New holding type `dwarven_hold_holding`; primary building `dwarven_hold_01`..`_10` is the hold level (LotR RiE's `dwarven_holding` pattern) |
 | Which holds | Exactly the EU4 Anbennar holds (working, ruined or infested at 1444) whose province is on the CK3 map: 9 holds. No founding of new holds |
 | Start state (1022) | All working except Khugdihr (ruined). EU4's 1444 ruin/infestation is later history; CK3's 1022 history has dwarves in Hehodovar and Gor Ozumbrog |
-| How digging works | Activity campaigns (~2 years each) add progress to the hold; a level needs several campaigns. The ruler is free between campaigns |
-| Activity phases | Survey, Excavation, Shoring, Breakthrough: the dig's stages |
-| Events | EU4-style random events for the player during each phase change the campaign's progress |
+| How digging works | Decision *Delve Deeper* pays for the next level; the dig runs for years as a scripted construction on the hold (revised 2026-10-12; the first build used activity campaigns) |
+| Dig stages | Survey, Excavation, Shoring by share of progress; they choose the events |
+| Events | EU4-style random events for the player during the dig add or remove months of progress |
 | Hold states | Working or ruined only. Infested holds are left to the Dwarovar situation (roadmap) |
 | Ruin | Only when a non-dwarf conquers a dwarf-held hold barony (the previous holder was dwarven) |
 | Restoring | Decision *Clear the Ruins of [Hold]*: gold and prestige, 5-year restoration, then working |
@@ -107,72 +108,74 @@ economy/military/piety preference modifiers):
 | Runeforge `runeforge_01..03` | 5 | `heavy_infantry_damage_mult` +0.05, `heavy_infantry_toughness_mult` +0.05 (character) |
 | Hall of the Ancestors `hall_of_the_ancestors_01..03` | 7 | `monthly_prestige` +0.2, `monthly_piety` +0.2 (character) |
 
-## Digging: the Delving Campaign
+## Digging: Delve Deeper (revised 2026-10-12)
 
-### Progress on the hold
+The first build dug through repeated *Delving Campaign* activities. That activity is removed: a ruler now pays for a
+level and the hold is dug over many years, with EU4-style events moving the dig forward or back. CK3 has no effect
+that changes the progress of an ordinary building construction (the engine's `effects.log` offers only
+`add_building`/`upgrade_building_effect`, which finish a building at once, and no cancel), so the dig is a scripted
+construction tracked on the hold, not the barony's construction slot.
 
-Each hold province has `var:aov_dig_progress` (starts 0). The target for the next level is
-`aov_dig_target = 50 × next level` (100 for level 2 … 500 for level 10; 2700 in all). When a campaign's progress
-brings the hold to its target, the hold rises one level and the progress resets to the surplus. Progress belongs
-to the hold: it survives the ruler's death and changes of holder among dwarves.
+### Starting a dig
 
-### The activity
+Decision *Delve Deeper* (`aov_delve_deeper_decision`, `common/decisions/aov_hold_decisions.txt`). Its event lists one
+option per hold the ruler can dig. A hold can be dug when:
 
-`activity_hold_dig` (*Delving Campaign at [Hold]*), in `common/activities/activity_types/aov_hold_dig.txt`:
+- the ruler has dwarven heritage (`is_dwarvish_culture = yes`) and personally holds the hold barony;
+- the hold is working (not ruined, no restoration running or pending) and below level 10;
+- no dig is running there (`var:aov_dig_target_level` absent);
+- the ruler can pay `aov_dig_cost` for that hold.
 
-- **Host**: has dwarven heritage, personally holds a working hold barony below level 10, not at war, can pay.
-  The phase location is fixed to the hold (the host's eligible hold; when the host has more than one, the activity
-  location picker offers each eligible hold province).
-- **Guests**: none invited (host and entourage only).
-- **Cost**: `aov_dig_campaign_cost` = 50 × current level gold, plus the investment option.
-- **Options** (planning screen):
-  - *Pace*: Careful (×0.75 progress, fewer setback events), Steady (×1), Reckless (×1.35, more setback events).
-  - *Investment*: None, Generous (+100 gold, ×1.25), Lavish (+250 gold, ×1.5).
-- **Phases** (all `is_predefined`, fixed order; each phase sets its length in `on_phase_active` with
-  `progress_activity_phase_after`, as LotR's mining activity does): Survey 3 months, Excavation 12 months,
-  Shoring 6 months, Breakthrough 1 month.
-- **Validity**: the activity ends early (no progress kept from it) when the host loses the hold barony, the hold is
-  ruined, or the hold is besieged or occupied. Whether war alone invalidates a running activity is checked during
-  planning; if the engine forces it, a declared or received war also ends the campaign.
-- **AI**: hosts campaigns when it can afford them (gold reserve check), not at war, weighted by stewardship and
-  greed/diligence traits; `ai_check_interval` 12 months.
+The ruler pays the whole level up front: **`aov_dig_cost` = 150 × target level** gold (300 for level 2 … 1500 for
+level 10). Starting sets on the hold province `var:aov_dig_target_level` (current level + 1), `var:aov_dig_progress`
+= 0 and the province modifier *Delving to Level N* (`aov_delving_02`..`aov_delving_10`, no effects; it marks the dig
+on the hold).
 
-### Campaign progress
+### Progress
 
-On start the activity stores `var:aov_campaign_progress = aov_dig_campaign_base`:
-
-`aov_dig_campaign_base = (20 + stewardship / 2 + learning / 4 + traits) × pace × investment`, where traits is
-+5 for `diligent`, +5 for `architect`, −5 for `lazy` (Anbennar has no dwarven skill traits; `race_dwarf` is the
-heritage check, not a bonus). With average skills a campaign yields about 30; level 2 needs about 4 campaigns
-(~8 years), level 10 about 17 (~35 years), level 1 to 10 about 90 campaigns.
+- **Length**: a dig to level N needs **`aov_dig_months` = 12 × (8 + 4 × (N − 1)) months** (144 months = 12 years
+  for level 2 … 528 months = 44 years for level 10; about 250 years from level 1 to 10 dug back to back).
+- **Monthly tick**: a monthly on_action (appended, hold provinces only) adds 1 to `aov_dig_progress` on every hold
+  with a running dig, unless the hold is occupied or its holder lacks dwarven heritage (progress pauses; it does not
+  reset).
+- **Completion**: when `aov_dig_progress` ≥ `aov_dig_months` of the target level, the next level is built
+  (`add_building = dwarven_hold_0N`, exactly one level), the dig variables and the *Delving* modifier are removed,
+  and *Breakthrough at [Hold]* (`aov_hold_dig.100`) fires for the holder with one random discovery: gems (gold =
+  25 × new level), a rich vein (county modifier `aov_hold_rich_vein`, `tax_mult` +0.1 for 10 years) or old
+  dwarven lore (learning lifestyle XP +500). Artifacts are left to Runesmithing (roadmap).
+- **Ownership**: the dig belongs to the hold. An heir or any dwarf who takes the hold carries it on; it pauses
+  under a non-dwarf holder (e.g. by inheritance). Conquest by a non-dwarf ruins the hold (below), which ends the
+  dig: progress and gold are lost. A dig cannot be cancelled.
+- **AI**: the decision has `ai_check_interval` 12 months; the AI takes it when its gold is at least 2 × the
+  hold's `aov_dig_cost`, picking its cheapest diggable hold.
+- **Display**: the decision's tooltip lists the ruler's running digs as "[Hold]: X of Y months". Whether a province
+  modifier's description can show the changing number is checked during planning (see Risks); the decision
+  tooltip is the guaranteed place.
 
 ### Events (EU4-style)
 
-Namespace `aov_hold_dig`. Players only; AI campaigns use the base value. Each phase's `on_phase_active` schedules one
-random pulse (`trigger_event = { on_action = aov_hold_dig_<phase>_pulse days = ... }`, the LotR pattern) that picks
-one event for that phase, so a campaign has up to 3 events (Survey, Excavation, Shoring), and Breakthrough ends it.
-Each event offers 2-3 options that change `aov_campaign_progress` (±5 to ±20), cost or gain gold/prestige, or risk
-a skill check. Reckless pace raises the weight of setback events; Careful lowers it.
+Namespace `aov_hold_dig`. A yearly on_action rolls once for each hold with a running dig whose holder is a
+dwarven player: **40% chance** of one event (about 5 events in a 12-year dig, 18 in a 44-year one). AI digs get no
+events. The event is picked from the dig's stage, by progress as a share of the level's months:
 
-| Phase | Events |
-|---|---|
-| Survey | Old Tunnel Maps; Unstable Strata; A Prospector's Claim |
-| Excavation | A Rich Vein (take the gold or push deeper); Flooded Gallery; The Miners' Strike; A Sealed Rune Door; Something in the Deep (prowess or martial check) |
-| Shoring | Gallery Collapse; A Master Engineer Arrives; Shortage of Timber |
+| Stage | Share | Events |
+|---|---|---|
+| Survey | under 25% | 1 Old Tunnel Maps; 2 Unstable Strata; 3 A Prospector's Claim |
+| Excavation | 25% to 75% | 4 A Rich Vein (take the gold or push deeper); 5 Flooded Gallery; 6 The Miners' Strike; 7 A Sealed Rune Door; 8 Something in the Deep (prowess or martial check) |
+| Shoring | 75% and over | 9 Gallery Collapse; 10 A Master Engineer Arrives; 11 Shortage of Timber |
 
-Breakthrough (`on_phase_active`): adds `aov_campaign_progress` to the hold; on a level-up fires *Breakthrough at
-[Hold]* with one random discovery: gems (gold = 25 × new level), a rich vein (county modifier
-`aov_hold_rich_vein`, `tax_mult` +0.1 for 10 years) or old dwarven lore (learning lifestyle XP +500); otherwise
-fires *The Campaign Ends* with the progress made and the remaining target. Artifacts are left to Runesmithing
-(roadmap).
+Events in a stage are equally likely (the activity's pace weighting is gone with the activity). Each event offers
+2-3 options that add or remove **months of progress** on the hold (up to ±18), cost or gain gold/prestige, or risk
+a skill check. Progress never drops below 0; a gain that reaches the level's months completes the level at once
+(the same completion as the monthly tick). Events name the hold ("the delving at [Hold]").
 
 ## Ruined holds
 
 - **Ruin**: `on_title_gain` (appended on_action) where the title is a hold barony, the gain is by conquest, the
   new holder lacks dwarven heritage and the previous holder had it: a non-dwarf conquering a dwarf-held hold (a
   non-dwarf taking a hold from another non-dwarf, as Marrhold's humans at start, does not ruin it). Effects: `var:aov_hold_ruined` set, `aov_dig_progress` reset to 0, county
-  modifier `aov_ruined_hold` (`tax_mult` −0.5, `development_growth_factor` −0.5, `levy_size` −0.5), any campaign at
-  the hold ends. The hold level is kept but disabled (`is_enabled` requires not ruined).
+  modifier `aov_ruined_hold` (`tax_mult` −0.5, `development_growth_factor` −0.5, `levy_size` −0.5), any running dig
+  at the hold ends (progress and the paid gold are lost). The hold level is kept but disabled (`is_enabled` requires not ruined).
 - **Game start**: Khugdihr is ruined (level 1).
 - **Restoring**: decision *Clear the Ruins of [Hold]* (`common/decisions/aov_hold_decisions.txt`). Shown to a
   dwarven-heritage ruler who personally holds a ruined hold with no restoration running or pending
@@ -188,18 +191,18 @@ fires *The Campaign Ends* with the progress made and the remaining target. Artif
 
 | File | Content |
 |---|---|
-| `tools/data/holds.py` | `HOLDS` (the 9 rows above: EU4 name, CK3 title, hold barony, start level, ruined); `LEVELS` (the level table); dig targets, campaign cost and base-value constants |
+| `tools/data/holds.py` | `HOLDS` (the 9 rows above: EU4 name, CK3 title, hold barony, start level, ruined); `LEVELS` (the level table); dig cost and months per level, event chance and stage shares |
 | `tools/build_holds.py` | Writes `common/buildings/aov_dwarven_holds.txt` (the 10 levels and the 3 dwarven buildings), `common/scripted_effects/aov_hold_setup_effects.txt` (game-start conversion: `set_holding_type`, level, Khugdihr's ruin), `localization/english/aov_holds_l_english.yml` |
 | `tools/build_holdings_override.py` | `ADDITIONS` gains `dwarven_hold_holding` |
 | `tools/build_governments_override.py` (new) | Copies Anbennar's government files and adds `dwarven_hold_holding` to `valid_holdings` |
 
 ### Hand-written script
 
-`aov_hold_*` files: the activity and its on_actions, scripted triggers (`aov_is_hold`, `aov_hold_is_working`,
-`aov_can_host_dig`), scripted effects (level up, ruin, restore), script values (targets, cost, campaign base),
-modifiers (`aov_ruined_hold`, `aov_restoring_hold`, the discovery modifier), the decision, the events
-(`events/aov_hold_dig_events.txt`, `events/aov_hold_ruin_events.txt`), the on_actions (game start, `on_title_gain`),
-loc.
+`aov_hold_*` files: scripted triggers (`aov_is_hold`, `aov_hold_is_working`, `aov_can_dig_at`), scripted effects
+(start dig, level up, end dig, ruin, restore), modifiers (`aov_ruined_hold`, `aov_restoring_hold`, the discovery
+modifier, `aov_delving_02..10`), the decisions (*Delve Deeper*, *Clear the Ruins*), the events
+(`events/aov_hold_dig_events.txt`, `events/aov_hold_ruin_events.txt`), the on_actions (game start, `on_title_gain`, the
+monthly dig tick, the yearly event roll), loc. Script values `aov_dig_cost` and `aov_dig_months` are generated.
 
 ### Art
 
@@ -209,17 +212,19 @@ loc.
   (`gfx/interface/ideas_EU4/`), not illustrations; they become the `aov_ruined_hold` / level modifier icons.
 - Map: holds use the castle meshes. Monument paintings keep priority in the county view for the five Dwarovar
   monuments in these holds.
-- Activity: vanilla activity art (a mine or mountain illustration) until custom art exists.
 
 ## Verification
 
 - Tool tests: every `HOLDS` title and barony exists in Anbennar and the barony belongs to the county; exactly one
-  hold is ruined at start; the level chain is unbroken and every level has effects; dig targets rise; campaign base
-  is positive; generated files are fresh; the conversion effect covers exactly `HOLDS`; the government override
+  hold is ruined at start; the level chain is unbroken and every level has effects; dig cost and months rise with
+  the level; the decision is gated as above; the monthly tick pauses and levels up exactly once; event progress
+  changes are bounded months with the floor at 0; stage selection; nothing references the removed activity;
+  generated files are fresh; the conversion effect covers exactly `HOLDS`; the government override
   adds the key to every castle-capable government and changes nothing else.
 - `python -I tools/validate.py` clean.
-- In game: the 9 holds are converted at start with their levels; Khugdihr is ruined; a dwarven player runs a
-  campaign with events in each phase and progress shown at the end; a level-up raises the building; a non-dwarf
+- In game: the 9 holds are converted at start with their levels; Khugdihr is ruined; a dwarven player starts a
+  dig with *Delve Deeper*, sees its progress in the decision tooltip and gets dig events; console-boosted progress
+  raises the level; a non-dwarf
   conquest ruins a hold; *Clear the Ruins* restores it after 5 years; Marrhold (human) shows the holding without
   level effects; no wrong-holding-type penalty for a feudal dwarf.
 
@@ -227,21 +232,22 @@ loc.
 
 - **Setting the primary building from script**: how to raise a holding's primary building level by effect
   (`add_building` of the next level, or another effect) is confirmed during planning; the level-up depends on it.
-- **Activity and war**: whether a running activity survives the host's war (see Validity).
+- **Progress display**: whether a province modifier's description can show the changing months (dynamic loc in a
+  modifier desc); if not, the decision tooltip alone shows progress.
 - **Holding construction**: which game list offers holding types when building on an empty barony (government
   `valid_holdings` may make the new type constructible); confirmed during planning, and the type is kept out of it.
 - **Ruined illustration in the county view**: reuses the monument-painting mechanism (an `AovMonumentIllustration`
   entry for ruined holds); a monument painting in the same barony takes priority.
 - **Governments override**: a generated whole-file copy, rerun after Anbennar updates (added to CLAUDE.md's update
   steps).
-- **AI**: campaigns must not drain AI treasuries; the gold reserve check and `ai_will_do` are tuned in play.
+- **AI**: digs must not drain AI treasuries; the 2 × cost gold check is tuned in play.
 
 ## Roadmap (later sub-projects, each its own spec)
 
 1. **The Dwarovar situation** (EU4): region-wide crises as phases (Goblintide, Serpent's Rot, Hoardcurse) that
    slow digs and threaten holds; brings back infested holds.
 2. **Delving tradition and mining tree** (LotR RiE, TODO list): a dwarven culture tradition and a mining lifestyle
-   tree that speed campaigns.
+   tree that speed digs.
 3. **Expeditions** (EU4 expeditions and dungeons, LotR mining activity): activities from a hold into the deep for
    treasure, artifacts and lore.
 4. **The Runelink** (EU4): rail between holds as a building chain; movement and supply between linked holds.
