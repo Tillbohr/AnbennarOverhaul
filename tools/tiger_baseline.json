@@ -208,5 +208,47 @@
   "message": "missing english localization key japan_feudal_government_realm",
   "severity": "warning",
   "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "colors",
+  "locations": [
+    {
+      "column": 22,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\map\\environment\\environment.txt",
+      "length": 1,
+      "line": "relative_fog_color = { 0.6 0.2 -0.2 }",
+      "linenr": 52,
+      "path": "gfx\\map\\environment\\environment.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "camera colors should be in hsv",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "colors",
+  "locations": [
+    {
+      "column": 32,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\map\\environment\\environment.txt",
+      "length": 4,
+      "line": "relative_fog_color = { 0.6 0.2 -0.2 }",
+      "linenr": 52,
+      "path": "gfx\\map\\environment\\environment.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "color values should be between 0.0 and 1.0",
+  "severity": "warning",
+  "wiki": null
 }
 ]

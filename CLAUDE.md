@@ -19,7 +19,7 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 |---|---|
 | Validate (new reports only) | `python -I tools/validate.py` |
 | Validate (everything) | `python -I tools/validate.py --all` |
-| Accept current reports as baseline | `python -I tools/validate.py --baseline` (only after confirming they are inherited from Anbennar) |
+| Accept current reports as baseline | `python -I tools/validate.py --baseline` (only after confirming they are inherited from Anbennar or from a file copied verbatim from Realms in Exile) |
 | Rebuild holdings override | `python -I tools/build_holdings_override.py` |
 | Rebuild dwarven holds | `python -I tools/build_holds.py` (copies Anbennar's castle assets into the hold levels) |
 | Rebuild governments override | `python -I tools/build_governments_override.py` |
@@ -103,7 +103,8 @@ reports that are not in the baseline (it ends `fatal: 0, error: 0, ...` when cle
 base mod via its in-folder `descriptor.mod`; pointing it at the launcher's `../descriptor.mod` makes tiger load
 the whole `mod/` folder instead. Current baseline: 4 `temple_citadel_holding` modifier-format warnings,
 inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error in the generated `gui/hud.gui`
-(vanilla HUD code referring to a dynastic-cycle group that Anbennar's `tgp_dynastic_cycle.txt` drops), and 5 missing `<government>_realm` localization warnings in the generated government files (celestial, steppe_admin, meritocratic, japan_administrative, japan_feudal; Anbennar and vanilla lack them too). The baseline's `other_rulers` entry had its `linenr` refreshed from a stale 1722 to 1742 (same report, no new one).
+(vanilla HUD code referring to a dynastic-cycle group that Anbennar's `tgp_dynastic_cycle.txt` drops), and 5 missing `<government>_realm` localization warnings in the generated government files (celestial, steppe_admin, meritocratic, japan_administrative, japan_feudal; Anbennar and vanilla lack them too), and 2 warnings on
+`relative_fog_color` in the copied RiE `gfx/map/environment/environment.txt` (RiE's value, kept so the lighting matches). The baseline's `other_rulers` entry had its `linenr` refreshed from a stale 1722 to 1742 (same report, no new one).
 
 ## Systems
 
