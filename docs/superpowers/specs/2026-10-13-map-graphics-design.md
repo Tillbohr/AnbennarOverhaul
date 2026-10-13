@@ -10,7 +10,8 @@ the map shaders that draw them. Everything ships inside this Overhaul; players n
 
 Out of scope: army unit models (the user will give instructions later), RiE's height data, texture placement maps,
 colour map, object placement and water textures (all drawn for Middle-earth's shape), the surround map, court-scene
-and portrait shaders.
+and portrait shaders. (Anbennar's own height data is raised around the dwarven mountains: see the addendum
+"Raised dwarven mountains and gates" at the end.)
 
 ## Decisions (from the conversation)
 
@@ -200,3 +201,104 @@ In-game checklist (PR, unticked):
 
 CLAUDE.md: a generated-files row for `tools/build_map_graphics.py`, a "Map graphics" systems entry, the generator in
 the command table, and the rerun in "Updating to a new Anbennar version" and "After a CK3 patch".
+
+## Addendum (2026-10-13): Raised dwarven mountains and gates
+
+Approved in conversation after a probe of Anbennar's packed height format. Same generator, same PR.
+
+### Goal
+
+Raise every dwarven mountain to about Erebor's height in RiE, and place RiE's Erebor gate where dwarven mountains meet
+normal terrain, so the gates read as entrances into the mountain.
+
+### Definitions
+
+- **Dwarven province:** province terrain (`common/province_terrain/00_province_terrain.txt`) `dwarven_hold_surface`,
+  `dwarven_hold`, `cavern` or `dwarven_road` (119 provinces today: 46 caverns, 36 roads, 22 surface holds, 15 holds).
+- **Range:** a connected group of dwarven provinces (adjacent on `provinces.png`); 9 today (largest 52 and 31).
+- **Normal land:** a province that is not dwarven, not water (`default.map` sea zones, lakes, river provinces), not
+  impassable (`impassable_mountains`, `impassable_seas`) and not unassigned (id 0).
+- **Gate site:** one per pair (dwarven county, normal-land county) whose provinces share a border on `provinces.png`,
+  skipped when the dwarven province's empire is in `GATE_EXCLUDE_REGIONS = ("e_dragon_coast", "e_harpylen")`. At
+  Rubyhold the sites are Redgate→Rewanfork (Lorent) and Rose Mines→Rivergate (Rivergate is normal terrain).
+
+### Erebor reference (measured from RiE)
+
+RiE's Erebor terrain rises from 22,102 at the gate to about 36,200 at the summit within 5–10 map units; its six
+mountain models are only 0.5–1.6 units tall. The `erebor_gate_mesh` is 11.6 units tall (its own cliff backing),
+placed at scale 0.7 (about 8 units). The towering look comes from that rise plus the gate's cliff, seen at RiE's low
+camera tilt (already ported). Most of the Serpentspine already exceeds Erebor's terrain; Rubyhold (median 27,044, peak
+40,982), Ovdal Tungr, Esmaria and the Harpylen cavern fall short.
+
+### Raising rule (values in `tools/data/map_graphics.py`)
+
+1. **Range lift:** for each range, `ground` = the median height of normal land and impassable pixels within
+   `LIFT_GROUND_RING` (24) pixels of the range. Factor `k = clamp((EREBOR_SUMMIT - ground) / (p90 - ground), 1,
+   LIFT_MAX)` with `EREBOR_SUMMIT = 36000`, `LIFT_MAX = 1.8` and p90 the range's 90th-percentile height. Every pixel of
+   the range becomes `ground + (h - ground) * k` (never lower than `h`).
+2. **Soft ceiling:** values above `SOFT_CEILING = 60000` are eased toward 65,535 (`60000 + (65535 - 60000) *
+   (1 - exp(-(v - 60000) / (65535 - 60000)))`), never clipped.
+3. **Gate cliffs:** at each gate site, a pad of radius `GATE_PAD` (2 px) is set to the local normal-land height at
+   the border; behind it (toward the dwarven side) the terrain within `GATE_RISE_DIST` (6 px) of the pad is raised to at
+   least `pad + GATE_RISE` (14000), blending into the lifted range.
+4. **Fade:** every change fades linearly to zero over `FADE_PX` (12) pixels outside the dwarven provinces; water and
+   impassable provinces change only inside that fade.
+
+### Pipeline
+
+`build_heightmap(roots)` in `tools/build_map_graphics.py`, with a stdlib PNG reader/writer `tools/pngio.py`:
+
+1. Read Anbennar's `map_data/heightmap.png` (16-bit grey, 8192×4096), `provinces.png`, `definition.csv`,
+   `default.map`, province terrain, landed titles and its packed files.
+2. Find dwarven provinces, ranges and gate sites; apply the raising rule.
+3. **Repack** (format decoded by the probe): all three images run bottom-up (row 0 = south). The indirection image has
+   one RGBA pixel per 32×32 block (256×128): tile column, tile row, step (1/2/4/8/16), level (0–4). A block's tile is
+   `32 / step + 1` pixels square, sampled every `step` pixels from the heightmap (the extra pixel is the shared edge),
+   stored in the packed image at `(column × size, level_offset_y + row × size)`. Levels occupy separate row bands whose
+   starts are `level_offsets` in `heightmap.heightmap`; tile columns per level are `min(256, packed_width // size)`.
+   Unchanged blocks keep Anbennar's level; a changed block gets the coarsest level whose sampled tile, interpolated
+   back, matches the edited heights within `PACK_TOLERANCE` (257, one 8-bit grey step), else level 0. The
+   `empty_tile_offset` tile is kept. `heightmap.heightmap` keeps every key except `level_offsets` (and
+   `empty_tile_offset` if the empty tile moves).
+4. Gates: one `erebor_gate_mesh` instance per site, on the dwarven side `GATE_INSET` (3 units) from the middle of the
+   pair's longest border run, facing the normal-land neighbour, scale `GATE_SCALE` (0.7), yaw correction
+   `GATE_YAW_OFFSET` (0 to start; tuned in game).
+
+### Outputs
+
+| Output | Notes |
+|---|---|
+| `map_data/heightmap.png`, `map_data/packed_heightmap.png`, `map_data/indirection_heightmap.png`, `map_data/heightmap.heightmap` | Whole-file overrides of Anbennar's; PNGs through Git LFS (~30 MB). |
+| `gfx/map/map_object_data/aov_dwarven_gates.txt` | Generated header; one `object` with the gate instances; a map-object layer that Anbennar or vanilla defines. |
+| `gfx/models/buildings/lotr_special_buildings/dwarven_wonders/erebor_gate/*` and the `mountains_mapobject_01_*` textures it names | Copied from RiE (~8 MB plus the textures). |
+
+The Rubyhold-only Erebor mountain cluster discussed earlier is dropped: the height data does that job.
+
+### Testing
+
+- `pngio` round-trips 8-bit RGB/RGBA and 16-bit grey.
+- Repacking Anbennar's unchanged heightmap reproduces every tile's heights; level bands don't overlap; tiles stay in
+  their band; `heightmap.heightmap` keeps every other key; every changed block decodes back within `PACK_TOLERANCE`.
+- Raising: each range's p90 ≥ 36,000 or its factor is at `LIFT_MAX`; no height lowered outside gate pads; nothing over
+  65,535; changes fade to zero within `FADE_PX`; water/impassable change only inside the fade.
+- Gates: count equals the sites minus Dragon Coast and Harpylen; each sits inside its dwarven province and faces its
+  neighbour; Rubyhold's two sites are as above; each pad is flat and the rise behind it is ≥ 14,000.
+- Copied mesh/textures exist and every texture the asset names resolves; the freshness test covers the new outputs.
+
+In-game checklist additions:
+
+- [ ] The map loads with no holes, spikes or seams at 32-pixel block edges.
+- [ ] Rubyhold, Ovdal Tungr and Esmaria stand clearly taller; the Serpentspine still looks right.
+- [ ] Edges fade smoothly into nearby land, water and impassable mountains.
+- [ ] Each gate sits on its pad, its cliff meets the slope, and it faces the normal land (Redgate, Rose Mines, the
+  Serpentspine sites).
+- [ ] Rivers, borders, holdings and county names over raised terrain look right.
+
+### Risks
+
+1. **The game may reject our packed layout** (tile placement and level choice differ from Paradox's packer). The first
+   build is checked in game before tuning; fallback: rebuild the packed files with CK3's map editor by hand.
+2. **Anbennar map updates** must be followed by a rerun (the files are whole-file overrides); CLAUDE.md's update steps
+   say so.
+3. **Steep cliffs may stretch textures**; RiE's vertical rock textures help.
+4. About 40 MB more LFS.
