@@ -79,7 +79,9 @@ DXT5 like vanilla's set (a texture array needs one size and format); every `DROP
 
 ## Colour grading
 
-`GRADING` lists kingdoms and their grade; each kingdom gets one `posteffect_volume` box:
+`GRADING` maps a title key to a grade. An empire entry covers its de jure kingdoms; a kingdom entry overrides its
+empire's (grade `None` removes the kingdom's box), for tuning spread-out kingdoms such as `k_ginerdu`, whose box
+spans much of the south. Each graded kingdom gets one `posteffect_volume` box:
 
 | Region (all de jure kingdoms of) | Grade |
 |---|---|
@@ -91,12 +93,15 @@ No box (map-wide `standard` grade): `e_middle_dwarovar`, `e_deepwoods`, `e_drago
 RiE's other grades (`tropical`, `savannah`, `tundra`, `artic`, `volcanic`, `ocean`, `cold`, `hot`) are copied and
 stay available.
 
-Box measurement: the kingdom's baronies' provinces (from Anbennar's landed titles) are looked up in Anbennar's
-`map_data/definition.csv` and their pixels found in `map_data/provinces.png` (8192×4096). The pixel bounding box
-becomes `position = { centre_x 400 (4096 - centre_row) }` and `size = { width 1600 height }` (RiE's convention:
-x, height, map y counted from the bottom; 400 and 1600 are RiE's vertical values), with `fade_distance = 300`
-(`GRADING_FADE`). Each box carries `posteffect_values_day` and `posteffect_values_night` set to the grade, as RiE's
-do. Volume names are the kingdom keys.
+Box measurement: each kingdom's provinces (the `province = N` lines of its baronies in Anbennar's landed titles)
+are looked up in Anbennar's `gfx/map/map_object_data/building_locators.txt`, which gives one map position
+`{ x 0 y }` per province (y counted from the bottom, the same convention as post-effect volumes). The box is the
+bounding box of those points grown by `GRADING_MARGIN` (60) on every side, so it covers the provinces' area, not
+only their centres: `position = { centre_x 400 centre_y }`, `size = { width 1600 height }` (400 and 1600 are RiE's
+vertical values), `fade_distance = GRADING_FADE` (300). Each box carries `posteffect_values_day` and
+`posteffect_values_night` set to the grade, as RiE's do. Volume names are the kingdom keys. A province without a
+locator is skipped and a kingdom with no located province gets no box; the generator prints both (today
+`k_obrtrol`'s 5 provinces have no locator and `k_the_reach` has no baronies). (The tools use the standard library only, so `provinces.png` is not decoded.)
 
 ## Lighting, skybox, snow, water, fog of war
 
@@ -105,7 +110,9 @@ do. Volume names are the kingdom keys.
 - **Skybox:** RiE places one mesh at `transform = "4104.55 1.74 2812.75 0 0 0 1 10000 1000 7000"` on its 8192×5632
   map. For Anbennar: position `(4096, 1.74, 2048)`, scale `(10000, 1000, 7000 × 4096 / 5632)` (≈ 5091), rotation
   unchanged. The asset and mesh are copied; the asset's shader `SKYX_sky` is in RiE's `pdxmesh.shader`.
-- **Snow:** `snow.settings` and the snow layer texture; drawn by `gh_snowfall.fxh`.
+- **Snow:** `snow.settings` and the snow layer texture; drawn by `gh_snowfall.fxh`. Its `"Texture_Index"` is the
+  position of the snow material in the terrain texture array (54 in RiE's material list); the generator rewrites it
+  to the 0-based position of the material with id `snow` in Anbennar's `materials.settings`.
 - **Water:** `water.settings`; every texture it names must exist in Anbennar's `gfx/map/water/` or the game.
 - **Fog of war:** `cloud.dds`, used by `gh_vic3_fog_of_war.fxh`.
 
@@ -143,12 +150,12 @@ on the real files:
 - `TEXTURE_MAP` keys and values exist; the generated `materials.settings` equals Anbennar's except the header and
   the mapped materials' three texture lines; order and masks unchanged.
 - Copied terrain textures are 1024×1024 DXT5; drop-ins match `DROP_INS`.
-- Every `GRADING` kingdom exists; a box covers all its provinces' pixels; the vertical flip is right (fixture);
+- Every `GRADING` kingdom exists; a box covers all its provinces' locators plus the margin (fixture);
   regions without a grade get no box; RiE's Middle-earth boxes are gone.
 - Shader include closure resolves; excluded and Anbennar-kept files are not in the output; the
   `dynamic_masks.fxh` check passes on Anbennar's file and fails on a fixture missing a function.
 - Every texture path named by copied shaders, `environment.txt`, `water.settings` and the skybox asset exists.
-- The skybox transform for Anbennar's map size.
+- The skybox transform for Anbennar's map size; `snow.settings` points at Anbennar's snow material.
 - Generated files are fresh (skipped when RiE is not installed).
 
 Validation: `python -I tools/validate.py` stays clean. Tiger does not check shaders.
