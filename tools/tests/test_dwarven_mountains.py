@@ -6,6 +6,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # python -I does not add the tools folder
 import dwarven_mountains as dm  # noqa: E402
+import heightpack as hp  # noqa: E402
 import pngio  # noqa: E402
 from build_hud_override import GeneratorError  # noqa: E402
 from data import map_graphics as data  # noqa: E402
@@ -165,6 +166,158 @@ class GeometryTests(unittest.TestCase):
         self.assertEqual(dm.gate_sites(pm, {1, 2}, {3}, set(), SYN_TITLES, border, ()), [])
 
 
+class SoftCeilingTests(unittest.TestCase):
+    def test_identity_up_to_ceiling(self):
+        self.assertEqual(dm.soft_ceiling(60000), 60000)
+        self.assertEqual(dm.soft_ceiling(123), 123)
+
+    def test_monotone_and_bounded(self):
+        last = 60000
+        for v in range(60001, 200000, 997):
+            now = dm.soft_ceiling(v)
+            self.assertGreaterEqual(now, last)
+            self.assertLessEqual(now, 65535)
+            last = now
+        self.assertLess(dm.soft_ceiling(1e6), 65536)
+
+
+class LiftFactorTests(unittest.TestCase):
+    def test_capped(self):
+        self.assertEqual(dm.lift_factor(20000, 10000), data.LIFT_MAX)
+
+    def test_rubyhold(self):
+        self.assertAlmostEqual(dm.lift_factor(40982, 15517), 1.3541, places=4)
+
+    def test_already_high(self):
+        self.assertEqual(dm.lift_factor(52000, 15000), 1)
+        self.assertEqual(dm.lift_factor(9000, 10000), 1)
+
+
+def fixture_range(heights=15000, ground=10000):
+    """60x40 plains (province 2, height `ground`) with a dwarven block (province 1) at x 20-29, y 10-19."""
+    w, h = 60, 40
+    ids = array("H", [2]) * (w * h)
+    vals = array("H", [ground]) * (w * h)
+    for y in range(10, 20):
+        for x in range(20, 30):
+            ids[y * w + x] = 1
+            vals[y * w + x] = heights
+    return dm.ProvinceMap(w, h, ids), hp.Grid(w, h, vals)
+
+
+class RaiseTests(unittest.TestCase):
+    def test_range_lift(self):
+        pm, grid = fixture_range()
+        new, report = dm.raise_heights(grid, pm, {1}, set(), set(), [])
+        self.assertEqual(new.get(25, 15), 19000)  # 10000 + 5000 * 1.8
+        self.assertEqual(report["ranges"][0]["factor"], data.LIFT_MAX)
+        self.assertEqual(report["ranges"][0]["ground"], 10000)
+        self.assertEqual(report["ranges"][0]["peak_before"], 15000)
+        self.assertEqual(report["ranges"][0]["peak_after"], 19000)
+        self.assertEqual(grid.get(25, 15), 15000)  # the input is untouched
+
+    def test_nothing_lowered_nothing_changed_far(self):
+        pm, grid = fixture_range()
+        new, _ = dm.raise_heights(grid, pm, {1}, set(), set(), [])
+        for y in range(40):
+            for x in range(60):
+                self.assertGreaterEqual(new.get(x, y), grid.get(x, y))
+                dist = max(max(20 - x, x - 29, 0), max(10 - y, y - 19, 0))
+                if dist > data.FADE_PX:
+                    self.assertEqual(new.get(x, y), grid.get(x, y))
+        self.assertLessEqual(max(new.values), 65535)
+
+    def test_fade_is_gradual(self):
+        pm, grid = fixture_range()
+        new, _ = dm.raise_heights(grid, pm, {1}, set(), set(), [])
+        row = [new.get(x, 15) for x in range(19, 5, -1)]
+        self.assertEqual(row, sorted(row, reverse=True))
+        self.assertGreater(new.get(19, 15), 10000)
+        self.assertEqual(new.get(19 - data.FADE_PX, 15), 10000)
+
+    def test_water_changes_only_in_fade(self):
+        pm, grid = fixture_range()
+        pm.ids[15 * 60 + 18] = 3  # water pixel next to the block
+        new, _ = dm.raise_heights(grid, pm, {1}, {3}, set(), [])
+        self.assertGreater(new.get(18, 15), 10000)
+
+    def test_already_tall_range_unchanged(self):
+        pm, grid = fixture_range(heights=52000)
+        new, report = dm.raise_heights(grid, pm, {1}, set(), set(), [])
+        self.assertEqual(report["ranges"][0]["factor"], 1)
+        self.assertEqual(new.values, grid.values)
+
+    def test_soft_ceiling_applies(self):
+        pm, grid = fixture_range(heights=62000, ground=10000)
+        new, _ = dm.raise_heights(grid, pm, {1}, set(), set(), [])
+        self.assertEqual(new.values, grid.values)  # peak above LIFT_PEAK: factor 1
+
+    def test_gate_pad_and_cliff(self):
+        w, h = 40, 21
+        ids = array("H", [1 if x < 20 else 2 for y in range(h) for x in range(w)])
+        vals = array("H", [6000 if x < 20 else 5000 for y in range(h) for x in range(w)])
+        pm, grid = dm.ProvinceMap(w, h, ids), hp.Grid(w, h, vals)
+        site = dm.GateSite("c_dw", "c_n", 19, 10, (-1.0, 0.0))
+        new, report = dm.raise_heights(grid, pm, {1}, set(), set(), [site])
+        pad = 5000
+        self.assertEqual(report["sites"][0]["pad"], pad)
+        for y in range(h):
+            for x in range(w):
+                d = math.hypot(x - 19, y - 10)
+                if d <= data.GATE_PAD:
+                    self.assertEqual(new.get(x, y), pad)
+                elif d <= data.GATE_RISE_DIST and x < 19:
+                    self.assertGreaterEqual(new.get(x, y), pad + data.GATE_RISE)
+        self.assertGreaterEqual(report["sites"][0]["rise"], data.GATE_RISE)
+        self.assertLessEqual(max(new.values), 65535)
+        # the ground on the normal side beyond the pad is untouched
+        self.assertEqual(new.get(35, 10), 5000)
+
+    def test_two_ranges_independent(self):
+        pm, grid = fixture_range()
+        for y in range(10, 20):
+            for x in range(40, 50):
+                pm.ids[y * 60 + x] = 4
+                grid.values[y * 60 + x] = 15000
+        new, report = dm.raise_heights(grid, pm, {1, 4}, set(), set(), [])
+        self.assertEqual(len(report["ranges"]), 2)
+        self.assertEqual(new.get(25, 15), new.get(45, 15))
+
+
+class SpacedSitesTests(unittest.TestCase):
+    def setUp(self):
+        self.titles = {1: ("e", "k", "c_a"), 2: ("e", "k", "c_b"), 3: ("e", "k", "c_x"), 4: ("e", "k", "c_y"),
+                       5: ("e", "k", "c_far"), 6: ("e", "k", "c_far2")}
+        self.border = {(1, 3): [(0, 0)] * 5, (3, 1): [(0, 0)] * 5,
+                       (2, 4): [(0, 0)] * 9, (4, 2): [(0, 0)] * 9,
+                       (5, 6): [(0, 0)] * 2}
+
+    def test_close_sites_keep_longer_border(self):
+        a = dm.GateSite("c_a", "c_x", 100, 100, (1.0, 0.0))
+        b = dm.GateSite("c_b", "c_y", 108, 100, (1.0, 0.0))
+        self.assertEqual(dm.spaced_sites([a, b], self.border, self.titles, 16), [b])
+
+    def test_tie_keeps_first(self):
+        self.border[(2, 4)] = [(0, 0)] * 5
+        a = dm.GateSite("c_a", "c_x", 100, 100, (1.0, 0.0))
+        b = dm.GateSite("c_b", "c_y", 108, 100, (1.0, 0.0))
+        self.assertEqual(dm.spaced_sites([a, b], self.border, self.titles, 16), [a])
+
+    def test_far_sites_kept_in_order(self):
+        a = dm.GateSite("c_a", "c_x", 100, 100, (1.0, 0.0))
+        b = dm.GateSite("c_b", "c_y", 116, 100, (1.0, 0.0))
+        self.assertEqual(dm.spaced_sites([a, b], self.border, self.titles, 16), [a, b])
+
+    def test_chain_keeps_strongest_then_next_free(self):
+        a = dm.GateSite("c_a", "c_x", 100, 100, (1.0, 0.0))
+        b = dm.GateSite("c_b", "c_y", 108, 100, (1.0, 0.0))
+        self.titles[7] = ("e", "k", "c_z")
+        self.titles[8] = ("e", "k", "c_w")
+        self.border[(7, 8)] = [(0, 0)] * 3
+        c = dm.GateSite("c_z", "c_w", 126, 100, (1.0, 0.0))
+        self.assertEqual(dm.spaced_sites([a, b, c], self.border, self.titles, 16), [b, c])
+
+
 @unittest.skipUnless(LIVE, "Anbennar map data not found")
 class RealDataTests(unittest.TestCase):
     @classmethod
@@ -181,6 +334,9 @@ class RealDataTests(unittest.TestCase):
         cls.border = dm.border_pixels(cls.pm)
         cls.sites = dm.gate_sites(cls.pm, cls.dwarven, cls.water, cls.impassable, cls.titles, cls.border,
                                   data.GATE_EXCLUDE_REGIONS)
+        cls.spaced = dm.spaced_sites(cls.sites, cls.border, cls.titles, data.GATE_MIN_SPACING)
+        cls.old = hp.Grid.from_png(pngio.read_png(read("map_data/heightmap.png")))
+        cls.new, cls.report = dm.raise_heights(cls.old, cls.pm, cls.dwarven, cls.water, cls.impassable, cls.spaced)
 
     def test_dimensions(self):
         self.assertEqual((self.pm.width, self.pm.height), (8192, 4096))
@@ -207,6 +363,63 @@ class RealDataTests(unittest.TestCase):
                          [("c_redgate", "c_rewanfork"), ("c_rose_mines", "c_rivergate")])
         self.assertIn(("c_redgate", "c_rewanfork"), [(s.dwarven_county, s.normal_county) for s in self.sites])
         self.assertIn(("c_rose_mines", "c_rivergate"), [(s.dwarven_county, s.normal_county) for s in self.sites])
+
+    def test_spacing_keeps_sites_apart(self):
+        # c_oldpassage's three sites are 21-38 px apart, so the 16 px rule merges none of the 12 real sites.
+        self.assertEqual(len(self.spaced), 12)
+        for i, a in enumerate(self.spaced):
+            for b in self.spaced[i + 1:]:
+                self.assertGreaterEqual(math.hypot(a.x - b.x, a.y - b.y), data.GATE_MIN_SPACING)
+
+    def test_every_range_reaches_peak_or_a_limit(self):
+        self.assertEqual(len(self.report["ranges"]), 9)
+        for r in self.report["ranges"]:
+            self.assertTrue(r["peak_after"] >= data.LIFT_PEAK - 1 or r["factor"] in (1, data.LIFT_MAX), r)
+
+    def test_rubyhold_range(self):
+        ruby = next(r for r in self.report["ranges"] if 62 in r["provinces"])
+        self.assertTrue(1.3 < ruby["factor"] < 1.4, ruby)
+        self.assertAlmostEqual(ruby["peak_after"], data.LIFT_PEAK, delta=50)
+
+    def test_nothing_lowered_outside_pads(self):
+        pads = set()
+        for s in self.spaced:
+            for y in range(s.y - data.GATE_PAD, s.y + data.GATE_PAD + 1):
+                for x in range(s.x - data.GATE_PAD, s.x + data.GATE_PAD + 1):
+                    pads.add(y * self.pm.width + x)
+        w = self.pm.width
+        for y in range(self.pm.height):
+            a = self.old.values[y * w:(y + 1) * w]
+            b = self.new.values[y * w:(y + 1) * w]
+            if a == b:
+                continue
+            for x in range(w):
+                if b[x] < a[x]:
+                    self.assertIn(y * w + x, pads)
+        self.assertLessEqual(max(self.new.values), 65535)
+
+    def test_far_pixels_unchanged(self):
+        import random
+        w, h, ids = self.pm.width, self.pm.height, self.pm.ids
+        changed = []
+        for y in range(h):
+            a = self.old.values[y * w:(y + 1) * w]
+            b = self.new.values[y * w:(y + 1) * w]
+            if a != b:
+                changed.extend(y * w + x for x in range(w) if a[x] != b[x])
+        self.assertTrue(changed)
+        reach = data.FADE_PX + 1
+        for i in random.Random(1).sample(changed, 1500):
+            y, x = divmod(i, w)
+            near_dwarven = any(ids[j * w + k] in self.dwarven
+                               for j in range(max(0, y - reach), min(h, y + reach + 1))
+                               for k in range(max(0, x - reach), min(w, x + reach + 1)))
+            near_gate = any(math.hypot(x - s.x, y - s.y) <= data.GATE_RISE_DIST + 1 for s in self.spaced)
+            self.assertTrue(near_dwarven or near_gate, (x, y))
+
+    def test_gate_cliffs(self):
+        for s, r in zip(self.spaced, self.report["sites"]):
+            self.assertGreaterEqual(r["rise"], data.GATE_RISE, r)
 
 
 if __name__ == "__main__":

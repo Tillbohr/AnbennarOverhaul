@@ -210,3 +210,200 @@ def gate_sites(pm, dwarven, water, impassable, titles, border, exclude_regions):
             raise GeneratorError(f"gate site {key[0]}/{key[1]}: both sides of the border have the same centre")
         sites.append(GateSite(key[0], key[1], x, y, (dx / length, dy / length)))
     return sites
+
+
+def spaced_sites(sites, border, titles, min_spacing):
+    """Drop gate sites closer than `min_spacing` map units to a stronger one.
+
+    The strength of a site is the length of the border (pixels of `border`) between the provinces of its
+    dwarven county and those of its normal-land county; ties go to the earlier site in `sites`. Sites are
+    taken strongest first and kept when no kept site is closer than `min_spacing`; the result keeps the
+    order of `sites`."""
+    provinces = defaultdict(list)
+    for pid, (_, _, county) in titles.items():
+        provinces[county].append(pid)
+
+    def strength(site):
+        return sum(len(border.get((a, b), ())) for a in provinces[site.dwarven_county]
+                   for b in provinces[site.normal_county])
+
+    order = sorted(range(len(sites)), key=lambda i: (-strength(sites[i]), i))
+    kept = []
+    for i in order:
+        s = sites[i]
+        if all(math.hypot(s.x - sites[j].x, s.y - sites[j].y) >= min_spacing for j in kept):
+            kept.append(i)
+    return [sites[i] for i in sorted(kept)]
+
+
+def soft_ceiling(v):
+    """`v` unchanged up to SOFT_CEILING; above it, compressed so it never reaches 65536."""
+    c = data.SOFT_CEILING
+    if v <= c:
+        return int(round(v))
+    span = 65535 - c
+    return min(65535, c + int(round(span * (1 - math.exp(-(v - c) / span)))))
+
+
+def lift_factor(peak, ground):
+    """The factor that takes a range's `peak` to LIFT_PEAK measured from `ground`, between 1 and LIFT_MAX."""
+    if peak <= ground:
+        return 1
+    return max(1, min(data.LIFT_MAX, (data.LIFT_PEAK - ground) / (peak - ground)))
+
+
+def _lookup(provinces):
+    table = bytearray(65536)
+    for p in provinces:
+        table[p] = 1
+    return table
+
+
+_NEIGHBOURS = [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]
+
+
+def _reach(sources, radius, pm, blocked):
+    """{pixel: (distance, nearest source)} for the pixels within `radius` of `sources` (flat indices).
+
+    Spreads through 8-neighbours over provinces whose `blocked` entry is 0 (so never into dwarven land);
+    the distance is the Euclidean distance to the source that reached the pixel first."""
+    w, h, ids = pm.width, pm.height, pm.ids
+    seen = {s: s for s in sources}
+    frontier = list(sources)
+    for _ in range(radius):
+        nxt = []
+        for i in frontier:
+            o = seen[i]
+            y, x = divmod(i, w)
+            for dx, dy in _NEIGHBOURS:
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < w and 0 <= ny < h:
+                    j = ny * w + nx
+                    if j not in seen and not blocked[ids[j]]:
+                        seen[j] = o
+                        nxt.append(j)
+        frontier = nxt
+    reach = {}
+    for i, o in seen.items():
+        if i != o:
+            d = math.hypot(i % w - o % w, i // w - o // w)
+            if d <= radius:
+                reach[i] = (d, o)
+    return reach
+
+
+def _ground(old, pm, reach, water):
+    ids = pm.ids
+    samples = sorted(old[i] for i, (d, _) in reach.items()
+                     if d <= data.LIFT_GROUND_RING and ids[i] and not water[ids[i]])
+    return samples[len(samples) // 2] if samples else None
+
+
+def range_ground(grid, pm, rng, dwarven, water):
+    """Median height of the non-dwarven, non-water pixels within LIFT_GROUND_RING px of the range `rng`."""
+    dw = _lookup(dwarven)
+    px = [i for i, v in enumerate(pm.ids) if v in rng]
+    return _ground(grid.values, pm, _reach(px, data.LIFT_GROUND_RING, pm, dw), _lookup(water))
+
+
+def _range_groups(dwarven, pm, pixels):
+    """Groups of dwarven provinces that touch each other (by pixel contact), largest first."""
+    w, h, ids = pm.width, pm.height, pm.ids
+    parent = {p: p for p in pixels}
+
+    def find(p):
+        while parent[p] != p:
+            parent[p] = parent[parent[p]]
+            p = parent[p]
+        return p
+
+    dw = _lookup(dwarven)
+    for p, idx in pixels.items():
+        for i in idx:
+            y, x = divmod(i, w)
+            if x + 1 < w and dw[ids[i + 1]] and ids[i + 1] != p:
+                parent[find(ids[i + 1])] = find(p)
+            if y + 1 < h and dw[ids[i + w]] and ids[i + w] != p:
+                parent[find(ids[i + w])] = find(p)
+    groups = defaultdict(set)
+    for p in pixels:
+        groups[find(p)].add(p)
+    return sorted(groups.values(), key=lambda g: (-len(g), min(g)))
+
+
+def _pad_height(old, pm, site, dw, blocked, search=40):
+    """Height of the normal-land pixel nearest the site (not dwarven, water, impassable or 0)."""
+    w, h, ids = pm.width, pm.height, pm.ids
+    best = None
+    for y in range(max(0, site.y - search), min(h, site.y + search + 1)):
+        for x in range(max(0, site.x - search), min(w, site.x + search + 1)):
+            v = ids[y * w + x]
+            if v and not dw[v] and not blocked[v]:
+                key = ((x - site.x) ** 2 + (y - site.y) ** 2, y, x)
+                if best is None or key < best[0]:
+                    best = (key, old[y * w + x])
+    return best[1] if best else old[site.y * w + site.x]
+
+
+def raise_heights(grid, pm, dwarven, water, impassable, sites):
+    """Lift every dwarven range and shape the gate sites; returns (new grid, report).
+
+    Per range: ground = `range_ground`, factor = `lift_factor(peak, ground)`; a pixel above the ground is
+    moved to `ground + (h - ground) * factor` (soft ceiling applied, never lowered), and the change fades
+    out over FADE_PX px into the surrounding land and water. Per site: a flat pad of radius GATE_PAD at the
+    height of the nearest normal-land pixel (the only pixels that may go down) and, behind it on the
+    dwarven side, a cliff: pixels within GATE_RISE_DIST px raised to at least pad + GATE_RISE.
+    The report is {"ranges": [{provinces, ground, factor, peak_before, peak_after}],
+    "sites": [{dwarven_county, normal_county, x, y, pad, rise}]}; `rise` is the lowest cliff pixel above the pad."""
+    w, h, ids = pm.width, pm.height, pm.ids
+    old = grid.values
+    new = array("H", old)
+    dw = _lookup(dwarven)
+    wat = _lookup(water)
+    blocked = _lookup(set(water) | set(impassable))
+    pixels = defaultdict(list)
+    for y in range(h):
+        row = ids[y * w:(y + 1) * w]
+        if dwarven.isdisjoint(row):
+            continue
+        for x, v in enumerate(row):
+            if dw[v]:
+                pixels[v].append(y * w + x)
+    report = {"ranges": [], "sites": []}
+    for group in _range_groups(dwarven, pm, pixels):
+        px = [i for p in group for i in pixels[p]]
+        reach = _reach(px, max(data.LIFT_GROUND_RING, data.FADE_PX), pm, dw)
+        ground = _ground(old, pm, reach, wat)
+        peak = max(old[i] for i in px)
+        factor = 1 if ground is None else lift_factor(peak, ground)
+        if factor > 1:
+            for i in px:
+                if old[i] > ground:
+                    new[i] = max(old[i], soft_ceiling(ground + (old[i] - ground) * factor))
+            for i, (d, o) in reach.items():
+                if d < data.FADE_PX and new[o] > old[o]:
+                    value = min(65535, old[i] + int(round((new[o] - old[o]) * (1 - d / data.FADE_PX))))
+                    if value > new[i]:
+                        new[i] = value
+        report["ranges"].append({"provinces": sorted(group), "ground": ground, "factor": factor,
+                                 "peak_before": peak, "peak_after": max(new[i] for i in px)})
+    reach_px = max(data.GATE_RISE_DIST, data.GATE_PAD)
+    for site in sites:
+        pad = _pad_height(old, pm, site, dw, blocked)
+        cliff = soft_ceiling(pad + data.GATE_RISE)
+        ix, iy = site.inward
+        rise = None
+        for y in range(max(0, site.y - reach_px), min(h, site.y + reach_px + 1)):
+            for x in range(max(0, site.x - reach_px), min(w, site.x + reach_px + 1)):
+                dx, dy = x - site.x, y - site.y
+                d = math.hypot(dx, dy)
+                i = y * w + x
+                if d <= data.GATE_PAD:
+                    new[i] = pad
+                elif d <= data.GATE_RISE_DIST and dx * ix + dy * iy > 0 and ids[i] and not wat[ids[i]]:
+                    if new[i] < cliff:
+                        new[i] = cliff
+                    rise = new[i] - pad if rise is None else min(rise, new[i] - pad)
+        report["sites"].append({"dwarven_county": site.dwarven_county, "normal_county": site.normal_county,
+                                "x": site.x, "y": site.y, "pad": pad, "rise": rise or 0})
+    return type(grid)(w, h, new), report
