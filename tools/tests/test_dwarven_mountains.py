@@ -317,6 +317,30 @@ class RaiseTests(unittest.TestCase):
         # the ground on the normal side beyond the pad is untouched
         self.assertEqual(new.get(35, 10), 5000)
 
+    def test_cliff_does_not_spill_into_normal_land(self):
+        w, h = 40, 31
+        ids = array("H", [1 if x < 20 else 2 for y in range(h) for x in range(w)])
+        vals = array("H", [52000 if x < 20 else 5000 for y in range(h) for x in range(w)])
+        pm, grid = dm.ProvinceMap(w, h, ids), hp.Grid(w, h, vals)
+        site = dm.GateSite("c_dw", "c_n", 19, 10, (0.0, 1.0))  # inward half-plane is y > 10, both provinces
+        new, _ = dm.raise_heights(grid, pm, {1}, set(), set(), [site])
+        self.assertEqual(new.get(25, 15), 5000)  # normal land on the inward half-plane, beside the pad
+        self.assertEqual(new.get(22, 14), 5000)
+        self.assertGreater(new.get(15, 14), 5000 + data.GATE_RISE - 1)  # the dwarven side still gets the cliff
+
+    def test_cliff_reaches_impassable_land(self):
+        w, h = 40, 31
+        ids = array("H", [1 if x < 20 else 2 for y in range(h) for x in range(w)])
+        for y in range(12, 31):
+            for x in range(20, 40):
+                ids[y * w + x] = 4
+        vals = array("H", [52000 if x < 20 else 5000 for y in range(h) for x in range(w)])  # no range lift
+        pm, grid = dm.ProvinceMap(w, h, ids), hp.Grid(w, h, vals)
+        site = dm.GateSite("c_dw", "c_n", 19, 10, (0.0, 1.0))
+        new, _ = dm.raise_heights(grid, pm, {1}, set(), {4}, [site])
+        self.assertGreaterEqual(new.get(22, 14), 5000 + data.GATE_RISE)  # impassable: cliff allowed
+        self.assertEqual(new.get(22, 11), 5000)  # normal land stays
+
     def test_two_ranges_independent(self):
         pm, grid = fixture_range()
         for y in range(10, 20):

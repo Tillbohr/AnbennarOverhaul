@@ -237,14 +237,17 @@ camera tilt (already ported). Most of the Serpentspine already exceeds Erebor's 
    LIFT_MAX)` with `LIFT_PEAK = 50000` (Erebor's terrain summit, about 36,000, plus the ~14,000 its gate cliff adds),
    `LIFT_MAX = 1.8` and `peak` the range's highest height (`k = 1` when `peak <= ground`). Every pixel of the range
    becomes `ground + (h - ground) * k` (never lower than `h`). Measured today: Rubyhold x1.37 (peak 40,982 -> 50,000),
-   Esmaria and Ovdal Tungr x1.8 (peaks about 39,200 and 37,600), the Serpentspine, Dragon Coast, Khugdihr and Harpylen
+   Esmaria, Ovdal Tungr, the Harpylen cavern (province 655) and province 912 x1.8 (Esmaria peak 27,866 -> 39,020, Ovdal
+   Tungr 30,646 -> 37,316, Harpylen 45,316 -> 48,930), the Serpentspine, Dragon Coast and Khugdihr
    ranges x1.0 (already at or above the target, or ringed by higher ground); they change only at gate cliffs.
    (Decided after measurement: a 90th-percentile target of 36,000 would have raised Rubyhold only 3%.)
 2. **Soft ceiling:** values above `SOFT_CEILING = 60000` are eased toward 65,535 (`60000 + (65535 - 60000) *
    (1 - exp(-(v - 60000) / (65535 - 60000)))`), never clipped.
 3. **Gate cliffs:** at each gate site, a pad of radius `GATE_PAD` (2 px) is set to the local normal-land height at
    the border; behind it (toward the dwarven side) the terrain within `GATE_RISE_DIST` (6 px) of the pad is raised to at
-   least `pad + GATE_RISE` (14000), blending into the lifted range.
+   least `pad + GATE_RISE` (14000), blending into the lifted range. Cliff pixels (core and skirt) are only those of
+   dwarven or impassable provinces: normal land and water never get cliff height, so the cliff cannot spill into
+   neighbouring normal provinces (the pad rule is unchanged).
 4. **Fade:** every change fades linearly to zero over `FADE_PX` (12) pixels outside the dwarven provinces; water and
    impassable provinces change only inside that fade.
 
@@ -264,8 +267,10 @@ camera tilt (already ported). Most of the Serpentspine already exceeds Erebor's 
    back, matches the edited heights within `PACK_TOLERANCE` (257, one 8-bit grey step), else level 0. The
    `empty_tile_offset` tile is kept. `heightmap.heightmap` keeps every key except `level_offsets` (and
    `empty_tile_offset` if the empty tile moves).
-4. Gates: one `erebor_gate_mesh` instance per site, on the dwarven side `GATE_INSET` (0 units to start) from the middle of the
-   pair's longest border run, facing the normal-land neighbour, scale `GATE_SCALE` (0.7), yaw correction
+4. Gates: one `erebor_gate_mesh` instance per site, on the dwarven side `GATE_INSET` (0 units to start) from the dwarven-side border pixel nearest the centroid of the
+   pair's dwarven-side border pixels. The yaw is `atan2(inward_x, inward_y)` so the mesh's local +Z points along
+   `inward`, into the mountain (as RiE's Erebor gate has the mountain behind it); its front faces the normal-land
+   neighbour. Scale `GATE_SCALE` (0.7), yaw correction
    `GATE_YAW_OFFSET` (0 to start; tuned in game).
 
 ### Outputs
@@ -274,7 +279,7 @@ camera tilt (already ported). Most of the Serpentspine already exceeds Erebor's 
 |---|---|
 | `map_data/heightmap.png`, `map_data/packed_heightmap.png`, `map_data/indirection_heightmap.png`, `map_data/heightmap.heightmap` | Whole-file overrides of Anbennar's; PNGs through Git LFS (~30 MB). |
 | `gfx/map/map_object_data/aov_dwarven_gates.txt` | Generated header; one `object` with the gate instances; a map-object layer that Anbennar or vanilla defines. |
-| `gfx/models/buildings/lotr_special_buildings/dwarven_wonders/erebor_gate/*` and the `mountains_mapobject_01_*` textures it names | Copied from RiE (~8 MB plus the textures). |
+| `gfx/models/mapitems/aov_dwarven_gate/` (asset, mesh, 3 gate textures and the 3 `mountains_mapobject_01_*` textures it names) | Copied from RiE, ~72 MB, of which ~66 MB are RiE's three 4096² mountain textures. |
 
 The Rubyhold-only Erebor mountain cluster discussed earlier is dropped: the height data does that job.
 
@@ -297,6 +302,7 @@ In-game checklist additions:
 - [ ] Each gate sits on its pad, its cliff meets the slope, and it faces the normal land (Redgate, Rose Mines, the
   Serpentspine sites).
 - [ ] Rivers, borders, holdings and county names over raised terrain look right.
+- [ ] Ovdal Tungr's gate cliff has no pit where a water pixel sits inside it, and no river clips a gate.
 
 ### Risks
 
@@ -305,4 +311,4 @@ In-game checklist additions:
 2. **Anbennar map updates** must be followed by a rerun (the files are whole-file overrides); CLAUDE.md's update steps
    say so.
 3. **Steep cliffs may stretch textures**; RiE's vertical rock textures help.
-4. About 40 MB more LFS.
+4. About 100 MB more LFS (~72 MB gate asset and textures, ~27 MB height files).

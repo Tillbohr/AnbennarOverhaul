@@ -352,7 +352,8 @@ def raise_heights(grid, pm, dwarven, water, impassable, sites):
     moved to `ground + (h - ground) * factor` (soft ceiling applied, never lowered), and the change fades
     out over FADE_PX px into the surrounding land and water. Per site: a flat pad of radius GATE_PAD at the
     height of the nearest normal-land pixel (the only pixels that may go down) and, behind it on the
-    dwarven side, a cliff: pixels within GATE_RISE_DIST px raised to at least pad + GATE_RISE, ramping down to nothing
+    dwarven side, a cliff (only pixels of dwarven or impassable provinces; normal land and water never get cliff
+    height): pixels within GATE_RISE_DIST px raised to at least pad + GATE_RISE, ramping down to nothing
     over the next GATE_SKIRT px (the ramp is the fade for the part outside the range).
     The report is {"ranges": [{provinces, ground, factor, peak_before, peak_after}],
     "sites": [{dwarven_county, normal_county, x, y, pad, rise}]}; `rise` is the lowest cliff pixel above the pad."""
@@ -362,6 +363,7 @@ def raise_heights(grid, pm, dwarven, water, impassable, sites):
     dw = _lookup(dwarven)
     wat = _lookup(water)
     blocked = _lookup(set(water) | set(impassable))
+    imp = _lookup(impassable)
     pixels = defaultdict(list)
     for y in range(h):
         row = ids[y * w:(y + 1) * w]
@@ -403,7 +405,7 @@ def raise_heights(grid, pm, dwarven, water, impassable, sites):
                     continue
                 if d <= data.GATE_PAD:
                     new[i] = pad
-                elif d < reach_px and dx * ix + dy * iy > 0:
+                elif d < reach_px and dx * ix + dy * iy > 0 and (dw[ids[i]] or imp[ids[i]]):
                     # full rise out to `core`, then a linear ramp down to nothing over `skirt` px
                     weight = 1 if d <= core else 1 - (d - core) / skirt
                     target = soft_ceiling(pad + data.GATE_RISE * weight)
