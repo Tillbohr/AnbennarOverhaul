@@ -410,6 +410,173 @@ def build_environment(roots: Roots) -> dict:
     return out
 
 
+POST_EFFECTS = "gfx/map/post_effects"
+VOLUMES_REL = f"{POST_EFFECTS}/posteffect_volumes.txt"
+LOCATORS_REL = "gfx/map/map_object_data/building_locators.txt"
+BLOCK_OPEN = re.compile(r"^\s*(\w+)\s*=\s*\{")
+PROVINCE_REF = re.compile(r"\bprovince\s*=\s*(\d+)")
+LOCATOR = re.compile(r"\bid\s*=\s*(\d+)\s*position\s*=\s*\{\s*(\S+)\s+\S+\s+(\S+)\s*\}")
+LUT_LINE = re.compile(r'^\s*lut\s*=\s*"([^"]+)"', re.MULTILINE)
+VOLUME_Y = 400.0  # RiE's vertical centre and height for its boxes
+VOLUME_HEIGHT = 1600.0
+
+
+def titles_text(roots: Roots) -> str:
+    """Anbennar's common/landed_titles/*.txt concatenated, comments removed."""
+    folder = roots.anbennar / "common/landed_titles"
+    files = sorted(folder.glob("*.txt"))
+    if not files:
+        raise GeneratorError(f"Anbennar not found: {folder} has no landed titles files")
+    return "\n".join(_uncommented(_read_text(path)) for path in files)
+
+
+def _uncommented(text: str) -> str:
+    """Text with everything from '#' to the line end removed outside double quotes (line count unchanged)."""
+    lines = []
+    for line in text.splitlines():
+        in_string, cut = False, len(line)
+        for index, ch in enumerate(line):
+            if ch == '"':
+                in_string = not in_string
+            elif ch == "#" and not in_string:
+                cut = index
+                break
+        lines.append(line[:cut])
+    return "\n".join(lines)
+
+
+def title_block(text: str, key: str) -> str:
+    """The text of the block that defines title `key` (from its name to its closing brace). It must be defined
+    exactly once; commented text is ignored."""
+    lines = _uncommented(text).splitlines()
+    found = []
+    for index, line in enumerate(lines):
+        match = BLOCK_OPEN.match(line)
+        if match and match.group(1) == key:
+            depth, end = 0, index
+            for end in range(index, len(lines)):
+                depth += brace_delta(lines[end])
+                if depth <= 0:
+                    break
+            else:
+                raise GeneratorError(f"title {key} has unbalanced braces")
+            found.append("\n".join(lines[index:end + 1]).lstrip())
+    if not found:
+        raise GeneratorError(f"title {key} is not defined in Anbennar's landed titles")
+    if len(found) > 1:
+        raise GeneratorError(f"title {key} is defined {len(found)} times in Anbennar's landed titles")
+    return found[0]
+
+
+def kingdoms_of(titles: str, empire: str) -> list:
+    """The kingdom keys directly inside an empire's block, in file order."""
+    kingdoms, depth = [], 0
+    for line in title_block(titles, empire).splitlines():
+        match = BLOCK_OPEN.match(line)
+        if depth == 1 and match and match.group(1).startswith("k_"):
+            kingdoms.append(match.group(1))
+        depth += brace_delta(line)
+    return kingdoms
+
+
+def provinces_of(titles: str, key: str) -> list:
+    """The `province = N` numbers inside a title's block, in file order."""
+    return [int(number) for number in PROVINCE_REF.findall(title_block(titles, key))]
+
+
+def locator_positions(text: str) -> dict:
+    """Province id -> (x, y) from building_locators.txt; y is the file's third number (counted from the bottom)."""
+    return {int(i): (float(x), float(y)) for i, x, y in LOCATOR.findall(text)}
+
+
+def graded_kingdoms(grading: dict, titles: str) -> dict:
+    """Kingdom key -> grade: empire entries expanded to their kingdoms, then kingdom entries applied on top
+    (None removes the kingdom)."""
+    result = {}
+    for key, grade in grading.items():
+        if key.startswith("e_") and grade is not None:
+            for kingdom in kingdoms_of(titles, key):
+                result[kingdom] = grade
+    for key, grade in grading.items():
+        if key.startswith("k_"):
+            title_block(titles, key)  # a typo in the table stops the generator
+            if grade is None:
+                result.pop(key, None)
+            else:
+                result[key] = grade
+        elif not key.startswith("e_"):
+            raise GeneratorError(f"GRADING key {key!r} is neither an empire nor a kingdom")
+    return result
+
+
+def volume_block(key: str, grade: str, points: list, margin: float, fade: float) -> str:
+    """One `posteffect_volume` box (LF line endings) around `points` ((x, y) map positions) grown by `margin`."""
+    xs, ys = [p[0] for p in points], [p[1] for p in points]
+    left, right, bottom, top = min(xs) - margin, max(xs) + margin, min(ys) - margin, max(ys) + margin
+    return (f'posteffect_volume = {{\n\tname = "{key}"\n'
+            f"\tposteffect_values_day = {grade}\n\tposteffect_values_night = {grade}\n"
+            f"\tposition = {{ {(left + right) / 2} {VOLUME_Y} {(bottom + top) / 2} }}\n"
+            f"\tsize = {{ {float(right - left)} {VOLUME_HEIGHT} {float(top - bottom)} }}\n"
+            f"\tfade_distance = {fade:g}\n}}\n")
+
+
+def posteffect_volumes(rie_text: str, boxes: str) -> str:
+    """RiE's volumes text without its active top-level `posteffect_volume = { ... }` blocks (commented ones and
+    everything else stay), then `boxes`; line endings follow RiE's text."""
+    eol = "\r\n" if "\r\n" in rie_text else "\n"
+    kept, depth, dropping = [], 0, False
+    for line in rie_text.splitlines():
+        if depth == 0 and re.match(r"posteffect_volume\s*=\s*\{", line):
+            dropping = True
+        if not dropping:
+            kept.append(line)
+        depth += brace_delta(line)
+        if dropping and depth == 0:
+            dropping = False
+    if dropping or depth != 0:
+        raise GeneratorError("RiE's posteffect_volumes.txt has unbalanced braces")
+    text = eol.join(kept) + eol
+    return text + boxes.replace("\r\n", "\n").replace("\n", eol)
+
+
+def build_grading(roots: Roots) -> tuple:
+    """(output rel path -> bytes, notes). Notes name provinces and kingdoms skipped for want of a locator."""
+    folder = roots.rie / POST_EFFECTS
+    luts = sorted(folder.glob("colorcorrection_*"))
+    if not (folder / "posteffect_volumes.txt").is_file() or not luts:
+        raise GeneratorError(f"RiE's {POST_EFFECTS} has no posteffect_volumes.txt or colour tables")
+    locators = roots.anbennar / LOCATORS_REL
+    if not locators.is_file():
+        raise GeneratorError(f"Anbennar not found: {locators} does not exist")
+    out = {f"{POST_EFFECTS}/{path.name}": path.read_bytes() for path in luts}
+
+    titles = titles_text(roots)
+    positions = locator_positions(_read_text(locators))
+    notes, boxes = [], []
+    for kingdom, grade in graded_kingdoms(data.GRADING, titles).items():
+        provinces = provinces_of(titles, kingdom)
+        located = [positions[p] for p in provinces if p in positions]
+        lost = [p for p in provinces if p not in positions]
+        if not located:
+            why = "has no provinces" if not provinces else f"provinces {', '.join(map(str, lost))} have no locator"
+            notes.append(f"{kingdom}: {why}; no {grade} box")
+            continue
+        if lost:
+            notes.append(f"{kingdom}: provinces {', '.join(map(str, lost))} have no locator and are skipped")
+        boxes.append(volume_block(kingdom, grade, located, data.GRADING_MARGIN, data.GRADING_FADE))
+
+    rie_text = _read_text(folder / "posteffect_volumes.txt")
+    text = posteffect_volumes(rie_text, "".join(boxes))
+    for lut in LUT_LINE.findall(text):
+        if lut not in out:
+            raise GeneratorError(f"posteffect_volumes.txt names {lut}, which is not a copied colorcorrection_* file")
+    for grade in set(graded_kingdoms(data.GRADING, titles).values()):
+        if not re.search(rf"(?m)^\s*name\s*=\s*{re.escape(grade)}\s*$", text):
+            raise GeneratorError(f"grade {grade!r} has no posteffect_values block in RiE's posteffect_volumes.txt")
+    out[VOLUMES_REL] = _with_header(text, VOLUMES_REL)
+    return out, notes
+
+
 def merge_parts(parts: list) -> dict:
     """Merge the parts' output dicts; two parts writing one path with different bytes is an error."""
     merged = {}
@@ -421,13 +588,17 @@ def merge_parts(parts: list) -> dict:
     return merged
 
 
-def build_all(roots: Roots) -> dict:
-    """Every output (rel path -> bytes). Nothing is written here."""
+def build_all(roots: Roots, notes: list = None) -> dict:
+    """Every output (rel path -> bytes). Nothing is written here. Notes about skipped grading boxes are appended
+    to `notes` when given."""
     if not roots.rie.is_dir():
         raise GeneratorError(f"Realms in Exile is not installed: {roots.rie} does not exist")
     if not (roots.anbennar / MATERIALS_REL).is_file():
         raise GeneratorError(f"Anbennar not found: {roots.anbennar / MATERIALS_REL} does not exist")
-    return merge_parts([build_terrain(roots), build_shaders(roots), build_environment(roots)])
+    grading, grading_notes = build_grading(roots)
+    if notes is not None:
+        notes.extend(grading_notes)
+    return merge_parts([build_terrain(roots), build_shaders(roots), build_environment(roots), grading])
 
 
 def main() -> int:
@@ -437,11 +608,14 @@ def main() -> int:
     parser.add_argument("--anbennar", type=Path, default=default.anbennar)
     parser.add_argument("--game", type=Path, default=default.game, help="CK3 install folder (holds game/)")
     args = parser.parse_args()
+    notes = []
     try:
-        files = build_all(Roots(rie=args.rie, anbennar=args.anbennar, game=args.game))
+        files = build_all(Roots(rie=args.rie, anbennar=args.anbennar, game=args.game), notes)
     except GeneratorError as error:
         print(f"error: {error}", file=sys.stderr)
         return 1
+    for note in notes:
+        print(f"note: {note}")
     for rel, content in files.items():
         target = SUBMOD / rel
         target.parent.mkdir(parents=True, exist_ok=True)

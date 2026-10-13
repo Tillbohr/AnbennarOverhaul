@@ -211,6 +211,83 @@ class ShaderTests(unittest.TestCase):
         self.assertEqual(bmg.missing_mask_symbols(snow, self.MASKS, anb), ["GetWinterSeverityValue"])
 
 
+TITLES = """# e_old = { k_gone = { } }
+e_one = {
+	color = { 1 2 3 }
+	k_a = {
+		d_x = { c_x = { b_x = { province = 1 } b_y = { province = 2 } } }
+	}
+	k_b = { # note {
+		d_y = { c_y = { b_z = { province = 3 } } }
+	}
+}
+e_two = {
+	k_c = { d_z = { c_z = { b_w = { province = 4 } } } }
+}
+"""
+
+VOLUMES = (
+    "##reload\r\n"
+    "posteffect_values = {\r\n\tname = standard\r\n}\r\n"
+    "posteffect_volumes = {\r\n\tposteffect_height_volume = {\r\n\t\tname = \"flat\"\r\n\t}\r\n}\r\n"
+    "#posteffect_volume = {\r\n#\tname = \"north\"\r\n#}\r\n"
+    "posteffect_volume = {\r\n\tname = \"FarNorth\"\r\n\tsize = { 1.0 2.0 3.0 }\r\n}\r\n"
+    "# posteffect_volume = {\r\n# \tname = \"Forodwaith\"\r\n# }\r\n"
+    "posteffect_volume = {\r\n\tname = \"UtterSouth\"\r\n}"
+)
+
+
+class GradingUnitTests(unittest.TestCase):
+    def test_title_block(self):
+        block = bmg.title_block(TITLES, "k_b")
+        self.assertTrue(block.startswith("k_b = {") and "province = 3" in block and "province = 4" not in block)
+        with self.assertRaises(GeneratorError):
+            bmg.title_block(TITLES, "k_gone")  # only in a comment
+        with self.assertRaises(GeneratorError):
+            bmg.title_block(TITLES + "k_a = { }\n", "k_a")
+
+    def test_kingdoms_and_provinces(self):
+        self.assertEqual(bmg.kingdoms_of(TITLES, "e_one"), ["k_a", "k_b"])
+        self.assertEqual(bmg.provinces_of(TITLES, "k_a"), [1, 2])
+        self.assertEqual(bmg.provinces_of(TITLES, "e_two"), [4])
+
+    def test_locator_positions(self):
+        text = ("game_object_locator={\n\tinstances={\n\t\t{\n\t\t\tid=1\n\t\t\tposition={ 1145.000000 0.000000 "
+                "2440.500000 }\n\t\t\trotation={ 0 0 0 1 }\n\t\t}\n\t\t{\n\t\t\tid=22\n\t\t\tposition={ 3.0 0.0 4.0 }\n"
+                "\t\t}\n\t}\n}\n")
+        self.assertEqual(bmg.locator_positions(text), {1: (1145.0, 2440.5), 22: (3.0, 4.0)})
+
+    def test_graded_kingdoms(self):
+        self.assertEqual(bmg.graded_kingdoms({"e_one": "desert", "e_two": "arid"}, TITLES),
+                         {"k_a": "desert", "k_b": "desert", "k_c": "arid"})
+        self.assertEqual(bmg.graded_kingdoms({"e_one": "desert", "k_b": "arid"}, TITLES),
+                         {"k_a": "desert", "k_b": "arid"} | {})
+        self.assertEqual(bmg.graded_kingdoms({"e_one": "desert", "k_b": None}, TITLES), {"k_a": "desert"})
+
+    def test_volume_block(self):
+        block = bmg.volume_block("k_x", "desert", [(100, 200), (300, 260)], 60, 300)
+        self.assertIn('name = "k_x"', block)
+        self.assertIn("posteffect_values_day = desert", block)
+        self.assertIn("posteffect_values_night = desert", block)
+        self.assertIn("position = { 200.0 400.0 230.0 }", block)
+        self.assertIn("size = { 320.0 1600.0 180.0 }", block)
+        self.assertIn("fade_distance = 300", block)
+        self.assertTrue(block.startswith("posteffect_volume = {") and block.rstrip().endswith("}"))
+
+    def test_posteffect_volumes(self):
+        boxes = bmg.volume_block("k_x", "desert", [(100, 200)], 60, 300)
+        out = bmg.posteffect_volumes(VOLUMES, boxes)
+        self.assertIn("posteffect_values = {\r\n\tname = standard\r\n}", out)
+        self.assertIn("posteffect_height_volume", out)
+        self.assertIn("#posteffect_volume = {\r\n#\tname = \"north\"", out)
+        self.assertIn("# posteffect_volume = {\r\n# \tname = \"Forodwaith\"", out)
+        self.assertNotIn("FarNorth", out)
+        self.assertNotIn("UtterSouth", out)
+        self.assertIn('name = "k_x"', out)
+        self.assertEqual(out.count("\n"), out.count("\r\n"))
+        self.assertTrue(out.endswith("\r\n"))
+
+
 ROOTS = bmg.Roots.default()
 INSTALLED = ROOTS.rie.is_dir() and (ROOTS.anbennar / "gfx/map/terrain/materials.settings").is_file()
 
@@ -316,6 +393,53 @@ class RealFileTests(unittest.TestCase):
                     "gfx/map/fog_of_war/cloud.dds", "gfx/map/environment/snow.settings",
                     "gfx/map/map_object_data/SKYX_skybox.txt", "gfx/map/water/water.settings"):
             self.assertIn(ref, files)
+
+    def test_grading_real(self):
+        files, notes = bmg.build_grading(ROOTS)
+        titles = bmg.titles_text(ROOTS)
+        volumes = files["gfx/map/post_effects/posteffect_volumes.txt"].decode("utf-8")
+        boxes = dict(re.findall(r'(?m)^posteffect_volume = \{\s*name = "(\w+)".*?size = \{ ([\d. ]+) \}', volumes,
+                                re.S))
+        graded = bmg.graded_kingdoms(data.GRADING, titles)
+        positions = bmg.locator_positions(_read(ROOTS.anbennar / "gfx/map/map_object_data/building_locators.txt"))
+        unboxed = {"k_the_reach"}
+        self.assertEqual(set(boxes), set(graded) - unboxed)
+        for empire in re.findall(r"(?m)^e_\w+(?= = \{)", titles):
+            if empire not in data.GRADING:
+                for kingdom in bmg.kingdoms_of(titles, empire):
+                    self.assertNotIn(kingdom, boxes)
+        for empire in ("e_middle_dwarovar", "e_deepwoods", "e_dragon_coast"):
+            self.assertTrue(bmg.kingdoms_of(titles, empire), empire)
+        for kingdom in set(boxes):
+            volume = re.search(r'posteffect_volume = \{\s*name = "%s".*?position = \{ ([\d. ]+) \}.*?size = \{ ([\d. ]+) \}'
+                               % kingdom, volumes, re.S)
+            cx, _, cy = (float(v) for v in volume.group(1).split())
+            w, _, h = (float(v) for v in volume.group(2).split())
+            for province in bmg.provinces_of(titles, kingdom):
+                if province in positions:
+                    x, y = positions[province]
+                    self.assertTrue(abs(x - cx) <= w / 2 and abs(y - cy) <= h / 2, f"{kingdom} {province}")
+        self.assertTrue(any("k_the_reach" in note for note in notes), notes)
+        luts = re.findall(r'lut = "([^"]+)"', volumes)
+        self.assertTrue(luts)
+        for lut in luts:
+            self.assertIn(lut, files)
+            self.assertEqual(files[lut], (ROOTS.rie / lut).read_bytes())
+
+    def test_grading_empires_exist(self):
+        titles = bmg.titles_text(ROOTS)
+        for empire in data.GRADING:
+            self.assertTrue(bmg.kingdoms_of(titles, empire), empire)
+
+    def test_build_all_has_grading(self):
+        notes = []
+        files = bmg.build_all(ROOTS, notes)
+        self.assertIn("gfx/map/post_effects/posteffect_volumes.txt", files)
+        self.assertTrue(notes)
+
+
+def _read(path):
+    return path.read_bytes().decode("utf-8")
 
 
 if __name__ == "__main__":
