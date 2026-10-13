@@ -373,6 +373,23 @@ class RealFileTests(unittest.TestCase):
         cls.anb = (ROOTS.anbennar / "gfx/map/terrain/materials.settings").read_text(encoding="utf-8")
         cls.rie = (ROOTS.rie / "gfx/map/terrain/materials.settings").read_text(encoding="utf-8")
 
+    def test_terrain_gaps_filled(self):
+        """Anbennar's blend maps have unpainted pixels (drawn black); the build fills every one, large gaps with
+        TERRAIN_FILL_MATERIAL at its position in Anbennar's material list (the terrain texture-array index)."""
+        from array import array
+        import terrain_fill as tfill
+        files, notes = real_build()
+        index = tfill.read_tga(files["gfx/map/terrain/detail_index.tga"])
+        intensity = tfill.read_tga(files["gfx/map/terrain/detail_intensity.tga"])
+        self.assertNotIn(0, array("I", intensity.pixels))
+        position = [m["id"] for m in bmg.parse_materials(self.anb)].index(data.TERRAIN_FILL_MATERIAL)
+        self.assertEqual(bmg.terrain_fill_index(self.anb), position)
+        full = struct.unpack("<I", bytes((255, 0, 0, 0)))[0]
+        filled = array("I", index.pixels)
+        weights = array("I", intensity.pixels)
+        self.assertTrue(any(w == full and filled[i] == position for i, w in enumerate(weights)))
+        self.assertTrue(any(n.startswith("terrain gaps filled:") for n in notes))
+
     def test_map_keys_and_values_exist(self):
         anb_ids = {m["id"] for m in bmg.parse_materials(self.anb)}
         rie_ids = {m["id"] for m in bmg.parse_materials(self.rie)}

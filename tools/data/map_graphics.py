@@ -103,3 +103,8 @@ GATE_INSET = 0.0  # units a gate is moved from its pad centre toward the mountai
 GATE_SCALE = 0.7  # scale of the gate mesh
 GATE_YAW_OFFSET = 0.0  # extra yaw (radians) added to the gate mesh facing
 PACK_TOLERANCE = 257  # largest height error allowed when repacking the heightmap
+
+# Terrain blend-map gaps: Anbennar's detail_intensity.tga has pixels with no material (drawn black). Gaps smaller
+# than TERRAIN_FILL_LARGE pixels copy a painted neighbour; larger ones get TERRAIN_FILL_MATERIAL at full weight.
+TERRAIN_FILL_MATERIAL = "mountain_02"  # Anbennar material id; draws RiE's Mountains 01 rock through TEXTURE_MAP
+TERRAIN_FILL_LARGE = 1000

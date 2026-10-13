@@ -23,6 +23,7 @@ from build_hud_override import GeneratorError, brace_delta  # noqa: E402
 import dwarven_mountains as dm  # noqa: E402
 import heightpack as hp  # noqa: E402
 import pngio  # noqa: E402
+import terrain_fill as tfill  # noqa: E402
 from data import map_graphics as data  # noqa: E402
 
 MARKER = "# Anbennar Overhaul"
@@ -727,6 +728,37 @@ def _height_notes(report: dict) -> list:
     return notes
 
 
+DETAIL_INDEX_REL = f"{TERRAIN}/detail_index.tga"
+DETAIL_INTENSITY_REL = f"{TERRAIN}/detail_intensity.tga"
+
+
+def terrain_fill_index(anb_materials_text: str) -> int:
+    """Terrain texture-array index of TERRAIN_FILL_MATERIAL: its position in Anbennar's material list."""
+    ids = [m["id"] for m in parse_materials(anb_materials_text)]
+    if data.TERRAIN_FILL_MATERIAL not in ids:
+        raise GeneratorError(f"terrain fill material {data.TERRAIN_FILL_MATERIAL} is not in Anbennar's "
+                             f"{MATERIALS_REL}")
+    return ids.index(data.TERRAIN_FILL_MATERIAL)
+
+
+def build_terrain_fill(roots: Roots, notes: list = None) -> dict:
+    """Anbennar's terrain blend maps with every unpainted (zero-weight, drawn black) pixel filled; see
+    tools/terrain_fill.py. Whole-file overrides of detail_index.tga and detail_intensity.tga."""
+    paths = [roots.anbennar / DETAIL_INDEX_REL, roots.anbennar / DETAIL_INTENSITY_REL]
+    for path in paths:
+        if not path.is_file():
+            raise GeneratorError(f"Anbennar not found: {path} does not exist")
+    material = terrain_fill_index(_read_text(roots.anbennar / MATERIALS_REL))
+    index, intensity, report = tfill.fill_unpainted(tfill.read_tga(paths[0].read_bytes()),
+                                                    tfill.read_tga(paths[1].read_bytes()),
+                                                    fill_material=material, large=data.TERRAIN_FILL_LARGE)
+    if notes is not None:
+        notes.append(f"terrain gaps filled: {report['small_pixels']} px in {report['small_groups']} small gaps "
+                     f"(copied from neighbours), {report['large_pixels']} px in {report['large_groups']} large "
+                     f"gaps ({data.TERRAIN_FILL_MATERIAL})")
+    return {DETAIL_INDEX_REL: tfill.write_tga(index), DETAIL_INTENSITY_REL: tfill.write_tga(intensity)}
+
+
 def build_heightmap(roots: Roots, notes: list = None) -> dict:
     """The raised heightmap and the dwarven gates: heightmap.png, the packed and indirection files that CK3
     draws, heightmap.heightmap, the gate map objects and the gate model files.
@@ -804,7 +836,7 @@ def build_all(roots: Roots, notes: list = None) -> dict:
     if notes is not None:
         notes.extend(grading_notes)
     return merge_parts([build_terrain(roots), build_shaders(roots), build_environment(roots), grading,
-                        build_heightmap(roots, notes)])
+                        build_heightmap(roots, notes), build_terrain_fill(roots, notes)])
 
 
 def main() -> int:
