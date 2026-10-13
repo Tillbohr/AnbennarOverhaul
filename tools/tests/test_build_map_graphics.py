@@ -289,6 +289,7 @@ class GradingUnitTests(unittest.TestCase):
 
 
 ROOTS = bmg.Roots.default()
+MOD = Path(__file__).resolve().parents[2]
 INSTALLED = ROOTS.rie.is_dir() and (ROOTS.anbennar / "gfx/map/terrain/materials.settings").is_file()
 
 
@@ -436,6 +437,12 @@ class RealFileTests(unittest.TestCase):
         files = bmg.build_all(ROOTS, notes)
         self.assertIn("gfx/map/post_effects/posteffect_volumes.txt", files)
         self.assertTrue(notes)
+
+    def test_generated_files_are_fresh(self):
+        files = bmg.build_all(ROOTS)
+        stale = [rel for rel, data_ in files.items()
+                 if not (MOD / rel).is_file() or (MOD / rel).read_bytes() != data_]
+        self.assertEqual(stale, [], "rerun python -I tools/build_map_graphics.py")
 
 
 def _read(path):

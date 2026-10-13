@@ -32,6 +32,7 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 | Rebuild inventions | `python -I tools/build_inventions.py` (needs EU4 Anbennar installed for icons) |
 | Rebuild spells | `python -I tools/build_spells.py` (needs EU4 Anbennar installed for magic art) |
 | Rebuild magic lifestyle art | `python -I tools/build_magic_lifestyle_art.py` (needs EU4 Anbennar and CK3 installed) |
+| Rebuild map graphics | `python -I tools/build_map_graphics.py` (needs Realms in Exile installed) |
 
 ## Loading
 
@@ -72,11 +73,12 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 | `common/buildings/zz_aov_monument_overrides_cannor.txt` (with `common/buildings/aov_monuments_cannor.txt`, `history/provinces/aov_monuments_cannor.txt`, `localization/english/aov_monuments_cannor_l_english.yml`) | `python -I tools/build_monuments.py` | Cannor great-project buildings from `tools/data/monuments/cannor.py`. The `zz_` file re-emits the 17 Anbennar monument levels (copied from Anbennar's current definitions) with the EU4 tier modifiers, `on_complete` and `next_building` inserted, marked `# Anbennar Overhaul: EU4 tier <n>`; Anbennar's own triggers are untouched. The new upper levels of those chains (in `aov_monuments_cannor.txt`) are copies of the chain's top Anbennar level with the EU4 tier merged the same way (EU4 culture gate in `can_construct` only), because a CK3 upgrade replaces the previous level's effects. The script validates the data first and stops on a placement, name, icon, modifier-key or empty-level problem. |
 | `common/buildings/aov_monuments_dwarovar.txt`, `history/provinces/aov_monuments_dwarovar.txt`, `localization/english/aov_monuments_dwarovar_l_english.yml` | `python -I tools/build_monuments.py` | Middle Dwarovar great-project buildings from `tools/data/monuments/dwarovar.py` (no Anbennar levels, so no overrides file). |
 | `common/buildings/aov_monuments_<region>.txt`, `history/provinces/aov_monuments_<region>.txt`, `localization/english/aov_monuments_<region>_l_english.yml` for `bulwar`, `salahad`, `deepwoods` | `python -I tools/build_monuments.py` | Great-project buildings of the rest of the map from `tools/data/monuments/<region>.py` (no Anbennar levels, so no overrides files). |
+| `gfx/FX/` (16 shader files), `gfx/map/terrain/` (materials, textures), `gfx/map/environment/`, `gfx/map/water/`, `gfx/map/fog_of_war/`, `gfx/map/post_effects/`, `gfx/map/map_object_data/`, `gfx/models/mapitems/` (skybox) | `python -I tools/build_map_graphics.py` | Realms in Exile's map look, 84 files (~180 MB, `.dds`/`.mesh`/`.tga` via Git LFS) copied or rewritten from RiE and Anbennar by `tools/data/map_graphics.py`; the settings, `posteffect_volumes.txt` and the snow `Texture_Index` are rewritten, so never edit the output by hand. Rerun after a RiE or Anbennar update. |
 
 ## Updating to a new Anbennar version
 
 1. Replace `../anbennar-ck3-dev-master` with the new Anbennar release.
-2. Run `python -I tools/build_holdings_override.py` and `python -I tools/build_holds.py` and `python -I tools/build_governments_override.py` and `python -I tools/build_hud_override.py` and `python -I tools/build_lifestyle_override.py` and `python -I tools/build_county_view_override.py`, and `python -I tools/build_monuments.py` (the monument overrides copy Anbennar's current definitions; it errors naming any monument key Anbennar no longer defines).
+2. Run `python -I tools/build_holdings_override.py` and `python -I tools/build_holds.py` and `python -I tools/build_governments_override.py` and `python -I tools/build_hud_override.py` and `python -I tools/build_lifestyle_override.py` and `python -I tools/build_county_view_override.py`, and `python -I tools/build_map_graphics.py`, and `python -I tools/build_monuments.py` (the monument overrides copy Anbennar's current definitions; it errors naming any monument key Anbennar no longer defines).
 3. Run tiger and the tool tests (below) and fix anything that references renamed Anbennar content. The tests fail if
    Anbennar renames `anb_enhance_ability_interaction` or adds another way to start its Enhance Ability scheme (removed
    from the game; see `EnhanceAbilityRemovedTests`).
@@ -92,6 +94,7 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 7. Test in game; check `database_conflicts.log` for overhaul keys now also defined by Anbennar (notably `magic_duelist_focus`, which `zz_aov_magic_focuses.txt` must keep overriding).
 
 After a CK3 patch, rerun `python -I tools/build_hud_override.py`, `python -I tools/build_lifestyle_override.py` and `python -I tools/build_county_view_override.py` too: their sources are the game's `hud.gui`, `window_character_lifestyle.gui` and `window_county_view.gui` (when Anbennar ships no copy).
+Rerun `python -I tools/build_map_graphics.py` too once Realms in Exile has updated for the patch (its shaders are the source).
 
 ## Validation
 
@@ -211,3 +214,15 @@ inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error
   county view (`EXTRA_ART` of `tools/build_monuments.py`). Data in `tools/data/holds.py`, generated by
   `tools/build_holds.py`; hand-written logic in the `aov_hold_*` files (decisions, on_actions, effects, triggers,
   `aov_hold_formats.txt`). Spec `docs/superpowers/specs/2026-10-10-dwarven-hold-digging-design.md`.
+- **Map graphics:** Realms in Exile's map look over Anbennar's map, generated by `tools/build_map_graphics.py` from
+  `tools/data/map_graphics.py` (spec `docs/superpowers/specs/2026-10-13-map-graphics-design.md`). Terrain: 32 Anbennar
+  mountain, hill and cliff materials (`TEXTURE_MAP`) get RiE's diffuse, normal and material textures in
+  `materials.settings` (order and masks untouched), plus 4 drop-in files (`DROP_INS`). Shaders: 16 RiE files under
+  `gfx/FX/` (12 roots plus `gh_snowfall`, `gh_utils`, `gh_vic3_fog_of_war`, `gh_vic3_fog_of_war_settings`); Anbennar
+  keeps `bordercolor.fxh`, `gh_camera_utils.fxh` and `dynamic_masks.fxh`. Also RiE's environment, water, fog of war
+  and the skybox (centred at (4096, 2048), z-scale 5090.909091); the snow `Texture_Index` is rewritten to 56
+  (Anbennar's `snow` material). Colour grading (`GRADING`, one box per kingdom from its baronies' building locators,
+  margin 60, fade 300): 33 boxes, 5 boreal (Gerudia), 11 desert (Salahad, Kheterata), 18 arid (Bulwar, Harpylen);
+  RiE's Middle-earth boxes are dropped, and `k_the_reach` (no baronies) is reported as a note. Tune the textures and
+  grades in game. `credits.txt` credits RiE, Godherja (the `gh_` shaders, adapted by RiE) and Victoria 3 (fog of war
+  is based on its shader). **Ask the RiE and Godherja teams for permission before the next Workshop upload.**

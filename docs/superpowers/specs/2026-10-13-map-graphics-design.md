@@ -100,8 +100,8 @@ bounding box of those points grown by `GRADING_MARGIN` (60) on every side, so it
 only their centres: `position = { centre_x 400 centre_y }`, `size = { width 1600 height }` (400 and 1600 are RiE's
 vertical values), `fade_distance = GRADING_FADE` (300). Each box carries `posteffect_values_day` and
 `posteffect_values_night` set to the grade, as RiE's do. Volume names are the kingdom keys. A province without a
-locator is skipped and a kingdom with no located province gets no box; the generator prints both (today
-`k_obrtrol`'s 5 provinces have no locator and `k_the_reach` has no baronies). (The tools use the standard library only, so `provinces.png` is not decoded.)
+locator is skipped and a kingdom with no located province gets no box; the generator prints both (today only
+`k_the_reach`, which has no baronies; `k_obrtrol` is commented out in Anbennar's landed titles, so it is not a kingdom). (The tools use the standard library only, so `provinces.png` is not decoded.)
 
 ## Lighting, skybox, snow, water, fog of war
 
