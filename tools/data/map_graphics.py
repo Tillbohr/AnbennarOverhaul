@@ -41,6 +41,15 @@ DROP_INS = (
     "forest_pine_01_properties.dds",
 )
 
+# RiE files copied verbatim. The textures the shaders reference (skybox.dds, gh_snow_layer_1.dds, cloud.dds) are
+# copied by build_shaders, so they are not listed here.
+COPY_FILES = (
+    "gfx/map/environment/environment.txt",
+    "gfx/models/mapitems/SKYX_skybox.mesh",
+    "gfx/models/mapitems/SKYX_skybox.asset",
+    "gfx/map/water/water.settings",
+)
+
 # --- Declared for later tasks -------------------------------------------------------------------------------
 
 # Colour grading: title key -> grade (empire covers its de jure kingdoms; a kingdom entry overrides, None removes).

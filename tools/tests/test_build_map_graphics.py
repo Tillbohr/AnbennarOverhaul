@@ -1,3 +1,4 @@
+import re
 import struct
 import sys
 import tempfile
@@ -121,6 +122,44 @@ class BuildAllTests(unittest.TestCase):
             bmg.merge_parts([{"a": b"1"}, {"a": b"2"}])
 
 
+class EnvironmentUnitTests(unittest.TestCase):
+    LINE = ('transform="4104.552734 1.743652 2812.745605 0.000000 0.000000 0.000000 1.000000 10000.000000 '
+            '1000.000000 7000.000000\n"')
+
+    def test_skybox_transform(self):
+        out = bmg.skybox_transform(self.LINE, (8192, 5632), (8192, 4096))
+        self.assertTrue(out.startswith('transform="') and out.endswith('\n"'))
+        values = [float(v) for v in out[len('transform="'):-2].split()]
+        self.assertEqual(values[:3], [4096.0, 1.743652, 2048.0])
+        self.assertEqual(values[3:7], [0.0, 0.0, 0.0, 1.0])
+        self.assertEqual(values[7:9], [10000.0, 1000.0])
+        self.assertAlmostEqual(values[9], 5090.909091, places=5)
+
+    def test_skybox_transform_rejects_other_lines(self):
+        with self.assertRaises(GeneratorError):
+            bmg.skybox_transform("name=x", (1, 1), (1, 1))
+
+    def test_snow_settings(self):
+        text = '"A" = 1\n"Texture_Index" = 54\t\t\t# Index of snow\n"B" = 54\n'
+        out = bmg.snow_settings(text, 7)
+        self.assertEqual(out, '"A" = 1\n"Texture_Index" = 7\t\t\t# Index of snow # Anbennar Overhaul\n"B" = 54\n')
+        with self.assertRaises(GeneratorError):
+            bmg.snow_settings('"A" = 1\n', 7)
+
+    def test_settings_paths(self):
+        text = '"X" = "gfx/map/a.dds"\n# "gfx/map/c.dds"\ncubemap = "gfx/b.dds" # note\n"Y" = 3\n'
+        self.assertEqual(bmg.settings_paths(text), ["gfx/map/a.dds", "gfx/b.dds"])
+
+    def test_png_size(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp, "p.png")
+            path.write_bytes(b"\x89PNG\r\n\x1a\n" + struct.pack(">I", 13) + b"IHDR" + struct.pack(">II", 8192, 4096))
+            self.assertEqual(bmg.png_size(path), (8192, 4096))
+            path.write_bytes(b"nope")
+            with self.assertRaises(GeneratorError):
+                bmg.png_size(path)
+
+
 class ShaderTests(unittest.TestCase):
     def test_includes_ignore_comments(self):
         text = 'Includes = {\n\t"cw/a.fxh"\n\t# "cw/b.fxh"\n\t"c.fxh" # tail\n}\nincludes = {\n\t"d.fxh"\n}\n'
@@ -240,6 +279,42 @@ class RealFileTests(unittest.TestCase):
                     self.assertIn(ref, files)
         for ref in ("gfx/map/environment/skybox.dds", "gfx/map/environment/gh_snow_layer_1.dds",
                     "gfx/map/fog_of_war/cloud.dds"):
+            self.assertIn(ref, files)
+
+    def _exists(self, ref):
+        return any((base / ref).is_file() for base in (ROOTS.anbennar, ROOTS.game / "game"))
+
+    def test_snow_index_is_position_of_snow_material(self):
+        ids = [m["id"] for m in bmg.parse_materials(self.anb)]
+        index = ids.index("snow")
+        out = bmg.build_environment(ROOTS)["gfx/map/environment/snow.settings"].decode("utf-8")
+        self.assertRegex(out, r'(?m)^"Texture_Index" = %d\t+# Index of snow' % index)
+
+    def test_environment_outputs(self):
+        out = bmg.build_environment(ROOTS)
+        for rel in data.COPY_FILES:
+            self.assertEqual(out[rel], (ROOTS.rie / rel).read_bytes(), rel)
+        sky = out["gfx/map/map_object_data/SKYX_skybox.txt"].decode("utf-8")
+        self.assertIn("4096.000000 1.743652 2048.000000", sky)
+        self.assertIn("5090.909091", sky)
+        self.assertTrue(sky.startswith("﻿" + bmg.HEADER("gfx/map/map_object_data/SKYX_skybox.txt")[0]))
+
+    def test_named_paths_exist(self):
+        out = bmg.build_environment(ROOTS)
+        for rel in ("gfx/map/environment/environment.txt", "gfx/map/water/water.settings"):
+            refs = bmg.settings_paths(out[rel].decode("utf-8"))
+            self.assertTrue(refs, rel)
+            for ref in refs:
+                self.assertTrue(self._exists(ref), f"{rel}: {ref}")
+        asset = out["gfx/models/mapitems/SKYX_skybox.asset"].decode("utf-8")
+        for name in re.findall(r'"([^"]+\.dds)"', asset):
+            self.assertTrue(self._exists(f"gfx/models/{name}"), name)
+
+    def test_build_all_has_environment_and_rie_only_textures(self):
+        files = bmg.build_all(ROOTS)
+        for ref in ("gfx/map/environment/skybox.dds", "gfx/map/environment/gh_snow_layer_1.dds",
+                    "gfx/map/fog_of_war/cloud.dds", "gfx/map/environment/snow.settings",
+                    "gfx/map/map_object_data/SKYX_skybox.txt", "gfx/map/water/water.settings"):
             self.assertIn(ref, files)
 
 

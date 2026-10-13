@@ -323,6 +323,93 @@ def build_shaders(roots: Roots) -> dict:
     return out
 
 
+SKYBOX_REL = "gfx/map/map_object_data/SKYX_skybox.txt"
+SNOW_REL = "gfx/map/environment/snow.settings"
+SKYBOX_TRANSFORM = re.compile(r'transform="((?:\s*-?\d+(?:\.\d+)?){10})(\s*)"')
+SNOW_INDEX = re.compile(r'^("Texture_Index"\s*=\s*)\d+', re.MULTILINE)
+SETTINGS_PATH = re.compile(r'"(gfx/[^"]+)"')
+
+
+def png_size(path: Path) -> tuple:
+    """(width, height) from a PNG's IHDR chunk."""
+    with open(path, "rb") as handle:
+        head = handle.read(24)
+    if len(head) < 24 or head[:8] != b"\x89PNG\r\n\x1a\n" or head[12:16] != b"IHDR":
+        raise GeneratorError(f"{path} is not a PNG file")
+    return int.from_bytes(head[16:20], "big"), int.from_bytes(head[20:24], "big")
+
+
+def skybox_transform(line: str, rie_size: tuple, anb_size: tuple) -> str:
+    """RiE's skybox transform (x y z, 3 rotation, 1 + 3 scale values; the closing quote may be on the next line)
+    moved to the centre of Anbennar's map, with the depth scale following the map height. Only x, z and the
+    last scale change."""
+    match = SKYBOX_TRANSFORM.search(line)
+    if not match:
+        raise GeneratorError(f"cannot read the skybox transform: {line!r}")
+    values = match.group(1).split()
+    values[0] = f"{anb_size[0] / 2:.6f}"
+    values[2] = f"{anb_size[1] / 2:.6f}"
+    values[9] = f"{float(values[9]) * anb_size[1] / rie_size[1]:.6f}"
+    return line[:match.start(1)] + " ".join(values) + match.group(2) + line[match.end(2):]
+
+
+def snow_settings(text: str, index: int) -> str:
+    """snow.settings with only the Texture_Index number replaced (its tabs and comment stay) and the line marked."""
+    lines = text.splitlines(keepends=True)
+    for position, line in enumerate(lines):
+        match = SNOW_INDEX.match(line)
+        if match:
+            body = line.rstrip("\r\n")
+            lines[position] = f"{match.group(1)}{index}{body[match.end():]} {MARKER}{line[len(body):]}"
+            return "".join(lines)
+    raise GeneratorError('snow.settings has no "Texture_Index" line')
+
+
+def settings_paths(text: str) -> list:
+    """The quoted gfx/ paths of a .settings or environment.txt text; commented text is ignored."""
+    found = []
+    for line in text.splitlines():
+        found.extend(SETTINGS_PATH.findall(_strip_comment(line)))
+    return found
+
+
+def _with_header(text: str, path_rel: str) -> bytes:
+    bom = "﻿" if text.startswith("﻿") else ""
+    eol = "\r\n" if "\r\n" in text else "\n"
+    header = "".join(line + eol for line in HEADER(path_rel))
+    return (bom + header + text[len(bom):]).encode("utf-8")
+
+
+def build_environment(roots: Roots) -> dict:
+    """Output rel path -> bytes for lighting, skybox, snow and water: verbatim RiE copies, the skybox placement
+    for Anbennar's map size and the snow texture index."""
+    out = {}
+    for rel in data.COPY_FILES:
+        if not (roots.rie / rel).is_file():
+            raise GeneratorError(f"{rel} does not exist in RiE")
+        out[rel] = (roots.rie / rel).read_bytes()
+
+    rie_size = png_size(roots.rie / "map_data/provinces.png")
+    anb_size = png_size(roots.anbennar / "map_data/provinces.png")
+    sky = _read_text(roots.rie / SKYBOX_REL)
+    out[SKYBOX_REL] = _with_header(skybox_transform(sky, rie_size, anb_size), SKYBOX_REL)
+
+    ids = [material.get("id") for material in parse_materials(_read_text(roots.anbennar / MATERIALS_REL))]
+    if "snow" not in ids:
+        raise GeneratorError("Anbennar's materials.settings has no material with id 'snow'")
+    out[SNOW_REL] = _with_header(snow_settings(_read_text(roots.rie / SNOW_REL), ids.index("snow")), SNOW_REL)
+
+    for rel in ("gfx/map/environment/environment.txt", "gfx/map/water/water.settings"):
+        for ref in settings_paths(out[rel].decode("utf-8")):
+            if not (roots.anbennar / ref).is_file() and not (roots.game / "game" / ref).is_file():
+                raise GeneratorError(f"{rel} names {ref}, which exists in neither Anbennar nor the game")
+    asset = out["gfx/models/mapitems/SKYX_skybox.asset"].decode("utf-8")
+    for name in re.findall(r'"([^"]+\.dds)"', asset):
+        if not (roots.anbennar / "gfx/models" / name).is_file() and not (roots.game / "game/gfx/models" / name).is_file():
+            raise GeneratorError(f"SKYX_skybox.asset names {name}, which exists in neither Anbennar nor the game")
+    return out
+
+
 def merge_parts(parts: list) -> dict:
     """Merge the parts' output dicts; two parts writing one path with different bytes is an error."""
     merged = {}
@@ -340,7 +427,7 @@ def build_all(roots: Roots) -> dict:
         raise GeneratorError(f"Realms in Exile is not installed: {roots.rie} does not exist")
     if not (roots.anbennar / MATERIALS_REL).is_file():
         raise GeneratorError(f"Anbennar not found: {roots.anbennar / MATERIALS_REL} does not exist")
-    return merge_parts([build_terrain(roots), build_shaders(roots)])
+    return merge_parts([build_terrain(roots), build_shaders(roots), build_environment(roots)])
 
 
 def main() -> int:
