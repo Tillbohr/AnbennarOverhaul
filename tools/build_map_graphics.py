@@ -769,8 +769,7 @@ def _height_notes(report: dict) -> list:
         notes.append(f"range {','.join(map(str, r['provinces']))}: ground {ground}, factor {r['factor']:.3f}, "
                      f"peak {r['peak_before']} -> {r['peak_after']}")
     for g in report["sites"]:
-        notes.append(f"gate {g['dwarven_county']}/{g['normal_county']} at ({g['x']}, {g['y']}): "
-                     f"pad {g['pad']}, rise {g['rise']}")
+        notes.append(f"gate {g['dwarven_county']}/{g['normal_county']} at ({g['x']}, {g['y']})")
     return notes
 
 

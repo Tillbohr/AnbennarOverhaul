@@ -258,88 +258,24 @@ class RaiseTests(unittest.TestCase):
         new, _ = dm.raise_heights(grid, pm, {1}, set(), set(), [])
         self.assertEqual(new.values, grid.values)  # peak above LIFT_PEAK: factor 1
 
-    def test_soft_ceiling_inside_raise(self):
-        # the lift never passes the ceiling (it stops at LIFT_PEAK), but a cliff pad + 14000 = 64000 does
-        pm, grid = fixture_range(heights=52000, ground=50000)
+    def test_gate_sites_change_nothing(self):
+        """Sites no longer shape the ground: no pad, cliff or skirt, whatever sites are passed."""
+        pm, grid = fixture_range()
         site = dm.GateSite("c_dw", "c_n", 20, 15, (1.0, 0.0))
-        new, report = dm.raise_heights(grid, pm, {1}, set(), set(), [site])
-        self.assertEqual(report["sites"][0]["pad"], 50000)
-        self.assertEqual(new.get(23, 15), dm.soft_ceiling(64000))
-        self.assertLess(dm.soft_ceiling(64000), 64000)
-        self.assertLessEqual(max(new.values), 65535)
+        without, _ = dm.raise_heights(grid, pm, {1}, set(), set(), [])
+        with_site, report = dm.raise_heights(grid, pm, {1}, set(), set(), [site])
+        self.assertEqual(with_site.values, without.values)
+        self.assertEqual(report["sites"], [{"dwarven_county": "c_dw", "normal_county": "c_n", "x": 20, "y": 15}])
 
-    def test_gate_skirt_ramps_down(self):
+    def test_no_pixel_is_lowered_at_a_site(self):
         w, h = 60, 41
         ids = array("H", [1 if x < 30 else 2 for y in range(h) for x in range(w)])
         vals = array("H", [6000 if x < 30 else 5000 for y in range(h) for x in range(w)])
         pm, grid = dm.ProvinceMap(w, h, ids), hp.Grid(w, h, vals)
         site = dm.GateSite("c_dw", "c_n", 29, 20, (-1.0, 0.0))
         new, _ = dm.raise_heights(grid, pm, {1}, set(), set(), [site])
-        profile = [new.get(29 - r, 20) for r in range(data.GATE_RISE_DIST, data.GATE_RISE_DIST + data.GATE_SKIRT + 1)]
-        self.assertEqual(profile, sorted(profile, reverse=True))
-        steps = [a - b for a, b in zip(profile, profile[1:])]
-        self.assertLessEqual(max(steps), data.GATE_RISE / data.GATE_SKIRT + 5)
-        self.assertEqual(profile[0], 5000 + data.GATE_RISE)
-        self.assertEqual(profile[-1], new.get(5, 20))  # beyond the skirt: the lifted range again
-
-    def test_pad_skips_water(self):
-        w, h = 40, 21
-        ids = array("H", [1 if x < 20 else 2 for y in range(h) for x in range(w)])
-        ids[10 * w + 20] = 3
-        vals = array("H", [6000 if x < 20 else 5000 for y in range(h) for x in range(w)])
-        vals[10 * w + 20] = 1234
-        for y in range(h):
-            for x in range(20):
-                vals[y * w + x] = 52000  # above LIFT_PEAK: no lift, so the water pixel can only change by the pad
-        pm, grid = dm.ProvinceMap(w, h, ids), hp.Grid(w, h, vals)
-        site = dm.GateSite("c_dw", "c_n", 19, 10, (-1.0, 0.0))
-        new, _ = dm.raise_heights(grid, pm, {1}, {3}, set(), [site])
-        self.assertEqual(new.get(20, 10), 1234)
-
-    def test_gate_pad_and_cliff(self):
-        w, h = 40, 21
-        ids = array("H", [1 if x < 20 else 2 for y in range(h) for x in range(w)])
-        vals = array("H", [6000 if x < 20 else 5000 for y in range(h) for x in range(w)])
-        pm, grid = dm.ProvinceMap(w, h, ids), hp.Grid(w, h, vals)
-        site = dm.GateSite("c_dw", "c_n", 19, 10, (-1.0, 0.0))
-        new, report = dm.raise_heights(grid, pm, {1}, set(), set(), [site])
-        pad = 5000
-        self.assertEqual(report["sites"][0]["pad"], pad)
-        for y in range(h):
-            for x in range(w):
-                d = math.hypot(x - 19, y - 10)
-                if d <= data.GATE_PAD:
-                    self.assertEqual(new.get(x, y), pad)
-                elif d <= data.GATE_RISE_DIST and x < 19:
-                    self.assertGreaterEqual(new.get(x, y), pad + data.GATE_RISE)
-        self.assertGreaterEqual(report["sites"][0]["rise"], data.GATE_RISE)
-        self.assertLessEqual(max(new.values), 65535)
-        # the ground on the normal side beyond the pad is untouched
-        self.assertEqual(new.get(35, 10), 5000)
-
-    def test_cliff_does_not_spill_into_normal_land(self):
-        w, h = 40, 31
-        ids = array("H", [1 if x < 20 else 2 for y in range(h) for x in range(w)])
-        vals = array("H", [52000 if x < 20 else 5000 for y in range(h) for x in range(w)])
-        pm, grid = dm.ProvinceMap(w, h, ids), hp.Grid(w, h, vals)
-        site = dm.GateSite("c_dw", "c_n", 19, 10, (0.0, 1.0))  # inward half-plane is y > 10, both provinces
-        new, _ = dm.raise_heights(grid, pm, {1}, set(), set(), [site])
-        self.assertEqual(new.get(25, 15), 5000)  # normal land on the inward half-plane, beside the pad
-        self.assertEqual(new.get(22, 14), 5000)
-        self.assertGreater(new.get(15, 14), 5000 + data.GATE_RISE - 1)  # the dwarven side still gets the cliff
-
-    def test_cliff_reaches_impassable_land(self):
-        w, h = 40, 31
-        ids = array("H", [1 if x < 20 else 2 for y in range(h) for x in range(w)])
-        for y in range(12, 31):
-            for x in range(20, 40):
-                ids[y * w + x] = 4
-        vals = array("H", [52000 if x < 20 else 5000 for y in range(h) for x in range(w)])  # no range lift
-        pm, grid = dm.ProvinceMap(w, h, ids), hp.Grid(w, h, vals)
-        site = dm.GateSite("c_dw", "c_n", 19, 10, (0.0, 1.0))
-        new, _ = dm.raise_heights(grid, pm, {1}, set(), {4}, [site])
-        self.assertGreaterEqual(new.get(22, 14), 5000 + data.GATE_RISE)  # impassable: cliff allowed
-        self.assertEqual(new.get(22, 11), 5000)  # normal land stays
+        for i in range(w * h):
+            self.assertGreaterEqual(new.values[i], grid.values[i])
 
     def test_two_ranges_independent(self):
         pm, grid = fixture_range()
@@ -449,21 +385,13 @@ class RealDataTests(unittest.TestCase):
         self.assertTrue(1.3 < ruby["factor"] < 1.4, ruby)
         self.assertAlmostEqual(ruby["peak_after"], data.LIFT_PEAK, delta=50)
 
-    def test_nothing_lowered_outside_pads(self):
-        pads = set()
-        for s in self.spaced:
-            for y in range(s.y - data.GATE_PAD, s.y + data.GATE_PAD + 1):
-                for x in range(s.x - data.GATE_PAD, s.x + data.GATE_PAD + 1):
-                    pads.add(y * self.pm.width + x)
+    def test_nothing_lowered_anywhere(self):
         w = self.pm.width
         for y in range(self.pm.height):
             a = self.old.values[y * w:(y + 1) * w]
             b = self.new.values[y * w:(y + 1) * w]
-            if a == b:
-                continue
-            for x in range(w):
-                if b[x] < a[x]:
-                    self.assertIn(y * w + x, pads)
+            if a != b:
+                self.assertTrue(all(q >= p for p, q in zip(a, b)), y)
         self.assertLessEqual(max(self.new.values), 65535)
 
     def test_far_pixels_unchanged(self):
@@ -485,7 +413,6 @@ class RealDataTests(unittest.TestCase):
             for j in range(max(0, y - reach), min(h, y + reach + 1)):
                 m |= rows[j]
             near.append(m)
-        gate_reach = data.GATE_RISE_DIST + data.GATE_SKIRT
         changed = 0
         for y in range(h):
             a = self.old.values[y * w:(y + 1) * w]
@@ -495,14 +422,8 @@ class RealDataTests(unittest.TestCase):
             for x in range(w):
                 if a[x] != b[x]:
                     changed += 1
-                    if not (near[y] >> x) & 1:
-                        self.assertTrue(any(math.hypot(x - s.x, y - s.y) <= gate_reach for s in self.spaced),
-                                        (x, y))
+                    self.assertTrue((near[y] >> x) & 1, (x, y))  # gate sites included: nothing carved
         self.assertGreater(changed, 0)
-
-    def test_gate_cliffs(self):
-        for s, r in zip(self.spaced, self.report["sites"]):
-            self.assertGreaterEqual(r["rise"], data.GATE_RISE, r)
 
 
 if __name__ == "__main__":
