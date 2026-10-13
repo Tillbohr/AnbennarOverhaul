@@ -545,11 +545,8 @@ class RealFileTests(unittest.TestCase):
 
     def test_generated_files_are_fresh(self):
         files = real_build()[0]
-        # The height outputs reach the mod when the generator is next run for real; until then a missing one is
-        # not stale (a present one must match).
         stale = [rel for rel, data_ in files.items()
-                 if not ((MOD / rel).is_file() or bmg.is_height_output(rel))
-                 or ((MOD / rel).is_file() and (MOD / rel).read_bytes() != data_)]
+                 if not (MOD / rel).is_file() or (MOD / rel).read_bytes() != data_]
         self.assertEqual(stale, [], "rerun python -I tools/build_map_graphics.py")
 
 

@@ -236,7 +236,7 @@ camera tilt (already ported). Most of the Serpentspine already exceeds Erebor's 
    `LIFT_GROUND_RING` (24) pixels of the range. Factor `k = clamp((LIFT_PEAK - ground) / (peak - ground), 1,
    LIFT_MAX)` with `LIFT_PEAK = 50000` (Erebor's terrain summit, about 36,000, plus the ~14,000 its gate cliff adds),
    `LIFT_MAX = 1.8` and `peak` the range's highest height (`k = 1` when `peak <= ground`). Every pixel of the range
-   becomes `ground + (h - ground) * k` (never lower than `h`). Measured today: Rubyhold x1.35 (peak 40,982 -> 50,000),
+   becomes `ground + (h - ground) * k` (never lower than `h`). Measured today: Rubyhold x1.37 (peak 40,982 -> 50,000),
    Esmaria and Ovdal Tungr x1.8 (peaks about 39,200 and 37,600), the Serpentspine, Dragon Coast, Khugdihr and Harpylen
    ranges x1.0 (already at or above the target, or ringed by higher ground); they change only at gate cliffs.
    (Decided after measurement: a 90th-percentile target of 36,000 would have raised Rubyhold only 3%.)
@@ -264,7 +264,7 @@ camera tilt (already ported). Most of the Serpentspine already exceeds Erebor's 
    back, matches the edited heights within `PACK_TOLERANCE` (257, one 8-bit grey step), else level 0. The
    `empty_tile_offset` tile is kept. `heightmap.heightmap` keeps every key except `level_offsets` (and
    `empty_tile_offset` if the empty tile moves).
-4. Gates: one `erebor_gate_mesh` instance per site, on the dwarven side `GATE_INSET` (3 units) from the middle of the
+4. Gates: one `erebor_gate_mesh` instance per site, on the dwarven side `GATE_INSET` (0 units to start) from the middle of the
    pair's longest border run, facing the normal-land neighbour, scale `GATE_SCALE` (0.7), yaw correction
    `GATE_YAW_OFFSET` (0 to start; tuned in game).
 

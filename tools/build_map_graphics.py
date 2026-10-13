@@ -670,11 +670,6 @@ GATE_ASSET_FILES = ((RIE_GATE_DIR, ("erebor_gate.asset", "erebor_gate.mesh", "er
 GATE_LAYER = "temp_layer"
 
 
-def is_height_output(rel: str) -> bool:
-    """True for the files build_heightmap adds (heights, gate objects, gate model files)."""
-    return rel in HEIGHT_OUTPUTS or rel == GATES_REL or rel.startswith(GATE_ASSET_DIR + "/")
-
-
 def gate_objects(sites: list, scale: float, yaw_offset: float, inset: float = 0.0) -> str:
     """One map object block holding a gate mesh per site, in RiE's layout (sites sorted by county keys).
 
@@ -798,8 +793,8 @@ def merge_parts(parts: list) -> dict:
 
 
 def build_all(roots: Roots, notes: list = None) -> dict:
-    """Every output (rel path -> bytes). Nothing is written here. Notes about skipped grading boxes and the raised ranges and gates are appended
-    to `notes` when given."""
+    """Every output (rel path -> bytes). Nothing is written here. Notes about skipped grading boxes and the
+    raised ranges and gates are appended to `notes` when given."""
     if not roots.rie.is_dir():
         raise GeneratorError(f"Realms in Exile is not installed: {roots.rie} does not exist")
     if not (roots.anbennar / MATERIALS_REL).is_file():
