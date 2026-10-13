@@ -572,18 +572,24 @@ class GateObjectsTests(unittest.TestCase):
         for token in lines[0] + lines[1]:
             self.assertRegex(token, r"^-?\d+\.\d{6}$")
 
-    def test_yaw_faces_away_from_the_mountain(self):
-        # inward (0, 1): t = atan2(-0, -1) = pi, so the gate faces -inward (south)
+    def test_local_z_points_along_inward(self):
+        # inward (0, 1): t = atan2(0, 1) = 0, quaternion (0, 0, 0, 1): local +Z (into the mountain) = inward
         _, lines = self.transforms(1.0, 0.0)
         line = lines[1]
-        self.assertAlmostEqual(2 * math.atan2(float(line[4]), float(line[6])), math.pi, places=5)
-        self.assertEqual((float(line[3]), float(line[5])), (0.0, 0.0))
+        self.assertEqual([float(v) for v in line[3:7]], [0.0, 0.0, 0.0, 1.0])
+
+    def test_yaw_for_inward_along_x(self):
+        # inward (1, 0): t = atan2(1, 0) = pi/2
+        sites = [dm.GateSite("c_a", "c_y", 300, 50, (1.0, 0.0))]
+        text = bmg.gate_objects(sites, 1.0, 0.0)
+        line = re.search(r'transform="([^"]*)', text).group(1).split()
+        self.assertAlmostEqual(2 * math.atan2(float(line[4]), float(line[6])), math.pi / 2, places=5)
 
     def test_yaw_offset_is_added(self):
         _, lines = self.transforms(1.0, 0.5)
         line = lines[1]
-        self.assertAlmostEqual(math.sin((math.pi + 0.5) / 2), float(line[4]), places=5)
-        self.assertAlmostEqual(math.cos((math.pi + 0.5) / 2), float(line[6]), places=5)
+        self.assertAlmostEqual(math.sin(0.5 / 2), float(line[4]), places=5)
+        self.assertAlmostEqual(math.cos(0.5 / 2), float(line[6]), places=5)
 
     def test_inset_moves_the_gate_toward_the_mountain(self):
         _, lines = self.transforms(1.0, 0.0, 2.0)

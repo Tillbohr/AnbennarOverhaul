@@ -674,12 +674,13 @@ def gate_objects(sites: list, scale: float, yaw_offset: float, inset: float = 0.
     """One map object block holding a gate mesh per site, in RiE's layout (sites sorted by county keys).
 
     A gate stands at the site (the pad centre) moved `inset` units along `inward` toward the mountain. CK3 is
-    Y-up, so the map's y becomes z and the ground offset y is 0. The yaw is `atan2(-inward_x, -inward_y)`
-    plus `yaw_offset`: the gate faces the normal land, away from the mountain."""
+    Y-up, so the map's y becomes z and the ground offset y is 0. The yaw is `atan2(inward_x, inward_y)`
+    plus `yaw_offset`: the mesh's local +Z points along `inward` (into the mountain, as in RiE's Erebor gate),
+    so its front faces the normal land, away from the mountain."""
     lines = []
     for site in sorted(sites, key=lambda s: (s.dwarven_county, s.normal_county)):
         ix, iy = site.inward
-        t = math.atan2(-ix + 0.0, -iy + 0.0) + yaw_offset  # + 0.0 turns -0.0 into 0.0
+        t = math.atan2(ix + 0.0, iy + 0.0) + yaw_offset  # + 0.0 turns -0.0 into 0.0
         values = (site.x + ix * inset, 0.0, site.y + iy * inset, 0.0, math.sin(t / 2), 0.0, math.cos(t / 2),
                   scale, scale, scale)
         lines.append(" ".join(f"{v:.6f}" for v in values))
