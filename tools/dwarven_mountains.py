@@ -352,7 +352,8 @@ def raise_heights(grid, pm, dwarven, water, impassable, sites):
     moved to `ground + (h - ground) * factor` (soft ceiling applied, never lowered), and the change fades
     out over FADE_PX px into the surrounding land and water. Per site: a flat pad of radius GATE_PAD at the
     height of the nearest normal-land pixel (the only pixels that may go down) and, behind it on the
-    dwarven side, a cliff: pixels within GATE_RISE_DIST px raised to at least pad + GATE_RISE.
+    dwarven side, a cliff: pixels within GATE_RISE_DIST px raised to at least pad + GATE_RISE, ramping down to nothing
+    over the next GATE_SKIRT px (the ramp is the fade for the part outside the range).
     The report is {"ranges": [{provinces, ground, factor, peak_before, peak_after}],
     "sites": [{dwarven_county, normal_county, x, y, pad, rise}]}; `rise` is the lowest cliff pixel above the pad."""
     w, h, ids = pm.width, pm.height, pm.ids
@@ -387,10 +388,10 @@ def raise_heights(grid, pm, dwarven, water, impassable, sites):
                         new[i] = value
         report["ranges"].append({"provinces": sorted(group), "ground": ground, "factor": factor,
                                  "peak_before": peak, "peak_after": max(new[i] for i in px)})
-    reach_px = max(data.GATE_RISE_DIST, data.GATE_PAD)
+    core, skirt = data.GATE_RISE_DIST, data.GATE_SKIRT
+    reach_px = core + skirt
     for site in sites:
         pad = _pad_height(old, pm, site, dw, blocked)
-        cliff = soft_ceiling(pad + data.GATE_RISE)
         ix, iy = site.inward
         rise = None
         for y in range(max(0, site.y - reach_px), min(h, site.y + reach_px + 1)):
@@ -398,12 +399,18 @@ def raise_heights(grid, pm, dwarven, water, impassable, sites):
                 dx, dy = x - site.x, y - site.y
                 d = math.hypot(dx, dy)
                 i = y * w + x
+                if wat[ids[i]] or not ids[i]:
+                    continue
                 if d <= data.GATE_PAD:
                     new[i] = pad
-                elif d <= data.GATE_RISE_DIST and dx * ix + dy * iy > 0 and ids[i] and not wat[ids[i]]:
-                    if new[i] < cliff:
-                        new[i] = cliff
-                    rise = new[i] - pad if rise is None else min(rise, new[i] - pad)
+                elif d < reach_px and dx * ix + dy * iy > 0:
+                    # full rise out to `core`, then a linear ramp down to nothing over `skirt` px
+                    weight = 1 if d <= core else 1 - (d - core) / skirt
+                    target = soft_ceiling(pad + data.GATE_RISE * weight)
+                    if new[i] < target:
+                        new[i] = target
+                    if d <= core:
+                        rise = new[i] - pad if rise is None else min(rise, new[i] - pad)
         report["sites"].append({"dwarven_county": site.dwarven_county, "normal_county": site.normal_county,
                                 "x": site.x, "y": site.y, "pad": pad, "rise": rise or 0})
     return type(grid)(w, h, new), report

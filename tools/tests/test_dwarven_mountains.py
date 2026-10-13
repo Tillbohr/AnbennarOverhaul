@@ -237,9 +237,15 @@ class RaiseTests(unittest.TestCase):
 
     def test_water_changes_only_in_fade(self):
         pm, grid = fixture_range()
-        pm.ids[15 * 60 + 18] = 3  # water pixel next to the block
+        for y in range(40):
+            for x in (5, 18, 37, 45):
+                pm.ids[y * 60 + x] = 3
         new, _ = dm.raise_heights(grid, pm, {1}, {3}, set(), [])
-        self.assertGreater(new.get(18, 15), 10000)
+        self.assertGreater(new.get(18, 15), 10000)  # in the fade band
+        self.assertEqual(new.get(5, 15), 10000)  # 15 px from the block
+        self.assertGreater(new.get(37, 15), 10000)  # 8 px east: inside the band
+        self.assertEqual(new.get(45, 15), 10000)  # 16 px east
+        self.assertGreater(new.get(18, 0), 10000)
 
     def test_already_tall_range_unchanged(self):
         pm, grid = fixture_range(heights=52000)
@@ -247,10 +253,48 @@ class RaiseTests(unittest.TestCase):
         self.assertEqual(report["ranges"][0]["factor"], 1)
         self.assertEqual(new.values, grid.values)
 
-    def test_soft_ceiling_applies(self):
+    def test_peak_above_lift_peak_unchanged(self):
         pm, grid = fixture_range(heights=62000, ground=10000)
         new, _ = dm.raise_heights(grid, pm, {1}, set(), set(), [])
         self.assertEqual(new.values, grid.values)  # peak above LIFT_PEAK: factor 1
+
+    def test_soft_ceiling_inside_raise(self):
+        # the lift never passes the ceiling (it stops at LIFT_PEAK), but a cliff pad + 14000 = 64000 does
+        pm, grid = fixture_range(heights=52000, ground=50000)
+        site = dm.GateSite("c_dw", "c_n", 20, 15, (1.0, 0.0))
+        new, report = dm.raise_heights(grid, pm, {1}, set(), set(), [site])
+        self.assertEqual(report["sites"][0]["pad"], 50000)
+        self.assertEqual(new.get(23, 15), dm.soft_ceiling(64000))
+        self.assertLess(dm.soft_ceiling(64000), 64000)
+        self.assertLessEqual(max(new.values), 65535)
+
+    def test_gate_skirt_ramps_down(self):
+        w, h = 60, 41
+        ids = array("H", [1 if x < 30 else 2 for y in range(h) for x in range(w)])
+        vals = array("H", [6000 if x < 30 else 5000 for y in range(h) for x in range(w)])
+        pm, grid = dm.ProvinceMap(w, h, ids), hp.Grid(w, h, vals)
+        site = dm.GateSite("c_dw", "c_n", 29, 20, (-1.0, 0.0))
+        new, _ = dm.raise_heights(grid, pm, {1}, set(), set(), [site])
+        profile = [new.get(29 - r, 20) for r in range(data.GATE_RISE_DIST, data.GATE_RISE_DIST + data.GATE_SKIRT + 1)]
+        self.assertEqual(profile, sorted(profile, reverse=True))
+        steps = [a - b for a, b in zip(profile, profile[1:])]
+        self.assertLessEqual(max(steps), data.GATE_RISE / data.GATE_SKIRT + 5)
+        self.assertEqual(profile[0], 5000 + data.GATE_RISE)
+        self.assertEqual(profile[-1], new.get(5, 20))  # beyond the skirt: the lifted range again
+
+    def test_pad_skips_water(self):
+        w, h = 40, 21
+        ids = array("H", [1 if x < 20 else 2 for y in range(h) for x in range(w)])
+        ids[10 * w + 20] = 3
+        vals = array("H", [6000 if x < 20 else 5000 for y in range(h) for x in range(w)])
+        vals[10 * w + 20] = 1234
+        for y in range(h):
+            for x in range(20):
+                vals[y * w + x] = 52000  # above LIFT_PEAK: no lift, so the water pixel can only change by the pad
+        pm, grid = dm.ProvinceMap(w, h, ids), hp.Grid(w, h, vals)
+        site = dm.GateSite("c_dw", "c_n", 19, 10, (-1.0, 0.0))
+        new, _ = dm.raise_heights(grid, pm, {1}, {3}, set(), [site])
+        self.assertEqual(new.get(20, 10), 1234)
 
     def test_gate_pad_and_cliff(self):
         w, h = 40, 21
@@ -399,23 +443,38 @@ class RealDataTests(unittest.TestCase):
         self.assertLessEqual(max(self.new.values), 65535)
 
     def test_far_pixels_unchanged(self):
-        import random
         w, h, ids = self.pm.width, self.pm.height, self.pm.ids
-        changed = []
+        reach = data.FADE_PX + 1
+        rows = []  # bit x of rows[y] = a dwarven pixel within `reach` columns of x in row y
+        for y in range(h):
+            bits = 0
+            for x, v in enumerate(ids[y * w:(y + 1) * w]):
+                if v in self.dwarven:
+                    bits |= 1 << x
+            wide = bits
+            for k in range(1, reach + 1):
+                wide |= (bits << k) | (bits >> k)
+            rows.append(wide)
+        near = []
+        for y in range(h):
+            m = 0
+            for j in range(max(0, y - reach), min(h, y + reach + 1)):
+                m |= rows[j]
+            near.append(m)
+        gate_reach = data.GATE_RISE_DIST + data.GATE_SKIRT
+        changed = 0
         for y in range(h):
             a = self.old.values[y * w:(y + 1) * w]
             b = self.new.values[y * w:(y + 1) * w]
-            if a != b:
-                changed.extend(y * w + x for x in range(w) if a[x] != b[x])
-        self.assertTrue(changed)
-        reach = data.FADE_PX + 1
-        for i in random.Random(1).sample(changed, 1500):
-            y, x = divmod(i, w)
-            near_dwarven = any(ids[j * w + k] in self.dwarven
-                               for j in range(max(0, y - reach), min(h, y + reach + 1))
-                               for k in range(max(0, x - reach), min(w, x + reach + 1)))
-            near_gate = any(math.hypot(x - s.x, y - s.y) <= data.GATE_RISE_DIST + 1 for s in self.spaced)
-            self.assertTrue(near_dwarven or near_gate, (x, y))
+            if a == b:
+                continue
+            for x in range(w):
+                if a[x] != b[x]:
+                    changed += 1
+                    if not (near[y] >> x) & 1:
+                        self.assertTrue(any(math.hypot(x - s.x, y - s.y) <= gate_reach for s in self.spaced),
+                                        (x, y))
+        self.assertGreater(changed, 0)
 
     def test_gate_cliffs(self):
         for s, r in zip(self.spaced, self.report["sites"]):
