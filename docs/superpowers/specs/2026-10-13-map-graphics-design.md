@@ -232,10 +232,14 @@ camera tilt (already ported). Most of the Serpentspine already exceeds Erebor's 
 
 ### Raising rule (values in `tools/data/map_graphics.py`)
 
-1. **Range lift:** for each range, `ground` = the median height of normal land and impassable pixels within
-   `LIFT_GROUND_RING` (24) pixels of the range. Factor `k = clamp((EREBOR_SUMMIT - ground) / (p90 - ground), 1,
-   LIFT_MAX)` with `EREBOR_SUMMIT = 36000`, `LIFT_MAX = 1.8` and p90 the range's 90th-percentile height. Every pixel of
-   the range becomes `ground + (h - ground) * k` (never lower than `h`).
+1. **Range lift:** for each range, `ground` = the median height of non-dwarven, non-water pixels within
+   `LIFT_GROUND_RING` (24) pixels of the range. Factor `k = clamp((LIFT_PEAK - ground) / (peak - ground), 1,
+   LIFT_MAX)` with `LIFT_PEAK = 50000` (Erebor's terrain summit, about 36,000, plus the ~14,000 its gate cliff adds),
+   `LIFT_MAX = 1.8` and `peak` the range's highest height (`k = 1` when `peak <= ground`). Every pixel of the range
+   becomes `ground + (h - ground) * k` (never lower than `h`). Measured today: Rubyhold x1.35 (peak 40,982 -> 50,000),
+   Esmaria and Ovdal Tungr x1.8 (peaks about 39,200 and 37,600), the Serpentspine, Dragon Coast, Khugdihr and Harpylen
+   ranges x1.0 (already at or above the target, or ringed by higher ground); they change only at gate cliffs.
+   (Decided after measurement: a 90th-percentile target of 36,000 would have raised Rubyhold only 3%.)
 2. **Soft ceiling:** values above `SOFT_CEILING = 60000` are eased toward 65,535 (`60000 + (65535 - 60000) *
    (1 - exp(-(v - 60000) / (65535 - 60000)))`), never clipped.
 3. **Gate cliffs:** at each gate site, a pad of radius `GATE_PAD` (2 px) is set to the local normal-land height at
@@ -279,7 +283,7 @@ The Rubyhold-only Erebor mountain cluster discussed earlier is dropped: the heig
 - `pngio` round-trips 8-bit RGB/RGBA and 16-bit grey.
 - Repacking Anbennar's unchanged heightmap reproduces every tile's heights; level bands don't overlap; tiles stay in
   their band; `heightmap.heightmap` keeps every other key; every changed block decodes back within `PACK_TOLERANCE`.
-- Raising: each range's p90 ≥ 36,000 or its factor is at `LIFT_MAX`; no height lowered outside gate pads; nothing over
+- Raising: each range's peak ≥ 50,000, or its factor is at `LIFT_MAX`, or it was 1 (peak already ≥ 50,000 or ≤ ground); no height lowered outside gate pads; nothing over
   65,535; changes fade to zero within `FADE_PX`; water/impassable change only inside the fade.
 - Gates: count equals the sites minus Dragon Coast and Harpylen; each sits inside its dwarven province and faces its
   neighbour; Rubyhold's two sites are as above; each pad is flat and the rise behind it is ≥ 14,000.
