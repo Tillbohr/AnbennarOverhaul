@@ -374,3 +374,61 @@ def raise_heights(grid, pm, dwarven, water, impassable, sites):
     report["sites"] = [{"dwarven_county": s.dwarven_county, "normal_county": s.normal_county,
                        "x": s.x, "y": s.y} for s in sites]
     return type(grid)(w, h, new), report
+
+
+SEA_SITE_RADIUS = 6  # sea pixels within this many px of a sea gate's pixel decide which way it faces
+
+
+def sea_zone_ids(text):
+    """Sea zone province ids from `default.map` (lakes, rivers and impassable seas do not count)."""
+    return _id_list(re.sub(r"#[^\n]*", "", text), "sea_zones")
+
+
+def barony_province(titles_text, barony):
+    """The `province = N` number of a barony in landed titles text."""
+    m = re.search(r"\b" + re.escape(barony) + r"\s*=\s*\{[^{}]*?\bprovince\s*=\s*(\d+)", _strip(titles_text))
+    if not m:
+        raise GeneratorError(f"landed titles: {barony} has no province")
+    return int(m.group(1))
+
+
+def sea_gate_site(pm, border, sea, province, locator, county):
+    """The sea gate of `province` (hold county `county`): a GateSite with normal_county "sea".
+
+    The site is the province pixel that 4-touches a sea zone (a set of ids) nearest `locator` (x, y); `inward`
+    is the unit vector from the centroid of the touching sea pixels within SEA_SITE_RADIUS px of the site to the
+    site, so the gate faces the sea."""
+    shore = []
+    sea_px = []
+    for s in sorted(sea):
+        shore.extend(border.get((province, s), ()))
+        sea_px.extend(border.get((s, province), ()))
+    if not shore:
+        raise GeneratorError(f"sea gate {county}: province {province} has no shore pixel (none touches a sea zone)")
+    lx, ly = locator
+    x, y = min(shore, key=lambda p: ((p[0] - lx) ** 2 + (p[1] - ly) ** 2, p[1], p[0]))
+    near = [p for p in sea_px if math.hypot(p[0] - x, p[1] - y) <= SEA_SITE_RADIUS]
+    cx, cy = _centroid(near)
+    dx, dy = x - cx, y - cy
+    length = math.hypot(dx, dy)
+    if length == 0:
+        raise GeneratorError(f"sea gate {county}: the shore at ({x}, {y}) has no direction toward the sea")
+    return GateSite(county, "sea", x, y, (dx / length, dy / length))
+
+
+def with_sea_gates(sites, counties, holds, pm, border, sea, titles_text, locators):
+    """`sites` with the land sites of each hold county in `counties` replaced by one sea gate site.
+
+    `holds` are data.holds.HOLDS-style dicts (title, barony); `locators` maps province id -> (x, y). Sites of
+    other counties are returned unchanged; the sea sites come last, in the order of `counties`."""
+    new = []
+    for county in counties:
+        entry = next((h for h in holds if h["title"] == county), None)
+        if entry is None:
+            raise GeneratorError(f"sea gate {county}: no dwarven hold has that county title")
+        province = barony_province(titles_text, entry["barony"])
+        if province not in locators:
+            raise GeneratorError(f"sea gate {county}: province {province} ({entry['barony']}) has no building "
+                                 f"locator")
+        new.append(sea_gate_site(pm, border, sea, province, locators[province], county))
+    return [s for s in sites if s.dwarven_county not in counties] + new

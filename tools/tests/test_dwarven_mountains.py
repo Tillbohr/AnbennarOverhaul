@@ -288,6 +288,71 @@ class RaiseTests(unittest.TestCase):
         self.assertEqual(new.get(25, 15), new.get(45, 15))
 
 
+def sea_fixture():
+    """20x11: province 3 (lake) at x 0-4, province 1 (the hold) at x 5-14, province 2 (sea) at x 15-19."""
+    w, h = 20, 11
+    ids = array("H", [3] * 5 + [1] * 10 + [2] * 5) * h
+    return dm.ProvinceMap(w, h, ids)
+
+
+SEA_TITLES = "e_a = { k_a = { d_a = { c_hold = { b_hold = { province = 1 } } } } }\n"
+HOLDS = [{"title": "c_hold", "barony": "b_hold"}, {"title": "c_other", "barony": "b_other"}]
+
+
+class SeaGateTests(unittest.TestCase):
+    def setUp(self):
+        self.pm = sea_fixture()
+        self.border = dm.border_pixels(self.pm)
+
+    def test_sea_zone_ids_ignore_lakes_and_rivers(self):
+        self.assertEqual(dm.sea_zone_ids(DEFAULT_MAP), {1, 2, 3})
+
+    def test_barony_province(self):
+        self.assertEqual(dm.barony_province(SEA_TITLES, "b_hold"), 1)
+        with self.assertRaisesRegex(GeneratorError, "b_missing"):
+            dm.barony_province(SEA_TITLES, "b_missing")
+
+    def test_site_is_the_shore_pixel_nearest_the_locator_facing_the_sea(self):
+        site = dm.sea_gate_site(self.pm, self.border, {2}, 1, (8.0, 5.0), "c_hold")
+        self.assertEqual((site.dwarven_county, site.normal_county, site.x, site.y), ("c_hold", "sea", 14, 5))
+        self.assertAlmostEqual(site.inward[0], -1.0)  # from the sea (x 15) toward the land
+        self.assertAlmostEqual(site.inward[1], 0.0)
+
+    def test_lakes_do_not_count_as_shore(self):
+        # the lake side (x 5) is nearer the locator, but only sea zones count
+        site = dm.sea_gate_site(self.pm, self.border, {2}, 1, (6.0, 5.0), "c_hold")
+        self.assertEqual(site.x, 14)
+
+    def test_inward_uses_only_sea_pixels_within_six_px(self):
+        # site (14, 2): the touching sea pixels (15, 0..7) are within 6 px (centroid y 3.5), (15, 8..10) are not
+        site = dm.sea_gate_site(self.pm, self.border, {2}, 1, (14.0, 2.0), "c_hold")
+        self.assertEqual((site.x, site.y), (14, 2))
+        self.assertAlmostEqual(site.inward[1] / site.inward[0], 1.5)
+        self.assertAlmostEqual(math.hypot(*site.inward), 1.0)
+
+    def test_errors(self):
+        with self.assertRaisesRegex(GeneratorError, "shore"):
+            dm.sea_gate_site(self.pm, self.border, {99}, 1, (8.0, 5.0), "c_hold")
+
+    def test_with_sea_gates_replaces_land_sites_only_of_that_county(self):
+        keep = dm.GateSite("c_keep", "c_x", 1, 1, (1.0, 0.0))
+        land = dm.GateSite("c_hold", "c_n", 6, 5, (0.0, 1.0))
+        out = dm.with_sea_gates([keep, land], ("c_hold",), HOLDS, self.pm, self.border, {2}, SEA_TITLES,
+                                {1: (8.0, 5.0)})
+        self.assertEqual([(s.dwarven_county, s.normal_county) for s in out],
+                         [("c_keep", "c_x"), ("c_hold", "sea")])
+        self.assertIs(out[0], keep)
+
+    def test_with_sea_gates_errors(self):
+        args = (self.pm, self.border, {2}, SEA_TITLES, {1: (8.0, 5.0)})
+        with self.assertRaisesRegex(GeneratorError, "c_nothold"):
+            dm.with_sea_gates([], ("c_nothold",), HOLDS, *args)
+        with self.assertRaisesRegex(GeneratorError, "locator"):
+            dm.with_sea_gates([], ("c_hold",), HOLDS, self.pm, self.border, {2}, SEA_TITLES, {})
+        with self.assertRaisesRegex(GeneratorError, "b_other"):
+            dm.with_sea_gates([], ("c_other",), HOLDS, *args)
+
+
 class SpacedSitesTests(unittest.TestCase):
     def setUp(self):
         self.titles = {1: ("e", "k", "c_a"), 2: ("e", "k", "c_b"), 3: ("e", "k", "c_x"), 4: ("e", "k", "c_y"),
