@@ -603,6 +603,11 @@ class CourtSceneTests(unittest.TestCase):
             bmg.court_scene_override(COURT_ANB, COURT_RIE)
         bmg.court_scene_override(COURT_ANB, COURT_RIE, required=("have_one",))  # defined by Anbennar: fine
 
+    def test_copied_blocks_take_the_line_endings_of_anbennars_file(self):
+        out = bmg.court_scene_override(COURT_ANB, COURT_RIE.replace("\n", "\r\n"), required=("new_one",))
+        self.assertNotIn("\r", out)
+        self.assertIn(_effect("new_one").strip(), out)
+
     def test_crlf_text_is_kept(self):
         anb = COURT_ANB.replace("\n", "\r\n")
         out = bmg.court_scene_override(anb, COURT_RIE.replace("\n", "\r\n"), required=("new_one",))

@@ -234,12 +234,12 @@ camera tilt (already ported). Most of the Serpentspine already exceeds Erebor's 
 
 1. **Range lift:** for each range, `ground` = the median height of non-dwarven, non-water pixels within
    `LIFT_GROUND_RING` (24) pixels of the range. Factor `k = clamp((LIFT_PEAK - ground) / (peak - ground), 1,
-   LIFT_MAX)` with `LIFT_PEAK = 50000` (Erebor's terrain summit, about 36,000, plus the ~14,000 its gate cliff adds),
+   LIFT_MAX)` with `LIFT_PEAK = 50000` (Erebor's terrain summit, about 36,000, plus the height its gate model adds),
    `LIFT_MAX = 1.8` and `peak` the range's highest height (`k = 1` when `peak <= ground`). Every pixel of the range
    becomes `ground + (h - ground) * k` (never lower than `h`). Measured today: Rubyhold x1.37 (peak 40,982 -> 50,000),
    Esmaria, Ovdal Tungr, the Harpylen cavern (province 655) and province 912 x1.8 (Esmaria peak 27,866 -> 39,020, Ovdal
    Tungr 30,646 -> 37,316, Harpylen 45,316 -> 48,930), the Serpentspine, Dragon Coast and Khugdihr
-   ranges x1.0 (already at or above the target, or ringed by higher ground); they change only at gate cliffs.
+   ranges x1.0 (already at or above the target, or ringed by higher ground); they are unchanged.
    (Decided after measurement: a 90th-percentile target of 36,000 would have raised Rubyhold only 3%.)
 2. **Soft ceiling:** values above `SOFT_CEILING = 60000` are eased toward 65,535 (`60000 + (65535 - 60000) *
    (1 - exp(-(v - 60000) / (65535 - 60000)))`), never clipped.

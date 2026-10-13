@@ -353,7 +353,7 @@ def court_scene_override(anb_text: str, rie_text: str, required: tuple = COURT_S
     for match in PLACEHOLDER_EFFECT.finditer(rie_text):
         if match.group(1) not in defined:
             defined.add(match.group(1))
-            blocks.append(match.group(0).rstrip("\r\n"))
+            blocks.append(match.group(0).rstrip("\r\n").replace("\r\n", "\n").replace("\n", eol))
     missing = [name for name in required if name not in defined]
     if missing:
         raise GeneratorError(f"{COURT_SCENE_REL} would not define {', '.join(missing)} (the gate needs them)")
