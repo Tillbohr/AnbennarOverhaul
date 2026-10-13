@@ -669,6 +669,87 @@ class GateObjectsTests(unittest.TestCase):
         _, lines = self.transforms(1.0, 0.0, 2.0)
         self.assertEqual(lines[0][:3], ["298.000000", "0.000000", "50.000000"])  # inward (-1, 0)
 
+    def with_overrides(self, overrides):
+        text = bmg.gate_objects(self.SITES, 1.0, 0.0, 2.0, overrides)
+        body = re.search(r'transform="([^"]*)', text).group(1)
+        return [line.split() for line in body.split("\n") if line.strip()]
+
+    def test_override_scale_yaw_inset_and_offsets_apply_to_one_gate(self):
+        lines = self.with_overrides({("c_a", "c_y"): {"scale": 3.0, "inset": 5.0, "dx": 1.5, "dy": -2.0, "yaw": 0.5}})
+        a, b = lines  # c_a first; inward (-1, 0)
+        self.assertEqual(a[:3], ["296.500000", "0.000000", "48.000000"])  # 300 - 5 + 1.5, 50 - 2
+        self.assertEqual(a[7:], ["3.000000"] * 3)
+        t = math.atan2(-1.0, 0.0) + 0.5
+        self.assertAlmostEqual(float(a[4]), math.sin(t / 2), places=5)
+        self.assertAlmostEqual(float(a[6]), math.cos(t / 2), places=5)
+        self.assertEqual(b[:3], ["100.000000", "0.000000", "202.000000"])  # untouched: default inset 2 along (0, 1)
+        self.assertEqual(b[7:], ["1.000000"] * 3)
+
+    def test_override_with_a_single_key_leaves_the_rest_default(self):
+        a, _ = self.with_overrides({("c_a", "c_y"): {"scale": 2.0}})
+        self.assertEqual(a[:3], ["298.000000", "0.000000", "50.000000"])
+        self.assertEqual(a[7:], ["2.000000"] * 3)
+
+    def test_unknown_override_key_raises(self):
+        with self.assertRaisesRegex(GeneratorError, "c_nope.*c_y|GATE_OVERRIDES"):
+            bmg.gate_objects(self.SITES, 1.0, 0.0, 0.0, {("c_nope", "c_y"): {"scale": 2.0}})
+
+    def test_unknown_override_option_raises(self):
+        with self.assertRaisesRegex(GeneratorError, "scaleX"):
+            bmg.gate_objects(self.SITES, 1.0, 0.0, 0.0, {("c_a", "c_y"): {"scaleX": 2.0}})
+
+    def test_data_defaults(self):
+        self.assertEqual((data.GATE_SCALE, data.GATE_INSET), (1.6, 2.0))
+        self.assertEqual(data.SEA_GATES, ("c_ovdal_tungr",))
+        self.assertIsInstance(data.GATE_OVERRIDES, dict)
+        for key in ("GATE_PAD", "GATE_RISE", "GATE_RISE_DIST", "GATE_SKIRT"):
+            self.assertFalse(hasattr(data, key), key)
+
+
+@unittest.skipUnless(INSTALLED and (ROOTS.anbennar / "map_data/provinces.png").is_file(),
+                     "RiE and Anbennar are not installed")
+class SeaGateRealTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.pm, cls.water, cls.impassable, cls.dwarven, cls.sites = bmg._analyse(ROOTS)
+        folder = ROOTS.anbennar
+        cls.sea = dm.sea_zone_ids((folder / "map_data/default.map").read_text(encoding="utf-8-sig"))
+        cls.titles_text = "\n".join(p.read_text(encoding="utf-8-sig")
+                                    for p in sorted((folder / "common/landed_titles").glob("*.txt")))
+        cls.titles = dm.province_titles(cls.titles_text)
+        cls.border = dm.border_pixels(cls.pm)
+        land = dm.gate_sites(cls.pm, cls.dwarven, cls.water, cls.impassable, cls.titles, cls.border,
+                             data.GATE_EXCLUDE_REGIONS)
+        cls.land = dm.spaced_sites(land, cls.border, cls.titles, data.GATE_MIN_SPACING)
+
+    def test_ovdal_tungr_has_one_sea_gate_on_the_irovar_shore(self):
+        ovdal = [s for s in self.sites if s.dwarven_county == "c_ovdal_tungr"]
+        self.assertEqual(len(ovdal), 1)
+        site = ovdal[0]
+        self.assertEqual(site.normal_county, "sea")
+        w = self.pm.width
+        province = dm.barony_province(self.titles_text, "b_irovar")
+        self.assertEqual(province, 526)
+        self.assertEqual(self.pm.ids[site.y * w + site.x], province)
+        touching = [self.pm.ids[ny * w + nx] for nx, ny in ((site.x + 1, site.y), (site.x - 1, site.y),
+                                                            (site.x, site.y + 1), (site.x, site.y - 1))
+                    if 0 <= nx < w and 0 <= ny < self.pm.height]
+        self.assertTrue(any(p in self.sea for p in touching), touching)
+        self.assertAlmostEqual(math.hypot(*site.inward), 1.0)
+
+    def test_inward_points_away_from_the_sea(self):
+        site = next(s for s in self.sites if s.dwarven_county == "c_ovdal_tungr")
+        w = self.pm.width
+        ix, iy = site.inward
+        seaward = [self.pm.ids[round(site.y - k * iy) * w + round(site.x - k * ix)] for k in (3,)]
+        self.assertIn(seaward[0], self.sea | {0}, f"site {site}: the pixel 3 px seaward is province {seaward[0]}")
+
+    def test_no_land_site_remains_and_the_others_are_unchanged(self):
+        self.assertTrue(any(s.dwarven_county == "c_ovdal_tungr" for s in self.land))
+        self.assertEqual([s for s in self.sites if s.dwarven_county != "c_ovdal_tungr"],
+                         [s for s in self.land if s.dwarven_county != "c_ovdal_tungr"])
+        self.assertEqual(len(self.sites), len(self.land))
+
 
 @unittest.skipUnless(INSTALLED and (ROOTS.anbennar / "map_data/provinces.png").is_file(),
                      "RiE and Anbennar are not installed")

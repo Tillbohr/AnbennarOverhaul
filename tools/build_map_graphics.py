@@ -25,6 +25,7 @@ import heightpack as hp  # noqa: E402
 import pngio  # noqa: E402
 import terrain_fill as tfill  # noqa: E402
 from data import map_graphics as data  # noqa: E402
+from data.holds import HOLDS  # noqa: E402
 
 MARKER = "# Anbennar Overhaul"
 
@@ -717,19 +718,37 @@ GATE_ASSET_FILES = ((RIE_GATE_DIR, ("erebor_gate.asset", "erebor_gate.mesh", "er
 GATE_LAYER = "temp_layer"
 
 
-def gate_objects(sites: list, scale: float, yaw_offset: float, inset: float = 0.0) -> str:
+GATE_OPTIONS = ("scale", "yaw", "inset", "dx", "dy")
+
+
+def gate_objects(sites: list, scale: float, yaw_offset: float, inset: float = 0.0, overrides: dict = None) -> str:
     """One map object block holding a gate mesh per site, in RiE's layout (sites sorted by county keys).
 
-    A gate stands at the site (the pad centre) moved `inset` units along `inward` toward the mountain. CK3 is
+    A gate stands at the site moved `inset` units along `inward` toward the mountain, set into the slope. CK3 is
     Y-up, so the map's y becomes z and the ground offset y is 0. The yaw is `atan2(inward_x, inward_y)`
     plus `yaw_offset`: the mesh's local +Z points along `inward` (into the mountain, as in RiE's Erebor gate),
-    so its front faces the normal land, away from the mountain."""
+    so its front faces the normal land, away from the mountain. `overrides` maps (dwarven county, normal county)
+    to a dict with optional `scale`, `yaw` (added to the yaw), `inset`, `dx` and `dy` (map units added to the
+    position); a key matching no site or an unknown option raises GeneratorError."""
+    overrides = overrides or {}
+    known = {(s.dwarven_county, s.normal_county) for s in sites}
+    for key, options in overrides.items():
+        if key not in known:
+            raise GeneratorError(f"GATE_OVERRIDES key {key} matches no gate; gates are: "
+                                 + ", ".join(f"{a}/{b}" for a, b in sorted(known)))
+        for name in options:
+            if name not in GATE_OPTIONS:
+                raise GeneratorError(f"GATE_OVERRIDES {key}: unknown option {name!r} "
+                                     f"(use {', '.join(GATE_OPTIONS)})")
     lines = []
     for site in sorted(sites, key=lambda s: (s.dwarven_county, s.normal_county)):
+        option = overrides.get((site.dwarven_county, site.normal_county), {})
         ix, iy = site.inward
-        t = math.atan2(ix + 0.0, iy + 0.0) + yaw_offset  # + 0.0 turns -0.0 into 0.0
-        values = (site.x + ix * inset, 0.0, site.y + iy * inset, 0.0, math.sin(t / 2), 0.0, math.cos(t / 2),
-                  scale, scale, scale)
+        t = math.atan2(ix + 0.0, iy + 0.0) + yaw_offset + option.get("yaw", 0.0)  # + 0.0 turns -0.0 into 0.0
+        move = option.get("inset", inset)
+        size = option.get("scale", scale)
+        values = (site.x + ix * move + option.get("dx", 0.0), 0.0, site.y + iy * move + option.get("dy", 0.0), 0.0,
+                  math.sin(t / 2), 0.0, math.cos(t / 2), size, size, size)
         lines.append(" ".join(f"{v:.6f}" for v in values))
     return ('object={\n\tname="aov_dwarven_gates"\n\trender_pass=Map\n\tclamp_to_water_level=no\n'
             f'\tgenerated_content=no\n\tlayer="{GATE_LAYER}"\n\tpdxmesh="erebor_gate_mesh"\n'
@@ -754,11 +773,14 @@ def _analyse(roots: Roots) -> tuple:
     pm = dm.load_province_map((folder / "provinces.png").read_bytes(), _read_text(folder / "definition.csv"))
     water, impassable = dm.default_map_sets(_read_text(folder / "default.map"))
     dwarven = dm.dwarven_provinces(dm.province_terrain(_read_text(terrain_file)))
-    titles = dm.province_titles("\n".join(_read_text(p) for p in sorted(
-        (roots.anbennar / "common/landed_titles").glob("*.txt"))))
+    titles_source = "\n".join(_read_text(p) for p in sorted((roots.anbennar / "common/landed_titles").glob("*.txt")))
+    titles = dm.province_titles(titles_source)
     border = dm.border_pixels(pm)
     sites = dm.gate_sites(pm, dwarven, water, impassable, titles, border, data.GATE_EXCLUDE_REGIONS)
     sites = dm.spaced_sites(sites, border, titles, data.GATE_MIN_SPACING)
+    locators = locator_positions(_read_text(roots.anbennar / LOCATORS_REL))
+    sea = dm.sea_zone_ids(_read_text(folder / "default.map"))
+    sites = dm.with_sea_gates(sites, data.SEA_GATES, HOLDS, pm, border, sea, titles_source, locators)
     return pm, water, impassable, dwarven, sites
 
 
@@ -848,7 +870,7 @@ def build_heightmap(roots: Roots, notes: list = None) -> dict:
         f"{MAP_DATA}/indirection_heightmap.png": pngio.write_png(ind_new),
         f"{MAP_DATA}/heightmap.heightmap": hp.settings_text(s, offsets, empty_offset).encode("utf-8"),
     }
-    gates = gate_objects(sites, data.GATE_SCALE, data.GATE_YAW_OFFSET, data.GATE_INSET)
+    gates = gate_objects(sites, data.GATE_SCALE, data.GATE_YAW_OFFSET, data.GATE_INSET, data.GATE_OVERRIDES)
     out[GATES_REL] = _with_header("﻿" + gates, GATES_REL)
     for source, names in GATE_ASSET_FILES:
         for name in names:

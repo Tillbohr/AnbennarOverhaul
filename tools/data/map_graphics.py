@@ -95,8 +95,13 @@ LIFT_GROUND_RING = 24  # pixels around a range whose median height is the range'
 SOFT_CEILING = 60000  # heights above this are compressed so they never clip at 65535
 FADE_PX = 12  # pixels over which a lift fades at a range edge
 GATE_MIN_SPACING = 16  # gate sites closer than this (map units) are merged, keeping the longer border
-GATE_INSET = 0.0  # units a gate is moved from its pad centre toward the mountain; tune in game
-GATE_SCALE = 0.7  # scale of the gate mesh
+GATE_INSET = 2.0  # units a gate is moved along `inward` (into the mountain) from its site, so it sits in the slope
+GATE_SCALE = 1.6  # scale of the gate mesh
+# Per-gate tweaks, keyed by (dwarven county, normal county) ("sea" for a sea gate); a key that matches no gate stops
+# the generator. Optional keys: scale, yaw (radians added), inset (replaces GATE_INSET), dx, dy (map units).
+GATE_OVERRIDES = {}
+# Hold counties whose land gate sites are replaced by one gate on the shore of the hold's province, facing the sea.
+SEA_GATES = ("c_ovdal_tungr",)
 GATE_YAW_OFFSET = 0.0  # extra yaw (radians) added to the gate mesh facing
 PACK_TOLERANCE = 257  # largest height error allowed when repacking the heightmap
 
