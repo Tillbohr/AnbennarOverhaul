@@ -12,6 +12,7 @@ Spec: docs/superpowers/specs/2026-10-13-map-graphics-design.md
 
 import argparse
 import fnmatch
+import math
 import re
 import sys
 from dataclasses import dataclass
@@ -19,6 +20,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # python -I does not add the script's folder
 from build_hud_override import GeneratorError, brace_delta  # noqa: E402
+import dwarven_mountains as dm  # noqa: E402
+import heightpack as hp  # noqa: E402
+import pngio  # noqa: E402
 from data import map_graphics as data  # noqa: E402
 
 MARKER = "# Anbennar Overhaul"
@@ -652,6 +656,136 @@ def build_grading(roots: Roots) -> tuple:
     return out, notes
 
 
+MAP_DATA = "map_data"
+HEIGHT_OUTPUTS = (f"{MAP_DATA}/heightmap.png", f"{MAP_DATA}/packed_heightmap.png",
+                  f"{MAP_DATA}/indirection_heightmap.png", f"{MAP_DATA}/heightmap.heightmap")
+GATES_REL = "gfx/map/map_object_data/aov_dwarven_gates.txt"
+GATE_ASSET_DIR = "gfx/models/mapitems/aov_dwarven_gate"
+RIE_GATE_DIR = "gfx/models/buildings/lotr_special_buildings/dwarven_wonders/erebor_gate"
+RIE_MOUNTAIN_DIR = "gfx/models/mapitems/mountains/mountain_01"
+GATE_ASSET_FILES = ((RIE_GATE_DIR, ("erebor_gate.asset", "erebor_gate.mesh", "erebor_gate_diffuse.dds",
+                                    "erebor_gate_normal.dds", "erebor_gate_properties.dds")),
+                    (RIE_MOUNTAIN_DIR, ("mountains_mapobject_01_diffuse.dds", "mountains_mapobject_01_normal.dds",
+                                        "mountains_mapobject_01_properties.dds")))
+GATE_LAYER = "temp_layer"
+
+
+def is_height_output(rel: str) -> bool:
+    """True for the files build_heightmap adds (heights, gate objects, gate model files)."""
+    return rel in HEIGHT_OUTPUTS or rel == GATES_REL or rel.startswith(GATE_ASSET_DIR + "/")
+
+
+def gate_objects(sites: list, scale: float, yaw_offset: float, inset: float = 0.0) -> str:
+    """One map object block holding a gate mesh per site, in RiE's layout (sites sorted by county keys).
+
+    A gate stands at the site (the pad centre) moved `inset` units along `inward` toward the mountain. CK3 is
+    Y-up, so the map's y becomes z and the ground offset y is 0. The yaw is `atan2(-inward_x, -inward_y)`
+    plus `yaw_offset`: the gate faces the normal land, away from the mountain."""
+    lines = []
+    for site in sorted(sites, key=lambda s: (s.dwarven_county, s.normal_county)):
+        ix, iy = site.inward
+        t = math.atan2(-ix + 0.0, -iy + 0.0) + yaw_offset  # + 0.0 turns -0.0 into 0.0
+        values = (site.x + ix * inset, 0.0, site.y + iy * inset, 0.0, math.sin(t / 2), 0.0, math.cos(t / 2),
+                  scale, scale, scale)
+        lines.append(" ".join(f"{v:.6f}" for v in values))
+    return ('object={\n\tname="aov_dwarven_gates"\n\trender_pass=Map\n\tclamp_to_water_level=no\n'
+            f'\tgenerated_content=no\n\tlayer="{GATE_LAYER}"\n\tpdxmesh="erebor_gate_mesh"\n'
+            f'\tcount={len(lines)}\n\ttransform="' + "\n".join(lines) + '\n"}\n')
+
+
+def _read_png_file(path: Path):
+    if not path.is_file():
+        raise GeneratorError(f"Anbennar not found: {path} does not exist")
+    return pngio.read_png(path.read_bytes())
+
+
+def _analyse(roots: Roots) -> tuple:
+    """(provinces, water, impassable, dwarven, titles, border, spaced gate sites) from Anbennar's map data."""
+    folder = roots.anbennar / MAP_DATA
+    for name in ("provinces.png", "definition.csv", "default.map"):
+        if not (folder / name).is_file():
+            raise GeneratorError(f"Anbennar not found: {folder / name} does not exist")
+    terrain_file = roots.anbennar / "common/province_terrain/00_province_terrain.txt"
+    if not terrain_file.is_file():
+        raise GeneratorError(f"Anbennar not found: {terrain_file} does not exist")
+    pm = dm.load_province_map((folder / "provinces.png").read_bytes(), _read_text(folder / "definition.csv"))
+    water, impassable = dm.default_map_sets(_read_text(folder / "default.map"))
+    dwarven = dm.dwarven_provinces(dm.province_terrain(_read_text(terrain_file)))
+    titles = dm.province_titles("\n".join(_read_text(p) for p in sorted(
+        (roots.anbennar / "common/landed_titles").glob("*.txt"))))
+    border = dm.border_pixels(pm)
+    sites = dm.gate_sites(pm, dwarven, water, impassable, titles, border, data.GATE_EXCLUDE_REGIONS)
+    sites = dm.spaced_sites(sites, border, titles, data.GATE_MIN_SPACING)
+    return pm, water, impassable, dwarven, sites
+
+
+def _height_notes(report: dict) -> list:
+    notes = []
+    for r in report["ranges"]:
+        ground = "none" if r["ground"] is None else str(r["ground"])
+        notes.append(f"range {','.join(map(str, r['provinces']))}: ground {ground}, factor {r['factor']:.3f}, "
+                     f"peak {r['peak_before']} -> {r['peak_after']}")
+    for g in report["sites"]:
+        notes.append(f"gate {g['dwarven_county']}/{g['normal_county']} at ({g['x']}, {g['y']}): "
+                     f"pad {g['pad']}, rise {g['rise']}")
+    return notes
+
+
+def build_heightmap(roots: Roots, notes: list = None) -> dict:
+    """The raised heightmap and the dwarven gates: heightmap.png, the packed and indirection files that CK3
+    draws, heightmap.heightmap, the gate map objects and the gate model files.
+
+    Blocks whose heights did not change keep Anbennar's tiles; changed blocks are sampled from the new heights
+    at the coarsest level within PACK_TOLERANCE."""
+    folder = roots.anbennar / MAP_DATA
+    settings_file = folder / "heightmap.heightmap"
+    if not settings_file.is_file():
+        raise GeneratorError(f"Anbennar not found: {settings_file} does not exist")
+    settings_bytes = settings_file.read_bytes()
+    s = hp.parse_settings(settings_bytes.decode("utf-8"))
+    height_img = _read_png_file(folder / "heightmap.png")
+    packed_img = _read_png_file(folder / "packed_heightmap.png")
+    ind_img = _read_png_file(folder / "indirection_heightmap.png")
+    old = hp.Grid.from_png(height_img)
+    packed = hp.Grid.from_png(packed_img)
+    anb_blocks = hp.unpack(ind_img, packed, s)
+
+    pm, water, impassable, dwarven, sites = _analyse(roots)
+    if (pm.width, pm.height) != (old.width, old.height):
+        raise GeneratorError(f"provinces.png is {pm.width}x{pm.height} but heightmap.png is "
+                             f"{old.width}x{old.height}")
+    new, report = dm.raise_heights(old, pm, dwarven, water, impassable, sites)
+    if notes is not None:
+        notes.extend(_height_notes(report))
+
+    changed = hp.changed_blocks(old, new)
+    blocks = {}
+    for key, block in anb_blocks.items():
+        if key in changed:
+            level = hp.choose_level(new, key[0], key[1], data.PACK_TOLERANCE, s.max_compress_level)
+            blocks[key] = hp.Block(1 << level, level, hp.sample(new, key[0], key[1], 1 << level))
+        else:
+            blocks[key] = block
+    packed_new, ind_new, offsets, empty_offset = hp.pack(blocks, packed.width, s,
+                                                         empty_tile=hp.empty_tile(packed, s))
+
+    out = {
+        f"{MAP_DATA}/heightmap.png": pngio.write_png(new.to_png()),
+        f"{MAP_DATA}/packed_heightmap.png": pngio.write_png(packed_new.to_png()),
+        f"{MAP_DATA}/indirection_heightmap.png": pngio.write_png(ind_new),
+        f"{MAP_DATA}/heightmap.heightmap": hp.settings_text(s, offsets, empty_offset).encode("utf-8"),
+    }
+    gates = gate_objects(sites, data.GATE_SCALE, data.GATE_YAW_OFFSET, data.GATE_INSET)
+    out[GATES_REL] = _with_header("﻿" + gates, GATES_REL)
+    for source, names in GATE_ASSET_FILES:
+        for name in names:
+            path = roots.rie / source / name
+            if not path.is_file():
+                raise GeneratorError(f"Realms in Exile not found: {path} does not exist")
+            out[f"{GATE_ASSET_DIR}/{name}"] = path.read_bytes()
+    return out
+
+
 def merge_parts(parts: list) -> dict:
     """Merge the parts' output dicts; two parts writing one path with different bytes is an error."""
     merged = {}
@@ -664,7 +798,7 @@ def merge_parts(parts: list) -> dict:
 
 
 def build_all(roots: Roots, notes: list = None) -> dict:
-    """Every output (rel path -> bytes). Nothing is written here. Notes about skipped grading boxes are appended
+    """Every output (rel path -> bytes). Nothing is written here. Notes about skipped grading boxes and the raised ranges and gates are appended
     to `notes` when given."""
     if not roots.rie.is_dir():
         raise GeneratorError(f"Realms in Exile is not installed: {roots.rie} does not exist")
@@ -673,7 +807,8 @@ def build_all(roots: Roots, notes: list = None) -> dict:
     grading, grading_notes = build_grading(roots)
     if notes is not None:
         notes.extend(grading_notes)
-    return merge_parts([build_terrain(roots), build_shaders(roots), build_environment(roots), grading])
+    return merge_parts([build_terrain(roots), build_shaders(roots), build_environment(roots), grading,
+                        build_heightmap(roots, notes)])
 
 
 def main() -> int:

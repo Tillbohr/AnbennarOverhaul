@@ -1,3 +1,4 @@
+import math
 import re
 import struct
 import sys
@@ -8,6 +9,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # python -I does not add the tools folder
 import build_map_graphics as bmg  # noqa: E402
 from build_hud_override import GeneratorError  # noqa: E402
+import dwarven_mountains as dm  # noqa: E402
+import heightpack as hp  # noqa: E402
+import pngio  # noqa: E402
 from data import map_graphics as data  # noqa: E402
 
 ANB = """# comment
@@ -351,6 +355,15 @@ class GradingUnitTests(unittest.TestCase):
 ROOTS = bmg.Roots.default()
 MOD = Path(__file__).resolve().parents[2]
 INSTALLED = ROOTS.rie.is_dir() and (ROOTS.anbennar / "gfx/map/terrain/materials.settings").is_file()
+_BUILD = []
+
+
+def real_build():
+    """(files, notes) of one build_all on the installed mods, shared by every real-data test (about a minute)."""
+    if not _BUILD:
+        notes = []
+        _BUILD.append((bmg.build_all(ROOTS, notes), notes))
+    return _BUILD[0]
 
 
 @unittest.skipUnless(INSTALLED, "RiE and Anbennar are not installed")
@@ -459,7 +472,7 @@ class RealFileTests(unittest.TestCase):
             self.assertTrue(self._exists(f"gfx/models/{name}"), name)
 
     def test_build_all_has_environment_and_rie_only_textures(self):
-        files = bmg.build_all(ROOTS)
+        files = real_build()[0]
         for ref in ("gfx/map/environment/skybox.dds", "gfx/map/environment/gh_snow_layer_1.dds",
                     "gfx/map/fog_of_war/cloud.dds", "gfx/map/environment/snow.settings",
                     "gfx/map/map_object_data/SKYX_skybox.txt", "gfx/map/water/water.settings"):
@@ -526,16 +539,129 @@ class RealFileTests(unittest.TestCase):
             self.assertTrue(bmg.kingdoms_of(titles, empire), empire)
 
     def test_build_all_has_grading(self):
-        notes = []
-        files = bmg.build_all(ROOTS, notes)
+        files, notes = real_build()
         self.assertIn("gfx/map/post_effects/posteffect_volumes.txt", files)
         self.assertTrue(notes)
 
     def test_generated_files_are_fresh(self):
-        files = bmg.build_all(ROOTS)
+        files = real_build()[0]
+        # The height outputs reach the mod when the generator is next run for real; until then a missing one is
+        # not stale (a present one must match).
         stale = [rel for rel, data_ in files.items()
-                 if not (MOD / rel).is_file() or (MOD / rel).read_bytes() != data_]
+                 if not ((MOD / rel).is_file() or bmg.is_height_output(rel))
+                 or ((MOD / rel).is_file() and (MOD / rel).read_bytes() != data_)]
         self.assertEqual(stale, [], "rerun python -I tools/build_map_graphics.py")
+
+
+class GateObjectsTests(unittest.TestCase):
+    SITES = [dm.GateSite("c_b", "c_x", 100, 200, (0.0, 1.0)), dm.GateSite("c_a", "c_y", 300, 50, (-1.0, 0.0))]
+
+    def transforms(self, *args):
+        text = bmg.gate_objects(self.SITES, *args)
+        body = re.search(r'transform="([^"]*)', text).group(1)
+        return text, [line.split() for line in body.split("\n") if line.strip()]
+
+    def test_block_layout(self):
+        text, lines = self.transforms(0.7, 0.0)
+        for needle in ('name="aov_dwarven_gates"', "render_pass=Map", "clamp_to_water_level=no",
+                       "generated_content=no", 'layer="temp_layer"', 'pdxmesh="erebor_gate_mesh"', "count=2"):
+            self.assertIn(needle, text)
+        self.assertEqual(len(lines), 2)
+
+    def test_transforms_sorted_by_county_keys_with_six_decimals(self):
+        _, lines = self.transforms(0.7, 0.0)
+        self.assertEqual(lines[0][:3], ["300.000000", "0.000000", "50.000000"])  # c_a sorts before c_b
+        self.assertEqual(lines[0][7:], ["0.700000"] * 3)
+        for token in lines[0] + lines[1]:
+            self.assertRegex(token, r"^-?\d+\.\d{6}$")
+
+    def test_yaw_faces_away_from_the_mountain(self):
+        # inward (0, 1): t = atan2(-0, -1) = pi, so the gate faces -inward (south)
+        _, lines = self.transforms(1.0, 0.0)
+        line = lines[1]
+        self.assertAlmostEqual(2 * math.atan2(float(line[4]), float(line[6])), math.pi, places=5)
+        self.assertEqual((float(line[3]), float(line[5])), (0.0, 0.0))
+
+    def test_yaw_offset_is_added(self):
+        _, lines = self.transforms(1.0, 0.5)
+        line = lines[1]
+        self.assertAlmostEqual(math.sin((math.pi + 0.5) / 2), float(line[4]), places=5)
+        self.assertAlmostEqual(math.cos((math.pi + 0.5) / 2), float(line[6]), places=5)
+
+    def test_inset_moves_the_gate_toward_the_mountain(self):
+        _, lines = self.transforms(1.0, 0.0, 2.0)
+        self.assertEqual(lines[0][:3], ["298.000000", "0.000000", "50.000000"])  # inward (-1, 0)
+
+
+@unittest.skipUnless(INSTALLED and (ROOTS.anbennar / "map_data/provinces.png").is_file(),
+                     "RiE and Anbennar are not installed")
+class HeightOutputsTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.files, cls.notes = real_build()
+        anb = ROOTS.anbennar / "map_data"
+        cls.settings = hp.parse_settings((anb / "heightmap.heightmap").read_text(encoding="utf-8-sig"))
+        cls.anb_blocks = hp.unpack(pngio.read_png((anb / "indirection_heightmap.png").read_bytes()),
+                                   hp.Grid.from_png(pngio.read_png((anb / "packed_heightmap.png").read_bytes())),
+                                   cls.settings)
+        cls.anb_height = hp.Grid.from_png(pngio.read_png((anb / "heightmap.png").read_bytes()))
+        cls.new_settings = hp.parse_settings(cls.files["map_data/heightmap.heightmap"].decode("utf-8-sig"))
+        cls.new_height = hp.Grid.from_png(pngio.read_png(cls.files["map_data/heightmap.png"]))
+        cls.new_blocks = hp.unpack(pngio.read_png(cls.files["map_data/indirection_heightmap.png"]),
+                                   hp.Grid.from_png(pngio.read_png(cls.files["map_data/packed_heightmap.png"])),
+                                   cls.new_settings)
+
+    def test_outputs_exist(self):
+        for rel in bmg.HEIGHT_OUTPUTS:
+            self.assertIn(rel, self.files)
+
+    def test_dimensions_and_depths_match_anbennar(self):
+        anb = ROOTS.anbennar / "map_data"
+        for name in ("heightmap", "indirection_heightmap", "packed_heightmap"):
+            old = pngio.read_png((anb / f"{name}.png").read_bytes())
+            new = pngio.read_png(self.files[f"map_data/{name}.png"])
+            self.assertEqual((new.bit_depth, new.color_type), (old.bit_depth, old.color_type), name)
+            self.assertEqual(new.width, old.width, name)
+            if name != "packed_heightmap":
+                self.assertEqual(new.height, old.height, name)
+
+    def test_settings_keep_everything_else(self):
+        s, n = self.settings, self.new_settings
+        self.assertEqual((n.tile_size, n.original_size, n.max_compress_level),
+                         (s.tile_size, s.original_size, s.max_compress_level))
+
+    def test_unchanged_blocks_keep_anbennars_tiles_and_changed_match_heightmap(self):
+        changed = hp.changed_blocks(self.anb_height, self.new_height)
+        self.assertTrue(changed)
+        self.assertEqual(self.anb_blocks.keys(), self.new_blocks.keys())
+        for key, anb in self.anb_blocks.items():
+            block = self.new_blocks[key]
+            if key not in changed:
+                self.assertEqual((block.level, block.tile), (anb.level, anb.tile), key)
+                continue
+            full = hp.sample(self.new_height, key[0], key[1], 1)
+            self.assertTrue(hp._interpolates(block.tile, 32 // block.step + 1, block.step, full, 33,
+                                             data.PACK_TOLERANCE), key)
+
+    def test_gate_count_matches_sites(self):
+        text = self.files["gfx/map/map_object_data/aov_dwarven_gates.txt"].decode("utf-8")
+        count = int(re.search(r"count=(\d+)", text).group(1))
+        lines = [l for l in re.search(r'transform="([^"]*)', text).group(1).split("\n") if l.strip()]
+        self.assertEqual(count, len(lines))
+        self.assertEqual(count, sum(note.startswith("gate ") for note in self.notes))
+        self.assertTrue(text.lstrip("﻿").startswith(bmg.MARKER))
+
+    def test_every_texture_the_asset_names_sits_beside_it(self):
+        folder = "gfx/models/mapitems/aov_dwarven_gate/"
+        asset = self.files[folder + "erebor_gate.asset"].decode("utf-8-sig")
+        names = re.findall(r'(?:texture_\w+|(?<![_a-z])file)\s*=\s*"([^"]+)"', asset)
+        self.assertTrue(names)
+        for name in names:
+            self.assertIn(folder + name, self.files)
+
+    def test_notes_cover_ranges_and_sites(self):
+        self.assertEqual(sum(note.startswith("range ") for note in self.notes), 9)
+        self.assertEqual(sum(note.startswith("gate ") for note in self.notes), 12)
 
 
 def _read(path):
