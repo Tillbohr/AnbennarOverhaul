@@ -328,6 +328,52 @@ def build_shaders(roots: Roots) -> dict:
     return out
 
 
+COURT_SCENE_REL = f"{FX}/court_scene.shader"
+EFFECT_NAME = re.compile(r"^Effect[ \t]+(\w+)", re.MULTILINE)
+PLACEHOLDER_EFFECT = re.compile(
+    r'^Effect[ \t]+(\w+)[ \t]*\r?\n\{[ \t]*\r?\n[ \t]*VertexShader[ \t]*=[ \t]*"VS_standard"[ \t]*\r?\n'
+    r'[ \t]*PixelShader[ \t]*=[ \t]*"PS_noop"[ \t]*\r?\n\}[ \t]*\r?$', re.MULTILINE)
+# What the dwarven gate's pdxmesh and its rock backing request (error.log: "Failed getting Effect ...").
+COURT_SCENE_REQUIRED = ("standard_winter_mapobject", "standard_colormap", "standard_colormap_mapobject")
+
+
+def court_scene_override(anb_text: str, rie_text: str, required: tuple = COURT_SCENE_REQUIRED) -> str:
+    """Anbennar's gfx/FX/court_scene.shader plus the placeholder effects of RiE's that Anbennar lacks.
+
+    CK3 looks the effects of map-object meshes up in court_scene.shader; RiE declares map-object effects there as
+    placeholders (VS_standard vertex shader, PS_noop pixel shader) and Anbennar's file lacks some, so the gate mesh
+    fails to load. Only RiE blocks whose body is exactly that pair are copied, verbatim, after Anbennar's text."""
+    for code in ("VS_standard", "PS_noop"):
+        if not re.search(rf"^\s*MainCode\s+{code}\b", anb_text, re.MULTILINE):
+            raise GeneratorError(f"Anbennar's {COURT_SCENE_REL} has no MainCode {code}")
+    defined = set(EFFECT_NAME.findall(anb_text))
+    eol = "\r\n" if "\r\n" in anb_text else "\n"
+    blocks = []
+    for match in PLACEHOLDER_EFFECT.finditer(rie_text):
+        if match.group(1) not in defined:
+            defined.add(match.group(1))
+            blocks.append(match.group(0).rstrip("\r\n"))
+    missing = [name for name in required if name not in defined]
+    if missing:
+        raise GeneratorError(f"{COURT_SCENE_REL} would not define {', '.join(missing)} (the gate needs them)")
+    if not blocks:
+        return anb_text
+    lead = "" if anb_text.endswith("\n") else eol
+    header = (f"{MARKER}: placeholder map-object effects copied from Realms in Exile's {COURT_SCENE_REL} so the "
+              f"dwarven gate mesh loads.")
+    return anb_text + lead + eol + header + eol + eol + (eol + eol).join(blocks) + eol
+
+
+def build_court_scene(roots: Roots) -> dict:
+    """gfx/FX/court_scene.shader: a whole-file override (Anbennar's file plus RiE's missing placeholder effects)."""
+    anb, rie = roots.anbennar / COURT_SCENE_REL, roots.rie / COURT_SCENE_REL
+    if not anb.is_file():
+        raise GeneratorError(f"Anbennar not found: {anb} does not exist")
+    if not rie.is_file():
+        raise GeneratorError(f"Realms in Exile not found: {rie} does not exist")
+    return {COURT_SCENE_REL: court_scene_override(_read_text(anb), _read_text(rie)).encode("utf-8")}
+
+
 DEFINES_REL = "common/defines/graphic/aov_map_graphics_defines.txt"
 RIE_DEFINES_REL = "common/defines/graphic/00_graphics.txt"
 SKYBOX_REL = "gfx/map/map_object_data/SKYX_skybox.txt"
@@ -835,7 +881,8 @@ def build_all(roots: Roots, notes: list = None) -> dict:
     grading, grading_notes = build_grading(roots)
     if notes is not None:
         notes.extend(grading_notes)
-    return merge_parts([build_terrain(roots), build_shaders(roots), build_environment(roots), grading,
+    return merge_parts([build_terrain(roots), build_shaders(roots), build_court_scene(roots), build_environment(roots),
+                        grading,
                         build_heightmap(roots, notes), build_terrain_fill(roots, notes)])
 
 

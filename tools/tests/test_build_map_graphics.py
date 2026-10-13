@@ -567,6 +567,63 @@ class RealFileTests(unittest.TestCase):
         self.assertEqual(stale, [], "rerun python -I tools/build_map_graphics.py")
 
 
+def _effect(name, vs="VS_standard", ps="PS_noop"):
+    return f'Effect {name}\n{{\n\tVertexShader = "{vs}"\n\tPixelShader = "{ps}"\n}}\n\n'
+
+
+COURT_ANB = ('Includes = {\n}\nMainCode VS_standard\n{\n}\nMainCode PS_noop\n{\n}\n\n'
+             + _effect("have_one") + _effect("have_two")
+             + 'Effect real\n{\n\tVertexShader = "VS_standard"\n\tPixelShader = "PS_standard"\n}\n')
+COURT_RIE = (_effect("have_one") + _effect("new_one") + _effect("real_rie", ps="PS_standard") + _effect("new_two")
+             + 'Effect with_defines\n{\n\tVertexShader = "VS_standard"\n\tPixelShader = "PS_noop"\n'
+             '\tDefines = { "X" }\n}\n')
+
+
+class CourtSceneTests(unittest.TestCase):
+    def test_appends_only_missing_placeholders(self):
+        out = bmg.court_scene_override(COURT_ANB, COURT_RIE, required=("new_one",))
+        self.assertTrue(out.startswith(COURT_ANB))
+        tail = out[len(COURT_ANB):]
+        self.assertIn(bmg.MARKER, tail)
+        self.assertEqual(re.findall(r"^Effect (\w+)", tail, re.M), ["new_one", "new_two"])
+        self.assertIn(_effect("new_one").strip(), tail)
+        self.assertIn(_effect("new_two").strip(), tail)
+        self.assertNotIn("real_rie", tail)
+        self.assertNotIn("with_defines", tail)
+        self.assertNotIn("have_one", tail)
+
+    def test_needs_the_main_codes(self):
+        for missing in ("MainCode VS_standard", "MainCode PS_noop"):
+            with self.assertRaisesRegex(GeneratorError, missing):
+                bmg.court_scene_override(COURT_ANB.replace(missing, "MainCode Other"), COURT_RIE,
+                                         required=("new_one",))
+
+    def test_required_effect_must_end_up_defined(self):
+        with self.assertRaisesRegex(GeneratorError, "standard_colormap"):
+            bmg.court_scene_override(COURT_ANB, COURT_RIE)
+        bmg.court_scene_override(COURT_ANB, COURT_RIE, required=("have_one",))  # defined by Anbennar: fine
+
+    def test_crlf_text_is_kept(self):
+        anb = COURT_ANB.replace("\n", "\r\n")
+        out = bmg.court_scene_override(anb, COURT_RIE.replace("\n", "\r\n"), required=("new_one",))
+        self.assertTrue(out.startswith(anb))
+        self.assertEqual(out.count("\r\n"), out.count("\n"))
+
+
+@unittest.skipUnless(INSTALLED, "RiE and Anbennar are not installed")
+class CourtSceneRealTests(unittest.TestCase):
+    def test_output_extends_anbennars_file_with_the_gate_effects(self):
+        files = real_build()[0]
+        out = files["gfx/FX/court_scene.shader"]
+        anb = (ROOTS.anbennar / "gfx/FX/court_scene.shader").read_bytes()
+        self.assertTrue(out.startswith(anb))
+        self.assertGreater(len(out), len(anb))
+        text = out.decode("utf-8")
+        for name in ("standard_winter_mapobject", "standard_winter_selection_mapobject", "standard_colormap",
+                     "standard_colormap_mapobject"):
+            self.assertRegex(text, rf"(?m)^Effect {name}\s*$")
+
+
 class GateObjectsTests(unittest.TestCase):
     SITES = [dm.GateSite("c_b", "c_x", 100, 200, (0.0, 1.0)), dm.GateSite("c_a", "c_y", 300, 50, (-1.0, 0.0))]
 
