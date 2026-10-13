@@ -243,11 +243,10 @@ camera tilt (already ported). Most of the Serpentspine already exceeds Erebor's 
    (Decided after measurement: a 90th-percentile target of 36,000 would have raised Rubyhold only 3%.)
 2. **Soft ceiling:** values above `SOFT_CEILING = 60000` are eased toward 65,535 (`60000 + (65535 - 60000) *
    (1 - exp(-(v - 60000) / (65535 - 60000)))`), never clipped.
-3. **Gate cliffs:** at each gate site, a pad of radius `GATE_PAD` (2 px) is set to the local normal-land height at
-   the border; behind it (toward the dwarven side) the terrain within `GATE_RISE_DIST` (6 px) of the pad is raised to at
-   least `pad + GATE_RISE` (14000), blending into the lifted range. Cliff pixels (core and skirt) are only those of
-   dwarven or impassable provinces: normal land and water never get cliff height, so the cliff cannot spill into
-   neighbouring normal provinces (the pad rule is unchanged).
+3. **No gate pads, cliffs or skirts (redesign, see "Gate redesign" below):** the first version carved a flat pad and
+   raised a 14,000 cliff at every gate site. In game that stretched the land into sheer, textured walls, so the
+   constants `GATE_PAD`, `GATE_RISE`, `GATE_RISE_DIST` and `GATE_SKIRT` are gone and gate sites no longer change a
+   single height. No pixel is ever lowered.
 4. **Fade:** every change fades linearly to zero over `FADE_PX` (12) pixels outside the dwarven provinces; water and
    impassable provinces change only inside that fade.
 
@@ -267,11 +266,11 @@ camera tilt (already ported). Most of the Serpentspine already exceeds Erebor's 
    back, matches the edited heights within `PACK_TOLERANCE` (257, one 8-bit grey step), else level 0. The
    `empty_tile_offset` tile is kept. `heightmap.heightmap` keeps every key except `level_offsets` (and
    `empty_tile_offset` if the empty tile moves).
-4. Gates: one `erebor_gate_mesh` instance per site, on the dwarven side `GATE_INSET` (0 units to start) from the dwarven-side border pixel nearest the centroid of the
-   pair's dwarven-side border pixels. The yaw is `atan2(inward_x, inward_y)` so the mesh's local +Z points along
-   `inward`, into the mountain (as RiE's Erebor gate has the mountain behind it); its front faces the normal-land
-   neighbour. Scale `GATE_SCALE` (0.7), yaw correction
-   `GATE_YAW_OFFSET` (0 to start; tuned in game).
+4. Gates: one `erebor_gate_mesh` instance per site, moved `GATE_INSET` (2 units) along `inward` from the
+   dwarven-side border pixel nearest the centroid of the pair's dwarven-side border pixels. The yaw is
+   `atan2(inward_x, inward_y)` so the mesh's local +Z points along `inward`, into the mountain (as RiE's Erebor gate
+   has the mountain behind it); its front faces the normal-land neighbour. Scale `GATE_SCALE` (1.6), yaw correction
+   `GATE_YAW_OFFSET` (0; tuned in game), per-gate tweaks in `GATE_OVERRIDES`.
 
 ### Outputs
 
@@ -280,18 +279,46 @@ camera tilt (already ported). Most of the Serpentspine already exceeds Erebor's 
 | `map_data/heightmap.png`, `map_data/packed_heightmap.png`, `map_data/indirection_heightmap.png`, `map_data/heightmap.heightmap` | Whole-file overrides of Anbennar's; PNGs through Git LFS (~30 MB). |
 | `gfx/map/map_object_data/aov_dwarven_gates.txt` | Generated header; one `object` with the gate instances; a map-object layer that Anbennar or vanilla defines. |
 | `gfx/models/mapitems/aov_dwarven_gate/` (asset, mesh, 3 gate textures and the 3 `mountains_mapobject_01_*` textures it names) | Copied from RiE, ~72 MB, of which ~66 MB are RiE's three 4096² mountain textures. |
+| `gfx/FX/court_scene.shader` | Anbennar's file byte for byte plus RiE's placeholder map-object effects Anbennar lacks (see "Gate redesign"). |
 
 The Rubyhold-only Erebor mountain cluster discussed earlier is dropped: the height data does that job.
+
+### Gate redesign (2026-10-13, after the first in-game test)
+
+In game the gates were too small, the pads and cliffs stretched the land into sheer textured walls, and the gate's
+rock backing did not load. `error.log` said `Failed getting Effect [standard_winter_mapobject] in file
+[gfx/FX/court_scene.shader] ... (requested by pdxmesh erebor_gate_mesh)` (also `standard_winter_selection_mapobject`)
+and `Failed to create material with shader standard_colormap (in gfx/FX/court_scene.shader) for mesh [mountain]`.
+
+1. **Court-scene placeholders.** CK3 looks the effects of map-object meshes up in `court_scene.shader`. RiE's own copy
+   declares them as placeholders (`VertexShader = "VS_standard"`, `PixelShader = "PS_noop"`); Anbennar's lacks 19 of
+   them (the build counts them). `build_court_scene` writes `gfx/FX/court_scene.shader` = Anbennar's file plus, after
+   a `# Anbennar Overhaul` comment, every RiE effect whose body is exactly that pair and whose name Anbennar does not
+   define, copied verbatim. RiE's file as a whole stays in `SHADER_NEVER` (its portrait and court code is not
+   wanted). The build stops if Anbennar's file lacks `MainCode VS_standard` or `MainCode PS_noop`, or if
+   `standard_winter_mapobject`, `standard_colormap` or `standard_colormap_mapobject` is still undefined.
+2. **No carved terrain** (raising rule 3 above): the gate sits in the lifted slope instead.
+3. **Bigger gates set into the slope.** `GATE_SCALE = 1.6` (was 0.7), `GATE_INSET = 2.0` map units along `inward`,
+   into the mountain. `GATE_OVERRIDES` is `{(dwarven county, normal county): {scale, yaw, inset, dx, dy}}` (yaw in
+   radians added to the facing, dx and dy in map units); empty until in-game tuning needs it, and a key that matches no
+   gate stops the build.
+4. **Sea gates.** `SEA_GATES = ("c_ovdal_tungr",)`: Ovdal Tungr's gate should stand at the shore by the
+   holding, facing the sea, so for each listed county the land sites are dropped and one sea site is made. The hold barony comes from
+   `tools/data/holds.py` (`b_irovar`, province 526). Among that province's pixels that 4-touch a `sea_zones` pixel
+   (lakes and rivers do not count) the one nearest the province's building locator is the site, and `inward` is the unit
+   vector from the centroid of the touching sea pixels within 6 px to the site, so the gate faces the sea (its
+   `normal_county` is `"sea"`, the key for overrides).
 
 ### Testing
 
 - `pngio` round-trips 8-bit RGB/RGBA and 16-bit grey.
 - Repacking Anbennar's unchanged heightmap reproduces every tile's heights; level bands don't overlap; tiles stay in
   their band; `heightmap.heightmap` keeps every other key; every changed block decodes back within `PACK_TOLERANCE`.
-- Raising: each range's peak ≥ 50,000, or its factor is at `LIFT_MAX`, or it was 1 (peak already ≥ 50,000 or ≤ ground); no height lowered outside gate pads; nothing over
-  65,535; changes fade to zero within `FADE_PX`; water/impassable change only inside the fade.
+- Raising: each range's peak ≥ 50,000, or its factor is at `LIFT_MAX`, or it was 1 (peak already ≥ 50,000 or ≤ ground); no height lowered anywhere; nothing over
+  65,535; changes fade to zero within `FADE_PX` (gate sites included); water/impassable change only inside the fade.
 - Gates: count equals the sites minus Dragon Coast and Harpylen; each sits inside its dwarven province and faces its
-  neighbour; Rubyhold's two sites are as above; each pad is flat and the rise behind it is ≥ 14,000.
+  neighbour; Rubyhold's two sites are as above; overrides apply and an unknown key stops the build; Ovdal Tungr's gate
+  is a sea site (see below).
 - Copied mesh/textures exist and every texture the asset names resolves; the freshness test covers the new outputs.
 
 In-game checklist additions:
@@ -299,10 +326,11 @@ In-game checklist additions:
 - [ ] The map loads with no holes, spikes or seams at 32-pixel block edges.
 - [ ] Rubyhold, Ovdal Tungr and Esmaria stand clearly taller; the Serpentspine still looks right.
 - [ ] Edges fade smoothly into nearby land, water and impassable mountains.
-- [ ] Each gate sits on its pad, its cliff meets the slope, and it faces the normal land (Redgate, Rose Mines, the
-  Serpentspine sites).
+- [ ] Gates look built into the rock at their sites, face the normal land (Redgate, Rose Mines, the Serpentspine
+  sites), and their rock backing shows.
 - [ ] Rivers, borders, holdings and county names over raised terrain look right.
-- [ ] Ovdal Tungr's gate cliff has no pit where a water pixel sits inside it, and no river clips a gate.
+- [ ] Ovdal Tungr's gate stands at the shore by the holding, facing the sea; no river clips a gate.
+- [ ] No stretched walls remain at former gate sites.
 
 ### Risks
 
