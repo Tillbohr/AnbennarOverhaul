@@ -107,6 +107,38 @@
 {
   "confidence": "reasonable",
   "info": null,
+  "key": "duplicate-item",
+  "locations": [
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\common\\defines\\graphic\\aov_map_graphics_defines.txt",
+      "length": 19,
+      "line": "\tZOOM_STEPS_MIN_TILT   = { 12 14 14 14 45 46 47 48 49 50 51 52 52 53 54 54 54 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 50 40 }",
+      "linenr": 4,
+      "path": "common\\defines\\graphic\\aov_map_graphics_defines.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\defines\\graphics\\00_graphics.txt",
+      "length": 19,
+      "line": "\tZOOM_STEPS_MIN_TILT   = { 40  41  43  44  45  46  47  48  49  50  51  52  52  53  54  54  54   55   55   55   55   55   55   55   55   55   55   55   55   55   55   55   55   55   50 }",
+      "linenr": 163,
+      "path": "common\\defines\\graphics\\00_graphics.txt",
+      "stage": null,
+      "tag": "the other define is here"
+    }
+  ],
+  "message": "define is redefined by another define",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
   "key": "missing-localization",
   "locations": [
     {

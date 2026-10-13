@@ -323,6 +323,8 @@ def build_shaders(roots: Roots) -> dict:
     return out
 
 
+DEFINES_REL = "common/defines/graphic/aov_map_graphics_defines.txt"
+RIE_DEFINES_REL = "common/defines/graphic/00_graphics.txt"
 SKYBOX_REL = "gfx/map/map_object_data/SKYX_skybox.txt"
 SNOW_REL = "gfx/map/environment/snow.settings"
 SKYBOX_TRANSFORM = re.compile(r'transform="((?:\s*-?\d+(?:\.\d+)?){10})(\s*)"')
@@ -339,17 +341,15 @@ def png_size(path: Path) -> tuple:
     return int.from_bytes(head[16:20], "big"), int.from_bytes(head[20:24], "big")
 
 
-def skybox_transform(line: str, rie_size: tuple, anb_size: tuple) -> str:
+def skybox_transform(line: str, anb_size: tuple) -> str:
     """RiE's skybox transform (x y z, 3 rotation, 1 + 3 scale values; the closing quote may be on the next line)
-    moved to the centre of Anbennar's map, with the depth scale following the map height. Only x, z and the
-    last scale change."""
+    moved to the centre of Anbennar's map. Only x and z change; the scales (depth 7000 included) stay RiE's."""
     match = SKYBOX_TRANSFORM.search(line)
     if not match:
         raise GeneratorError(f"cannot read the skybox transform: {line!r}")
     values = match.group(1).split()
     values[0] = f"{anb_size[0] / 2:.6f}"
     values[2] = f"{anb_size[1] / 2:.6f}"
-    values[9] = f"{float(values[9]) * anb_size[1] / rie_size[1]:.6f}"
     return line[:match.start(1)] + " ".join(values) + match.group(2) + line[match.end(2):]
 
 
@@ -374,10 +374,22 @@ def settings_paths(text: str) -> list:
 
 
 def _with_header(text: str, path_rel: str) -> bytes:
-    bom = "﻿" if text.startswith("﻿") else ""
+    bom = "\ufeff" if text.startswith("\ufeff") else ""
     eol = "\r\n" if "\r\n" in text else "\n"
     header = "".join(line + eol for line in HEADER(path_rel))
     return (bom + header + text[len(bom):]).encode("utf-8")
+
+
+TILT_LINE = re.compile(r"^\s*ZOOM_STEPS_MIN_TILT\s*=\s*\{[^}]*\}", re.MULTILINE)
+
+
+def defines_file(rie_defines: str) -> bytes:
+    """aov_map_graphics_defines.txt: RiE's ZOOM_STEPS_MIN_TILT line (the camera may tilt up to the horizon, which is
+    what shows the skybox) in an NCamera block (the define lives there in vanilla and RiE)."""
+    match = TILT_LINE.search(_uncommented(rie_defines))
+    if not match:
+        raise GeneratorError(f"{RIE_DEFINES_REL} in RiE has no ZOOM_STEPS_MIN_TILT line")
+    return _with_header("\ufeffNCamera = {\n\t" + match.group(0).strip() + "\n}\n", DEFINES_REL)
 
 
 def build_environment(roots: Roots) -> dict:
@@ -389,15 +401,16 @@ def build_environment(roots: Roots) -> dict:
             raise GeneratorError(f"{rel} does not exist in RiE")
         out[rel] = (roots.rie / rel).read_bytes()
 
-    rie_size = png_size(roots.rie / "map_data/provinces.png")
     anb_size = png_size(roots.anbennar / "map_data/provinces.png")
     sky = _read_text(roots.rie / SKYBOX_REL)
-    out[SKYBOX_REL] = _with_header(skybox_transform(sky, rie_size, anb_size), SKYBOX_REL)
+    out[SKYBOX_REL] = _with_header(skybox_transform(sky, anb_size), SKYBOX_REL)
 
     ids = [material.get("id") for material in parse_materials(_read_text(roots.anbennar / MATERIALS_REL))]
     if "snow" not in ids:
         raise GeneratorError("Anbennar's materials.settings has no material with id 'snow'")
     out[SNOW_REL] = _with_header(snow_settings(_read_text(roots.rie / SNOW_REL), ids.index("snow")), SNOW_REL)
+
+    out[DEFINES_REL] = defines_file(_read_text(roots.rie / RIE_DEFINES_REL))
 
     for rel in ("gfx/map/environment/environment.txt", "gfx/map/water/water.settings"):
         for ref in settings_paths(out[rel].decode("utf-8")):
@@ -468,15 +481,24 @@ def title_block(text: str, key: str) -> str:
     return found[0]
 
 
+def _children(titles: str, parent: str, prefix: str) -> list:
+    found, depth = [], 0
+    for line in title_block(titles, parent).splitlines():
+        match = BLOCK_OPEN.match(line)
+        if depth == 1 and match and match.group(1).startswith(prefix):
+            found.append(match.group(1))
+        depth += brace_delta(line)
+    return found
+
+
 def kingdoms_of(titles: str, empire: str) -> list:
     """The kingdom keys directly inside an empire's block, in file order."""
-    kingdoms, depth = [], 0
-    for line in title_block(titles, empire).splitlines():
-        match = BLOCK_OPEN.match(line)
-        if depth == 1 and match and match.group(1).startswith("k_"):
-            kingdoms.append(match.group(1))
-        depth += brace_delta(line)
-    return kingdoms
+    return _children(titles, empire, "k_")
+
+
+def duchies_of(titles: str, kingdom: str) -> list:
+    """The duchy keys directly inside a kingdom's block (its de jure duchies), in file order."""
+    return _children(titles, kingdom, "d_")
 
 
 def provinces_of(titles: str, key: str) -> list:
@@ -509,15 +531,45 @@ def graded_kingdoms(grading: dict, titles: str) -> dict:
     return result
 
 
-def volume_block(key: str, grade: str, points: list, margin: float, fade: float) -> str:
-    """One `posteffect_volume` box (LF line endings) around `points` ((x, y) map positions) grown by `margin`."""
+def grading_box(points: list, margin: float) -> tuple:
+    """(left, right, bottom, top) of `points` ((x, y) map positions) grown by `margin` on every side."""
     xs, ys = [p[0] for p in points], [p[1] for p in points]
-    left, right, bottom, top = min(xs) - margin, max(xs) + margin, min(ys) - margin, max(ys) + margin
+    return min(xs) - margin, max(xs) + margin, min(ys) - margin, max(ys) + margin
+
+
+def fade_distance(box: tuple, fade: float, share: float) -> float:
+    """The fade of a box: `fade`, but at most `share` of the box's shorter side."""
+    return min(fade, share * min(box[1] - box[0], box[3] - box[2]))
+
+
+def volume_block(key: str, grade: str, box: tuple, fade: float) -> str:
+    """One `posteffect_volume` box (LF line endings) for `box` (left, right, bottom, top), fading over `fade`.
+    Numbers carry one decimal."""
+    left, right, bottom, top = box
     return (f'posteffect_volume = {{\n\tname = "{key}"\n'
             f"\tposteffect_values_day = {grade}\n\tposteffect_values_night = {grade}\n"
-            f"\tposition = {{ {(left + right) / 2} {VOLUME_Y} {(bottom + top) / 2} }}\n"
-            f"\tsize = {{ {float(right - left)} {VOLUME_HEIGHT} {float(top - bottom)} }}\n"
-            f"\tfade_distance = {fade:g}\n}}\n")
+            f"\tposition = {{ {(left + right) / 2:.1f} {VOLUME_Y:.1f} {(bottom + top) / 2:.1f} }}\n"
+            f"\tsize = {{ {right - left:.1f} {VOLUME_HEIGHT:.1f} {top - bottom:.1f} }}\n"
+            f"\tfade_distance = {fade:.1f}\n}}\n")
+
+
+def box_overlaps(boxes: list, threshold: float) -> list:
+    """(name a, grade a, name b, grade b, share) for every pair of boxes ((name, grade, box) triples) with different
+    grades whose overlap is more than `threshold` of the smaller box's area; most overlapping first."""
+    found = []
+    for i, (name_a, grade_a, a) in enumerate(boxes):
+        for name_b, grade_b, b in boxes[i + 1:]:
+            if grade_a == grade_b:
+                continue
+            width = min(a[1], b[1]) - max(a[0], b[0])
+            height = min(a[3], b[3]) - max(a[2], b[2])
+            if width <= 0 or height <= 0:
+                continue
+            smaller = min((a[1] - a[0]) * (a[3] - a[2]), (b[1] - b[0]) * (b[3] - b[2]))
+            share = width * height / smaller
+            if share > threshold:
+                found.append((name_a, grade_a, name_b, grade_b, share))
+    return sorted(found, key=lambda item: -item[4])
 
 
 def posteffect_volumes(rie_text: str, boxes: str) -> str:
@@ -539,8 +591,38 @@ def posteffect_volumes(rie_text: str, boxes: str) -> str:
     return text + boxes.replace("\r\n", "\n").replace("\n", eol)
 
 
+def grading_boxes(titles: str, positions: dict, grading: dict, skip: dict, margin: float) -> tuple:
+    """([(duchy key, grade, box)], notes): one box per de jure duchy of every graded kingdom, measured from the
+    locators of its provinces (provinces in `skip` never count). Notes name duchies without a box and provinces
+    skipped for want of a locator."""
+    notes, boxes = [], []
+    for kingdom, grade in graded_kingdoms(grading, titles).items():
+        duchies = duchies_of(titles, kingdom)
+        if not duchies:
+            notes.append(f"{kingdom}: has no duchies; no {grade} box")
+        for duchy in duchies:
+            provinces = [p for p in provinces_of(titles, duchy) if p not in skip]
+            located = [positions[p] for p in provinces if p in positions]
+            lost = [p for p in provinces if p not in positions]
+            if not located:
+                why = "has no provinces" if not provinces else f"provinces {', '.join(map(str, lost))} have no locator"
+                notes.append(f"{duchy} ({kingdom}): {why}; no {grade} box")
+                continue
+            if lost:
+                notes.append(f"{duchy} ({kingdom}): provinces {', '.join(map(str, lost))} have no locator and are "
+                             f"skipped")
+            boxes.append((duchy, grade, grading_box(located, margin)))
+    return boxes, notes
+
+
+def overlap_notes(boxes: list, threshold: float) -> list:
+    return [f"{a} ({grade_a}) and {b} ({grade_b}) overlap by {share:.0%} of the smaller box"
+            for a, grade_a, b, grade_b, share in box_overlaps(boxes, threshold)]
+
+
 def build_grading(roots: Roots) -> tuple:
-    """(output rel path -> bytes, notes). Notes name provinces and kingdoms skipped for want of a locator."""
+    """(output rel path -> bytes, notes). Notes name provinces and duchies skipped for want of a locator and pairs
+    of boxes of different grades that overlap."""
     folder = roots.rie / POST_EFFECTS
     luts = sorted(folder.glob("colorcorrection_*"))
     if not (folder / "posteffect_volumes.txt").is_file() or not luts:
@@ -551,26 +633,19 @@ def build_grading(roots: Roots) -> tuple:
     out = {f"{POST_EFFECTS}/{path.name}": path.read_bytes() for path in luts}
 
     titles = titles_text(roots)
-    positions = locator_positions(_read_text(locators))
-    notes, boxes = [], []
-    for kingdom, grade in graded_kingdoms(data.GRADING, titles).items():
-        provinces = provinces_of(titles, kingdom)
-        located = [positions[p] for p in provinces if p in positions]
-        lost = [p for p in provinces if p not in positions]
-        if not located:
-            why = "has no provinces" if not provinces else f"provinces {', '.join(map(str, lost))} have no locator"
-            notes.append(f"{kingdom}: {why}; no {grade} box")
-            continue
-        if lost:
-            notes.append(f"{kingdom}: provinces {', '.join(map(str, lost))} have no locator and are skipped")
-        boxes.append(volume_block(kingdom, grade, located, data.GRADING_MARGIN, data.GRADING_FADE))
+    graded = graded_kingdoms(data.GRADING, titles)
+    boxes, notes = grading_boxes(titles, locator_positions(_read_text(locators)), data.GRADING,
+                                 data.GRADING_SKIP_PROVINCES, data.GRADING_MARGIN)
+    notes.extend(overlap_notes(boxes, data.GRADING_OVERLAP_NOTE))
+    blocks = [volume_block(name, grade, box, fade_distance(box, data.GRADING_FADE, data.GRADING_FADE_SHARE))
+              for name, grade, box in boxes]
 
     rie_text = _read_text(folder / "posteffect_volumes.txt")
-    text = posteffect_volumes(rie_text, "".join(boxes))
+    text = posteffect_volumes(rie_text, "".join(blocks))
     for lut in LUT_LINE.findall(text):
         if lut not in out:
             raise GeneratorError(f"posteffect_volumes.txt names {lut}, which is not a copied colorcorrection_* file")
-    for grade in set(graded_kingdoms(data.GRADING, titles).values()):
+    for grade in set(graded.values()):
         if not re.search(rf"(?m)^\s*name\s*=\s*{re.escape(grade)}\s*$", text):
             raise GeneratorError(f"grade {grade!r} has no posteffect_values block in RiE's posteffect_volumes.txt")
     out[VOLUMES_REL] = _with_header(text, VOLUMES_REL)
@@ -611,7 +686,7 @@ def main() -> int:
     notes = []
     try:
         files = build_all(Roots(rie=args.rie, anbennar=args.anbennar, game=args.game), notes)
-    except GeneratorError as error:
+    except (GeneratorError, OSError, UnicodeDecodeError) as error:
         print(f"error: {error}", file=sys.stderr)
         return 1
     for note in notes:

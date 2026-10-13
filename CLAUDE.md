@@ -73,7 +73,7 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
 | `common/buildings/zz_aov_monument_overrides_cannor.txt` (with `common/buildings/aov_monuments_cannor.txt`, `history/provinces/aov_monuments_cannor.txt`, `localization/english/aov_monuments_cannor_l_english.yml`) | `python -I tools/build_monuments.py` | Cannor great-project buildings from `tools/data/monuments/cannor.py`. The `zz_` file re-emits the 17 Anbennar monument levels (copied from Anbennar's current definitions) with the EU4 tier modifiers, `on_complete` and `next_building` inserted, marked `# Anbennar Overhaul: EU4 tier <n>`; Anbennar's own triggers are untouched. The new upper levels of those chains (in `aov_monuments_cannor.txt`) are copies of the chain's top Anbennar level with the EU4 tier merged the same way (EU4 culture gate in `can_construct` only), because a CK3 upgrade replaces the previous level's effects. The script validates the data first and stops on a placement, name, icon, modifier-key or empty-level problem. |
 | `common/buildings/aov_monuments_dwarovar.txt`, `history/provinces/aov_monuments_dwarovar.txt`, `localization/english/aov_monuments_dwarovar_l_english.yml` | `python -I tools/build_monuments.py` | Middle Dwarovar great-project buildings from `tools/data/monuments/dwarovar.py` (no Anbennar levels, so no overrides file). |
 | `common/buildings/aov_monuments_<region>.txt`, `history/provinces/aov_monuments_<region>.txt`, `localization/english/aov_monuments_<region>_l_english.yml` for `bulwar`, `salahad`, `deepwoods` | `python -I tools/build_monuments.py` | Great-project buildings of the rest of the map from `tools/data/monuments/<region>.py` (no Anbennar levels, so no overrides files). |
-| `gfx/FX/` (16 shader files), `gfx/map/terrain/` (materials, textures), `gfx/map/environment/`, `gfx/map/water/`, `gfx/map/fog_of_war/`, `gfx/map/post_effects/`, `gfx/map/map_object_data/`, `gfx/models/mapitems/` (skybox) | `python -I tools/build_map_graphics.py` | Realms in Exile's map look, 84 files (~180 MB, `.dds`/`.mesh`/`.tga` via Git LFS) copied or rewritten from RiE and Anbennar by `tools/data/map_graphics.py`; the settings, `posteffect_volumes.txt` and the snow `Texture_Index` are rewritten, so never edit the output by hand. Rerun after a RiE or Anbennar update. |
+| `gfx/FX/` (16 shader files), `gfx/map/terrain/` (materials, textures), `gfx/map/environment/`, `gfx/map/water/`, `gfx/map/fog_of_war/`, `gfx/map/post_effects/`, `gfx/map/map_object_data/`, `gfx/models/mapitems/` (skybox), `common/defines/graphic/aov_map_graphics_defines.txt` (camera tilt) | `python -I tools/build_map_graphics.py` | Realms in Exile's map look, 85 files (~190 MB, `.dds`/`.mesh`/`.tga` via Git LFS) copied or rewritten from RiE and Anbennar by `tools/data/map_graphics.py`; the settings, `posteffect_volumes.txt` and the snow `Texture_Index` are rewritten, so never edit the output by hand. Rerun after a RiE or Anbennar update. |
 
 ## Updating to a new Anbennar version
 
@@ -104,7 +104,7 @@ base mod via its in-folder `descriptor.mod`; pointing it at the launcher's `../d
 the whole `mod/` folder instead. Current baseline: 4 `temple_citadel_holding` modifier-format warnings,
 inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error in the generated `gui/hud.gui`
 (vanilla HUD code referring to a dynastic-cycle group that Anbennar's `tgp_dynastic_cycle.txt` drops), and 5 missing `<government>_realm` localization warnings in the generated government files (celestial, steppe_admin, meritocratic, japan_administrative, japan_feudal; Anbennar and vanilla lack them too), and 2 warnings on
-`relative_fog_color` in the copied RiE `gfx/map/environment/environment.txt` (RiE's value, kept so the lighting matches). The baseline's `other_rulers` entry had its `linenr` refreshed from a stale 1722 to 1742 (same report, no new one).
+`relative_fog_color` in the copied RiE `gfx/map/environment/environment.txt` (RiE's value, kept so the lighting matches; vanilla's `environment.txt` has the identical line, so this is a tiger false positive on a vanilla value). 1 `duplicate-item` warning for `ZOOM_STEPS_MIN_TILT` in `common/defines/graphic/aov_map_graphics_defines.txt` (intended: it overrides Anbennar's and vanilla's value, the later-loaded mod wins; tiger flags every cross-mod define override). The baseline's `other_rulers` entry had its `linenr` refreshed from a stale 1722 to 1742 (same report, no new one).
 
 ## Systems
 
@@ -221,9 +221,13 @@ inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error
   `materials.settings` (order and masks untouched), plus 4 drop-in files (`DROP_INS`). Shaders: 16 RiE files under
   `gfx/FX/` (12 roots plus `gh_snowfall`, `gh_utils`, `gh_vic3_fog_of_war`, `gh_vic3_fog_of_war_settings`); Anbennar
   keeps `bordercolor.fxh`, `gh_camera_utils.fxh` and `dynamic_masks.fxh`. Also RiE's environment, water, fog of war
-  and the skybox (centred at (4096, 2048), z-scale 5090.909091); the snow `Texture_Index` is rewritten to 56
-  (Anbennar's `snow` material). Colour grading (`GRADING`, one box per kingdom from its baronies' building locators,
-  margin 60, fade 300): 33 boxes, 5 boreal (Gerudia), 11 desert (Salahad, Kheterata), 18 arid (Bulwar, Harpylen);
-  RiE's Middle-earth boxes are dropped, and `k_the_reach` (no baronies) is reported as a note. Tune the textures and
+  and the skybox (centred at (4096, 2048), RiE's z-scale 7000 kept); `aov_map_graphics_defines.txt` ports RiE's lowered
+  `ZOOM_STEPS_MIN_TILT`, so at close zoom the camera can tilt nearly flat and show the skybox, as in RiE; the snow `Texture_Index` is rewritten to 56
+  (Anbennar's `snow` material). Colour grading (`GRADING`, one box per de jure duchy of each graded kingdom from its
+  baronies' building locators, margin 60, fade min(300, 25% of the box's short side); `GRADING_SKIP_PROVINCES` leaves
+  out stray locators such as b_obadel's): 125 boxes, 20 boreal (Gerudia), 45 desert (Salahad, Kheterata), 60 arid
+  (Bulwar, Harpylen); RiE's Middle-earth boxes are dropped, `k_the_reach` (no duchies) is reported as a note, and
+  every pair of different-grade boxes overlapping by more than 25% is printed as a note (three pairs still exceed
+  50%, see the spec). Tune the textures and
   grades in game. `credits.txt` credits RiE, Godherja (the `gh_` shaders, adapted by RiE) and Victoria 3 (fog of war
   is based on its shader). **Ask the RiE and Godherja teams for permission before the next Workshop upload.**

@@ -17,7 +17,7 @@ and portrait shaders.
 - Lives in this Overhaul, not a separate submod or repo.
 - Ground textures: remap Anbennar's mountain, rock, hill and snow materials to RiE textures, plus RiE's same-name
   replacements for vanilla's snow and pine-forest textures. Lowlands stay vanilla.
-- Colour grading by Anbennar region, one box per kingdom; the Middle Dwarovar gets no grade for now (a milder
+- Colour grading by Anbennar region, one box per de jure duchy; the Middle Dwarovar gets no grade for now (a milder
   "deep" grade may come later).
 - Permission: port now, credit RiE, Godherja and Victoria 3 in `credits.txt`, and ask the RiE and Godherja teams
   whether the `gh_` shaders may be reused before the next Workshop upload. This blocks publishing only.
@@ -45,7 +45,8 @@ through Git LFS (git-lfs 3.3 is installed; the account has 10 GB storage and 10 
 | Lighting | `gfx/map/environment/environment.txt` | RiE's, copied. |
 | Skybox | `gfx/map/environment/skybox.dds`, `gfx/models/mapitems/SKYX_skybox.mesh`, `gfx/models/mapitems/SKYX_skybox.asset`, `gfx/map/map_object_data/SKYX_skybox.txt` | RiE's; the placement's transform is rewritten for Anbennar's map (below). |
 | Snow | `gfx/map/environment/snow.settings`, `gfx/map/environment/gh_snow_layer_1.dds` | RiE's, copied. |
-| Colour grading | `gfx/map/post_effects/colorcorrection_*.{tga,dds}`, `gfx/map/post_effects/posteffect_volumes.txt` | Colour tables copied. The volumes file is generated: RiE's `posteffect_values` blocks and height volumes verbatim, then one box volume per kingdom of `GRADING` (below). RiE's Middle-earth boxes are dropped. |
+| Colour grading | `gfx/map/post_effects/colorcorrection_*.{tga,dds}`, `gfx/map/post_effects/posteffect_volumes.txt` | Colour tables copied. The volumes file is generated: RiE's `posteffect_values` blocks and height volumes verbatim, then one box volume per de jure duchy of each graded kingdom of `GRADING` (below). RiE's Middle-earth boxes are dropped. |
+| Camera tilt | `common/defines/graphic/aov_map_graphics_defines.txt` | Generated: an `NCamera` block holding only RiE's `ZOOM_STEPS_MIN_TILT` line (RiE lowers the first steps to `12 14 14 14`, vanilla and Anbennar have `40 41 43 44`), read from RiE's `common/defines/graphic/00_graphics.txt`; the generator stops if the line is missing. It lets the camera tilt up to the horizon, which is what shows the skybox. |
 | Water | `gfx/map/water/water.settings` | RiE's settings. Anbennar's flow map, foam map and water colour stay. |
 | Fog of war | `gfx/map/fog_of_war/cloud.dds` | RiE's tiling 4096×4096 cloud texture. |
 | Shaders | `gfx/FX/...` | RiE's map shaders and every RiE file they include (below). |
@@ -80,8 +81,9 @@ DXT5 like vanilla's set (a texture array needs one size and format); every `DROP
 ## Colour grading
 
 `GRADING` maps a title key to a grade. An empire entry covers its de jure kingdoms; a kingdom entry overrides its
-empire's (grade `None` removes the kingdom's box), for tuning spread-out kingdoms such as `k_ginerdu`, whose box
-spans much of the south. Each graded kingdom gets one `posteffect_volume` box:
+empire's (grade `None` removes the kingdom's box), for tuning. Every de jure duchy of a graded kingdom (the `d_` blocks directly inside the kingdom's block)
+gets one `posteffect_volume` box with the kingdom's grade. Per-duchy boxes hug the land: a per-kingdom box for a
+spread-out kingdom such as `k_ginerdu` covered most of its neighbours' differently graded boxes.
 
 | Region (all de jure kingdoms of) | Grade |
 |---|---|
@@ -93,23 +95,32 @@ No box (map-wide `standard` grade): `e_middle_dwarovar`, `e_deepwoods`, `e_drago
 RiE's other grades (`tropical`, `savannah`, `tundra`, `artic`, `volcanic`, `ocean`, `cold`, `hot`) are copied and
 stay available.
 
-Box measurement: each kingdom's provinces (the `province = N` lines of its baronies in Anbennar's landed titles)
+Box measurement: each duchy's provinces (the `province = N` lines of its baronies in Anbennar's landed titles)
 are looked up in Anbennar's `gfx/map/map_object_data/building_locators.txt`, which gives one map position
 `{ x 0 y }` per province (y counted from the bottom, the same convention as post-effect volumes). The box is the
 bounding box of those points grown by `GRADING_MARGIN` (60) on every side, so it covers the provinces' area, not
 only their centres: `position = { centre_x 400 centre_y }`, `size = { width 1600 height }` (400 and 1600 are RiE's
-vertical values), `fade_distance = GRADING_FADE` (300). Each box carries `posteffect_values_day` and
-`posteffect_values_night` set to the grade, as RiE's do. Volume names are the kingdom keys. A province without a
-locator is skipped and a kingdom with no located province gets no box; the generator prints both (today only
-`k_the_reach`, which has no baronies; `k_obrtrol` is commented out in Anbennar's landed titles, so it is not a kingdom). (The tools use the standard library only, so `provinces.png` is not decoded.)
+vertical values), `fade_distance = min(GRADING_FADE, GRADING_FADE_SHARE x the box's short side)` (300 and 0.25; a fixed 300 exceeded many duchy boxes). Numbers are written with one decimal. Each box carries `posteffect_values_day` and
+`posteffect_values_night` set to the grade, as RiE's do. Volume names are the duchy keys. `GRADING_SKIP_PROVINCES` (province id to reason) leaves stray locators out of
+the measurement (today b_obadel, province 6536, whose locator sits far from the rest of `k_ginerdu`). A province
+without a locator is skipped and a duchy with no located province gets no box; the generator prints both (today
+only `k_the_reach`, which has no duchies; `k_obrtrol` is commented out in Anbennar's landed titles, so it is not a
+kingdom).
+
+Overlaps: after measuring, every pair of boxes with different grades that overlap by more than
+`GRADING_OVERLAP_NOTE` (0.25) of the smaller box's area is printed as a note (not an error). Today 9 pairs are noted;
+three overlap by more than half (`d_ardu` / `d_hasr` 85%, `d_masusopot` / `d_sad_sur` 76%, `d_ardu` /
+`d_eduz_vacyn` 67%, all desert Salahad boxes against arid Bulwar ones) and are left for in-game tuning: the margin,
+`GRADING_SKIP_PROVINCES` or a kingdom override can resolve them. (The tools use the standard library only, so `provinces.png` is not decoded.)
 
 ## Lighting, skybox, snow, water, fog of war
 
 - **Lighting:** RiE's `environment.txt`. Every file it names (e.g. its cubemap) must exist in the copied set,
   Anbennar or the game.
 - **Skybox:** RiE places one mesh at `transform = "4104.55 1.74 2812.75 0 0 0 1 10000 1000 7000"` on its 8192×5632
-  map. For Anbennar: position `(4096, 1.74, 2048)`, scale `(10000, 1000, 7000 × 4096 / 5632)` (≈ 5091), rotation
-  unchanged. The asset and mesh are copied; the asset's shader `SKYX_sky` is in RiE's `pdxmesh.shader`.
+  map. For Anbennar: position `(4096, 1.74, 2048)`; scale (`10000, 1000, 7000`) and rotation unchanged (the depth
+  scale stays RiE's 7000 rather than shrinking with the map height). The asset and mesh are copied; the asset's shader `SKYX_sky` is in RiE's `pdxmesh.shader`. The skybox only shows when the camera can tilt to the horizon, so
+  the generator also writes `aov_map_graphics_defines.txt` with RiE's lowered `ZOOM_STEPS_MIN_TILT` (see Outputs).
 - **Snow:** `snow.settings` and the snow layer texture; drawn by `gh_snowfall.fxh`. Its `"Texture_Index"` is the
   position of the snow material in the terrain texture array (54 in RiE's material list); the generator rewrites it
   to the 0-based position of the material with id `snow` in Anbennar's `materials.settings`.
@@ -138,7 +149,8 @@ Texture references: every `File = "..."` path in a copied shader must exist in t
 game. A texture found only in RiE is copied (today: the skybox, the snow layer and the fog-of-war cloud); one that
 Anbennar or the game has (e.g. `surround_mask.dds`, the environment cubemaps) is not.
 
-`dynamic_masks.fxh`: `gh_snowfall.fxh` includes it, and Anbennar's version is heavily rewritten. A check lists the
+`dynamic_masks.fxh`: `gh_snowfall.fxh` includes it. Anbennar's `dynamic_masks.fxh` and `bordercolor.fxh` equal
+vanilla's apart from line endings, so the check below guards future Anbennar edits. A check lists the
 functions and constants `gh_snowfall.fxh` uses that are defined in RiE's `dynamic_masks.fxh` and requires each to
 be defined in Anbennar's version too; the generator stops otherwise.
 
@@ -150,12 +162,14 @@ on the real files:
 - `TEXTURE_MAP` keys and values exist; the generated `materials.settings` equals Anbennar's except the header and
   the mapped materials' three texture lines; order and masks unchanged.
 - Copied terrain textures are 1024×1024 DXT5; drop-ins match `DROP_INS`.
-- Every `GRADING` kingdom exists; a box covers all its provinces' locators plus the margin (fixture);
-  regions without a grade get no box; RiE's Middle-earth boxes are gone.
+- Every `GRADING` kingdom exists; one box per de jure duchy covers all its provinces' locators plus the margin
+  (fixture); `GRADING_SKIP_PROVINCES` is honoured; fade follows the box size; different-grade overlaps are noted;
+  numbers have one decimal; regions without a grade get no box; RiE's Middle-earth boxes are gone.
+- The defines file carries RiE's `ZOOM_STEPS_MIN_TILT` line and the generator stops when it is missing.
 - Shader include closure resolves; excluded and Anbennar-kept files are not in the output; the
   `dynamic_masks.fxh` check passes on Anbennar's file and fails on a fixture missing a function.
 - Every texture path named by copied shaders, `environment.txt`, `water.settings` and the skybox asset exists.
-- The skybox transform for Anbennar's map size; `snow.settings` points at Anbennar's snow material.
+- The skybox transform for Anbennar's map size (RiE's scales kept); `snow.settings` points at Anbennar's snow material.
 - Generated files are fresh (skipped when RiE is not installed).
 
 Validation: `python -I tools/validate.py` stays clean. Tiger does not check shaders.
@@ -166,7 +180,9 @@ In-game checklist (PR, unticked):
 - [ ] Mountains show RiE's rock (the Serpentspine, Gerudia's peaks, Salahad's desert mountains).
 - [ ] Snowfall appears in winter; the snow textures look right.
 - [ ] Fog of war shows the new clouds over unexplored land.
-- [ ] Tilting the camera shows the skybox at the horizon.
+- [ ] At close zoom the camera tilts to the horizon and shows the skybox.
+- [ ] Frost and snow do not reach Bulwar or Salahad (`snow.settings` hemisphere values were tuned for Middle-earth's taller map).
+- [ ] The area past the map edges looks right (RiE's water shader makes everything outside the map water).
 - [ ] Salahad, Kheterata, Bulwar, Harpylen and Gerudia get their grades, with soft edges and no hard box outlines.
 - [ ] Water looks right along Anbennar's coasts.
 - [ ] Performance is about the same as before (FPS on the full map).

@@ -127,17 +127,17 @@ class EnvironmentUnitTests(unittest.TestCase):
             '1000.000000 7000.000000\n"')
 
     def test_skybox_transform(self):
-        out = bmg.skybox_transform(self.LINE, (8192, 5632), (8192, 4096))
+        out = bmg.skybox_transform(self.LINE, (8192, 4096))
         self.assertTrue(out.startswith('transform="') and out.endswith('\n"'))
         values = [float(v) for v in out[len('transform="'):-2].split()]
         self.assertEqual(values[:3], [4096.0, 1.743652, 2048.0])
         self.assertEqual(values[3:7], [0.0, 0.0, 0.0, 1.0])
         self.assertEqual(values[7:9], [10000.0, 1000.0])
-        self.assertAlmostEqual(values[9], 5090.909091, places=5)
+        self.assertEqual(values[9], 7000.0)  # RiE's depth scale is kept
 
     def test_skybox_transform_rejects_other_lines(self):
         with self.assertRaises(GeneratorError):
-            bmg.skybox_transform("name=x", (1, 1), (1, 1))
+            bmg.skybox_transform("name=x", (1, 1))
 
     def test_snow_settings(self):
         text = '"A" = 1\n"Texture_Index" = 54\t\t\t# Index of snow\n"B" = 54\n'
@@ -145,6 +145,18 @@ class EnvironmentUnitTests(unittest.TestCase):
         self.assertEqual(out, '"A" = 1\n"Texture_Index" = 7\t\t\t# Index of snow # Anbennar Overhaul\n"B" = 54\n')
         with self.assertRaises(GeneratorError):
             bmg.snow_settings('"A" = 1\n', 7)
+
+    TILT = ("NCamera = {\n\t# note\n\tZOOM_STEPS_MIN_TILT = { 12 14 50 40 } # tail\n\tOTHER = 1\n}\n")
+
+    def test_defines_file(self):
+        out = bmg.defines_file(self.TILT).decode("utf-8")
+        header = "".join(line + "\n" for line in bmg.HEADER(bmg.DEFINES_REL))
+        self.assertEqual(out, "﻿" + header
+                         + "NCamera = {\n\tZOOM_STEPS_MIN_TILT = { 12 14 50 40 }\n}\n")
+
+    def test_defines_file_without_the_line_raises(self):
+        with self.assertRaisesRegex(GeneratorError, "ZOOM_STEPS_MIN_TILT"):
+            bmg.defines_file("NCamera = {\n\t# ZOOM_STEPS_MIN_TILT = { 1 }\n}\n")
 
     def test_settings_paths(self):
         text = '"X" = "gfx/map/a.dds"\n# "gfx/map/c.dds"\ncubemap = "gfx/b.dds" # note\n"Y" = 3\n'
@@ -261,21 +273,69 @@ class GradingUnitTests(unittest.TestCase):
         self.assertEqual(bmg.graded_kingdoms({"e_one": "desert", "e_two": "arid"}, TITLES),
                          {"k_a": "desert", "k_b": "desert", "k_c": "arid"})
         self.assertEqual(bmg.graded_kingdoms({"e_one": "desert", "k_b": "arid"}, TITLES),
-                         {"k_a": "desert", "k_b": "arid"} | {})
+                         {"k_a": "desert", "k_b": "arid"})
         self.assertEqual(bmg.graded_kingdoms({"e_one": "desert", "k_b": None}, TITLES), {"k_a": "desert"})
 
+    def test_duchies_of(self):
+        self.assertEqual(bmg.duchies_of(TITLES, "k_a"), ["d_x"])
+        self.assertEqual(bmg.duchies_of(TITLES, "k_b"), ["d_y"])
+
+    POSITIONS = {1: (100.0, 200.0), 2: (300.0, 260.0), 3: (1000.0, 1000.0), 4: (50.0, 50.0)}
+
+    def test_grading_boxes_one_per_duchy(self):
+        boxes, notes = bmg.grading_boxes(TITLES, self.POSITIONS, {"e_one": "desert", "k_b": "arid"}, {}, 60)
+        self.assertEqual(boxes, [("d_x", "desert", (40.0, 360.0, 140.0, 320.0)),
+                                 ("d_y", "arid", (940.0, 1060.0, 940.0, 1060.0))])
+        self.assertEqual(notes, [])
+
+    def test_grading_boxes_honour_skip_table(self):
+        boxes, notes = bmg.grading_boxes(TITLES, self.POSITIONS, {"e_one": "desert"}, {2: "far away"}, 60)
+        self.assertEqual(boxes[0], ("d_x", "desert", (40.0, 160.0, 140.0, 260.0)))
+        boxes, notes = bmg.grading_boxes(TITLES, self.POSITIONS, {"e_one": "desert"}, {1: "x", 2: "y"}, 60)
+        self.assertEqual([b[0] for b in boxes], ["d_y"])
+        self.assertTrue(any("d_x" in note and "no provinces" in note for note in notes), notes)
+
+    def test_grading_boxes_note_missing_locators(self):
+        boxes, notes = bmg.grading_boxes(TITLES, {1: (1.0, 2.0)}, {"e_one": "desert"}, {}, 10)
+        self.assertEqual([b[0] for b in boxes], ["d_x"])
+        self.assertTrue(any("province" in note and "2" in note for note in notes), notes)
+        self.assertTrue(any("d_y" in note for note in notes), notes)
+
+    def test_fade_distance(self):
+        self.assertEqual(bmg.fade_distance((0, 1000, 0, 800), 300, 0.25), 200.0)
+        self.assertEqual(bmg.fade_distance((0, 4000, 0, 3000), 300, 0.25), 300)
+        self.assertEqual(bmg.fade_distance((0, 120, 0, 2000), 300, 0.25), 30.0)
+
+    def test_box_overlaps(self):
+        boxes = [("a", "desert", (0, 100, 0, 100)), ("b", "arid", (50, 150, 0, 100)),
+                 ("c", "desert", (50, 150, 0, 100)), ("e", "arid", (500, 600, 0, 100))]
+        found = bmg.box_overlaps(boxes, 0.25)
+        # a-c share a grade and b-c overlap fully but differ in grade; e overlaps nothing
+        self.assertEqual([(a, b, round(share, 2)) for a, _, b, _, share in found],
+                         [("b", "c", 1.0), ("a", "b", 0.5)])
+        self.assertEqual(bmg.box_overlaps(boxes, 0.6)[0][:4], ("b", "arid", "c", "desert"))
+        self.assertEqual(len(bmg.box_overlaps(boxes, 0.6)), 1)
+        self.assertEqual(bmg.overlap_notes(boxes, 0.6), ["b (arid) and c (desert) overlap by 100% of the smaller box"])
+
     def test_volume_block(self):
-        block = bmg.volume_block("k_x", "desert", [(100, 200), (300, 260)], 60, 300)
+        block = bmg.volume_block("k_x", "desert", bmg.grading_box([(100, 200), (300, 260)], 60), 45)
         self.assertIn('name = "k_x"', block)
         self.assertIn("posteffect_values_day = desert", block)
         self.assertIn("posteffect_values_night = desert", block)
         self.assertIn("position = { 200.0 400.0 230.0 }", block)
         self.assertIn("size = { 320.0 1600.0 180.0 }", block)
-        self.assertIn("fade_distance = 300", block)
+        self.assertIn("fade_distance = 45.0", block)
+        self.assertRegex(block, r"position = \{ \d+\.\d \d+\.\d \d+\.\d \}")
+
+    def test_volume_block_has_no_float_noise(self):
+        block = bmg.volume_block("k_x", "arid", bmg.grading_box([(0.1 + 0.2, 1 / 3)], 60.1), 0.1 + 0.2)
+        self.assertIn("fade_distance = 0.3\n", block)
+        for number in re.findall(r"-?\d+\.\d+", block):
+            self.assertRegex(number, r"^-?\d+\.\d$")
         self.assertTrue(block.startswith("posteffect_volume = {") and block.rstrip().endswith("}"))
 
     def test_posteffect_volumes(self):
-        boxes = bmg.volume_block("k_x", "desert", [(100, 200)], 60, 300)
+        boxes = bmg.volume_block("k_x", "desert", bmg.grading_box([(100, 200)], 60), 120)
         out = bmg.posteffect_volumes(VOLUMES, boxes)
         self.assertIn("posteffect_values = {\r\n\tname = standard\r\n}", out)
         self.assertIn("posteffect_height_volume", out)
@@ -343,6 +403,8 @@ class RealFileTests(unittest.TestCase):
         snow = (ROOTS.rie / "gfx/FX/gh_snowfall.fxh").read_text(encoding="utf-8")
         rie_masks = bmg.rie_dynamic_masks(ROOTS)
         anb_masks = (ROOTS.anbennar / "gfx/FX/dynamic_masks.fxh").read_text(encoding="utf-8")
+        checked = bmg.defined_symbols(rie_masks) & set(bmg.IDENTIFIER.findall(snow))
+        self.assertIn("GetWinterSeverityValue", checked)
         self.assertEqual(bmg.missing_mask_symbols(snow, rie_masks, anb_masks), [])
 
     def test_shader_textures_exist_and_rie_only_are_built(self):
@@ -374,8 +436,16 @@ class RealFileTests(unittest.TestCase):
             self.assertEqual(out[rel], (ROOTS.rie / rel).read_bytes(), rel)
         sky = out["gfx/map/map_object_data/SKYX_skybox.txt"].decode("utf-8")
         self.assertIn("4096.000000 1.743652 2048.000000", sky)
-        self.assertIn("5090.909091", sky)
+        self.assertIn("7000.000000", sky)
         self.assertTrue(sky.startswith("﻿" + bmg.HEADER("gfx/map/map_object_data/SKYX_skybox.txt")[0]))
+
+    def test_defines_file_real(self):
+        out = bmg.build_environment(ROOTS)[bmg.DEFINES_REL].decode("utf-8")
+        rie = (ROOTS.rie / bmg.RIE_DEFINES_REL).read_text(encoding="utf-8")
+        line = re.search(r"(?m)^\s*(ZOOM_STEPS_MIN_TILT.*?\})", rie).group(1)
+        self.assertTrue(out.startswith("﻿" + bmg.HEADER(bmg.DEFINES_REL)[0]))
+        self.assertTrue(out.endswith("NCamera = {\n\t" + line + "\n}\n"), out)
+        self.assertNotIn("\r", out)
 
     def test_named_paths_exist(self):
         out = bmg.build_environment(ROOTS)
@@ -395,37 +465,60 @@ class RealFileTests(unittest.TestCase):
                     "gfx/map/map_object_data/SKYX_skybox.txt", "gfx/map/water/water.settings"):
             self.assertIn(ref, files)
 
+    # Pairs of different-grade duchy boxes that overlap by more than half of the smaller box on today's data. They
+    # are reported in the generator's notes; a new pair appearing here is a regression to look at.
+    KNOWN_HEAVY_OVERLAPS = {("d_ardu", "d_hasr"), ("d_masusopot", "d_sad_sur"), ("d_ardu", "d_eduz_vacyn")}
+
     def test_grading_real(self):
         files, notes = bmg.build_grading(ROOTS)
         titles = bmg.titles_text(ROOTS)
         volumes = files["gfx/map/post_effects/posteffect_volumes.txt"].decode("utf-8")
-        boxes = dict(re.findall(r'(?m)^posteffect_volume = \{\s*name = "(\w+)".*?size = \{ ([\d. ]+) \}', volumes,
-                                re.S))
+        names = re.findall(r'(?m)^posteffect_volume = \{\s*name = "(\w+)"', volumes)
         graded = bmg.graded_kingdoms(data.GRADING, titles)
+        duchies = {d: k for k in graded for d in bmg.duchies_of(titles, k)}
+        self.assertEqual(sorted(names), sorted(duchies))
+        self.assertTrue(all(name.startswith("d_") for name in names))
         positions = bmg.locator_positions(_read(ROOTS.anbennar / "gfx/map/map_object_data/building_locators.txt"))
-        unboxed = {"k_the_reach"}
-        self.assertEqual(set(boxes), set(graded) - unboxed)
         for empire in re.findall(r"(?m)^e_\w+(?= = \{)", titles):
             if empire not in data.GRADING:
                 for kingdom in bmg.kingdoms_of(titles, empire):
-                    self.assertNotIn(kingdom, boxes)
+                    self.assertNotIn(kingdom, duchies.values())
         for empire in ("e_middle_dwarovar", "e_deepwoods", "e_dragon_coast"):
             self.assertTrue(bmg.kingdoms_of(titles, empire), empire)
-        for kingdom in set(boxes):
-            volume = re.search(r'posteffect_volume = \{\s*name = "%s".*?position = \{ ([\d. ]+) \}.*?size = \{ ([\d. ]+) \}'
-                               % kingdom, volumes, re.S)
+        for duchy in names:
+            volume = re.search(r'posteffect_volume = \{\s*name = "%s".*?position = \{ ([\d. ]+) \}.*?size = '
+                               r'\{ ([\d. ]+) \}.*?fade_distance = ([\d.]+)' % duchy, volumes, re.S)
             cx, _, cy = (float(v) for v in volume.group(1).split())
             w, _, h = (float(v) for v in volume.group(2).split())
-            for province in bmg.provinces_of(titles, kingdom):
-                if province in positions:
+            self.assertAlmostEqual(float(volume.group(3)), min(300.0, 0.25 * min(w, h)), delta=0.06, msg=duchy)
+            for province in bmg.provinces_of(titles, duchy):
+                if province in positions and province not in data.GRADING_SKIP_PROVINCES:
                     x, y = positions[province]
-                    self.assertTrue(abs(x - cx) <= w / 2 and abs(y - cy) <= h / 2, f"{kingdom} {province}")
+                    self.assertTrue(abs(x - cx) <= w / 2 + 0.06 and abs(y - cy) <= h / 2 + 0.06, f"{duchy} {province}")
         self.assertTrue(any("k_the_reach" in note for note in notes), notes)
+        for number in re.findall(r"(?m)^\s*(?:position|size) = \{ ([\d. ]+) \}|fade_distance = ([\d.]+)",
+                                   volumes[volumes.index('name = "%s"' % names[0]):]):
+            for value in number:
+                for token in value.split():
+                    self.assertRegex(token, r"^\d+\.\d$")
         luts = re.findall(r'lut = "([^"]+)"', volumes)
         self.assertTrue(luts)
         for lut in luts:
             self.assertIn(lut, files)
             self.assertEqual(files[lut], (ROOTS.rie / lut).read_bytes())
+
+    def test_grading_skip_table_and_overlaps_real(self):
+        titles = bmg.titles_text(ROOTS)
+        for province in data.GRADING_SKIP_PROVINCES:
+            self.assertTrue(any(province in bmg.provinces_of(titles, k) for k in
+                                (k for e in data.GRADING if e.startswith("e_") for k in bmg.kingdoms_of(titles, e))),
+                            province)
+        positions = bmg.locator_positions(_read(ROOTS.anbennar / "gfx/map/map_object_data/building_locators.txt"))
+        boxes, _ = bmg.grading_boxes(titles, positions, data.GRADING, data.GRADING_SKIP_PROVINCES, data.GRADING_MARGIN)
+        heavy = {(a, b) for a, _, b, _, share in bmg.box_overlaps(boxes, 0.5)}
+        self.assertEqual(heavy, self.KNOWN_HEAVY_OVERLAPS)
+        _, notes = bmg.build_grading(ROOTS)
+        self.assertEqual(sum("overlap by" in note for note in notes), len(bmg.box_overlaps(boxes, data.GRADING_OVERLAP_NOTE)))
 
     def test_grading_empires_exist(self):
         titles = bmg.titles_text(ROOTS)

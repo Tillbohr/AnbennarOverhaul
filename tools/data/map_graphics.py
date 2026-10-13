@@ -33,7 +33,8 @@ for _keys, _values in _GROUPS:
     TEXTURE_MAP.update(zip(_keys, _values))
 
 # RiE versions of vanilla terrain files, copied under the same name (every material using them changes).
-# The first two are not texture-array members as far as checks go: see build_map_graphics.NOT_ARRAY_MEMBERS.
+# Only snow_diffuse_for_combined_winter.dds is not a texture-array member as far as checks go (RiE's copy is
+# 256x128): see build_map_graphics.NOT_ARRAY_MEMBERS.
 DROP_INS = (
     "snow_diffuse.dds",
     "snow_diffuse_for_combined_winter.dds",
@@ -50,9 +51,10 @@ COPY_FILES = (
     "gfx/map/water/water.settings",
 )
 
-# --- Declared for later tasks -------------------------------------------------------------------------------
+# --- Colour grading and shaders -----------------------------------------------------------------------------
 
 # Colour grading: title key -> grade (empire covers its de jure kingdoms; a kingdom entry overrides, None removes).
+# Every de jure duchy of a graded kingdom gets its own box with that grade.
 GRADING = {
     "e_gerudia": "boreal",
     "e_salahad": "desert",
@@ -61,7 +63,14 @@ GRADING = {
     "e_harpylen": "arid",
 }
 GRADING_MARGIN = 60
-GRADING_FADE = 300
+GRADING_FADE = 300  # the largest fade distance; a box's fade is also capped at GRADING_FADE_SHARE of its short side
+GRADING_FADE_SHARE = 0.25
+GRADING_OVERLAP_NOTE = 0.25  # boxes of different grades overlapping more than this share of the smaller are noted
+
+# Provinces whose building locator is left out of the box measurement: province id -> reason.
+GRADING_SKIP_PROVINCES = {
+    6536: "b_obadel's building locator sits far from the rest of k_ginerdu",
+}
 
 # Shaders (RiE gfx/FX/ paths).
 SHADER_ROOTS = (
