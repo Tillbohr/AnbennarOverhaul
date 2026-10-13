@@ -11,6 +11,7 @@ Spec: docs/superpowers/specs/2026-10-13-map-graphics-design.md
 """
 
 import argparse
+import fnmatch
 import re
 import sys
 from dataclasses import dataclass
@@ -199,6 +200,129 @@ def build_terrain(roots: Roots) -> dict:
     return out
 
 
+FX = "gfx/FX"
+INCLUDES_BLOCK = re.compile(r"\bincludes\s*=\s*\{([^}]*)\}", re.IGNORECASE)
+QUOTED = re.compile(r'"([^"]+)"')
+TEXTURE_REF = re.compile(r'^\s*File\s*=\s*"([^"]+)"', re.IGNORECASE)
+IDENTIFIER = re.compile(r"[A-Za-z_]\w*")
+NOT_FUNCTIONS = frozenset({"return", "else", "if", "while", "for", "switch", "case", "define", "elif"})
+DEFINE = re.compile(r"^\s*#\s*define\s+(\w+)")
+STATIC_CONST = re.compile(r"^\s*static\s+const\s+[\w<>, ]+?\s+(\w+)\s*(?:\[[^\]]*\])?\s*=")
+BLOCK_NAME = re.compile(r"^\s*(?:TextureSampler|ConstantBuffer)\s+(\w+)")
+FUNCTION = re.compile(r"^\s*((?:[A-Za-z_]\w*(?:<[^>]*>)?\s+)+)([A-Za-z_]\w*)\s*\(")
+
+
+def _strip_comment(line: str) -> str:
+    return line.split("#", 1)[0].split("//", 1)[0]
+
+
+def includes(text: str) -> list:
+    """The quoted paths of every Includes block of a shader file; commented lines are ignored."""
+    found = []
+    for block in INCLUDES_BLOCK.finditer(re.sub(r"(?m)^\s*(#|//).*$", "", text)):
+        for line in block.group(1).splitlines():
+            found.extend(QUOTED.findall(_strip_comment(line)))
+    return found
+
+
+def texture_refs(text: str) -> list:
+    """The `File = "..."` paths of a shader file, in order, without duplicates; commented lines are ignored."""
+    found = []
+    for line in text.splitlines():
+        match = TEXTURE_REF.match(line)
+        if match and match.group(1) not in found:
+            found.append(match.group(1))
+    return found
+
+
+def defined_symbols(text: str) -> set:
+    """Names a shader file defines: functions, #define, static const, TextureSampler and ConstantBuffer names."""
+    names = set()
+    for line in text.splitlines():
+        if line.lstrip().startswith("//"):
+            continue
+        for pattern in (DEFINE, STATIC_CONST, BLOCK_NAME):
+            match = pattern.match(line)
+            if match:
+                names.add(match.group(1))
+        match = FUNCTION.match(line)
+        if match and match.group(1).split()[0] not in NOT_FUNCTIONS:
+            names.add(match.group(2))
+    return names
+
+
+def missing_mask_symbols(snowfall: str, rie_masks: str, anb_masks: str) -> list:
+    """Symbols of RiE's dynamic_masks.fxh that gh_snowfall.fxh uses and Anbennar's copy does not define."""
+    used = set(IDENTIFIER.findall(snowfall))
+    wanted = defined_symbols(rie_masks) & used
+    return sorted(wanted - defined_symbols(anb_masks))
+
+
+def shader_search(roots: Roots) -> list:
+    """Where an include not taken from RiE is looked up, in order."""
+    return [roots.anbennar / FX, roots.game / "game" / FX, roots.game / "jomini" / FX, roots.game / "clausewitz" / FX]
+
+
+def shader_closure(shader_roots, rie_fx: Path, search: list, keep, never) -> dict:
+    """Rel path (under gfx/FX) -> RiE source for the roots and every RiE file they include, directly or not.
+    An include is looked up in RiE (unless kept from Anbennar), then in `search`; only RiE files are walked
+    further. An include that matches `never` and resolves in RiE, or resolves nowhere, stops the generator."""
+    found, todo = {}, [(rel, "the shader roots") for rel in shader_roots]
+    while todo:
+        rel, parent = todo.pop(0)
+        if rel in found:
+            continue
+        in_rie = (rie_fx / rel).is_file()
+        if any(fnmatch.fnmatch(rel, pattern) for pattern in never):
+            if in_rie:
+                raise GeneratorError(f"{parent} includes {rel}, which must never be taken from RiE")
+            continue
+        if in_rie and rel not in keep:
+            found[rel] = rie_fx / rel
+            for child in includes(_read_text(rie_fx / rel)):
+                todo.append((child, rel))
+        elif not any((base / rel).is_file() for base in search):
+            raise GeneratorError(f"{parent} includes {rel}, which exists in none of RiE, Anbennar and the game")
+    return found
+
+
+def rie_dynamic_masks(roots: Roots) -> str:
+    """RiE's dynamic_masks.fxh, or the game's when RiE ships none (the shaders then resolve it to the game's)."""
+    for base in (roots.rie / FX, roots.game / "game" / FX):
+        if (base / "dynamic_masks.fxh").is_file():
+            return _read_text(base / "dynamic_masks.fxh")
+    raise GeneratorError("dynamic_masks.fxh exists in neither RiE nor the game")
+
+
+def build_shaders(roots: Roots) -> dict:
+    """Output rel path -> bytes for the RiE shader files and the textures only RiE has that they reference."""
+    rie_fx = roots.rie / FX
+    for rel in data.SHADER_ROOTS:
+        if not (rie_fx / rel).is_file():
+            raise GeneratorError(f"shader root {rel} does not exist in RiE's {FX}")
+    closure = shader_closure(data.SHADER_ROOTS, rie_fx, shader_search(roots), data.SHADER_KEEP_ANBENNAR,
+                             data.SHADER_NEVER)
+    snowfall = roots.rie / FX / "gh_snowfall.fxh"
+    if "gh_snowfall.fxh" in closure:
+        anb_masks = roots.anbennar / FX / "dynamic_masks.fxh"
+        if not anb_masks.is_file():
+            raise GeneratorError(f"Anbennar not found: {anb_masks} does not exist")
+        missing = missing_mask_symbols(_read_text(snowfall), rie_dynamic_masks(roots), _read_text(anb_masks))
+        if missing:
+            raise GeneratorError("Anbennar's dynamic_masks.fxh lacks symbols gh_snowfall.fxh uses: "
+                                 + ", ".join(missing))
+    out = {}
+    for rel, source in closure.items():
+        out[f"{FX}/{rel}"] = source.read_bytes()
+        for ref in texture_refs(_read_text(source)):
+            if (roots.anbennar / ref).is_file() or (roots.game / "game" / ref).is_file():
+                continue
+            if not (roots.rie / ref).is_file():
+                raise GeneratorError(f"{rel} references {ref}, which exists in none of RiE, Anbennar and the game")
+            out[ref] = (roots.rie / ref).read_bytes()
+    return out
+
+
 def merge_parts(parts: list) -> dict:
     """Merge the parts' output dicts; two parts writing one path with different bytes is an error."""
     merged = {}
@@ -216,7 +340,7 @@ def build_all(roots: Roots) -> dict:
         raise GeneratorError(f"Realms in Exile is not installed: {roots.rie} does not exist")
     if not (roots.anbennar / MATERIALS_REL).is_file():
         raise GeneratorError(f"Anbennar not found: {roots.anbennar / MATERIALS_REL} does not exist")
-    return merge_parts([build_terrain(roots)])
+    return merge_parts([build_terrain(roots), build_shaders(roots)])
 
 
 def main() -> int:

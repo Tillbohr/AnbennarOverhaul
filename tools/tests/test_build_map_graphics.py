@@ -121,6 +121,57 @@ class BuildAllTests(unittest.TestCase):
             bmg.merge_parts([{"a": b"1"}, {"a": b"2"}])
 
 
+class ShaderTests(unittest.TestCase):
+    def test_includes_ignore_comments(self):
+        text = 'Includes = {\n\t"cw/a.fxh"\n\t# "cw/b.fxh"\n\t"c.fxh" # tail\n}\nincludes = {\n\t"d.fxh"\n}\n'
+        self.assertEqual(bmg.includes(text), ["cw/a.fxh", "c.fxh", "d.fxh"])
+
+    def _tree(self, tmp, rie_files, extra=None):
+        tmp = Path(tmp)
+        dirs = {"rie": tmp / "rie", "anb": tmp / "anb", "engine": tmp / "engine"}
+        for name, files in (("rie", rie_files), ("anb", extra or {}), ("engine", {"cw/e.fxh": ""})):
+            for rel, text in files.items():
+                path = dirs[name] / rel
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(text, encoding="utf-8")
+        return dirs
+
+    def test_closure_resolves_and_walks_only_rie_files(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            d = self._tree(tmp, {"a.shader": 'Includes = {\n"b.fxh"\n"cw/e.fxh"\n"kept.fxh"\n}',
+                                 "b.fxh": 'Includes = {\n"cw/e.fxh"\n}', "kept.fxh": 'Includes = {\n"nope.fxh"\n}'},
+                            {"kept.fxh": ""})
+            got = bmg.shader_closure(["a.shader"], d["rie"], [d["anb"], d["engine"]], ("kept.fxh",), ())
+            self.assertEqual(sorted(got), ["a.shader", "b.fxh"])
+            self.assertEqual(got["b.fxh"], d["rie"] / "b.fxh")
+
+    def test_closure_never_and_unknown_raise(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            d = self._tree(tmp, {"a.shader": 'Includes = {\n"gh_portrait_x.fxh"\n}', "gh_portrait_x.fxh": ""})
+            with self.assertRaisesRegex(GeneratorError, "a.shader.*gh_portrait_x|gh_portrait_x.*a.shader"):
+                bmg.shader_closure(["a.shader"], d["rie"], [d["anb"], d["engine"]], (), ("gh_portrait_*",))
+        with tempfile.TemporaryDirectory() as tmp:
+            d = self._tree(tmp, {"a.shader": 'Includes = {\n"unknown.fxh"\n}'})
+            with self.assertRaisesRegex(GeneratorError, "a.shader.*unknown.fxh|unknown.fxh.*a.shader"):
+                bmg.shader_closure(["a.shader"], d["rie"], [d["anb"], d["engine"]], (), ())
+
+    def test_texture_refs(self):
+        text = 'TextureSampler X\n{\n\tFile = "gfx/map/a.dds"\n\t# File = "gfx/map/c.dds"\n}\nFile="gfx/map/b.dds"'
+        self.assertEqual(bmg.texture_refs(text), ["gfx/map/a.dds", "gfx/map/b.dds"])
+
+    MASKS = ("TextureSampler SnowMaskMap\n{\n}\n#define WINTER_X 1\nstatic const float K = 1;\n"
+             "float GetWinterSeverityValue( in float2 c )\n{\n\treturn 1;\n}\n")
+
+    def test_defined_symbols(self):
+        self.assertEqual(bmg.defined_symbols(self.MASKS), {"SnowMaskMap", "WINTER_X", "K", "GetWinterSeverityValue"})
+
+    def test_missing_mask_symbols(self):
+        snow = "float3 f() { return GetWinterSeverityValue(p) * K; }"
+        self.assertEqual(bmg.missing_mask_symbols(snow, self.MASKS, self.MASKS), [])
+        anb = self.MASKS.replace("GetWinterSeverityValue", "Renamed")
+        self.assertEqual(bmg.missing_mask_symbols(snow, self.MASKS, anb), ["GetWinterSeverityValue"])
+
+
 ROOTS = bmg.Roots.default()
 INSTALLED = ROOTS.rie.is_dir() and (ROOTS.anbennar / "gfx/map/terrain/materials.settings").is_file()
 
@@ -163,6 +214,33 @@ class RealFileTests(unittest.TestCase):
         changed = [b for a, b in zip(old, new[header:]) if a != b]
         self.assertEqual(len(changed), 3 * len(data.TEXTURE_MAP))
         self.assertTrue(all(c.endswith("# Anbennar Overhaul") for c in changed))
+
+    def test_shader_closure_is_the_spec_set(self):
+        closure = bmg.shader_closure(data.SHADER_ROOTS, ROOTS.rie / "gfx/FX", bmg.shader_search(ROOTS),
+                                     data.SHADER_KEEP_ANBENNAR, data.SHADER_NEVER)
+        extra = {"gh_snowfall.fxh", "gh_utils.fxh", "gh_vic3_fog_of_war.fxh", "gh_vic3_fog_of_war_settings.fxh"}
+        self.assertEqual(set(closure), set(data.SHADER_ROOTS) | extra)
+        self.assertEqual(len(closure), 16)
+
+    def test_missing_mask_symbols_real(self):
+        snow = (ROOTS.rie / "gfx/FX/gh_snowfall.fxh").read_text(encoding="utf-8")
+        rie_masks = bmg.rie_dynamic_masks(ROOTS)
+        anb_masks = (ROOTS.anbennar / "gfx/FX/dynamic_masks.fxh").read_text(encoding="utf-8")
+        self.assertEqual(bmg.missing_mask_symbols(snow, rie_masks, anb_masks), [])
+
+    def test_shader_textures_exist_and_rie_only_are_built(self):
+        files = bmg.build_shaders(ROOTS)
+        shaders = {k for k in files if k.startswith("gfx/FX/")}
+        self.assertEqual(len(shaders), 16)
+        for rel in shaders:
+            for ref in bmg.texture_refs(files[rel].decode("utf-8", "replace")):
+                found = any((root / ref).is_file() for root in (ROOTS.rie, ROOTS.anbennar, ROOTS.game / "game"))
+                self.assertTrue(found, f"{rel}: {ref}")
+                if not (ROOTS.anbennar / ref).is_file() and not (ROOTS.game / "game" / ref).is_file():
+                    self.assertIn(ref, files)
+        for ref in ("gfx/map/environment/skybox.dds", "gfx/map/environment/gh_snow_layer_1.dds",
+                    "gfx/map/fog_of_war/cloud.dds"):
+            self.assertIn(ref, files)
 
 
 if __name__ == "__main__":

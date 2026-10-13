@@ -61,3 +61,9 @@ SHADER_ROOTS = (
     "jomini/map_lighting.fxh", "jomini/jomini_province_overlays.fxh",
 )
 SHADER_KEEP_ANBENNAR = ("bordercolor.fxh", "gh_camera_utils.fxh", "dynamic_masks.fxh")
+# RiE shader files that must never be pulled in (portrait and court scene code the map does not need); fnmatch
+# patterns on the path relative to gfx/FX.
+SHADER_NEVER = (
+    "court_scene.shader", "lotr_event_shaders.shader", "jomini/portrait*", "jomini/texture_decals_base.fxh",
+    "gh_portrait_*",
+)
