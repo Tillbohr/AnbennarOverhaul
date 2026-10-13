@@ -85,3 +85,19 @@ SHADER_NEVER = (
     "court_scene.shader", "lotr_event_shaders.shader", "jomini/portrait*", "jomini/texture_decals_base.fxh",
     "gh_portrait_*",
 )
+
+# Raised dwarven mountains (spec addendum 2026-10-13).
+DWARVEN_TERRAINS = ("dwarven_hold_surface", "dwarven_hold", "cavern", "dwarven_road")  # province terrains that form ranges
+GATE_EXCLUDE_REGIONS = ("e_dragon_coast", "e_harpylen")  # empires whose gate sites are left out
+LIFT_PEAK = 50000  # height a range's highest point is lifted to
+LIFT_MAX = 1.8  # largest lift factor on any pixel
+LIFT_GROUND_RING = 24  # pixels around a range blended back to the original ground
+SOFT_CEILING = 60000  # heights above this are compressed so they never clip at 65535
+GATE_PAD = 2  # pixels of flat ground kept around a gate
+GATE_RISE = 14000  # height the ground rises over GATE_RISE_DIST around a gate
+GATE_RISE_DIST = 6  # pixels over which that rise happens
+FADE_PX = 12  # pixels over which a lift fades at a range edge
+GATE_INSET = 3  # pixels a gate is moved from the border into the dwarven side
+GATE_SCALE = 0.7  # scale of the gate mesh
+GATE_YAW_OFFSET = 0.0  # extra yaw (radians) added to the gate mesh facing
+PACK_TOLERANCE = 257  # largest height error allowed when repacking the heightmap
