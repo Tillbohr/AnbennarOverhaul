@@ -279,7 +279,7 @@ camera tilt (already ported). Most of the Serpentspine already exceeds Erebor's 
 |---|---|
 | `map_data/heightmap.png`, `map_data/packed_heightmap.png`, `map_data/indirection_heightmap.png`, `map_data/heightmap.heightmap` | Whole-file overrides of Anbennar's; PNGs through Git LFS (~30 MB). |
 | `gfx/map/map_object_data/aov_dwarven_gates.txt` | Generated header; one `object` with the gate instances; a map-object layer that Anbennar or vanilla defines. |
-| `gfx/models/mapitems/aov_dwarven_gate/` (gate asset, mesh and textures; `aov_<piece>.asset`, `<piece>.mesh` for mountain_01..06 and rock_mesa_02 with the `mountains_mapobject_01_*` textures; the mesa rock uses the game's own cliff textures) | Copied from RiE (the `aov_` assets are rewritten), ~72 MB, mostly RiE's 4096² mountain textures. |
+| `gfx/models/mapitems/aov_dwarven_gate/` (gate asset, mesh and textures; `aov_<piece>.asset`, `<piece>.mesh` for mountain_01..06 and rock_mesa_02 with the `mountains_mapobject_01_*` textures) | Copied from RiE (the `aov_` assets are rewritten), ~72 MB, mostly RiE's 4096² mountain textures. |
 | `gfx/map/map_object_data/aov_dwarven_gate_overlays.txt` | The transplanted composition objects (item 5). |
 | `gfx/FX/court_scene.shader` | Anbennar's file byte for byte plus RiE's placeholder map-object effects Anbennar lacks (see "Gate redesign"). |
 
@@ -327,18 +327,14 @@ and `Failed to create material with shader standard_colormap (in gfx/FX/court_sc
    gate face. Objects: every map object with a transform within `COMPOSITION_RADIUS` (16) map units of the gate except
    the gate, `rammas_echor_intact_mesh` and `ravenhill_mesh` (`COMPOSITION_EXCLUDE`): 10 mountain pieces (shader
    `snap_to_terrain_alpha_to_coverage_colormap`: vertex y = terrain height + mesh y x y-scale, a draped rock skin, not
-   tall rock) and 3 flank objects. **Correction to the first brief:** the flank objects are not rocks in RiE. Its
-   `env_effects.txt` lists them in the `waterfall` effect-entity block (the Running River's source); the brief's
-   parser had attributed the next block's mesh. They keep their RiE positions and rotation and are drawn as
-   `rock_mesa_02_mesh` (`COMPOSITION_SUBSTITUTES = {"waterfall": "rock_mesa_02_mesh"}`; shader `standard_winter`,
-   textures `mountain_01_vertical_*`), which gives the 13 objects of the brief. The river-rapids effect entity beside the
-   gate is not part of it. The extracted table (t, l in RiE units, y offset, yaw relative to the gate, scale):
+   tall rock). (The first brief also listed 3 `rock_mesa_02` flank rocks. They are not rocks in RiE: its `env_effects.txt`
+   lists those transforms in the `waterfall` effect-entity block, the Running River's source. The first transplant drew
+   them as mesa rocks at k x scale; in game they were huge pale boulders on the lowland, so the substitutes, the
+   `rock_mesa_02` asset and its textures are removed. Effect entities are never part of the composition.) The
+   extracted pieces (t, l in RiE units, y offset, yaw relative to the gate, scale):
 
    | Mesh | t | l | y | yaw | scale |
    |---|---|---|---|---|---|
-   | rock_mesa_02 | -1.12 | 3.42 | 0.76 | -10.6 | 1.0 |
-   | rock_mesa_02 | -2.72 | 3.29 | 0 | 0.4 | 1.0 |
-   | rock_mesa_02 | -6.16 | -5.90 | 0 | -80.1 | 1.0 |
    | mountain_01 | 6.05 | 0.79 | 0 | 40.7 | 1.0 |
    | mountain_02 | 7.24 | 2.68 | 0 | -31.4 | 1.0 |
    | mountain_03 | 3.70 | -3.79 | 0 | 45.2 | 1.0 |
@@ -353,20 +349,27 @@ and `Failed to create material with shader standard_colormap (in gfx/FX/court_sc
    **Transplant at a gate.** Scale `k = gate size / EREBOR_GATE_SCALE (0.703864)` (gate 1.6 -> k = 2.273); frame = the
    final gate position `P` (`dm.gate_position`, shared with the gate mesh) and `inward` axis `u`; the composition does not
    follow `GATE_YAW_OFFSET` or a gate yaw override. A point (t, l) is `P + k (t u + l v)`.
-   - *Cone:* at each pixel `p` within `k * TRANSPLANT_RADIUS (18)` of `P`, `(t, l)` is looked up in the Erebor delta
-     `D(t / k, l' / k)` (l' = -l when mirrored); for `D > 0` the pixel becomes `max(current,
-     soft_ceiling(foot + k D f w))`, `f` the site's height factor, `w` a cosine fade to 0 over the last
-     `TRANSPLANT_FADE (4)` RiE px of the radius, `foot` the height at `P` after the range lift. Any land changes
-     (dwarven, impassable or normal); water and province 0 never; nothing is lowered. Gates apply in key order, each
+   - *Cone (second in-game test: the first stamp `max(cur, foot + k D f w)` lifted every low pixel of the patch to the
+     foot, giving blocky plateaus in front of the gates and canyon walls at rivers):* the cone only blends up from the
+     ground. At each pixel `p` within `k * TRANSPLANT_RADIUS (18)` of `P` (not water, not province 0) `(t, l)` is looked up in
+     the Erebor delta `D(t / k, l' / k)` (l' = -l when mirrored). Cone weight `c` = smoothstep of `D` between
+     `TRANSPLANT_CONE_MIN` (0.15) and `TRANSPLANT_CONE_FULL` (0.40) of the extracted peak x a face weight (0 for t < 0, a
+     cosine up to 1 at t = `TRANSPLANT_FACE_RAMP` (1) RiE px) x the radius fade (cosine to 0 over the last
+     `TRANSPLANT_FADE` (4) RiE px) x a water fade `min(1, d / TRANSPLANT_WATER_FADE (6))`, `d` the distance in map px to the
+     nearest water or province-0 pixel. The pixel becomes `max(cur, round(cur + c (soft_ceiling(foot + k D f) - cur)))`,
+     `f` the height factor, `foot` the height at `P` after the range lift. Pixels in front of the face, outside the cone
+     (D < 0.15 peak), on water or on province 0 never change, and nothing is lowered. Gates apply in key order, each
      blending from what the previous left (Old Passage's three overlap).
-   - *Objects:* each composition object becomes one instance per gate: position `P + k (t' u' + l' v')`, yaw = the
-     composition's yaw + turn + the relative yaw (negated when mirrored) + jitter, uniform scale `k s` x jitter, ground
-     offset y = the RiE offset x k. One `object` per mesh type in `aov_dwarven_gate_overlays.txt`, layer `temp_layer`,
-     meshes `aov_mountain_0N_mesh` and `aov_rock_mesa_02_mesh` (assets `aov_<piece>.asset`: only the pdxmesh and entity
-     names gain the prefix; mesh and textures copied beside them; the mesa rock's `mountain_01_vertical_*` textures are
-     the game's own in `gfx/models/mapitems/cliffs/` (CK3 finds textures by name; RiE's normal and properties files are
-     identical, its diffuse differs), so they are not copied and tiger stays clean). `build_all` stops if a shader named by a copied gate-folder asset
-     lacks its `<shader>_mapobject` effect in the generated `court_scene.shader` (covers `standard_winter`).
+   - *Pieces:* each composition mountain piece becomes at most one instance per gate: position `P + k (t' u' + l' v')`,
+     yaw = the composition's yaw + turn + the relative yaw (negated when mirrored) + jitter, uniform scale `k s` x jitter,
+     ground offset y = the RiE offset x k. A piece is kept only if its centre (RiE units, after mirror, turn and jitter)
+     has t >= 0 and cone weight `c` (shape, without the water fade) >= `TRANSPLANT_PIECE_MIN_WEIGHT` (0.3), and does not
+     fall on water, province 0 or off the map. Of Erebor's 10 pieces, mountain_01, 02, 03 (both) and 06 survive; the two
+     mountain_04 (one at t < 0) and three mountain_05 (beside the narrow cone) are dropped at every gate. One `object`
+     per mesh type in `aov_dwarven_gate_overlays.txt`, layer `temp_layer`, meshes `aov_mountain_0N_mesh` (assets
+     `aov_<piece>.asset`: only the pdxmesh and entity names gain the prefix; mesh and textures copied beside them; pieces
+     that never survive are not copied). `build_all` stops if a shader named by a copied gate-folder asset lacks its
+     `<shader>_mapobject` effect in the generated `court_scene.shader`.
 
    **Per-site variation** (deterministic; seed = first 8 bytes of SHA-256 of `"<dwarven county>/<normal county>"`; all
    bounds `TRANSPLANT_*` in `tools/data/map_graphics.py`; `TRANSPLANT_OVERRIDES[(dwarven, normal)]` pins `mirror`,
@@ -379,9 +382,8 @@ and `Failed to create material with shader standard_colormap (in gfx/FX/court_sc
      cone's footprint by `TRANSPLANT_PEAK_MARGIN` (2,000), clamped to [0.85, 1.25], then +-0.05 seeded jitter inside
      the clamp. Where the terrain is far above the foot the clamp wins, and the soft ceiling bounds the result.
    - *Object jitter:* position +-0.6 RiE units, yaw +-15 degrees, scale x 0.9 to 1.1.
-   - *Drop* any object whose centre falls on water, province 0 or off the map. The random draws per object are fixed,
-     so dropping one never shifts the others.
-   Each gate gets a build note: mirrored, turn, `f`, cone peak (foot, rise) and objects placed/dropped.
+   - *Drop* pieces as above. The random draws per piece are fixed, so dropping one never shifts the others.
+   Each gate gets a build note: mirrored, turn, `f`, cone peak (foot, rise) and pieces kept/dropped (named).
 
 ### Testing
 
@@ -390,11 +392,13 @@ and `Failed to create material with shader standard_colormap (in gfx/FX/court_sc
   their band; `heightmap.heightmap` keeps every other key; every changed block decodes back within `PACK_TOLERANCE`.
 - Raising: each range's peak ≥ 50,000, or its factor is at `LIFT_MAX`, or it was 1 (peak already ≥ 50,000 or ≤ ground); no height lowered anywhere; nothing over
   65,535; changes fade to zero within `FADE_PX` (gate sites included); water/impassable change only inside the fade.
-- Transplant: the extraction yields the 13 objects within tolerance (Rammas Echor, Ravenhill and the gate excluded);
+- Transplant: the extraction yields the 10 pieces within tolerance (Rammas Echor, Ravenhill and the gate excluded);
   frame maths for north- and east-facing fixtures and mirroring; cone peak position, never lowered, water untouched,
-  fade at the radius, overlap order-independence; seeded variation (determinism, uphill turn bounded by 25 degrees,
-  height clamp, dropping on water); real build: 12 gates, 13 x 12 objects minus the dropped, each cone peak at least
-  `soft_ceiling(foot + 0.8 k peak)`.
+  nothing changes in front of the face or outside the cone on ground lower than the foot, no canyon walls at a river,
+  the piece filter, fade at the radius, overlap order-independence; seeded variation (determinism, uphill turn bounded by 25 degrees,
+  height clamp, dropping on water); real build: 12 gates, 10 x 12 pieces minus the dropped, each cone peak at least
+  `soft_ceiling(foot + 0.8 k peak)`, no changed pixel in front of any face, steps outside the cone core below 11,000
+  (the face wall, t < 1.5 RiE units, is steep by design).
 - Gates: count equals the sites minus Dragon Coast and Harpylen; each sits inside its dwarven province and faces its
   neighbour; Rubyhold's two sites are as above; overrides apply and an unknown key stops the build; Ovdal Tungr's gate
   is a sea site (see below).
@@ -411,8 +415,8 @@ In-game checklist additions:
 - [ ] Ovdal Tungr's gate stands at the shore by the holding, facing the sea; no river clips a gate.
 - [ ] No stretched walls remain at former gate sites.
 - [ ] Each gate stands at the foot of a steep cone with the mountain pieces draped over its slopes (rock, not stretched
-  ground) and the mesa rocks at its flanks; none float, are buried or face wrongly; error.log has no "Failed getting
-  Effect" or texture errors for the new meshes (watch `rock_mesa_02`'s vanilla cliff textures, which are found by name).
+  ground); no plateau on the lowland before the gate, no canyon walls where rivers cross a cone; none float, are buried or face wrongly; error.log has no "Failed getting
+  Effect" or texture errors for the new meshes.
 - [ ] Mirrored and unmirrored gates both look right; the turn toward the uphill side follows the ridge; tall ranges
   (Marrhold, Outer Khug's Cave) still show a cone rising out of the slope.
 - [ ] Old Passage's three overlapping gates do not form a single heap; Ovdal Tungr's sea gate keeps its objects on land.
