@@ -333,7 +333,7 @@ def _range_groups(dwarven, pm, pixels):
 
 def gate_position(site, inset, option=None):
     """Where a gate mesh stands: the site moved `inset` (or the option's `inset`) along `inward`, plus the
-    option's `dx`, `dy`. The transform of the gate map object and the terrain massif both use this."""
+    option's `dx`, `dy`. The transform of the gate map object and the terrain shoulder both use this."""
     option = option or {}
     move = option.get("inset", inset)
     return (site.x + site.inward[0] * move + option.get("dx", 0.0),
@@ -352,24 +352,18 @@ def _ease(x):
     return 0.5 + 0.5 * math.cos(math.pi * min(1.0, max(0.0, x)))
 
 
-def gate_scale(site, scale, overrides):
-    """The scale of a gate's mesh: the override's `scale`, else `scale`."""
-    option = (overrides or {}).get((site.dwarven_county, site.normal_county), {})
-    return option.get("scale", scale)
-
-
-def massif_weight(t, lateral):
-    """Weight 0..1 of a gate's massif `t` px behind the gate position (negative = in front) and `lateral` px off
-    its axis: 1 in the core rectangle (0..MASSIF_CORE_DEPTH behind, within MASSIF_CORE_HALF_WIDTH), a cosine ease
-    to 0 over MASSIF_FALLOFF px of distance from that rectangle, and 0 in front of the gate face (t <= -1)."""
-    if t <= -1:
+def shoulder_weight(t, lateral):
+    """Weight 0..1 of a gate's shoulder `t` px behind the gate position and `lateral` px off its axis."""
+    start, ramp, length, fall = data.SHOULDER_START, data.SHOULDER_RAMP, data.SHOULDER_LENGTH, 6
+    if t < start or t >= length or lateral >= data.SHOULDER_HALF_WIDTH:
         return 0.0
-    along = max(-t, t - data.MASSIF_CORE_DEPTH, 0.0)
-    across = max(abs(lateral) - data.MASSIF_CORE_HALF_WIDTH, 0.0)
-    dist = math.hypot(along, across)
-    if dist >= data.MASSIF_FALLOFF:
-        return 0.0
-    return _ease(dist / data.MASSIF_FALLOFF)
+    if t < start + ramp:
+        along = 1 - _ease((t - start) / ramp)
+    elif t <= length - fall:
+        along = 1.0
+    else:
+        along = _ease((t - (length - fall)) / fall)
+    return along * _ease(lateral / data.SHOULDER_HALF_WIDTH)
 
 
 def _edge_distance(i, w, blocked_px, offsets):
@@ -382,61 +376,37 @@ def _edge_distance(i, w, blocked_px, offsets):
     return 1e9
 
 
-HIDDEN_BEHIND_FACE = 3  # px behind a gate position where the face strip ends (steps there are not measured)
-
-
-def _hidden(x, y, gates):
-    """True when pixel (x, y) is in a gate's face strip: from 2 px in front of the gate position to
-    HIDDEN_BEHIND_FACE px behind it, across the massif's whole width. The slab hides the middle of it; the rest is
-    the mountain's front face beside the gate (the massif starts at the gate face by design), so no step is
-    measured there. `gates` is a list of ((px, py), (ux, uy))."""
-    for (px, py), (ux, uy) in gates:
-        dx, dy = x - px, y - py
-        if -2 <= dx * ux + dy * uy < HIDDEN_BEHIND_FACE and abs(dx * uy - dy * ux) <= data.MASSIF_CORE_HALF_WIDTH + data.MASSIF_FALLOFF:
-            return True
-    return False
-
-
-def _max_step(values, w, h, pixels, gates):
+def _max_step(values, w, h, pixels):
     """Largest height difference between horizontally or vertically adjacent pixels, at least one of them in
-    `pixels` (flat indices), leaving out pairs with a pixel hidden by a gate slab (see `_hidden`)."""
+    `pixels` (flat indices)."""
     step = 0
     for i in pixels:
         y, x = divmod(i, w)
-        if _hidden(x, y, gates):
-            continue
         v = values[i]
-        for j, ok, nx, ny in ((i - 1, x > 0, x - 1, y), (i + 1, x + 1 < w, x + 1, y),
-                              (i - w, y > 0, x, y - 1), (i + w, y + 1 < h, x, y + 1)):
-            if ok and abs(values[j] - v) > step and not _hidden(nx, ny, gates):
+        for j, ok in ((i - 1, x > 0), (i + 1, x + 1 < w), (i - w, y > 0), (i + w, y + 1 < h)):
+            if ok and abs(values[j] - v) > step:
                 step = abs(values[j] - v)
     return step
 
 
-def raise_heights(grid, pm, dwarven, water, impassable, sites, inset=None, overrides=None, scale=None):
-    """Lift every dwarven range and give each gate a massif; returns (new grid, report).
+def raise_heights(grid, pm, dwarven, water, impassable, sites, inset=None, overrides=None):
+    """Lift every dwarven range and give each gate a shoulder; returns (new grid, report).
 
     Per range: ground = `range_ground`, factor = `lift_factor(peak, ground)`; a pixel above the ground is
     moved to `ground + (h - ground) * factor` (soft ceiling applied, never lowered), and the change fades
-    out over FADE_PX px into the surrounding land and water. Then, per gate in county order (position from
-    `gate_placements` with `inset`/`overrides`, size from `gate_scale`; defaults GATE_INSET, GATE_OVERRIDES,
-    GATE_SCALE), with `foot` the height at the gate pixel after the range lift (before any gate):
-    1. footprint: pixels of any land (not water, not province 0) from 2 px in front of the gate to
-       GATE_MODEL_DEPTH * scale + 1 px behind it and within GATE_MODEL_HALF_WIDTH * scale + 1 px of its axis are
-       raised to at least `foot`, so the gate does not hover;
-    2. massif: pixels of dwarven or impassable provinces blend from their height toward
-       `top = soft_ceiling(foot + GATE_MODEL_HEIGHT * scale * HEIGHT_UNITS_PER_WORLD_UNIT * MASSIF_TOP_FACTOR)` by
-       `massif_weight(t, l)`, also eased down over MASSIF_EDGE_FADE px toward pixels that may not change, so the
-       mountain reaches the top of the gate model. Each gate blends from what the last left.
-    No pixel is ever lowered; normal land, water and province 0 change only in the footprint (not water, 0).
+    out over FADE_PX px into the surrounding land and water. Then, per gate (position from `gate_placements`
+    with `inset`/`overrides`, default GATE_INSET/GATE_OVERRIDES): a broad gentle shoulder behind it, along
+    `inward`: pixels of dwarven or impassable provinces are raised to at least
+    a blend of their height toward `soft_ceiling(foot + SHOULDER_RISE)` by `shoulder_weight(t, l)` (also eased
+    down over SHOULDER_EDGE_FADE px toward pixels that may not change), `foot` being the height at the gate
+    pixel after the range lift. Gates are applied in county order, each blending from what the last left. No
+    pixel is ever lowered; normal land, water and province 0 never change in the shoulder.
     The report is {"ranges": [{provinces, ground, factor, peak_before, peak_after}],
-    "sites": [{dwarven_county, normal_county, x, y, foot, top, massif_max, footprint_raised, step_before,
-    step_after}]}; `massif_max` is the highest height among the massif's pixels, the steps the largest
-    adjacent-pixel height steps in the massif after the range lift and at the end, leaving out the strips the gate
-    slabs hide (see `_max_step`)."""
+    "sites": [{dwarven_county, normal_county, x, y, foot, shoulder_max, step_before, step_after}]};
+    `shoulder_max` is the highest height among the pixels the shoulder covers; `step_before`/`step_after` are the
+    largest adjacent-pixel height steps in the shoulder's footprint after the range lift and at the end."""
     inset = data.GATE_INSET if inset is None else inset
     overrides = data.GATE_OVERRIDES if overrides is None else overrides
-    scale = data.GATE_SCALE if scale is None else scale
     w, h, ids = pm.width, pm.height, pm.ids
     old = grid.values
     new = array("H", old)
@@ -468,52 +438,37 @@ def raise_heights(grid, pm, dwarven, water, impassable, sites, inset=None, overr
                         new[i] = value
         report["ranges"].append({"provinces": sorted(group), "ground": ground, "factor": factor,
                                  "peak_before": peak, "peak_after": max(new[i] for i in px)})
-    fixed = bytearray(b"\x01") * 65536  # provinces the massif may not change: normal land, water, 0
+    fixed = bytearray(b"") * 65536  # provinces the shoulder may not change: normal land, water, 0
     for p in set(dwarven) | set(impassable):
         fixed[p] = 0
-    land = bytearray(b"\x01") * 65536  # provinces the footprint may raise: any land
-    land[0] = 0
-    for p in water:
-        land[p] = 0
     lifted = array("H", new)
-    fade = data.MASSIF_EDGE_FADE
+    reach_px = math.ceil(math.hypot(data.SHOULDER_LENGTH, data.SHOULDER_HALF_WIDTH)) + 1
+    fade = data.SHOULDER_EDGE_FADE
     offsets = sorted(((dx, dy) for dy in range(-fade, fade + 1) for dx in range(-fade, fade + 1)
                       if 0 < math.hypot(dx, dy) < fade), key=lambda o: math.hypot(*o))
-    reach_px = math.ceil(math.hypot(data.MASSIF_CORE_DEPTH + data.MASSIF_FALLOFF,
-                                    data.MASSIF_CORE_HALF_WIDTH + data.MASSIF_FALLOFF)) + 1
     placed = sorted(gate_placements(sites, inset, overrides),
                     key=lambda sp: (sp[0].dwarven_county, sp[0].normal_county))
     feet = []
-    for site, (px, py) in placed:  # feet from the lifted ground, before any gate
+    for site, (px, py) in placed:  # feet from the lifted ground, before any shoulder
         gx = min(w - 1, max(0, int(round(px))))
         gy = min(h - 1, max(0, int(round(py))))
         feet.append((gx, gy, new[gy * w + gx]))
     footprints = []
-    gate_axes = []
     for (site, (px, py)), (gx, gy, foot) in zip(placed, feet):
         ux, uy = site.inward
-        size = gate_scale(site, scale, overrides)
-        top_height = soft_ceiling(foot + data.GATE_MODEL_HEIGHT * size * data.HEIGHT_UNITS_PER_WORLD_UNIT
-                                  * data.MASSIF_TOP_FACTOR)
+        top_height = soft_ceiling(foot + data.SHOULDER_RISE)
         x0, x1 = max(0, gx - reach_px), min(w, gx + reach_px + 1)
         y0, y1 = max(0, gy - reach_px), min(h, gy + reach_px + 1)
-        fp_depth = data.GATE_MODEL_DEPTH * size + 1
-        fp_half = data.GATE_MODEL_HALF_WIDTH * size + 1
-        raised = 0
         weights = {}
         for y in range(y0, y1):
             for x in range(x0, x1):
                 i = y * w + x
+                if fixed[ids[i]]:
+                    continue
                 dx, dy = x - px, y - py
-                t = dx * ux + dy * uy
-                lateral = abs(dx * uy - dy * ux)
-                if land[ids[i]] and -2 <= t <= fp_depth and lateral <= fp_half and new[i] < foot:
-                    new[i] = foot
-                    raised += 1
-                if not fixed[ids[i]]:
-                    weight = massif_weight(t, lateral)
-                    if weight > 0:
-                        weights[i] = weight
+                weight = shoulder_weight(dx * ux + dy * uy, abs(dx * uy - dy * ux))
+                if weight > 0:
+                    weights[i] = weight
         sources = [y * w + x for y in range(max(0, y0 - fade), min(h, y1 + fade))
                    for x in range(max(0, x0 - fade), min(w, x1 + fade)) if fixed[ids[y * w + x]]]
         blocked_px = set(sources)
@@ -527,13 +482,11 @@ def raise_heights(grid, pm, dwarven, water, impassable, sites, inset=None, overr
                 new[i] = value
             top = max(top, new[i])
         footprints.append(weights)
-        gate_axes.append(((px, py), (ux, uy)))
         report["sites"].append({"dwarven_county": site.dwarven_county, "normal_county": site.normal_county,
-                                "x": site.x, "y": site.y, "foot": foot, "top": top_height, "massif_max": top,
-                                "footprint_raised": raised})
+                                "x": site.x, "y": site.y, "foot": foot, "shoulder_max": top})
     for entry, weights in zip(report["sites"], footprints):
-        entry["step_before"] = _max_step(lifted, w, h, weights, gate_axes)
-        entry["step_after"] = _max_step(new, w, h, weights, gate_axes)
+        entry["step_before"] = _max_step(lifted, w, h, weights)
+        entry["step_after"] = _max_step(new, w, h, weights)
     return type(grid)(w, h, new), report
 
 

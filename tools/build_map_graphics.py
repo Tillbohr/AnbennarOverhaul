@@ -746,7 +746,7 @@ def gate_objects(sites: list, scale: float, yaw_offset: float, inset: float = 0.
         ix, iy = site.inward
         t = math.atan2(ix + 0.0, iy + 0.0) + yaw_offset + option.get("yaw", 0.0)  # + 0.0 turns -0.0 into 0.0
         size = option.get("scale", scale)
-        px, py = dm.gate_position(site, inset, option)  # the same position the terrain massif is built around
+        px, py = dm.gate_position(site, inset, option)  # the same position the terrain shoulder is built around
         values = (px, 0.0, py, 0.0, math.sin(t / 2), 0.0, math.cos(t / 2), size, size, size)
         lines.append(" ".join(f"{v:.6f}" for v in values))
     return ('object={\n\tname="aov_dwarven_gates"\n\trender_pass=Map\n\tclamp_to_water_level=no\n'
@@ -791,8 +791,8 @@ def _height_notes(report: dict) -> list:
                      f"peak {r['peak_before']} -> {r['peak_after']}")
     for g in report["sites"]:
         notes.append(f"gate {g['dwarven_county']}/{g['normal_county']} at ({g['x']}, {g['y']}): "
-                     f"foot {g['foot']}, top {g['top']}, massif max {g['massif_max']}, "
-                     f"footprint raised {g['footprint_raised']}, max step {g['step_before']} -> {g['step_after']}")
+                     f"foot {g['foot']}, shoulder max {g['shoulder_max']}, "
+                     f"max step {g['step_before']} -> {g['step_after']}")
     return notes
 
 

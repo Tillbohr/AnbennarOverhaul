@@ -258,180 +258,154 @@ class RaiseTests(unittest.TestCase):
         new, _ = dm.raise_heights(grid, pm, {1}, set(), set(), [])
         self.assertEqual(new.values, grid.values)  # peak above LIFT_PEAK: factor 1
 
-    SITE = dm.GateSite("c_dw", "c_n", 30, 30, (-1.0, 0.0))  # gate at (28, 30) with inset 2; the mountain is -x
-    RISE1 = data.GATE_MODEL_HEIGHT * 1.0 * data.HEIGHT_UNITS_PER_WORLD_UNIT * data.MASSIF_TOP_FACTOR
+    SITE = dm.GateSite("c_dw", "c_n", 30, 30, (-1.0, 0.0))
 
-    def massif_fixture(self, islands=True):
-        """80x60 flat 10000: dwarven province 1 at x < 40, normal 2 beside it, optional islands of normal land (2)
-        and water (3) in the core, off the gate's axis."""
+    def shoulder_fixture(self, islands=True):
+        """80x60 flat 10000: dwarven province 1 at x < 40, normal 2 beside it, an island of normal land (2) and of
+        water (3) west of the gate, off its axis."""
         w, h = 80, 60
         ids = array("H", [1 if x < 40 else 2 for y in range(h) for x in range(w)])
         vals = array("H", [10000]) * (w * h)
-        if islands:
-            for y in range(36, 38):
-                for x in range(22, 26):
-                    ids[y * w + x] = 2 if x < 24 else 3
+        for y in range(36 if islands else 0, 41 if islands else 0):
+            for x in range(10, 19):
+                ids[y * w + x] = 2 if x < 14 else 3
         return dm.ProvinceMap(w, h, ids), hp.Grid(w, h, vals)
 
-    def raise_one(self, pm, grid, water=(), impassable=(), sites=None, overrides=None, scale=1.0):
-        return dm.raise_heights(grid, pm, {1}, set(water), set(impassable), sites or [self.SITE], inset=2.0,
-                                overrides=overrides or {}, scale=scale)
-
-    def test_massif_top_comes_from_the_gate_model_and_scale(self):
-        pm, grid = self.massif_fixture(islands=False)
-        new, report = self.raise_one(pm, grid)
+    def test_shoulder_profile_along_the_axis(self):
+        pm, grid = self.shoulder_fixture(islands=False)
+        new, report = dm.raise_heights(grid, pm, {1}, {3}, set(), [self.SITE], inset=2.0, overrides={})
+        # the gate is at (28, 30); behind it is toward -x
+        row = [new.get(28 - t, 30) for t in range(0, data.SHOULDER_LENGTH + 3)]
+        start, ramp, length = data.SHOULDER_START, data.SHOULDER_RAMP, data.SHOULDER_LENGTH
+        self.assertTrue(all(v == 10000 for v in row[:start + 1]))  # t <= START: untouched
+        self.assertTrue(all(v == 10000 for v in row[length + 1:]))  # beyond the end
+        rising = row[start:start + ramp + 1]
+        self.assertEqual(rising, sorted(rising))
+        for v in row[start + ramp:length - 6 + 1]:
+            self.assertGreaterEqual(v, 10000 + 0.95 * data.SHOULDER_RISE)
+        falling = row[length - 6:length + 1]
+        self.assertEqual(falling, sorted(falling, reverse=True))
+        limit = data.SHOULDER_RISE * math.pi / (2 * data.SHOULDER_RAMP) + 3
+        self.assertLessEqual(max(abs(a - b) for a, b in zip(row[:start + ramp + 1], row[1:])), limit)
+        fall_limit = data.SHOULDER_RISE * math.pi / (2 * 6) + 3  # the last 6 px ease back down
+        self.assertLessEqual(max(abs(a - b) for a, b in zip(row[length - 6:], row[length - 5:])), fall_limit)
         entry = report["sites"][0]
         self.assertEqual(entry["foot"], 10000)
-        self.assertEqual(entry["top"], round(10000 + self.RISE1))
-        self.assertEqual(new.get(24, 30), entry["top"])  # the core
-        self.assertEqual(entry["massif_max"], entry["top"])
-        _, report2 = self.raise_one(pm, grid, scale=2.0)
-        self.assertEqual(report2["sites"][0]["top"], round(10000 + 2 * self.RISE1))
+        self.assertEqual(entry["shoulder_max"], 10000 + data.SHOULDER_RISE)
 
-    def test_override_scale_sets_the_top(self):
-        pm, grid = self.massif_fixture(islands=False)
-        _, report = self.raise_one(pm, grid, overrides={("c_dw", "c_n"): {"scale": 2.0}})
-        self.assertEqual(report["sites"][0]["top"], round(10000 + 2 * self.RISE1))
+    def test_shoulder_is_limited_to_the_strip_and_never_lowers(self):
+        pm, grid = self.shoulder_fixture()
+        new, _ = dm.raise_heights(grid, pm, {1}, {3}, set(), [self.SITE], inset=2.0, overrides={})
+        w = pm.width
+        for y in range(pm.height):
+            for x in range(w):
+                i = y * w + x
+                self.assertGreaterEqual(new.values[i], grid.values[i])
+                t, lat = 28 - x, abs(y - 30)
+                outside = (t < data.SHOULDER_START or t > data.SHOULDER_LENGTH or lat >= data.SHOULDER_HALF_WIDTH
+                           or pm.ids[i] != 1)
+                if outside:
+                    self.assertEqual(new.values[i], grid.values[i], (x, y))
+        self.assertGreater(new.get(15, 31), 10000)
+        self.assertEqual(new.get(12, 38), 10000)  # normal-land island inside the strip
+        self.assertEqual(new.get(17, 38), 10000)  # water island
 
-    def test_core_is_flat_at_the_top_and_falloff_is_smooth(self):
-        pm, grid = self.massif_fixture(islands=False)
-        new, report = self.raise_one(pm, grid)
-        top = report["sites"][0]["top"]
-        depth, half = data.MASSIF_CORE_DEPTH, data.MASSIF_CORE_HALF_WIDTH
-        for t in range(0, depth + 1):
-            for l in range(-half, half + 1):
-                self.assertEqual(new.get(28 - t, 30 + l), top, (t, l))
-        row = [new.get(x, 30) for x in range(0, 28 - depth)]  # from the far end toward the core
-        self.assertEqual(row, sorted(row))
-        self.assertEqual(new.get(28 - depth - data.MASSIF_FALLOFF, 30), 10000)
-        limit = (top - 10000) * math.pi / (2 * data.MASSIF_FALLOFF) + 3
-        self.assertLessEqual(max(b - a for a, b in zip(row, row[1:])), limit)
-        column = [new.get(24, 30 + half + k) for k in range(0, data.MASSIF_FALLOFF + 1)]
+    def test_shoulder_is_gentle_sideways_too(self):
+        pm, grid = self.shoulder_fixture(islands=False)
+        new, _ = dm.raise_heights(grid, pm, {1}, {3}, set(), [self.SITE], inset=2.0, overrides={})
+        column = [new.get(20, y) for y in range(30, 30 + data.SHOULDER_HALF_WIDTH + 1)]
         self.assertEqual(column, sorted(column, reverse=True))
-        self.assertEqual(column[-1], 10000)
+        self.assertLessEqual(max(a - b for a, b in zip(column, column[1:])),
+                             data.SHOULDER_RISE * math.pi / (2 * data.SHOULDER_HALF_WIDTH) + 3)
 
-    def test_nothing_in_front_of_the_face_changes_on_flat_ground(self):
-        pm, grid = self.massif_fixture(islands=False)
-        new, _ = self.raise_one(pm, grid)
-        w = pm.width
-        for y in range(pm.height):
-            for x in range(29, w):  # t < 0
-                self.assertEqual(new.values[y * w + x], 10000, (x, y))
+    def test_shoulder_uses_the_final_gate_position(self):
+        pm, grid = self.shoulder_fixture(islands=False)
+        overrides = {("c_dw", "c_n"): {"dx": -4.0}}
+        placements = dm.gate_placements([self.SITE], 2.0, overrides)
+        self.assertEqual(placements[0][1], (24.0, 30.0))
+        new, _ = dm.raise_heights(grid, pm, {1}, {3}, set(), [self.SITE], inset=2.0, overrides=overrides)
+        self.assertEqual(new.get(25, 30), 10000)  # t = -1 from the moved gate
+        self.assertGreater(new.get(12, 30), 10000 + 0.95 * data.SHOULDER_RISE)  # t = 12: on the plateau
 
-    def test_footprint_raises_the_ground_to_the_foot_only_there(self):
-        pm, grid = self.massif_fixture(islands=False)
-        w = pm.width
-        for y in range(pm.height):
-            for x in range(w):
-                grid.values[y * w + x] = 60000 - 500 * min(x, 40)  # falls toward +x: no range lift (peak > LIFT_PEAK)
-        for y in (28, 29):
-            for x in (29, 30):
-                pm.ids[y * w + x] = 3  # water in the footprint
-        new, report = self.raise_one(pm, grid, water={3})
-        foot = report["sites"][0]["foot"]
-        self.assertEqual(foot, 46000)
-        for i in range(len(new.values)):
-            self.assertGreaterEqual(new.values[i], grid.values[i])
-        self.assertEqual(new.get(29, 30), foot)  # in front of the gate, inside the footprint (t = -1)
-        self.assertEqual(new.get(30, 32), foot)
-        self.assertEqual(new.get(29, 29), grid.get(29, 29))  # water
-        self.assertEqual(new.get(30, 40), grid.get(30, 40))  # outside the footprint's width
-        self.assertEqual(new.get(33, 30), grid.get(33, 30))  # in front of the footprint (t = -5)
-        self.assertGreater(report["sites"][0]["footprint_raised"], 10)
+    def test_shoulder_raises_the_foot_relative_height(self):
+        pm, grid = self.shoulder_fixture(islands=False)
+        for i in range(len(grid.values)):
+            grid.values[i] = 20000 + (i % pm.width)  # not flat: foot is the height at the gate pixel
+        new, report = dm.raise_heights(grid, pm, {1}, {3}, set(), [self.SITE], inset=2.0, overrides={})
+        foot = grid.get(28, 30)
+        self.assertEqual(report["sites"][0]["foot"], foot)
+        self.assertGreaterEqual(new.get(14, 30), foot + 0.95 * data.SHOULDER_RISE)
 
-    def test_footprint_raises_normal_land_but_the_massif_does_not(self):
-        pm, grid = self.massif_fixture(islands=False)
+    def test_shoulder_blends_from_the_local_ground_not_the_foot(self):
+        """A high foot among low ground: the faint edge of the shoulder must not pull pixels up to the foot."""
+        pm, grid = self.shoulder_fixture(islands=False)
         w = pm.width
         for y in range(pm.height):
             for x in range(w):
-                grid.values[y * w + x] = 60000 - 500 * min(x, 40)
-        for y in range(29, 32):
-            pm.ids[y * w + 29] = 2  # normal land in the footprint (t = -1)
-        for y in range(36, 38):
-            for x in range(22, 24):
-                pm.ids[y * w + x] = 2  # normal land in the core, off the footprint
-        new, report = self.raise_one(pm, grid)
-        self.assertEqual(new.get(29, 30), report["sites"][0]["foot"])
-        self.assertEqual(new.get(22, 36), grid.get(22, 36))
-
-    def test_province_border_eases_the_massif_out(self):
-        pm, grid = self.massif_fixture(islands=False)
-        w = pm.width
-        for y in range(pm.height):
-            for x in (10, 11):
-                pm.ids[y * w + x] = 2
-        new, report = self.raise_one(pm, grid)
-        top = report["sites"][0]["top"]
-        self.assertEqual(new.get(11, 30), 10000)
-        weight = dm.massif_weight(28 - 12, 0.0)  # (12, 30), one pixel from the strip
-        self.assertLessEqual(new.get(12, 30) - 10000, weight * (top - 10000) / data.MASSIF_EDGE_FADE + 3)
-        rise = [new.get(x, 30) - 10000 for x in range(12, 17)]
-        self.assertEqual(rise, sorted(rise))
-
-    def test_massif_blends_from_the_local_ground(self):
-        pm, grid = self.massif_fixture(islands=False)
-        w = pm.width
-        for y in range(pm.height):
-            for x in range(w):
-                grid.values[y * w + x] = 8000 + 300 * min(x, 40)
-        new, report = self.raise_one(pm, grid)
-        top = report["sites"][0]["top"]
+                grid.values[y * w + x] = 30000 if 26 <= x <= 30 and 28 <= y <= 32 else 8000
+        new, report = dm.raise_heights(grid, pm, {1}, set(), set(), [self.SITE], inset=2.0, overrides={})
+        entry = report["sites"][0]
+        top = dm.soft_ceiling(entry["foot"] + data.SHOULDER_RISE)
+        faint = 0
         for y in range(pm.height):
             for x in range(40):
                 i = y * w + x
+                weight = dm.shoulder_weight((28 - x) * 1.0, abs(y - 30.0))
                 self.assertGreaterEqual(new.values[i], grid.values[i])
-                weight = dm.massif_weight(28 - x, abs(y - 30))
-                if 0 < weight < 0.1 and x < 28:
+                if 0 < weight < 0.1:
+                    faint += 1
                     self.assertLessEqual(new.values[i] - grid.values[i], weight * (top - grid.values[i]) + 1, (x, y))
+        self.assertGreater(faint, 10)
+        self.assertLessEqual(entry["step_after"], max(entry["step_before"], 6000) + 1)
 
-    def test_massif_changes_only_dwarven_or_impassable_land(self):
-        pm, grid = self.massif_fixture()
-        new, _ = self.raise_one(pm, grid, water={3})
-        self.assertEqual(new.get(22, 36), 10000)  # normal-land island in the core
-        self.assertEqual(new.get(25, 37), 10000)  # water island
-        pm, grid = self.massif_fixture(islands=False)
-        for y in range(20, 26):
-            for x in range(20, 27):
-                pm.ids[y * pm.width + x] = 4
-        new, report = self.raise_one(pm, grid, impassable={4})
-        self.assertEqual(new.get(23, 22), report["sites"][0]["top"])
+    def test_sloped_ground_keeps_steps_gentle(self):
+        pm, grid = self.shoulder_fixture(islands=False)
+        w = pm.width
+        for i in range(len(grid.values)):
+            grid.values[i] = 8000 + 300 * min(i % w, 40)
+        new, report = dm.raise_heights(grid, pm, {1}, set(), set(), [self.SITE], inset=2.0, overrides={})
+        entry = report["sites"][0]
+        for i in range(len(new.values)):
+            self.assertGreaterEqual(new.values[i], grid.values[i])
+        self.assertLessEqual(entry["step_after"], max(entry["step_before"], 6000))
 
-    def test_massif_uses_the_final_gate_position(self):
-        pm, grid = self.massif_fixture(islands=False)
-        overrides = {("c_dw", "c_n"): {"dx": -4.0}}
-        self.assertEqual(dm.gate_placements([self.SITE], 2.0, overrides)[0][1], (24.0, 30.0))
-        new, report = self.raise_one(pm, grid, overrides=overrides)
-        self.assertEqual(new.get(25, 30), 10000)  # in front of the moved gate (t = -1)
-        self.assertEqual(new.get(22, 30), report["sites"][0]["top"])
-
-    def test_massif_reaches_along_a_diagonal_axis(self):
-        pm, grid = self.massif_fixture(islands=False)
-        site = dm.GateSite("c_dw", "c_n", 30, 30, (-math.sqrt(0.5), -math.sqrt(0.5)))
-        new, report = dm.raise_heights(grid, pm, {1}, set(), set(), [site], inset=0.0, overrides={}, scale=1.0)
-        t = 6
-        x = y = round(30 - t * math.sqrt(0.5))
-        self.assertEqual(new.get(x, y), report["sites"][0]["top"])
-        far = data.MASSIF_CORE_DEPTH + 15
-        x = y = round(30 - far * math.sqrt(0.5))
-        self.assertGreater(new.get(x, y), 10000)
+    def test_shoulder_eases_down_toward_a_province_border(self):
+        pm, grid = self.shoulder_fixture(islands=False)
+        w = pm.width
+        for y in range(pm.height):
+            for x in (10, 11):
+                pm.ids[y * w + x] = 2  # a strip of normal land across the shoulder
+        new, report = dm.raise_heights(grid, pm, {1}, set(), set(), [self.SITE], inset=2.0, overrides={})
+        self.assertEqual(new.get(11, 30), 10000)
+        # (12, 30) is on the plateau (t = 16) one pixel from the strip: 1/8 of the rise
+        self.assertLessEqual(new.get(12, 30) - 10000, data.SHOULDER_RISE / data.SHOULDER_EDGE_FADE + 3)
+        rise = [new.get(x, 30) - 10000 for x in range(12, 17)]  # d = 1..5 px from the strip
+        self.assertEqual(rise, sorted(rise))
+        self.assertLessEqual(report["sites"][0]["step_after"], 6000)
 
     def test_overlapping_gates_do_not_depend_on_input_order(self):
-        pm, grid = self.massif_fixture(islands=False)
+        pm, grid = self.shoulder_fixture(islands=False)
         a = dm.GateSite("c_a", "c_n", 30, 30, (-1.0, 0.0))
         b = dm.GateSite("c_b", "c_n", 30, 36, (-1.0, 0.0))
-        one, rep1 = self.raise_one(pm, grid, sites=[a, b])
-        two, rep2 = self.raise_one(pm, grid, sites=[b, a])
+        one, _ = dm.raise_heights(grid, pm, {1}, set(), set(), [a, b], inset=2.0, overrides={})
+        two, _ = dm.raise_heights(grid, pm, {1}, set(), set(), [b, a], inset=2.0, overrides={})
         self.assertEqual(one.values, two.values)
-        self.assertEqual(rep1["sites"], rep2["sites"])
 
-    def test_report_steps(self):
-        pm, grid = self.massif_fixture(islands=False)
-        _, report = self.raise_one(pm, grid)
-        entry = report["sites"][0]
-        self.assertEqual(entry["step_before"], 0)
-        # the front of the core is hidden by the slab and not measured: the steepest step is the falloff
-        self.assertLessEqual(entry["step_after"],
-                             (entry["top"] - 10000) * math.pi / (2 * data.MASSIF_FALLOFF) + 3)
+    def test_shoulder_reaches_along_a_diagonal_axis(self):
+        pm, grid = self.shoulder_fixture(islands=False)
+        site = dm.GateSite("c_dw", "c_n", 30, 30, (-math.sqrt(0.5), -math.sqrt(0.5)))
+        new, _ = dm.raise_heights(grid, pm, {1}, set(), set(), [site], inset=0.0, overrides={})
+        t = data.SHOULDER_LENGTH - 8  # still on the plateau
+        x, y = round(30 - t * math.sqrt(0.5)), round(30 - t * math.sqrt(0.5))
+        self.assertGreater(new.get(x, y), 10000 + 0.9 * data.SHOULDER_RISE)
+
+    def test_shoulder_changes_only_dwarven_or_impassable_land(self):
+        pm, grid = self.shoulder_fixture()
+        for y in range(20, 30):
+            for x in range(10, 20):
+                pm.ids[y * pm.width + x] = 4  # impassable
+        new, _ = dm.raise_heights(grid, pm, {1}, {3}, {4}, [self.SITE], inset=2.0, overrides={})
+        self.assertGreater(new.get(15, 25), 10000)
 
     def test_no_pixel_is_lowered_at_a_site(self):
         w, h = 60, 41
@@ -644,8 +618,7 @@ class RealDataTests(unittest.TestCase):
             for j in range(max(0, y - reach), min(h, y + reach + 1)):
                 m |= rows[j]
             near.append(m)
-        shoulder_reach = math.ceil(math.hypot(data.MASSIF_CORE_DEPTH + data.MASSIF_FALLOFF,
-                                                data.MASSIF_CORE_HALF_WIDTH + data.MASSIF_FALLOFF)) + 1 + data.GATE_INSET
+        shoulder_reach = math.ceil(math.hypot(data.SHOULDER_LENGTH, data.SHOULDER_HALF_WIDTH)) + 1 + data.GATE_INSET
         changed = 0
         for y in range(h):
             a = self.old.values[y * w:(y + 1) * w]
@@ -655,7 +628,7 @@ class RealDataTests(unittest.TestCase):
             for x in range(w):
                 if a[x] != b[x]:
                     changed += 1
-                    # outside the fade band only a gate's massif (impassable land beside a gate) may change
+                    # outside the fade band only a gate's shoulder (impassable land beside a gate) may change
                     self.assertTrue((near[y] >> x) & 1 or any(math.hypot(x - g.x, y - g.y) <= shoulder_reach
                                                               for g in self.spaced), (x, y))
         self.assertGreater(changed, 0)
