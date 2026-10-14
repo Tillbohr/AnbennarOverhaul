@@ -246,8 +246,8 @@ camera tilt (already ported). Most of the Serpentspine already exceeds Erebor's 
 3. **No gate pads, cliffs or skirts (redesign, see "Gate redesign" below):** the first version carved a flat pad and
    raised a 14,000 cliff at every gate site. In game that stretched the land into sheer, textured walls, so the
    constants `GATE_PAD`, `GATE_RISE`, `GATE_RISE_DIST` and `GATE_SKIRT` are gone and gate sites no longer change a
-   single height of the ground in front of the gate (no carving). No pixel is ever lowered. A gentle shoulder behind
-   each gate is added instead (rule 3b).
+   single height of the ground in front of the gate (no carving). No pixel is ever lowered. A massif around each gate is
+   added instead (see "Gate redesign").
 4. **Fade:** every change fades linearly to zero over `FADE_PX` (12) pixels outside the dwarven provinces; water and
    impassable provinces change only inside that fade.
 
@@ -299,30 +299,50 @@ and `Failed to create material with shader standard_colormap (in gfx/FX/court_sc
    wanted). The build stops if Anbennar's file lacks `MainCode VS_standard` or `MainCode PS_noop`, or if
    `standard_winter_mapobject`, `standard_colormap` or `standard_colormap_mapobject` is still undefined.
 2. **No carved terrain** (raising rule 3 above): the gate sits in the lifted slope instead.
-   **Shoulder (added after the second in-game test):** with the ground uncarved, the gate's rock backing stood as a free
-   slab with a dip behind it. So after the range lift each gate gets a broad, gentle rise of dwarven or impassable
-   ground behind it (normal land, water and province 0 never change, nothing is lowered), built around the gate's final
-   position `P` (site + inset along `inward` + `GATE_OVERRIDES` dx/dy, the same position the mesh transform uses, from
-   one shared function) and its `inward` axis `u`. For a pixel `p`: `t = (p - P) . u`, `l` = distance from the axis.
-   Along-axis weight: 0 before `SHOULDER_START` (2 px), a cosine ease 0 to 1 over `SHOULDER_RAMP` (10 px), 1 until
-   `SHOULDER_LENGTH` (24 px) minus 6, a cosine ease back to 0 over the last 6 px. Lateral weight: a cosine ease 1 to 0
-   over `SHOULDER_HALF_WIDTH` (12 px). `foot` is the height at the gate pixel after the range lift (taken before any
-   shoulder). A pixel blends from its current height toward `soft_ceiling(foot + SHOULDER_RISE (16000))` by `along *
-   lateral`, and by `min(1, d / SHOULDER_EDGE_FADE)` (8 px) where `d` is its distance to the nearest pixel that may
-   not change (normal land, water, no province), so the shoulder eases to nothing at its edges and at province borders
-   instead of being cut at full height; a pixel is never lowered. (The first version used the absolute target `foot +
-   RISE * weight`, which pulled every faint-weight pixel up to the foot and made cliffs of 7,000 to 20,000 at the
-   footprint edges.) Gates apply in county order, each blending from what the last left, so overlapping gates (Old
-   Passage's three) are deterministic. The footprint scan reaches `ceil(hypot(LENGTH, HALF_WIDTH)) + 1` px so diagonal
-   axes are not cut short. The earlier cliffs (14,000 within 6 px) stretched textures. Steepness, measured as the largest
-   adjacent-pixel step in each gate's footprint (before the shoulder, after the range lift -> final): Khugdihr 2,417 ->
-   2,464; Marrhold 3,013 -> 2,884; Old Passage/Ar Einnas 3,813 -> 5,146; Old Passage/Gabmorionn 3,008 -> 5,146; Old
-   Passage/Old Passage 3,777 -> 6,123; Outer Khug's Cave 2,445 -> 3,084; Ovdal Tungr 3,766 -> 3,766; Redgate 4,203 ->
-   3,901; Rose Mines 3,696 -> 4,028; Seghdihr 3,700 -> 2,540; Silverforge 2,367 -> 2,419; Verkal Gulan 2,552 -> 2,550.
-   On flat ground the ramp's steepest step is `RISE * pi / (2 * RAMP)` (about 2,500) and the 6 px fall at the far end
-   `RISE * pi / 12` (about 4,200); where the ground is much lower than the foot the blend span is larger. The test
-   allows `max(pre-existing, 6000)` plus 200 (Old Passage's overlap reaches 6,123). Sea gates get it too. The report and
-   a note per gate give the foot, the highest shoulder height and the steps.
+   **Gate massif (replaces the shoulder, after the third in-game test):** with the ground uncarved, the rock backing
+   stood as a free slab with a dip behind it; a first fix, a 16,000-high shoulder, was too low. The gate is about 18.5
+   world units tall at scale 1.6, and RiE's Erebor gate (scale 0.704, 8.16 units tall) stands against a 14,345 rise,
+   so one world unit is about 1,760 height units and the gate top is about 32,500 above its foot. In game the gate's
+   peak stuck out above the mountain, so each gate now gets a massif that reaches the top of the gate model and the
+   gate reads as carved out of the mountain. Values in `tools/data/map_graphics.py`:
+   `GATE_MODEL_HEIGHT = 11.59`, `GATE_MODEL_HALF_WIDTH = 3.92`, `GATE_MODEL_DEPTH = 3.25` (mesh units, from
+   `erebor_gate.mesh`'s bounding box), `HEIGHT_UNITS_PER_WORLD_UNIT = 1760`, `MASSIF_TOP_FACTOR = 1.0`,
+   `MASSIF_CORE_DEPTH = 8`, `MASSIF_CORE_HALF_WIDTH = 8`, `MASSIF_FALLOFF = 20`, `MASSIF_EDGE_FADE = 8`,
+   `MASSIF_STEP_LIMIT = 8000`. Per gate, around its final position `P` (site + inset along `inward` + overrides, one
+   shared function with the mesh transform), axis `u` (into the mountain), scale `s` (including an override), with `foot`
+   the height at the gate pixel after the range lift (taken before any gate); `t = (p - P) . u`, `l` = distance from the axis:
+   1. **Footprint (no hovering):** pixels on any land (dwarven, impassable or normal; never water or province 0) with
+      `t` in `[-2, GATE_MODEL_DEPTH * s + 1]` and `l <= GATE_MODEL_HALF_WIDTH * s + 1` are raised to at least `foot`.
+   2. **Massif:** `top = soft_ceiling(foot + GATE_MODEL_HEIGHT * s * HEIGHT_UNITS_PER_WORLD_UNIT * MASSIF_TOP_FACTOR)`.
+      The core (`t` in `[0, 8]`, `l <= 8`, covering the scaled slab of about 5.2 by 6.3 plus margin) has weight 1;
+      outside it the weight is a cosine ease 1 to 0 over `MASSIF_FALLOFF` (20 px) of Euclidean distance to the core
+      rectangle; nothing at `t <= -1` (nothing in front of the gate face). Pixels of dwarven or impassable provinces
+      blend from their height, `new = max(cur, round(cur + weight * (top - cur)))`, with the weight also multiplied by
+      `min(1, d / MASSIF_EDGE_FADE)` where `d` is the distance to the nearest pixel that may not change (normal land,
+      water, no province). Gates apply in county order, each blending from what the last left. Sea gates get it too.
+   The report and a note per gate give foot, top, massif max, footprint pixels raised, and the largest adjacent-pixel
+   step in the massif before (after the range lift) and after. Steps in each gate's face strip (`t` from -2 to 3, across
+   the massif) are not measured: the slab hides the middle, and the rest is the mountain's front face beside the gate,
+   which starts at the gate face by design (a cliff of about the full gate height). Measured:
+
+   | gate | foot | top | massif max | footprint raised | max step before -> after |
+   |---|---|---|---|---|---|
+   | Khugdihr / Khugsroad | 28,293 | 60,856 | 60,856 | 37 | 3,016 -> 3,759 |
+   | Marrhold / Marrvale | 36,417 | 64,457 | 64,457 | 57 | 3,013 -> 3,570 |
+   | Old Passage / Ar Einnas | 20,140 | 52,777 | 52,777 | 52 | 3,813 -> 8,069 |
+   | Old Passage / Gabmorionn | 8,051 | 40,688 | 52,777 | 33 | 3,777 -> 8,069 |
+   | Old Passage / Old Passage | 20,713 | 53,350 | 53,350 | 8 | 3,777 -> 8,069 |
+   | Outer Khug's Cave / Cutback Valley | 44,609 | 65,290 | 65,290 | 28 | 2,445 -> 2,314 |
+   | Ovdal Tungr / sea | 5,327 | 37,964 | 37,964 | 14 | 3,766 -> 4,462 |
+   | Redgate / Rewanfork | 28,914 | 61,353 | 61,353 | 108 | 4,223 -> 5,486 |
+   | Rose Mines / Rivergate | 20,933 | 53,570 | 53,570 | 18 | 3,814 -> 5,639 |
+   | Seghdihr / Azka Sur | 7,738 | 40,375 | 40,375 | 10 | 3,700 -> 4,064 |
+   | Silverforge | 10,381 | 43,018 | 39,739 | 16 | 2,456 -> 4,576 |
+   | Verkal Gulan / Heros Vale | 19,874 | 52,511 | 52,511 | 12 | 2,704 -> 3,997 |
+
+   Silverforge's massif stops short of its top because 27% of its core is normal land beside a province border. Old
+   Passage's three overlapping gates reach 8,069 (the test allows the limit plus 100). `HEIGHT_UNITS_PER_WORLD_UNIT`
+   and `MASSIF_TOP_FACTOR` are the tuning knobs in game.
 3. **Bigger gates set into the slope.** `GATE_SCALE = 1.6` (was 0.7), `GATE_INSET = 2.0` map units along `inward`,
    into the mountain. `GATE_OVERRIDES` is `{(dwarven county, normal county): {scale, yaw, inset, dx, dy}}` (yaw in
    radians added to the facing, dx and dy in map units); empty until in-game tuning needs it, and a key that matches no

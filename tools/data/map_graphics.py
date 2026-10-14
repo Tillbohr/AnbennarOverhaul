@@ -103,15 +103,20 @@ GATE_OVERRIDES = {}
 # Hold counties whose land gate sites are replaced by one gate on the shore of the hold's province, facing the sea.
 SEA_GATES = ("c_ovdal_tungr",)
 GATE_YAW_OFFSET = 0.0  # extra yaw (radians) added to the gate mesh facing
-# Gate shoulder: a broad, gentle rise of the ground behind each gate so the gate's rock backing joins the mountain
-# (the earlier steep cliffs stretched textures). Measured behind the gate along its `inward` axis (t, px from the
-# gate position) and sideways from that axis (l, px).
-SHOULDER_RISE = 16000  # height units above the gate foot at the top of the shoulder
-SHOULDER_START = 2  # px behind the gate position where the ground starts rising
-SHOULDER_RAMP = 10  # px over which it rises (cosine ease)
-SHOULDER_LENGTH = 24  # px behind the gate where the shoulder ends (it eases back down over the last 6 px)
-SHOULDER_HALF_WIDTH = 12  # px either side of the axis where the shoulder reaches zero (cosine ease)
-SHOULDER_EDGE_FADE = 8  # px from a pixel that may not change (normal land, water, no province) over which the shoulder eases to zero
+# Gate massif: the ground around and behind each gate is raised until the mountain reaches the top of the gate model,
+# so the gate looks carved out of the mountain. Measured from the gate position along its `inward` axis (t, px; the
+# gate faces -t, the mountain is at +t) and sideways from that axis (l, px).
+GATE_MODEL_HEIGHT = 11.59  # height of erebor_gate.mesh in mesh units (its bounding box)
+GATE_MODEL_HALF_WIDTH = 3.92  # half the mesh's width, mesh units
+GATE_MODEL_DEPTH = 3.25  # how far the mesh reaches behind its origin, mesh units
+# Height units per world unit: RiE's Erebor gate (scale 0.704, 8.16 units tall) stands against a 14,345 rise.
+HEIGHT_UNITS_PER_WORLD_UNIT = 1760  # measured from RiE's Erebor; tune in game
+MASSIF_TOP_FACTOR = 1.0  # the massif top is foot + model height * scale * units per world unit * this
+MASSIF_CORE_DEPTH = 8  # px behind the gate position that are raised to the top (the scaled slab is about 5.2 deep)
+MASSIF_CORE_HALF_WIDTH = 8  # px either side of the axis that are raised to the top (the slab is about 6.3 wide)
+MASSIF_FALLOFF = 20  # px (distance from the core rectangle) over which the massif eases from the top to nothing
+MASSIF_EDGE_FADE = 8  # px from a pixel that may not change (normal land, water, no province) over which it eases out
+MASSIF_STEP_LIMIT = 8000  # largest adjacent-pixel step allowed inside a massif beyond what the ground already had
 PACK_TOLERANCE = 257  # largest height error allowed when repacking the heightmap
 
 # Terrain blend-map gaps: Anbennar's detail_intensity.tga has pixels with no material (drawn black). Gaps smaller

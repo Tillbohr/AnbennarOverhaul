@@ -690,7 +690,7 @@ class GateObjectsTests(unittest.TestCase):
         self.assertEqual(b[:3], ["100.000000", "0.000000", "202.000000"])  # untouched: default inset 2 along (0, 1)
         self.assertEqual(b[7:], ["1.000000"] * 3)
 
-    def test_gate_position_is_shared_with_the_terrain_shoulder(self):
+    def test_gate_position_is_shared_with_the_terrain_massif(self):
         overrides = {("c_a", "c_y"): {"dx": 1.5, "dy": -2.0, "inset": 5.0}}
         text = bmg.gate_objects(self.SITES, 1.0, 0.0, 2.0, overrides)
         body = re.search(r'transform="([^"]*)', text).group(1)
@@ -836,16 +836,21 @@ class HeightOutputsTests(unittest.TestCase):
         self.assertEqual(sum(note.startswith("range ") for note in self.notes), 9)
         self.assertEqual(sum(note.startswith("gate ") for note in self.notes), 12)
 
-    def test_every_gate_has_a_gentle_shoulder(self):
-        found = [re.search(r"^gate (\S+) at .*foot (\d+), shoulder max (\d+), max step (\d+) -> (\d+)", n)
-                 for n in self.notes if n.startswith("gate ")]
+    # Gates whose massif cannot reach its top, and why.
+    MASSIF_LIMITED = {"c_silverforge/c_silverforge": "27% of its core is normal land beside a province border"}
+
+    def test_every_gate_has_a_massif(self):
+        found = [re.search(r"^gate (\S+) at .*foot (\d+), top (\d+), massif max (\d+), footprint raised (\d+), "
+                           r"max step (\d+) -> (\d+)", n) for n in self.notes if n.startswith("gate ")]
         self.assertEqual(len(found), 12)
         for m in found:
-            foot, top, before, after = (int(m.group(k)) for k in (2, 3, 4, 5))
-            self.assertGreaterEqual(top, min(65535 - 1, foot + 0.8 * data.SHOULDER_RISE), m.group(0))
-            # steps inside the footprint stay near what the ground had (Old Passage's three overlapping gates
-            # reach 6123 against the 6000 allowance, hence the small tolerance)
-            self.assertLessEqual(after, max(before, 6000) + 200, m.group(0))
+            foot, top, peak, raised, before, after = (int(m.group(k)) for k in range(2, 8))
+            self.assertGreater(top, foot, m.group(0))
+            if m.group(1) not in self.MASSIF_LIMITED:
+                self.assertGreaterEqual(peak, top - 500, m.group(0))
+            # outside the face strips, steps stay near what the ground had (Old Passage's three overlapping
+            # gates reach 8,069 against the 8,000 limit, hence the small tolerance)
+            self.assertLessEqual(after, max(before, data.MASSIF_STEP_LIMIT) + 100, m.group(0))
 
 
 def _read(path):
