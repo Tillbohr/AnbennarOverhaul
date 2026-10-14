@@ -333,6 +333,29 @@ and `Failed to create material with shader standard_colormap (in gfx/FX/court_sc
    (lakes and rivers do not count) the one nearest the province's building locator is the site, and `inward` is the unit
    vector from the centroid of the touching sea pixels within 6 px to the site, so the gate faces the sea (its
    `normal_county` is `"sea"`, the key for overrides).
+5. **Mountain-piece overlays and the Moria comparison (added after the third in-game test).** Heightmap reshaping
+   cannot wrap rock around a vertical slab without stretched walls (three attempts), and RiE blends its gates with 3D
+   rock models, so each gate gets RiE's mountain pieces (`mountain_01/mountain_0N.mesh`, shader
+   `snap_to_terrain_alpha_to_coverage_colormap`: vertices follow the terrain, the mesh height is added on top) stacked
+   behind and beside it. `GATE_OVERLAY_LAYOUT` (`tools/data/map_graphics.py`) lists entries `{piece, t, l, yaw, sx, sy,
+   sz}` in the gate's frame: `t` map units along `inward`, `l` along the mesh's local +X (`inward` rotated -90 degrees,
+   `(inward_y, -inward_x)` in map coordinates; checked against the yaw convention), `yaw` added to the gate's yaw, `sx
+   sy sz` the piece scale. Sizes are for a gate at its mesh's base scale (`GATE_MESH_BASE_SCALE`: Erebor 1.6, Moria
+   4.8) and scale linearly with gate size / base scale, heights included. Start layout: `mountain_05` behind the top
+   (t 5, scale 0.6/4.0/0.6) and `mountain_03`, `mountain_04` at the sides (t 2, l -/+7, yaw +/-0.6, scale
+   0.45/3.0/0.45). `GATE_OVERLAY_OVERRIDES` (gate key -> list, or None for none) replaces one gate's layout; an unknown
+   key, piece or entry key stops the build. Output `gfx/map/map_object_data/aov_dwarven_gate_overlays.txt` (one block
+   `aov_dwarven_gate_overlay_<piece>` per piece used, sorted by gate then layout order); only the pieces used are
+   copied, with assets written as `aov_mountain_0N.asset` where only the pdxmesh and entity names gain the `aov_` prefix
+   (so they cannot collide with another mod's `mountain_0N_mesh`). `build_all` stops if any shader named by a copied
+   gate-folder asset lacks its `<shader>_mapobject` effect in the generated `court_scene.shader`
+   (`COURT_SCENE_REQUIRED` also lists `snap_to_terrain_alpha_to_coverage_colormap_mapobject`; Anbennar defines it).
+   **Moria comparison:** `GATE_OVERRIDES` gains `mesh` (`erebor_gate_mesh` default, or `moriaeast_mesh`), and
+   `("c_silverforge", "c_silverforge")` uses RiE's Moria east gate at scale 4.8 (about as tall as the Erebor gate at
+   1.6), with the asset and its textures copied verbatim; `gate_objects` writes one block per mesh
+   (`aov_dwarven_gates`, `aov_dwarven_gates_moriaeast`). The Moria mesh is a thin carved facade whose centre is about 1.5
+   mesh units off its origin along x, so it may need a `dx`/`dy` shift after a look. Overlays apply to it too (factor
+   size / 4.8).
 
 ### Testing
 
@@ -356,6 +379,9 @@ In-game checklist additions:
 - [ ] Rivers, borders, holdings and county names over raised terrain look right.
 - [ ] Ovdal Tungr's gate stands at the shore by the holding, facing the sea; no river clips a gate.
 - [ ] No stretched walls remain at former gate sites.
+- [ ] The overlay crags are visible and blend the gate tops into the slope; none float or are buried; error.log has no
+  "Failed getting Effect" for the new meshes.
+- [ ] Silverforge's Moria gate faces the lowland and its facade is centred (mind the 1.5-unit x offset).
 
 ### Risks
 
