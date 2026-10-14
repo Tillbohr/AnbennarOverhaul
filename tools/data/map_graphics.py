@@ -98,40 +98,43 @@ GATE_MIN_SPACING = 16  # gate sites closer than this (map units) are merged, kee
 GATE_INSET = 2.0  # units a gate is moved along `inward` (into the mountain) from its site, so it sits in the slope
 GATE_SCALE = 1.6  # scale of the gate mesh
 # Per-gate tweaks, keyed by (dwarven county, normal county) ("sea" for a sea gate); a key that matches no gate stops
-# the generator. Optional keys: scale, yaw (radians added), inset (replaces GATE_INSET), dx, dy (map units),
-# mesh (a key of GATE_MESH_BASE_SCALE; default GATE_DEFAULT_MESH).
-GATE_OVERRIDES = {
-    # Comparison: RiE's Moria east gate (a thin carved facade) instead of the Erebor gate. Its facade is centred
-    # ~1.5 mesh units off its origin along x (about 1.5 map units at this scale in the gate's right direction);
-    # shift with dx/dy if it looks off in game.
-    ("c_silverforge", "c_silverforge"): {"mesh": "moriaeast_mesh", "scale": 4.8, "dx": 0, "dy": 0},
-}
-GATE_DEFAULT_MESH = "erebor_gate_mesh"
-# Scale at which each gate mesh is about as tall as the Erebor gate at GATE_SCALE; the overlay layout below is
-# written for that height and scaled by (gate scale / this).
-GATE_MESH_BASE_SCALE = {"erebor_gate_mesh": 1.6, "moriaeast_mesh": 4.8}
-# Mountain-piece overlays around each gate (RiE's mountain_01 pieces, snapped to the terrain), in the gate's frame:
-# t map units along `inward` (behind the gate), l to the gate's local +X (the inward vector rotated -90 degrees: (inward_y, -inward_x) in map coordinates), yaw radians added to the gate's yaw, sx/sy/sz the piece scale. Sizes
-# are for a gate at its base scale and are multiplied by (gate scale / base scale), heights included.
-GATE_OVERLAY_LAYOUT = [
-    {"piece": "mountain_05", "t": 5, "l": 0, "yaw": 0.0, "sx": 0.6, "sy": 4.0, "sz": 0.6},
-    {"piece": "mountain_03", "t": 2, "l": -7, "yaw": 0.6, "sx": 0.45, "sy": 3.0, "sz": 0.45},
-    {"piece": "mountain_04", "t": 2, "l": 7, "yaw": -0.6, "sx": 0.45, "sy": 3.0, "sz": 0.45},
-]
-# Per-gate layouts keyed like GATE_OVERRIDES: a list replaces the layout, None gives that gate no overlays.
-GATE_OVERLAY_OVERRIDES = {}
+# the generator. Optional keys: scale, yaw (radians added to the gate mesh), inset (replaces GATE_INSET), dx, dy (map
+# units). The transplant composition below follows the gate's position and scale, not its yaw.
+GATE_OVERRIDES = {}
 # Hold counties whose land gate sites are replaced by one gate on the shore of the hold's province, facing the sea.
 SEA_GATES = ("c_ovdal_tungr",)
 GATE_YAW_OFFSET = 0.0  # extra yaw (radians) added to the gate mesh facing
-# Gate shoulder: a broad, gentle rise of the ground behind each gate so the gate's rock backing joins the mountain
-# (the earlier steep cliffs stretched textures). Measured behind the gate along its `inward` axis (t, px from the
-# gate position) and sideways from that axis (l, px).
-SHOULDER_RISE = 16000  # height units above the gate foot at the top of the shoulder
-SHOULDER_START = 2  # px behind the gate position where the ground starts rising
-SHOULDER_RAMP = 10  # px over which it rises (cosine ease)
-SHOULDER_LENGTH = 24  # px behind the gate where the shoulder ends (it eases back down over the last 6 px)
-SHOULDER_HALF_WIDTH = 12  # px either side of the axis where the shoulder reaches zero (cosine ease)
-SHOULDER_EDGE_FADE = 8  # px from a pixel that may not change (normal land, water, no province) over which the shoulder eases to zero
+
+# Erebor transplant: Realms in Exile's Erebor gate sits in a small composition (a steep terrain cone starting at the
+# gate face, ten draped mountain-piece skins and three mesa rocks). The generator extracts it from RiE's map data and
+# stamps a scaled copy at every gate, varied per site so each conforms to its terrain (spec addendum 2026-10-14).
+EREBOR_GATE_SCALE = 0.703864  # scale of RiE's Erebor gate mesh; a gate's size / this = the transplant scale k
+EREBOR_GATE_MESH = "erebor_gate_mesh"
+# Objects within COMPOSITION_RADIUS RiE map units of the Erebor gate form the composition, except these meshes.
+COMPOSITION_RADIUS = 16
+# Excluded: the gate itself, and the Ravenhill building that stands beside it (RiE's map data lists its transform
+# right after the Rammas Echor block, which has no transform of its own).
+COMPOSITION_EXCLUDE = ("erebor_gate_mesh", "rammas_echor_intact_mesh", "ravenhill_mesh")
+# RiE places no rocks at Erebor: the three flank objects are `waterfall` effect entities (the Running River's source).
+# Their positions, rotation and scale are kept and drawn as this mesh instead (an effect entity cannot be a gate flank
+# in our map). Other entities near the gate (river rapids) are left out.
+COMPOSITION_SUBSTITUTES = {"waterfall": "rock_mesa_02_mesh"}
+TRANSPLANT_RADIUS = 18  # RiE px around the Erebor gate whose height delta is copied
+TRANSPLANT_FADE = 4  # RiE px at the edge of the radius over which the stamped cone fades to zero
+# Per-site variation (deterministic: seeded by a hash of the site key).
+TRANSPLANT_MIRROR_CHANCE = 0.5  # probability of mirroring the composition left/right
+TRANSPLANT_MAX_TURN = 25  # degrees the composition's axis may turn toward the uphill direction
+TRANSPLANT_UPHILL_T = (4, 30)  # px behind the gate (along inward) whose terrain decides "uphill"
+TRANSPLANT_UPHILL_L = 20  # px either side of the axis used for it
+TRANSPLANT_PEAK_MARGIN = 2000  # the cone's peak should clear the highest lifted terrain in its footprint by this
+TRANSPLANT_HEIGHT_MIN = 0.85  # clamp of the cone height factor
+TRANSPLANT_HEIGHT_MAX = 1.25
+TRANSPLANT_HEIGHT_JITTER = 0.05  # seeded +/- jitter of the height factor, within the clamp
+TRANSPLANT_JITTER_POS = 0.6  # RiE units, each object's position, +/-
+TRANSPLANT_JITTER_YAW = 15  # degrees, +/-
+TRANSPLANT_JITTER_SCALE = (0.9, 1.1)  # each object's scale multiplier
+# Per-gate pins keyed like GATE_OVERRIDES: mirror (bool), turn (degrees), height (the height factor, used as is).
+TRANSPLANT_OVERRIDES = {}
 PACK_TOLERANCE = 257  # largest height error allowed when repacking the heightmap
 
 # Terrain blend-map gaps: Anbennar's detail_intensity.tga has pixels with no material (drawn black). Gaps smaller

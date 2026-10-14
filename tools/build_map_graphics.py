@@ -21,6 +21,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # python -I does not add the script's folder
 from build_hud_override import GeneratorError, brace_delta  # noqa: E402
 import dwarven_mountains as dm  # noqa: E402
+import gate_transplant as gt  # noqa: E402
 import heightpack as hp  # noqa: E402
 import pngio  # noqa: E402
 import terrain_fill as tfill  # noqa: E402
@@ -713,20 +714,20 @@ OVERLAYS_REL = "gfx/map/map_object_data/aov_dwarven_gate_overlays.txt"
 GATE_ASSET_DIR = "gfx/models/mapitems/aov_dwarven_gate"
 RIE_GATE_DIR = "gfx/models/buildings/lotr_special_buildings/dwarven_wonders/erebor_gate"
 RIE_MOUNTAIN_DIR = "gfx/models/mapitems/mountains/mountain_01"
+RIE_ROCK_DIR = "gfx/models/mapitems/rocks/rock_mesa"
 GATE_ASSET_FILES = ((RIE_GATE_DIR, ("erebor_gate.asset", "erebor_gate.mesh", "erebor_gate_diffuse.dds",
-                                    "erebor_gate_normal.dds", "erebor_gate_properties.dds")),
-                    (RIE_MOUNTAIN_DIR, ("mountains_mapobject_01_diffuse.dds", "mountains_mapobject_01_normal.dds",
-                                        "mountains_mapobject_01_properties.dds")))
+                                    "erebor_gate_normal.dds", "erebor_gate_properties.dds")),)
+# Composition mesh name -> the RiE folder of its asset (the mesh `<piece>_mesh` has `<piece>.asset` and `<piece>.mesh`).
+PIECE = re.compile(r"^((?:mountain_0[1-6])|(?:rock_mesa_0[1-3]))_mesh$")
+PIECE_DIRS = {"mountain": RIE_MOUNTAIN_DIR, "rock_mesa": RIE_ROCK_DIR}
+# CK3 finds a mesh texture by file name, and the game already ships the mesa rocks' `mountain_01_vertical_*` textures
+# here; copying RiE's versions would redefine them (and its diffuse differs), so a texture the asset's own RiE folder
+# lacks is expected in the game folder instead.
+GAME_TEXTURE_DIRS = ("gfx/models/mapitems/cliffs",)
 GATE_LAYER = "temp_layer"
 
 
-GATE_OPTIONS = ("scale", "yaw", "inset", "dx", "dy", "mesh")
-RIE_MORIA_DIR = "gfx/models/buildings/lotr_special_buildings/dwarven_wonders/moria_east"
-# Files copied for a gate mesh other than the default one, only when a gate uses it.
-GATE_MESH_ASSET_FILES = {"moriaeast_mesh": (RIE_MORIA_DIR, ("moriaeast.asset", "moriaeast.mesh", "moriaeast_Diffuse.dds",
-                                                            "moriaeast_Normal.dds", "moriaeast_Properties.dds"))}
-OVERLAY_PIECES = tuple(f"mountain_0{n}" for n in range(1, 7))
-OVERLAY_KEYS = ("piece", "t", "l", "yaw", "sx", "sy", "sz")
+GATE_OPTIONS = ("scale", "yaw", "inset", "dx", "dy")
 
 
 def _gate_key_set(sites: list) -> set:
@@ -739,13 +740,13 @@ def _unknown_key(name: str, key, sites: list) -> GeneratorError:
 
 
 def placed_gates(sites: list, scale: float, yaw_offset: float, inset: float, overrides: dict = None) -> list:
-    """[(site, mesh, size, yaw t, (x, y))] per gate, sorted by county keys, with the GATE_OVERRIDES applied.
+    """[(site, size, yaw t, (x, y))] per gate, sorted by county keys, with the GATE_OVERRIDES applied.
 
     A gate stands at the site moved `inset` units along `inward` toward the mountain, set into the slope. The yaw
     is `atan2(inward_x, inward_y)` plus `yaw_offset` and the override's yaw: the mesh's local +Z points along
     `inward` (into the mountain, as in RiE's Erebor gate), so its front faces the normal land. `overrides` maps
-    (dwarven county, normal county) to a dict with optional `scale`, `yaw`, `inset`, `dx`, `dy` (map units added to
-    the position) and `mesh`; a key matching no site, an unknown option or an unknown mesh raises GeneratorError."""
+    (dwarven county, normal county) to a dict with optional `scale`, `yaw`, `inset`, `dx` and `dy` (map units added
+    to the position); a key matching no site or an unknown option raises GeneratorError."""
     overrides = overrides or {}
     for key, options in overrides.items():
         if key not in _gate_key_set(sites):
@@ -754,17 +755,13 @@ def placed_gates(sites: list, scale: float, yaw_offset: float, inset: float, ove
             if name not in GATE_OPTIONS:
                 raise GeneratorError(f"GATE_OVERRIDES {key}: unknown option {name!r} "
                                      f"(use {', '.join(GATE_OPTIONS)})")
-        if options.get("mesh", data.GATE_DEFAULT_MESH) not in data.GATE_MESH_BASE_SCALE:
-            raise GeneratorError(f"GATE_OVERRIDES {key}: unknown mesh {options['mesh']!r} "
-                                 f"(use {', '.join(data.GATE_MESH_BASE_SCALE)})")
     placed = []
     for site in sorted(sites, key=lambda s: (s.dwarven_county, s.normal_county)):
         option = overrides.get((site.dwarven_county, site.normal_county), {})
         ix, iy = site.inward
         t = math.atan2(ix + 0.0, iy + 0.0) + yaw_offset + option.get("yaw", 0.0)  # + 0.0 turns -0.0 into 0.0
-        # the same position the terrain shoulder is built around
-        placed.append((site, option.get("mesh", data.GATE_DEFAULT_MESH), option.get("scale", scale), t,
-                       dm.gate_position(site, inset, option)))
+        # the same position the transplant composition is built around
+        placed.append((site, option.get("scale", scale), t, dm.gate_position(site, inset, option)))
     return placed
 
 
@@ -775,73 +772,40 @@ def _object_block(name: str, mesh: str, lines: list) -> str:
 
 
 def gate_objects(sites: list, scale: float, yaw_offset: float, inset: float = 0.0, overrides: dict = None) -> str:
-    """One map object block per gate mesh holding a gate per site, in RiE's layout (sites sorted by county keys).
-    The default mesh's block is first and named `aov_dwarven_gates`; another mesh's is `aov_dwarven_gates_<mesh
-    name without _mesh>`. CK3 is Y-up, so the map's y becomes z and the ground offset y is 0."""
-    by_mesh = {}
-    for _, mesh, size, t, (px, py) in placed_gates(sites, scale, yaw_offset, inset, overrides):
+    """The map object block holding a gate per site (sorted by county keys), in RiE's layout. CK3 is Y-up, so
+    the map's y becomes z and the ground offset y is 0."""
+    lines = []
+    for _, size, t, (px, py) in placed_gates(sites, scale, yaw_offset, inset, overrides):
         values = (px, 0.0, py, 0.0, math.sin(t / 2), 0.0, math.cos(t / 2), size, size, size)
-        by_mesh.setdefault(mesh, []).append(" ".join(f"{v:.6f}" for v in values))
-    blocks = []
-    for mesh in sorted(by_mesh, key=lambda m: (m != data.GATE_DEFAULT_MESH, m)):
-        name = "aov_dwarven_gates" if mesh == data.GATE_DEFAULT_MESH else \
-            f"aov_dwarven_gates_{mesh.removesuffix('_mesh')}"
-        blocks.append(_object_block(name, mesh, by_mesh[mesh]))
-    return "".join(blocks)
+        lines.append(" ".join(f"{v:.6f}" for v in values))
+    return _object_block("aov_dwarven_gates", data.EREBOR_GATE_MESH, lines)
 
 
-def _checked_layout(layout, where: str) -> list:
-    for entry in layout:
-        if sorted(entry) != sorted(OVERLAY_KEYS):
-            extra = sorted(set(entry) - set(OVERLAY_KEYS))
-            lack = sorted(set(OVERLAY_KEYS) - set(entry))
-            raise GeneratorError(f"{where}: layout entry {entry} has unknown keys {extra} / lacks {lack}")
-        if entry["piece"] not in OVERLAY_PIECES:
-            raise GeneratorError(f"{where}: unknown piece {entry['piece']!r} (use {', '.join(OVERLAY_PIECES)})")
-    return list(layout)
+def piece_name(mesh: str) -> str:
+    """`mountain_03` for the composition mesh `mountain_03_mesh`; other meshes raise GeneratorError."""
+    m = PIECE.match(mesh)
+    if not m:
+        raise GeneratorError(f"composition mesh {mesh!r} is not a RiE mountain piece or mesa rock "
+                             f"(mountain_01..06, rock_mesa_01..03)")
+    return m.group(1)
 
 
-def overlay_pieces(sites: list, layout: list, overrides: dict = None) -> list:
-    """The sorted piece names the gates' overlays use."""
-    overrides = overrides or {}
-    used = set()
-    for site in sites:
-        entries = overrides.get((site.dwarven_county, site.normal_county), layout)
-        used.update(e["piece"] for e in entries or ())
-    return sorted(used)
+def transplant_objects(plans: list) -> str:
+    """Map object blocks (one per mesh type, meshes prefixed `aov_`) with every placed composition object of the
+    gate plans (see gate_transplant.GatePlan); "" when there are none. The ground offset y is the RiE offset
+    times the transplant scale."""
+    by_mesh = {}
+    for plan in plans:
+        for o in plan.objects:
+            values = (o.x, o.y_offset, o.y, 0.0, math.sin(o.yaw / 2), 0.0, math.cos(o.yaw / 2), o.scale, o.scale,
+                      o.scale)
+            by_mesh.setdefault(o.mesh, []).append(" ".join(f"{v + 0.0:.6f}" for v in values))
+    return "".join(_object_block(f"aov_dwarven_gate_overlay_{piece_name(mesh)}", f"aov_{mesh}", by_mesh[mesh])
+                   for mesh in sorted(by_mesh))
 
 
-def overlay_objects(sites: list, scale: float, yaw_offset: float, inset: float, gate_overrides: dict,
-                    layout: list, overrides: dict = None) -> str:
-    """Map object blocks (one per mountain piece used) with the overlay pieces around every gate; "" when none.
-
-    Each layout entry is in the gate's frame: `t` map units along `inward`, `l` along the gate's local +X, which is
-    `inward` rotated -90 degrees, (inward_y, -inward_x) in map coordinates; `yaw` is added to the gate's yaw; sx, sy,
-    sz are the piece scale. Positions and sizes (heights too) scale with gate size / the mesh's base scale
-    (GATE_MESH_BASE_SCALE). `overrides` maps a gate key to its own layout, or None for no overlays."""
-    overrides = overrides or {}
-    layout = _checked_layout(layout, "GATE_OVERLAY_LAYOUT")
-    for key, entries in overrides.items():
-        if key not in _gate_key_set(sites):
-            raise _unknown_key("GATE_OVERLAY_OVERRIDES", key, sites)
-        if entries is not None:
-            _checked_layout(entries, f"GATE_OVERLAY_OVERRIDES {key}")
-    by_piece = {}
-    for site, mesh, size, t, (px, py) in placed_gates(sites, scale, yaw_offset, inset, gate_overrides):
-        entries = overrides.get((site.dwarven_county, site.normal_county), layout)
-        k = size / data.GATE_MESH_BASE_SCALE[mesh]
-        ux, uy = site.inward
-        vx, vy = uy, -ux
-        for e in entries or ():
-            a = t + e["yaw"]
-            values = (px + k * (e["t"] * ux + e["l"] * vx), 0.0, py + k * (e["t"] * uy + e["l"] * vy),
-                      0.0, math.sin(a / 2), 0.0, math.cos(a / 2), k * e["sx"], k * e["sy"], k * e["sz"])
-            by_piece.setdefault(e["piece"], []).append(" ".join(f"{v + 0.0:.6f}" for v in values))
-    return "".join(_object_block(f"aov_dwarven_gate_overlay_{piece}", f"aov_{piece}_mesh", by_piece[piece])
-                   for piece in sorted(by_piece))
-
-
-OVERLAY_NAME = re.compile(r'(\bname\s*=\s*"|\bpdxmesh\s*=\s*")(mountain_0\d)_(mesh|entity)"')
+OVERLAY_NAME = re.compile(r'(\bname\s*=\s*"|\bpdxmesh\s*=\s*")((?:mountain_0\d)|(?:rock_mesa_0\d))_(mesh|entity)"')
+ASSET_TEXTURE = re.compile(r'(?<!\w)texture_\w+\s*=\s*"([^"]+)"')
 
 
 def overlay_asset(text: str, piece: str) -> str:
@@ -851,6 +815,31 @@ def overlay_asset(text: str, piece: str) -> str:
                                    else m.group(0), text)
     if f'name = "aov_{piece}_mesh"' not in out or f'name = "aov_{piece}_entity"' not in out:
         raise GeneratorError(f"{piece}.asset does not define {piece}_mesh and {piece}_entity")
+    return out
+
+
+def transplant_assets(rie: Path, plans: list, game: Path = None) -> dict:
+    """The model files of the composition meshes the plans use: `aov_<piece>.asset` (names prefixed), the piece's
+    mesh, and the textures its asset names that sit in RiE's asset folder, all in GATE_ASSET_DIR. A texture that is
+    not there must be one of the game's own (GAME_TEXTURE_DIRS under `game`/game), which is not copied; otherwise
+    GeneratorError."""
+    out = {}
+    for mesh in sorted({o.mesh for plan in plans for o in plan.objects}):
+        piece = piece_name(mesh)
+        folder = rie / PIECE_DIRS[piece.rsplit("_", 1)[0]]
+        for name in (f"{piece}.asset", f"{piece}.mesh"):
+            if not (folder / name).is_file():
+                raise GeneratorError(f"Realms in Exile not found: {folder / name} does not exist")
+        asset = _read_text(folder / f"{piece}.asset")
+        out[f"{GATE_ASSET_DIR}/aov_{piece}.asset"] = _with_header(overlay_asset(asset, piece),
+                                                                   f"{GATE_ASSET_DIR}/aov_{piece}.asset")
+        out[f"{GATE_ASSET_DIR}/{piece}.mesh"] = (folder / f"{piece}.mesh").read_bytes()
+        for texture in sorted(set(ASSET_TEXTURE.findall(asset))):
+            if (folder / texture).is_file():
+                out[f"{GATE_ASSET_DIR}/{texture}"] = (folder / texture).read_bytes()
+            elif game is None or not any((game / "game" / d / texture).is_file() for d in GAME_TEXTURE_DIRS):
+                raise GeneratorError(f"{piece}.asset names {texture}, which is neither in {folder} nor in the game's "
+                                     f"{', '.join(GAME_TEXTURE_DIRS)}")
     return out
 
 
@@ -898,16 +887,16 @@ def _analyse(roots: Roots) -> tuple:
     return pm, water, impassable, dwarven, sites
 
 
-def _height_notes(report: dict) -> list:
+def _height_notes(report: dict, plans: list = ()) -> list:
     notes = []
     for r in report["ranges"]:
         ground = "none" if r["ground"] is None else str(r["ground"])
         notes.append(f"range {','.join(map(str, r['provinces']))}: ground {ground}, factor {r['factor']:.3f}, "
                      f"peak {r['peak_before']} -> {r['peak_after']}")
-    for g in report["sites"]:
-        notes.append(f"gate {g['dwarven_county']}/{g['normal_county']} at ({g['x']}, {g['y']}): "
-                     f"foot {g['foot']}, shoulder max {g['shoulder_max']}, "
-                     f"max step {g['step_before']} -> {g['step_after']}")
+    for p in plans:
+        notes.append(f"gate {p.key[0]}/{p.key[1]} at ({p.x:.1f}, {p.y:.1f}): mirrored {'yes' if p.mirror else 'no'}, "
+                     f"turn {math.degrees(p.turn):+.1f} deg, height factor {p.factor:.3f}, cone peak {p.peak} "
+                     f"(foot {p.foot}, +{p.peak - p.foot}), objects {len(p.objects)} placed / {p.dropped} dropped")
     return notes
 
 
@@ -965,10 +954,12 @@ def build_heightmap(roots: Roots, notes: list = None) -> dict:
     if (pm.width, pm.height) != (old.width, old.height):
         raise GeneratorError(f"provinces.png is {pm.width}x{pm.height} but heightmap.png is "
                              f"{old.width}x{old.height}")
-    new, report = dm.raise_heights(old, pm, dwarven, water, impassable, sites, data.GATE_INSET,
-                                  data.GATE_OVERRIDES)
+    lifted, report = dm.raise_heights(old, pm, dwarven, water)
+    placed = [(site, size, pos) for site, size, _, pos in
+              placed_gates(sites, data.GATE_SCALE, data.GATE_YAW_OFFSET, data.GATE_INSET, data.GATE_OVERRIDES)]
+    new, plans = gt.transplant(lifted, pm, water, placed, gt.load_composition(roots.rie), data.TRANSPLANT_OVERRIDES)
     if notes is not None:
-        notes.extend(_height_notes(report))
+        notes.extend(_height_notes(report, plans))
 
     changed = hp.changed_blocks(old, new)
     blocks = {}
@@ -989,29 +980,16 @@ def build_heightmap(roots: Roots, notes: list = None) -> dict:
     }
     gates = gate_objects(sites, data.GATE_SCALE, data.GATE_YAW_OFFSET, data.GATE_INSET, data.GATE_OVERRIDES)
     out[GATES_REL] = _with_header("﻿" + gates, GATES_REL)
-    sources = list(GATE_ASSET_FILES)
-    for mesh in sorted({m for _, m, _, _, _ in placed_gates(sites, data.GATE_SCALE, data.GATE_YAW_OFFSET,
-                                                              data.GATE_INSET, data.GATE_OVERRIDES)}):
-        if mesh in GATE_MESH_ASSET_FILES:
-            sources.append(GATE_MESH_ASSET_FILES[mesh])
-    for source, names in sources:
+    for source, names in GATE_ASSET_FILES:
         for name in names:
             path = roots.rie / source / name
             if not path.is_file():
                 raise GeneratorError(f"Realms in Exile not found: {path} does not exist")
             out[f"{GATE_ASSET_DIR}/{name}"] = path.read_bytes()
-    overlays = overlay_objects(sites, data.GATE_SCALE, data.GATE_YAW_OFFSET, data.GATE_INSET, data.GATE_OVERRIDES,
-                               data.GATE_OVERLAY_LAYOUT, data.GATE_OVERLAY_OVERRIDES)
+    overlays = transplant_objects(plans)
     if overlays:
-        out[OVERLAYS_REL] = _with_header("﻿" + overlays, OVERLAYS_REL)
-    for piece in overlay_pieces(sites, data.GATE_OVERLAY_LAYOUT, data.GATE_OVERLAY_OVERRIDES):
-        for name in (f"{piece}.asset", f"{piece}.mesh"):
-            if not (roots.rie / RIE_MOUNTAIN_DIR / name).is_file():
-                raise GeneratorError(f"Realms in Exile not found: {roots.rie / RIE_MOUNTAIN_DIR / name} does not exist")
-        asset = _read_text(roots.rie / RIE_MOUNTAIN_DIR / f"{piece}.asset")
-        out[f"{GATE_ASSET_DIR}/aov_{piece}.asset"] = _with_header(overlay_asset(asset, piece),
-                                                                   f"{GATE_ASSET_DIR}/aov_{piece}.asset")
-        out[f"{GATE_ASSET_DIR}/{piece}.mesh"] = (roots.rie / RIE_MOUNTAIN_DIR / f"{piece}.mesh").read_bytes()
+        out[OVERLAYS_REL] = _with_header("\ufeff" + overlays, OVERLAYS_REL)
+    out.update(transplant_assets(roots.rie, plans, roots.game))
     return out
 
 
