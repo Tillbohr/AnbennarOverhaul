@@ -366,6 +366,29 @@ def shoulder_weight(t, lateral):
     return along * _ease(lateral / data.SHOULDER_HALF_WIDTH)
 
 
+def _edge_distance(i, w, blocked_px, offsets):
+    """Euclidean distance from flat pixel `i` to the nearest pixel of `blocked_px`, or a large number when none
+    lies within `offsets` (which are sorted by distance)."""
+    y, x = divmod(i, w)
+    for dx, dy in offsets:
+        if (y + dy) * w + x + dx in blocked_px:
+            return math.hypot(dx, dy)
+    return 1e9
+
+
+def _max_step(values, w, h, pixels):
+    """Largest height difference between horizontally or vertically adjacent pixels, at least one of them in
+    `pixels` (flat indices)."""
+    step = 0
+    for i in pixels:
+        y, x = divmod(i, w)
+        v = values[i]
+        for j, ok in ((i - 1, x > 0), (i + 1, x + 1 < w), (i - w, y > 0), (i + w, y + 1 < h)):
+            if ok and abs(values[j] - v) > step:
+                step = abs(values[j] - v)
+    return step
+
+
 def raise_heights(grid, pm, dwarven, water, impassable, sites, inset=None, overrides=None):
     """Lift every dwarven range and give each gate a shoulder; returns (new grid, report).
 
@@ -374,12 +397,14 @@ def raise_heights(grid, pm, dwarven, water, impassable, sites, inset=None, overr
     out over FADE_PX px into the surrounding land and water. Then, per gate (position from `gate_placements`
     with `inset`/`overrides`, default GATE_INSET/GATE_OVERRIDES): a broad gentle shoulder behind it, along
     `inward`: pixels of dwarven or impassable provinces are raised to at least
-    `foot + SHOULDER_RISE * shoulder_weight(t, l)` (soft ceiling applied), `foot` being the height at the gate
-    pixel after the range lift. No pixel is ever lowered; normal land, water and province 0 never change in the
-    shoulder.
+    a blend of their height toward `soft_ceiling(foot + SHOULDER_RISE)` by `shoulder_weight(t, l)` (also eased
+    down over SHOULDER_EDGE_FADE px toward pixels that may not change), `foot` being the height at the gate
+    pixel after the range lift. Gates are applied in county order, each blending from what the last left. No
+    pixel is ever lowered; normal land, water and province 0 never change in the shoulder.
     The report is {"ranges": [{provinces, ground, factor, peak_before, peak_after}],
-    "sites": [{dwarven_county, normal_county, x, y, foot, shoulder_max}]}; `shoulder_max` is the highest
-    height among the pixels the shoulder covers."""
+    "sites": [{dwarven_county, normal_county, x, y, foot, shoulder_max, step_before, step_after}]};
+    `shoulder_max` is the highest height among the pixels the shoulder covers; `step_before`/`step_after` are the
+    largest adjacent-pixel height steps in the shoulder's footprint after the range lift and at the end."""
     inset = data.GATE_INSET if inset is None else inset
     overrides = data.GATE_OVERRIDES if overrides is None else overrides
     w, h, ids = pm.width, pm.height, pm.ids
@@ -413,30 +438,55 @@ def raise_heights(grid, pm, dwarven, water, impassable, sites, inset=None, overr
                         new[i] = value
         report["ranges"].append({"provinces": sorted(group), "ground": ground, "factor": factor,
                                  "peak_before": peak, "peak_after": max(new[i] for i in px)})
-    imp = _lookup(impassable)
-    reach_px = data.SHOULDER_LENGTH + 1
-    for site, (px, py) in gate_placements(sites, inset, overrides):
+    fixed = bytearray(b"") * 65536  # provinces the shoulder may not change: normal land, water, 0
+    for p in set(dwarven) | set(impassable):
+        fixed[p] = 0
+    lifted = array("H", new)
+    reach_px = math.ceil(math.hypot(data.SHOULDER_LENGTH, data.SHOULDER_HALF_WIDTH)) + 1
+    fade = data.SHOULDER_EDGE_FADE
+    offsets = sorted(((dx, dy) for dy in range(-fade, fade + 1) for dx in range(-fade, fade + 1)
+                      if 0 < math.hypot(dx, dy) < fade), key=lambda o: math.hypot(*o))
+    placed = sorted(gate_placements(sites, inset, overrides),
+                    key=lambda sp: (sp[0].dwarven_county, sp[0].normal_county))
+    feet = []
+    for site, (px, py) in placed:  # feet from the lifted ground, before any shoulder
         gx = min(w - 1, max(0, int(round(px))))
         gy = min(h - 1, max(0, int(round(py))))
-        foot = new[gy * w + gx]
+        feet.append((gx, gy, new[gy * w + gx]))
+    footprints = []
+    for (site, (px, py)), (gx, gy, foot) in zip(placed, feet):
         ux, uy = site.inward
-        top = foot
-        for y in range(max(0, gy - reach_px), min(h, gy + reach_px + 1)):
-            for x in range(max(0, gx - reach_px), min(w, gx + reach_px + 1)):
+        top_height = soft_ceiling(foot + data.SHOULDER_RISE)
+        x0, x1 = max(0, gx - reach_px), min(w, gx + reach_px + 1)
+        y0, y1 = max(0, gy - reach_px), min(h, gy + reach_px + 1)
+        weights = {}
+        for y in range(y0, y1):
+            for x in range(x0, x1):
                 i = y * w + x
-                v = ids[i]
-                if not (dw[v] or imp[v]):
+                if fixed[ids[i]]:
                     continue
                 dx, dy = x - px, y - py
                 weight = shoulder_weight(dx * ux + dy * uy, abs(dx * uy - dy * ux))
-                if weight <= 0:
-                    continue
-                target = soft_ceiling(foot + data.SHOULDER_RISE * weight)
-                if target > new[i]:
-                    new[i] = target
-                top = max(top, new[i])
+                if weight > 0:
+                    weights[i] = weight
+        sources = [y * w + x for y in range(max(0, y0 - fade), min(h, y1 + fade))
+                   for x in range(max(0, x0 - fade), min(w, x1 + fade)) if fixed[ids[y * w + x]]]
+        blocked_px = set(sources)
+        top = foot
+        for i, weight in weights.items():
+            if blocked_px:
+                weight *= min(1.0, _edge_distance(i, w, blocked_px, offsets) / fade)  # ease toward fixed pixels
+            cur = new[i]
+            value = int(round(cur + weight * (top_height - cur)))
+            if value > cur:
+                new[i] = value
+            top = max(top, new[i])
+        footprints.append(weights)
         report["sites"].append({"dwarven_county": site.dwarven_county, "normal_county": site.normal_county,
                                 "x": site.x, "y": site.y, "foot": foot, "shoulder_max": top})
+    for entry, weights in zip(report["sites"], footprints):
+        entry["step_before"] = _max_step(lifted, w, h, weights)
+        entry["step_after"] = _max_step(new, w, h, weights)
     return type(grid)(w, h, new), report
 
 

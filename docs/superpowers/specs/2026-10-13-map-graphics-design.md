@@ -306,11 +306,23 @@ and `Failed to create material with shader standard_colormap (in gfx/FX/court_sc
    one shared function) and its `inward` axis `u`. For a pixel `p`: `t = (p - P) . u`, `l` = distance from the axis.
    Along-axis weight: 0 before `SHOULDER_START` (2 px), a cosine ease 0 to 1 over `SHOULDER_RAMP` (10 px), 1 until
    `SHOULDER_LENGTH` (24 px) minus 6, a cosine ease back to 0 over the last 6 px. Lateral weight: a cosine ease 1 to 0
-   over `SHOULDER_HALF_WIDTH` (12 px). Target `foot + SHOULDER_RISE (16000) * along * lateral` through the soft ceiling,
-   `foot` being the height at the gate pixel after the range lift; each pixel becomes the larger of its height and the
-   target. The earlier cliffs (14,000 within 6 px) stretched textures; this rises over 10 px with a largest one-pixel
-   step of `RISE * pi / (2 * RAMP)` (about 2,500). Sea gates get it too. The report and a note per gate give the foot
-   and the highest shoulder height.
+   over `SHOULDER_HALF_WIDTH` (12 px). `foot` is the height at the gate pixel after the range lift (taken before any
+   shoulder). A pixel blends from its current height toward `soft_ceiling(foot + SHOULDER_RISE (16000))` by `along *
+   lateral`, and by `min(1, d / SHOULDER_EDGE_FADE)` (8 px) where `d` is its distance to the nearest pixel that may
+   not change (normal land, water, no province), so the shoulder eases to nothing at its edges and at province borders
+   instead of being cut at full height; a pixel is never lowered. (The first version used the absolute target `foot +
+   RISE * weight`, which pulled every faint-weight pixel up to the foot and made cliffs of 7,000 to 20,000 at the
+   footprint edges.) Gates apply in county order, each blending from what the last left, so overlapping gates (Old
+   Passage's three) are deterministic. The footprint scan reaches `ceil(hypot(LENGTH, HALF_WIDTH)) + 1` px so diagonal
+   axes are not cut short. The earlier cliffs (14,000 within 6 px) stretched textures. Steepness, measured as the largest
+   adjacent-pixel step in each gate's footprint (before the shoulder, after the range lift -> final): Khugdihr 2,417 ->
+   2,464; Marrhold 3,013 -> 2,884; Old Passage/Ar Einnas 3,813 -> 5,146; Old Passage/Gabmorionn 3,008 -> 5,146; Old
+   Passage/Old Passage 3,777 -> 6,123; Outer Khug's Cave 2,445 -> 3,084; Ovdal Tungr 3,766 -> 3,766; Redgate 4,203 ->
+   3,901; Rose Mines 3,696 -> 4,028; Seghdihr 3,700 -> 2,540; Silverforge 2,367 -> 2,419; Verkal Gulan 2,552 -> 2,550.
+   On flat ground the ramp's steepest step is `RISE * pi / (2 * RAMP)` (about 2,500) and the 6 px fall at the far end
+   `RISE * pi / 12` (about 4,200); where the ground is much lower than the foot the blend span is larger. The test
+   allows `max(pre-existing, 6000)` plus 200 (Old Passage's overlap reaches 6,123). Sea gates get it too. The report and
+   a note per gate give the foot, the highest shoulder height and the steps.
 3. **Bigger gates set into the slope.** `GATE_SCALE = 1.6` (was 0.7), `GATE_INSET = 2.0` map units along `inward`,
    into the mountain. `GATE_OVERRIDES` is `{(dwarven county, normal county): {scale, yaw, inset, dx, dy}}` (yaw in
    radians added to the facing, dx and dy in map units); empty until in-game tuning needs it, and a key that matches no

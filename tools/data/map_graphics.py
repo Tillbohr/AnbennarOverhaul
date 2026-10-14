@@ -111,6 +111,7 @@ SHOULDER_START = 2  # px behind the gate position where the ground starts rising
 SHOULDER_RAMP = 10  # px over which it rises (cosine ease)
 SHOULDER_LENGTH = 24  # px behind the gate where the shoulder ends (it eases back down over the last 6 px)
 SHOULDER_HALF_WIDTH = 12  # px either side of the axis where the shoulder reaches zero (cosine ease)
+SHOULDER_EDGE_FADE = 8  # px from a pixel that may not change (normal land, water, no province) over which the shoulder eases to zero
 PACK_TOLERANCE = 257  # largest height error allowed when repacking the heightmap
 
 # Terrain blend-map gaps: Anbennar's detail_intensity.tga has pixels with no material (drawn black). Gaps smaller

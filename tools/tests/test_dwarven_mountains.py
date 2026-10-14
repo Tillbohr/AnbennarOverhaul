@@ -260,19 +260,19 @@ class RaiseTests(unittest.TestCase):
 
     SITE = dm.GateSite("c_dw", "c_n", 30, 30, (-1.0, 0.0))
 
-    def shoulder_fixture(self):
+    def shoulder_fixture(self, islands=True):
         """80x60 flat 10000: dwarven province 1 at x < 40, normal 2 beside it, an island of normal land (2) and of
         water (3) west of the gate, off its axis."""
         w, h = 80, 60
         ids = array("H", [1 if x < 40 else 2 for y in range(h) for x in range(w)])
         vals = array("H", [10000]) * (w * h)
-        for y in range(36, 41):
+        for y in range(36 if islands else 0, 41 if islands else 0):
             for x in range(10, 19):
                 ids[y * w + x] = 2 if x < 14 else 3
         return dm.ProvinceMap(w, h, ids), hp.Grid(w, h, vals)
 
     def test_shoulder_profile_along_the_axis(self):
-        pm, grid = self.shoulder_fixture()
+        pm, grid = self.shoulder_fixture(islands=False)
         new, report = dm.raise_heights(grid, pm, {1}, {3}, set(), [self.SITE], inset=2.0, overrides={})
         # the gate is at (28, 30); behind it is toward -x
         row = [new.get(28 - t, 30) for t in range(0, data.SHOULDER_LENGTH + 3)]
@@ -311,7 +311,7 @@ class RaiseTests(unittest.TestCase):
         self.assertEqual(new.get(17, 38), 10000)  # water island
 
     def test_shoulder_is_gentle_sideways_too(self):
-        pm, grid = self.shoulder_fixture()
+        pm, grid = self.shoulder_fixture(islands=False)
         new, _ = dm.raise_heights(grid, pm, {1}, {3}, set(), [self.SITE], inset=2.0, overrides={})
         column = [new.get(20, y) for y in range(30, 30 + data.SHOULDER_HALF_WIDTH + 1)]
         self.assertEqual(column, sorted(column, reverse=True))
@@ -319,7 +319,7 @@ class RaiseTests(unittest.TestCase):
                              data.SHOULDER_RISE * math.pi / (2 * data.SHOULDER_HALF_WIDTH) + 3)
 
     def test_shoulder_uses_the_final_gate_position(self):
-        pm, grid = self.shoulder_fixture()
+        pm, grid = self.shoulder_fixture(islands=False)
         overrides = {("c_dw", "c_n"): {"dx": -4.0}}
         placements = dm.gate_placements([self.SITE], 2.0, overrides)
         self.assertEqual(placements[0][1], (24.0, 30.0))
@@ -328,13 +328,76 @@ class RaiseTests(unittest.TestCase):
         self.assertGreater(new.get(12, 30), 10000 + 0.95 * data.SHOULDER_RISE)  # t = 12: on the plateau
 
     def test_shoulder_raises_the_foot_relative_height(self):
-        pm, grid = self.shoulder_fixture()
+        pm, grid = self.shoulder_fixture(islands=False)
         for i in range(len(grid.values)):
             grid.values[i] = 20000 + (i % pm.width)  # not flat: foot is the height at the gate pixel
         new, report = dm.raise_heights(grid, pm, {1}, {3}, set(), [self.SITE], inset=2.0, overrides={})
         foot = grid.get(28, 30)
         self.assertEqual(report["sites"][0]["foot"], foot)
         self.assertGreaterEqual(new.get(14, 30), foot + 0.95 * data.SHOULDER_RISE)
+
+    def test_shoulder_blends_from_the_local_ground_not_the_foot(self):
+        """A high foot among low ground: the faint edge of the shoulder must not pull pixels up to the foot."""
+        pm, grid = self.shoulder_fixture(islands=False)
+        w = pm.width
+        for y in range(pm.height):
+            for x in range(w):
+                grid.values[y * w + x] = 30000 if 26 <= x <= 30 and 28 <= y <= 32 else 8000
+        new, report = dm.raise_heights(grid, pm, {1}, set(), set(), [self.SITE], inset=2.0, overrides={})
+        entry = report["sites"][0]
+        top = dm.soft_ceiling(entry["foot"] + data.SHOULDER_RISE)
+        faint = 0
+        for y in range(pm.height):
+            for x in range(40):
+                i = y * w + x
+                weight = dm.shoulder_weight((28 - x) * 1.0, abs(y - 30.0))
+                self.assertGreaterEqual(new.values[i], grid.values[i])
+                if 0 < weight < 0.1:
+                    faint += 1
+                    self.assertLessEqual(new.values[i] - grid.values[i], weight * (top - grid.values[i]) + 1, (x, y))
+        self.assertGreater(faint, 10)
+        self.assertLessEqual(entry["step_after"], max(entry["step_before"], 6000) + 1)
+
+    def test_sloped_ground_keeps_steps_gentle(self):
+        pm, grid = self.shoulder_fixture(islands=False)
+        w = pm.width
+        for i in range(len(grid.values)):
+            grid.values[i] = 8000 + 300 * min(i % w, 40)
+        new, report = dm.raise_heights(grid, pm, {1}, set(), set(), [self.SITE], inset=2.0, overrides={})
+        entry = report["sites"][0]
+        for i in range(len(new.values)):
+            self.assertGreaterEqual(new.values[i], grid.values[i])
+        self.assertLessEqual(entry["step_after"], max(entry["step_before"], 6000))
+
+    def test_shoulder_eases_down_toward_a_province_border(self):
+        pm, grid = self.shoulder_fixture(islands=False)
+        w = pm.width
+        for y in range(pm.height):
+            for x in (10, 11):
+                pm.ids[y * w + x] = 2  # a strip of normal land across the shoulder
+        new, report = dm.raise_heights(grid, pm, {1}, set(), set(), [self.SITE], inset=2.0, overrides={})
+        self.assertEqual(new.get(11, 30), 10000)
+        # (12, 30) is on the plateau (t = 16) one pixel from the strip: 1/8 of the rise
+        self.assertLessEqual(new.get(12, 30) - 10000, data.SHOULDER_RISE / data.SHOULDER_EDGE_FADE + 3)
+        rise = [new.get(x, 30) - 10000 for x in range(12, 17)]  # d = 1..5 px from the strip
+        self.assertEqual(rise, sorted(rise))
+        self.assertLessEqual(report["sites"][0]["step_after"], 6000)
+
+    def test_overlapping_gates_do_not_depend_on_input_order(self):
+        pm, grid = self.shoulder_fixture(islands=False)
+        a = dm.GateSite("c_a", "c_n", 30, 30, (-1.0, 0.0))
+        b = dm.GateSite("c_b", "c_n", 30, 36, (-1.0, 0.0))
+        one, _ = dm.raise_heights(grid, pm, {1}, set(), set(), [a, b], inset=2.0, overrides={})
+        two, _ = dm.raise_heights(grid, pm, {1}, set(), set(), [b, a], inset=2.0, overrides={})
+        self.assertEqual(one.values, two.values)
+
+    def test_shoulder_reaches_along_a_diagonal_axis(self):
+        pm, grid = self.shoulder_fixture(islands=False)
+        site = dm.GateSite("c_dw", "c_n", 30, 30, (-math.sqrt(0.5), -math.sqrt(0.5)))
+        new, _ = dm.raise_heights(grid, pm, {1}, set(), set(), [site], inset=0.0, overrides={})
+        t = data.SHOULDER_LENGTH - 8  # still on the plateau
+        x, y = round(30 - t * math.sqrt(0.5)), round(30 - t * math.sqrt(0.5))
+        self.assertGreater(new.get(x, y), 10000 + 0.9 * data.SHOULDER_RISE)
 
     def test_shoulder_changes_only_dwarven_or_impassable_land(self):
         pm, grid = self.shoulder_fixture()
@@ -343,6 +406,7 @@ class RaiseTests(unittest.TestCase):
                 pm.ids[y * pm.width + x] = 4  # impassable
         new, _ = dm.raise_heights(grid, pm, {1}, {3}, {4}, [self.SITE], inset=2.0, overrides={})
         self.assertGreater(new.get(15, 25), 10000)
+
     def test_no_pixel_is_lowered_at_a_site(self):
         w, h = 60, 41
         ids = array("H", [1 if x < 30 else 2 for y in range(h) for x in range(w)])
@@ -554,6 +618,7 @@ class RealDataTests(unittest.TestCase):
             for j in range(max(0, y - reach), min(h, y + reach + 1)):
                 m |= rows[j]
             near.append(m)
+        shoulder_reach = math.ceil(math.hypot(data.SHOULDER_LENGTH, data.SHOULDER_HALF_WIDTH)) + 1 + data.GATE_INSET
         changed = 0
         for y in range(h):
             a = self.old.values[y * w:(y + 1) * w]
@@ -563,7 +628,9 @@ class RealDataTests(unittest.TestCase):
             for x in range(w):
                 if a[x] != b[x]:
                     changed += 1
-                    self.assertTrue((near[y] >> x) & 1, (x, y))  # gate sites included: nothing carved
+                    # outside the fade band only a gate's shoulder (impassable land beside a gate) may change
+                    self.assertTrue((near[y] >> x) & 1 or any(math.hypot(x - g.x, y - g.y) <= shoulder_reach
+                                                              for g in self.spaced), (x, y))
         self.assertGreater(changed, 0)
 
 
