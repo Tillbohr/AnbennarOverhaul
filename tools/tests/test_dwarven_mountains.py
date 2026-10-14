@@ -258,15 +258,91 @@ class RaiseTests(unittest.TestCase):
         new, _ = dm.raise_heights(grid, pm, {1}, set(), set(), [])
         self.assertEqual(new.values, grid.values)  # peak above LIFT_PEAK: factor 1
 
-    def test_gate_sites_change_nothing(self):
-        """Sites no longer shape the ground: no pad, cliff or skirt, whatever sites are passed."""
-        pm, grid = fixture_range()
-        site = dm.GateSite("c_dw", "c_n", 20, 15, (1.0, 0.0))
-        without, _ = dm.raise_heights(grid, pm, {1}, set(), set(), [])
-        with_site, report = dm.raise_heights(grid, pm, {1}, set(), set(), [site])
-        self.assertEqual(with_site.values, without.values)
-        self.assertEqual(report["sites"], [{"dwarven_county": "c_dw", "normal_county": "c_n", "x": 20, "y": 15}])
+    SITE = dm.GateSite("c_dw", "c_n", 30, 30, (-1.0, 0.0))
 
+    def shoulder_fixture(self):
+        """80x60 flat 10000: dwarven province 1 at x < 40, normal 2 beside it, an island of normal land (2) and of
+        water (3) west of the gate, off its axis."""
+        w, h = 80, 60
+        ids = array("H", [1 if x < 40 else 2 for y in range(h) for x in range(w)])
+        vals = array("H", [10000]) * (w * h)
+        for y in range(36, 41):
+            for x in range(10, 19):
+                ids[y * w + x] = 2 if x < 14 else 3
+        return dm.ProvinceMap(w, h, ids), hp.Grid(w, h, vals)
+
+    def test_shoulder_profile_along_the_axis(self):
+        pm, grid = self.shoulder_fixture()
+        new, report = dm.raise_heights(grid, pm, {1}, {3}, set(), [self.SITE], inset=2.0, overrides={})
+        # the gate is at (28, 30); behind it is toward -x
+        row = [new.get(28 - t, 30) for t in range(0, data.SHOULDER_LENGTH + 3)]
+        start, ramp, length = data.SHOULDER_START, data.SHOULDER_RAMP, data.SHOULDER_LENGTH
+        self.assertTrue(all(v == 10000 for v in row[:start + 1]))  # t <= START: untouched
+        self.assertTrue(all(v == 10000 for v in row[length + 1:]))  # beyond the end
+        rising = row[start:start + ramp + 1]
+        self.assertEqual(rising, sorted(rising))
+        for v in row[start + ramp:length - 6 + 1]:
+            self.assertGreaterEqual(v, 10000 + 0.95 * data.SHOULDER_RISE)
+        falling = row[length - 6:length + 1]
+        self.assertEqual(falling, sorted(falling, reverse=True))
+        limit = data.SHOULDER_RISE * math.pi / (2 * data.SHOULDER_RAMP) + 3
+        self.assertLessEqual(max(abs(a - b) for a, b in zip(row[:start + ramp + 1], row[1:])), limit)
+        fall_limit = data.SHOULDER_RISE * math.pi / (2 * 6) + 3  # the last 6 px ease back down
+        self.assertLessEqual(max(abs(a - b) for a, b in zip(row[length - 6:], row[length - 5:])), fall_limit)
+        entry = report["sites"][0]
+        self.assertEqual(entry["foot"], 10000)
+        self.assertEqual(entry["shoulder_max"], 10000 + data.SHOULDER_RISE)
+
+    def test_shoulder_is_limited_to_the_strip_and_never_lowers(self):
+        pm, grid = self.shoulder_fixture()
+        new, _ = dm.raise_heights(grid, pm, {1}, {3}, set(), [self.SITE], inset=2.0, overrides={})
+        w = pm.width
+        for y in range(pm.height):
+            for x in range(w):
+                i = y * w + x
+                self.assertGreaterEqual(new.values[i], grid.values[i])
+                t, lat = 28 - x, abs(y - 30)
+                outside = (t < data.SHOULDER_START or t > data.SHOULDER_LENGTH or lat >= data.SHOULDER_HALF_WIDTH
+                           or pm.ids[i] != 1)
+                if outside:
+                    self.assertEqual(new.values[i], grid.values[i], (x, y))
+        self.assertGreater(new.get(15, 31), 10000)
+        self.assertEqual(new.get(12, 38), 10000)  # normal-land island inside the strip
+        self.assertEqual(new.get(17, 38), 10000)  # water island
+
+    def test_shoulder_is_gentle_sideways_too(self):
+        pm, grid = self.shoulder_fixture()
+        new, _ = dm.raise_heights(grid, pm, {1}, {3}, set(), [self.SITE], inset=2.0, overrides={})
+        column = [new.get(20, y) for y in range(30, 30 + data.SHOULDER_HALF_WIDTH + 1)]
+        self.assertEqual(column, sorted(column, reverse=True))
+        self.assertLessEqual(max(a - b for a, b in zip(column, column[1:])),
+                             data.SHOULDER_RISE * math.pi / (2 * data.SHOULDER_HALF_WIDTH) + 3)
+
+    def test_shoulder_uses_the_final_gate_position(self):
+        pm, grid = self.shoulder_fixture()
+        overrides = {("c_dw", "c_n"): {"dx": -4.0}}
+        placements = dm.gate_placements([self.SITE], 2.0, overrides)
+        self.assertEqual(placements[0][1], (24.0, 30.0))
+        new, _ = dm.raise_heights(grid, pm, {1}, {3}, set(), [self.SITE], inset=2.0, overrides=overrides)
+        self.assertEqual(new.get(25, 30), 10000)  # t = -1 from the moved gate
+        self.assertGreater(new.get(12, 30), 10000 + 0.95 * data.SHOULDER_RISE)  # t = 12: on the plateau
+
+    def test_shoulder_raises_the_foot_relative_height(self):
+        pm, grid = self.shoulder_fixture()
+        for i in range(len(grid.values)):
+            grid.values[i] = 20000 + (i % pm.width)  # not flat: foot is the height at the gate pixel
+        new, report = dm.raise_heights(grid, pm, {1}, {3}, set(), [self.SITE], inset=2.0, overrides={})
+        foot = grid.get(28, 30)
+        self.assertEqual(report["sites"][0]["foot"], foot)
+        self.assertGreaterEqual(new.get(14, 30), foot + 0.95 * data.SHOULDER_RISE)
+
+    def test_shoulder_changes_only_dwarven_or_impassable_land(self):
+        pm, grid = self.shoulder_fixture()
+        for y in range(20, 30):
+            for x in range(10, 20):
+                pm.ids[y * pm.width + x] = 4  # impassable
+        new, _ = dm.raise_heights(grid, pm, {1}, {3}, {4}, [self.SITE], inset=2.0, overrides={})
+        self.assertGreater(new.get(15, 25), 10000)
     def test_no_pixel_is_lowered_at_a_site(self):
         w, h = 60, 41
         ids = array("H", [1 if x < 30 else 2 for y in range(h) for x in range(w)])

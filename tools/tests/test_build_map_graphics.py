@@ -690,6 +690,16 @@ class GateObjectsTests(unittest.TestCase):
         self.assertEqual(b[:3], ["100.000000", "0.000000", "202.000000"])  # untouched: default inset 2 along (0, 1)
         self.assertEqual(b[7:], ["1.000000"] * 3)
 
+    def test_gate_position_is_shared_with_the_terrain_shoulder(self):
+        overrides = {("c_a", "c_y"): {"dx": 1.5, "dy": -2.0, "inset": 5.0}}
+        text = bmg.gate_objects(self.SITES, 1.0, 0.0, 2.0, overrides)
+        body = re.search(r'transform="([^"]*)', text).group(1)
+        lines = [line.split() for line in body.split("\n") if line.strip()]
+        placed = {s.dwarven_county: pos for s, pos in dm.gate_placements(self.SITES, 2.0, overrides)}
+        for line, county in zip(lines, ("c_a", "c_b")):
+            self.assertAlmostEqual(float(line[0]), placed[county][0], places=5)
+            self.assertAlmostEqual(float(line[2]), placed[county][1], places=5)
+
     def test_override_with_a_single_key_leaves_the_rest_default(self):
         a, _ = self.with_overrides({("c_a", "c_y"): {"scale": 2.0}})
         self.assertEqual(a[:3], ["298.000000", "0.000000", "50.000000"])
@@ -825,6 +835,14 @@ class HeightOutputsTests(unittest.TestCase):
     def test_notes_cover_ranges_and_sites(self):
         self.assertEqual(sum(note.startswith("range ") for note in self.notes), 9)
         self.assertEqual(sum(note.startswith("gate ") for note in self.notes), 12)
+
+    def test_every_gate_has_a_shoulder(self):
+        found = [re.search(r"^gate (\S+) at .*foot (\d+), shoulder max (\d+)", n) for n in self.notes
+                 if n.startswith("gate ")]
+        self.assertEqual(len(found), 12)
+        for m in found:
+            foot, top = int(m.group(2)), int(m.group(3))
+            self.assertGreaterEqual(top, min(65535 - 1, foot + 0.8 * data.SHOULDER_RISE), m.group(0))
 
 
 def _read(path):

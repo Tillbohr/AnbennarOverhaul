@@ -745,10 +745,9 @@ def gate_objects(sites: list, scale: float, yaw_offset: float, inset: float = 0.
         option = overrides.get((site.dwarven_county, site.normal_county), {})
         ix, iy = site.inward
         t = math.atan2(ix + 0.0, iy + 0.0) + yaw_offset + option.get("yaw", 0.0)  # + 0.0 turns -0.0 into 0.0
-        move = option.get("inset", inset)
         size = option.get("scale", scale)
-        values = (site.x + ix * move + option.get("dx", 0.0), 0.0, site.y + iy * move + option.get("dy", 0.0), 0.0,
-                  math.sin(t / 2), 0.0, math.cos(t / 2), size, size, size)
+        px, py = dm.gate_position(site, inset, option)  # the same position the terrain shoulder is built around
+        values = (px, 0.0, py, 0.0, math.sin(t / 2), 0.0, math.cos(t / 2), size, size, size)
         lines.append(" ".join(f"{v:.6f}" for v in values))
     return ('object={\n\tname="aov_dwarven_gates"\n\trender_pass=Map\n\tclamp_to_water_level=no\n'
             f'\tgenerated_content=no\n\tlayer="{GATE_LAYER}"\n\tpdxmesh="erebor_gate_mesh"\n'
@@ -791,7 +790,8 @@ def _height_notes(report: dict) -> list:
         notes.append(f"range {','.join(map(str, r['provinces']))}: ground {ground}, factor {r['factor']:.3f}, "
                      f"peak {r['peak_before']} -> {r['peak_after']}")
     for g in report["sites"]:
-        notes.append(f"gate {g['dwarven_county']}/{g['normal_county']} at ({g['x']}, {g['y']})")
+        notes.append(f"gate {g['dwarven_county']}/{g['normal_county']} at ({g['x']}, {g['y']}): "
+                     f"foot {g['foot']}, shoulder max {g['shoulder_max']}")
     return notes
 
 
@@ -849,7 +849,8 @@ def build_heightmap(roots: Roots, notes: list = None) -> dict:
     if (pm.width, pm.height) != (old.width, old.height):
         raise GeneratorError(f"provinces.png is {pm.width}x{pm.height} but heightmap.png is "
                              f"{old.width}x{old.height}")
-    new, report = dm.raise_heights(old, pm, dwarven, water, impassable, sites)
+    new, report = dm.raise_heights(old, pm, dwarven, water, impassable, sites, data.GATE_INSET,
+                                  data.GATE_OVERRIDES)
     if notes is not None:
         notes.extend(_height_notes(report))
 

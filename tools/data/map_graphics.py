@@ -103,6 +103,14 @@ GATE_OVERRIDES = {}
 # Hold counties whose land gate sites are replaced by one gate on the shore of the hold's province, facing the sea.
 SEA_GATES = ("c_ovdal_tungr",)
 GATE_YAW_OFFSET = 0.0  # extra yaw (radians) added to the gate mesh facing
+# Gate shoulder: a broad, gentle rise of the ground behind each gate so the gate's rock backing joins the mountain
+# (the earlier steep cliffs stretched textures). Measured behind the gate along its `inward` axis (t, px from the
+# gate position) and sideways from that axis (l, px).
+SHOULDER_RISE = 16000  # height units above the gate foot at the top of the shoulder
+SHOULDER_START = 2  # px behind the gate position where the ground starts rising
+SHOULDER_RAMP = 10  # px over which it rises (cosine ease)
+SHOULDER_LENGTH = 24  # px behind the gate where the shoulder ends (it eases back down over the last 6 px)
+SHOULDER_HALF_WIDTH = 12  # px either side of the axis where the shoulder reaches zero (cosine ease)
 PACK_TOLERANCE = 257  # largest height error allowed when repacking the heightmap
 
 # Terrain blend-map gaps: Anbennar's detail_intensity.tga has pixels with no material (drawn black). Gaps smaller

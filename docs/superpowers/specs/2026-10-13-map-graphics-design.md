@@ -246,7 +246,8 @@ camera tilt (already ported). Most of the Serpentspine already exceeds Erebor's 
 3. **No gate pads, cliffs or skirts (redesign, see "Gate redesign" below):** the first version carved a flat pad and
    raised a 14,000 cliff at every gate site. In game that stretched the land into sheer, textured walls, so the
    constants `GATE_PAD`, `GATE_RISE`, `GATE_RISE_DIST` and `GATE_SKIRT` are gone and gate sites no longer change a
-   single height. No pixel is ever lowered.
+   single height of the ground in front of the gate (no carving). No pixel is ever lowered. A gentle shoulder behind
+   each gate is added instead (rule 3b).
 4. **Fade:** every change fades linearly to zero over `FADE_PX` (12) pixels outside the dwarven provinces; water and
    impassable provinces change only inside that fade.
 
@@ -298,6 +299,18 @@ and `Failed to create material with shader standard_colormap (in gfx/FX/court_sc
    wanted). The build stops if Anbennar's file lacks `MainCode VS_standard` or `MainCode PS_noop`, or if
    `standard_winter_mapobject`, `standard_colormap` or `standard_colormap_mapobject` is still undefined.
 2. **No carved terrain** (raising rule 3 above): the gate sits in the lifted slope instead.
+   **Shoulder (added after the second in-game test):** with the ground uncarved, the gate's rock backing stood as a free
+   slab with a dip behind it. So after the range lift each gate gets a broad, gentle rise of dwarven or impassable
+   ground behind it (normal land, water and province 0 never change, nothing is lowered), built around the gate's final
+   position `P` (site + inset along `inward` + `GATE_OVERRIDES` dx/dy, the same position the mesh transform uses, from
+   one shared function) and its `inward` axis `u`. For a pixel `p`: `t = (p - P) . u`, `l` = distance from the axis.
+   Along-axis weight: 0 before `SHOULDER_START` (2 px), a cosine ease 0 to 1 over `SHOULDER_RAMP` (10 px), 1 until
+   `SHOULDER_LENGTH` (24 px) minus 6, a cosine ease back to 0 over the last 6 px. Lateral weight: a cosine ease 1 to 0
+   over `SHOULDER_HALF_WIDTH` (12 px). Target `foot + SHOULDER_RISE (16000) * along * lateral` through the soft ceiling,
+   `foot` being the height at the gate pixel after the range lift; each pixel becomes the larger of its height and the
+   target. The earlier cliffs (14,000 within 6 px) stretched textures; this rises over 10 px with a largest one-pixel
+   step of `RISE * pi / (2 * RAMP)` (about 2,500). Sea gates get it too. The report and a note per gate give the foot
+   and the highest shoulder height.
 3. **Bigger gates set into the slope.** `GATE_SCALE = 1.6` (was 0.7), `GATE_INSET = 2.0` map units along `inward`,
    into the mountain. `GATE_OVERRIDES` is `{(dwarven county, normal county): {scale, yaw, inset, dx, dy}}` (yaw in
    radians added to the facing, dx and dy in map units); empty until in-game tuning needs it, and a key that matches no

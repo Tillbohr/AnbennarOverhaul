@@ -331,15 +331,57 @@ def _range_groups(dwarven, pm, pixels):
     return sorted(groups.values(), key=lambda g: (-len(g), min(g)))
 
 
-def raise_heights(grid, pm, dwarven, water, impassable, sites):
-    """Lift every dwarven range; returns (new grid, report). The ground is never carved.
+def gate_position(site, inset, option=None):
+    """Where a gate mesh stands: the site moved `inset` (or the option's `inset`) along `inward`, plus the
+    option's `dx`, `dy`. The transform of the gate map object and the terrain shoulder both use this."""
+    option = option or {}
+    move = option.get("inset", inset)
+    return (site.x + site.inward[0] * move + option.get("dx", 0.0),
+            site.y + site.inward[1] * move + option.get("dy", 0.0))
+
+
+def gate_placements(sites, inset, overrides):
+    """[(site, (x, y))] with each gate's final position (see `gate_position`); `overrides` maps
+    (dwarven county, normal county) to option dicts."""
+    overrides = overrides or {}
+    return [(s, gate_position(s, inset, overrides.get((s.dwarven_county, s.normal_county)))) for s in sites]
+
+
+def _ease(x):
+    """Cosine ease from 1 (x = 0) to 0 (x = 1)."""
+    return 0.5 + 0.5 * math.cos(math.pi * min(1.0, max(0.0, x)))
+
+
+def shoulder_weight(t, lateral):
+    """Weight 0..1 of a gate's shoulder `t` px behind the gate position and `lateral` px off its axis."""
+    start, ramp, length, fall = data.SHOULDER_START, data.SHOULDER_RAMP, data.SHOULDER_LENGTH, 6
+    if t < start or t >= length or lateral >= data.SHOULDER_HALF_WIDTH:
+        return 0.0
+    if t < start + ramp:
+        along = 1 - _ease((t - start) / ramp)
+    elif t <= length - fall:
+        along = 1.0
+    else:
+        along = _ease((t - (length - fall)) / fall)
+    return along * _ease(lateral / data.SHOULDER_HALF_WIDTH)
+
+
+def raise_heights(grid, pm, dwarven, water, impassable, sites, inset=None, overrides=None):
+    """Lift every dwarven range and give each gate a shoulder; returns (new grid, report).
 
     Per range: ground = `range_ground`, factor = `lift_factor(peak, ground)`; a pixel above the ground is
     moved to `ground + (h - ground) * factor` (soft ceiling applied, never lowered), and the change fades
-    out over FADE_PX px into the surrounding land and water. No pixel is ever lowered, and gate sites do not
-    change the ground (the gate mesh is set into the slope instead); `sites` only fills the report.
+    out over FADE_PX px into the surrounding land and water. Then, per gate (position from `gate_placements`
+    with `inset`/`overrides`, default GATE_INSET/GATE_OVERRIDES): a broad gentle shoulder behind it, along
+    `inward`: pixels of dwarven or impassable provinces are raised to at least
+    `foot + SHOULDER_RISE * shoulder_weight(t, l)` (soft ceiling applied), `foot` being the height at the gate
+    pixel after the range lift. No pixel is ever lowered; normal land, water and province 0 never change in the
+    shoulder.
     The report is {"ranges": [{provinces, ground, factor, peak_before, peak_after}],
-    "sites": [{dwarven_county, normal_county, x, y}]}."""
+    "sites": [{dwarven_county, normal_county, x, y, foot, shoulder_max}]}; `shoulder_max` is the highest
+    height among the pixels the shoulder covers."""
+    inset = data.GATE_INSET if inset is None else inset
+    overrides = data.GATE_OVERRIDES if overrides is None else overrides
     w, h, ids = pm.width, pm.height, pm.ids
     old = grid.values
     new = array("H", old)
@@ -371,8 +413,30 @@ def raise_heights(grid, pm, dwarven, water, impassable, sites):
                         new[i] = value
         report["ranges"].append({"provinces": sorted(group), "ground": ground, "factor": factor,
                                  "peak_before": peak, "peak_after": max(new[i] for i in px)})
-    report["sites"] = [{"dwarven_county": s.dwarven_county, "normal_county": s.normal_county,
-                       "x": s.x, "y": s.y} for s in sites]
+    imp = _lookup(impassable)
+    reach_px = data.SHOULDER_LENGTH + 1
+    for site, (px, py) in gate_placements(sites, inset, overrides):
+        gx = min(w - 1, max(0, int(round(px))))
+        gy = min(h - 1, max(0, int(round(py))))
+        foot = new[gy * w + gx]
+        ux, uy = site.inward
+        top = foot
+        for y in range(max(0, gy - reach_px), min(h, gy + reach_px + 1)):
+            for x in range(max(0, gx - reach_px), min(w, gx + reach_px + 1)):
+                i = y * w + x
+                v = ids[i]
+                if not (dw[v] or imp[v]):
+                    continue
+                dx, dy = x - px, y - py
+                weight = shoulder_weight(dx * ux + dy * uy, abs(dx * uy - dy * ux))
+                if weight <= 0:
+                    continue
+                target = soft_ceiling(foot + data.SHOULDER_RISE * weight)
+                if target > new[i]:
+                    new[i] = target
+                top = max(top, new[i])
+        report["sites"].append({"dwarven_county": site.dwarven_county, "normal_county": site.normal_county,
+                                "x": site.x, "y": site.y, "foot": foot, "shoulder_max": top})
     return type(grid)(w, h, new), report
 
 
