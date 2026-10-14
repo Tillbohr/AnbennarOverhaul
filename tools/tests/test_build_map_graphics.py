@@ -1032,8 +1032,8 @@ class HeightOutputsTests(unittest.TestCase):
 
     def test_gate_count_matches_sites(self):
         text = self.files["gfx/map/map_object_data/aov_dwarven_gates.txt"].decode("utf-8")
-        count = int(re.search(r"count=(\d+)", text).group(1))
-        lines = [l for l in re.search(r'transform="([^"]*)', text).group(1).split("\n") if l.strip()]
+        count = sum(int(c) for c in re.findall(r"count=(\d+)", text))
+        lines = [l for body in re.findall(r'transform="([^"]*)', text) for l in body.split("\n") if l.strip()]
         self.assertEqual(count, len(lines))
         self.assertEqual(count, sum(note.startswith("gate ") for note in self.notes))
         self.assertTrue(text.lstrip("﻿").startswith(bmg.MARKER))
