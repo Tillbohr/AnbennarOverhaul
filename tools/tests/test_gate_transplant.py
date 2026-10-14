@@ -36,7 +36,7 @@ def tent(radius=18.0, peak=6000.0):
 def comp(radius=18.0, delta=None, objects=None):
     objs = objects if objects is not None else [
         gt.CompositionObject("mountain_01_mesh", 5.0, 2.0, 0.0, 0.5, 1.0),
-        gt.CompositionObject("rock_mesa_02_mesh", -1.0, 3.0, 0.76, -0.2, 0.5)]
+        gt.CompositionObject("mountain_02_mesh", 4.0, -3.0, 0.76, -0.2, 0.5)]
     return gt.Composition(objs, delta or tent(radius), 6000.0, radius)
 
 
@@ -187,6 +187,80 @@ class ConeTests(unittest.TestCase):
         self.assertTrue(all(x >= y for x, y in zip(n1.values, only_b.values)))
 
 
+class ConeShapeTests(unittest.TestCase):
+    """The cone only blends up from the ground; nothing in front of the face or outside the cone moves."""
+
+    PIN = {("c_a", "c_x"): {"mirror": False, "turn": 0, "height": 1.0}}
+
+    def low_ground(self):
+        pm, grid = plain(height=5000)
+        for y in range(68, 73):  # the gate stands on a 10,000 pad, the lowland around is 5,000
+            for x in range(66, 75):
+                grid.values[y * 140 + x] = 10000
+        return pm, grid
+
+    def test_ground_below_the_foot_is_not_lifted_in_front_or_outside_the_cone(self):
+        pm, grid = self.low_ground()
+        new, plans = run(pm, grid, [site()], overrides=self.PIN)
+        weights = plans[0].weights
+        changed = [i for i in range(len(new.values)) if new.values[i] != grid.values[i]]
+        self.assertTrue(changed)
+        self.assertLessEqual(set(changed), set(weights))
+        for i in weights:
+            self.assertGreaterEqual(i // 140, 70)  # t >= 0: never south of a north-facing gate
+        for i in range(len(new.values)):
+            if i // 140 < 70:
+                self.assertEqual(new.values[i], grid.values[i])
+        # the low ground beside the cone keeps its own height
+        self.assertEqual(new.get(70 + 25, 80), 5000)
+        self.assertEqual(new.get(70 - 25, 80), 5000)
+
+    def test_face_ramp_starts_at_zero(self):
+        c = comp(delta=lambda t, l: 5000.0)  # a delta far above the full threshold everywhere
+        self.assertEqual(gt.shape_weight(c, -0.01, 0), 0.0)
+        self.assertEqual(gt.shape_weight(c, 0.0, 0), 0.0)
+        self.assertAlmostEqual(gt.shape_weight(c, 0.5, 0), 0.5)
+        self.assertEqual(gt.shape_weight(c, 1.0, 0), 1.0)
+        self.assertEqual(gt.shape_weight(c, 6.0, 0), 1.0)
+
+    def test_weak_delta_does_not_move_ground(self):
+        c = comp()
+        self.assertEqual(gt.shape_weight(c, 6.0, 5.2), 0.0)  # delta 800 < 0.15 * peak
+
+    def test_river_through_the_cone_makes_no_canyon_walls(self):
+        pm, grid = plain()
+        for y in range(140):
+            for x in (76, 77):
+                pm.ids[y * 140 + x] = 5
+        new, plans = run(pm, grid, [site()], water={5}, overrides=self.PIN)
+        fade = data.TRANSPLANT_WATER_FADE
+        rises = []
+        for y in range(70, 110):
+            for x in range(60, 95):
+                if pm.ids[y * 140 + x] == 5:
+                    self.assertEqual(new.get(x, y), 10000)
+                    continue
+                d = min(abs(x - 76), abs(x - 77))
+                rise = new.get(x, y) - 10000
+                self.assertLessEqual(rise, 12000 * min(1, d / fade) + 1, (x, y))
+                if d == 1:
+                    rises.append(rise)
+        self.assertTrue(max(rises) > 0)
+        self.assertLessEqual(max(rises), 12000 / fade + 1)
+
+    def test_pieces_off_the_cone_or_in_front_are_dropped_and_named(self):
+        objs = [gt.CompositionObject("mountain_01_mesh", 6.0, 0.0, 0.0, 0.0, 1.0),     # on the peak
+                gt.CompositionObject("mountain_04_mesh", -1.0, 0.0, 0.0, 0.0, 1.0),    # in front of the face
+                gt.CompositionObject("mountain_05_mesh", 6.0, 7.0, 0.0, 0.0, 1.0),     # beside the cone
+                gt.CompositionObject("mountain_06_mesh", 6.0, 1.0, 0.0, 0.0, 1.0)]     # inside it
+        pm, grid = plain()
+        with no_jitter():
+            _, plans = run(pm, grid, [site()], comp(objects=objs), overrides=self.PIN)
+        p = plans[0]
+        self.assertEqual([o.mesh for o in p.objects], ["mountain_01_mesh", "mountain_06_mesh"])
+        self.assertEqual((p.dropped, p.dropped_names), (2, ["mountain_04_mesh", "mountain_05_mesh"]))
+
+
 class VariationTests(unittest.TestCase):
     def test_same_key_same_result(self):
         pm, grid = plain()
@@ -241,10 +315,11 @@ class VariationTests(unittest.TestCase):
                 pm.ids[oy * 140 + ox] = other
                 _, plans = run(pm, grid, [site()], water={5}, overrides=pin)
                 self.assertEqual((len(plans[0].objects), plans[0].dropped), (1, 1), other)
-                self.assertEqual(plans[0].objects[0].mesh, "rock_mesa_02_mesh")
+                self.assertEqual(plans[0].objects[0].mesh, "mountain_02_mesh")
                 pm.ids[oy * 140 + ox] = saved
             _, plans = run(pm, grid, [dm.GateSite("c_a", "c_x", 138, 70, (0.0, 1.0))], overrides=pin)
-            self.assertEqual((plans[0].dropped, plans[0].objects), (2, []))  # x = 142 and 144 are off the 140 px map
+            self.assertEqual(plans[0].dropped, 1)  # x = 142 is off the 140 px map
+            self.assertEqual([o.mesh for o in plans[0].objects], ["mountain_02_mesh"])
 
     def test_dropping_does_not_change_the_other_objects(self):
         pm, grid = plain()
@@ -341,11 +416,8 @@ class ParseTests(unittest.TestCase):
         self.assertAlmostEqual(gt.wrap(math.pi), math.pi)
 
 
-# Erebor's composition relative to its gate (the brief's table): mesh, t, l, y, yaw degrees, scale.
+# Erebor's mountain pieces relative to its gate (the brief's table without the waterfall substitutes, which are gone): mesh, t, l, y, yaw degrees, scale.
 EREBOR = [
-    ("rock_mesa_02_mesh", -1.12, 3.42, 0.76, -10.6, 1.0),
-    ("rock_mesa_02_mesh", -2.72, 3.29, 0.00, 0.4, 1.0),
-    ("rock_mesa_02_mesh", -6.16, -5.90, 0.00, -80.1, 1.0),
     ("mountain_01_mesh", 6.05, 0.79, 0.0, 40.7, 1.0),
     ("mountain_02_mesh", 7.24, 2.68, 0.0, -31.4, 1.0),
     ("mountain_03_mesh", 3.70, -3.79, 0.0, 45.2, 1.0),
@@ -366,7 +438,7 @@ class ExtractionRealTests(unittest.TestCase):
         cls.comp = gt.load_composition(RIE)
 
     def test_the_thirteen_objects(self):
-        self.assertEqual(len(self.comp.objects), 13)
+        self.assertEqual(len(self.comp.objects), 10)
         for want in EREBOR:
             hits = [o for o in self.comp.objects if o.mesh == want[0] and abs(o.t - want[1]) < 0.05
                     and abs(o.l - want[2]) < 0.05]
@@ -379,7 +451,7 @@ class ExtractionRealTests(unittest.TestCase):
     def test_gate_and_neighbouring_buildings_are_excluded(self):
         names = {o.mesh for o in self.comp.objects}
         self.assertEqual(names, {"mountain_01_mesh", "mountain_02_mesh", "mountain_03_mesh", "mountain_04_mesh",
-                                 "mountain_05_mesh", "mountain_06_mesh", "rock_mesa_02_mesh"})
+                                 "mountain_05_mesh", "mountain_06_mesh"})
 
     def test_cone_profile_along_the_inward_axis(self):
         for t, want in ((0, 0), (2, 10536), (4, 11261), (6, 14087), (10, 7452), (14, 514)):

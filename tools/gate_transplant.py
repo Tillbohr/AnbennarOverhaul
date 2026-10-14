@@ -76,6 +76,8 @@ class GatePlan:
     peak: int = 0
     objects: list = field(default_factory=list)
     dropped: int = 0
+    dropped_names: list = field(default_factory=list)
+    weights: dict = field(default_factory=dict)
 
 
 def frame(yaw):
@@ -165,7 +167,6 @@ def extract_composition(rie, radius=None, object_radius=None, exclude=None):
     gates, others = [], []
     for path in sorted(folder.glob("*.txt")):
         for mesh, entity, rows in parse_map_objects(path.read_text(encoding="utf-8-sig", errors="replace")):
-            mesh = mesh or data.COMPOSITION_SUBSTITUTES.get(entity)
             for row in rows:
                 if len(row) == 10 and mesh is not None:
                     (gates if mesh == data.EREBOR_GATE_MESH else others).append((mesh, row))
@@ -269,23 +270,59 @@ def _check_overrides(placed, overrides):
                 raise GeneratorError(f"TRANSPLANT_OVERRIDES {key}: unknown option {name!r} (use {', '.join(OPTIONS)})")
 
 
-def _cone_pixels(plan, comp, yaw, w, h):
-    """[(i, weight, delta)] for the pixels of one gate's cone (delta > 0, weight 0..1), in the composition's frame."""
-    (ux, uy), (vx, vy) = frame(yaw)
-    k, radius = plan.k, comp.radius
-    reach = math.ceil(k * radius) + 1
+def _smoothstep(x, lo, hi):
+    x = min(1.0, max(0.0, (x - lo) / (hi - lo)))
+    return x * x * (3 - 2 * x)
+
+
+def shape_weight(comp, t, l):
+    """Cone weight 0..1 at (t, l) RiE units of the composition's own frame (l already mirrored): smoothstep of the
+    delta between TRANSPLANT_CONE_MIN and _FULL (fractions of the cone's peak) x the face weight (0 in front of the
+    gate face, t < 0, a cosine up to 1 at t = TRANSPLANT_FACE_RAMP) x the fade over the last TRANSPLANT_FADE px of the
+    radius. Water is not considered here."""
+    r = math.hypot(t, l)
+    if t < 0 or r > comp.radius:
+        return 0.0
+    c = _smoothstep(comp.delta(t, l), data.TRANSPLANT_CONE_MIN * comp.peak, data.TRANSPLANT_CONE_FULL * comp.peak)
+    if c <= 0:
+        return 0.0
+    c *= 1 - _ease(t / data.TRANSPLANT_FACE_RAMP)
     fade = data.TRANSPLANT_FADE
+    if r > comp.radius - fade:
+        c *= _ease((r - (comp.radius - fade)) / fade)
+    return c
+
+
+def _water_offsets():
+    n = data.TRANSPLANT_WATER_FADE
+    return sorted(((dx, dy) for dy in range(-n, n + 1) for dx in range(-n, n + 1)
+                   if 0 < math.hypot(dx, dy) < n), key=lambda o: math.hypot(*o))
+
+
+def _cone_pixels(plan, comp, yaw, w, h, blocked, offsets):
+    """[(i, weight, delta)] for the pixels of one gate's cone: weight > 0 is `shape_weight` x the water fade
+    min(1, distance to the nearest `blocked` pixel (water or province 0) / TRANSPLANT_WATER_FADE)."""
+    (ux, uy), (vx, vy) = frame(yaw)
+    k = plan.k
+    reach = math.ceil(k * comp.radius) + 1
+    n = data.TRANSPLANT_WATER_FADE
     out = []
     for y in range(max(0, int(plan.y) - reach), min(h, int(plan.y) + reach + 1)):
         for x in range(max(0, int(plan.x) - reach), min(w, int(plan.x) + reach + 1)):
+            if blocked[y * w + x]:
+                continue
             dx, dy = x - plan.x, y - plan.y
             t, l = (dx * ux + dy * uy) / k, (dx * vx + dy * vy) / k
-            r = math.hypot(t, l)
-            if r > radius:
+            l = -l if plan.mirror else l
+            c = shape_weight(comp, t, l)
+            if c <= 0:
                 continue
-            d = comp.delta(t, -l if plan.mirror else l)
-            if d > 0:
-                out.append((y * w + x, 1.0 if r <= radius - fade else _ease((r - (radius - fade)) / fade), d))
+            for ox, oy in offsets:
+                px_, py_ = x + ox, y + oy
+                if 0 <= px_ < w and 0 <= py_ < h and blocked[py_ * w + px_]:
+                    c *= math.hypot(ox, oy) / n
+                    break
+            out.append((y * w + x, c, comp.delta(t, l)))
     return out
 
 
@@ -295,14 +332,21 @@ def transplant(grid, pm, water, placed, comp, overrides=None):
     `placed` is [(site, size, (x, y))]: the gate's size gives k = size / EREBOR_GATE_SCALE, its position and the
     site's `inward` give the frame. Per site (seeded by its key): mirror with probability TRANSPLANT_MIRROR_CHANCE,
     turn toward uphill by at most TRANSPLANT_MAX_TURN, a height factor (see `height_factor`) plus jitter, object
-    jitter; `overrides` (TRANSPLANT_OVERRIDES) pins `mirror`, `turn` (degrees) and `height`. The cone raises land of
-    any kind (not water, not province 0) to at least `soft_ceiling(foot + k * delta * factor * fade)` where delta > 0,
-    `foot` being the height at the gate in `grid`; nothing is lowered. Gates apply in key order, each blending from
-    what the last left. Objects whose centre falls outside the map, on water or on province 0 are dropped."""
+    jitter; `overrides` (TRANSPLANT_OVERRIDES) pins `mirror`, `turn` (degrees) and `height`.
+    The cone only blends up from the ground: a pixel with cone weight c (see `shape_weight` and `_cone_pixels`)
+    becomes `max(cur, round(cur + c * (soft_ceiling(foot + k * delta * factor) - cur)))`, `foot` being the height at
+    the gate in `grid`; pixels in front of the gate face, outside the cone, on water or on province 0 never change.
+    Gates apply in key order, each blending from what the last left. A piece survives only if its centre has t >= 0
+    and cone weight >= TRANSPLANT_PIECE_MIN_WEIGHT, and does not fall outside the map, on water or on province 0;
+    `plan.kept` and `plan.dropped_names` list the meshes; `plan.weights` is {pixel: cone weight}."""
     overrides = overrides if overrides is not None else data.TRANSPLANT_OVERRIDES
     _check_overrides(placed, overrides)
     w, h, ids = pm.width, pm.height, pm.ids
     wat = _lookup(water)
+    blocked = bytearray(len(ids))
+    for i, v in enumerate(ids):
+        blocked[i] = 1 if (not v or wat[v]) else 0
+    offsets = _water_offsets()
     old = grid.values
     new = array("H", old)
     plans = []
@@ -326,11 +370,12 @@ def transplant(grid, pm, water, placed, comp, overrides=None):
         gx, gy = min(w - 1, max(0, int(round(px)))), min(h - 1, max(0, int(round(py))))
         foot = old[gy * w + gx]
         plan = GatePlan(key, px, py, k, mirror, turn, 1.0, foot)
-        cone = _cone_pixels(plan, comp, yaw, w, h)
+        cone = _cone_pixels(plan, comp, yaw, w, h, blocked, offsets)
+        plan.weights = {i: c for i, c, _ in cone}
         if "height" in pin:
             plan.factor = pin["height"]
         else:
-            ground = [old[i] for i, _, _ in cone if ids[i] and not wat[ids[i]]]
+            ground = [old[i] for i, _, _ in cone]
             raw = height_factor(foot, k * comp.peak, max(ground, default=foot))
             plan.factor = clamp_factor(raw + jitter_h)
         sign = -1 if mirror else 1
@@ -341,8 +386,10 @@ def transplant(grid, pm, water, placed, comp, overrides=None):
             lo, hi = data.TRANSPLANT_JITTER_SCALE
             x, y = px + k * (t * ux + l * vx), py + k * (t * uy + l * vy)
             ox, oy = int(round(x)), int(round(y))
-            if not (0 <= ox < w and 0 <= oy < h) or not ids[oy * w + ox] or wat[ids[oy * w + ox]]:
+            if (t < 0 or shape_weight(comp, t, sign * l) < data.TRANSPLANT_PIECE_MIN_WEIGHT
+                    or not (0 <= ox < w and 0 <= oy < h) or blocked[oy * w + ox]):
                 plan.dropped += 1
+                plan.dropped_names.append(obj.mesh)
                 continue
             plan.objects.append(PlacedObject(obj.mesh, x, y, obj.y * k, yaw + sign * obj.yaw
                                              + jyaw * math.radians(data.TRANSPLANT_JITTER_YAW),
@@ -351,10 +398,10 @@ def transplant(grid, pm, water, placed, comp, overrides=None):
         cones.append(cone)
     for plan, cone in zip(plans, cones):
         for i, weight, d in cone:
-            if not ids[i] or wat[ids[i]]:
-                continue
-            value = dm.soft_ceiling(plan.foot + plan.k * d * plan.factor * weight)
-            plan.peak = max(plan.peak, value)
-            if value > new[i]:
+            target = dm.soft_ceiling(plan.foot + plan.k * d * plan.factor)
+            cur = new[i]
+            value = max(cur, int(round(cur + weight * (target - cur))))
+            if value > cur:
                 new[i] = value
+                plan.peak = max(plan.peak, value)
     return type(grid)(w, h, new), plans

@@ -112,15 +112,21 @@ EREBOR_GATE_SCALE = 0.703864  # scale of RiE's Erebor gate mesh; a gate's size /
 EREBOR_GATE_MESH = "erebor_gate_mesh"
 # Objects within COMPOSITION_RADIUS RiE map units of the Erebor gate form the composition, except these meshes.
 COMPOSITION_RADIUS = 16
-# Excluded: the gate itself, and the Ravenhill building that stands beside it (RiE's map data lists its transform
-# right after the Rammas Echor block, which has no transform of its own).
+# Excluded: the gate itself and the Ravenhill building beside it (RiE's map data lists its transform right after the
+# Rammas Echor block, which has no transform of its own). Effect entities (the waterfalls and river rapids at Erebor)
+# are not meshes and never part of the composition.
 COMPOSITION_EXCLUDE = ("erebor_gate_mesh", "rammas_echor_intact_mesh", "ravenhill_mesh")
-# RiE places no rocks at Erebor: the three flank objects are `waterfall` effect entities (the Running River's source).
-# Their positions, rotation and scale are kept and drawn as this mesh instead (an effect entity cannot be a gate flank
-# in our map). Other entities near the gate (river rapids) are left out.
-COMPOSITION_SUBSTITUTES = {"waterfall": "rock_mesa_02_mesh"}
 TRANSPLANT_RADIUS = 18  # RiE px around the Erebor gate whose height delta is copied
 TRANSPLANT_FADE = 4  # RiE px at the edge of the radius over which the stamped cone fades to zero
+# Cone weight c (how far a pixel moves from its own height toward the cone's height): smoothstep of the delta between
+# these fractions of the extracted peak, times a face weight (0 in front of the gate face, rising to 1 over the first
+# TRANSPLANT_FACE_RAMP RiE px behind it), times the radius fade, times a water fade (distance in map px to the nearest
+# water or unassigned pixel / TRANSPLANT_WATER_FADE, at most 1, so rivers never become canyons).
+TRANSPLANT_CONE_MIN = 0.15
+TRANSPLANT_CONE_FULL = 0.40
+TRANSPLANT_FACE_RAMP = 1
+TRANSPLANT_WATER_FADE = 6
+TRANSPLANT_PIECE_MIN_WEIGHT = 0.3  # a mountain piece stays only where the cone weight at its centre is at least this
 # Per-site variation (deterministic: seeded by a hash of the site key).
 TRANSPLANT_MIRROR_CHANCE = 0.5  # probability of mirroring the composition left/right
 TRANSPLANT_MAX_TURN = 25  # degrees the composition's axis may turn toward the uphill direction

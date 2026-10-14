@@ -758,21 +758,21 @@ def _plan(mesh_positions):
 
 
 class TransplantObjectsTests(unittest.TestCase):
-    PLAN = _plan([("mountain_05_mesh", 10.0, 20.0, 0.0, 0.0, 2.0), ("rock_mesa_02_mesh", 30.5, 40.25, 1.52, math.pi, 1.5),
+    PLAN = _plan([("mountain_05_mesh", 10.0, 20.0, 0.0, 0.0, 2.0), ("mountain_02_mesh", 30.5, 40.25, 1.52, math.pi, 1.5),
                   ("mountain_05_mesh", 50.0, 60.0, 0.0, math.pi / 2, 1.9)])
 
     def test_one_block_per_mesh_with_the_prefixed_mesh(self):
         blocks = _blocks(bmg.transplant_objects([self.PLAN]))
-        self.assertEqual(sorted(blocks), ["aov_dwarven_gate_overlay_mountain_05", "aov_dwarven_gate_overlay_rock_mesa_02"])
+        self.assertEqual(sorted(blocks), ["aov_dwarven_gate_overlay_mountain_02", "aov_dwarven_gate_overlay_mountain_05"])
         mesh, count, lines = blocks["aov_dwarven_gate_overlay_mountain_05"]
         self.assertEqual((mesh, count, len(lines)), ("aov_mountain_05_mesh", 2, 2))
-        self.assertEqual(blocks["aov_dwarven_gate_overlay_rock_mesa_02"][0], "aov_rock_mesa_02_mesh")
+        self.assertEqual(blocks["aov_dwarven_gate_overlay_mountain_02"][0], "aov_mountain_02_mesh")
         text = bmg.transplant_objects([self.PLAN])
         for needle in ("render_pass=Map", "clamp_to_water_level=no", "generated_content=no", 'layer="temp_layer"'):
             self.assertIn(needle, text)
 
     def test_transform_is_position_offset_yaw_and_uniform_scale(self):
-        _, _, lines = _blocks(bmg.transplant_objects([self.PLAN]))["aov_dwarven_gate_overlay_rock_mesa_02"]
+        _, _, lines = _blocks(bmg.transplant_objects([self.PLAN]))["aov_dwarven_gate_overlay_mountain_02"]
         x, y, z, qx, qy, qz, qw, sx, sy, sz = lines[0]
         self.assertEqual((x, y, z), (30.5, 1.52, 40.25))  # the map's y becomes z; the ground offset is y
         self.assertEqual((qx, qz), (0.0, 0.0))
@@ -787,11 +787,12 @@ class TransplantObjectsTests(unittest.TestCase):
             bmg.transplant_objects([_plan([("ravenhill_mesh", 1.0, 1.0, 0.0, 0.0, 1.0)])])
 
     def test_notes_report_the_variation(self):
-        plan = gt.GatePlan(("c_a", "c_y"), 1.0, 2.0, 2.2, True, math.radians(-12.5), 1.05, 1000, peak=1500, dropped=2)
+        plan = gt.GatePlan(("c_a", "c_y"), 1.0, 2.0, 2.2, True, math.radians(-12.5), 1.05, 1000, peak=1500, dropped=2,
+                           dropped_names=["mountain_04_mesh", "mountain_05_mesh"])
         plan.objects = [gt.PlacedObject("mountain_01_mesh", 0, 0, 0, 0, 1)] * 11
         note = bmg._height_notes({"ranges": []}, [plan])[0]
         for needle in ("gate c_a/c_y", "mirrored yes", "turn -12.5 deg", "height factor 1.050", "cone peak 1500",
-                       "foot 1000", "+500", "11 placed / 2 dropped"):
+                       "foot 1000", "+500", "pieces 11 kept / 2 dropped (mountain_04, mountain_05)"):
             self.assertIn(needle, note)
 
 
@@ -806,13 +807,6 @@ class OverlayAssetTests(unittest.TestCase):
                          .replace('"mountain_05_entity"', '"aov_mountain_05_entity"'))
         self.assertIn('file = "mountain_05.mesh"', out)
         self.assertIn('name = "mountain_05"', out)
-
-    def test_rock_mesa_asset(self):
-        asset = self.ASSET.replace("mountain_05", "rock_mesa_02")
-        out = bmg.overlay_asset(asset, "rock_mesa_02")
-        self.assertIn('name = "aov_rock_mesa_02_mesh"', out)
-        self.assertIn('pdxmesh = "aov_rock_mesa_02_mesh"', out)
-        self.assertIn('file = "rock_mesa_02.mesh"', out)
 
     def test_unexpected_asset_raises(self):
         with self.assertRaisesRegex(GeneratorError, "mountain_05"):
@@ -841,14 +835,14 @@ class GateOverlayRealTests(unittest.TestCase):
         for rel in self.files:
             self.assertNotIn("moria", rel.lower())
 
-    def test_thirteen_objects_per_gate_minus_the_dropped(self):
+    def test_ten_pieces_per_gate_minus_the_dropped(self):
         dropped = sum(int(re.search(r"/ (\d+) dropped", n).group(1)) for n in self.notes if n.startswith("gate "))
         placed = sum(len(v[2]) for v in self.blocks.values())
-        self.assertEqual(placed, 13 * 12 - dropped)
+        self.assertEqual(placed, 10 * 12 - dropped)
+        # mountain_04 and mountain_05 stand outside the narrow cone (or in front of the face): dropped at every gate
         self.assertEqual({k: v[0] for k, v in self.blocks.items()},
                          {f"aov_dwarven_gate_overlay_{p}": f"aov_{p}_mesh" for p in (
-                             "mountain_01", "mountain_02", "mountain_03", "mountain_04", "mountain_05", "mountain_06",
-                             "rock_mesa_02")})
+                             "mountain_01", "mountain_02", "mountain_03", "mountain_06")})
         for _, count, lines in self.blocks.values():
             self.assertEqual(count, len(lines))
         self.assertTrue(self.files["gfx/map/map_object_data/aov_dwarven_gate_overlays.txt"].decode("utf-8-sig")
@@ -867,27 +861,20 @@ class GateOverlayRealTests(unittest.TestCase):
                 self.assertLessEqual(near, 16 * k + 1, (name, near))
 
     def test_overlay_assets_are_prefixed_and_have_meshes_and_textures(self):
-        for piece in ("mountain_01", "mountain_02", "mountain_03", "mountain_04", "mountain_05", "mountain_06",
-                      "rock_mesa_02"):
+        used = {m.removeprefix("aov_").removesuffix("_mesh") for m, _, _ in self.blocks.values()}
+        self.assertTrue(used)
+        for piece in used:
             asset = self.files[f"{self.folder}aov_{piece}.asset"].decode("utf-8-sig")
             self.assertIn(f'name = "aov_{piece}_mesh"', asset)
             self.assertIn(f'name = "aov_{piece}_entity"', asset)
             self.assertIn(f'file = "{piece}.mesh"', asset)
             self.assertIn(self.folder + f"{piece}.mesh", self.files)
             for name in re.findall(r'texture_\w+\s*=\s*"([^"]+)"', asset):
-                if piece.startswith("rock_mesa"):  # the game ships these (CK3 finds textures by name)
-                    self.assertIn(name, {"mountain_01_vertical_diffuse.dds", "mountain_01_vertical_normal.dds",
-                                         "mountain_01_vertical_properties.dds"})
-                    self.assertTrue((ROOTS.game / "game/gfx/models/mapitems/cliffs" / name).is_file(), name)
-                    self.assertNotIn(self.folder + name, self.files)
-                else:
-                    self.assertIn(self.folder + name, self.files, name)
-
-    def test_missing_game_texture_stops_the_build(self):
-        plan = _plan([("rock_mesa_02_mesh", 1.0, 1.0, 0.0, 0.0, 1.0)])
-        with tempfile.TemporaryDirectory() as empty:
-            with self.assertRaisesRegex(GeneratorError, "mountain_01_vertical"):
-                bmg.transplant_assets(ROOTS.rie, [plan], Path(empty))
+                self.assertIn(self.folder + name, self.files, name)
+        for rel in self.files:
+            self.assertNotIn("rock_mesa", rel)
+            if rel.startswith(self.folder):
+                self.assertNotIn("vertical", rel)
 
     def test_every_asset_effect_has_a_mapobject_variant(self):
         shader = self.files["gfx/FX/court_scene.shader"].decode("utf-8")
@@ -899,6 +886,94 @@ class GateOverlayRealTests(unittest.TestCase):
         self.assertTrue({"standard_winter", "standard_colormap", "snap_to_terrain_alpha_to_coverage_colormap"} <= used)
         for name in used:
             self.assertIn(name + "_mapobject", names)
+
+
+@unittest.skipUnless(INSTALLED and (ROOTS.anbennar / "map_data/provinces.png").is_file(),
+                     "RiE and Anbennar are not installed")
+class ConeRealTests(unittest.TestCase):
+    """The cone only rises behind each gate's face and blends up from the ground."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.pm, cls.water, _, cls.dwarven, cls.sites = bmg._analyse(ROOTS)
+        old = hp.Grid.from_png(pngio.read_png((ROOTS.anbennar / "map_data/heightmap.png").read_bytes()))
+        cls.lifted, _ = dm.raise_heights(old, cls.pm, cls.dwarven, cls.water)
+        cls.placed = [(s, z, p) for s, z, _, p in bmg.placed_gates(cls.sites, data.GATE_SCALE, data.GATE_YAW_OFFSET,
+                                                                  data.GATE_INSET, data.GATE_OVERRIDES)]
+        cls.comp = gt.load_composition(ROOTS.rie)
+        cls.new, cls.plans = gt.transplant(cls.lifted, cls.pm, cls.water, cls.placed, cls.comp,
+                                           data.TRANSPLANT_OVERRIDES)
+        cls.site = {(s.dwarven_county, s.normal_county): s for s, _, _ in cls.placed}
+
+    def frame(self, plan):
+        site = self.site[plan.key]
+        return gt.frame(math.atan2(site.inward[0] + 0.0, site.inward[1] + 0.0) + plan.turn)
+
+    def test_the_build_uses_this_stamp(self):
+        files = real_build()[0]
+        self.assertEqual(pngio.write_png(self.new.to_png()), files["map_data/heightmap.png"])
+
+    def test_nothing_changes_in_front_of_a_face_or_outside_the_cones(self):
+        w = self.pm.width
+        union = set()
+        for plan in self.plans:
+            (ux, uy), _ = self.frame(plan)
+            for i, c in plan.weights.items():
+                y, x = divmod(i, w)
+                self.assertGreaterEqual((x - plan.x) * ux + (y - plan.y) * uy, 0, (plan.key, x, y))
+                self.assertTrue(0 < c <= 1)
+            union.update(plan.weights)
+        changed = [i for i, (a, b) in enumerate(zip(self.lifted.values, self.new.values)) if a != b]
+        self.assertTrue(changed)
+        self.assertLessEqual(set(changed), union)
+        self.assertTrue(all(b >= a for a, b in zip(self.lifted.values, self.new.values)))
+
+    def test_water_and_unassigned_pixels_never_change(self):
+        ids, w = self.pm.ids, self.pm.width
+        for i in set().union(*[p.weights for p in self.plans]):
+            self.assertTrue(ids[i] and ids[i] not in self.water)
+        for i, (a, b) in enumerate(zip(self.lifted.values, self.new.values)):
+            if a != b:
+                self.assertTrue(ids[i] and ids[i] not in self.water, (i % w, i // w))
+
+    def test_steps_outside_the_core(self):
+        """Adjacent-pixel steps among cone pixels with weight < 0.4. The face wall (t < 1.5 RiE units, where the
+        cone rises from the ground in about two pixels) is steep by design (measured 6k to 18k); the rest of the
+        cone's flank stays below 11k (Old Passage's overlapping gates are the worst)."""
+        w, h = self.pm.width, self.pm.height
+        values = self.new.values
+        for plan in self.plans:
+            (ux, uy), _ = self.frame(plan)
+            worst = 0
+            for i, c in plan.weights.items():
+                y, x = divmod(i, w)
+                if c >= 0.4 or ((x - plan.x) * ux + (y - plan.y) * uy) / plan.k < 1.5:
+                    continue
+                for j, ok in ((i - 1, x > 0), (i + 1, x + 1 < w), (i - w, y > 0), (i + w, y + 1 < h)):
+                    if ok:
+                        worst = max(worst, abs(values[i] - values[j]))
+            self.assertLessEqual(worst, 11000, (plan.key, worst))
+
+    def test_kept_pieces_have_t_nonnegative_and_cone_weight(self):
+        for plan in self.plans:
+            (ux, uy), (vx, vy) = self.frame(plan)
+            self.assertEqual(len(plan.objects) + plan.dropped, len(self.comp.objects))
+            self.assertEqual(len(plan.dropped_names), plan.dropped)
+            for o in plan.objects:
+                dx, dy = o.x - plan.x, o.y - plan.y
+                t, l = (dx * ux + dy * uy) / plan.k, (dx * vx + dy * vy) / plan.k
+                self.assertGreaterEqual(t, 0)
+                self.assertGreaterEqual(gt.shape_weight(self.comp, t, -l if plan.mirror else l),
+                                        data.TRANSPLANT_PIECE_MIN_WEIGHT - 1e-9, (plan.key, o.mesh))
+
+    def test_which_pieces_survive(self):
+        """Report: the unjittered Erebor pieces whose centre has t >= 0 and weight >= 0.3."""
+        kept = sorted(o.mesh for o in self.comp.objects
+                      if o.t >= 0 and gt.shape_weight(self.comp, o.t, o.l) >= data.TRANSPLANT_PIECE_MIN_WEIGHT)
+        self.assertTrue(kept)
+        self.assertNotIn("mountain_04_mesh", kept[:0])
+        for plan in self.plans:
+            self.assertLessEqual(len(plan.objects), len(self.comp.objects))
 
 
 @unittest.skipUnless(INSTALLED and (ROOTS.anbennar / "map_data/provinces.png").is_file(),

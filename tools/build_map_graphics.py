@@ -714,16 +714,10 @@ OVERLAYS_REL = "gfx/map/map_object_data/aov_dwarven_gate_overlays.txt"
 GATE_ASSET_DIR = "gfx/models/mapitems/aov_dwarven_gate"
 RIE_GATE_DIR = "gfx/models/buildings/lotr_special_buildings/dwarven_wonders/erebor_gate"
 RIE_MOUNTAIN_DIR = "gfx/models/mapitems/mountains/mountain_01"
-RIE_ROCK_DIR = "gfx/models/mapitems/rocks/rock_mesa"
 GATE_ASSET_FILES = ((RIE_GATE_DIR, ("erebor_gate.asset", "erebor_gate.mesh", "erebor_gate_diffuse.dds",
                                     "erebor_gate_normal.dds", "erebor_gate_properties.dds")),)
 # Composition mesh name -> the RiE folder of its asset (the mesh `<piece>_mesh` has `<piece>.asset` and `<piece>.mesh`).
-PIECE = re.compile(r"^((?:mountain_0[1-6])|(?:rock_mesa_0[1-3]))_mesh$")
-PIECE_DIRS = {"mountain": RIE_MOUNTAIN_DIR, "rock_mesa": RIE_ROCK_DIR}
-# CK3 finds a mesh texture by file name, and the game already ships the mesa rocks' `mountain_01_vertical_*` textures
-# here; copying RiE's versions would redefine them (and its diffuse differs), so a texture the asset's own RiE folder
-# lacks is expected in the game folder instead.
-GAME_TEXTURE_DIRS = ("gfx/models/mapitems/cliffs",)
+PIECE = re.compile(r"^(mountain_0[1-6])_mesh$")
 GATE_LAYER = "temp_layer"
 
 
@@ -785,8 +779,8 @@ def piece_name(mesh: str) -> str:
     """`mountain_03` for the composition mesh `mountain_03_mesh`; other meshes raise GeneratorError."""
     m = PIECE.match(mesh)
     if not m:
-        raise GeneratorError(f"composition mesh {mesh!r} is not a RiE mountain piece or mesa rock "
-                             f"(mountain_01..06, rock_mesa_01..03)")
+        raise GeneratorError(f"composition mesh {mesh!r} is not a RiE mountain piece "
+                             f"(mountain_01..06)")
     return m.group(1)
 
 
@@ -804,7 +798,7 @@ def transplant_objects(plans: list) -> str:
                    for mesh in sorted(by_mesh))
 
 
-OVERLAY_NAME = re.compile(r'(\bname\s*=\s*"|\bpdxmesh\s*=\s*")((?:mountain_0\d)|(?:rock_mesa_0\d))_(mesh|entity)"')
+OVERLAY_NAME = re.compile(r'(\bname\s*=\s*"|\bpdxmesh\s*=\s*")(mountain_0\d)_(mesh|entity)"')
 ASSET_TEXTURE = re.compile(r'(?<!\w)texture_\w+\s*=\s*"([^"]+)"')
 
 
@@ -818,15 +812,13 @@ def overlay_asset(text: str, piece: str) -> str:
     return out
 
 
-def transplant_assets(rie: Path, plans: list, game: Path = None) -> dict:
+def transplant_assets(rie: Path, plans: list) -> dict:
     """The model files of the composition meshes the plans use: `aov_<piece>.asset` (names prefixed), the piece's
-    mesh, and the textures its asset names that sit in RiE's asset folder, all in GATE_ASSET_DIR. A texture that is
-    not there must be one of the game's own (GAME_TEXTURE_DIRS under `game`/game), which is not copied; otherwise
-    GeneratorError."""
+    mesh, and the textures its asset names, all in GATE_ASSET_DIR."""
     out = {}
     for mesh in sorted({o.mesh for plan in plans for o in plan.objects}):
         piece = piece_name(mesh)
-        folder = rie / PIECE_DIRS[piece.rsplit("_", 1)[0]]
+        folder = rie / RIE_MOUNTAIN_DIR
         for name in (f"{piece}.asset", f"{piece}.mesh"):
             if not (folder / name).is_file():
                 raise GeneratorError(f"Realms in Exile not found: {folder / name} does not exist")
@@ -835,11 +827,9 @@ def transplant_assets(rie: Path, plans: list, game: Path = None) -> dict:
                                                                    f"{GATE_ASSET_DIR}/aov_{piece}.asset")
         out[f"{GATE_ASSET_DIR}/{piece}.mesh"] = (folder / f"{piece}.mesh").read_bytes()
         for texture in sorted(set(ASSET_TEXTURE.findall(asset))):
-            if (folder / texture).is_file():
-                out[f"{GATE_ASSET_DIR}/{texture}"] = (folder / texture).read_bytes()
-            elif game is None or not any((game / "game" / d / texture).is_file() for d in GAME_TEXTURE_DIRS):
-                raise GeneratorError(f"{piece}.asset names {texture}, which is neither in {folder} nor in the game's "
-                                     f"{', '.join(GAME_TEXTURE_DIRS)}")
+            if not (folder / texture).is_file():
+                raise GeneratorError(f"Realms in Exile not found: {folder / texture} does not exist")
+            out[f"{GATE_ASSET_DIR}/{texture}"] = (folder / texture).read_bytes()
     return out
 
 
@@ -896,7 +886,8 @@ def _height_notes(report: dict, plans: list = ()) -> list:
     for p in plans:
         notes.append(f"gate {p.key[0]}/{p.key[1]} at ({p.x:.1f}, {p.y:.1f}): mirrored {'yes' if p.mirror else 'no'}, "
                      f"turn {math.degrees(p.turn):+.1f} deg, height factor {p.factor:.3f}, cone peak {p.peak} "
-                     f"(foot {p.foot}, +{p.peak - p.foot}), objects {len(p.objects)} placed / {p.dropped} dropped")
+                     f"(foot {p.foot}, +{p.peak - p.foot}), pieces {len(p.objects)} kept / {p.dropped} dropped"
+                     + (f" ({', '.join(n.removesuffix('_mesh') for n in p.dropped_names)})" if p.dropped else ""))
     return notes
 
 
@@ -989,7 +980,7 @@ def build_heightmap(roots: Roots, notes: list = None) -> dict:
     overlays = transplant_objects(plans)
     if overlays:
         out[OVERLAYS_REL] = _with_header("\ufeff" + overlays, OVERLAYS_REL)
-    out.update(transplant_assets(roots.rie, plans, roots.game))
+    out.update(transplant_assets(roots.rie, plans))
     return out
 
 
