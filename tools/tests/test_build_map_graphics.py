@@ -721,6 +721,220 @@ class GateObjectsTests(unittest.TestCase):
             self.assertFalse(hasattr(data, key), key)
 
 
+def _blocks(text):
+    """{object name: (pdxmesh, count, [transform value lists])} of a map object text."""
+    found = {}
+    for block in re.findall(r"object=\{.*?\}\n", text, re.S):
+        name = re.search(r'name="([^"]+)"', block).group(1)
+        body = re.search(r'transform="([^"]*)', block).group(1)
+        lines = [[float(v) for v in line.split()] for line in body.split("\n") if line.strip()]
+        found[name] = (re.search(r'pdxmesh="([^"]+)"', block).group(1), int(re.search(r"count=(\d+)", block).group(1)),
+                       lines)
+    return found
+
+
+LAYOUT = [{"piece": "mountain_05", "t": 5, "l": 0, "yaw": 0.0, "sx": 0.6, "sy": 4.0, "sz": 0.6},
+          {"piece": "mountain_03", "t": 2, "l": -7, "yaw": 0.6, "sx": 0.45, "sy": 3.0, "sz": 0.45}]
+
+
+class MoriaGateTests(unittest.TestCase):
+    SITES = [dm.GateSite("c_a", "c_y", 300, 50, (0.0, 1.0)), dm.GateSite("c_b", "c_x", 100, 200, (1.0, 0.0))]
+
+    def test_mesh_override_makes_a_second_block(self):
+        text = bmg.gate_objects(self.SITES, 1.6, 0.0, 0.0, {("c_b", "c_x"): {"mesh": "moriaeast_mesh", "scale": 4.8}})
+        blocks = _blocks(text)
+        self.assertEqual(len(blocks), 2)
+        mesh, count, lines = blocks["aov_dwarven_gates"]
+        self.assertEqual((mesh, count, len(lines)), ("erebor_gate_mesh", 1, 1))
+        self.assertEqual(lines[0][:3], [300.0, 0.0, 50.0])
+        mesh, count, lines = blocks["aov_dwarven_gates_moriaeast"]
+        self.assertEqual((mesh, count, len(lines)), ("moriaeast_mesh", 1, 1))
+        self.assertEqual(lines[0][:3], [100.0, 0.0, 200.0])
+        self.assertEqual(lines[0][7:], [4.8] * 3)
+
+    def test_unknown_mesh_raises(self):
+        with self.assertRaisesRegex(GeneratorError, "nope_mesh"):
+            bmg.gate_objects(self.SITES, 1.6, 0.0, 0.0, {("c_a", "c_y"): {"mesh": "nope_mesh"}})
+
+    def test_all_default_gates_stay_one_block(self):
+        self.assertEqual(list(_blocks(bmg.gate_objects(self.SITES, 1.6, 0.0))), ["aov_dwarven_gates"])
+
+
+class OverlayTests(unittest.TestCase):
+    NORTH = dm.GateSite("c_a", "c_y", 300, 50, (0.0, 1.0))  # t = 0
+    EAST = dm.GateSite("c_b", "c_x", 100, 200, (1.0, 0.0))  # t = pi/2
+
+    def overlays(self, sites, layout=LAYOUT, overrides=None, gate_overrides=None, scale=1.6, inset=0.0):
+        text = bmg.overlay_objects(sites, scale, 0.0, inset, gate_overrides, layout, overrides)
+        return _blocks(text)
+
+    def test_one_block_per_piece_type_with_the_prefixed_mesh(self):
+        blocks = self.overlays([self.NORTH, self.EAST])
+        self.assertEqual(sorted(blocks), ["aov_dwarven_gate_overlay_mountain_03", "aov_dwarven_gate_overlay_mountain_05"])
+        mesh, count, lines = blocks["aov_dwarven_gate_overlay_mountain_05"]
+        self.assertEqual((mesh, count, len(lines)), ("aov_mountain_05_mesh", 2, 2))
+        text = bmg.overlay_objects([self.NORTH], 1.6, 0.0, 0.0, None, LAYOUT)
+        for needle in ("render_pass=Map", "clamp_to_water_level=no", "generated_content=no", 'layer="temp_layer"'):
+            self.assertIn(needle, text)
+
+    def test_frame_for_a_gate_facing_north(self):
+        # inward (0, 1): t axis is +map y; l axis (inward_y, -inward_x) = (1, 0)
+        _, _, lines = self.overlays([self.NORTH])["aov_dwarven_gate_overlay_mountain_03"]
+        x, y, z = lines[0][:3]
+        self.assertAlmostEqual(x, 300 - 7)
+        self.assertEqual(y, 0.0)
+        self.assertAlmostEqual(z, 50 + 2)
+        t = 0.6
+        self.assertAlmostEqual(lines[0][4], math.sin(t / 2), places=5)
+        self.assertAlmostEqual(lines[0][6], math.cos(t / 2), places=5)
+        self.assertEqual(lines[0][7:], [0.45, 3.0, 0.45])
+
+    def test_frame_for_a_gate_facing_east(self):
+        # inward (1, 0): t axis +map x; l axis (0, -1)
+        _, _, lines = self.overlays([self.EAST])["aov_dwarven_gate_overlay_mountain_03"]
+        x, _, z = lines[0][:3]
+        self.assertAlmostEqual(x, 100 + 2)
+        self.assertAlmostEqual(z, 200 + 7)  # l = -7 along (0, -1)
+        t = math.pi / 2 + 0.6
+        self.assertAlmostEqual(2 * math.atan2(lines[0][4], lines[0][6]), t, places=5)
+
+    def test_local_x_axis_is_the_l_direction(self):
+        # the mesh's local +X after the yaw t is (cos t, -sin t) in (x, z): it must equal the l axis
+        for site in (self.NORTH, self.EAST, dm.GateSite("c_c", "c_z", 5, 5, (0.6, 0.8))):
+            t = math.atan2(site.inward[0], site.inward[1])
+            self.assertAlmostEqual(math.cos(t), site.inward[1])
+            self.assertAlmostEqual(-math.sin(t), -site.inward[0])
+
+    def test_layout_scales_with_the_gate_and_includes_heights(self):
+        _, _, lines = self.overlays([self.NORTH], scale=3.2)["aov_dwarven_gate_overlay_mountain_03"]
+        self.assertAlmostEqual(lines[0][0], 300 - 14)
+        self.assertAlmostEqual(lines[0][2], 50 + 4)
+        self.assertEqual(lines[0][7:], [0.9, 6.0, 0.9])
+
+    def test_moria_gate_uses_its_own_base_scale(self):
+        go = {("c_a", "c_y"): {"mesh": "moriaeast_mesh", "scale": 4.8}}
+        _, _, lines = self.overlays([self.NORTH], gate_overrides=go)["aov_dwarven_gate_overlay_mountain_03"]
+        self.assertAlmostEqual(lines[0][0], 300 - 7)
+        self.assertEqual(lines[0][7:], [0.45, 3.0, 0.45])
+
+    def test_gate_yaw_override_and_position_override_carry_over(self):
+        go = {("c_a", "c_y"): {"dx": 10.0, "dy": -1.0, "yaw": 0.5}}
+        _, _, lines = self.overlays([self.NORTH], gate_overrides=go)["aov_dwarven_gate_overlay_mountain_05"]
+        self.assertAlmostEqual(lines[0][0], 310.0)
+        self.assertAlmostEqual(lines[0][2], 50 - 1 + 5)
+        self.assertAlmostEqual(2 * math.atan2(lines[0][4], lines[0][6]), 0.5, places=5)
+
+    def test_override_replaces_or_disables_a_gate_layout(self):
+        only = [{"piece": "mountain_01", "t": 1, "l": 1, "yaw": 0.0, "sx": 1.0, "sy": 1.0, "sz": 1.0}]
+        blocks = self.overlays([self.NORTH, self.EAST], overrides={("c_a", "c_y"): only, ("c_b", "c_x"): None})
+        self.assertEqual(sorted(blocks), ["aov_dwarven_gate_overlay_mountain_01"])
+        self.assertEqual(blocks["aov_dwarven_gate_overlay_mountain_01"][1], 1)
+
+    def test_unknown_override_key_raises(self):
+        with self.assertRaisesRegex(GeneratorError, "GATE_OVERLAY_OVERRIDES"):
+            self.overlays([self.NORTH], overrides={("c_nope", "c_y"): None})
+
+    def test_bad_layout_entries_raise(self):
+        with self.assertRaisesRegex(GeneratorError, "mountain_99"):
+            self.overlays([self.NORTH], layout=[dict(LAYOUT[0], piece="mountain_99")])
+        with self.assertRaisesRegex(GeneratorError, "sq"):
+            self.overlays([self.NORTH], layout=[dict(LAYOUT[0], sq=1)])
+        with self.assertRaisesRegex(GeneratorError, "sz"):
+            self.overlays([self.NORTH], layout=[{k: v for k, v in LAYOUT[0].items() if k != "sz"}])
+
+    def test_deterministic_and_sorted_by_gate(self):
+        a = bmg.overlay_objects([self.EAST, self.NORTH], 1.6, 0.0, 0.0, None, LAYOUT)
+        b = bmg.overlay_objects([self.NORTH, self.EAST], 1.6, 0.0, 0.0, None, LAYOUT)
+        self.assertEqual(a, b)
+        lines = _blocks(a)["aov_dwarven_gate_overlay_mountain_05"][2]
+        self.assertEqual(lines[0][0], 300.0)  # c_a before c_b
+
+    def test_no_layout_gives_no_text(self):
+        self.assertEqual(bmg.overlay_objects([self.NORTH], 1.6, 0.0, 0.0, None, []), "")
+
+
+class OverlayAssetTests(unittest.TestCase):
+    ASSET = ('pdxmesh = {\n\tname = "mountain_05_mesh"\n\tfile = "mountain_05.mesh"\n\tscale = 1.5\n\n'
+             '\tmeshsettings = {\n\t\tname = "mountain_05"\n\t\tshader = "snap_to_terrain_alpha_to_coverage_colormap"\n\t}\n}\n\n'
+             'entity = {\n\tname = "mountain_05_entity"\n\tpdxmesh = "mountain_05_mesh"\n}\n')
+
+    def test_only_the_names_change(self):
+        out = bmg.overlay_asset(self.ASSET, "mountain_05")
+        self.assertEqual(out, self.ASSET.replace('"mountain_05_mesh"', '"aov_mountain_05_mesh"')
+                         .replace('"mountain_05_entity"', '"aov_mountain_05_entity"'))
+        self.assertIn('file = "mountain_05.mesh"', out)
+        self.assertIn('name = "mountain_05"', out)
+
+    def test_unexpected_asset_raises(self):
+        with self.assertRaisesRegex(GeneratorError, "mountain_05"):
+            bmg.overlay_asset("pdxmesh = { name = \"other\" }", "mountain_05")
+
+    def test_effect_check(self):
+        shader = "Effect a_mapobject\n{\n}\nEffect b_mapobject\n{\n}\n"
+        asset = 'shader = "a"\nshader = "b"\n'
+        bmg.check_asset_effects({bmg.GATE_ASSET_DIR + "/x.asset": asset.encode()}, shader)
+        with self.assertRaisesRegex(GeneratorError, "c_mapobject"):
+            bmg.check_asset_effects({bmg.GATE_ASSET_DIR + "/x.asset": (asset + 'shader = "c"\n').encode()}, shader)
+
+
+@unittest.skipUnless(INSTALLED and (ROOTS.anbennar / "map_data/provinces.png").is_file(),
+                     "RiE and Anbennar are not installed")
+class GateOverlayRealTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.files, cls.notes = real_build()
+        cls.folder = "gfx/models/mapitems/aov_dwarven_gate/"
+
+    def test_twelve_gates_eleven_erebor_one_moria(self):
+        blocks = _blocks(self.files["gfx/map/map_object_data/aov_dwarven_gates.txt"].decode("utf-8-sig"))
+        self.assertEqual({k: (v[0], v[1]) for k, v in blocks.items()},
+                         {"aov_dwarven_gates": ("erebor_gate_mesh", 11),
+                          "aov_dwarven_gates_moriaeast": ("moriaeast_mesh", 1)})
+        for rel in ("moriaeast.asset", "moriaeast.mesh", "moriaeast_Diffuse.dds", "moriaeast_Normal.dds",
+                    "moriaeast_Properties.dds"):
+            self.assertIn(self.folder + rel, self.files)
+        asset = (ROOTS.rie / "gfx/models/buildings/lotr_special_buildings/dwarven_wonders/moria_east/moriaeast.asset")
+        self.assertEqual(self.files[self.folder + "moriaeast.asset"], asset.read_bytes())
+
+    def test_silverforge_moria_transform(self):
+        blocks = _blocks(self.files["gfx/map/map_object_data/aov_dwarven_gates.txt"].decode("utf-8-sig"))
+        line = blocks["aov_dwarven_gates_moriaeast"][2][0]
+        self.assertEqual(line[7:], [4.8] * 3)
+        self.assertEqual(line[1], 0.0)
+
+    def test_overlays_for_all_twelve_gates(self):
+        text = self.files["gfx/map/map_object_data/aov_dwarven_gate_overlays.txt"].decode("utf-8-sig")
+        self.assertTrue(text.startswith(bmg.MARKER))
+        blocks = _blocks(text)
+        self.assertEqual({k: (v[0], v[1]) for k, v in blocks.items()},
+                         {"aov_dwarven_gate_overlay_mountain_03": ("aov_mountain_03_mesh", 12),
+                          "aov_dwarven_gate_overlay_mountain_04": ("aov_mountain_04_mesh", 12),
+                          "aov_dwarven_gate_overlay_mountain_05": ("aov_mountain_05_mesh", 12)})
+        for _, count, lines in blocks.values():
+            self.assertEqual(count, len(lines))
+
+    def test_overlay_assets_are_prefixed_and_have_meshes(self):
+        for piece in ("mountain_03", "mountain_04", "mountain_05"):
+            asset = self.files[f"{self.folder}aov_{piece}.asset"].decode("utf-8-sig")
+            self.assertIn(f'name = "aov_{piece}_mesh"', asset)
+            self.assertIn(f'name = "aov_{piece}_entity"', asset)
+            self.assertIn(f'file = "{piece}.mesh"', asset)
+            self.assertIn(self.folder + f"{piece}.mesh", self.files)
+        self.assertNotIn(self.folder + "mountain_01.mesh", self.files)  # unused pieces are not copied
+        self.assertNotIn(self.folder + "aov_mountain_01.asset", self.files)
+
+    def test_every_asset_effect_has_a_mapobject_variant(self):
+        shader = self.files["gfx/FX/court_scene.shader"].decode("utf-8")
+        names = set(bmg.EFFECT_NAME.findall(shader))
+        used = set()
+        for rel, content in self.files.items():
+            if rel.endswith(".asset") and rel.startswith(self.folder):
+                used.update(re.findall(r'shader\s*=\s*"([^"]+)"', content.decode("utf-8-sig")))
+        self.assertTrue({"standard_winter", "standard_colormap", "snap_to_terrain_alpha_to_coverage_colormap"} <= used)
+        for name in used:
+            self.assertIn(name + "_mapobject", names)
+
+
 @unittest.skipUnless(INSTALLED and (ROOTS.anbennar / "map_data/provinces.png").is_file(),
                      "RiE and Anbennar are not installed")
 class SeaGateRealTests(unittest.TestCase):

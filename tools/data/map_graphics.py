@@ -98,8 +98,28 @@ GATE_MIN_SPACING = 16  # gate sites closer than this (map units) are merged, kee
 GATE_INSET = 2.0  # units a gate is moved along `inward` (into the mountain) from its site, so it sits in the slope
 GATE_SCALE = 1.6  # scale of the gate mesh
 # Per-gate tweaks, keyed by (dwarven county, normal county) ("sea" for a sea gate); a key that matches no gate stops
-# the generator. Optional keys: scale, yaw (radians added), inset (replaces GATE_INSET), dx, dy (map units).
-GATE_OVERRIDES = {}
+# the generator. Optional keys: scale, yaw (radians added), inset (replaces GATE_INSET), dx, dy (map units),
+# mesh (a key of GATE_MESH_BASE_SCALE; default GATE_DEFAULT_MESH).
+GATE_OVERRIDES = {
+    # Comparison: RiE's Moria east gate (a thin carved facade) instead of the Erebor gate. Its facade is centred
+    # ~1.5 mesh units off its origin along x (about 1.5 map units at this scale in the gate's right direction);
+    # shift with dx/dy if it looks off in game.
+    ("c_silverforge", "c_silverforge"): {"mesh": "moriaeast_mesh", "scale": 4.8, "dx": 0, "dy": 0},
+}
+GATE_DEFAULT_MESH = "erebor_gate_mesh"
+# Scale at which each gate mesh is about as tall as the Erebor gate at GATE_SCALE; the overlay layout below is
+# written for that height and scaled by (gate scale / this).
+GATE_MESH_BASE_SCALE = {"erebor_gate_mesh": 1.6, "moriaeast_mesh": 4.8}
+# Mountain-piece overlays around each gate (RiE's mountain_01 pieces, snapped to the terrain), in the gate's frame:
+# t map units along `inward` (behind the gate), l to the gate's local +X (the inward vector rotated -90 degrees: (inward_y, -inward_x) in map coordinates), yaw radians added to the gate's yaw, sx/sy/sz the piece scale. Sizes
+# are for a gate at its base scale and are multiplied by (gate scale / base scale), heights included.
+GATE_OVERLAY_LAYOUT = [
+    {"piece": "mountain_05", "t": 5, "l": 0, "yaw": 0.0, "sx": 0.6, "sy": 4.0, "sz": 0.6},
+    {"piece": "mountain_03", "t": 2, "l": -7, "yaw": 0.6, "sx": 0.45, "sy": 3.0, "sz": 0.45},
+    {"piece": "mountain_04", "t": 2, "l": 7, "yaw": -0.6, "sx": 0.45, "sy": 3.0, "sz": 0.45},
+]
+# Per-gate layouts keyed like GATE_OVERRIDES: a list replaces the layout, None gives that gate no overlays.
+GATE_OVERLAY_OVERRIDES = {}
 # Hold counties whose land gate sites are replaced by one gate on the shore of the hold's province, facing the sea.
 SEA_GATES = ("c_ovdal_tungr",)
 GATE_YAW_OFFSET = 0.0  # extra yaw (radians) added to the gate mesh facing
