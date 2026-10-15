@@ -359,7 +359,7 @@ and `Failed to create material with shader standard_colormap (in gfx/FX/court_sc
      nearest water or province-0 pixel. The pixel becomes `max(cur, round(cur + c (soft_ceiling(foot + k D f) - cur)))`,
      `f` the height factor, `foot` the height at `P` after the range lift. Pixels in front of the face, outside the cone
      (D < 0.15 peak), on water or on province 0 never change, and nothing is lowered. Gates apply in key order, each
-     blending from what the previous left (Old Passage's three overlap).
+     blending from what the previous left (no gates overlap since Old Passage's three were removed).
    - *Pieces:* each composition mountain piece becomes at most one instance per gate: position `P + k (t' u' + l' v')`,
      yaw = the composition's yaw + turn + the relative yaw (negated when mirrored) + jitter, uniform scale `k s` x jitter,
      ground offset y = the RiE offset x k. A piece is kept only if its centre (RiE units, after mirror, turn and jitter)
@@ -411,7 +411,7 @@ and `Failed to create material with shader standard_colormap (in gfx/FX/court_sc
      along the cone axis in 0.5 px steps by at most `PIECE_MAX_PUSH` (12) px, is filtered again at the new position
      (t >= 0, cone weight >= 0.3, land), else is dropped.
    The build note per gate adds: range join (m before -> after, s), apron pixels raised, pushed pieces by name.
-   Measured (12 gates): the range joins its cone's peak at every gate whose range stood lower; see the build notes for the pieces kept, pushed and dropped per gate.
+   Measured (9 gates; Old Passage's three removed by `GATE_EXCLUDE_COUNTIES`): the range joins its cone's peak at every gate whose range stood lower; see the build notes for the pieces kept, pushed and dropped per gate.
 
 ### Testing
 
@@ -424,7 +424,7 @@ and `Failed to create material with shader standard_colormap (in gfx/FX/court_sc
   frame maths for north- and east-facing fixtures and mirroring; cone peak position, never lowered, water untouched,
   nothing changes in front of the face or outside the cone on ground lower than the foot, no canyon walls at a river,
   the piece filter, fade at the radius, overlap order-independence; seeded variation (determinism, uphill turn bounded by 25 degrees,
-  height clamp, dropping on water); real build: 12 gates, 10 x 12 pieces minus the dropped, each cone peak at least
+  height clamp, dropping on water); real build: 9 gates, 10 x 9 pieces minus the dropped, each cone peak at least
   `soft_ceiling(foot + 0.8 k peak)`, no changed pixel in front of any face, steps outside the cone core below 11,000
   (the face wall, t < 1.5 RiE units, is steep by design); polish: the join (a lower ridge rises to the cone peak with its
   profile scaled, cone and front untouched, water untouched, fade to zero at the radius, s clamp, key order), the apron
@@ -454,7 +454,7 @@ In-game checklist additions:
 - [ ] No gate floats or overhangs lower ground; no mountain piece covers a gate.
 - [ ] Mirrored and unmirrored gates both look right; the turn toward the uphill side follows the ridge; tall ranges
   (Marrhold, Outer Khug's Cave) still show a cone rising out of the slope.
-- [ ] Old Passage's three overlapping gates do not form a single heap; Ovdal Tungr's sea gate keeps its objects on land.
+- [ ] Old Passage has no gates and no cones; Ovdal Tungr's sea gate keeps its objects on land.
 
 ### Risks
 
@@ -464,3 +464,8 @@ In-game checklist additions:
    say so.
 3. **Steep cliffs may stretch textures**; RiE's vertical rock textures help.
 4. About 100 MB more LFS (~72 MB gate asset and textures, ~27 MB height files).
+
+### Old Passage removed (2026-10-15)
+
+At the user's request `GATE_EXCLUDE_COUNTIES = ("c_oldpassage",)` drops every gate site of that county (its three
+sites overlapped into the steepest cluster); the generator stops if a listed county has no site. 9 gates remain.

@@ -891,10 +891,19 @@ def _analyse(roots: Roots) -> tuple:
     border = dm.border_pixels(pm)
     sites = dm.gate_sites(pm, dwarven, water, impassable, titles, border, data.GATE_EXCLUDE_REGIONS)
     sites = dm.spaced_sites(sites, border, titles, data.GATE_MIN_SPACING)
+    sites = without_counties(sites, data.GATE_EXCLUDE_COUNTIES)
     locators = locator_positions(_read_text(roots.anbennar / LOCATORS_REL))
     sea = dm.sea_zone_ids(_read_text(folder / "default.map"))
     sites = dm.with_sea_gates(sites, data.SEA_GATES, HOLDS, pm, border, sea, titles_source, locators)
     return pm, water, impassable, dwarven, sites
+
+
+def without_counties(sites: list, counties) -> list:
+    """The gate sites minus every site whose dwarven county is listed; a listed county with no site stops the build."""
+    unknown = sorted(set(counties) - {s.dwarven_county for s in sites})
+    if unknown:
+        raise GeneratorError(f"GATE_EXCLUDE_COUNTIES lists counties with no gate site: {', '.join(unknown)}")
+    return [s for s in sites if s.dwarven_county not in counties]
 
 
 def _height_notes(report: dict, plans: list = ()) -> list:

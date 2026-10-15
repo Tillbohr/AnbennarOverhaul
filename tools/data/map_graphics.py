@@ -101,6 +101,8 @@ GATE_SCALE = 1.6  # scale of the gate mesh
 # the generator. Optional keys: scale, yaw (radians added to the gate mesh), inset (replaces GATE_INSET), dx, dy (map
 # units). The transplant composition below follows the gate's position and scale, not its yaw.
 GATE_OVERRIDES = {}
+# Dwarven counties that get no gate at all (user choice); a county here with no gate site stops the generator.
+GATE_EXCLUDE_COUNTIES = ("c_oldpassage",)
 # Hold counties whose land gate sites are replaced by one gate on the shore of the hold's province, facing the sea.
 SEA_GATES = ("c_ovdal_tungr",)
 GATE_YAW_OFFSET = 0.0  # extra yaw (radians) added to the gate mesh facing

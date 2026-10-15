@@ -637,6 +637,21 @@ class CourtSceneRealTests(unittest.TestCase):
             self.assertRegex(text, rf"(?m)^Effect {name}\s*$")
 
 
+class GateExclusionTests(unittest.TestCase):
+    SITES = [dm.GateSite("c_a", "c_x", 1, 2, (0.0, 1.0)), dm.GateSite("c_a", "c_y", 3, 4, (0.0, 1.0)),
+             dm.GateSite("c_b", "c_x", 5, 6, (0.0, 1.0))]
+
+    def test_every_site_of_an_excluded_county_is_dropped(self):
+        self.assertEqual(bmg.without_counties(self.SITES, ("c_a",)), [self.SITES[2]])
+
+    def test_no_exclusion_keeps_all(self):
+        self.assertEqual(bmg.without_counties(self.SITES, ()), self.SITES)
+
+    def test_county_matching_no_site_stops_the_build(self):
+        with self.assertRaises(GeneratorError):
+            bmg.without_counties(self.SITES, ("c_typo",))
+
+
 class GateObjectsTests(unittest.TestCase):
     SITES = [dm.GateSite("c_b", "c_x", 100, 200, (0.0, 1.0)), dm.GateSite("c_a", "c_y", 300, 50, (-1.0, 0.0))]
 
@@ -838,14 +853,14 @@ class GateOverlayRealTests(unittest.TestCase):
 
     def test_twelve_erebor_gates_only(self):
         blocks = _blocks(self.files["gfx/map/map_object_data/aov_dwarven_gates.txt"].decode("utf-8-sig"))
-        self.assertEqual({k: (v[0], v[1]) for k, v in blocks.items()}, {"aov_dwarven_gates": ("erebor_gate_mesh", 12)})
+        self.assertEqual({k: (v[0], v[1]) for k, v in blocks.items()}, {"aov_dwarven_gates": ("erebor_gate_mesh", 9)})
         for rel in self.files:
             self.assertNotIn("moria", rel.lower())
 
     def test_ten_pieces_per_gate_minus_the_dropped(self):
         dropped = sum(int(re.search(r"/ (\d+) dropped", n).group(1)) for n in self.notes if n.startswith("gate "))
         placed = sum(len(v[2]) for v in self.blocks.values())
-        self.assertEqual(placed, 10 * 12 - dropped)
+        self.assertEqual(placed, 10 * 9 - dropped)
         # mountain_04 and mountain_05 stand outside the narrow cone (or in front of the face): dropped at every gate;
         # the keep-out then removes the large mountain_01 and mountain_03 footprints at most gates
         self.assertEqual({v[0] for v in self.blocks.values()} - {f"aov_mountain_0{n}_mesh" for n in (1, 2, 3, 6)},
@@ -1061,7 +1076,8 @@ class SeaGateRealTests(unittest.TestCase):
         cls.border = dm.border_pixels(cls.pm)
         land = dm.gate_sites(cls.pm, cls.dwarven, cls.water, cls.impassable, cls.titles, cls.border,
                              data.GATE_EXCLUDE_REGIONS)
-        cls.land = dm.spaced_sites(land, cls.border, cls.titles, data.GATE_MIN_SPACING)
+        land = dm.spaced_sites(land, cls.border, cls.titles, data.GATE_MIN_SPACING)
+        cls.land = bmg.without_counties(land, data.GATE_EXCLUDE_COUNTIES)
 
     def test_ovdal_tungr_has_one_sea_gate_on_the_irovar_shore(self):
         ovdal = [s for s in self.sites if s.dwarven_county == "c_ovdal_tungr"]
@@ -1160,7 +1176,8 @@ class HeightOutputsTests(unittest.TestCase):
 
     def test_notes_cover_ranges_and_sites(self):
         self.assertEqual(sum(note.startswith("range ") for note in self.notes), 9)
-        self.assertEqual(sum(note.startswith("gate ") for note in self.notes), 12)
+        self.assertEqual(sum(note.startswith("gate ") for note in self.notes), 9)
+        self.assertFalse(any("c_oldpassage" in note for note in self.notes if note.startswith("gate ")))
 
     def test_every_gate_has_a_cone_rising_to_its_peak(self):
         """The cone peak is at least foot + 0.8 * k * Erebor's peak; where the soft ceiling compresses the sum (a gate
@@ -1168,7 +1185,7 @@ class HeightOutputsTests(unittest.TestCase):
         import gate_transplant as gt_
         found = [re.search(r"^gate (\S+) at .*height factor ([\d.]+), cone peak (\d+) \(foot (\d+)", n)
                  for n in self.notes if n.startswith("gate ")]
-        self.assertEqual(len(found), 12)
+        self.assertEqual(len(found), 9)
         k = 1.6 / data.EREBOR_GATE_SCALE
         peak = gt_.load_composition(ROOTS.rie).peak
         for m in found:
