@@ -187,3 +187,14 @@ listed first. Second in-game test:
    asset of `walls_02/03/04` (`CASTANORIAN_WALLS`; castanorian keys, all graphical regions: score 6 ties the western
    wall assets and wins by order). RiE has no Dunedain model for `walls_00`, `walls_01_tribal` and `walls_01`. The assets,
    meshes and textures are copied into `gfx/models/buildings/aov_rie_holdings/castanorian/`.
+
+### Round 4
+
+1. Temples in dwarven terrain showed vanilla temples. RiE has no dwarf temple, so `temple_01..04` get the same first
+   dwarf asset as castles and cities (`dwarven_holding_0N_mesh` for level N, the dwarven-terrain `provinces`, all
+   graphical regions, no cultures, no faiths: a province outranks the faith), data-driven in `MODELS`.
+2. Escanni early walls showed the vanilla palisade and field (RiE has no Gondor equivalent). `walls_01_tribal` and
+   `walls_01` get an inserted first asset `western_walls_00_mesh` (vanilla's "no walls" mesh, the one `walls_00`
+   uses; castanorian keys, all regions): it draws nothing but keeps a background active, so the building stays
+   enabled and no `is_enabled` changes. Same table as the Gondor walls (`CASTANORIAN_WALLS`); the mesh is the game's
+   (`GAME_MESHES`), so nothing is copied.

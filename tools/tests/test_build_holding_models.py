@@ -374,12 +374,13 @@ class ModelTableTests(unittest.TestCase):
         self.assertEqual(data.MODELS["tribe_01"], {"wood_elf": ["sindarin_sanctuary_01_mesh"]})
         self.assertEqual(data.MODELS["tribe_02"], {"wood_elf": ["sindarin_sanctuary_02_mesh"]})
         self.assertEqual(data.WALL_MODELS, {"high_elf": "highelves_fort_wall_mesh", "wood_elf": "sindarin_hedge_wall_01_mesh"})
-        self.assertEqual(data.CASTANORIAN_WALLS, {"walls_02": "dunedain_walls_02_mesh", "walls_03": "dunedain_walls_03_mesh",
+        self.assertEqual(data.CASTANORIAN_WALLS, {"walls_01_tribal": "western_walls_00_mesh", "walls_01": "western_walls_00_mesh",
+                                                  "walls_02": "dunedain_walls_02_mesh", "walls_03": "dunedain_walls_03_mesh",
                                                   "walls_04": "dunedain_walls_04_mesh"})
         for key, groups in data.MODELS.items():
             if key.startswith("tribe"):
                 continue
-            expected = {"high_elf", "wood_elf", "castanorian"} | ({"dwarven"} if not key.startswith("temple") else set())
+            expected = {"high_elf", "wood_elf", "castanorian", "dwarven"}
             self.assertEqual(set(groups), expected, key)
         self.assertEqual(set(data.MODEL_SETS), set(data.GROUPS))
 
@@ -396,8 +397,8 @@ class ModelTableTests(unittest.TestCase):
         self.assertEqual([m[f"temple_0{n}"]["castanorian"] for n in range(1, 5)],
                          [["building_dunedain_temple_01_a_mesh", "building_dunedain_temple_01_b_mesh"]] * 2
                          + [["building_dunedain_temple_02_a_mesh", "building_dunedain_temple_02_b_mesh"]] * 2)
-        self.assertEqual([m[f"{k}_0{n}"]["dwarven"] for k in ("castle", "city") for n in range(1, 5)],
-                         [[f"dwarven_holding_0{n}_mesh"] for n in range(1, 5)] * 2)
+        self.assertEqual([m[f"{k}_0{n}"]["dwarven"] for k in ("castle", "city", "temple") for n in range(1, 5)],
+                         [[f"dwarven_holding_0{n}_mesh"] for n in range(1, 5)] * 3)
 
 
 @unittest.skipUnless(REAL.rie.is_dir() and REAL.anbennar.is_dir() and REAL.game.is_dir(), "RiE, Anbennar and game needed")
@@ -477,7 +478,7 @@ class RealBuildingTests(unittest.TestCase):
         self.assertNotIn(263, any_owner)
         self.assertTrue(any_owner)
         regions = bhm.graphical_regions(REAL.anbennar)
-        for kind in ("castle", "city"):
+        for kind in ("castle", "city", "temple"):
             for n in range(1, 5):
                 mesh = f"dwarven_holding_0{n}_mesh"
                 asset = self._dwarf_asset(f"{kind}_0{n}")
@@ -485,6 +486,7 @@ class RealBuildingTests(unittest.TestCase):
                 self.assertIn("graphical_regions = { %s }" % " ".join(regions), asset)
                 self.assertIn("illustration = ", asset)
                 self.assertNotIn("graphical_cultures", asset)
+                self.assertNotIn("graphical_faiths", asset)
                 self.assertIn("provinces = { %s }" % " ".join(map(str, any_owner)), asset)
                 start, end = bhm.building_block(self.buildings, f"{kind}_0{n}")
                 self.assertEqual(self.buildings[start:end].count(f'"{mesh}"'), 1)
@@ -510,6 +512,8 @@ class RealBuildingTests(unittest.TestCase):
             block = self.buildings[start:end]
             for group, meshes in groups.items():
                 asset = self._asset(block, meshes[0])
+                if group == "dwarven":
+                    continue
                 if key.startswith("temple_"):
                     self.assertIn(line, asset, (key, group))
                 else:
@@ -547,6 +551,11 @@ DWARF_LINE ="\t\tNOT = { aov_dwarven_model_province_trigger = yes } # Anbennar O
 
 @unittest.skipUnless(REAL.rie.is_dir() and REAL.anbennar.is_dir() and REAL.game.is_dir(), "RiE, Anbennar and game needed")
 class RealWallTests(unittest.TestCase):
+    def test_vanilla_no_walls_mesh_is_the_games(self):
+        self.assertEqual(data.GAME_MESHES, ("western_walls_00_mesh",))
+        text = "\n".join(p.read_text("utf-8-sig") for p in (REAL.game / "game/gfx/models").rglob("*.asset"))
+        self.assertIn('name = "western_walls_00_mesh"', text)
+
     @classmethod
     def setUpClass(cls):
         cls.files = bhm.build_walls(REAL)
@@ -654,6 +663,9 @@ class RealWallTests(unittest.TestCase):
             self.assertIn(f"{bhm.ASSET_DIR}/{group}/{asset.name}", files)
             self.assertIn(f"{bhm.ASSET_DIR}/{group}/{asset.stem}.mesh", files)
         for mesh in data.CASTANORIAN_WALLS.values():
+            if mesh in data.GAME_MESHES:
+                self.assertFalse(any(rel.endswith(mesh + ".mesh") for rel in files))
+                continue
             asset = bhm.find_asset(REAL.rie / "gfx/models", mesh)
             self.assertIn(f"{bhm.ASSET_DIR}/castanorian/{asset.name}", files)
             self.assertIn(f"{bhm.ASSET_DIR}/castanorian/{asset.stem}.mesh", files)

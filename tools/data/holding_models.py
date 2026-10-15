@@ -52,8 +52,9 @@ MODELS.update(_levels("castle", _HIGH_ELF, _WOOD_ELF,
 MODELS.update(_levels("city", _HIGH_ELF, _WOOD_ELF,
                       [(name,) for name in ("gondor_city_01", "gondor_city_01", "gondor_city_02", "gondor_city_02")],
                       _DWARVEN))
+# RiE has no dwarf temple: temples in dwarven terrain reuse the holding model of the same level.
 MODELS.update(_levels("temple", _HIGH_ELF, _WOOD_ELF,
-                      [[f"building_dunedain_temple_0{n}_{side}" for side in "ab"] for n in (1, 1, 2, 2)]))
+                      [[f"building_dunedain_temple_0{n}_{side}" for side in "ab"] for n in (1, 1, 2, 2)], _DWARVEN))
 
 # Tribal holdings (wood elves only; every wood elf holding in the Deepwoods starts tribal).
 MODELS["tribe_01"] = {"wood_elf": ["sindarin_sanctuary_01_mesh"]}
@@ -62,9 +63,13 @@ MODELS["tribe_02"] = {"wood_elf": ["sindarin_sanctuary_02_mesh"]}
 # Background wall buildings (aov_elven_walls): group -> pdxmesh.
 WALL_MODELS = {"high_elf": "highelves_fort_wall_mesh", "wood_elf": "sindarin_hedge_wall_01_mesh"}
 
-# Gondorian walls (with gatehouses) of the castanorian group: re-emitted wall building -> pdxmesh. RiE has no
-# Dunedain model for walls_00, walls_01_tribal or walls_01.
-CASTANORIAN_WALLS = {f"walls_0{n}": f"dunedain_walls_0{n}_mesh" for n in (2, 3, 4)}
+# Walls of the castanorian group: re-emitted wall building -> pdxmesh. Early levels (walls_01_tribal, walls_01) have no
+# RiE Gondor equivalent, so they get vanilla's "no walls" mesh (the one walls_00 uses): it keeps a background building
+# active but draws no palisade or field. Levels 02..04 get the Gondorian walls with gatehouses.
+CASTANORIAN_WALLS = {"walls_01_tribal": "western_walls_00_mesh", "walls_01": "western_walls_00_mesh",
+                     **{f"walls_0{n}": f"dunedain_walls_0{n}_mesh" for n in (2, 3, 4)}}
+# Meshes of CASTANORIAN_WALLS that the game defines (nothing to copy from RiE).
+GAME_MESHES = ("western_walls_00_mesh",)
 
 # Dwarven hold level (1..10) -> RiE dwarven pdxmesh, used by tools/build_holds.py (dwarf holders only; the
 # assets are copied by tools/build_holding_models.py).

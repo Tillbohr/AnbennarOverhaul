@@ -35,6 +35,14 @@ walls_01_tribal = {
 
 	
 	#Base Tribal Walls:
+	# Anbennar Overhaul: RiE holding wall
+	asset = {
+		type = pdxmesh
+		name = "western_walls_00_mesh"
+		graphical_cultures = { aov_castanorian_building_gfx }
+		graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
+	}
+
 	asset = {
 		type = pdxmesh
 		names = {
@@ -81,6 +89,14 @@ walls_01_tribal = {
 
 walls_01 = {
 	is_graphical_background = yes
+
+	# Anbennar Overhaul: RiE holding wall
+	asset = {
+		type = pdxmesh
+		name = "western_walls_00_mesh"
+		graphical_cultures = { aov_castanorian_building_gfx }
+		graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
+	}
 
 	asset = {
 		type = pdxmesh

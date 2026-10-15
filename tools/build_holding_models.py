@@ -683,7 +683,8 @@ def build_assets(roots: Roots) -> dict:
         if group in data.WALL_MODELS and data.WALL_MODELS[group] not in meshes:
             meshes.append(data.WALL_MODELS[group])
         if group == "castanorian":
-            meshes += [mesh for mesh in data.CASTANORIAN_WALLS.values() if mesh not in meshes]
+            meshes += [mesh for mesh in data.CASTANORIAN_WALLS.values()
+                       if mesh not in meshes and mesh not in data.GAME_MESHES]
         if group == "dwarven":  # the dwarven hold levels (tools/build_holds.py) use one more model
             meshes += [mesh for mesh in data.HOLD_DWARF_MESHES.values() if mesh not in meshes]
         folder = (models / "buildings" / data.MODEL_SETS[group]).resolve()
