@@ -385,6 +385,31 @@ and `Failed to create material with shader standard_colormap (in gfx/FX/court_sc
    - *Drop* pieces as above. The random draws per piece are fixed, so dropping one never shifts the others.
    Each gate gets a build note: mirrored, turn, `f`, cone peak (foot, rise) and pieces kept/dropped (named).
 
+6. **Transplant polish (2026-10-15, after the third in-game test: "much better").** Feedback: the Erebor peaks sloped
+   down to the Serpentspine behind them, and some gates floated or were covered by pieces. After the cones, per gate in
+   key order (each reading what the previous left):
+   - *Range joins the cone peak.* Region = pixels at t >= 0 in the composition's (turned) frame within
+     `RANGE_JOIN_RADIUS` (60) px of `P`, dwarven or impassable, not water or province 0, with own cone weight below
+     `RANGE_JOIN_CORE` (0.4). `g` = the gate's foot, `peak` = the gate's cone peak (soft-ceilinged). A region pixel with
+     `cur > g` becomes `max(cur, soft_ceiling(g + (cur - g)(1 + (s - 1) w)))`, `w` = 1 within `RANGE_JOIN_FULL` (30) px
+     and a cosine fade to 0 at the radius, times the water fade. The scale `s` is clamped to [1, `RANGE_JOIN_MAX` (2)];
+     the brief's `(peak - g) / (m - g)` for the region maximum `m` is exact when `m` stands within the full-weight
+     radius, but a maximum in the fade (or beside water) would leave the range near the gate short, so `s` is solved
+     (bisection) as the smallest scale with which the highest *scaled* pixel reaches the peak. Ridges keep their shape
+     (their relative profile is multiplied, not flattened), nothing is lowered, the cone core is untouched.
+   - *No floating gate.* In the gate's own frame (the gate's facing, not the composition's turn), pixels with
+     `t` in [-`GATE_APRON` (4) x size / 1.6, `GATE_MODEL_DEPTH` (3.25) x size] and `|l|` <= `GATE_MODEL_HALF_WIDTH`
+     (3.92) x size + 1 are raised to at least the foot, with a cosine blend over `GATE_APRON_FADE` (3) px outside the
+     rectangle; land only (Ovdal Tungr's sea front stays water); never lowered.
+   - *Pieces never cover the gate.* A piece's footprint is its mesh's bounding box (the `min`/`max` float3 properties
+     of the pdxmesh, times the asset's scale 1.5, times the instance's scale), rotated by its yaw. The gate's keep-out
+     is the footprint-and-apron rectangle with a 2 px margin behind and at the sides. An overlapping piece moves back
+     along the cone axis in 0.5 px steps by at most `PIECE_MAX_PUSH` (12) px, is filtered again at the new position
+     (t >= 0, cone weight >= 0.3, land), else is dropped.
+   The build note per gate adds: range join (m before -> after, s), apron pixels raised, pushed pieces by name.
+   Measured (12 gates): the range joins its cone's peak at every gate whose range stood lower; 1-2 of the 5 pieces that
+   pass the cone filter survive the keep-out (the bounding boxes are up to 20 x 22 RiE px at scale 1).
+
 ### Testing
 
 - `pngio` round-trips 8-bit RGB/RGBA and 16-bit grey.
@@ -398,7 +423,12 @@ and `Failed to create material with shader standard_colormap (in gfx/FX/court_sc
   the piece filter, fade at the radius, overlap order-independence; seeded variation (determinism, uphill turn bounded by 25 degrees,
   height clamp, dropping on water); real build: 12 gates, 10 x 12 pieces minus the dropped, each cone peak at least
   `soft_ceiling(foot + 0.8 k peak)`, no changed pixel in front of any face, steps outside the cone core below 11,000
-  (the face wall, t < 1.5 RiE units, is steep by design).
+  (the face wall, t < 1.5 RiE units, is steep by design); polish: the join (a lower ridge rises to the cone peak with its
+  profile scaled, cone and front untouched, water untouched, fade to zero at the radius, s clamp, key order), the apron
+  (front raised to the foot on a slope, never lowered, water untouched, gate frame), piece push/drop/re-filter,
+  `mesh_bounds` on a real RiE mesh; real build: every range's highest point after at least
+  `min(peak - 2000, foot + 2 (m - foot))`, no pixel lowered, every footprint pixel at or above its foot, no piece
+  overlaps its gate's keep-out; steps outside the core below 13,000 (the join scales ridges up to 2x).
 - Gates: count equals the sites minus Dragon Coast and Harpylen; each sits inside its dwarven province and faces its
   neighbour; Rubyhold's two sites are as above; overrides apply and an unknown key stops the build; Ovdal Tungr's gate
   is a sea site (see below).
@@ -417,6 +447,8 @@ In-game checklist additions:
 - [ ] Each gate stands at the foot of a steep cone with the mountain pieces draped over its slopes (rock, not stretched
   ground); no plateau on the lowland before the gate, no canyon walls where rivers cross a cone; none float, are buried or face wrongly; error.log has no "Failed getting
   Effect" or texture errors for the new meshes.
+- [ ] The range behind each cone rises to the cone's peak (no downward slope from the Erebor peaks to the Serpentspine); the cone itself is not squished.
+- [ ] No gate floats or overhangs lower ground; no mountain piece covers a gate.
 - [ ] Mirrored and unmirrored gates both look right; the turn toward the uphill side follows the ridge; tall ranges
   (Marrhold, Outer Khug's Cave) still show a cone rising out of the slope.
 - [ ] Old Passage's three overlapping gates do not form a single heap; Ovdal Tungr's sea gate keeps its objects on land.
