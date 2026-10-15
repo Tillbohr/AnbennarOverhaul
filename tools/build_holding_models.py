@@ -533,6 +533,9 @@ def build_walls(roots: Roots) -> dict:
     exclusion = f"\t\tNOT = {{ {uses_elf_gfx(elf_keys(group_keys))} }} {MARKER}: elven walls\n"
     # a province that shows the dwarf model gets no wall background at all (the fence and field are walls_00..04)
     dwarven = f"\t\tNOT = {{ {DWARF_TRIGGER} = yes }} {MARKER}: dwarven holds\n"
+    # walls_00 ("no walls") is the one background a dwarf-model province keeps: a holding needs an active background
+    # building or it shows no model at all (RiE keeps walls_00 on for its underground dwarves too).
+    dwarven_00 = f"\t\t\t{DWARF_TRIGGER} = yes {MARKER}: dwarven holds\n"
     blocks = []
     for key in WALL_SOURCE_KEYS:
         text = source_building(roots, key)
@@ -540,9 +543,20 @@ def build_walls(roots: Roots) -> dict:
         at = [i for i, line in enumerate(lines) if line.rstrip("\r\n") == IS_ENABLED_LINE]
         if len(at) != 1:
             raise GeneratorError(f"{key}: expected one top-level is_enabled block, found {len(at)}")
-        lines.insert(at[0] + 1, dwarven)
-        if key != "walls_00":
+        if key == "walls_00":
+            if lines[at[0] + 1].strip() != "OR = {":
+                raise GeneratorError("walls_00: is_enabled does not start with OR = {")
+            lines.insert(at[0] + 2, dwarven_00)
+        else:
+            lines.insert(at[0] + 1, dwarven)
             lines.insert(at[0] + 1, exclusion)
+        if key in data.CASTANORIAN_WALLS:
+            first = next((i for i, line in enumerate(lines) if ASSET_START.match(strip_comment(line))), None)
+            if first is None or not lines[first].startswith("\tasset"):
+                raise GeneratorError(f"{key}: first asset not found at one tab")
+            asset = asset_block(data.CASTANORIAN_WALLS[key], group_keys["castanorian"], regions)
+            indented = "".join(line[1:] + "\n" for line in asset.splitlines())
+            lines[first:first] = [f"\t{MARKER}: RiE holding wall\n", indented, "\n"]
         blocks.append("".join(lines))
     header = "\n".join(HEADER()) + "\n\n"
     return {WALLS_FILE: (BOM + header + elven).encode("utf-8"),
@@ -668,6 +682,8 @@ def build_assets(roots: Roots) -> dict:
             meshes += [mesh for mesh in groups.get(group, []) if mesh not in meshes]
         if group in data.WALL_MODELS and data.WALL_MODELS[group] not in meshes:
             meshes.append(data.WALL_MODELS[group])
+        if group == "castanorian":
+            meshes += [mesh for mesh in data.CASTANORIAN_WALLS.values() if mesh not in meshes]
         if group == "dwarven":  # the dwarven hold levels (tools/build_holds.py) use one more model
             meshes += [mesh for mesh in data.HOLD_DWARF_MESHES.values() if mesh not in meshes]
         folder = (models / "buildings" / data.MODEL_SETS[group]).resolve()

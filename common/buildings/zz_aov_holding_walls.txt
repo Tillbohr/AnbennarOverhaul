@@ -10,8 +10,8 @@ walls_00 = {
 	}
 
 	is_enabled = {
-		NOT = { aov_dwarven_model_province_trigger = yes } # Anbennar Overhaul: dwarven holds
 		OR = {
+			aov_dwarven_model_province_trigger = yes # Anbennar Overhaul: dwarven holds
 			AND = {
 				is_county_capital = no
 				fort_level < 1
@@ -243,6 +243,14 @@ walls_02 = {
 	is_graphical_background = yes
 
 
+	# Anbennar Overhaul: RiE holding wall
+	asset = {
+		type = pdxmesh
+		name = "dunedain_walls_02_mesh"
+		graphical_cultures = { aov_castanorian_building_gfx }
+		graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
+	}
+
 	asset = {
 		type = pdxmesh
 		graphical_regions = { graphical_western graphical_mediterranean graphical_india }
@@ -412,6 +420,14 @@ walls_02 = {
 walls_03 = {
 	is_graphical_background = yes
 
+	# Anbennar Overhaul: RiE holding wall
+	asset = {
+		type = pdxmesh
+		name = "dunedain_walls_03_mesh"
+		graphical_cultures = { aov_castanorian_building_gfx }
+		graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
+	}
+
 	asset = {
 		type = pdxmesh
 		graphical_regions = { graphical_western }
@@ -578,6 +594,14 @@ walls_03 = {
 
 walls_04 = {
 	is_graphical_background = yes
+
+	# Anbennar Overhaul: RiE holding wall
+	asset = {
+		type = pdxmesh
+		name = "dunedain_walls_04_mesh"
+		graphical_cultures = { aov_castanorian_building_gfx }
+		graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
+	}
 
 	asset = {
 		type = pdxmesh

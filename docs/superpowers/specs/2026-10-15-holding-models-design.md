@@ -175,3 +175,15 @@ listed first. Second in-game test:
    `aov_dwarven_model_province_trigger` (`common/scripted_triggers/aov_holding_model_triggers.txt`); `walls_01_tribal`,
    `walls_01..04` and now also `walls_00` (`western_walls_00_mesh`) are re-emitted with the inserted line `NOT = {
    aov_dwarven_model_province_trigger = yes }`, after the elven line, as the first lines of `is_enabled`.
+
+### Round 3
+
+1. Dwarf-model provinces showed no model at all (e.g. Midmarket): round 2 switched off every wall background there,
+   `walls_00` included. A holding needs an active background building; RiE keeps `walls_00` ("no walls") on for its
+   underground dwarves (`lotr_dwarven_underground_buildings_requirement_terrain`). `walls_00` is now ON in dwarf-model
+   provinces: `aov_dwarven_model_province_trigger = yes` is the first child of its `is_enabled` `OR`. `walls_01_tribal`
+   and `walls_01..04` keep their `NOT` line (no palisade or fields).
+2. Castanorian (Escanni) holders get RiE's Gondor walls with gatehouses: `dunedain_walls_02/03/04_mesh` as the first
+   asset of `walls_02/03/04` (`CASTANORIAN_WALLS`; castanorian keys, all graphical regions: score 6 ties the western
+   wall assets and wins by order). RiE has no Dunedain model for `walls_00`, `walls_01_tribal` and `walls_01`. The assets,
+   meshes and textures are copied into `gfx/models/buildings/aov_rie_holdings/castanorian/`.

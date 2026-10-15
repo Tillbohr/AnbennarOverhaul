@@ -374,6 +374,8 @@ class ModelTableTests(unittest.TestCase):
         self.assertEqual(data.MODELS["tribe_01"], {"wood_elf": ["sindarin_sanctuary_01_mesh"]})
         self.assertEqual(data.MODELS["tribe_02"], {"wood_elf": ["sindarin_sanctuary_02_mesh"]})
         self.assertEqual(data.WALL_MODELS, {"high_elf": "highelves_fort_wall_mesh", "wood_elf": "sindarin_hedge_wall_01_mesh"})
+        self.assertEqual(data.CASTANORIAN_WALLS, {"walls_02": "dunedain_walls_02_mesh", "walls_03": "dunedain_walls_03_mesh",
+                                                  "walls_04": "dunedain_walls_04_mesh"})
         for key, groups in data.MODELS.items():
             if key.startswith("tribe"):
                 continue
@@ -539,7 +541,8 @@ class RealBuildingTests(unittest.TestCase):
 
 WALL_KEYS = ("walls_01_tribal", "walls_01", "walls_02", "walls_03", "walls_04")
 WALL_SOURCE = "common/buildings/99_background_graphics_buildings.txt"
-DWARF_LINE = "\t\tNOT = { aov_dwarven_model_province_trigger = yes } # Anbennar Overhaul: dwarven holds\n"
+WALLS_00_LINE = "\t\t\taov_dwarven_model_province_trigger = yes # Anbennar Overhaul: dwarven holds\n"
+DWARF_LINE ="\t\tNOT = { aov_dwarven_model_province_trigger = yes } # Anbennar Overhaul: dwarven holds\n"
 
 
 @unittest.skipUnless(REAL.rie.is_dir() and REAL.anbennar.is_dir() and REAL.game.is_dir(), "RiE, Anbennar and game needed")
@@ -570,14 +573,40 @@ class RealWallTests(unittest.TestCase):
         self.assertIn("NOT = { aov_dwarven_model_province_trigger = yes }", enabled)
         self.assertIn("fort_level > 0", enabled)
 
+    def _block_lines(self, text, key):
+        a, b = bhm.building_block(text, key)
+        return text[a:b].splitlines(keepends=True)
+
+    def _without_dunedain(self, key, new):
+        """(new without the inserted Dunedain asset: marker line, asset block, blank line; the asset's lines)."""
+        mesh = data.CASTANORIAN_WALLS[key]
+        at = next(i for i, line in enumerate(new) if f'"{mesh}"' in line)
+        start = at - 2  # asset = {, type = pdxmesh, name
+        self.assertEqual(new[start - 1], "\t# Anbennar Overhaul: RiE holding wall\n", key)
+        end = next(i for i in range(at, len(new)) if new[i] == "\t}\n")
+        self.assertEqual(new[end + 1], "\n", key)
+        return new[:start - 1] + new[end + 2:], new[start:end + 1]
+
+    def test_dunedain_asset_is_first_asset(self):
+        for key, mesh in data.CASTANORIAN_WALLS.items():
+            lines = self._block_lines(self.overrides, key)
+            firsts = [i for i, line in enumerate(lines) if line == "\tasset = {\n"]
+            self.assertIn(f'"{mesh}"', lines[firsts[0] + 2], key)
+
     def test_re_emitted_walls_differ_by_one_first_line(self):
         source = bhm.read_text(REAL.anbennar / WALL_SOURCE).removeprefix(bhm.BOM)
         self.assertTrue(self.overrides.startswith(bhm.BOM))
+        regions = bhm.graphical_regions(REAL.anbennar)
         for key in WALL_KEYS:
-            s0, s1 = bhm.building_block(source, key)
-            o0, o1 = bhm.building_block(self.overrides, key)
-            old = source[s0:s1].splitlines(keepends=True)
-            new = self.overrides[o0:o1].splitlines(keepends=True)
+            old = self._block_lines(source, key)
+            new = self._block_lines(self.overrides, key)
+            if key in data.CASTANORIAN_WALLS:
+                new, asset = self._without_dunedain(key, new)
+                self.assertEqual(asset[1], "\t\ttype = pdxmesh\n")
+                self.assertEqual(asset[3], "\t\tgraphical_cultures = { %s }\n" % " ".join(self.keys["castanorian"]))
+                self.assertEqual(asset[4], "\t\tgraphical_regions = { %s }\n" % " ".join(regions))
+            else:
+                self.assertNotIn("dunedain_walls", "".join(new), key)
             self.assertEqual(len(new), len(old) + 2, key)
             at = next(i for i, line in enumerate(old) if line == "\tis_enabled = {\n") + 1
             self.assertEqual(new[:at], old[:at], key)
@@ -591,14 +620,13 @@ class RealWallTests(unittest.TestCase):
 
     def test_walls_00_is_re_emitted_with_the_dwarven_line_only(self):
         source = bhm.read_text(REAL.anbennar / WALL_SOURCE).removeprefix(bhm.BOM)
-        s0, s1 = bhm.building_block(source, "walls_00")
-        o0, o1 = bhm.building_block(self.overrides, "walls_00")
-        old = source[s0:s1].splitlines(keepends=True)
-        new = self.overrides[o0:o1].splitlines(keepends=True)
-        at = next(i for i, line in enumerate(old) if line == "\tis_enabled = {\n") + 1
+        old = self._block_lines(source, "walls_00")
+        new = self._block_lines(self.overrides, "walls_00")
+        at = next(i for i, line in enumerate(old) if line == "\tis_enabled = {\n") + 2
+        self.assertEqual(old[at - 1], "\t\tOR = {\n")
         self.assertEqual(len(new), len(old) + 1)
         self.assertEqual(new[:at], old[:at])
-        self.assertEqual(new[at], DWARF_LINE)
+        self.assertEqual(new[at], WALLS_00_LINE)
         self.assertEqual(new[at + 1:], old[at:])
         self.assertEqual(sorted(re.findall(r"^(\w+) = \{", self.overrides, re.MULTILINE)),
                          sorted(WALL_KEYS + ("walls_00",)))
@@ -625,6 +653,14 @@ class RealWallTests(unittest.TestCase):
             asset = bhm.find_asset(REAL.rie / "gfx/models", mesh)
             self.assertIn(f"{bhm.ASSET_DIR}/{group}/{asset.name}", files)
             self.assertIn(f"{bhm.ASSET_DIR}/{group}/{asset.stem}.mesh", files)
+        for mesh in data.CASTANORIAN_WALLS.values():
+            asset = bhm.find_asset(REAL.rie / "gfx/models", mesh)
+            self.assertIn(f"{bhm.ASSET_DIR}/castanorian/{asset.name}", files)
+            self.assertIn(f"{bhm.ASSET_DIR}/castanorian/{asset.stem}.mesh", files)
+            for ref in re.findall(r'"([^"]+\.dds)"', asset.read_text("utf-8-sig")):
+                self.assertTrue(any(rel.endswith("/" + ref) for rel in files)
+                                or any((REAL.game / "game/gfx/models").rglob(ref))
+                                or any((REAL.anbennar / "gfx/models").rglob(ref)), ref)
 
 
 @unittest.skipUnless(REAL.rie.is_dir() and REAL.anbennar.is_dir() and REAL.game.is_dir(), "RiE, Anbennar and game needed")

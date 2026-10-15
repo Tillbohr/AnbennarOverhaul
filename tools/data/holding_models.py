@@ -62,6 +62,10 @@ MODELS["tribe_02"] = {"wood_elf": ["sindarin_sanctuary_02_mesh"]}
 # Background wall buildings (aov_elven_walls): group -> pdxmesh.
 WALL_MODELS = {"high_elf": "highelves_fort_wall_mesh", "wood_elf": "sindarin_hedge_wall_01_mesh"}
 
+# Gondorian walls (with gatehouses) of the castanorian group: re-emitted wall building -> pdxmesh. RiE has no
+# Dunedain model for walls_00, walls_01_tribal or walls_01.
+CASTANORIAN_WALLS = {f"walls_0{n}": f"dunedain_walls_0{n}_mesh" for n in (2, 3, 4)}
+
 # Dwarven hold level (1..10) -> RiE dwarven pdxmesh, used by tools/build_holds.py (dwarf holders only; the
 # assets are copied by tools/build_holding_models.py).
 HOLD_DWARF_MESHES = {n: f"dwarven_holding_0{(n + 1) // 2}_mesh" for n in range(1, 11)}
