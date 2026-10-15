@@ -100,6 +100,235 @@ class RealDataTests(unittest.TestCase):
         self.assertIn("graphical = yes", out)
 
 
+BUILDING_FIXTURE = (
+    "@illu = \"gfx/x.dds\"\n"
+    "\n"
+    "castle_01 = {\n"
+    "\tmodifier = { x = 1 }\n"
+    "\tassets = {\n"
+    "\t\t### FP1 ###\n"
+    "\t\tasset = {\n"
+    "\t\t\ttype = pdxmesh\n"
+    "\t\t\tname = \"first_mesh\"\n"
+    "\t\t\tillustration = @illu\n"
+    "\t\t\tsoundeffect = { soundeffect = \"event:/a\" soundparameter = { \"Tier\" = 0 } } # note {\n"
+    "\t\t\tgraphical_cultures = { c }\n"
+    "\t\t}\n"
+    "\t\tasset = {\n"
+    "\t\t\ttype = pdxmesh\n"
+    "\t\t\tname = \"second_mesh\"\n"
+    "\t\t}\n"
+    "\t}\n"
+    "}\n"
+    "castle_02 = {\n"
+    "\tassets = { }\n"
+    "}\n"
+)
+
+
+class BuildingTests(unittest.TestCase):
+    def test_building_block_bounds(self):
+        start, end = bhm.building_block(BUILDING_FIXTURE, "castle_01")
+        block = BUILDING_FIXTURE[start:end]
+        self.assertTrue(block.startswith("castle_01 = {"))
+        self.assertTrue(block.endswith("\t}\n}\n"))
+        self.assertNotIn("castle_02", block)
+        with self.assertRaises(bhm.GeneratorError):
+            bhm.building_block(BUILDING_FIXTURE, "castle_09")
+
+    def test_asset_block_single_and_variants(self):
+        one = bhm.asset_block("a_mesh", "gfx_key")
+        self.assertEqual(one, "\t\tasset = {\n\t\t\ttype = pdxmesh\n\t\t\tname = \"a_mesh\"\n"
+                              "\t\t\tgraphical_cultures = { gfx_key }\n\t\t}\n")
+        two = bhm.asset_block(["a_mesh", "b_mesh"], "gfx_key", region="graphical_r")
+        self.assertIn("\t\t\tnames = {\n\t\t\t\t\"a_mesh\"\n\t\t\t\t\"b_mesh\"\n\t\t\t}\n", two)
+        self.assertIn("\t\t\tgraphical_regions = { graphical_r }\n", two)
+        self.assertLess(two.index("graphical_cultures"), two.index("graphical_regions"))
+
+    def test_insert_assets_puts_new_assets_first(self):
+        start, end = bhm.building_block(BUILDING_FIXTURE, "castle_01")
+        block = BUILDING_FIXTURE[start:end]
+        assets = [bhm.asset_block("new_a_mesh", "k_a"),
+                  bhm.asset_block("new_b_mesh", "k_b", region="graphical_r")]
+        out = bhm.insert_assets(block, assets, {"illu": "\"gfx/x.dds\""})
+        marker = "\t\t# Anbennar Overhaul: RiE holding model\n"
+        self.assertEqual(out.count(marker), 1)
+        i = out.index(marker)
+        # the comment above the original first asset stays with it
+        self.assertEqual(out[:i], block[:block.index("\t\t### FP1 ###")])
+        j = out.index("\t\t### FP1 ###")
+        self.assertEqual(out[j:], block[block.index("\t\t### FP1 ###"):])
+        added = out[i + len(marker):j]
+        self.assertEqual(added.count("asset = {"), 2)
+        self.assertEqual(added.count("illustration = \"gfx/x.dds\"\n"), 2)
+        self.assertEqual(added.count("soundeffect = { soundeffect = \"event:/a\" soundparameter = { \"Tier\" = 0 } }\n"), 2)
+        self.assertNotIn("# note", added)
+        self.assertLess(added.index("new_a_mesh"), added.index("new_b_mesh"))
+        self.assertLess(added.index("illustration"), added.index("graphical_cultures"))
+
+    def test_insert_assets_keeps_crlf(self):
+        start, end = bhm.building_block(BUILDING_FIXTURE, "castle_01")
+        block = BUILDING_FIXTURE[start:end].replace("\n", "\r\n")
+        out = bhm.insert_assets(block, [bhm.asset_block("n_mesh", "k")], {"illu": "\"gfx/x.dds\""})
+        self.assertNotIn("\n", out.replace("\r\n", ""))
+
+    def test_insert_assets_needs_an_asset(self):
+        with self.assertRaises(bhm.GeneratorError):
+            bhm.insert_assets("castle_09 = {\n\tassets = { }\n}\n", [bhm.asset_block("n", "k")], {})
+
+    def test_asset_files_missing_texture_stops(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            models = Path(tmp) / "gfx" / "models"
+            folder = models / "buildings" / "x"
+            folder.mkdir(parents=True)
+            asset = folder / "m.asset"
+            asset.write_text('pdxmesh = {\n\tname = "m_mesh"\n\tfile = "m.mesh"\n\tmeshsettings = {\n'
+                             '\t\ttexture_diffuse = "d.dds"\n#\t\ttexture_normal = "ignored.dds"\n\t}\n}\n')
+            (folder / "m.mesh").write_bytes(b"x")
+            with self.assertRaises(bhm.GeneratorError):
+                bhm.asset_files(asset, models)
+        with tempfile.TemporaryDirectory() as tmp:
+            models = Path(tmp) / "gfx" / "models"
+            folder = models / "buildings" / "x"
+            folder.mkdir(parents=True)
+            asset = folder / "m.asset"
+            asset.write_text('pdxmesh = {\n\tname = "m_mesh"\n\tfile = "m.mesh"\n\tmeshsettings = {\n'
+                             '\t\ttexture_diffuse = "d.dds"\n\t}\n}\n')
+            (folder / "m.mesh").write_bytes(b"x")
+            (models / "other").mkdir()
+            (models / "other" / "d.dds").write_bytes(b"y")  # found elsewhere in the models folder
+            names = [p.name for p in bhm.asset_files(asset, models)]
+            self.assertEqual(sorted(names), ["d.dds", "m.asset", "m.mesh"])
+
+    def test_find_asset_by_mesh_name(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            models = Path(tmp)
+            (models / "a").mkdir()
+            (models / "a" / "z.asset").write_text('pdxmesh = {\n\tname = "z_mesh"\n}\nentity = {\n\tname = "z_entity"\n}\n')
+            self.assertEqual(bhm.find_asset(models, "z_mesh"), models / "a" / "z.asset")
+            with self.assertRaises(bhm.GeneratorError):
+                bhm.find_asset(models, "nope_mesh")
+
+
+class ModelTableTests(unittest.TestCase):
+    def test_table_shape(self):
+        self.assertEqual(sorted(data.MODELS), [f"{k}_0{n}" for k in ("castle", "city", "temple") for n in range(1, 5)])
+        for key, groups in data.MODELS.items():
+            expected = {"high_elf", "wood_elf", "castanorian"} | ({"dwarven"} if not key.startswith("temple") else set())
+            self.assertEqual(set(groups), expected, key)
+        self.assertEqual(set(data.MODEL_SETS), set(data.GROUPS))
+
+    def test_table_values(self):
+        m = data.MODELS
+        self.assertEqual(m["castle_01"]["high_elf"], ["highelves_01_01_mesh", "highelves_01_02_mesh"])
+        self.assertEqual(m["city_04"]["high_elf"], ["highelves_04_01_mesh", "highelves_04_02_mesh"])
+        self.assertEqual([m[f"temple_0{n}"]["wood_elf"] for n in range(1, 5)],
+                         [[f"sindarin_sanctuary_0{n}_mesh"] for n in (1, 2, 3, 3)])
+        self.assertEqual([m[f"castle_0{n}"]["castanorian"] for n in range(1, 5)],
+                         [[f"building_dunedain_castle_0{n}_mesh"] for n in range(1, 5)])
+        self.assertEqual([m[f"city_0{n}"]["castanorian"] for n in range(1, 5)],
+                         [["gondor_city_01_mesh"], ["gondor_city_01_mesh"], ["gondor_city_02_mesh"], ["gondor_city_02_mesh"]])
+        self.assertEqual([m[f"temple_0{n}"]["castanorian"] for n in range(1, 5)],
+                         [["building_dunedain_temple_01_a_mesh", "building_dunedain_temple_01_b_mesh"]] * 2
+                         + [["building_dunedain_temple_02_a_mesh", "building_dunedain_temple_02_b_mesh"]] * 2)
+        self.assertEqual([m[f"{k}_0{n}"]["dwarven"] for k in ("castle", "city") for n in range(1, 5)],
+                         [[f"dwarven_holding_0{n}_mesh"] for n in range(1, 5)] * 2)
+
+
+@unittest.skipUnless(REAL.rie.is_dir() and REAL.anbennar.is_dir() and REAL.game.is_dir(), "RiE, Anbennar and game needed")
+class RealBuildingTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.buildings = bhm.build_buildings(REAL)[bhm.BUILDINGS_FILE].decode("utf-8")
+
+    def test_source_selection(self):
+        self.assertIn("anbennar", str(bhm.source_file(REAL, "castle_01")[0]).lower())
+        self.assertIn("anbennar", str(bhm.source_file(REAL, "temple_01")[0]).lower())
+        self.assertEqual(bhm.source_file(REAL, "city_01")[0].parent, REAL.game / "game/common/buildings")
+        self.assertTrue(bhm.source_building(REAL, "city_01").startswith("city_01 = {"))
+
+    def test_header_and_bom(self):
+        self.assertTrue(self.buildings.startswith("﻿# Anbennar Overhaul: generated by tools/build_holding_models.py"))
+
+    def test_twelve_buildings_equal_sources_outside_inserts(self):
+        for key, groups in data.MODELS.items():
+            source = bhm.source_building(REAL, key)
+            start, end = bhm.building_block(self.buildings, key)
+            block = self.buildings[start:end]
+            marker = "\t\t# Anbennar Overhaul: RiE holding model" + ("\r\n" if "\r\n" in source else "\n")
+            self.assertEqual(block.count(marker), 1, key)
+            i = block.index(marker)
+            self.assertEqual(block[:i], source[:i], key)
+            self.assertTrue(block.endswith(source[i:]), key)
+            self.assertEqual(block.count("asset = {"), source.count("asset = {") + len(groups), key)
+
+    def test_dwarf_assets_carry_region_and_others_do_not(self):
+        for key, groups in data.MODELS.items():
+            start, end = bhm.building_block(self.buildings, key)
+            block = self.buildings[start:end]
+            for group, meshes in groups.items():
+                needle = f'"{meshes[0]}"'
+                at = block.index(needle)
+                eol = "\r\n" if "\r\n" in block else "\n"
+                asset = block[block.rindex("asset = {", 0, at):block.index(eol + "\t\t}" + eol, at)]
+                self.assertIn("{ %s }" % data.GROUPS[group]["gfx"], asset)
+                self.assertEqual("graphical_regions = { %s }" % data.REGION in asset, group == "dwarven")
+
+    def test_every_mesh_found_in_rie(self):
+        models = REAL.rie / "gfx/models"
+        for key, groups in data.MODELS.items():
+            for group, meshes in groups.items():
+                for mesh in meshes:
+                    path = bhm.find_asset(models, mesh)
+                    folder = (models / "buildings" / data.MODEL_SETS[group]).resolve()
+                    self.assertEqual(path.resolve().parent, folder, mesh)
+
+
+@unittest.skipUnless(REAL.rie.is_dir() and REAL.anbennar.is_dir() and REAL.game.is_dir(), "RiE, Anbennar and game needed")
+class RealAssetTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.files = bhm.build_assets(REAL)  # also runs the collision and shader checks
+
+    def test_layout_and_completeness(self):
+        prefix = "gfx/models/buildings/aov_rie_holdings/"
+        self.assertTrue(all(rel.startswith(prefix) for rel in self.files))
+        groups = {rel[len(prefix):].split("/")[0] for rel in self.files}
+        self.assertEqual(groups, set(data.GROUPS))
+        import re
+        for rel, content in self.files.items():
+            if not rel.endswith(".asset"):
+                continue
+            folder = rel.rsplit("/", 1)[0]
+            text = content.decode("utf-8-sig")
+            for line in text.splitlines():
+                line = bhm.strip_comment(line)
+                for ref in re.findall(r'"([^"]+\.(?:mesh|dds))"', line):
+                    beside = f"{folder}/{ref}" in self.files
+                    vanilla = (REAL.game / "game/gfx/models/buildings" / ref).is_file() or \
+                        any((REAL.anbennar / "gfx/models").rglob(ref)) or any((REAL.game / "game/gfx/models").rglob(ref))
+                    self.assertTrue(beside or vanilla, f"{rel}: {ref}")
+
+    def test_every_model_asset_copied(self):
+        prefix = "gfx/models/buildings/aov_rie_holdings/"
+        for groups in data.MODELS.values():
+            for group, meshes in groups.items():
+                for mesh in meshes:
+                    asset = bhm.find_asset(REAL.rie / "gfx/models", mesh)
+                    self.assertIn(f"{prefix}{group}/{asset.name}", self.files)
+
+    def test_no_pdxmesh_name_collisions(self):
+        bhm.check_collisions(REAL, self.files)  # raises on a collision
+
+    def test_collision_check_detects(self):
+        game_asset = next((REAL.game / "game/gfx/models/buildings").glob("*.asset"))
+        import re
+        name = re.search(r'name\s*=\s*"([^"]+)"', game_asset.read_text("utf-8-sig")).group(1)
+        fake = {"gfx/models/buildings/aov_rie_holdings/x/y.asset": f'pdxmesh = {{\n\tname = "{name}"\n}}\n'.encode()}
+        with self.assertRaises(bhm.GeneratorError):
+            bhm.check_collisions(REAL, fake)
+
+
 class RootTests(unittest.TestCase):
     def test_missing_rie_raises(self):
         with tempfile.TemporaryDirectory() as tmp:

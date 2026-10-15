@@ -11,6 +11,7 @@ import argparse
 import re
 import sys
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -199,11 +200,254 @@ def build_region(roots: Roots) -> dict:
     return {REGION_FILE: region_file(provinces).encode("utf-8")}
 
 
+def block_end(lines: list, start: int) -> int:
+    """Index after the line that closes the block opened on lines[start]."""
+    depth = 0
+    for index in range(start, len(lines)):
+        code = strip_comment(lines[index])
+        depth += code.count("{") - code.count("}")
+        if depth <= 0 and (index > start or "{" in code):
+            return index + 1
+    raise GeneratorError(f"unbalanced braces from line {start + 1}")
+
+
+def building_block(text: str, key: str) -> tuple:
+    """(start, end) offsets of the top-level definition of key: from its line start to after its closing line."""
+    lines = text.splitlines(keepends=True)
+    offset, depth = 0, 0
+    for index, line in enumerate(lines):
+        code = strip_comment(line)
+        match = TOP_KEY.match(code) if depth == 0 else None
+        if match and match.group(1) == key:
+            end = block_end(lines, index)
+            return offset, offset + sum(len(item) for item in lines[index:end])
+        depth += code.count("{") - code.count("}")
+        offset += len(line)
+    raise GeneratorError(f"building {key} not found")
+
+
+def source_file(roots: Roots, key: str) -> tuple:
+    """(path, text without BOM) of the file defining key: Anbennar's common/buildings first, else the game's."""
+    pattern = re.compile(r"^﻿?%s\s*=\s*\{" % re.escape(key), re.MULTILINE)
+    folders = (roots.anbennar / "common/buildings", roots.game / "game/common/buildings")
+    for folder in folders:
+        for path in sorted(folder.glob("*.txt")):
+            text = read_text(path).removeprefix(BOM)
+            if pattern.search(text):
+                return path, text
+    raise GeneratorError(f"building {key} is defined by neither Anbennar nor the game")
+
+
+def source_building(roots: Roots, key: str) -> str:
+    _path, text = source_file(roots, key)
+    start, end = building_block(text, key)
+    return text[start:end]
+
+
+def source_variables(text: str) -> dict:
+    """File-local '@name = value' definitions: name -> value text."""
+    found = {}
+    for line in text.splitlines():
+        match = re.match(r"^@(\w+)\s*=\s*(.+?)\s*$", strip_comment(line).lstrip(BOM))
+        if match:
+            found[match.group(1)] = match.group(2)
+    return found
+
+
+def asset_block(names, gfx: str, region=None) -> str:
+    """A new pdxmesh asset (two-tab indented, LF): one name or variant names, the culture gfx key and,
+    for dwarves, the graphical region."""
+    lines = ["\t\tasset = {", "\t\t\ttype = pdxmesh"]
+    if isinstance(names, str) or len(names) == 1:
+        lines.append(f'\t\t\tname = "{names if isinstance(names, str) else names[0]}"')
+    else:
+        lines += ["\t\t\tnames = {"] + [f'\t\t\t\t"{name}"' for name in names] + ["\t\t\t}"]
+    lines.append("\t\t\tgraphical_cultures = { %s }" % gfx)
+    if region:
+        lines.append("\t\t\tgraphical_regions = { %s }" % region)
+    lines.append("\t\t}")
+    return "\n".join(lines) + "\n"
+
+
+def insert_assets(block: str, assets: list, variables=None) -> str:
+    """block with the new assets inserted before its first asset (and the comment lines directly above it),
+    after a marker line. Each new asset takes the first original asset's illustration and soundeffect lines
+    (file-local @variables resolved through variables)."""
+    variables = variables or {}
+    eol = "\r\n" if "\r\n" in block else "\n"
+    lines = block.splitlines(keepends=True)
+    first = next((i for i, line in enumerate(lines) if re.match(r"^\s*asset\s*=\s*\{", strip_comment(line))), None)
+    if first is None:
+        raise GeneratorError("building has no asset block to insert before")
+    if not lines[first].startswith("\t\tasset"):
+        raise GeneratorError("first asset is not indented by two tabs")
+    extras = []
+    for line in lines[first + 1:block_end(lines, first)]:
+        code = strip_comment(line).rstrip()
+        if re.match(r"^\s*(illustration|soundeffect)\s*=", code):
+            extras.append(code.strip())
+    resolved = []
+    for line in extras:
+        for name in re.findall(r"@(\w+)", line):
+            if name not in variables:
+                raise GeneratorError(f"variable @{name} used by the first asset is not defined in the source file")
+            line = line.replace(f"@{name}", variables[name])
+        resolved.append(f"\t\t\t{line}")
+    point = first
+    while point > 0 and lines[point - 1].lstrip().startswith("#"):
+        point -= 1
+    out = [f"\t\t{MARKER}: RiE holding model"]
+    for asset in assets:
+        for line in asset.splitlines():
+            if line.lstrip().startswith("graphical_cultures"):
+                out += resolved
+            out.append(line)
+    inserted = eol.join(out) + eol
+    return "".join(lines[:point]) + inserted + "".join(lines[point:])
+
+
+BUILDINGS_FILE = "common/buildings/zz_aov_holding_models.txt"
+ASSET_DIR = "gfx/models/buildings/aov_rie_holdings"
+TEXTURE_REF = re.compile(r'"([^"]+\.(?:mesh|dds|png|tga))"', re.IGNORECASE)
+PDXMESH_NAME = re.compile(r'^(?:pdxmesh|entity)\s*=\s*\{[ \t]*\r?\n\s*name\s*=\s*"([^"]+)"', re.MULTILINE)
+ANY_NAME = re.compile(r'\bname\s*=\s*"([^"]+)"')
+
+
+def build_buildings(roots: Roots) -> dict:
+    roots.check()
+    blocks = []
+    for key, groups in data.MODELS.items():
+        path, text = source_file(roots, key)
+        start, end = building_block(text, key)
+        assets = []
+        for group, meshes in groups.items():
+            region = data.REGION if group == "dwarven" else None
+            assets.append(asset_block(meshes, data.GROUPS[group]["gfx"], region))
+        blocks.append(insert_assets(text[start:end], assets, source_variables(text)))
+    content = BOM + "\n".join(HEADER()) + "\n\n" + "\n".join(blocks)
+    return {BUILDINGS_FILE: content.encode("utf-8")}
+
+
+@lru_cache(maxsize=None)
+def _asset_index(models: str) -> dict:
+    """pdxmesh/entity name -> .asset files under a gfx/models folder."""
+    index = {}
+    for path in sorted(Path(models).rglob("*.asset")):
+        for name in PDXMESH_NAME.findall(path.read_text("utf-8-sig", errors="replace")):
+            index.setdefault(name, []).append(path)
+    return index
+
+
+@lru_cache(maxsize=None)
+def _file_names(models: str) -> dict:
+    """file name -> paths for every file under a folder."""
+    names = {}
+    for path in sorted(Path(models).rglob("*")):
+        if path.is_file():
+            names.setdefault(path.name, []).append(path)
+    return names
+
+
+def find_asset(rie_models: Path, mesh: str) -> Path:
+    """The .asset under rie_models that defines the pdxmesh named mesh."""
+    hits = _asset_index(str(rie_models)).get(mesh, [])
+    if not hits:
+        raise GeneratorError(f"pdxmesh {mesh} not found in {rie_models}")
+    if len(hits) > 1:
+        raise GeneratorError(f"pdxmesh {mesh} is defined by several assets: {', '.join(str(h) for h in hits)}")
+    return hits[0]
+
+
+def asset_files(asset_path: Path, rie_models=None, vanilla=()) -> list:
+    """The files to copy for one asset: the asset, its mesh and every texture it names. A file sits beside the
+    asset, else elsewhere under rie_models; a texture found only in a vanilla folder is left to the game. Raises
+    when a file resolves nowhere."""
+    asset_path = Path(asset_path)
+    if rie_models is None:
+        rie_models = next(p for p in asset_path.parents if p.name == "models")
+    refs = []
+    for line in asset_path.read_text("utf-8-sig").splitlines():
+        for ref in TEXTURE_REF.findall(strip_comment(line)):
+            if ref not in refs:
+                refs.append(ref)
+    files = [asset_path]
+    for ref in refs:
+        if "/" in ref or "\\" in ref:
+            raise GeneratorError(f"{asset_path.name}: {ref} is a path, not a file beside the asset")
+        beside = asset_path.parent / ref
+        if beside.is_file():
+            files.append(beside)
+            continue
+        found = _file_names(str(rie_models)).get(ref, [])
+        if found:
+            if len({p.read_bytes() for p in found}) > 1:
+                raise GeneratorError(f"{asset_path.name}: {ref} exists with different content in several RiE folders")
+            files.append(found[0])
+            continue
+        if ref.lower().endswith(".mesh") or not any(ref in _file_names(str(root)) for root in vanilla):
+            raise GeneratorError(f"{asset_path.name}: {ref} not found beside the asset, in RiE or in the game")
+    return files
+
+
+def check_collisions(roots: Roots, files: dict) -> None:
+    """No copied pdxmesh or entity name may already be defined under Anbennar's or the game's gfx/models."""
+    copied = {}
+    for rel, content in files.items():
+        if rel.endswith(".asset"):
+            for name in PDXMESH_NAME.findall(content.decode("utf-8-sig")):
+                copied.setdefault(name, rel)
+    clashes = []
+    for root in (roots.anbennar / "gfx/models", roots.game / "game/gfx/models"):
+        for path in root.rglob("*.asset"):
+            for name in ANY_NAME.findall(path.read_text("utf-8-sig", errors="replace")):
+                if name in copied:
+                    clashes.append(f"{name} ({copied[name]}) is also defined in {path}")
+    if clashes:
+        raise GeneratorError("pdxmesh name collisions: " + "; ".join(sorted(set(clashes))))
+
+
+def check_shaders(files: dict) -> None:
+    """Every copied asset's shader needs its _mapobject effect in this mod's shader files."""
+    import build_map_graphics as bmg
+    fx = SUBMOD / "gfx/FX"
+    text = "\n".join(read_text(fx / name) for name in ("court_scene.shader", "pdxmesh.shader", "pdxmesh_decal.shader"))
+    # check_asset_effects only looks at the gate folder, so present the assets as if they lived there
+    as_gate = {f"{bmg.GATE_ASSET_DIR}/{rel}": content for rel, content in files.items() if rel.endswith(".asset")}
+    bmg.check_asset_effects(as_gate, text)
+
+
+def build_assets(roots: Roots) -> dict:
+    roots.check()
+    models = roots.rie / "gfx/models"
+    vanilla = (roots.game / "game/gfx/models", roots.anbennar / "gfx/models")
+    files = {}
+    for group in data.GROUPS:
+        meshes = []
+        for groups in data.MODELS.values():
+            meshes += [mesh for mesh in groups.get(group, []) if mesh not in meshes]
+        folder = (models / "buildings" / data.MODEL_SETS[group]).resolve()
+        for mesh in meshes:
+            asset = find_asset(models, mesh)
+            if asset.resolve().parent != folder:
+                raise GeneratorError(f"{mesh} is defined in {asset}, not in {folder}")
+            for source in asset_files(asset, models, vanilla):
+                rel = f"{ASSET_DIR}/{group}/{source.name}"
+                content = source.read_bytes()
+                if files.get(rel, content) != content:
+                    raise GeneratorError(f"{rel} would get two different files")
+                files[rel] = content
+    check_collisions(roots, files)
+    check_shaders(files)
+    return files
+
+
 def build_all(roots: Roots) -> dict:
     roots.check()
     files = {}
     files.update(build_cultures(roots))
     files.update(build_region(roots))
+    files.update(build_buildings(roots))
+    files.update(build_assets(roots))
     return files
 
 

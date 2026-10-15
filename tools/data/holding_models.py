@@ -12,5 +12,43 @@ GROUPS = {
 DWARF_MOUNTAIN_TERRAINS = ("mountains", "desert_mountains", "dwarven_hold", "dwarven_hold_surface",
                            "cavern", "dwarven_road")
 
+# RiE subfolder (under gfx/models/buildings/) that holds each group's assets.
+MODEL_SETS = {
+    "high_elf": "elven/highelves",
+    "wood_elf": "elven",
+    "dwarven": "dwarven",
+    "castanorian": "dunedain",
+}
+
+
+def _levels(kind: str, high_elf, wood_elf, castanorian, dwarven=None) -> dict:
+    """building key -> group -> mesh names, for levels 01..04 of one holding kind (names get '_mesh')."""
+    out = {}
+    for level in range(4):
+        groups = {
+            "high_elf": [f"{name}_mesh" for name in high_elf[level]],
+            "wood_elf": [f"{wood_elf[level]}_mesh"],
+            "castanorian": [f"{name}_mesh" for name in castanorian[level]],
+        }
+        if dwarven:
+            groups["dwarven"] = [f"{dwarven[level]}_mesh"]
+        out[f"{kind}_0{level + 1}"] = groups
+    return out
+
+
+_HIGH_ELF = [(f"highelves_0{n}_01", f"highelves_0{n}_02") for n in range(1, 5)]
+_WOOD_ELF = ["sindarin_sanctuary_01", "sindarin_sanctuary_02", "sindarin_sanctuary_03", "sindarin_sanctuary_03"]
+_DWARVEN = [f"dwarven_holding_0{n}" for n in range(1, 5)]
+
+# Building key -> group -> pdxmesh names (the spec's section 2 table). Dwarves only change castles and cities.
+MODELS = {}
+MODELS.update(_levels("castle", _HIGH_ELF, _WOOD_ELF,
+                      [(f"building_dunedain_castle_0{n}",) for n in range(1, 5)], _DWARVEN))
+MODELS.update(_levels("city", _HIGH_ELF, _WOOD_ELF,
+                      [(name,) for name in ("gondor_city_01", "gondor_city_01", "gondor_city_02", "gondor_city_02")],
+                      _DWARVEN))
+MODELS.update(_levels("temple", _HIGH_ELF, _WOOD_ELF,
+                      [[f"building_dunedain_temple_0{n}_{side}" for side in "ab"] for n in (1, 1, 2, 2)]))
+
 REGION = "graphical_aov_dwarven_mountains"
 REGION_COLOR = (120, 80, 40)
