@@ -124,12 +124,12 @@ class RegionTests(unittest.TestCase):
 
     def test_terrain_provinces(self):
         text = "1=mountains\n2=plains\n3=cavern\n#4=mountains\n5=dwarven_road\n"
-        self.assertEqual(bhm.terrain_provinces(text, data.DWARF_MOUNTAIN_TERRAINS), [1])
+        self.assertEqual(bhm.terrain_provinces(text, ("mountains",)), [1])
         self.assertEqual(bhm.terrain_provinces(text, data.DWARF_TERRAIN_TERRAINS), [3, 5])
         self.assertEqual(bhm.terrain_provinces(text, data.DWARF_TERRAIN_TERRAINS, exclude=(3,)), [5])
 
-    def test_dwarf_terrain_split(self):
-        self.assertEqual(set(data.DWARF_TERRAIN_TERRAINS) & set(data.DWARF_MOUNTAIN_TERRAINS), set())
+    def test_dwarf_terrain_constants(self):
+        self.assertFalse(hasattr(data, "DWARF_MOUNTAIN_TERRAINS"))
         self.assertEqual(data.DWARF_PROVINCE_EXCLUDE, (263,))
 
 
@@ -416,7 +416,7 @@ class RealBuildingTests(unittest.TestCase):
     def test_all_buildings_equal_sources_outside_inserts(self):
         for key, groups in data.MODELS.items():
             kind = key.rsplit("_", 1)[0]
-            extra = 1 if "dwarven" in groups else 0  # the dwarf model gets a terrain asset and a mountain asset
+            extra = 0  # the dwarf model has one asset (the dwarven terrain, any holder)
             # file-local @variables get the building kind as a prefix (the sources reuse names with different values)
             source = re.sub(r"@(\w+)", lambda m: f"@{kind}_{m.group(1)}", bhm.source_building(REAL, key))
             start, end = bhm.building_block(self.buildings, key)
@@ -461,37 +461,57 @@ class RealBuildingTests(unittest.TestCase):
             self.assertIn("illustration = ", asset)
             self.assertNotRegex(asset, r"fp\d_|norse")
 
-    def _dwarf_assets(self, key):
+    def _dwarf_asset(self, key):
         start, end = bhm.building_block(self.buildings, key)
         block = self.buildings[start:end]
         first = block.index("asset = {")
         nl = "\r\n" if "\r\n" in block else "\n"
-        eol = nl + "\t\t}" + nl
-        a = block[first:block.index(eol, first)]
-        second = block.index("asset = {", first + 1)
-        b = block[second:block.index(eol, second)]
-        return a, b
+        return block[first:block.index(nl + "\t\t}" + nl, first)]
 
-    def test_dwarf_terrain_and_mountain_assets(self):
+    def test_dwarf_terrain_asset_only(self):
         terrain = bhm.read_text(REAL.anbennar / bhm.TERRAIN_FILE)
         any_owner = bhm.terrain_provinces(terrain, data.DWARF_TERRAIN_TERRAINS, exclude=data.DWARF_PROVINCE_EXCLUDE)
-        mountains = bhm.terrain_provinces(terrain, data.DWARF_MOUNTAIN_TERRAINS)
+        self.assertEqual(any_owner, bhm.dwarf_model_provinces(REAL.anbennar))
         self.assertNotIn(263, any_owner)
-        self.assertTrue(any_owner and mountains)
-        _targets, group_keys = bhm.assign_gfx(bhm.culture_texts(REAL))
+        self.assertTrue(any_owner)
         regions = bhm.graphical_regions(REAL.anbennar)
         for kind in ("castle", "city"):
             for n in range(1, 5):
                 mesh = f"dwarven_holding_0{n}_mesh"
-                a, b = self._dwarf_assets(f"{kind}_0{n}")
-                for asset in (a, b):
-                    self.assertIn(f'"{mesh}"', asset)
-                    self.assertIn("graphical_regions = { %s }" % " ".join(regions), asset)
-                    self.assertIn("illustration = ", asset)
-                self.assertNotIn("graphical_cultures", a)
-                self.assertIn("provinces = { %s }" % " ".join(map(str, any_owner)), a)
-                self.assertIn("graphical_cultures = { %s }" % " ".join(group_keys["dwarven"]), b)
-                self.assertIn("provinces = { %s }" % " ".join(map(str, mountains)), b)
+                asset = self._dwarf_asset(f"{kind}_0{n}")
+                self.assertIn(f'"{mesh}"', asset)
+                self.assertIn("graphical_regions = { %s }" % " ".join(regions), asset)
+                self.assertIn("illustration = ", asset)
+                self.assertNotIn("graphical_cultures", asset)
+                self.assertIn("provinces = { %s }" % " ".join(map(str, any_owner)), asset)
+                start, end = bhm.building_block(self.buildings, f"{kind}_0{n}")
+                self.assertEqual(self.buildings[start:end].count(f'"{mesh}"'), 1)
+
+    def test_no_asset_combines_dwarf_keys_with_provinces(self):
+        _targets, group_keys = bhm.assign_gfx(bhm.culture_texts(REAL))
+        for key in data.MODELS:
+            start, end = bhm.building_block(self.buildings, key)
+            for asset in bhm.original_assets(self.buildings[start:end].splitlines(keepends=True)):
+                code = "".join(asset)
+                if "provinces =" in code:
+                    for gfx in group_keys["dwarven"]:
+                        self.assertNotIn(gfx, code, key)
+
+    def test_temple_assets_list_the_anbennar_faiths(self):
+        faiths = bhm.graphical_faiths(REAL.anbennar)
+        self.assertIn("orthodox_gfx", faiths)
+        self.assertIn("pagan_gfx", faiths)
+        self.assertEqual(faiths, sorted(faiths))
+        line = "graphical_faiths = { %s }" % " ".join(faiths)
+        for key, groups in data.MODELS.items():
+            start, end = bhm.building_block(self.buildings, key)
+            block = self.buildings[start:end]
+            for group, meshes in groups.items():
+                asset = self._asset(block, meshes[0])
+                if key.startswith("temple_"):
+                    self.assertIn(line, asset, (key, group))
+                else:
+                    self.assertNotIn("graphical_faiths", asset, (key, group))
 
     def test_no_output_uses_the_removed_region(self):
         self.assertNotIn("graphical_aov_dwarven_mountains", self.buildings)
@@ -519,6 +539,7 @@ class RealBuildingTests(unittest.TestCase):
 
 WALL_KEYS = ("walls_01_tribal", "walls_01", "walls_02", "walls_03", "walls_04")
 WALL_SOURCE = "common/buildings/99_background_graphics_buildings.txt"
+DWARF_LINE = "\t\tNOT = { aov_dwarven_model_province_trigger = yes } # Anbennar Overhaul: dwarven holds\n"
 
 
 @unittest.skipUnless(REAL.rie.is_dir() and REAL.anbennar.is_dir() and REAL.game.is_dir(), "RiE, Anbennar and game needed")
@@ -556,20 +577,43 @@ class RealWallTests(unittest.TestCase):
             o0, o1 = bhm.building_block(self.overrides, key)
             old = source[s0:s1].splitlines(keepends=True)
             new = self.overrides[o0:o1].splitlines(keepends=True)
-            self.assertEqual(len(new), len(old) + 1, key)
+            self.assertEqual(len(new), len(old) + 2, key)
             at = next(i for i, line in enumerate(old) if line == "\tis_enabled = {\n") + 1
             self.assertEqual(new[:at], old[:at], key)
-            self.assertEqual(new[at + 1:], old[at:], key)
+            self.assertEqual(new[at + 2:], old[at:], key)
             inserted = new[at]
+            self.assertEqual(new[at + 1], DWARF_LINE, key)
             self.assertTrue(inserted.startswith("\t\tNOT = { scope:holder ?= { culture = { OR = { has_building_gfx = "), key)
             self.assertTrue(inserted.endswith(" } } } } # Anbennar Overhaul: elven walls\n"), key)
             for gfx in self.keys["high_elf"] + self.keys["wood_elf"]:
                 self.assertIn(f"has_building_gfx = {gfx}", inserted)
 
-    def test_walls_00_is_not_re_emitted(self):
-        with self.assertRaises(bhm.GeneratorError):
-            bhm.building_block(self.overrides, "walls_00")
-        self.assertEqual(sorted(re.findall(r"^(\w+) = \{", self.overrides, re.MULTILINE)), sorted(WALL_KEYS))
+    def test_walls_00_is_re_emitted_with_the_dwarven_line_only(self):
+        source = bhm.read_text(REAL.anbennar / WALL_SOURCE).removeprefix(bhm.BOM)
+        s0, s1 = bhm.building_block(source, "walls_00")
+        o0, o1 = bhm.building_block(self.overrides, "walls_00")
+        old = source[s0:s1].splitlines(keepends=True)
+        new = self.overrides[o0:o1].splitlines(keepends=True)
+        at = next(i for i, line in enumerate(old) if line == "\tis_enabled = {\n") + 1
+        self.assertEqual(len(new), len(old) + 1)
+        self.assertEqual(new[:at], old[:at])
+        self.assertEqual(new[at], DWARF_LINE)
+        self.assertEqual(new[at + 1:], old[at:])
+        self.assertEqual(sorted(re.findall(r"^(\w+) = \{", self.overrides, re.MULTILINE)),
+                         sorted(WALL_KEYS + ("walls_00",)))
+
+    def test_dwarven_trigger_file(self):
+        text = bhm.build_triggers(REAL)[bhm.TRIGGER_FILE].decode("utf-8")
+        self.assertTrue(text.startswith("\ufeff# Anbennar Overhaul: generated"))
+        self.assertNotIn("\r", text)
+        start, end = bhm.building_block(text, "aov_dwarven_model_province_trigger")
+        expected = ("aov_dwarven_model_province_trigger = {\n\tOR = {\n"
+                    + "".join(f"\t\tterrain = {t}\n" for t in data.DWARF_TERRAIN_TERRAINS)
+                    + "\t}\n"
+                    + "".join(f"\tNOT = {{ this = province:{p} }}\n" for p in data.DWARF_PROVINCE_EXCLUDE)
+                    + "}\n")
+        self.assertEqual(text[start:end], expected)
+        self.assertEqual(bhm.TRIGGER_FILE, "common/scripted_triggers/aov_holding_model_triggers.txt")
 
     def test_override_file_loads_after_anbennars(self):
         self.assertGreater(Path(bhm.WALL_OVERRIDES_FILE).name, Path(WALL_SOURCE).name)

@@ -98,6 +98,7 @@ class HoldBuildingTests(unittest.TestCase):
             self.assertIn(f'name = "{mesh}"', first, n)
             self.assertIn("type = pdxmesh", first, n)
             self.assertNotIn("graphical_cultures", first, n)  # any holder sees the dwarf model
+            self.assertIn("provinces = { %s }" % " ".join(map(str, bhm.dwarf_model_provinces(bh.ANBENNAR_CK3))), first, n)
             self.assertIn("graphical_regions = { %s }" % " ".join(regions), first, n)
             self.assertIn("# Anbennar Overhaul: RiE dwarf hold model", first, n)
             band = assets[holds.ASSET_BAND[n]]

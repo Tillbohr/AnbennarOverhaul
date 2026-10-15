@@ -155,3 +155,23 @@ Changes:
   `cavern`, `dwarven_road`, minus 263) get the dwarf model in every castle and city for any holder (`provinces`, no
   `graphical_cultures`); dwarf cultures also get it in `mountains` and `desert_mountains` provinces. The dwarven hold
   levels lose `graphical_cultures` on their dwarf asset.
+
+### Round 2
+
+Evidence: CK3 scores assets rather than filtering them (RiE's `00_temple_buildings.txt`: graphical_faiths +1,
+graphical_cultures +2, graphical_regions +4; `_buildings.info`: `provinces` outranks the region); ties go to the asset
+listed first. Second in-game test:
+1. Elven and Castanorian temples stayed vanilla: Venail's faith has `graphical_faith = orthodox_gfx`, so vanilla's
+   temple asset scored 1 + 2 + 4 = 7 against our 6. Every new temple asset now also lists `graphical_faiths` = the
+   distinct `graphical_faith` values of Anbennar's religion_types (`catholic_gfx dharmic_gfx islamic_gfx orthodox_gfx
+   pagan_gfx sinitic_gfx`, read at build time): 7 and first, so ours wins; other cultures score 5 and keep vanilla.
+2. Marrhold (a human-held dwarven hold) stayed vanilla: the hold-level dwarf asset had regions only (4) against the
+   copied western castle asset (6). It now lists the same dwarven-terrain `provinces` as the castle and city asset
+   (`dwarf_model_provinces`, shared code).
+3. Dwarf models appeared in mountains without dwarves: `provinces` outranks `graphical_cultures`, so the mountain
+   asset showed to every holder. It is removed (with `DWARF_MOUNTAIN_TERRAINS`). Dwarves outside dwarven terrain now
+   keep vanilla models, because a province asset cannot be limited to a culture.
+4. The fence and field around dwarf models were the vanilla wall backgrounds. New generated scripted trigger
+   `aov_dwarven_model_province_trigger` (`common/scripted_triggers/aov_holding_model_triggers.txt`); `walls_01_tribal`,
+   `walls_01..04` and now also `walls_00` (`western_walls_00_mesh`) are re-emitted with the inserted line `NOT = {
+   aov_dwarven_model_province_trigger = yes }`, after the elven line, as the first lines of `is_enabled`.

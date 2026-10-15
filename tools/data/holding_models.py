@@ -15,8 +15,6 @@ DWARF_TERRAIN_TERRAINS = ("dwarven_hold", "dwarven_hold_surface", "cavern", "dwa
 # Provinces of those terrains that keep the ordinary models (263 is Old Passage, the dwarven road between Esmaria and
 # Silverforge; user choice).
 DWARF_PROVINCE_EXCLUDE = (263,)
-# Ordinary mountains: only dwarf cultures show the dwarf model there; on flat land they keep vanilla's.
-DWARF_MOUNTAIN_TERRAINS = ("mountains", "desert_mountains")
 
 # RiE subfolder (under gfx/models/buildings/) that holds each group's assets.
 MODEL_SETS = {

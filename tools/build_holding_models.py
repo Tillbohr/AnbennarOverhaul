@@ -233,6 +233,32 @@ def read_text(path: Path) -> str:
     return path.read_bytes().decode("utf-8")
 
 
+def dwarf_model_provinces(anbennar: Path) -> list:
+    """Provinces whose castles and cities show the dwarf model whoever holds them: the dwarven terrains minus
+    DWARF_PROVINCE_EXCLUDE. Shared by the asset lists here and in tools/build_holds.py."""
+    ids = terrain_provinces(read_text(Path(anbennar) / TERRAIN_FILE), data.DWARF_TERRAIN_TERRAINS,
+                            data.DWARF_PROVINCE_EXCLUDE)
+    if not ids:
+        raise GeneratorError("no dwarven terrain provinces found")
+    return ids
+
+
+GRAPHICAL_FAITH = re.compile(r'^\s*graphical_faith\s*=\s*"?([A-Za-z0-9_]+)"?')
+
+
+def graphical_faiths(anbennar: Path) -> list:
+    """Sorted distinct graphical_faith values (religion and faith level) in Anbennar's religion_types files."""
+    found = set()
+    for path in sorted((Path(anbennar) / "common/religion/religion_types").glob("*.txt")):
+        for line in read_text(path).splitlines():
+            match = GRAPHICAL_FAITH.match(strip_comment(line).lstrip(BOM))
+            if match:
+                found.add(match.group(1))
+    if not found:
+        raise GeneratorError("no graphical_faith found in Anbennar's religion_types")
+    return sorted(found)
+
+
 def culture_texts(roots: Roots) -> dict:
     folder = roots.anbennar / CULTURES_DIR
     return {path.name: read_text(path) for path in sorted(folder.glob("*.txt"))}
@@ -313,9 +339,10 @@ def _words(value) -> str:
     return value if isinstance(value, str) else " ".join(value)
 
 
-def asset_block(names, gfx, regions=None, provinces=None) -> str:
+def asset_block(names, gfx, regions=None, provinces=None, faiths=None) -> str:
     """A new pdxmesh asset (two-tab indented, LF): one name or variant names, the culture gfx key(s) (None for any
-    culture), the province ids and the graphical region(s) it serves (a str or a list of each)."""
+    culture), the province ids, the graphical region(s) and the graphical faith(s) it serves (a str or a list of
+    each)."""
     lines = ["\t\tasset = {", "\t\t\ttype = pdxmesh"]
     if isinstance(names, str) or len(names) == 1:
         lines.append(f'\t\t\tname = "{names if isinstance(names, str) else names[0]}"')
@@ -327,6 +354,8 @@ def asset_block(names, gfx, regions=None, provinces=None) -> str:
         lines.append("\t\t\tprovinces = { %s }" % " ".join(str(p) for p in sorted(provinces)))
     if regions:
         lines.append("\t\t\tgraphical_regions = { %s }" % _words(regions))
+    if faiths:
+        lines.append("\t\t\tgraphical_faiths = { %s }" % _words(faiths))
     lines.append("\t\t}")
     return "\n".join(lines) + "\n"
 
@@ -423,27 +452,24 @@ def build_buildings(roots: Roots) -> dict:
     _targets, group_keys = assign_gfx(texts)
     fallbacks = gfx_fallbacks(texts)
     regions = graphical_regions(roots.anbennar)
-    terrain = read_text(roots.anbennar / TERRAIN_FILE)
-    dwarf_terrain = terrain_provinces(terrain, data.DWARF_TERRAIN_TERRAINS, data.DWARF_PROVINCE_EXCLUDE)
-    dwarf_mountains = terrain_provinces(terrain, data.DWARF_MOUNTAIN_TERRAINS)
-    if not dwarf_terrain or not dwarf_mountains:
-        raise GeneratorError("no dwarven terrain or mountain provinces found")
+    dwarf_terrain = dwarf_model_provinces(roots.anbennar)
+    faiths = graphical_faiths(roots.anbennar)
     for key, groups in data.MODELS.items():
         path, text = source_file(roots, key)
         start, end = building_block(text, key)
         assets, assets_fallback = [], []
         for group, meshes in groups.items():
             # Every asset serves every graphical region (the region outranks the culture when CK3 picks an asset,
-            # so a bare culture asset would lose). Dwarf castles and cities come in two assets, first: dwarven
-            # terrain for any holder (a province list outranks the region), then ordinary mountains for dwarf
-            # cultures only.
+            # so a bare culture asset would lose). Dwarf castles and cities get one asset, first: dwarven terrain
+            # for any holder (a province list outranks the region; it cannot be limited to a culture, so dwarves
+            # elsewhere keep vanilla's models). Temples also list every graphical faith: vanilla's temple assets
+            # score +1 for the faith, ours must tie that to win by order.
             if group == "dwarven":
-                new = [asset_block(meshes, None, regions, dwarf_terrain),
-                       asset_block(meshes, group_keys[group], regions, dwarf_mountains)]
-                assets[:0] = new
-                assets_fallback[:0] = [fallbacks[data.GROUPS[group]["gfx"]]] * 2
+                assets.insert(0, asset_block(meshes, None, regions, dwarf_terrain))
+                assets_fallback.insert(0, fallbacks[data.GROUPS[group]["gfx"]])
                 continue
-            assets.append(asset_block(meshes, group_keys[group], regions))
+            assets.append(asset_block(meshes, group_keys[group], regions,
+                                      faiths=faiths if key.startswith("temple_") else None))
             assets_fallback.append(fallbacks[data.GROUPS[group]["gfx"]])
         defined = source_variables(text)
         kind = key.rsplit("_", 1)[0]
@@ -464,8 +490,10 @@ def build_buildings(roots: Roots) -> dict:
 
 WALLS_FILE = "common/buildings/aov_holding_walls.txt"
 WALL_OVERRIDES_FILE = "common/buildings/zz_aov_holding_walls.txt"
-WALL_SOURCE_KEYS = ("walls_01_tribal", "walls_01", "walls_02", "walls_03", "walls_04")
+WALL_SOURCE_KEYS = ("walls_00", "walls_01_tribal", "walls_01", "walls_02", "walls_03", "walls_04")
 IS_ENABLED_LINE = "\tis_enabled = {"
+TRIGGER_FILE = "common/scripted_triggers/aov_holding_model_triggers.txt"
+DWARF_TRIGGER = "aov_dwarven_model_province_trigger"
 
 
 def uses_elf_gfx(keys: list) -> str:
@@ -475,6 +503,19 @@ def uses_elf_gfx(keys: list) -> str:
 
 def elf_keys(group_keys: dict) -> list:
     return [key for group in ("high_elf", "wood_elf") for key in group_keys[group]]
+
+
+def build_triggers(roots: Roots) -> dict:
+    """Province scripted trigger: the province shows the dwarf castle/city model (dwarven terrain, minus
+    DWARF_PROVINCE_EXCLUDE; the same constants as the asset's province list). `terrain = <key>` is a province
+    trigger (vanilla 00_artifact_triggers.txt uses it under title_province)."""
+    roots.check()
+    lines = [f"{DWARF_TRIGGER} = {{", "\tOR = {"]
+    lines += [f"\t\tterrain = {terrain}" for terrain in data.DWARF_TERRAIN_TERRAINS]
+    lines.append("\t}")
+    lines += [f"\tNOT = {{ this = province:{province} }}" for province in data.DWARF_PROVINCE_EXCLUDE]
+    lines.append("}")
+    return {TRIGGER_FILE: (BOM + "\n".join(HEADER()) + "\n\n" + "\n".join(lines) + "\n").encode("utf-8")}
 
 
 def build_walls(roots: Roots) -> dict:
@@ -489,6 +530,8 @@ def build_walls(roots: Roots) -> dict:
              "\t\t# the walls a vanilla holding shows (see walls_00 in Anbennar's background buildings)\n"
              "\t\tOR = {\n\t\t\tis_county_capital = yes\n\t\t\tfort_level > 0\n\t\t}\n\t}\n}\n")
     exclusion = f"\t\tNOT = {{ {uses_elf_gfx(elf_keys(group_keys))} }} {MARKER}: elven walls\n"
+    # a province that shows the dwarf model gets no wall background at all (the fence and field are walls_00..04)
+    dwarven = f"\t\tNOT = {{ {DWARF_TRIGGER} = yes }} {MARKER}: dwarven holds\n"
     blocks = []
     for key in WALL_SOURCE_KEYS:
         text = source_building(roots, key)
@@ -496,7 +539,9 @@ def build_walls(roots: Roots) -> dict:
         at = [i for i, line in enumerate(lines) if line.rstrip("\r\n") == IS_ENABLED_LINE]
         if len(at) != 1:
             raise GeneratorError(f"{key}: expected one top-level is_enabled block, found {len(at)}")
-        lines.insert(at[0] + 1, exclusion)
+        lines.insert(at[0] + 1, dwarven)
+        if key != "walls_00":
+            lines.insert(at[0] + 1, exclusion)
         blocks.append("".join(lines))
     header = "\n".join(HEADER()) + "\n\n"
     return {WALLS_FILE: (BOM + header + elven).encode("utf-8"),
@@ -648,6 +693,7 @@ def build_all(roots: Roots) -> dict:
     roots.check()
     files = {}
     files.update(build_cultures(roots))
+    files.update(build_triggers(roots))
     files.update(build_walls(roots))
     files.update(build_buildings(roots))
     files.update(build_localization(roots))
