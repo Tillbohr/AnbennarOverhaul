@@ -494,6 +494,8 @@ WALL_SOURCE_KEYS = ("walls_00", "walls_01_tribal", "walls_01", "walls_02", "wall
 IS_ENABLED_LINE = "\tis_enabled = {"
 TRIGGER_FILE = "common/scripted_triggers/aov_holding_model_triggers.txt"
 DWARF_TRIGGER = "aov_dwarven_model_province_trigger"
+WALL_LEVEL_TRIGGER = "aov_holding_walls_level_%d_trigger"
+LEVEL_MARKER = f"{MARKER}: walls by holding level"
 
 
 def uses_elf_gfx(keys: list) -> str:
@@ -515,6 +517,11 @@ def build_triggers(roots: Roots) -> dict:
     lines.append("\t}")
     lines += [f"\tNOT = {{ this = province:{province} }}" for province in data.DWARF_PROVINCE_EXCLUDE]
     lines.append("}")
+    # walls by holding level: the province's primary holding building is of that level
+    for level, (call, keys) in sorted(data.WALL_LEVELS.items()):
+        lines += ["", f"{WALL_LEVEL_TRIGGER % level} = {{", "\tOR = {"]
+        lines += [f"\t\t{call} = {key}" for key in keys]
+        lines += ["\t}", "}"]
     return {TRIGGER_FILE: (BOM + "\n".join(HEADER()) + "\n\n" + "\n".join(lines) + "\n").encode("utf-8")}
 
 
@@ -536,6 +543,21 @@ def build_walls(roots: Roots) -> dict:
     # walls_00 ("no walls") is the one background a dwarf-model province keeps: a holding needs an active background
     # building or it shows no model at all (RiE keeps walls_00 on for its underground dwarves too).
     dwarven_00 = f"\t\t\t{DWARF_TRIGGER} = yes {MARKER}: dwarven holds\n"
+    # walls_00 is also on for every holding below level 3 and for tribal holders. An elf whose holding has elven walls
+    # (the aov_elven_walls condition) does not get it, so an elf never shows two backgrounds (RiE's walls_00 and its
+    # elven walls exclude each other the same way: fort_level < 1 against fort_level >= 1).
+    level_00 = (f"\t\t\tAND = {{ {LEVEL_MARKER}\n"
+                "\t\t\t\tOR = {\n"
+                f"\t\t\t\t\tNOT = {{ OR = {{ {WALL_LEVEL_TRIGGER % 3} = yes {WALL_LEVEL_TRIGGER % 4} = yes }} }}\n"
+                "\t\t\t\t\tscope:holder ?= { government_has_flag = government_is_tribal }\n"
+                "\t\t\t\t}\n"
+                "\t\t\t\tNOT = {\n"
+                "\t\t\t\t\tAND = {\n"
+                f"\t\t\t\t\t\t{uses_elf_gfx(elf_keys(group_keys))}\n"
+                "\t\t\t\t\t\tOR = {\n\t\t\t\t\t\t\tis_county_capital = yes\n\t\t\t\t\t\t\tfort_level > 0\n\t\t\t\t\t\t}\n"
+                "\t\t\t\t\t}\n"
+                "\t\t\t\t}\n"
+                "\t\t\t}\n")
     blocks = []
     for key in WALL_SOURCE_KEYS:
         text = source_building(roots, key)
@@ -546,10 +568,30 @@ def build_walls(roots: Roots) -> dict:
         if key == "walls_00":
             if lines[at[0] + 1].strip() != "OR = {":
                 raise GeneratorError("walls_00: is_enabled does not start with OR = {")
+            lines.insert(at[0] + 2, level_00)
             lines.insert(at[0] + 2, dwarven_00)
         else:
+            if key in ("walls_03", "walls_04"):
+                level = int(key[-1])
+                start = at[0]
+                end = block_end(lines, start)
+                children = [i for i in range(start + 1, end - 1) if lines[i].startswith("\t\t") and not lines[i].startswith("\t\t\t")]
+                fort = [i for i in children if lines[i] == "\t\tOR = {\n"]
+                nor = [i for i in children if lines[i] == "\t\tNOR = {\n"]
+                if len(fort) != 1 or len(nor) > 1:
+                    raise GeneratorError(f"{key}: expected one OR and at most one NOR block in is_enabled")
+                # the fortification OR becomes the level trigger; the fortification NOR (which would leave a level-3
+                # holding with a top fortification without any wall background) goes, the two levels are exclusive
+                for i in sorted(nor + fort, reverse=True):
+                    close = block_end(lines, i)
+                    if i in fort:
+                        lines[i:close] = [f"\t\t{WALL_LEVEL_TRIGGER % level} = yes {LEVEL_MARKER}\n"]
+                    else:
+                        lines[i:close] = [f"\t\t{LEVEL_MARKER}: the fortification exclusions are dropped, the levels exclude each other\n"]
             lines.insert(at[0] + 1, dwarven)
             lines.insert(at[0] + 1, exclusion)
+            if key in ("walls_01_tribal", "walls_01", "walls_02"):
+                lines.insert(at[0] + 1, f"\t\talways = no {LEVEL_MARKER}\n")
         if key in data.CASTANORIAN_WALLS:
             first = next((i for i, line in enumerate(lines) if ASSET_START.match(strip_comment(line))), None)
             if first is None or not lines[first].startswith("\tasset"):
@@ -683,8 +725,7 @@ def build_assets(roots: Roots) -> dict:
         if group in data.WALL_MODELS and data.WALL_MODELS[group] not in meshes:
             meshes.append(data.WALL_MODELS[group])
         if group == "castanorian":
-            meshes += [mesh for mesh in data.CASTANORIAN_WALLS.values()
-                       if mesh not in meshes and mesh not in data.GAME_MESHES]
+            meshes += [mesh for mesh in data.CASTANORIAN_WALLS.values() if mesh not in meshes]
         if group == "dwarven":  # the dwarven hold levels (tools/build_holds.py) use one more model
             meshes += [mesh for mesh in data.HOLD_DWARF_MESHES.values() if mesh not in meshes]
         folder = (models / "buildings" / data.MODEL_SETS[group]).resolve()

@@ -10,3 +10,19 @@ aov_dwarven_model_province_trigger = {
 	}
 	NOT = { this = province:263 }
 }
+
+aov_holding_walls_level_3_trigger = {
+	OR = {
+		has_building = castle_03
+		has_building = city_03
+		has_building = temple_03
+	}
+}
+
+aov_holding_walls_level_4_trigger = {
+	OR = {
+		has_building_or_higher = castle_04
+		has_building_or_higher = city_04
+		has_building_or_higher = temple_04
+	}
+}

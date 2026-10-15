@@ -63,13 +63,16 @@ MODELS["tribe_02"] = {"wood_elf": ["sindarin_sanctuary_02_mesh"]}
 # Background wall buildings (aov_elven_walls): group -> pdxmesh.
 WALL_MODELS = {"high_elf": "highelves_fort_wall_mesh", "wood_elf": "sindarin_hedge_wall_01_mesh"}
 
-# Walls of the castanorian group: re-emitted wall building -> pdxmesh. Early levels (walls_01_tribal, walls_01) have no
-# RiE Gondor equivalent, so they get vanilla's "no walls" mesh (the one walls_00 uses): it keeps a background building
-# active but draws no palisade or field. Levels 02..04 get the Gondorian walls with gatehouses.
-CASTANORIAN_WALLS = {"walls_01_tribal": "western_walls_00_mesh", "walls_01": "western_walls_00_mesh",
-                     **{f"walls_0{n}": f"dunedain_walls_0{n}_mesh" for n in (2, 3, 4)}}
-# Meshes of CASTANORIAN_WALLS that the game defines (nothing to copy from RiE).
-GAME_MESHES = ("western_walls_00_mesh",)
+# Walls follow the holding level for every culture (the vanilla chain needs fortification buildings that almost no
+# holding has): level -> (province trigger, the primary holding buildings of that level). Anbennar and the game have
+# no level 05+. Levels 1-2 and tribal holdings show no walls (walls_00); walls_01_tribal, walls_01 and walls_02 never show.
+WALL_LEVELS = {
+    3: ("has_building", ("castle_03", "city_03", "temple_03")),
+    4: ("has_building_or_higher", ("castle_04", "city_04", "temple_04")),
+}
+
+# Walls of the castanorian group: re-emitted wall building -> pdxmesh (RiE's Gondorian walls with gatehouses).
+CASTANORIAN_WALLS = {"walls_03": "dunedain_walls_03_mesh", "walls_04": "dunedain_walls_04_mesh"}
 
 # Dwarven hold level (1..10) -> RiE dwarven pdxmesh, used by tools/build_holds.py (dwarf holders only; the
 # assets are copied by tools/build_holding_models.py).

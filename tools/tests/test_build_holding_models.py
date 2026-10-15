@@ -374,9 +374,9 @@ class ModelTableTests(unittest.TestCase):
         self.assertEqual(data.MODELS["tribe_01"], {"wood_elf": ["sindarin_sanctuary_01_mesh"]})
         self.assertEqual(data.MODELS["tribe_02"], {"wood_elf": ["sindarin_sanctuary_02_mesh"]})
         self.assertEqual(data.WALL_MODELS, {"high_elf": "highelves_fort_wall_mesh", "wood_elf": "sindarin_hedge_wall_01_mesh"})
-        self.assertEqual(data.CASTANORIAN_WALLS, {"walls_01_tribal": "western_walls_00_mesh", "walls_01": "western_walls_00_mesh",
-                                                  "walls_02": "dunedain_walls_02_mesh", "walls_03": "dunedain_walls_03_mesh",
-                                                  "walls_04": "dunedain_walls_04_mesh"})
+        self.assertEqual(data.CASTANORIAN_WALLS, {"walls_03": "dunedain_walls_03_mesh", "walls_04": "dunedain_walls_04_mesh"})
+        self.assertEqual(data.WALL_LEVELS[3], ("has_building", ("castle_03", "city_03", "temple_03")))
+        self.assertEqual(data.WALL_LEVELS[4], ("has_building_or_higher", ("castle_04", "city_04", "temple_04")))
         for key, groups in data.MODELS.items():
             if key.startswith("tribe"):
                 continue
@@ -546,16 +546,13 @@ class RealBuildingTests(unittest.TestCase):
 WALL_KEYS = ("walls_01_tribal", "walls_01", "walls_02", "walls_03", "walls_04")
 WALL_SOURCE = "common/buildings/99_background_graphics_buildings.txt"
 WALLS_00_LINE = "\t\t\taov_dwarven_model_province_trigger = yes # Anbennar Overhaul: dwarven holds\n"
-DWARF_LINE ="\t\tNOT = { aov_dwarven_model_province_trigger = yes } # Anbennar Overhaul: dwarven holds\n"
+DWARF_LINE = "\t\tNOT = { aov_dwarven_model_province_trigger = yes } # Anbennar Overhaul: dwarven holds\n"
+ALWAYS_NO = "\t\talways = no # Anbennar Overhaul: walls by holding level\n"
+LEVEL_LINE = "\t\taov_holding_walls_level_%d_trigger = yes # Anbennar Overhaul: walls by holding level\n"
 
 
 @unittest.skipUnless(REAL.rie.is_dir() and REAL.anbennar.is_dir() and REAL.game.is_dir(), "RiE, Anbennar and game needed")
 class RealWallTests(unittest.TestCase):
-    def test_vanilla_no_walls_mesh_is_the_games(self):
-        self.assertEqual(data.GAME_MESHES, ("western_walls_00_mesh",))
-        text = "\n".join(p.read_text("utf-8-sig") for p in (REAL.game / "game/gfx/models").rglob("*.asset"))
-        self.assertIn('name = "western_walls_00_mesh"', text)
-
     @classmethod
     def setUpClass(cls):
         cls.files = bhm.build_walls(REAL)
@@ -564,7 +561,7 @@ class RealWallTests(unittest.TestCase):
         cls.keys = bhm.assign_gfx(bhm.culture_texts(REAL))[1]
 
     def test_elven_walls_building(self):
-        self.assertTrue(self.elven.startswith("\ufeff# Anbennar Overhaul: generated"))
+        self.assertTrue(self.elven.startswith("﻿# Anbennar Overhaul: generated"))
         start, end = bhm.building_block(self.elven, "aov_elven_walls")
         block = self.elven[start:end]
         self.assertIn("is_graphical_background = yes", block)
@@ -596,49 +593,89 @@ class RealWallTests(unittest.TestCase):
         self.assertEqual(new[end + 1], "\n", key)
         return new[:start - 1] + new[end + 2:], new[start:end + 1]
 
-    def test_dunedain_asset_is_first_asset(self):
+    def test_escanni_assets_only_in_walls_03_and_04(self):
+        self.assertEqual(sorted(re.findall(r"^(\w+) = \{", self.overrides, re.MULTILINE)),
+                         sorted(WALL_KEYS + ("walls_00",)))
+        for key in WALL_KEYS + ("walls_00",):
+            block = "".join(self._block_lines(self.overrides, key))
+            self.assertEqual("dunedain_walls" in block, key in ("walls_03", "walls_04"), key)
+            self.assertEqual("RiE holding wall" in block, key in ("walls_03", "walls_04"), key)
         for key, mesh in data.CASTANORIAN_WALLS.items():
             lines = self._block_lines(self.overrides, key)
             firsts = [i for i, line in enumerate(lines) if line == "\tasset = {\n"]
             self.assertIn(f'"{mesh}"', lines[firsts[0] + 2], key)
 
-    def test_re_emitted_walls_differ_by_one_first_line(self):
+    def _check_common(self, key, old, new):
+        """new = old with the elven and dwarven lines inserted at the top of is_enabled; returns the rest of both."""
+        at = next(i for i, line in enumerate(old) if line == "\tis_enabled = {\n") + 1
+        self.assertEqual(new[:at], old[:at], key)
+        inserted = new[at]
+        self.assertEqual(new[at + 1], DWARF_LINE, key)
+        self.assertTrue(inserted.startswith("\t\tNOT = { scope:holder ?= { culture = { OR = { has_building_gfx = "), key)
+        self.assertTrue(inserted.endswith(" } } } } # Anbennar Overhaul: elven walls\n"), key)
+        for gfx in self.keys["high_elf"] + self.keys["wood_elf"]:
+            self.assertIn(f"has_building_gfx = {gfx}", inserted)
+        return old[at:], new[at + 2:]
+
+    def test_early_walls_never_show(self):
         source = bhm.read_text(REAL.anbennar / WALL_SOURCE).removeprefix(bhm.BOM)
-        self.assertTrue(self.overrides.startswith(bhm.BOM))
-        regions = bhm.graphical_regions(REAL.anbennar)
-        for key in WALL_KEYS:
+        for key in ("walls_01_tribal", "walls_01", "walls_02"):
             old = self._block_lines(source, key)
             new = self._block_lines(self.overrides, key)
-            if key in data.CASTANORIAN_WALLS:
-                new, asset = self._without_dunedain(key, new)
-                self.assertEqual(asset[1], "\t\ttype = pdxmesh\n")
-                self.assertEqual(asset[3], "\t\tgraphical_cultures = { %s }\n" % " ".join(self.keys["castanorian"]))
-                self.assertEqual(asset[4], "\t\tgraphical_regions = { %s }\n" % " ".join(regions))
-            else:
-                self.assertNotIn("dunedain_walls", "".join(new), key)
-            self.assertEqual(len(new), len(old) + 2, key)
-            at = next(i for i, line in enumerate(old) if line == "\tis_enabled = {\n") + 1
-            self.assertEqual(new[:at], old[:at], key)
-            self.assertEqual(new[at + 2:], old[at:], key)
-            inserted = new[at]
-            self.assertEqual(new[at + 1], DWARF_LINE, key)
-            self.assertTrue(inserted.startswith("\t\tNOT = { scope:holder ?= { culture = { OR = { has_building_gfx = "), key)
-            self.assertTrue(inserted.endswith(" } } } } # Anbennar Overhaul: elven walls\n"), key)
-            for gfx in self.keys["high_elf"] + self.keys["wood_elf"]:
-                self.assertIn(f"has_building_gfx = {gfx}", inserted)
+            self.assertEqual(len(new), len(old) + 3, key)
+            at = next(i for i, line in enumerate(new) if line == "\tis_enabled = {\n")
+            self.assertEqual(new[at + 1], ALWAYS_NO, key)
+            rest_old, rest_new = self._check_common(key, old, new[:at + 1] + new[at + 2:])
+            self.assertEqual(rest_new, rest_old, key)
 
-    def test_walls_00_is_re_emitted_with_the_dwarven_line_only(self):
+    def test_walls_03_and_04_follow_the_holding_level(self):
+        source = bhm.read_text(REAL.anbennar / WALL_SOURCE).removeprefix(bhm.BOM)
+        for level in (3, 4):
+            key = f"walls_0{level}"
+            old = self._block_lines(source, key)
+            new, _asset = self._without_dunedain(key, self._block_lines(self.overrides, key))
+            text = "".join(new)
+            self.assertNotIn("curtain_walls_0", text, key)
+            self.assertIn(LEVEL_LINE % level, new, key)
+            self.assertNotIn(LEVEL_LINE % (7 - level), new, key)
+            self.assertIn("\t\t\tNOT = { government_has_flag = government_is_tribal }\n", new, key)
+            self.assertIn(DWARF_LINE, new, key)
+            # the assets (before is_enabled) are Anbennar's untouched
+            a_old = old.index("\tis_enabled = {\n")
+            a_new = new.index("\tis_enabled = {\n")
+            self.assertEqual(new[:a_new], old[:a_old], key)
+
+    def test_walls_00_is_re_emitted_with_the_dwarven_line_and_the_level_child(self):
         source = bhm.read_text(REAL.anbennar / WALL_SOURCE).removeprefix(bhm.BOM)
         old = self._block_lines(source, "walls_00")
         new = self._block_lines(self.overrides, "walls_00")
         at = next(i for i, line in enumerate(old) if line == "\tis_enabled = {\n") + 2
         self.assertEqual(old[at - 1], "\t\tOR = {\n")
-        self.assertEqual(len(new), len(old) + 1)
         self.assertEqual(new[:at], old[:at])
         self.assertEqual(new[at], WALLS_00_LINE)
-        self.assertEqual(new[at + 1:], old[at:])
-        self.assertEqual(sorted(re.findall(r"^(\w+) = \{", self.overrides, re.MULTILINE)),
-                         sorted(WALL_KEYS + ("walls_00",)))
+        extra = len(new) - len(old) - 1
+        self.assertGreater(extra, 0)
+        child = "".join(new[at + 1:at + 1 + extra])
+        self.assertIn("# Anbennar Overhaul: walls by holding level", child)
+        self.assertIn("NOT = { OR = { aov_holding_walls_level_3_trigger = yes aov_holding_walls_level_4_trigger = yes } }", child)
+        self.assertEqual(new[at + 1 + extra:], old[at:])
+
+    def test_walls_00_leaves_elves_with_elven_walls_alone(self):
+        text = "".join(self._block_lines(self.overrides, "walls_00"))
+        child = text[text.index("walls by holding level"):]
+        self.assertIn("has_building_gfx = ", child)
+        self.assertIn("is_county_capital = yes", child)
+        self.assertIn("fort_level > 0", child)
+        self.assertIn("government_is_tribal", child)
+
+    def test_level_trigger_file(self):
+        text = bhm.build_triggers(REAL)[bhm.TRIGGER_FILE].decode("utf-8")
+        for level, call, keys in ((3, "has_building", ("castle_03", "city_03", "temple_03")),
+                                  (4, "has_building_or_higher", ("castle_04", "city_04", "temple_04"))):
+            start, end = bhm.building_block(text, f"aov_holding_walls_level_{level}_trigger")
+            expected = (f"aov_holding_walls_level_{level}_trigger = {{\n\tOR = {{\n"
+                        + "".join(f"\t\t{call} = {key}\n" for key in keys) + "\t}\n}\n")
+            self.assertEqual(text[start:end], expected)
 
     def test_dwarven_trigger_file(self):
         text = bhm.build_triggers(REAL)[bhm.TRIGGER_FILE].decode("utf-8")
@@ -662,10 +699,8 @@ class RealWallTests(unittest.TestCase):
             asset = bhm.find_asset(REAL.rie / "gfx/models", mesh)
             self.assertIn(f"{bhm.ASSET_DIR}/{group}/{asset.name}", files)
             self.assertIn(f"{bhm.ASSET_DIR}/{group}/{asset.stem}.mesh", files)
+        self.assertFalse(any("dunedain_walls_02" in rel for rel in files))
         for mesh in data.CASTANORIAN_WALLS.values():
-            if mesh in data.GAME_MESHES:
-                self.assertFalse(any(rel.endswith(mesh + ".mesh") for rel in files))
-                continue
             asset = bhm.find_asset(REAL.rie / "gfx/models", mesh)
             self.assertIn(f"{bhm.ASSET_DIR}/castanorian/{asset.name}", files)
             self.assertIn(f"{bhm.ASSET_DIR}/castanorian/{asset.stem}.mesh", files)

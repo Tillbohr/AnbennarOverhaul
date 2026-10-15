@@ -12,6 +12,21 @@ walls_00 = {
 	is_enabled = {
 		OR = {
 			aov_dwarven_model_province_trigger = yes # Anbennar Overhaul: dwarven holds
+			AND = { # Anbennar Overhaul: walls by holding level
+				OR = {
+					NOT = { OR = { aov_holding_walls_level_3_trigger = yes aov_holding_walls_level_4_trigger = yes } }
+					scope:holder ?= { government_has_flag = government_is_tribal }
+				}
+				NOT = {
+					AND = {
+						scope:holder ?= { culture = { OR = { has_building_gfx = aov_high_elf_building_gfx has_building_gfx = aov_wood_elf_building_gfx } } }
+						OR = {
+							is_county_capital = yes
+							fort_level > 0
+						}
+					}
+				}
+			}
 			AND = {
 				is_county_capital = no
 				fort_level < 1
@@ -35,14 +50,6 @@ walls_01_tribal = {
 
 	
 	#Base Tribal Walls:
-	# Anbennar Overhaul: RiE holding wall
-	asset = {
-		type = pdxmesh
-		name = "western_walls_00_mesh"
-		graphical_cultures = { aov_castanorian_building_gfx }
-		graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
-	}
-
 	asset = {
 		type = pdxmesh
 		names = {
@@ -61,6 +68,7 @@ walls_01_tribal = {
 		graphical_cultures = { emishi_building_gfx amuric_building_gfx }
 	}
 	is_enabled = {
+		always = no # Anbennar Overhaul: walls by holding level
 		NOT = { scope:holder ?= { culture = { OR = { has_building_gfx = aov_high_elf_building_gfx has_building_gfx = aov_wood_elf_building_gfx } } } } # Anbennar Overhaul: elven walls
 		NOT = { aov_dwarven_model_province_trigger = yes } # Anbennar Overhaul: dwarven holds
 		OR = {
@@ -89,14 +97,6 @@ walls_01_tribal = {
 
 walls_01 = {
 	is_graphical_background = yes
-
-	# Anbennar Overhaul: RiE holding wall
-	asset = {
-		type = pdxmesh
-		name = "western_walls_00_mesh"
-		graphical_cultures = { aov_castanorian_building_gfx }
-		graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
-	}
 
 	asset = {
 		type = pdxmesh
@@ -222,6 +222,7 @@ walls_01 = {
 	}
 
 	is_enabled = {
+		always = no # Anbennar Overhaul: walls by holding level
 		NOT = { scope:holder ?= { culture = { OR = { has_building_gfx = aov_high_elf_building_gfx has_building_gfx = aov_wood_elf_building_gfx } } } } # Anbennar Overhaul: elven walls
 		NOT = { aov_dwarven_model_province_trigger = yes } # Anbennar Overhaul: dwarven holds
 		OR = {
@@ -258,14 +259,6 @@ walls_01 = {
 walls_02 = {
 	is_graphical_background = yes
 
-
-	# Anbennar Overhaul: RiE holding wall
-	asset = {
-		type = pdxmesh
-		name = "dunedain_walls_02_mesh"
-		graphical_cultures = { aov_castanorian_building_gfx }
-		graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
-	}
 
 	asset = {
 		type = pdxmesh
@@ -401,6 +394,7 @@ walls_02 = {
 	}
 
 	is_enabled = {
+		always = no # Anbennar Overhaul: walls by holding level
 		NOT = { scope:holder ?= { culture = { OR = { has_building_gfx = aov_high_elf_building_gfx has_building_gfx = aov_wood_elf_building_gfx } } } } # Anbennar Overhaul: elven walls
 		NOT = { aov_dwarven_model_province_trigger = yes } # Anbennar Overhaul: dwarven holds
 		OR = {
@@ -579,32 +573,8 @@ walls_03 = {
 		scope:holder = {
 			NOT = { government_has_flag = government_is_tribal }
 		}
-		OR = {
-			# These buildings will trigger the visual "upgrade" to this wall asset
-			has_building_or_higher = "curtain_walls_03"
-			has_building_or_higher = "hill_forts_03"
-			has_building_or_higher = "ramparts_03"
-			has_building_or_higher = "watchtowers_03"
-			has_building_or_higher = "temple_citadel_03"
-			# has_building_or_higher = "walls_of_benin_01" # Anbennar
-			# has_building_or_higher = "walls_of_genoa_01" # Anbennar
-			# has_building_or_higher = "aurelian_walls_01" # Anbennar
-			scope:holder = {
-				government_has_flag = government_is_nomadic
-				root = { fort_level = 3 }
-			}
-		}
-		NOR = {
-			# Disabling this level of walled graphics for holdings with special walls and other fortifications so that they always look appropriately fortified. Note: If any of these buildings are given unique 3D assets, this should be looked at again.
-			has_building_or_higher = "curtain_walls_06"
-			has_building_or_higher = "hill_forts_06"
-			has_building_or_higher = "ramparts_06"
-			has_building_or_higher = "watchtowers_06"
-			has_building_or_higher = "temple_citadel_04"
-			# has_building_or_higher = "theodosian_walls_01" # Anbennar
-			# has_building_or_higher = "city_wall_of_toledo_01" # Anbennar
-			# has_building_or_higher = "roman_wall_of_lugo_01" # Anbennar
-		}
+		aov_holding_walls_level_3_trigger = yes # Anbennar Overhaul: walls by holding level
+		# Anbennar Overhaul: walls by holding level: the fortification exclusions are dropped, the levels exclude each other
 	}
 }
 
@@ -751,18 +721,6 @@ walls_04 = {
 		scope:holder = {
 			NOT = { government_has_flag = government_is_tribal }
 		}
-		OR = {
-			# These buildings will trigger the visual "upgrade" to this wall asset
-			has_building_or_higher = "curtain_walls_06"
-			has_building_or_higher = "hill_forts_06"
-			has_building_or_higher = "ramparts_06"
-			has_building_or_higher = "watchtowers_06"
-			has_building_or_higher = "temple_citadel_04"
-			# has_building_or_higher = "theodosian_walls_01" # Anbennar
-			scope:holder = {
-				government_has_flag = government_is_nomadic
-				root = { fort_level >= 4 }
-			}
-		}
+		aov_holding_walls_level_4_trigger = yes # Anbennar Overhaul: walls by holding level
 	}
 }

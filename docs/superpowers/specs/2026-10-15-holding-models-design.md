@@ -198,3 +198,25 @@ listed first. Second in-game test:
    uses; castanorian keys, all regions): it draws nothing but keeps a background active, so the building stays
    enabled and no `is_enabled` changes. Same table as the Gondor walls (`CASTANORIAN_WALLS`); the mesh is the game's
    (`GAME_MESHES`), so nothing is copied.
+
+### Round 5
+
+Escanni holdings never showed Gondor walls: the vanilla wall chain is driven by fortification buildings (`walls_02`
+needs Curtain Walls 2 / Hill Forts 2 / ..., `walls_03` level 3, ...) and almost no holding has one at game start.
+Walls now follow the HOLDING LEVEL for every culture (user decision), `WALL_LEVELS` in the data file:
+
+1. Generated province triggers `aov_holding_walls_level_3_trigger` (`has_building` `castle_03`/`city_03`/`temple_03`) and
+   `aov_holding_walls_level_4_trigger` (`has_building_or_higher` `castle_04`/`city_04`/`temple_04`; Anbennar and the game
+   define no level 05+) in `aov_holding_model_triggers.txt`.
+2. `walls_00` gets a new first-level child of its `OR`: level 1-2 holdings and tribal holders (`NOT = { OR = { level 3,
+   level 4 } }` or a tribal holder), except an elf whose holding has elven walls. RiE keeps its `walls_00`
+   (`fort_level < 1`, not capital) and `elven_walls` (`fort_level >= 1`) mutually exclusive, so the elf guard repeats the
+   `aov_elven_walls` condition (elf culture and (county capital or fort level > 0)) instead of allowing both backgrounds.
+3. `walls_01_tribal`, `walls_01`, `walls_02`: `always = no` as the first `is_enabled` line (they never show).
+4. `walls_03`, `walls_04`: the fortification `OR` (curtain walls / hill forts / ramparts / watchtowers / temple citadel,
+   plus the nomad `fort_level` alternative) is replaced by the level trigger. `walls_03`'s fortification `NOR` (levels
+   06 and temple citadel 4) is dropped: with it a level-3 holding with a top fortification would have shown no wall
+   background at all (`walls_04` needs level 4), and the two level triggers already exclude each other. The tribal
+   exclusion and the elven and dwarven lines stay; a tribal holder with a level 3-4 holding gets `walls_00`.
+5. The now unused Escanni entries are gone: `western_walls_00_mesh` in `walls_01_tribal`/`walls_01`, `dunedain_walls_02_mesh`
+   in `walls_02` (`GAME_MESHES` removed, `dunedain_walls_02.asset/.mesh` no longer copied).
