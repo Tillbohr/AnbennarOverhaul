@@ -260,10 +260,11 @@ def footprint(obj, box):
 
 
 def keep_out(plan):
-    """Map corners of the gate's keep-out: the model footprint, the front apron and a PIECE_KEEP_OUT_MARGIN."""
+    """Map corners of the gate's keep-out: the zone in front of and at the face (the front apron up to
+    PIECE_FACE_CLEARANCE behind it), the model's width plus PIECE_KEEP_OUT_MARGIN wide. The body behind may be covered."""
     m = data.PIECE_KEEP_OUT_MARGIN
     return _rect_corners(plan.x, plan.y, plan.gate_yaw, -data.GATE_APRON * plan.size / data.GATE_APRON_SCALE,
-                         data.GATE_MODEL_DEPTH * plan.size + m, -(data.GATE_MODEL_HALF_WIDTH * plan.size + m),
+                         data.PIECE_FACE_CLEARANCE, -(data.GATE_MODEL_HALF_WIDTH * plan.size + m),
                          data.GATE_MODEL_HALF_WIDTH * plan.size + m)
 
 

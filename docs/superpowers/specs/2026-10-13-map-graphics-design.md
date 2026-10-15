@@ -403,12 +403,15 @@ and `Failed to create material with shader standard_colormap (in gfx/FX/court_sc
      rectangle; land only (Ovdal Tungr's sea front stays water); never lowered.
    - *Pieces never cover the gate.* A piece's footprint is its mesh's bounding box (the `min`/`max` float3 properties
      of the pdxmesh, times the asset's scale 1.5, times the instance's scale), rotated by its yaw. The gate's keep-out
-     is the footprint-and-apron rectangle with a 2 px margin behind and at the sides. An overlapping piece moves back
+     is only the zone in front of and at the face (gate frame): t from -`GATE_APRON` x size / 1.6 to `PIECE_FACE_CLEARANCE` (1) px
+     behind the face, |l| <= `GATE_MODEL_HALF_WIDTH` x size + `PIECE_KEEP_OUT_MARGIN` (2); pieces draping over the cone
+     and the gate's body behind the face are allowed (a first, whole-footprint keep-out left only 1-2 pieces per gate
+     and was too conservative). The piece's footprint is an oriented box (the bounding box corners rotated into the map).
+     An overlapping piece moves back
      along the cone axis in 0.5 px steps by at most `PIECE_MAX_PUSH` (12) px, is filtered again at the new position
      (t >= 0, cone weight >= 0.3, land), else is dropped.
    The build note per gate adds: range join (m before -> after, s), apron pixels raised, pushed pieces by name.
-   Measured (12 gates): the range joins its cone's peak at every gate whose range stood lower; 1-2 of the 5 pieces that
-   pass the cone filter survive the keep-out (the bounding boxes are up to 20 x 22 RiE px at scale 1).
+   Measured (12 gates): the range joins its cone's peak at every gate whose range stood lower; see the build notes for the pieces kept, pushed and dropped per gate.
 
 ### Testing
 

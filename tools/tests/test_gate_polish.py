@@ -194,41 +194,46 @@ def bounds(half=2.0):
 
 
 class PieceKeepOutTests(unittest.TestCase):
+    """The keep-out is the zone in front of and at the face; the body behind the face may be overlapped."""
+
     def one(self, piece, delta=None, half=2.0):
         pm, grid = plain()
-        c = comp(objects=[piece], delta=delta)
+        c = comp(objects=[piece], delta=delta or (lambda t, l: 5000.0))
         with no_jitter():
             return gt.transplant(grid, pm, set(), [(site(), K2, (70, 70))], c, PIN0,
                                  piece_bounds=bounds(half))[1][0]
 
-    def test_overlapping_piece_is_pushed_back_clear_and_named(self):
-        p = self.one(gt.CompositionObject("mountain_01_mesh", 2.0, 0.0, 0.0, 0.0, 1.0))
+    def test_piece_reaching_in_front_of_the_face_is_pushed_back_clear_and_named(self):
+        p = self.one(gt.CompositionObject("mountain_01_mesh", 0.6, 0.0, 0.0, 0.0, 1.0))  # centre 1.2 px behind the face
         self.assertEqual(p.pushed_names, ["mountain_01_mesh"])
-        self.assertEqual(len(p.objects), 1)
         o = p.objects[0]
         self.assertAlmostEqual(o.x, 70.0)
-        self.assertGreater(o.y, 74.0)
-        self.assertLessEqual(o.y - 74.0, data.PIECE_MAX_PUSH)
+        self.assertAlmostEqual(o.y, 70 + 5.2)  # scale 2: the footprint (+-4 px) now starts 1.2 px behind the face
+        self.assertLessEqual(o.y - 71.2, data.PIECE_MAX_PUSH)
         box = bounds()["mountain_01_mesh"]
         self.assertFalse(gt.overlaps_keep_out(p, o, box))
         back = gt.PlacedObject(o.mesh, o.x, o.y - 0.5, o.y_offset, o.yaw, o.scale)
         self.assertTrue(gt.overlaps_keep_out(p, back, box))  # pushed no further than needed
 
-    def test_clear_piece_is_not_moved(self):
-        p = self.one(gt.CompositionObject("mountain_01_mesh", 7.0, 0.0, 0.0, 0.0, 1.0))
+    def test_piece_overlapping_only_the_body_behind_the_face_is_kept(self):
+        p = self.one(gt.CompositionObject("mountain_01_mesh", 3.0, 0.0, 0.0, 0.0, 1.0))  # footprint t 2..10 px
         self.assertEqual(p.pushed_names, [])
-        self.assertAlmostEqual(p.objects[0].y, 70 + 14.0)
+        self.assertAlmostEqual(p.objects[0].y, 70 + 6.0)
+
+    def test_piece_beside_the_gate_is_not_moved(self):
+        p = self.one(gt.CompositionObject("mountain_01_mesh", 0.6, 7.0, 0.0, 0.0, 1.0))  # l = 14 px, beyond 7.5
+        self.assertEqual(p.pushed_names, [])
 
     def test_piece_that_cannot_clear_within_the_limit_is_dropped(self):
-        p = self.one(gt.CompositionObject("mountain_01_mesh", 4.0, 0.0, 0.0, 0.0, 1.0), half=12.0)
+        p = self.one(gt.CompositionObject("mountain_01_mesh", 2.0, 0.0, 0.0, 0.0, 1.0), half=20.0)
         self.assertEqual(p.objects, [])
         self.assertEqual(p.dropped_names, ["mountain_01_mesh"])
         self.assertEqual(p.dropped, 1)
 
     def test_pushed_piece_is_filtered_again(self):
         def delta(t, l):
-            return 3000.0 if 0 < t < 5 and abs(l) < 8 else 0.0
-        p = self.one(gt.CompositionObject("mountain_01_mesh", 3.0, 0.0, 0.0, 0.0, 1.0), delta=delta)
+            return 3000.0 if 0 < t < 1.2 and abs(l) < 8 else 0.0
+        p = self.one(gt.CompositionObject("mountain_01_mesh", 0.6, 0.0, 0.0, 0.0, 1.0), delta=delta)
         self.assertEqual(p.objects, [])
         self.assertEqual(p.dropped_names, ["mountain_01_mesh"])
 
@@ -240,10 +245,11 @@ class PieceKeepOutTests(unittest.TestCase):
 
     def test_rotated_footprint(self):
         plan = gt.GatePlan(("a", "b"), 70, 70, 2.0, False, 0.0, 1.0, G, size=K2, yaw=0.0, gate_yaw=0.0)
-        o = gt.PlacedObject("mountain_01_mesh", 70, 80, 0, math.pi / 4, 1.0)
-        self.assertFalse(gt.overlaps_keep_out(plan, o, (-2, -2, 2, 2)))
-        o = gt.PlacedObject("mountain_01_mesh", 70, 76, 0, math.pi / 4, 1.0)
-        self.assertTrue(gt.overlaps_keep_out(plan, o, (-2, -2, 2, 2)))
+        box = (-2, -2, 2, 2)  # turned 45 degrees: a diamond reaching 2.83 px from its centre, not 2
+        self.assertFalse(gt.overlaps_keep_out(plan, gt.PlacedObject("m", 70, 74, 0, math.pi / 4, 1.0), box))
+        self.assertTrue(gt.overlaps_keep_out(plan, gt.PlacedObject("m", 70, 71.5, 0, math.pi / 4, 1.0), box))
+        self.assertFalse(gt.overlaps_keep_out(plan, gt.PlacedObject("m", 82, 70, 0, math.pi / 4, 1.0), box))
+        self.assertTrue(gt.overlaps_keep_out(plan, gt.PlacedObject("m", 78, 70, 0, math.pi / 4, 1.0), box))
 
 
 class MeshBoundsTests(unittest.TestCase):

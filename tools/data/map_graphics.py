@@ -153,10 +153,11 @@ GATE_APRON_FADE = 3
 GATE_MODEL_DEPTH = 3.25
 GATE_MODEL_HALF_WIDTH = 3.92
 GATE_APRON_SCALE = 1.6
-# A mountain piece whose footprint overlaps the gate's keep-out (footprint plus apron, 2 px margin behind and at the
-# sides) is pushed back along the cone axis by at most PIECE_MAX_PUSH px, else dropped.
+# A mountain piece whose footprint overlaps the gate's keep-out (the front apron up to PIECE_FACE_CLEARANCE px behind
+# the face, and the model's width plus PIECE_KEEP_OUT_MARGIN px at the sides) is pushed back along the cone axis by at most PIECE_MAX_PUSH px, else dropped.
 PIECE_MAX_PUSH = 12
 PIECE_KEEP_OUT_MARGIN = 2
+PIECE_FACE_CLEARANCE = 1.0  # the keep-out ends this many px behind the gate face: the body behind it may be overlapped
 # Per-gate pins keyed like GATE_OVERRIDES: mirror (bool), turn (degrees), height (the height factor, used as is).
 TRANSPLANT_OVERRIDES = {}
 PACK_TOLERANCE = 257  # largest height error allowed when repacking the heightmap
