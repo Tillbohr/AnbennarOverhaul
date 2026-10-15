@@ -51,30 +51,33 @@ castle_01 = {
 				"highelves_01_01_mesh"
 				"highelves_01_02_mesh"
 			}
-			illustration = "gfx/interface/illustrations/holding_types/fp1_castle_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 0 } }
+			illustration = "gfx/interface/illustrations/holding_types/castle_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_high_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "sindarin_sanctuary_01_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_castle_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 0 } }
+			illustration = "gfx/interface/illustrations/holding_types/castle_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_wood_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "building_dunedain_castle_01_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_castle_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 0 } }
+			illustration = "gfx/interface/illustrations/holding_types/castle_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_castanorian_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "dwarven_holding_01_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_castle_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 0 } }
-			graphical_cultures = { aov_dwarven_building_gfx }
+			illustration = "gfx/interface/illustrations/holding_types/castle_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 0 } }
+			graphical_cultures = { aov_dwarven_building_gfx aov_dwarven_mena_building_gfx }
 			graphical_regions = { graphical_aov_dwarven_mountains }
 		}
 		### FP1 Norse ###
@@ -628,30 +631,33 @@ castle_02 = {
 				"highelves_02_01_mesh"
 				"highelves_02_02_mesh"
 			}
-			illustration = "gfx/interface/illustrations/holding_types/fp1_castle_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 1 } }
+			illustration = "gfx/interface/illustrations/holding_types/castle_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 1 } }
 			graphical_cultures = { aov_high_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "sindarin_sanctuary_02_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_castle_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 1 } }
+			illustration = "gfx/interface/illustrations/holding_types/castle_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 1 } }
 			graphical_cultures = { aov_wood_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "building_dunedain_castle_02_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_castle_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 1 } }
+			illustration = "gfx/interface/illustrations/holding_types/castle_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 1 } }
 			graphical_cultures = { aov_castanorian_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "dwarven_holding_02_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_castle_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 1 } }
-			graphical_cultures = { aov_dwarven_building_gfx }
+			illustration = "gfx/interface/illustrations/holding_types/castle_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 1 } }
+			graphical_cultures = { aov_dwarven_building_gfx aov_dwarven_mena_building_gfx }
 			graphical_regions = { graphical_aov_dwarven_mountains }
 		}
 		### FP1 Norse ###
@@ -1146,30 +1152,33 @@ castle_03 = {
 				"highelves_03_01_mesh"
 				"highelves_03_02_mesh"
 			}
-			illustration = "gfx/interface/illustrations/holding_types/fp1_castle_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 2 } }
+			illustration = "gfx/interface/illustrations/holding_types/castle_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 2 } }
 			graphical_cultures = { aov_high_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "sindarin_sanctuary_03_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_castle_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 2 } }
+			illustration = "gfx/interface/illustrations/holding_types/castle_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 2 } }
 			graphical_cultures = { aov_wood_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "building_dunedain_castle_03_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_castle_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 2 } }
+			illustration = "gfx/interface/illustrations/holding_types/castle_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 2 } }
 			graphical_cultures = { aov_castanorian_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "dwarven_holding_03_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_castle_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 2 } }
-			graphical_cultures = { aov_dwarven_building_gfx }
+			illustration = "gfx/interface/illustrations/holding_types/castle_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 2 } }
+			graphical_cultures = { aov_dwarven_building_gfx aov_dwarven_mena_building_gfx }
 			graphical_regions = { graphical_aov_dwarven_mountains }
 		}
 		### FP1 Norse ###
@@ -1661,30 +1670,33 @@ castle_04 = {
 				"highelves_04_01_mesh"
 				"highelves_04_02_mesh"
 			}
-			illustration = "gfx/interface/illustrations/holding_types/fp1_castle_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 3 } }
+			illustration = "gfx/interface/illustrations/holding_types/castle_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 3 } }
 			graphical_cultures = { aov_high_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "sindarin_sanctuary_03_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_castle_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 3 } }
+			illustration = "gfx/interface/illustrations/holding_types/castle_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 3 } }
 			graphical_cultures = { aov_wood_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "building_dunedain_castle_04_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_castle_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 3 } }
+			illustration = "gfx/interface/illustrations/holding_types/castle_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 3 } }
 			graphical_cultures = { aov_castanorian_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "dwarven_holding_04_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_castle_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 3 } }
-			graphical_cultures = { aov_dwarven_building_gfx }
+			illustration = "gfx/interface/illustrations/holding_types/castle_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 3 } }
+			graphical_cultures = { aov_dwarven_building_gfx aov_dwarven_mena_building_gfx }
 			graphical_regions = { graphical_aov_dwarven_mountains }
 		}
 		### FP1 Norse ###
@@ -2171,30 +2183,33 @@ city_01 = {
 				"highelves_01_01_mesh"
 				"highelves_01_02_mesh"
 			}
-			illustration = "gfx/interface/illustrations/holding_types/fp1_city_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/nordic_city" }
+			illustration = "gfx/interface/illustrations/holding_types/city_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/western_city" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_high_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "sindarin_sanctuary_01_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_city_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/nordic_city" }
+			illustration = "gfx/interface/illustrations/holding_types/city_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/western_city" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_wood_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "gondor_city_01_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_city_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/nordic_city" }
+			illustration = "gfx/interface/illustrations/holding_types/city_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/western_city" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_castanorian_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "dwarven_holding_01_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_city_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/nordic_city" }
-			graphical_cultures = { aov_dwarven_building_gfx }
+			illustration = "gfx/interface/illustrations/holding_types/city_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/western_city" soundparameter = { "Tier" = 0 } }
+			graphical_cultures = { aov_dwarven_building_gfx aov_dwarven_mena_building_gfx }
 			graphical_regions = { graphical_aov_dwarven_mountains }
 		}
 		### FP1 Norse ###
@@ -2793,30 +2808,33 @@ city_02 = {
 				"highelves_02_01_mesh"
 				"highelves_02_02_mesh"
 			}
-			illustration = "gfx/interface/illustrations/holding_types/fp1_city_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/nordic_city" }
+			illustration = "gfx/interface/illustrations/holding_types/city_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/western_city" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_high_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "sindarin_sanctuary_02_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_city_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/nordic_city" }
+			illustration = "gfx/interface/illustrations/holding_types/city_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/western_city" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_wood_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "gondor_city_01_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_city_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/nordic_city" }
+			illustration = "gfx/interface/illustrations/holding_types/city_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/western_city" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_castanorian_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "dwarven_holding_02_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_city_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/nordic_city" }
-			graphical_cultures = { aov_dwarven_building_gfx }
+			illustration = "gfx/interface/illustrations/holding_types/city_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/western_city" soundparameter = { "Tier" = 0 } }
+			graphical_cultures = { aov_dwarven_building_gfx aov_dwarven_mena_building_gfx }
 			graphical_regions = { graphical_aov_dwarven_mountains }
 		}
 		### FP1 Norse ###
@@ -3391,30 +3409,33 @@ city_03 = {
 				"highelves_03_01_mesh"
 				"highelves_03_02_mesh"
 			}
-			illustration = "gfx/interface/illustrations/holding_types/fp1_city_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/nordic_city" }
+			illustration = "gfx/interface/illustrations/holding_types/city_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/western_city" soundparameter = { "Tier" = 2 } }
 			graphical_cultures = { aov_high_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "sindarin_sanctuary_03_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_city_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/nordic_city" }
+			illustration = "gfx/interface/illustrations/holding_types/city_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/western_city" soundparameter = { "Tier" = 2 } }
 			graphical_cultures = { aov_wood_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "gondor_city_02_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_city_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/nordic_city" }
+			illustration = "gfx/interface/illustrations/holding_types/city_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/western_city" soundparameter = { "Tier" = 2 } }
 			graphical_cultures = { aov_castanorian_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "dwarven_holding_03_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_city_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/nordic_city" }
-			graphical_cultures = { aov_dwarven_building_gfx }
+			illustration = "gfx/interface/illustrations/holding_types/city_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/western_city" soundparameter = { "Tier" = 2 } }
+			graphical_cultures = { aov_dwarven_building_gfx aov_dwarven_mena_building_gfx }
 			graphical_regions = { graphical_aov_dwarven_mountains }
 		}
 		### FP1 Norse ###
@@ -3973,30 +3994,33 @@ city_04 = {
 				"highelves_04_01_mesh"
 				"highelves_04_02_mesh"
 			}
-			illustration = "gfx/interface/illustrations/holding_types/fp1_city_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/nordic_city" }
+			illustration = "gfx/interface/illustrations/holding_types/city_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/western_city" soundparameter = { "Tier" = 2 } }
 			graphical_cultures = { aov_high_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "sindarin_sanctuary_03_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_city_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/nordic_city" }
+			illustration = "gfx/interface/illustrations/holding_types/city_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/western_city" soundparameter = { "Tier" = 2 } }
 			graphical_cultures = { aov_wood_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "gondor_city_02_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_city_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/nordic_city" }
+			illustration = "gfx/interface/illustrations/holding_types/city_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/western_city" soundparameter = { "Tier" = 2 } }
 			graphical_cultures = { aov_castanorian_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "dwarven_holding_04_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/fp1_city_norse.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/nordic_city" }
-			graphical_cultures = { aov_dwarven_building_gfx }
+			illustration = "gfx/interface/illustrations/holding_types/city_western.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/western_city" soundparameter = { "Tier" = 2 } }
+			graphical_cultures = { aov_dwarven_building_gfx aov_dwarven_mena_building_gfx }
 			graphical_regions = { graphical_aov_dwarven_mountains }
 		}
 		### FP1 Norse ###
@@ -4553,16 +4577,18 @@ temple_01 = {
 				"highelves_01_01_mesh"
 				"highelves_01_02_mesh"
 			}
-			illustration = "gfx/interface/illustrations/holding_types/temple_generic_grass.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/generic_temple" soundparameter = { "Tier" = 0 } }
+			illustration = "gfx/interface/illustrations/holding_types/temple_orthodox.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/orthodox_temple" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_high_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "sindarin_sanctuary_01_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/temple_generic_grass.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/generic_temple" soundparameter = { "Tier" = 0 } }
+			illustration = "gfx/interface/illustrations/holding_types/temple_orthodox.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/orthodox_temple" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_wood_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
@@ -4570,9 +4596,10 @@ temple_01 = {
 				"building_dunedain_temple_01_a_mesh"
 				"building_dunedain_temple_01_b_mesh"
 			}
-			illustration = "gfx/interface/illustrations/holding_types/temple_generic_grass.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/generic_temple" soundparameter = { "Tier" = 0 } }
+			illustration = "gfx/interface/illustrations/holding_types/temple_orthodox.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/orthodox_temple" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_castanorian_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		#Generic Base:
 		#Note Generic Base is only used for cultures that lack culturally unique temples for at least one faith - if they do then they must have an entry for graphical_faiths for all other religions.
@@ -5608,16 +5635,18 @@ temple_02 = {
 				"highelves_02_01_mesh"
 				"highelves_02_02_mesh"
 			}
-			illustration = "gfx/interface/illustrations/holding_types/temple_generic_grass.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/generic_temple" soundparameter = { "Tier" = 0 } }
+			illustration = "gfx/interface/illustrations/holding_types/temple_orthodox.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/orthodox_temple" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_high_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "sindarin_sanctuary_02_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/temple_generic_grass.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/generic_temple" soundparameter = { "Tier" = 0 } }
+			illustration = "gfx/interface/illustrations/holding_types/temple_orthodox.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/orthodox_temple" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_wood_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
@@ -5625,9 +5654,10 @@ temple_02 = {
 				"building_dunedain_temple_01_a_mesh"
 				"building_dunedain_temple_01_b_mesh"
 			}
-			illustration = "gfx/interface/illustrations/holding_types/temple_generic_grass.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/generic_temple" soundparameter = { "Tier" = 0 } }
+			illustration = "gfx/interface/illustrations/holding_types/temple_orthodox.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/orthodox_temple" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_castanorian_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		### GENERIC ###
 		#Generic Base:
@@ -6491,16 +6521,18 @@ temple_03 = {
 				"highelves_03_01_mesh"
 				"highelves_03_02_mesh"
 			}
-			illustration = "gfx/interface/illustrations/holding_types/temple_generic_grass.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/generic_temple" soundparameter = { "Tier" = 0 } }
+			illustration = "gfx/interface/illustrations/holding_types/temple_orthodox.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/orthodox_temple" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_high_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "sindarin_sanctuary_03_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/temple_generic_grass.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/generic_temple" soundparameter = { "Tier" = 0 } }
+			illustration = "gfx/interface/illustrations/holding_types/temple_orthodox.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/orthodox_temple" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_wood_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
@@ -6508,9 +6540,10 @@ temple_03 = {
 				"building_dunedain_temple_02_a_mesh"
 				"building_dunedain_temple_02_b_mesh"
 			}
-			illustration = "gfx/interface/illustrations/holding_types/temple_generic_grass.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/generic_temple" soundparameter = { "Tier" = 0 } }
+			illustration = "gfx/interface/illustrations/holding_types/temple_orthodox.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/orthodox_temple" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_castanorian_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		### GENERIC ###
 		#Generic Base:
@@ -7362,16 +7395,18 @@ temple_04 = {
 				"highelves_04_01_mesh"
 				"highelves_04_02_mesh"
 			}
-			illustration = "gfx/interface/illustrations/holding_types/temple_generic_grass.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/generic_temple" soundparameter = { "Tier" = 0 } }
+			illustration = "gfx/interface/illustrations/holding_types/temple_orthodox.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/orthodox_temple" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_high_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
 			name = "sindarin_sanctuary_03_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/temple_generic_grass.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/generic_temple" soundparameter = { "Tier" = 0 } }
+			illustration = "gfx/interface/illustrations/holding_types/temple_orthodox.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/orthodox_temple" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_wood_elf_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
 			type = pdxmesh
@@ -7379,9 +7414,10 @@ temple_04 = {
 				"building_dunedain_temple_02_a_mesh"
 				"building_dunedain_temple_02_b_mesh"
 			}
-			illustration = "gfx/interface/illustrations/holding_types/temple_generic_grass.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/generic_temple" soundparameter = { "Tier" = 0 } }
+			illustration = "gfx/interface/illustrations/holding_types/temple_orthodox.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Temples/orthodox_temple" soundparameter = { "Tier" = 0 } }
 			graphical_cultures = { aov_castanorian_building_gfx }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		### GENERIC ###
 		#Generic Base:

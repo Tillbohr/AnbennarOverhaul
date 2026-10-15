@@ -86,7 +86,10 @@ class HoldBuildingTests(unittest.TestCase):
         self.assertIn(assets["castle_03"][1], self.blocks["dwarven_hold_05"])
 
     def test_dwarf_model_asset_comes_first(self):
+        import build_holding_models as bhm
         _, assets = bh.castle_assets(bh.ANBENNAR_CK3)
+        regions = bhm.graphical_regions(bh.ANBENNAR_CK3)
+        _targets, keys = bhm.assign_gfx(bhm.culture_texts(bhm.Roots(rie=None, anbennar=bh.ANBENNAR_CK3, game=None)))
         for n in range(1, 11):
             block = self.blocks[f"dwarven_hold_{n:02d}"]
             mesh = HOLD_DWARF_MESHES[n]
@@ -94,14 +97,18 @@ class HoldBuildingTests(unittest.TestCase):
             first = first[:first.index("\n\t\t}")]
             self.assertIn(f'name = "{mesh}"', first, n)
             self.assertIn("type = pdxmesh", first, n)
-            self.assertIn("graphical_cultures = { aov_dwarven_building_gfx }", first, n)
-            self.assertNotIn("graphical_regions", first, n)
+            self.assertIn("graphical_cultures = { %s }" % " ".join(keys["dwarven"]), first, n)
+            self.assertIn("graphical_regions = { %s }" % " ".join(regions), first, n)
             self.assertIn("# Anbennar Overhaul: RiE dwarf hold model", first, n)
             band = assets[holds.ASSET_BAND[n]]
-            illustration = next(l for l in band if l.strip().startswith("illustration ="))
-            soundeffect = next(l for l in band if l.strip().startswith("soundeffect ="))
+            # illustration and sound: the band's first asset without a DLC flag that serves western_building_gfx
+            plain = [a for a in bhm.original_assets(band)
+                     if "requires_dlc_flag" not in "".join(a) and "western_building_gfx" in "".join(a)][0]
+            illustration = next(l for l in plain if l.strip().startswith("illustration ="))
+            soundeffect = next(l for l in plain if l.strip().startswith("soundeffect ="))
             self.assertIn(illustration, first, n)
             self.assertIn(soundeffect, first, n)
+            self.assertNotRegex(first, r"fp\d_|norse", n)
             # the castle asset still follows the dwarf one
             self.assertIn(band[1], block[block.index(first) + len(first):], n)
 

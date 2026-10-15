@@ -8,6 +8,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
@@ -59,7 +60,68 @@ class CultureTests(unittest.TestCase):
         self.assertEqual(out.count("\r\n"), text.count("\r\n"))
 
 
+GFX_FIXTURE = {
+    "a.txt": (
+        "x1 = {\n\theritage = heritage_x\n\tbuilding_gfx = { western_building_gfx }\n}\n"
+        "x2 = {\n\theritage = heritage_x\n\tbuilding_gfx = { western_building_gfx }\n}\n"
+        "x3 = {\n\theritage = heritage_x\n\tbuilding_gfx = { mena_building_gfx }\n}\n"
+        "y1 = {\n\theritage = heritage_y\n\tbuilding_gfx = { mena_building_gfx }\n}\n"
+    ),
+}
+GFX_GROUPS = {"x": {"label": "X", "gfx": "aov_x_building_gfx", "heritage": "heritage_x"},
+              "y": {"label": "Y", "gfx": "aov_y_building_gfx", "heritage": "heritage_y"}}
+
+
+class GfxKeyTests(unittest.TestCase):
+    def test_one_key_per_sequence(self):
+        with mock.patch.object(data, "GROUPS", GFX_GROUPS):
+            targets, keys = bhm.assign_gfx(GFX_FIXTURE)
+        self.assertEqual(targets, {"x1": "aov_x_building_gfx", "x2": "aov_x_building_gfx",
+                                   "x3": "aov_x_mena_building_gfx", "y1": "aov_y_building_gfx"})
+        self.assertEqual(keys, {"x": ["aov_x_building_gfx", "aov_x_mena_building_gfx"], "y": ["aov_y_building_gfx"]})
+
+    def test_fallback_is_the_second_key_of_the_sequence(self):
+        with mock.patch.object(data, "GROUPS", GFX_GROUPS):
+            self.assertEqual(bhm.gfx_fallbacks(GFX_FIXTURE),
+                             {"aov_x_building_gfx": "western_building_gfx", "aov_x_mena_building_gfx": "mena_building_gfx",
+                              "aov_y_building_gfx": "mena_building_gfx"})
+
+    def test_variant_without_fallback_raises(self):
+        texts = {"a.txt": "x1 = {\n\theritage = heritage_x\n\tbuilding_gfx = { western_building_gfx }\n}\n"
+                          "x2 = {\n\theritage = heritage_x\n\tbuilding_gfx = { }\n}\n"}
+        with mock.patch.object(data, "GROUPS", {"x": GFX_GROUPS["x"]}):
+            with self.assertRaises(bhm.GeneratorError):
+                bhm.assign_gfx(texts)
+
+    def test_localization_labels(self):
+        group = dict(GFX_GROUPS["x"], variant_labels={"mena_building_gfx": "X (Southern)"})
+        with mock.patch.object(data, "GROUPS", {"x": group}):
+            out = bhm.localization_lines({"x": ["aov_x_building_gfx", "aov_x_mena_building_gfx"]})
+        self.assertEqual(out, [' aov_x_building_gfx:0 "X"', ' aov_x_mena_building_gfx:0 "X (Southern)"'])
+
+    def test_group_labels_have_no_tolkien_names(self):
+        labels = [g["label"] for g in data.GROUPS.values()] + \
+            [v for g in data.GROUPS.values() for v in g.get("variant_labels", {}).values()]
+        self.assertEqual(sorted(labels), sorted(["High Elven", "Wood Elven", "Dwarven", "Dwarven (Southern)", "Castanorian"]))
+
+
 class RegionTests(unittest.TestCase):
+    def test_graphical_regions_from_text(self):
+        text = ("﻿# c\ngraphical_a = {\n\tgraphical = yes\n\tprovinces = { 1 }\n}\n"
+                "other = {\n\tprovinces = { 2 }\n}\n"
+                "# graphical_c = {\n#\tgraphical = yes\n# }\n"
+                "graphical_b = {\n\tgraphical = yes\n}\n"
+                "nested = {\n\tsub = {\n\t\tgraphical = yes\n\t}\n}\n")
+        self.assertEqual(bhm.graphical_regions_from_text(text), ["graphical_a", "graphical_b"])
+
+    def test_no_graphical_regions_raises(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp) / "map_data/geographical_regions"
+            folder.mkdir(parents=True)
+            (folder / "r.txt").write_text("plain = {\n\tprovinces = { 1 }\n}\n")
+            with self.assertRaises(bhm.GeneratorError):
+                bhm.graphical_regions(Path(tmp))
+
     def test_mountain_provinces(self):
         text = "1=mountains\n2=plains\n3=cavern\n#4=mountains\n"
         self.assertEqual(bhm.mountain_provinces(text, data.DWARF_MOUNTAIN_TERRAINS), [1, 3])
@@ -100,6 +162,36 @@ class RealDataTests(unittest.TestCase):
         out = bhm.build_region(REAL)[bhm.REGION_FILE].decode("utf-8")
         self.assertIn("graphical = yes", out)
 
+    def test_regions_cover_anbennars_graphical_regions(self):
+        regions = bhm.graphical_regions(REAL.anbennar)
+        self.assertEqual(len(regions), 7)
+        self.assertEqual(sorted(regions), sorted(set(regions)))
+        self.assertIn("graphical_western", regions)
+        self.assertNotIn(data.REGION, regions)
+
+    def test_dwarf_keys(self):
+        targets, keys = bhm.assign_gfx(bhm.culture_texts(REAL))
+        self.assertEqual(keys["dwarven"], ["aov_dwarven_building_gfx", "aov_dwarven_mena_building_gfx"])
+        for group in ("high_elf", "wood_elf", "castanorian"):
+            self.assertEqual(keys[group], [data.GROUPS[group]["gfx"]])
+        mena = sorted(c for c, k in targets.items() if k == "aov_dwarven_mena_building_gfx")
+        self.assertEqual(mena, ["copper_dwarvish", "gold_dwarvish", "marble_dwarvish"])
+
+    def test_every_first_gfx_key_has_one_sequence(self):
+        """With the overrides applied, a building_gfx list starting with a key always continues the same way."""
+        texts = dict(bhm.culture_texts(REAL))
+        for rel, content in bhm.build_cultures(REAL).items():
+            texts[Path(rel).name] = content.decode("utf-8")
+        sequences = {}
+        for text in texts.values():
+            for _key, _s, _e, body in bhm.culture_blocks(text):
+                seq = bhm.building_gfx_sequence(body)
+                if not seq:
+                    continue
+                sequences.setdefault(seq[0], set()).add(seq[1:])
+        bad = {k: v for k, v in sequences.items() if len(v) > 1}
+        self.assertEqual(bad, {})
+
 
 BUILDING_FIXTURE = (
     "@illu = \"gfx/x.dds\"\n"
@@ -127,7 +219,60 @@ BUILDING_FIXTURE = (
 )
 
 
+DLC_FIXTURE = (
+    "castle_01 = {\n"
+    "\tassets = {\n"
+    "\t\tasset = {\n"
+    "\t\t\ttype = pdxmesh\n"
+    "\t\t\tname = \"norse_mesh\"\n"
+    "\t\t\trequires_dlc_flag = the_northern_lords\n"
+    "\t\t\tillustration = \"gfx/norse.dds\"\n"
+    "\t\t\tgraphical_cultures = { western_building_gfx }\n"
+    "\t\t}\n"
+    "\t\tasset = {\n"
+    "\t\t\ttype = pdxmesh\n"
+    "\t\t\tname = \"mena_mesh\"\n"
+    "\t\t\tillustration = \"gfx/mena.dds\"\n"
+    "\t\t\tgraphical_cultures = { mena_building_gfx }\n"
+    "\t\t}\n"
+    "\t\tasset = {\n"
+    "\t\t\ttype = pdxmesh\n"
+    "\t\t\tname = \"west_mesh\"\n"
+    "\t\t\tillustration = \"gfx/west.dds\"\n"
+    "\t\t\tsoundeffect = \"event:/w\"\n"
+    "\t\t\tgraphical_cultures = {\n\t\t\t\tother_gfx\n\t\t\t\twestern_building_gfx\n\t\t\t}\n"
+    "\t\t}\n"
+    "\t}\n"
+    "}\n"
+)
+
+
 class BuildingTests(unittest.TestCase):
+    def test_illustration_comes_from_the_fallback_culture_asset_without_dlc(self):
+        out = bhm.insert_assets(DLC_FIXTURE, [bhm.asset_block("n_mesh", "k")], {}, fallbacks=["western_building_gfx"])
+        added = out[:out.index("norse_mesh")]
+        self.assertIn("illustration = \"gfx/west.dds\"", added)
+        self.assertIn("soundeffect = \"event:/w\"", added)
+        self.assertNotIn("norse", added)
+        out = bhm.insert_assets(DLC_FIXTURE, [bhm.asset_block("n_mesh", "k")], {}, fallbacks=["mena_building_gfx"])
+        self.assertIn("illustration = \"gfx/mena.dds\"", out[:out.index("norse_mesh")])
+
+    def test_fallback_without_a_match_uses_first_asset_without_dlc(self):
+        out = bhm.insert_assets(DLC_FIXTURE, [bhm.asset_block("n_mesh", "k")], {}, fallbacks=["nowhere_gfx"])
+        self.assertIn("illustration = \"gfx/mena.dds\"", out[:out.index("norse_mesh")])
+
+    def test_duplicate_building_definition_raises(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp) / "common/buildings"
+            folder.mkdir(parents=True)
+            (folder / "a.txt").write_text("castle_01 = {\n}\n")
+            (folder / "b.txt").write_text("﻿castle_01 = {\n}\n", encoding="utf-8")
+            roots = bhm.Roots(rie=Path(tmp), anbennar=Path(tmp), game=Path(tmp))
+            with self.assertRaises(bhm.GeneratorError):
+                bhm.source_file(roots, "castle_01")
+            (folder / "b.txt").write_text("# castle_01 = {\n")
+            self.assertEqual(bhm.source_file(roots, "castle_01")[0].name, "a.txt")
+
     def test_building_block_bounds(self):
         start, end = bhm.building_block(BUILDING_FIXTURE, "castle_01")
         block = BUILDING_FIXTURE[start:end]
@@ -141,16 +286,17 @@ class BuildingTests(unittest.TestCase):
         one = bhm.asset_block("a_mesh", "gfx_key")
         self.assertEqual(one, "\t\tasset = {\n\t\t\ttype = pdxmesh\n\t\t\tname = \"a_mesh\"\n"
                               "\t\t\tgraphical_cultures = { gfx_key }\n\t\t}\n")
-        two = bhm.asset_block(["a_mesh", "b_mesh"], "gfx_key", region="graphical_r")
+        two = bhm.asset_block(["a_mesh", "b_mesh"], ["gfx_key", "gfx_other"], regions=["graphical_r", "graphical_s"])
         self.assertIn("\t\t\tnames = {\n\t\t\t\t\"a_mesh\"\n\t\t\t\t\"b_mesh\"\n\t\t\t}\n", two)
-        self.assertIn("\t\t\tgraphical_regions = { graphical_r }\n", two)
+        self.assertIn("\t\t\tgraphical_cultures = { gfx_key gfx_other }\n", two)
+        self.assertIn("\t\t\tgraphical_regions = { graphical_r graphical_s }\n", two)
         self.assertLess(two.index("graphical_cultures"), two.index("graphical_regions"))
 
     def test_insert_assets_puts_new_assets_first(self):
         start, end = bhm.building_block(BUILDING_FIXTURE, "castle_01")
         block = BUILDING_FIXTURE[start:end]
         assets = [bhm.asset_block("new_a_mesh", "k_a"),
-                  bhm.asset_block("new_b_mesh", "k_b", region="graphical_r")]
+                  bhm.asset_block("new_b_mesh", "k_b", regions=["graphical_r"])]
         out = bhm.insert_assets(block, assets, {"illu": "\"gfx/x.dds\""})
         marker = "\t\t# Anbennar Overhaul: RiE holding model\n"
         self.assertEqual(out.count(marker), 1)
@@ -262,20 +408,38 @@ class RealBuildingTests(unittest.TestCase):
             self.assertEqual(block.count(marker), 1, key)
             i = block.index(marker)
             self.assertEqual(block[:i], source[:i], key)
+            self.assertNotIn("asset = {", block[:i], key)  # the new assets come before every original one
             self.assertTrue(block.endswith(source[i:]), key)
             self.assertEqual(block.count("asset = {"), source.count("asset = {") + len(groups), key)
 
-    def test_dwarf_assets_carry_region_and_others_do_not(self):
+    @staticmethod
+    def _asset(block, mesh):
+        at = block.index(f'"{mesh}"')
+        eol = "\r\n" if "\r\n" in block else "\n"
+        return block[block.rindex("asset = {", 0, at):block.index(eol + "\t\t}" + eol, at)]
+
+    def test_assets_carry_regions_and_every_key_of_their_group(self):
+        _targets, group_keys = bhm.assign_gfx(bhm.culture_texts(REAL))
+        regions = bhm.graphical_regions(REAL.anbennar)
         for key, groups in data.MODELS.items():
             start, end = bhm.building_block(self.buildings, key)
             block = self.buildings[start:end]
             for group, meshes in groups.items():
-                needle = f'"{meshes[0]}"'
-                at = block.index(needle)
-                eol = "\r\n" if "\r\n" in block else "\n"
-                asset = block[block.rindex("asset = {", 0, at):block.index(eol + "\t\t}" + eol, at)]
-                self.assertIn("{ %s }" % data.GROUPS[group]["gfx"], asset)
-                self.assertEqual("graphical_regions = { %s }" % data.REGION in asset, group == "dwarven")
+                asset = self._asset(block, meshes[0])
+                self.assertIn("graphical_cultures = { %s }" % " ".join(group_keys[group]), asset)
+                expected = [data.REGION] if group == "dwarven" else regions
+                self.assertIn("graphical_regions = { %s }" % " ".join(expected), asset, (key, group))
+
+    def test_new_assets_never_copy_a_dlc_illustration(self):
+        for key, groups in data.MODELS.items():
+            start, end = bhm.building_block(self.buildings, key)
+            block = self.buildings[start:end]
+            for group, meshes in groups.items():
+                asset = self._asset(block, meshes[0])
+                self.assertNotRegex(asset, r"fp\d_|norse", (key, group))
+                self.assertIn("illustration = ", asset)
+                if key.startswith("castle"):
+                    self.assertRegex(asset, r'illustration = "gfx/interface/illustrations/holding_types/castle_(western|mena)\.dds"')
 
     def test_every_mesh_found_in_rie(self):
         models = REAL.rie / "gfx/models"
@@ -350,6 +514,14 @@ class FreshnessTests(unittest.TestCase):
             if not path.is_file() or path.read_bytes() != content:
                 stale.append(rel)
         self.assertEqual(stale, [], "stale: rerun python -I tools/build_holding_models.py")
+
+    def test_no_orphan_model_files(self):
+        """Files under the RiE holdings folder that build_all no longer produces are leftovers to delete."""
+        produced = set(bhm.build_all(REAL))
+        folder = bhm.SUBMOD / bhm.ASSET_DIR
+        orphans = sorted(p.relative_to(bhm.SUBMOD).as_posix() for p in folder.rglob("*")
+                         if p.is_file() and p.relative_to(bhm.SUBMOD).as_posix() not in produced)
+        self.assertEqual(orphans, [], "leftover files: delete them")
 
 
 if __name__ == "__main__":

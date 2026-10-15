@@ -30,10 +30,15 @@ Without RiE installed it stops naming the missing path and writes nothing.
 
 ### 1. Culture keys (generated full-file overrides)
 
-CK3 picks a holding model by the holder culture's `building_gfx` list (first match wins) and the province's graphical
-region. Anbennar gives all four groups vanilla gfx (mostly `western_building_gfx`), so each target culture gets a new
-key **prepended** to its `building_gfx` list: `aov_high_elf_building_gfx`, `aov_wood_elf_building_gfx`,
-`aov_dwarven_building_gfx`, `aov_castanorian_building_gfx`. The rest of the list stays as fallback.
+CK3 picks a holding asset by the province's graphical region first (`_buildings.info`: the most important criterion)
+and then by the holder culture's `building_gfx` keys; the region outranks the culture. Anbennar gives all four groups
+vanilla gfx (mostly `western_building_gfx`), so each target culture gets a new key **prepended** to its `building_gfx`
+list: `aov_high_elf_building_gfx`, `aov_wood_elf_building_gfx`, `aov_dwarven_building_gfx`,
+`aov_castanorian_building_gfx`. The rest of the list stays as fallback. `_cultures.info` requires every list that starts
+with one key to continue identically, so a group gets one key per distinct existing list: its own key for the most
+common list, `aov_<group>_<second key's stem>_building_gfx` for each other (dwarves: copper, gold and marble dwarvish
+end in `mena_building_gfx` and get `aov_dwarven_mena_building_gfx`). A test checks that, with the overrides applied,
+every first key has exactly one continuation across Anbennar's culture files.
 
 Culture definitions are overridden as whole files: the generator copies each Anbennar culture file that contains a
 target culture (`common/culture/cultures/anb_elven.txt`, `anb_dwarf.txt`, `anb_escanni.txt` today; derived from the
@@ -48,9 +53,13 @@ parents' gfx, as usual.
 definition is copied from Anbennar when Anbennar defines it (`00_castle_buildings.txt`, `00_temple_buildings.txt`),
 otherwise from the game (`city_*` from `game/common/buildings/00_city_buildings.txt`), byte-exact except new `asset`
 blocks inserted **before** the first existing `asset` block, marked `# Anbennar Overhaul: RiE holding model`. Each new
-asset: `type = pdxmesh`, `name` or `names` (variants), the original first asset's `illustration` and `soundeffect`,
-and `graphical_cultures = { aov_<group>_building_gfx }` (dwarves also `graphical_regions = {
-graphical_aov_dwarven_mountains }`).
+asset: `type = pdxmesh`, `name` or `names` (variants), `illustration` and `soundeffect` copied from the first original
+asset without `requires_dlc_flag` whose `graphical_cultures` include the group key's fallback (the second key of its
+list, `western_building_gfx`; if none, the first asset without a DLC flag), `graphical_cultures = { <every key of the
+group> }` and `graphical_regions = { <every region with graphical = yes in Anbennar's map_data/geographical_regions> }`
+(read at build time, as vanilla's DLC culture assets list all regions; the region outranks the culture, so a bare
+culture asset would lose to the region-matched western ones). Dwarf castle and city assets keep only
+`graphical_regions = { graphical_aov_dwarven_mountains }`.
 
 | Building | High elves | Wood elves | Castanorians | Dwarves (mountains only) |
 |---|---|---|---|---|
@@ -64,8 +73,9 @@ graphical_aov_dwarven_mountains }`).
 ### 3. Dwarven holds
 
 `tools/build_holds.py` (generated `common/buildings/aov_dwarven_holds.txt`) adds, before each hold level's existing
-castle asset, an asset `dwarven_holding_0N_mesh` with `graphical_cultures = { aov_dwarven_building_gfx }` (levels 1-2 →
-01, 3-4 → 02, 5-6 → 03, 7-8 → 04, 9-10 → 05, as RiE's `dwarven_depths`), no region requirement (holds are in mountains).
+castle asset, an asset `dwarven_holding_0N_mesh` with `graphical_cultures` = both dwarven keys and `graphical_regions`
+= every graphical region (levels 1-2 → 01, 3-4 → 02, 5-6 → 03, 7-8 → 04, 9-10 → 05, as RiE's `dwarven_depths`);
+illustration and sound as in section 2 (the band's first castle asset without a DLC flag that serves `western_building_gfx`).
 The castle asset stays as the fallback for non-dwarf holders.
 
 ### 4. Dwarves in mountains vs on land

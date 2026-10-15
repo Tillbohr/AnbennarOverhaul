@@ -10,6 +10,7 @@ an Anbennar or RiE update:
 import argparse
 import re
 import sys
+from collections import Counter
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
@@ -115,6 +116,83 @@ def resolve_cultures(files: dict) -> dict:
     return result
 
 
+GFX_LIST = re.compile(r"\bbuilding_gfx\s*=\s*\{([^}]*)\}")
+GFX_SUFFIX = "_building_gfx"
+
+
+def building_gfx_sequence(body: str) -> tuple:
+    """The culture block's building_gfx list (comments ignored); empty when it has none."""
+    code = "\n".join(strip_comment(line) for line in body.splitlines())
+    match = GFX_LIST.search(code)
+    return tuple(match.group(1).split()) if match else ()
+
+
+def assign_gfx(files: dict) -> tuple:
+    """Which gfx key each target culture gets: (culture -> key, group -> keys, main key first).
+
+    CK3 needs every building_gfx list that starts with one key to continue the same way, so a group gets one key
+    per distinct existing list: its own key for the most common list, aov_<group>_<second key's stem>_building_gfx
+    for each other."""
+    resolved = resolve_cultures(files)
+    sequences = {}
+    for text in files.values():
+        for key, _start, _end, body in culture_blocks(text):
+            sequences[key] = building_gfx_sequence(body)
+    targets, group_keys = {}, {}
+    for name, cultures in resolved.items():
+        main = data.GROUPS[name]["gfx"]
+        counts = Counter(sequences[culture] for culture in cultures)
+        main_sequence = counts.most_common(1)[0][0]
+        keys = {main_sequence: main}
+        for culture in cultures:
+            sequence = sequences[culture]
+            if sequence not in keys:
+                if not sequence or not sequence[0].endswith(GFX_SUFFIX):
+                    raise GeneratorError(f"culture {culture} has no usable building_gfx list to derive a key from")
+                keys[sequence] = f"aov_{name}_{sequence[0][:-len(GFX_SUFFIX)]}{GFX_SUFFIX}"
+            targets[culture] = keys[sequence]
+        if len(set(keys.values())) != len(keys):
+            raise GeneratorError(f"group {name}: two building_gfx lists would get the same key")
+        group_keys[name] = list(keys.values())
+    return targets, group_keys
+
+
+def gfx_fallbacks(files: dict) -> dict:
+    """Each generated key -> the gfx key CK3 falls back to behind it (the second key of its list), None if it has none."""
+    targets, _keys = assign_gfx(files)
+    sequences = {}
+    for text in files.values():
+        for key, _start, _end, body in culture_blocks(text):
+            sequences[key] = building_gfx_sequence(body)
+    return {gfx: (sequences[culture][0] if sequences[culture] else None) for culture, gfx in targets.items()}
+
+
+def graphical_regions_from_text(text: str) -> list:
+    """Names of the top-level regions with 'graphical = yes' directly inside them, in file order."""
+    found = []
+    for key, _start, _end, body in culture_blocks(text):
+        depth = 0
+        for line in body.splitlines():
+            code = strip_comment(line)
+            if depth == 1 and re.match(r"^\s*graphical\s*=\s*yes\s*$", code):
+                found.append(key)
+                break
+            depth += code.count("{") - code.count("}")
+    return found
+
+
+def graphical_regions(anbennar: Path) -> list:
+    """Every graphical region Anbennar defines (map_data/geographical_regions/*.txt), files sorted by name."""
+    regions = []
+    for path in sorted((Path(anbennar) / "map_data/geographical_regions").glob("*.txt")):
+        for name in graphical_regions_from_text(read_text(path)):
+            if name not in regions:
+                regions.append(name)
+    if not regions:
+        raise GeneratorError(f"no graphical regions (graphical = yes) found under {anbennar}/map_data/geographical_regions")
+    return regions
+
+
 def override_culture_file(text: str, targets: dict) -> str:
     """Prepend each target culture's gfx key to its building_gfx line, marked; all else unchanged."""
     pieces, last, remaining = [], 0, dict(targets)
@@ -178,11 +256,7 @@ def culture_texts(roots: Roots) -> dict:
 def build_cultures(roots: Roots) -> dict:
     roots.check()
     texts = culture_texts(roots)
-    resolved = resolve_cultures(texts)
-    targets = {}
-    for name, keys in resolved.items():
-        for key in keys:
-            targets[key] = data.GROUPS[name]["gfx"]
+    targets, _group_keys = assign_gfx(texts)
     out = {}
     for filename, text in texts.items():
         wanted = {key: targets[key] for key, *_ in culture_blocks(text) if key in targets}
@@ -231,10 +305,15 @@ def source_file(roots: Roots, key: str) -> tuple:
     pattern = re.compile(r"^﻿?%s\s*=\s*\{" % re.escape(key), re.MULTILINE)
     folders = (roots.anbennar / "common/buildings", roots.game / "game/common/buildings")
     for folder in folders:
+        hits = []
         for path in sorted(folder.glob("*.txt")):
             text = read_text(path).removeprefix(BOM)
             if pattern.search(text):
-                return path, text
+                hits.append((path, text))
+        if len(hits) > 1:
+            raise GeneratorError(f"building {key} is defined in several files: {', '.join(str(p) for p, _t in hits)}")
+        if hits:
+            return hits[0]
     raise GeneratorError(f"building {key} is defined by neither Anbennar nor the game")
 
 
@@ -254,50 +333,91 @@ def source_variables(text: str) -> dict:
     return found
 
 
-def asset_block(names, gfx: str, region=None) -> str:
-    """A new pdxmesh asset (two-tab indented, LF): one name or variant names, the culture gfx key and,
-    for dwarves, the graphical region."""
+def _words(value) -> str:
+    return value if isinstance(value, str) else " ".join(value)
+
+
+def asset_block(names, gfx, regions=None) -> str:
+    """A new pdxmesh asset (two-tab indented, LF): one name or variant names, the culture gfx key(s) and the
+    graphical region(s) it serves (a str or a list of each)."""
     lines = ["\t\tasset = {", "\t\t\ttype = pdxmesh"]
     if isinstance(names, str) or len(names) == 1:
         lines.append(f'\t\t\tname = "{names if isinstance(names, str) else names[0]}"')
     else:
         lines += ["\t\t\tnames = {"] + [f'\t\t\t\t"{name}"' for name in names] + ["\t\t\t}"]
-    lines.append("\t\t\tgraphical_cultures = { %s }" % gfx)
-    if region:
-        lines.append("\t\t\tgraphical_regions = { %s }" % region)
+    lines.append("\t\t\tgraphical_cultures = { %s }" % _words(gfx))
+    if regions:
+        lines.append("\t\t\tgraphical_regions = { %s }" % _words(regions))
     lines.append("\t\t}")
     return "\n".join(lines) + "\n"
 
 
-def insert_assets(block: str, assets: list, variables=None) -> str:
+ASSET_START = re.compile(r"^\s*asset\s*=\s*\{")
+
+
+def original_assets(lines: list) -> list:
+    """The asset = { } blocks (each a list of lines) found in a building's lines."""
+    found, index = [], 0
+    while index < len(lines):
+        if ASSET_START.match(strip_comment(lines[index])):
+            end = block_end(lines, index)
+            found.append(lines[index:end])
+            index = end
+        else:
+            index += 1
+    return found
+
+
+def template_asset(assets: list, fallback=None) -> list:
+    """The original asset whose illustration and sound the new ones copy: the first without requires_dlc_flag
+    whose graphical_cultures include the fallback gfx key; failing that, the first without requires_dlc_flag."""
+    plain = []
+    for asset in assets:
+        code = "\n".join(strip_comment(line) for line in asset)
+        if not re.search(r"\brequires_dlc_flag\b", code):
+            plain.append((asset, code))
+    if fallback:
+        for asset, code in plain:
+            match = re.search(r"\bgraphical_cultures\s*=\s*\{([^}]*)\}", code)
+            if match and fallback in match.group(1).split():
+                return asset
+    if not plain:
+        raise GeneratorError("building has no asset without requires_dlc_flag to take an illustration from")
+    return plain[0][0]
+
+
+def insert_assets(block: str, assets: list, variables=None, fallbacks=None) -> str:
     """block with the new assets inserted before its first asset (and the comment lines directly above it),
-    after a marker line. Each new asset takes the first original asset's illustration and soundeffect lines
-    (file-local @variables resolved through variables)."""
+    after a marker line. Each new asset takes the illustration and soundeffect lines of its template asset
+    (template_asset: the original serving that asset's fallback gfx key in fallbacks, without a DLC flag;
+    file-local @variables resolved through variables)."""
     variables = variables or {}
+    fallbacks = list(fallbacks) if fallbacks is not None else [None] * len(assets)
+    if len(fallbacks) != len(assets):
+        raise GeneratorError("fallbacks must match the assets one to one")
     eol = "\r\n" if "\r\n" in block else "\n"
     lines = block.splitlines(keepends=True)
-    first = next((i for i, line in enumerate(lines) if re.match(r"^\s*asset\s*=\s*\{", strip_comment(line))), None)
+    first = next((i for i, line in enumerate(lines) if ASSET_START.match(strip_comment(line))), None)
     if first is None:
         raise GeneratorError("building has no asset block to insert before")
     if not lines[first].startswith("\t\tasset"):
         raise GeneratorError("first asset is not indented by two tabs")
-    extras = []
-    for line in lines[first + 1:block_end(lines, first)]:
-        code = strip_comment(line).rstrip()
-        if re.match(r"^\s*(illustration|soundeffect)\s*=", code):
-            extras.append(code.strip())
-    resolved = []
-    for line in extras:
-        for name in re.findall(r"@(\w+)", line):
-            if name not in variables:
-                raise GeneratorError(f"variable @{name} used by the first asset is not defined in the source file")
-            line = line.replace(f"@{name}", variables[name])
-        resolved.append(f"\t\t\t{line}")
+    originals = original_assets(lines)
     point = first
     while point > 0 and lines[point - 1].lstrip().startswith("#"):
         point -= 1
     out = [f"\t\t{MARKER}: RiE holding model"]
-    for asset in assets:
+    for asset, fallback in zip(assets, fallbacks):
+        resolved = []
+        for line in template_asset(originals, fallback)[1:]:
+            code = strip_comment(line).rstrip()
+            if re.match(r"^\s*(illustration|soundeffect)\s*=", code):
+                code = code.strip()
+                for name in re.findall(r"@(\w+)", code):
+                    if name not in variables:
+                        raise GeneratorError(f"variable @{name} used by the template asset is not defined in the source file")
+                    code = code.replace(f"@{name}", variables[name])
+                resolved.append(f"\t\t\t{code}")
         for line in asset.splitlines():
             if line.lstrip().startswith("graphical_cultures"):
                 out += resolved
@@ -318,16 +438,22 @@ def build_buildings(roots: Roots) -> dict:
     roots.check()
     blocks = []
     variables = {}
+    texts = culture_texts(roots)
+    _targets, group_keys = assign_gfx(texts)
+    fallbacks = gfx_fallbacks(texts)
+    regions = graphical_regions(roots.anbennar)
     for key, groups in data.MODELS.items():
         path, text = source_file(roots, key)
         start, end = building_block(text, key)
-        assets = []
+        assets, assets_fallback = [], []
         for group, meshes in groups.items():
-            region = data.REGION if group == "dwarven" else None
-            assets.append(asset_block(meshes, data.GROUPS[group]["gfx"], region))
+            # Dwarf castles and cities show only on mountain provinces; every other asset serves every graphical
+            # region (the region outranks the culture when CK3 picks an asset, so a bare culture asset would lose).
+            assets.append(asset_block(meshes, group_keys[group], [data.REGION] if group == "dwarven" else regions))
+            assets_fallback.append(fallbacks[data.GROUPS[group]["gfx"]])
         defined = source_variables(text)
         kind = key.rsplit("_", 1)[0]
-        block = insert_assets(text[start:end], assets, defined)
+        block = insert_assets(text[start:end], assets, defined, assets_fallback)
         # The source files reuse variable names with different values, so each kind gets its own prefix.
         block = re.sub(r"@(\w+)", lambda m: f"@{kind}_{m.group(1)}", block)
         variables.update({f"{kind}_{name}": value for name, value in defined.items()})
@@ -344,10 +470,22 @@ def build_buildings(roots: Roots) -> dict:
 
 def build_localization(roots: Roots) -> dict:
     """Names of the new graphical-culture keys (shown in the culture creation screen)."""
-    lines = [BOM + "l_english:"]
-    for group in data.GROUPS.values():
-        lines.append(f' {group["gfx"]}:0 "{group["label"]}"')
+    _targets, group_keys = assign_gfx(culture_texts(roots))
+    lines = [BOM + "l_english:"] + localization_lines(group_keys)
     return {LOCALIZATION_FILE: ("\n".join(lines) + "\n").encode("utf-8")}
+
+
+def localization_lines(group_keys: dict) -> list:
+    """One loc line per gfx key: the group's label, or its variant label for a key derived from another list."""
+    lines = []
+    for name, keys in group_keys.items():
+        group = data.GROUPS[name]
+        for key in keys:
+            variant = f'{key[len(f"aov_{name}_"):-len(GFX_SUFFIX)]}{GFX_SUFFIX}' if key != group["gfx"] else None
+            label = group["label"] if variant is None else \
+                group.get("variant_labels", {}).get(variant, f'{group["label"]} ({variant[:-len(GFX_SUFFIX)].title()})')
+            lines.append(f' {key}:0 "{label}"')
+    return lines
 
 
 @lru_cache(maxsize=None)

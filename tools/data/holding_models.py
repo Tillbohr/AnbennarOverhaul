@@ -1,11 +1,13 @@
 """Data for tools/build_holding_models.py: which cultures get which RiE holding-model graphics."""
 
-# Culture groups: building_gfx key and either explicit culture keys or a heritage (every culture of it).
+# Culture groups: building_gfx key (the group's most common existing list; other lists get derived keys, see
+# build_holding_models.assign_gfx), optional labels for the derived keys, and either explicit culture keys or a heritage (every culture of it).
 GROUPS = {
-    "high_elf": {"label": "High Elven (Noldor)", "gfx": "aov_high_elf_building_gfx", "cultures": ("moon_elvish", "sun_elvish")},
-    "wood_elf": {"label": "Sindarin and Silvan", "gfx": "aov_wood_elf_building_gfx", "cultures": ("wood_elvish",)},
-    "dwarven": {"label": "Dwarven", "gfx": "aov_dwarven_building_gfx", "heritage": "heritage_dwarven"},
-    "castanorian": {"label": "Castanorian (Dunedain)", "gfx": "aov_castanorian_building_gfx", "heritage": "heritage_escanni"},
+    "high_elf": {"label": "High Elven", "gfx": "aov_high_elf_building_gfx", "cultures": ("moon_elvish", "sun_elvish")},
+    "wood_elf": {"label": "Wood Elven", "gfx": "aov_wood_elf_building_gfx", "cultures": ("wood_elvish",)},
+    "dwarven": {"label": "Dwarven", "gfx": "aov_dwarven_building_gfx", "heritage": "heritage_dwarven",
+                "variant_labels": {"mena_building_gfx": "Dwarven (Southern)"}},
+    "castanorian": {"label": "Castanorian", "gfx": "aov_castanorian_building_gfx", "heritage": "heritage_escanni"},
 }
 
 # Province terrains that count as dwarven mountains (dwarves keep mountain models there, land models elsewhere).

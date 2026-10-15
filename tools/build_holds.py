@@ -11,6 +11,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # python -I does not add the script's folder
 from data import holds  # noqa: E402
 from data.holding_models import HOLD_DWARF_MESHES  # noqa: E402
+import build_holding_models as bhm  # noqa: E402
 
 SUBMOD = Path(__file__).resolve().parent.parent
 ANBENNAR_CK3 = SUBMOD.parent / "anbennar-ck3-dev-master"
@@ -96,20 +97,23 @@ AI_PREFERENCE = {
 }
 
 
-def dwarf_asset(n, castle_lines):
-    """The RiE dwarven model asset of hold level n, with the illustration and sound of the level's first castle asset."""
-    first = castle_lines[:castle_lines.index("\t\t}") + 1]
-    keep = [l for l in first if l.strip().startswith(("illustration =", "soundeffect ="))]
+def dwarf_asset(n, castle_lines, gfx_keys, fallback, regions):
+    """The RiE dwarven model asset of hold level n. It serves every dwarven gfx key and every graphical region
+    (the region outranks the culture in CK3's asset choice), with the illustration and sound of the level's first
+    castle asset that has no DLC flag and serves the fallback gfx key."""
+    template = bhm.template_asset(bhm.original_assets(castle_lines), fallback)
+    keep = [l for l in template if l.strip().startswith(("illustration =", "soundeffect ="))]
     return "\n".join(["\t\tasset = {  # Anbennar Overhaul: RiE dwarf hold model", "\t\t\ttype = pdxmesh",
                       f'\t\t\tname = "{HOLD_DWARF_MESHES[n]}"', *keep,
-                      "\t\t\tgraphical_cultures = { aov_dwarven_building_gfx }", "\t\t}"])
+                      "\t\t\tgraphical_cultures = { %s }" % " ".join(gfx_keys),
+                      "\t\t\tgraphical_regions = { %s }" % " ".join(regions), "\t\t}"])
 
 
-def render_level(n, assets):
+def render_level(n, assets, gfx):
     lvl = holds.LEVELS[n - 1]
     band = holds.ASSET_BAND[n]
     out = [f"{level_key(n)} = {{\n", "\tconstruction_time = slow_construction_time\n\n",
-           "\tassets = {\n", dwarf_asset(n, assets[band]) + "\n" + "\n".join(assets[band]) + "\n", "\t}\n\n",
+           "\tassets = {\n", dwarf_asset(n, assets[band], *gfx) + "\n" + "\n".join(assets[band]) + "\n", "\t}\n\n",
            "\tcan_construct_potential = {\n\t\talways = no\n\t}\n\n", IS_ENABLED,
            "\tcost_gold = main_building_tier_1_cost\n"]
     if n < 10:
@@ -143,10 +147,19 @@ def render_dwarven_building(spec, n):
     return "".join(out)
 
 
+def dwarf_gfx(root: Path) -> tuple:
+    """(dwarven gfx keys, the main key's fallback key, graphical regions) read from Anbennar's files."""
+    texts = bhm.culture_texts(bhm.Roots(rie=None, anbennar=Path(root), game=None))
+    _targets, group_keys = bhm.assign_gfx(texts)
+    main = bhm.data.GROUPS["dwarven"]["gfx"]
+    return group_keys["dwarven"], bhm.gfx_fallbacks(texts)[main], bhm.graphical_regions(root)
+
+
 def render_buildings(root: Path = ANBENNAR) -> str:
     variables, assets = castle_assets(root)
+    gfx = dwarf_gfx(root)
     parts = [HEADER, "\n", "\n".join(variables) + "\n\n"]
-    parts += [render_level(n, assets) + "\n" for n in range(1, 11)]
+    parts += [render_level(n, assets, gfx) + "\n" for n in range(1, 11)]
     for spec in holds.DWARVEN_BUILDINGS:
         parts += [render_dwarven_building(spec, n) + "\n" for n in (1, 2, 3)]
     return "".join(parts).rstrip("\n") + "\n"
