@@ -846,10 +846,13 @@ class GateOverlayRealTests(unittest.TestCase):
         dropped = sum(int(re.search(r"/ (\d+) dropped", n).group(1)) for n in self.notes if n.startswith("gate "))
         placed = sum(len(v[2]) for v in self.blocks.values())
         self.assertEqual(placed, 10 * 12 - dropped)
-        # mountain_04 and mountain_05 stand outside the narrow cone (or in front of the face): dropped at every gate
-        self.assertEqual({k: v[0] for k, v in self.blocks.items()},
-                         {f"aov_dwarven_gate_overlay_{p}": f"aov_{p}_mesh" for p in (
-                             "mountain_01", "mountain_02", "mountain_03", "mountain_06")})
+        # mountain_04 and mountain_05 stand outside the narrow cone (or in front of the face): dropped at every gate;
+        # the keep-out then removes the large mountain_01 and mountain_03 footprints at most gates
+        self.assertEqual({v[0] for v in self.blocks.values()} - {f"aov_mountain_0{n}_mesh" for n in (1, 2, 3, 6)},
+                         set())
+        self.assertIn("aov_dwarven_gate_overlay_mountain_02", self.blocks)
+        for name, (mesh, _, _) in self.blocks.items():
+            self.assertEqual(name, "aov_dwarven_gate_overlay_" + mesh.removeprefix("aov_").removesuffix("_mesh"))
         for _, count, lines in self.blocks.values():
             self.assertEqual(count, len(lines))
         self.assertTrue(self.files["gfx/map/map_object_data/aov_dwarven_gate_overlays.txt"].decode("utf-8-sig")
