@@ -307,6 +307,7 @@ def insert_assets(block: str, assets: list, variables=None) -> str:
 
 
 BUILDINGS_FILE = "common/buildings/zz_aov_holding_models.txt"
+LOCALIZATION_FILE = "localization/english/aov_holding_models_l_english.yml"
 ASSET_DIR = "gfx/models/buildings/aov_rie_holdings"
 TEXTURE_REF = re.compile(r'"([^"]+\.(?:mesh|dds|png|tga))"', re.IGNORECASE)
 PDXMESH_NAME = re.compile(r'^(?:pdxmesh|entity)\s*=\s*\{[ \t]*\r?\n\s*name\s*=\s*"([^"]+)"', re.MULTILINE)
@@ -316,6 +317,7 @@ ANY_NAME = re.compile(r'\bname\s*=\s*"([^"]+)"')
 def build_buildings(roots: Roots) -> dict:
     roots.check()
     blocks = []
+    variables = {}
     for key, groups in data.MODELS.items():
         path, text = source_file(roots, key)
         start, end = building_block(text, key)
@@ -323,9 +325,29 @@ def build_buildings(roots: Roots) -> dict:
         for group, meshes in groups.items():
             region = data.REGION if group == "dwarven" else None
             assets.append(asset_block(meshes, data.GROUPS[group]["gfx"], region))
-        blocks.append(insert_assets(text[start:end], assets, source_variables(text)))
-    content = BOM + "\n".join(HEADER()) + "\n\n" + "\n".join(blocks)
+        defined = source_variables(text)
+        kind = key.rsplit("_", 1)[0]
+        block = insert_assets(text[start:end], assets, defined)
+        # The source files reuse variable names with different values, so each kind gets its own prefix.
+        block = re.sub(r"@(\w+)", lambda m: f"@{kind}_{m.group(1)}", block)
+        variables.update({f"{kind}_{name}": value for name, value in defined.items()})
+        blocks.append(block)
+    body = "\n".join(blocks)
+    used = sorted(set(re.findall(r"@(\w+)", body)))
+    missing = [name for name in used if name not in variables]
+    if missing:
+        raise GeneratorError(f"variables used but not defined in the source files: {', '.join(missing)}")
+    top = "".join(f"@{name} = {variables[name]}\n" for name in used)
+    content = BOM + "\n".join(HEADER()) + "\n\n" + (top + "\n" if top else "") + body
     return {BUILDINGS_FILE: content.encode("utf-8")}
+
+
+def build_localization(roots: Roots) -> dict:
+    """Names of the new graphical-culture keys (shown in the culture creation screen)."""
+    lines = [BOM + "l_english:"]
+    for group in data.GROUPS.values():
+        lines.append(f' {group["gfx"]}:0 "{group["label"]}"')
+    return {LOCALIZATION_FILE: ("\n".join(lines) + "\n").encode("utf-8")}
 
 
 @lru_cache(maxsize=None)
@@ -425,6 +447,8 @@ def build_assets(roots: Roots) -> dict:
         meshes = []
         for groups in data.MODELS.values():
             meshes += [mesh for mesh in groups.get(group, []) if mesh not in meshes]
+        if group == "dwarven":  # the dwarven hold levels (tools/build_holds.py) use one more model
+            meshes += [mesh for mesh in data.HOLD_DWARF_MESHES.values() if mesh not in meshes]
         folder = (models / "buildings" / data.MODEL_SETS[group]).resolve()
         for mesh in meshes:
             asset = find_asset(models, mesh)
@@ -447,6 +471,7 @@ def build_all(roots: Roots) -> dict:
     files.update(build_cultures(roots))
     files.update(build_region(roots))
     files.update(build_buildings(roots))
+    files.update(build_localization(roots))
     files.update(build_assets(roots))
     return files
 

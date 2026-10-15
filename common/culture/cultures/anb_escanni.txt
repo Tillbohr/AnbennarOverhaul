@@ -1,0 +1,478 @@
+﻿
+adenner = {
+	color = { 15 117 187 }
+	created = 1020.1.1 # Random date before game start
+	parents = { adeanic moon_elvish }
+
+	ethos = ethos_bellicose
+	heritage = heritage_escanni
+	language = language_castanorian_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_adeanic_chivalry
+		tradition_equitable
+		tradition_anb_devoted_horsemanship
+		tradition_warrior_monks
+	}
+	
+	name_list = name_list_adenner
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_castanorian_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { western_clothing_gfx }
+	unit_gfx = { western_unit_gfx }
+	
+	ethnicities = {
+		10 = slavic_blond
+		5 = slavic_ginger
+		55 = slavic_brown_hair
+		30 = slavic_dark_hair
+	}
+}
+
+white_reachman = {
+	color = { 250 250 250 }
+	created = 400.1.1
+	parents = { old_gerudian castanorian }
+
+	ethos = ethos_stoic
+	heritage = heritage_escanni
+	language = language_reachman_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_maritime_mercantilism
+		tradition_parochialism
+		tradition_stalwart_defenders
+		tradition_test_maa_anb_vrorengards
+	}
+	
+	name_list = name_list_white_reachman
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_castanorian_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { northern_clothing_gfx western_clothing_gfx }
+	unit_gfx = { western_unit_gfx }
+	
+	ethnicities = {
+		45 = slavic_blond
+		25 = slavic_northern_blond
+		5 = slavic_ginger
+		5 = slavic_northern_ginger
+		10 = slavic_brown_hair
+		10 = slavic_dark_hair
+	}
+}
+
+black_castanorian = {
+	color = { 25 25 25 }
+	created = 865.1.1 # canon
+	parents = { castanorian olavish }
+
+	ethos = ethos_bellicose
+	heritage = heritage_escanni
+	language = language_castanorian_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_laws_of_castan_ebonfrost
+		tradition_ruling_caste
+		tradition_reverence_for_veterans
+		tradition_formation_fighting
+	}
+	
+	name_list = name_list_black_castanorian
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_castanorian_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { northern_clothing_gfx western_clothing_gfx }
+	unit_gfx = { western_unit_gfx }
+	
+	ethnicities = {
+		45 = slavic_blond
+		15 = slavic_northern_blond
+		20 = slavic_brown_hair
+		10 = slavic_northern_brown_hair
+		10 = slavic_dark_hair
+		5 = slavic_northern_dark_hair
+	}
+}
+
+marcher = {
+	color = { 230 216 166 }
+
+	created = 500.12.8	# placeholder, About a year after Elecast slays Alos the Copper
+	#parents = { castanorian tifdeynic }
+	history_loc_override = marcher_history_loc	
+
+	ethos = ethos_bellicose
+	heritage = heritage_escanni
+	language = language_castanorian_common
+	martial_custom = martial_custom_equal
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_rule_by_the_blade
+		tradition_marcher_meritocracy
+		tradition_hill_dwellers
+	}
+	
+	name_list = name_list_marcher
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_castanorian_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { western_clothing_gfx }
+	unit_gfx = { western_unit_gfx }
+
+	ethnicities = {
+		50 = slavic_blond
+		40 = slavic_brown_hair
+		10 = slavic_dark_hair
+	}
+}
+
+castellyrian = {
+	color = { 144 144 200 }
+	created = 1339.1.1	# Canon
+	parents = { castanorian moon_elvish }
+
+	ethos = ethos_courtly
+	heritage = heritage_escanni
+	language = language_castanorian_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_formation_fighting
+		tradition_religion_blending
+		tradition_escanni_chivalry
+	}
+	
+	name_list = name_list_castellyrian
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_castanorian_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { western_clothing_gfx }
+	unit_gfx = { western_unit_gfx }
+
+	ethnicities = {
+		20 = slavic_blond
+		5 = slavic_ginger
+		35 = slavic_brown_hair
+		40 = slavic_dark_hair
+	}
+}
+
+castanite = {
+	color = { 255 255 255 }
+
+	ethos = ethos_bellicose
+	heritage = heritage_escanni
+	language = language_old_castanorian
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_religion_blending
+		tradition_legalistic
+		tradition_mystical_ancestors
+		tradition_test_maa_anb_patrician_guards
+	}
+	dlc_tradition = {
+		trait = tradition_malleable_invaders
+		requires_dlc_flag = hybridize_culture
+	}
+	
+	name_list = name_list_castellyrian
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_castanorian_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { western_clothing_gfx }
+	unit_gfx = { western_unit_gfx }
+
+	ethnicities = {
+		10 = african	#ancient castanite roots
+		10 = east_african
+		15 = arab
+		15 = mediterranean_byzantine
+		10 = milcorissian
+		20 =  slavic_brown_hair
+		30 = slavic_dark_hair
+	}
+}
+
+castanorian = {
+	color = { 200 200 200 }
+	created = 2.1.1 # placeholder so the date shows
+	parents = { castanite }
+
+	ethos = ethos_bureaucratic
+	heritage = heritage_escanni
+	language = language_castanorian_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_formation_fighting
+		tradition_religion_blending
+		tradition_mystical_ancestors
+		tradition_fervent_temple_builders
+	}
+	
+	name_list = name_list_castanorian
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_castanorian_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { western_clothing_gfx }
+	unit_gfx = { western_unit_gfx }
+
+	ethnicities = {
+		1 = african	#ancient castanite roots
+		1 = east_african
+		2 = arab
+		11 = byzantine
+
+		10 = slavic_blond
+		5 = slavic_ginger
+		30 = slavic_brown_hair
+		30 = slavic_dark_hair
+	}
+}
+
+adeanic = {
+	color = { 18 84 130 }
+
+	ethos = ethos_bellicose
+	heritage = heritage_escanni
+	language = language_castanorian_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_adeanic_chivalry
+		tradition_anb_devoted_horsemanship
+		tradition_warrior_monks
+	}
+	
+	name_list = name_list_adeanic
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_castanorian_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { western_clothing_gfx }
+	unit_gfx = { western_unit_gfx }
+
+	ethnicities = {
+		10 = slavic_blond
+		5 = slavic_ginger
+		55 = slavic_brown_hair
+		30 = slavic_dark_hair
+	}
+}
+
+faranni = {
+	color = { 139 164 72 }
+	created = 1100.1.1 # ovewritten when decision is done
+	parents = { esmari adeanic }
+
+	ethos = ethos_communal
+	heritage = heritage_escanni
+	language = language_damerian_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		# From Esmari
+		tradition_wedding_ceremonies
+		tradition_festivities
+		# From Adeanic
+		
+		# New: explode making a custom one
+		tradition_forest_folk
+		tradition_hill_dwellers
+		tradition_xenophilic
+	}
+	
+	name_list = name_list_esmari
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_castanorian_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { western_clothing_gfx }
+	unit_gfx = { western_unit_gfx }
+	
+	ethnicities = {
+		# Adeanic
+		5 = slavic_blond
+		5 = slavic_ginger
+		15 = slavic_brown_hair
+		15 = slavic_dark_hair
+		# Esmari
+		15 = caucasian_blond
+		5 = caucasian_ginger
+		30 = caucasian_brown_hair
+		10 = caucasian_dark_hair
+	}
+}
+
+balmirish = {
+	color = { 25 129 105 }
+
+	ethos = ethos_bellicose
+	heritage = heritage_escanni
+	language = language_castanorian_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_wetlanders
+		tradition_stalwart_defenders
+		tradition_castle_keepers
+		tradition_hunters
+		tradition_test_maa_anb_mireknights
+	}
+	
+	name_list = name_list_balmirish
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_castanorian_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { western_clothing_gfx }
+	unit_gfx = { western_unit_gfx }
+	
+	ethnicities = {
+		5 = slavic_blond
+		10 = slavic_ginger
+		35 = slavic_brown_hair
+		40 = slavic_dark_hair
+	}
+}
+
+patrician = {
+	color = { 255 255 255 }
+	created = 2.1.1 # placeholder so the date shows
+	parents = { castanite }
+
+	ethos = ethos_courtly
+	heritage = heritage_escanni
+	language = language_old_castanorian
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_religion_blending
+		tradition_legalistic
+		tradition_family_entrepreneurship
+		tradition_test_maa_anb_patrician_guards
+	}
+	dlc_tradition = {
+		trait = tradition_staunch_traditionalists
+		requires_dlc_flag = hybridize_culture
+	}
+	
+	name_list = name_list_patrician
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_castanorian_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { western_clothing_gfx }
+	unit_gfx = { western_unit_gfx }
+	
+	ethnicities = {
+		10 = african	#ancient castanite roots
+		10 = east_african
+		15 = arab
+	}
+}
+
+merewoodian = {
+	color = { 135 74 63 }
+	
+	parents = { castanorian mereddite }
+	
+	created = 100.1.1
+
+	ethos = ethos_communal
+	heritage = heritage_escanni
+	language = language_castanorian_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_forest_folk
+		tradition_forest_fighters
+		tradition_charitable
+		tradition_poetry
+		
+	}
+	
+	name_list = name_list_castanorian
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_castanorian_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { western_clothing_gfx }
+	unit_gfx = { western_unit_gfx }
+
+	ethnicities = {
+		10 = slavic_blond
+		5 = slavic_ginger
+		30 = slavic_brown_hair
+		30 = slavic_dark_hair
+	}
+}
+
+trystanite = {
+	color = { 190 128 131 }
+	
+	parents = { castanorian }
+	
+	created = 491.1.1
+
+	ethos = ethos_bellicose
+	heritage = heritage_escanni
+	language = language_castanorian_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_hill_dwellers
+		tradition_collective_lands
+		tradition_talent_acquisition
+	}
+	
+	name_list = name_list_castanorian
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_castanorian_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { western_clothing_gfx }
+	unit_gfx = { western_unit_gfx }
+
+	ethnicities = {
+		10 = slavic_blond
+		5 = slavic_ginger
+		30 = slavic_brown_hair
+		30 = slavic_dark_hair
+	}
+}
+
+humacfelder = {
+	color = { 103 121 164 }
+
+	ethos = ethos_communal
+	heritage = heritage_escanni
+	language = language_castanorian_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_culture_blending
+		tradition_martial_admiration # TODO Replace with Escanni MAA
+		tradition_collective_lands
+		tradition_hill_dwellers
+		tradition_fervent_temple_builders
+	}
+	
+	name_list = name_list_castanorian
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_castanorian_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { western_clothing_gfx }
+	unit_gfx = { western_unit_gfx }
+
+	ethnicities = {
+		1 = african
+		1 = east_african
+		11 = byzantine
+		2 = arab
+		40 = slavic_dark_hair	
+		5 = slavic_ginger
+		60 = slavic_blond
+		70 = slavic_brown_hair
+	}
+}

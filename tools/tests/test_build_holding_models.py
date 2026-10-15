@@ -3,6 +3,7 @@
     python -I -m unittest discover -s tools/tests -p test_build_holding_models.py -v
 """
 
+import re
 import sys
 import tempfile
 import unittest
@@ -252,7 +253,9 @@ class RealBuildingTests(unittest.TestCase):
 
     def test_twelve_buildings_equal_sources_outside_inserts(self):
         for key, groups in data.MODELS.items():
-            source = bhm.source_building(REAL, key)
+            kind = key.rsplit("_", 1)[0]
+            # file-local @variables get the building kind as a prefix (the sources reuse names with different values)
+            source = re.sub(r"@(\w+)", lambda m: f"@{kind}_{m.group(1)}", bhm.source_building(REAL, key))
             start, end = bhm.building_block(self.buildings, key)
             block = self.buildings[start:end]
             marker = "\t\t# Anbennar Overhaul: RiE holding model" + ("\r\n" if "\r\n" in source else "\n")
@@ -335,6 +338,18 @@ class RootTests(unittest.TestCase):
             roots = bhm.Roots(rie=Path(tmp) / "none", anbennar=Path(tmp), game=Path(tmp))
             with self.assertRaises(bhm.GeneratorError):
                 bhm.build_all(roots)
+
+
+@unittest.skipUnless(REAL.rie.is_dir() and REAL.anbennar.is_dir() and REAL.game.is_dir(), "RiE, Anbennar and game needed")
+class FreshnessTests(unittest.TestCase):
+    def test_generated_files_match_the_mod(self):
+        """Every file build_all writes exists in the mod with identical bytes (rerun the generator otherwise)."""
+        stale = []
+        for rel, content in bhm.build_all(REAL).items():
+            path = bhm.SUBMOD / rel
+            if not path.is_file() or path.read_bytes() != content:
+                stale.append(rel)
+        self.assertEqual(stale, [], "stale: rerun python -I tools/build_holding_models.py")
 
 
 if __name__ == "__main__":

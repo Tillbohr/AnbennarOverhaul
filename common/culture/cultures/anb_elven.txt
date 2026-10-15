@@ -1,0 +1,86 @@
+﻿moon_elvish = {
+	color = { 135 245 245 }
+
+	ethos = ethos_egalitarian
+	heritage = heritage_elven
+	language = language_moon_elven
+	martial_custom = martial_custom_equal
+	head_determination = head_determination_domain
+	traditions = {
+		#tradition_isolationist	#havens are, not the people
+		tradition_storytellers	#get yourself an elven guardian too elvenize your country lol
+		tradition_equal_inheritance
+		tradition_poetry
+	}
+	
+	name_list = name_list_moon_elven
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_high_elf_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { elvish_clothing_gfx western_clothing_gfx }
+	unit_gfx = { western_unit_gfx }
+	
+	ethnicities = {
+		25 = moon_elvish
+		5 = sun_elvish
+	}
+}
+
+sun_elvish = {
+	color = { 255 200 92 }
+
+	ethos = ethos_courtly
+	heritage = heritage_elven
+	language = language_sun_elven
+	martial_custom = martial_custom_equal
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_ruling_caste
+		tradition_equal_inheritance
+		tradition_sundancer_legions
+		tradition_zealous_people
+		tradition_formation_fighting
+	}
+	
+	name_list = name_list_sun_elven
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_high_elf_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { elvish_clothing_gfx western_clothing_gfx }
+	unit_gfx = { western_unit_gfx }
+	
+	ethnicities = {
+		10 = moon_elvish
+		20 = sun_elvish
+	}
+}
+
+wood_elvish = {
+	color = { 20 88 23 }
+	created = 1017.5.1
+	parents = { moon_elvish }
+	history_loc_override = wood_elven_history_loc
+
+	ethos = ethos_stoic
+	heritage = heritage_elven
+	language = language_moon_elven
+	martial_custom = martial_custom_equal
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_isolationist
+		tradition_equal_inheritance
+		tradition_forest_folk
+	}
+	
+	name_list = name_list_wood_elven
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_wood_elf_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { elvish_clothing_gfx western_clothing_gfx }
+	unit_gfx = { western_unit_gfx }
+	
+	ethnicities = {
+		25 = moon_elvish
+		5 = sun_elvish
+	}
+}

@@ -1,0 +1,309 @@
+﻿
+ruby_dwarvish = {
+	color = { 161 0 0 }
+
+	ethos = ethos_courtly
+	heritage = heritage_dwarven
+	language = language_cannorian_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_storytellers
+		tradition_hereditary_hierarchy
+		tradition_test_maa_anb_dwarven_handgunners
+	}
+	dlc_tradition = {
+		trait = tradition_staunch_traditionalists
+		requires_dlc_flag = hybridize_culture
+	}
+	
+	name_list = name_list_dwarven
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { northern_clothing_gfx western_clothing_gfx }
+	unit_gfx = { dwarven_unit_gfx }
+	
+	ethnicities = {
+		100 = dwarf
+	}
+}
+
+silver_dwarvish = {
+	color = { 177 177 177 }
+	created = 600.1.1
+	parents = { stone_dwarvish }
+
+	ethos = ethos_bureaucratic
+	heritage = heritage_dwarven
+	language = language_cannorian_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_family_entrepreneurship
+		tradition_zealous_people
+		tradition_metal_craftsmanship
+		tradition_test_maa_anb_dwarven_handgunners
+	}
+	
+	name_list = name_list_dwarven
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { northern_clothing_gfx western_clothing_gfx }
+	unit_gfx = { dwarven_unit_gfx }
+	
+	ethnicities = {
+		100 = dwarf
+	}
+}
+
+stone_dwarvish = {
+	color = { 170 163 157 }
+
+	ethos = ethos_stoic
+	heritage = heritage_dwarven
+	language = language_cannorian_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_hard_working
+		tradition_family_entrepreneurship
+		tradition_loyal_soldiers
+	}
+	dlc_tradition = {
+		trait = tradition_artisans
+		requires_dlc_flag = royal_court
+	}
+	
+	name_list = name_list_dwarven
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { northern_clothing_gfx western_clothing_gfx }
+	unit_gfx = { dwarven_unit_gfx }
+	
+	ethnicities = {
+		100 = dwarf
+	}
+}
+
+agate_dwarvish = {
+	color = { 149 131 101 }
+
+	ethos = ethos_communal
+	heritage = heritage_dwarven
+	language = language_cannorian_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_metal_craftsmanship
+		tradition_legalistic
+	}
+	
+	name_list = name_list_dwarven
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { northern_clothing_gfx western_clothing_gfx }
+	unit_gfx = { dwarven_unit_gfx }
+	
+	ethnicities = {
+		100 = dwarf
+	}
+}
+
+copper_dwarvish = {
+	color = { 204 117 21 }
+
+	ethos = ethos_stoic
+	heritage = heritage_dwarven
+	language = language_segbandalic_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_family_entrepreneurship
+		tradition_hard_working
+		tradition_maritime_mercantilism
+		tradition_language_copper_dwarven_bahari
+	}
+	
+	name_list = name_list_dwarven
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx mena_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { dde_abbasid_clothing_gfx mena_clothing_gfx }
+	unit_gfx = { dwarven_unit_gfx }
+	
+	ethnicities = {
+		100 = dwarf
+	}
+}
+
+citrine_dwarvish = {
+	color = { 36 96 143 }
+
+	ethos = ethos_stoic
+	heritage = heritage_dwarven
+	language = language_segbandalic_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_astute_diplomats
+		tradition_swords_for_hire
+		tradition_caravaneers
+	}
+	
+	name_list = name_list_dwarven
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { northern_clothing_gfx western_clothing_gfx }
+	unit_gfx = { dwarven_unit_gfx }
+	
+	ethnicities = {
+		100 = dwarf
+	}
+}
+
+gold_dwarvish = {
+	color = { 255 198 0 }
+
+	ethos = ethos_communal
+	heritage = heritage_dwarven
+	language = language_segbandalic_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_stalwart_defenders
+		tradition_ancient_miners
+		tradition_warriors_of_the_dry
+	}
+	
+	name_list = name_list_dwarven
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx mena_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { dde_abbasid_clothing_gfx mena_clothing_gfx }
+	unit_gfx = { dwarven_unit_gfx }
+	
+	ethnicities = {
+		100 = dwarf
+	}
+}
+
+pyrite_dwarvish = {
+	color = { 15 82 186 }
+
+	ethos = ethos_bureaucratic
+	heritage = heritage_dwarven
+	language = language_segbandalic_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_hard_working
+		tradition_metal_craftsmanship
+	}
+	dlc_tradition = {
+		trait = tradition_artisans
+		requires_dlc_flag = royal_court
+	}
+	
+	name_list = name_list_dwarven
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { northern_clothing_gfx western_clothing_gfx }
+	unit_gfx = { dwarven_unit_gfx }
+	
+	ethnicities = {
+		100 = dwarf
+	}
+}
+
+titanium_dwarvish = {
+	color = { 223 187 144 }
+
+	ethos = ethos_stoic
+	heritage = heritage_dwarven
+	language = language_segbandalic_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_formation_fighting
+		tradition_warrior_culture
+		tradition_warrior_monks
+	}
+	
+	name_list = name_list_dwarven
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { northern_clothing_gfx western_clothing_gfx }
+	unit_gfx = { dwarven_unit_gfx }
+	
+	ethnicities = {
+		100 = dwarf
+	}
+}
+
+topaz_dwarvish = {
+	color = { 93 161 154 }
+
+	ethos = ethos_communal
+	heritage = heritage_dwarven
+	language = language_segbandalic_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_stand_and_fight
+		tradition_stalwart_defenders
+		tradition_welcoming
+	}
+	
+	name_list = name_list_dwarven
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { northern_clothing_gfx western_clothing_gfx }
+	unit_gfx = { dwarven_unit_gfx }
+
+	ethnicities = {
+		100 = dwarf
+	}
+}
+marble_dwarvish = {
+	color = { 241 242 227 }
+
+	ethos = ethos_egalitarian
+	heritage = heritage_dwarven
+	language = language_segbandalic_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_xenophilic
+		tradition_hard_working
+		tradition_diasporic
+	}
+	
+	name_list = name_list_dwarven
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx mena_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { dde_abbasid_clothing_gfx mena_clothing_gfx }
+	unit_gfx = { dwarven_unit_gfx }
+	
+	ethnicities = {
+		100 = dwarf
+	}
+}

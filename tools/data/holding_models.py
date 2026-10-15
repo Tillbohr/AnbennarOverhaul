@@ -2,10 +2,10 @@
 
 # Culture groups: building_gfx key and either explicit culture keys or a heritage (every culture of it).
 GROUPS = {
-    "high_elf": {"gfx": "aov_high_elf_building_gfx", "cultures": ("moon_elvish", "sun_elvish")},
-    "wood_elf": {"gfx": "aov_wood_elf_building_gfx", "cultures": ("wood_elvish",)},
-    "dwarven": {"gfx": "aov_dwarven_building_gfx", "heritage": "heritage_dwarven"},
-    "castanorian": {"gfx": "aov_castanorian_building_gfx", "heritage": "heritage_escanni"},
+    "high_elf": {"label": "High Elven (Noldor)", "gfx": "aov_high_elf_building_gfx", "cultures": ("moon_elvish", "sun_elvish")},
+    "wood_elf": {"label": "Sindarin and Silvan", "gfx": "aov_wood_elf_building_gfx", "cultures": ("wood_elvish",)},
+    "dwarven": {"label": "Dwarven", "gfx": "aov_dwarven_building_gfx", "heritage": "heritage_dwarven"},
+    "castanorian": {"label": "Castanorian (Dunedain)", "gfx": "aov_castanorian_building_gfx", "heritage": "heritage_escanni"},
 }
 
 # Province terrains that count as dwarven mountains (dwarves keep mountain models there, land models elsewhere).
