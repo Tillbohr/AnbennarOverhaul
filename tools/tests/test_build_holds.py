@@ -6,6 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # python -I does not add the tools folder
 import build_holds as bh  # noqa: E402
 from data import holds  # noqa: E402
+from data.holding_models import HOLD_DWARF_MESHES  # noqa: E402
 
 LIVE = bh.ANBENNAR_CK3.is_dir()
 SUBMOD = bh.SUBMOD
@@ -83,6 +84,31 @@ class HoldBuildingTests(unittest.TestCase):
         self.assertGreater(len(assets["castle_03"]), 5)
         self.assertIn("asset = {", self.blocks["dwarven_hold_05"])
         self.assertIn(assets["castle_03"][1], self.blocks["dwarven_hold_05"])
+
+    def test_dwarf_model_asset_comes_first(self):
+        _, assets = bh.castle_assets(bh.ANBENNAR_CK3)
+        for n in range(1, 11):
+            block = self.blocks[f"dwarven_hold_{n:02d}"]
+            mesh = HOLD_DWARF_MESHES[n]
+            first = block[block.index("asset = {"):]
+            first = first[:first.index("\n\t\t}")]
+            self.assertIn(f'name = "{mesh}"', first, n)
+            self.assertIn("type = pdxmesh", first, n)
+            self.assertIn("graphical_cultures = { aov_dwarven_building_gfx }", first, n)
+            self.assertNotIn("graphical_regions", first, n)
+            self.assertIn("# Anbennar Overhaul: RiE dwarf hold model", first, n)
+            band = assets[holds.ASSET_BAND[n]]
+            illustration = next(l for l in band if l.strip().startswith("illustration ="))
+            soundeffect = next(l for l in band if l.strip().startswith("soundeffect ="))
+            self.assertIn(illustration, first, n)
+            self.assertIn(soundeffect, first, n)
+            # the castle asset still follows the dwarf one
+            self.assertIn(band[1], block[block.index(first) + len(first):], n)
+
+    def test_dwarf_meshes_cover_every_level(self):
+        self.assertEqual(sorted(HOLD_DWARF_MESHES), list(range(1, 11)))
+        self.assertEqual([HOLD_DWARF_MESHES[n] for n in (1, 2, 3, 5, 7, 9, 10)],
+                         [f"dwarven_holding_0{k}_mesh" for k in (1, 1, 2, 3, 4, 5, 5)])
 
     def test_illustration_variables_are_redefined(self):
         vars_ = set(re.findall(r"@holding_illustration_\w+", self.text))

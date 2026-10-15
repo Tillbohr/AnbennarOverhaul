@@ -52,3 +52,7 @@ MODELS.update(_levels("temple", _HIGH_ELF, _WOOD_ELF,
 
 REGION = "graphical_aov_dwarven_mountains"
 REGION_COLOR = (120, 80, 40)
+
+# Dwarven hold level (1..10) -> RiE dwarven pdxmesh, used by tools/build_holds.py (dwarf holders only; the
+# assets are copied by tools/build_holding_models.py).
+HOLD_DWARF_MESHES = {n: f"dwarven_holding_0{(n + 1) // 2}_mesh" for n in range(1, 11)}

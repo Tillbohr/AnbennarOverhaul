@@ -10,6 +10,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # python -I does not add the script's folder
 from data import holds  # noqa: E402
+from data.holding_models import HOLD_DWARF_MESHES  # noqa: E402
 
 SUBMOD = Path(__file__).resolve().parent.parent
 ANBENNAR_CK3 = SUBMOD.parent / "anbennar-ck3-dev-master"
@@ -95,11 +96,20 @@ AI_PREFERENCE = {
 }
 
 
+def dwarf_asset(n, castle_lines):
+    """The RiE dwarven model asset of hold level n, with the illustration and sound of the level's first castle asset."""
+    first = castle_lines[:castle_lines.index("\t\t}") + 1]
+    keep = [l for l in first if l.strip().startswith(("illustration =", "soundeffect ="))]
+    return "\n".join(["\t\tasset = {  # Anbennar Overhaul: RiE dwarf hold model", "\t\t\ttype = pdxmesh",
+                      f'\t\t\tname = "{HOLD_DWARF_MESHES[n]}"', *keep,
+                      "\t\t\tgraphical_cultures = { aov_dwarven_building_gfx }", "\t\t}"])
+
+
 def render_level(n, assets):
     lvl = holds.LEVELS[n - 1]
     band = holds.ASSET_BAND[n]
     out = [f"{level_key(n)} = {{\n", "\tconstruction_time = slow_construction_time\n\n",
-           "\tassets = {\n", "\n".join(assets[band]) + "\n", "\t}\n\n",
+           "\tassets = {\n", dwarf_asset(n, assets[band]) + "\n" + "\n".join(assets[band]) + "\n", "\t}\n\n",
            "\tcan_construct_potential = {\n\t\talways = no\n\t}\n\n", IS_ENABLED,
            "\tcost_gold = main_building_tier_1_cost\n"]
     if n < 10:

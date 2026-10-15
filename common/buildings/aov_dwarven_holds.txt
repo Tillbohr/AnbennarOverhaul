@@ -18,6 +18,13 @@ dwarven_hold_01 = {
 	construction_time = slow_construction_time
 
 	assets = {
+		asset = {  # Anbennar Overhaul: RiE dwarf hold model
+			type = pdxmesh
+			name = "dwarven_holding_01_mesh"
+			illustration = @holding_illustration_norse
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 0 } }
+			graphical_cultures = { aov_dwarven_building_gfx }
+		}
 		asset = {
 			type = pdxmesh
 			name = "fp1_building_norse_castle_01_mesh"
@@ -387,6 +394,13 @@ dwarven_hold_02 = {
 	construction_time = slow_construction_time
 
 	assets = {
+		asset = {  # Anbennar Overhaul: RiE dwarf hold model
+			type = pdxmesh
+			name = "dwarven_holding_01_mesh"
+			illustration = @holding_illustration_norse
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 0 } }
+			graphical_cultures = { aov_dwarven_building_gfx }
+		}
 		asset = {
 			type = pdxmesh
 			name = "fp1_building_norse_castle_01_mesh"
@@ -756,6 +770,13 @@ dwarven_hold_03 = {
 	construction_time = slow_construction_time
 
 	assets = {
+		asset = {  # Anbennar Overhaul: RiE dwarf hold model
+			type = pdxmesh
+			name = "dwarven_holding_02_mesh"
+			illustration = @holding_illustration_norse
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 1 } }
+			graphical_cultures = { aov_dwarven_building_gfx }
+		}
 		asset = {
 			type = pdxmesh
 			name = "fp1_building_norse_castle_02_mesh"
@@ -1109,6 +1130,13 @@ dwarven_hold_04 = {
 	construction_time = slow_construction_time
 
 	assets = {
+		asset = {  # Anbennar Overhaul: RiE dwarf hold model
+			type = pdxmesh
+			name = "dwarven_holding_02_mesh"
+			illustration = @holding_illustration_norse
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 1 } }
+			graphical_cultures = { aov_dwarven_building_gfx }
+		}
 		asset = {
 			type = pdxmesh
 			name = "fp1_building_norse_castle_02_mesh"
@@ -1462,6 +1490,13 @@ dwarven_hold_05 = {
 	construction_time = slow_construction_time
 
 	assets = {
+		asset = {  # Anbennar Overhaul: RiE dwarf hold model
+			type = pdxmesh
+			name = "dwarven_holding_03_mesh"
+			illustration = @holding_illustration_norse
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 2 } }
+			graphical_cultures = { aov_dwarven_building_gfx }
+		}
 		asset = {
 			type = pdxmesh
 			name = "fp1_building_norse_castle_03_mesh"
@@ -1820,6 +1855,13 @@ dwarven_hold_06 = {
 	construction_time = slow_construction_time
 
 	assets = {
+		asset = {  # Anbennar Overhaul: RiE dwarf hold model
+			type = pdxmesh
+			name = "dwarven_holding_03_mesh"
+			illustration = @holding_illustration_norse
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 2 } }
+			graphical_cultures = { aov_dwarven_building_gfx }
+		}
 		asset = {
 			type = pdxmesh
 			name = "fp1_building_norse_castle_03_mesh"
@@ -2178,6 +2220,13 @@ dwarven_hold_07 = {
 	construction_time = slow_construction_time
 
 	assets = {
+		asset = {  # Anbennar Overhaul: RiE dwarf hold model
+			type = pdxmesh
+			name = "dwarven_holding_04_mesh"
+			illustration = @holding_illustration_norse
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 2 } }
+			graphical_cultures = { aov_dwarven_building_gfx }
+		}
 		asset = {
 			type = pdxmesh
 			name = "fp1_building_norse_castle_03_mesh"
@@ -2536,6 +2585,13 @@ dwarven_hold_08 = {
 	construction_time = slow_construction_time
 
 	assets = {
+		asset = {  # Anbennar Overhaul: RiE dwarf hold model
+			type = pdxmesh
+			name = "dwarven_holding_04_mesh"
+			illustration = @holding_illustration_norse
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 3 } }
+			graphical_cultures = { aov_dwarven_building_gfx }
+		}
 		asset = {
 			type = pdxmesh
 			name = "fp1_building_norse_castle_04_mesh"
@@ -2894,6 +2950,13 @@ dwarven_hold_09 = {
 	construction_time = slow_construction_time
 
 	assets = {
+		asset = {  # Anbennar Overhaul: RiE dwarf hold model
+			type = pdxmesh
+			name = "dwarven_holding_05_mesh"
+			illustration = @holding_illustration_norse
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 3 } }
+			graphical_cultures = { aov_dwarven_building_gfx }
+		}
 		asset = {
 			type = pdxmesh
 			name = "fp1_building_norse_castle_04_mesh"
@@ -3252,6 +3315,13 @@ dwarven_hold_10 = {
 	construction_time = slow_construction_time
 
 	assets = {
+		asset = {  # Anbennar Overhaul: RiE dwarf hold model
+			type = pdxmesh
+			name = "dwarven_holding_05_mesh"
+			illustration = @holding_illustration_norse
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/nordic_castle" soundparameter = { "Tier" = 3 } }
+			graphical_cultures = { aov_dwarven_building_gfx }
+		}
 		asset = {
 			type = pdxmesh
 			name = "fp1_building_norse_castle_04_mesh"
