@@ -97,15 +97,14 @@ AI_PREFERENCE = {
 }
 
 
-def dwarf_asset(n, castle_lines, gfx_keys, fallback, regions):
-    """The RiE dwarven model asset of hold level n. It serves every dwarven gfx key and every graphical region
+def dwarf_asset(n, castle_lines, fallback, regions):
+    """The RiE dwarven model asset of hold level n. It serves every holder culture and every graphical region
     (the region outranks the culture in CK3's asset choice), with the illustration and sound of the level's first
     castle asset that has no DLC flag and serves the fallback gfx key."""
     template = bhm.template_asset(bhm.original_assets(castle_lines), fallback)
     keep = [l for l in template if l.strip().startswith(("illustration =", "soundeffect ="))]
     return "\n".join(["\t\tasset = {  # Anbennar Overhaul: RiE dwarf hold model", "\t\t\ttype = pdxmesh",
                       f'\t\t\tname = "{HOLD_DWARF_MESHES[n]}"', *keep,
-                      "\t\t\tgraphical_cultures = { %s }" % " ".join(gfx_keys),
                       "\t\t\tgraphical_regions = { %s }" % " ".join(regions), "\t\t}"])
 
 
@@ -148,11 +147,10 @@ def render_dwarven_building(spec, n):
 
 
 def dwarf_gfx(root: Path) -> tuple:
-    """(dwarven gfx keys, the main key's fallback key, graphical regions) read from Anbennar's files."""
+    """(the dwarven main key's fallback key, graphical regions) read from Anbennar's files."""
     texts = bhm.culture_texts(bhm.Roots(rie=None, anbennar=Path(root), game=None))
-    _targets, group_keys = bhm.assign_gfx(texts)
     main = bhm.data.GROUPS["dwarven"]["gfx"]
-    return group_keys["dwarven"], bhm.gfx_fallbacks(texts)[main], bhm.graphical_regions(root)
+    return bhm.gfx_fallbacks(texts)[main], bhm.graphical_regions(root)
 
 
 def render_buildings(root: Path = ANBENNAR) -> str:

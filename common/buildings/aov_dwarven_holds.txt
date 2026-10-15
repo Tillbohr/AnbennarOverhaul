@@ -23,7 +23,6 @@ dwarven_hold_01 = {
 			name = "dwarven_holding_01_mesh"
 			illustration = @holding_illustration_western
 			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 0 } }
-			graphical_cultures = { aov_dwarven_building_gfx aov_dwarven_mena_building_gfx }
 			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
@@ -400,7 +399,6 @@ dwarven_hold_02 = {
 			name = "dwarven_holding_01_mesh"
 			illustration = @holding_illustration_western
 			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 0 } }
-			graphical_cultures = { aov_dwarven_building_gfx aov_dwarven_mena_building_gfx }
 			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
@@ -777,7 +775,6 @@ dwarven_hold_03 = {
 			name = "dwarven_holding_02_mesh"
 			illustration = @holding_illustration_western
 			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 1 } }
-			graphical_cultures = { aov_dwarven_building_gfx aov_dwarven_mena_building_gfx }
 			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
@@ -1138,7 +1135,6 @@ dwarven_hold_04 = {
 			name = "dwarven_holding_02_mesh"
 			illustration = @holding_illustration_western
 			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 1 } }
-			graphical_cultures = { aov_dwarven_building_gfx aov_dwarven_mena_building_gfx }
 			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
@@ -1499,7 +1495,6 @@ dwarven_hold_05 = {
 			name = "dwarven_holding_03_mesh"
 			illustration = @holding_illustration_western
 			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 2 } }
-			graphical_cultures = { aov_dwarven_building_gfx aov_dwarven_mena_building_gfx }
 			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
@@ -1865,7 +1860,6 @@ dwarven_hold_06 = {
 			name = "dwarven_holding_03_mesh"
 			illustration = @holding_illustration_western
 			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 2 } }
-			graphical_cultures = { aov_dwarven_building_gfx aov_dwarven_mena_building_gfx }
 			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
@@ -2231,7 +2225,6 @@ dwarven_hold_07 = {
 			name = "dwarven_holding_04_mesh"
 			illustration = @holding_illustration_western
 			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 2 } }
-			graphical_cultures = { aov_dwarven_building_gfx aov_dwarven_mena_building_gfx }
 			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
@@ -2597,7 +2590,6 @@ dwarven_hold_08 = {
 			name = "dwarven_holding_04_mesh"
 			illustration = @holding_illustration_western
 			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 3 } }
-			graphical_cultures = { aov_dwarven_building_gfx aov_dwarven_mena_building_gfx }
 			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
@@ -2963,7 +2955,6 @@ dwarven_hold_09 = {
 			name = "dwarven_holding_05_mesh"
 			illustration = @holding_illustration_western
 			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 3 } }
-			graphical_cultures = { aov_dwarven_building_gfx aov_dwarven_mena_building_gfx }
 			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {
@@ -3329,7 +3320,6 @@ dwarven_hold_10 = {
 			name = "dwarven_holding_05_mesh"
 			illustration = @holding_illustration_western
 			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 3 } }
-			graphical_cultures = { aov_dwarven_building_gfx aov_dwarven_mena_building_gfx }
 			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
 		}
 		asset = {

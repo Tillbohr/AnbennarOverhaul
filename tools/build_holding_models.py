@@ -1,7 +1,8 @@
 """Regenerate the holding-model files for Anbennar Overhaul.
 
 Gives Anbennar's elven, dwarven and Escanni cultures Realms in Exile's holding models: culture files
-with the new building_gfx keys, and the graphical region of dwarven mountain provinces. Rerun after
+with the new building_gfx keys, the holding buildings with RiE assets (dwarf assets limited by province), and
+the elven wall buildings. Rerun after
 an Anbennar or RiE update:
 
     python -I tools/build_holding_models.py [--rie PATH] [--anbennar PATH] [--game PATH]
@@ -24,7 +25,6 @@ MARKER = "# Anbennar Overhaul"
 SUBMOD = Path(__file__).resolve().parent.parent
 CULTURES_DIR = "common/culture/cultures"
 TERRAIN_FILE = "common/province_terrain/00_province_terrain.txt"
-REGION_FILE = "map_data/geographical_regions/aov_graphical_regions.txt"
 BOM = "\ufeff"
 
 TOP_KEY = re.compile(r"^\ufeff?\s*([A-Za-z0-9_.\-]+)\s*=\s*\{")
@@ -219,29 +219,14 @@ def override_culture_file(text: str, targets: dict) -> str:
     return "".join(pieces)
 
 
-def mountain_provinces(terrain_text: str, terrains) -> list:
-    """Sorted ids of provinces whose terrain is one of terrains."""
+def terrain_provinces(terrain_text: str, terrains, exclude=()) -> list:
+    """Sorted ids of provinces whose terrain is one of terrains, minus the ids in exclude."""
     wanted, ids = set(terrains), set()
     for line in terrain_text.splitlines():
         match = TERRAIN_LINE.match(strip_comment(line).lstrip(BOM))
         if match and match.group(2) in wanted:
             ids.add(int(match.group(1)))
-    return sorted(ids)
-
-
-def region_file(provinces: list) -> str:
-    lines = HEADER() + [
-        "",
-        f"{data.REGION} = {{",
-        "\tgraphical = yes",
-        "\tcolor = { %d %d %d }" % data.REGION_COLOR,
-        "\tprovinces = {",
-    ]
-    ordered = sorted(provinces)
-    for index in range(0, len(ordered), 10):
-        lines.append("\t\t" + " ".join(str(p) for p in ordered[index:index + 10]))
-    lines += ["\t}", "}", ""]
-    return BOM + "\n".join(lines)
+    return sorted(ids - set(exclude))
 
 
 def read_text(path: Path) -> str:
@@ -263,15 +248,6 @@ def build_cultures(roots: Roots) -> dict:
         if wanted:
             out[f"{CULTURES_DIR}/{filename}"] = override_culture_file(text, wanted).encode("utf-8")
     return out
-
-
-def build_region(roots: Roots) -> dict:
-    roots.check()
-    terrain = read_text(roots.anbennar / TERRAIN_FILE)
-    provinces = mountain_provinces(terrain, data.DWARF_MOUNTAIN_TERRAINS)
-    if not provinces:
-        raise GeneratorError("no dwarven mountain provinces found")
-    return {REGION_FILE: region_file(provinces).encode("utf-8")}
 
 
 def block_end(lines: list, start: int) -> int:
@@ -337,15 +313,18 @@ def _words(value) -> str:
     return value if isinstance(value, str) else " ".join(value)
 
 
-def asset_block(names, gfx, regions=None) -> str:
-    """A new pdxmesh asset (two-tab indented, LF): one name or variant names, the culture gfx key(s) and the
-    graphical region(s) it serves (a str or a list of each)."""
+def asset_block(names, gfx, regions=None, provinces=None) -> str:
+    """A new pdxmesh asset (two-tab indented, LF): one name or variant names, the culture gfx key(s) (None for any
+    culture), the province ids and the graphical region(s) it serves (a str or a list of each)."""
     lines = ["\t\tasset = {", "\t\t\ttype = pdxmesh"]
     if isinstance(names, str) or len(names) == 1:
         lines.append(f'\t\t\tname = "{names if isinstance(names, str) else names[0]}"')
     else:
         lines += ["\t\t\tnames = {"] + [f'\t\t\t\t"{name}"' for name in names] + ["\t\t\t}"]
-    lines.append("\t\t\tgraphical_cultures = { %s }" % _words(gfx))
+    if gfx:
+        lines.append("\t\t\tgraphical_cultures = { %s }" % _words(gfx))
+    if provinces:
+        lines.append("\t\t\tprovinces = { %s }" % " ".join(str(p) for p in sorted(provinces)))
     if regions:
         lines.append("\t\t\tgraphical_regions = { %s }" % _words(regions))
     lines.append("\t\t}")
@@ -418,9 +397,11 @@ def insert_assets(block: str, assets: list, variables=None, fallbacks=None) -> s
                         raise GeneratorError(f"variable @{name} used by the template asset is not defined in the source file")
                     code = code.replace(f"@{name}", variables[name])
                 resolved.append(f"\t\t\t{code}")
+        placed = False
         for line in asset.splitlines():
-            if line.lstrip().startswith("graphical_cultures"):
+            if not placed and line.lstrip().startswith(("graphical_cultures", "provinces", "graphical_regions")):
                 out += resolved
+                placed = True
             out.append(line)
     inserted = eol.join(out) + eol
     return "".join(lines[:point]) + inserted + "".join(lines[point:])
@@ -442,14 +423,27 @@ def build_buildings(roots: Roots) -> dict:
     _targets, group_keys = assign_gfx(texts)
     fallbacks = gfx_fallbacks(texts)
     regions = graphical_regions(roots.anbennar)
+    terrain = read_text(roots.anbennar / TERRAIN_FILE)
+    dwarf_terrain = terrain_provinces(terrain, data.DWARF_TERRAIN_TERRAINS, data.DWARF_PROVINCE_EXCLUDE)
+    dwarf_mountains = terrain_provinces(terrain, data.DWARF_MOUNTAIN_TERRAINS)
+    if not dwarf_terrain or not dwarf_mountains:
+        raise GeneratorError("no dwarven terrain or mountain provinces found")
     for key, groups in data.MODELS.items():
         path, text = source_file(roots, key)
         start, end = building_block(text, key)
         assets, assets_fallback = [], []
         for group, meshes in groups.items():
-            # Dwarf castles and cities show only on mountain provinces; every other asset serves every graphical
-            # region (the region outranks the culture when CK3 picks an asset, so a bare culture asset would lose).
-            assets.append(asset_block(meshes, group_keys[group], [data.REGION] if group == "dwarven" else regions))
+            # Every asset serves every graphical region (the region outranks the culture when CK3 picks an asset,
+            # so a bare culture asset would lose). Dwarf castles and cities come in two assets, first: dwarven
+            # terrain for any holder (a province list outranks the region), then ordinary mountains for dwarf
+            # cultures only.
+            if group == "dwarven":
+                new = [asset_block(meshes, None, regions, dwarf_terrain),
+                       asset_block(meshes, group_keys[group], regions, dwarf_mountains)]
+                assets[:0] = new
+                assets_fallback[:0] = [fallbacks[data.GROUPS[group]["gfx"]]] * 2
+                continue
+            assets.append(asset_block(meshes, group_keys[group], regions))
             assets_fallback.append(fallbacks[data.GROUPS[group]["gfx"]])
         defined = source_variables(text)
         kind = key.rsplit("_", 1)[0]
@@ -466,6 +460,47 @@ def build_buildings(roots: Roots) -> dict:
     top = "".join(f"@{name} = {variables[name]}\n" for name in used)
     content = BOM + "\n".join(HEADER()) + "\n\n" + (top + "\n" if top else "") + body
     return {BUILDINGS_FILE: content.encode("utf-8")}
+
+
+WALLS_FILE = "common/buildings/aov_holding_walls.txt"
+WALL_OVERRIDES_FILE = "common/buildings/zz_aov_holding_walls.txt"
+WALL_SOURCE_KEYS = ("walls_01_tribal", "walls_01", "walls_02", "walls_03", "walls_04")
+IS_ENABLED_LINE = "\tis_enabled = {"
+
+
+def uses_elf_gfx(keys: list) -> str:
+    """A culture trigger that holds when the holder's culture uses one of the gfx keys."""
+    return "scope:holder ?= { culture = { OR = { %s } } }" % " ".join(f"has_building_gfx = {key}" for key in keys)
+
+
+def elf_keys(group_keys: dict) -> list:
+    return [key for group in ("high_elf", "wood_elf") for key in group_keys[group]]
+
+
+def build_walls(roots: Roots) -> dict:
+    """The aov_elven_walls background building, and Anbennar's five vanilla-style wall buildings re-emitted so they
+    stand down for elven holders."""
+    roots.check()
+    _targets, group_keys = assign_gfx(culture_texts(roots))
+    regions = graphical_regions(roots.anbennar)
+    assets = "".join(asset_block(data.WALL_MODELS[group], group_keys[group], regions) for group in ("high_elf", "wood_elf"))
+    elven = (f"aov_elven_walls = {{\n\tis_graphical_background = yes\n\n{assets}\n"
+             f"{IS_ENABLED_LINE}\n\t\t{uses_elf_gfx(elf_keys(group_keys))}\n"
+             "\t\t# the walls a vanilla holding shows (see walls_00 in Anbennar's background buildings)\n"
+             "\t\tOR = {\n\t\t\tis_county_capital = yes\n\t\t\tfort_level > 0\n\t\t}\n\t}\n}\n")
+    exclusion = f"\t\tNOT = {{ {uses_elf_gfx(elf_keys(group_keys))} }} {MARKER}: elven walls\n"
+    blocks = []
+    for key in WALL_SOURCE_KEYS:
+        text = source_building(roots, key)
+        lines = text.splitlines(keepends=True)
+        at = [i for i, line in enumerate(lines) if line.rstrip("\r\n") == IS_ENABLED_LINE]
+        if len(at) != 1:
+            raise GeneratorError(f"{key}: expected one top-level is_enabled block, found {len(at)}")
+        lines.insert(at[0] + 1, exclusion)
+        blocks.append("".join(lines))
+    header = "\n".join(HEADER()) + "\n\n"
+    return {WALLS_FILE: (BOM + header + elven).encode("utf-8"),
+            WALL_OVERRIDES_FILE: (BOM + header + "\n".join(blocks)).encode("utf-8")}
 
 
 def build_localization(roots: Roots) -> dict:
@@ -581,10 +616,12 @@ def build_assets(roots: Roots) -> dict:
     models = roots.rie / "gfx/models"
     vanilla = (roots.game / "game/gfx/models", roots.anbennar / "gfx/models")
     files = {}
-    for group in data.GROUPS:
+    for group in sorted(data.GROUPS, reverse=True):  # a texture two groups share is kept by the first
         meshes = []
         for groups in data.MODELS.values():
             meshes += [mesh for mesh in groups.get(group, []) if mesh not in meshes]
+        if group in data.WALL_MODELS and data.WALL_MODELS[group] not in meshes:
+            meshes.append(data.WALL_MODELS[group])
         if group == "dwarven":  # the dwarven hold levels (tools/build_holds.py) use one more model
             meshes += [mesh for mesh in data.HOLD_DWARF_MESHES.values() if mesh not in meshes]
         folder = (models / "buildings" / data.MODEL_SETS[group]).resolve()
@@ -595,6 +632,10 @@ def build_assets(roots: Roots) -> dict:
             for source in asset_files(asset, models, vanilla):
                 rel = f"{ASSET_DIR}/{group}/{source.name}"
                 content = source.read_bytes()
+                # A texture two groups share is copied once: CK3 finds textures by name, and tiger flags duplicates.
+                if source.suffix == ".dds" and any(other != rel and other.endswith("/" + source.name)
+                                                   and files[other] == content for other in files):
+                    continue
                 if files.get(rel, content) != content:
                     raise GeneratorError(f"{rel} would get two different files")
                 files[rel] = content
@@ -607,7 +648,7 @@ def build_all(roots: Roots) -> dict:
     roots.check()
     files = {}
     files.update(build_cultures(roots))
-    files.update(build_region(roots))
+    files.update(build_walls(roots))
     files.update(build_buildings(roots))
     files.update(build_localization(roots))
     files.update(build_assets(roots))

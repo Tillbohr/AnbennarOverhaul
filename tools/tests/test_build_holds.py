@@ -97,7 +97,7 @@ class HoldBuildingTests(unittest.TestCase):
             first = first[:first.index("\n\t\t}")]
             self.assertIn(f'name = "{mesh}"', first, n)
             self.assertIn("type = pdxmesh", first, n)
-            self.assertIn("graphical_cultures = { %s }" % " ".join(keys["dwarven"]), first, n)
+            self.assertNotIn("graphical_cultures", first, n)  # any holder sees the dwarf model
             self.assertIn("graphical_regions = { %s }" % " ".join(regions), first, n)
             self.assertIn("# Anbennar Overhaul: RiE dwarf hold model", first, n)
             band = assets[holds.ASSET_BAND[n]]

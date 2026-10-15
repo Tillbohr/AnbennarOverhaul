@@ -10,9 +10,13 @@ GROUPS = {
     "castanorian": {"label": "Castanorian", "gfx": "aov_castanorian_building_gfx", "heritage": "heritage_escanni"},
 }
 
-# Province terrains that count as dwarven mountains (dwarves keep mountain models there, land models elsewhere).
-DWARF_MOUNTAIN_TERRAINS = ("mountains", "desert_mountains", "dwarven_hold", "dwarven_hold_surface",
-                           "cavern", "dwarven_road")
+# Dwarven terrain: a castle or city here shows the dwarf model whoever holds it (the asset lists the provinces).
+DWARF_TERRAIN_TERRAINS = ("dwarven_hold", "dwarven_hold_surface", "cavern", "dwarven_road")
+# Provinces of those terrains that keep the ordinary models (263 is Old Passage, the dwarven road between Esmaria and
+# Silverforge; user choice).
+DWARF_PROVINCE_EXCLUDE = (263,)
+# Ordinary mountains: only dwarf cultures show the dwarf model there; on flat land they keep vanilla's.
+DWARF_MOUNTAIN_TERRAINS = ("mountains", "desert_mountains")
 
 # RiE subfolder (under gfx/models/buildings/) that holds each group's assets.
 MODEL_SETS = {
@@ -43,6 +47,7 @@ _WOOD_ELF = ["sindarin_sanctuary_01", "sindarin_sanctuary_02", "sindarin_sanctua
 _DWARVEN = [f"dwarven_holding_0{n}" for n in range(1, 5)]
 
 # Building key -> group -> pdxmesh names (the spec's section 2 table). Dwarves only change castles and cities.
+# Dwarf entries are the model of the terrain/mountain assets (see build_holding_models.build_buildings).
 MODELS = {}
 MODELS.update(_levels("castle", _HIGH_ELF, _WOOD_ELF,
                       [(f"building_dunedain_castle_0{n}",) for n in range(1, 5)], _DWARVEN))
@@ -52,8 +57,12 @@ MODELS.update(_levels("city", _HIGH_ELF, _WOOD_ELF,
 MODELS.update(_levels("temple", _HIGH_ELF, _WOOD_ELF,
                       [[f"building_dunedain_temple_0{n}_{side}" for side in "ab"] for n in (1, 1, 2, 2)]))
 
-REGION = "graphical_aov_dwarven_mountains"
-REGION_COLOR = (120, 80, 40)
+# Tribal holdings (wood elves only; every wood elf holding in the Deepwoods starts tribal).
+MODELS["tribe_01"] = {"wood_elf": ["sindarin_sanctuary_01_mesh"]}
+MODELS["tribe_02"] = {"wood_elf": ["sindarin_sanctuary_02_mesh"]}
+
+# Background wall buildings (aov_elven_walls): group -> pdxmesh.
+WALL_MODELS = {"high_elf": "highelves_fort_wall_mesh", "wood_elf": "sindarin_hedge_wall_01_mesh"}
 
 # Dwarven hold level (1..10) -> RiE dwarven pdxmesh, used by tools/build_holds.py (dwarf holders only; the
 # assets are copied by tools/build_holding_models.py).
