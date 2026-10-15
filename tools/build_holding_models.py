@@ -527,6 +527,7 @@ def build_walls(roots: Roots) -> dict:
     assets = "".join(asset_block(data.WALL_MODELS[group], group_keys[group], regions) for group in ("high_elf", "wood_elf"))
     elven = (f"aov_elven_walls = {{\n\tis_graphical_background = yes\n\n{assets}\n"
              f"{IS_ENABLED_LINE}\n\t\t{uses_elf_gfx(elf_keys(group_keys))}\n"
+             f"\t\tNOT = {{ {DWARF_TRIGGER} = yes }}\n"
              "\t\t# the walls a vanilla holding shows (see walls_00 in Anbennar's background buildings)\n"
              "\t\tOR = {\n\t\t\tis_county_capital = yes\n\t\t\tfort_level > 0\n\t\t}\n\t}\n}\n")
     exclusion = f"\t\tNOT = {{ {uses_elf_gfx(elf_keys(group_keys))} }} {MARKER}: elven walls\n"

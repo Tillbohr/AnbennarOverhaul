@@ -19,6 +19,7 @@ aov_elven_walls = {
 
 	is_enabled = {
 		scope:holder ?= { culture = { OR = { has_building_gfx = aov_high_elf_building_gfx has_building_gfx = aov_wood_elf_building_gfx } } }
+		NOT = { aov_dwarven_model_province_trigger = yes }
 		# the walls a vanilla holding shows (see walls_00 in Anbennar's background buildings)
 		OR = {
 			is_county_capital = yes

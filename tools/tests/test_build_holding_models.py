@@ -567,6 +567,7 @@ class RealWallTests(unittest.TestCase):
             self.assertIn(f"has_building_gfx = {key}", enabled)
         self.assertIn("scope:holder ?= { culture = {", enabled)
         self.assertIn("is_county_capital = yes", enabled)
+        self.assertIn("NOT = { aov_dwarven_model_province_trigger = yes }", enabled)
         self.assertIn("fort_level > 0", enabled)
 
     def test_re_emitted_walls_differ_by_one_first_line(self):
