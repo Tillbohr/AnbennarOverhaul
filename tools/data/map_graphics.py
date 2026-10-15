@@ -139,6 +139,24 @@ TRANSPLANT_HEIGHT_JITTER = 0.05  # seeded +/- jitter of the height factor, withi
 TRANSPLANT_JITTER_POS = 0.6  # RiE units, each object's position, +/-
 TRANSPLANT_JITTER_YAW = 15  # degrees, +/-
 TRANSPLANT_JITTER_SCALE = (0.9, 1.1)  # each object's scale multiplier
+# The range behind a cone joins its peak: dwarven or impassable land behind the gate (t >= 0) within RANGE_JOIN_RADIUS
+# px of it, outside the cone core, is scaled up from the gate's foot by s = (cone peak - foot) / (range max - foot),
+# clamped to [1, RANGE_JOIN_MAX], at full strength within RANGE_JOIN_FULL px and fading out (cosine) to the radius.
+RANGE_JOIN_RADIUS = 60
+RANGE_JOIN_FULL = 30
+RANGE_JOIN_MAX = 2.0
+RANGE_JOIN_CORE = 0.4  # pixels with at least this cone weight are the cone, not the range
+# The gate model's footprint (px per unit of gate scale; the Erebor gate mesh is about 3.25 deep and 7.84 wide) and a
+# front apron (px at gate scale 1.6): both are raised to at least the gate's foot, blending out over GATE_APRON_FADE px.
+GATE_APRON = 4
+GATE_APRON_FADE = 3
+GATE_MODEL_DEPTH = 3.25
+GATE_MODEL_HALF_WIDTH = 3.92
+GATE_APRON_SCALE = 1.6
+# A mountain piece whose footprint overlaps the gate's keep-out (footprint plus apron, 2 px margin behind and at the
+# sides) is pushed back along the cone axis by at most PIECE_MAX_PUSH px, else dropped.
+PIECE_MAX_PUSH = 12
+PIECE_KEEP_OUT_MARGIN = 2
 # Per-gate pins keyed like GATE_OVERRIDES: mirror (bool), turn (degrees), height (the height factor, used as is).
 TRANSPLANT_OVERRIDES = {}
 PACK_TOLERANCE = 257  # largest height error allowed when repacking the heightmap

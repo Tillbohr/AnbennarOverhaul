@@ -15,6 +15,7 @@ import hashlib
 import math
 import random
 import re
+import struct
 import sys
 from array import array
 from dataclasses import dataclass, field
@@ -78,6 +79,14 @@ class GatePlan:
     dropped: int = 0
     dropped_names: list = field(default_factory=list)
     weights: dict = field(default_factory=dict)
+    size: float = 0.0  # the gate model's scale
+    yaw: float = 0.0  # the composition's facing (the gate's facing plus the turn)
+    gate_yaw: float = 0.0  # the gate's own facing
+    pushed_names: list = field(default_factory=list)  # pieces moved back off the gate's keep-out
+    join_before: int = 0  # the range behind the cone: its highest pixel before and after the join
+    join_after: int = 0
+    join_scale: float = 1.0
+    apron_raised: int = 0  # pixels raised to the foot under the gate's footprint and front apron
 
 
 def frame(yaw):
@@ -207,6 +216,62 @@ def load_composition(rie):
     return extract_composition(rie)
 
 
+# --- Mesh bounds and the gate's keep-out ----------------------------------------------------------------------
+
+MESH_MIN = re.compile(rb"!\x03minf\x03\x00\x00\x00(.{12})", re.S)
+MESH_MAX = re.compile(rb"!\x03maxf\x03\x00\x00\x00(.{12})", re.S)
+
+
+def mesh_bounds(blob):
+    """((min x, y, z), (max x, y, z)) of a pdxmesh file's bounding box (the `min` and `max` float3 properties of its
+    mesh block), in mesh units before the asset's scale."""
+    lo, hi = MESH_MIN.search(blob), MESH_MAX.search(blob)
+    if not lo or not hi:
+        raise GeneratorError("mesh has no min/max bounding box")
+    return struct.unpack("<3f", lo.group(1)), struct.unpack("<3f", hi.group(1))
+
+
+def _rect_corners(x, y, yaw, t0, t1, l0, l1):
+    """Map corners of the rectangle t0..t1 by l0..l1 in the frame of a point at (x, y) facing `yaw`."""
+    (ux, uy), (vx, vy) = frame(yaw)
+    return [(x + t * ux + l * vx, y + t * uy + l * vy) for t, l in ((t0, l0), (t1, l0), (t1, l1), (t0, l1))]
+
+
+def _overlap(a, b):
+    """True when convex polygons `a` and `b` overlap (separating axis test; touching is not overlapping)."""
+    for poly in (a, b):
+        for i in range(len(poly)):
+            ex, ey = poly[(i + 1) % len(poly)][0] - poly[i][0], poly[(i + 1) % len(poly)][1] - poly[i][1]
+            nx, ny = -ey, ex
+            pa = [nx * px + ny * py for px, py in a]
+            pb = [nx * px + ny * py for px, py in b]
+            if max(pa) <= min(pb) + 1e-9 or max(pb) <= min(pa) + 1e-9:
+                return False
+    return True
+
+
+def footprint(obj, box):
+    """Map corners of a placed piece's footprint; `box` = (min x, min z, max x, max z) of its mesh in px at scale 1
+    (mesh units times the asset scale). Local +X is the frame's v, local +Z its u (as for the gate)."""
+    (ux, uy), (vx, vy) = frame(obj.yaw)
+    x0, z0, x1, z1 = box
+    return [(obj.x + obj.scale * (lx * vx + lz * ux), obj.y + obj.scale * (lx * vy + lz * uy))
+            for lx, lz in ((x0, z0), (x1, z0), (x1, z1), (x0, z1))]
+
+
+def keep_out(plan):
+    """Map corners of the gate's keep-out: the model footprint, the front apron and a PIECE_KEEP_OUT_MARGIN."""
+    m = data.PIECE_KEEP_OUT_MARGIN
+    return _rect_corners(plan.x, plan.y, plan.gate_yaw, -data.GATE_APRON * plan.size / data.GATE_APRON_SCALE,
+                         data.GATE_MODEL_DEPTH * plan.size + m, -(data.GATE_MODEL_HALF_WIDTH * plan.size + m),
+                         data.GATE_MODEL_HALF_WIDTH * plan.size + m)
+
+
+def overlaps_keep_out(plan, obj, box):
+    """Whether the piece's footprint overlaps the gate's keep-out."""
+    return _overlap(footprint(obj, box), keep_out(plan))
+
+
 # --- Per-site variation ---------------------------------------------------------------------------------------
 
 def site_rng(key):
@@ -299,13 +364,22 @@ def _water_offsets():
                    if 0 < math.hypot(dx, dy) < n), key=lambda o: math.hypot(*o))
 
 
+def _water_factor(blocked, x, y, w, h, offsets):
+    """min(1, distance to the nearest `blocked` pixel / TRANSPLANT_WATER_FADE); `offsets` is `_water_offsets()`."""
+    n = data.TRANSPLANT_WATER_FADE
+    for ox, oy in offsets:
+        px_, py_ = x + ox, y + oy
+        if 0 <= px_ < w and 0 <= py_ < h and blocked[py_ * w + px_]:
+            return math.hypot(ox, oy) / n
+    return 1.0
+
+
 def _cone_pixels(plan, comp, yaw, w, h, blocked, offsets):
     """[(i, weight, delta)] for the pixels of one gate's cone: weight > 0 is `shape_weight` x the water fade
     min(1, distance to the nearest `blocked` pixel (water or province 0) / TRANSPLANT_WATER_FADE)."""
     (ux, uy), (vx, vy) = frame(yaw)
     k = plan.k
     reach = math.ceil(k * comp.radius) + 1
-    n = data.TRANSPLANT_WATER_FADE
     out = []
     for y in range(max(0, int(plan.y) - reach), min(h, int(plan.y) + reach + 1)):
         for x in range(max(0, int(plan.x) - reach), min(w, int(plan.x) + reach + 1)):
@@ -317,16 +391,88 @@ def _cone_pixels(plan, comp, yaw, w, h, blocked, offsets):
             c = shape_weight(comp, t, l)
             if c <= 0:
                 continue
-            for ox, oy in offsets:
-                px_, py_ = x + ox, y + oy
-                if 0 <= px_ < w and 0 <= py_ < h and blocked[py_ * w + px_]:
-                    c *= math.hypot(ox, oy) / n
-                    break
+            c *= _water_factor(blocked, x, y, w, h, offsets)
             out.append((y * w + x, c, comp.delta(t, l)))
     return out
 
 
-def transplant(grid, pm, water, placed, comp, overrides=None):
+def _join_range(new, plan, w, h, ids, blocked, ranges, offsets):
+    """Scale the range behind the gate's cone up so its highest point reaches the cone's peak (see `transplant`);
+    sets plan.join_before, join_after and join_scale."""
+    (ux, uy), _ = frame(plan.yaw)
+    radius, full = data.RANGE_JOIN_RADIUS, data.RANGE_JOIN_FULL
+    region = []
+    m = 0
+    for y in range(max(0, int(plan.y) - radius - 1), min(h, int(plan.y) + radius + 2)):
+        for x in range(max(0, int(plan.x) - radius - 1), min(w, int(plan.x) + radius + 2)):
+            i = y * w + x
+            if blocked[i] or not ranges[ids[i]]:
+                continue
+            dx, dy = x - plan.x, y - plan.y
+            d = math.hypot(dx, dy)
+            if d > radius or dx * ux + dy * uy < 0 or plan.weights.get(i, 0.0) >= data.RANGE_JOIN_CORE:
+                continue
+            region.append((i, x, y, d))
+            m = max(m, new[i])
+    g = plan.foot
+    plan.join_before = m
+    if m > g and plan.peak > m:
+        plan.join_scale = min(data.RANGE_JOIN_MAX, max(1.0, (plan.peak - g) / (m - g)))
+    s = plan.join_scale
+    if s > 1.0:
+        for i, x, y, d in region:
+            cur = new[i]
+            if cur <= g:
+                continue
+            wgt = 1.0 if d <= full else _ease((d - full) / (radius - full))
+            wgt *= _water_factor(blocked, x, y, w, h, offsets)
+            if wgt > 0:
+                new[i] = max(cur, dm.soft_ceiling(g + (cur - g) * (1 + (s - 1) * wgt)))
+    plan.join_after = max((new[i] for i, _, _, _ in region), default=0)
+
+
+def _level_footprint(new, plan, w, h, blocked):
+    """Raise the gate's footprint and front apron (in the gate's own frame) to at least its foot, blending out over
+    GATE_APRON_FADE px; land only. Sets plan.apron_raised."""
+    (ux, uy), (vx, vy) = frame(plan.gate_yaw)
+    back = data.GATE_APRON * plan.size / data.GATE_APRON_SCALE
+    depth = data.GATE_MODEL_DEPTH * plan.size
+    half = data.GATE_MODEL_HALF_WIDTH * plan.size + 1
+    fade = data.GATE_APRON_FADE
+    reach = math.ceil(math.hypot(max(back, depth), half)) + fade + 1
+    foot = plan.foot
+    raised = 0
+    for y in range(max(0, int(plan.y) - reach), min(h, int(plan.y) + reach + 2)):
+        for x in range(max(0, int(plan.x) - reach), min(w, int(plan.x) + reach + 2)):
+            i = y * w + x
+            if blocked[i] or new[i] >= foot:
+                continue
+            dx, dy = x - plan.x, y - plan.y
+            t, l = dx * ux + dy * uy, dx * vx + dy * vy
+            d = math.hypot(max(-back - t, 0.0, t - depth), max(abs(l) - half, 0.0))
+            if d > fade:
+                continue
+            cur = new[i]
+            value = max(cur, int(round(cur + (foot - cur) * _ease(d / fade))))
+            if value > cur:
+                new[i] = value
+                raised += 1
+    plan.apron_raised = raised
+
+
+def _clear_piece(plan, obj, box, axis, step=0.5):
+    """The distance (0 if none is needed, a multiple of `step`) to push `obj` along `axis` until its footprint no
+    longer overlaps the gate's keep-out, or None if PIECE_MAX_PUSH is not enough."""
+    d = 0.0
+    while d <= data.PIECE_MAX_PUSH + 1e-9:
+        moved = PlacedObject(obj.mesh, obj.x + d * axis[0], obj.y + d * axis[1], obj.y_offset, obj.yaw, obj.scale)
+        if not overlaps_keep_out(plan, moved, box):
+            return d
+        d += step
+    return None
+
+
+def transplant(grid, pm, water, placed, comp, overrides=None, ranges=None, piece_bounds=None):
     """Stamp the composition at every gate; returns (new grid, [GatePlan]) with plans sorted by site key.
 
     `placed` is [(site, size, (x, y))]: the gate's size gives k = size / EREBOR_GATE_SCALE, its position and the
@@ -338,11 +484,20 @@ def transplant(grid, pm, water, placed, comp, overrides=None):
     the gate in `grid`; pixels in front of the gate face, outside the cone, on water or on province 0 never change.
     Gates apply in key order, each blending from what the last left. A piece survives only if its centre has t >= 0
     and cone weight >= TRANSPLANT_PIECE_MIN_WEIGHT, and does not fall outside the map, on water or on province 0;
-    `plan.kept` and `plan.dropped_names` list the meshes; `plan.weights` is {pixel: cone weight}."""
+    `plan.dropped_names` lists the meshes; `plan.weights` is {pixel: cone weight}.
+
+    After all cones, each gate in key order (reading what the last left) joins the range behind its cone to the cone's
+    peak (`_join_range`: land of `ranges`, a set of province ids, None = all land, at t >= 0 within RANGE_JOIN_RADIUS
+    px and off the cone core, is scaled up from the foot by s = (peak - foot) / (range max - foot) in
+    [1, RANGE_JOIN_MAX], fading out with distance; never lowered) and then levels its footprint and front apron to the
+    foot (`_level_footprint`). `piece_bounds` ({mesh: (min x, min z, max x, max z)} in px at scale 1) enables the
+    keep-out: a piece whose footprint overlaps the gate's keep-out (`keep_out`) is pushed back along the cone axis by
+    at most PIECE_MAX_PUSH px, filtered again there (listed in `plan.pushed_names`), else dropped."""
     overrides = overrides if overrides is not None else data.TRANSPLANT_OVERRIDES
     _check_overrides(placed, overrides)
     w, h, ids = pm.width, pm.height, pm.ids
     wat = _lookup(water)
+    rng_ids = bytearray([1]) * 65536 if ranges is None else _lookup(ranges)
     blocked = bytearray(len(ids))
     for i, v in enumerate(ids):
         blocked[i] = 1 if (not v or wat[v]) else 0
@@ -351,6 +506,12 @@ def transplant(grid, pm, water, placed, comp, overrides=None):
     new = array("H", old)
     plans = []
     cones = []
+
+    def piece_ok(t, l, ox, oy):
+        """The piece filter: centre behind the face (t >= 0), enough cone weight, on the map and on land."""
+        return (t >= 0 and shape_weight(comp, t, l) >= data.TRANSPLANT_PIECE_MIN_WEIGHT
+                and 0 <= ox < w and 0 <= oy < h and not blocked[oy * w + ox])
+
     for site, size, (px, py) in sorted(placed, key=lambda sp: (sp[0].dwarven_county, sp[0].normal_county)):
         key = (site.dwarven_county, site.normal_county)
         pin = overrides.get(key, {})
@@ -369,7 +530,7 @@ def transplant(grid, pm, water, placed, comp, overrides=None):
         yaw = yaw0 + turn
         gx, gy = min(w - 1, max(0, int(round(px)))), min(h - 1, max(0, int(round(py))))
         foot = old[gy * w + gx]
-        plan = GatePlan(key, px, py, k, mirror, turn, 1.0, foot)
+        plan = GatePlan(key, px, py, k, mirror, turn, 1.0, foot, size=size, yaw=yaw, gate_yaw=yaw0)
         cone = _cone_pixels(plan, comp, yaw, w, h, blocked, offsets)
         plan.weights = {i: c for i, c, _ in cone}
         if "height" in pin:
@@ -386,14 +547,28 @@ def transplant(grid, pm, water, placed, comp, overrides=None):
             lo, hi = data.TRANSPLANT_JITTER_SCALE
             x, y = px + k * (t * ux + l * vx), py + k * (t * uy + l * vy)
             ox, oy = int(round(x)), int(round(y))
-            if (t < 0 or shape_weight(comp, t, sign * l) < data.TRANSPLANT_PIECE_MIN_WEIGHT
-                    or not (0 <= ox < w and 0 <= oy < h) or blocked[oy * w + ox]):
+            if not piece_ok(t, sign * l, ox, oy):
                 plan.dropped += 1
                 plan.dropped_names.append(obj.mesh)
                 continue
-            plan.objects.append(PlacedObject(obj.mesh, x, y, obj.y * k, yaw + sign * obj.yaw
-                                             + jyaw * math.radians(data.TRANSPLANT_JITTER_YAW),
-                                             k * obj.scale * (lo + (hi - lo) * jscale)))
+            piece = PlacedObject(obj.mesh, x, y, obj.y * k, yaw + sign * obj.yaw
+                                 + jyaw * math.radians(data.TRANSPLANT_JITTER_YAW),
+                                 k * obj.scale * (lo + (hi - lo) * jscale))
+            if piece_bounds is not None:
+                if obj.mesh not in piece_bounds:
+                    raise GeneratorError(f"no bounding box for {obj.mesh}")
+                push = _clear_piece(plan, piece, piece_bounds[obj.mesh], (ux, uy))
+                if push is not None and push > 0:
+                    piece.x, piece.y = x + push * ux, y + push * uy
+                    if piece_ok(t + push / k, sign * l, int(round(piece.x)), int(round(piece.y))):
+                        plan.pushed_names.append(obj.mesh)
+                    else:
+                        push = None
+                if push is None:
+                    plan.dropped += 1
+                    plan.dropped_names.append(obj.mesh)
+                    continue
+            plan.objects.append(piece)
         plans.append(plan)
         cones.append(cone)
     for plan, cone in zip(plans, cones):
@@ -404,4 +579,7 @@ def transplant(grid, pm, water, placed, comp, overrides=None):
             if value > cur:
                 new[i] = value
                 plan.peak = max(plan.peak, value)
+    for plan in plans:
+        _join_range(new, plan, w, h, ids, blocked, rng_ids, offsets)
+        _level_footprint(new, plan, w, h, blocked)
     return type(grid)(w, h, new), plans

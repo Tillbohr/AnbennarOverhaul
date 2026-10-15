@@ -49,9 +49,9 @@ def site(county="c_a", inward=(0.0, 1.0)):
     return dm.GateSite(county, "c_x", 70, 70, inward)
 
 
-def run(pm, grid, sites, c=None, water=(), overrides=None):
+def run(pm, grid, sites, c=None, water=(), overrides=None, **kw):
     placed = [(s, K2, (s.x, s.y)) for s in sites]
-    return gt.transplant(grid, pm, set(water), placed, c or comp(), overrides if overrides is not None else {})
+    return gt.transplant(grid, pm, set(water), placed, c or comp(), overrides if overrides is not None else {}, **kw)
 
 
 class FrameTests(unittest.TestCase):
@@ -205,11 +205,12 @@ class ConeShapeTests(unittest.TestCase):
         weights = plans[0].weights
         changed = [i for i in range(len(new.values)) if new.values[i] != grid.values[i]]
         self.assertTrue(changed)
-        self.assertLessEqual(set(changed), set(weights))
+        apron = {y * 140 + x for y in range(62, 77) for x in range(60, 81)}  # the gate's footprint and apron
+        self.assertLessEqual(set(changed), set(weights) | apron)
         for i in weights:
             self.assertGreaterEqual(i // 140, 70)  # t >= 0: never south of a north-facing gate
         for i in range(len(new.values)):
-            if i // 140 < 70:
+            if i // 140 < 70 and i not in apron:
                 self.assertEqual(new.values[i], grid.values[i])
         # the low ground beside the cone keeps its own height
         self.assertEqual(new.get(70 + 25, 80), 5000)
