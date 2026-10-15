@@ -812,6 +812,26 @@ def overlay_asset(text: str, piece: str) -> str:
     return out
 
 
+ASSET_SCALE = re.compile(r"(?<!\w)scale\s*=\s*([0-9.]+)")
+
+
+def piece_bounds(rie: Path, comp) -> dict:
+    """{composition mesh: (min x, min z, max x, max z)} of every piece mesh in `comp`: its bounding box in px at
+    object scale 1, i.e. in mesh units times the asset's scale."""
+    out = {}
+    folder = rie / RIE_MOUNTAIN_DIR
+    for mesh in sorted({o.mesh for o in comp.objects}):
+        piece = piece_name(mesh)
+        for name in (f"{piece}.asset", f"{piece}.mesh"):
+            if not (folder / name).is_file():
+                raise GeneratorError(f"Realms in Exile not found: {folder / name} does not exist")
+        found = ASSET_SCALE.search(_read_text(folder / f"{piece}.asset"))
+        scale = float(found.group(1)) if found else 1.0
+        lo, hi = gt.mesh_bounds((folder / f"{piece}.mesh").read_bytes())
+        out[mesh] = (lo[0] * scale, lo[2] * scale, hi[0] * scale, hi[2] * scale)
+    return out
+
+
 def transplant_assets(rie: Path, plans: list) -> dict:
     """The model files of the composition meshes the plans use: `aov_<piece>.asset` (names prefixed), the piece's
     mesh, and the textures its asset names, all in GATE_ASSET_DIR."""
@@ -886,8 +906,12 @@ def _height_notes(report: dict, plans: list = ()) -> list:
     for p in plans:
         notes.append(f"gate {p.key[0]}/{p.key[1]} at ({p.x:.1f}, {p.y:.1f}): mirrored {'yes' if p.mirror else 'no'}, "
                      f"turn {math.degrees(p.turn):+.1f} deg, height factor {p.factor:.3f}, cone peak {p.peak} "
-                     f"(foot {p.foot}, +{p.peak - p.foot}), pieces {len(p.objects)} kept / {p.dropped} dropped"
-                     + (f" ({', '.join(n.removesuffix('_mesh') for n in p.dropped_names)})" if p.dropped else ""))
+                     f"(foot {p.foot}, +{p.peak - p.foot}), range join {p.join_before} -> {p.join_after} "
+                     f"(s {p.join_scale:.2f}), apron {p.apron_raised} px raised, pieces {len(p.objects)} kept / "
+                     f"{p.dropped} dropped"
+                     + (f" ({', '.join(n.removesuffix('_mesh') for n in p.dropped_names)})" if p.dropped else "")
+                     + (f", pushed back: {', '.join(n.removesuffix('_mesh') for n in p.pushed_names)}"
+                        if p.pushed_names else ""))
     return notes
 
 
@@ -948,7 +972,9 @@ def build_heightmap(roots: Roots, notes: list = None) -> dict:
     lifted, report = dm.raise_heights(old, pm, dwarven, water)
     placed = [(site, size, pos) for site, size, _, pos in
               placed_gates(sites, data.GATE_SCALE, data.GATE_YAW_OFFSET, data.GATE_INSET, data.GATE_OVERRIDES)]
-    new, plans = gt.transplant(lifted, pm, water, placed, gt.load_composition(roots.rie), data.TRANSPLANT_OVERRIDES)
+    comp = gt.load_composition(roots.rie)
+    new, plans = gt.transplant(lifted, pm, water, placed, comp, data.TRANSPLANT_OVERRIDES,
+                               ranges=set(dwarven) | set(impassable), piece_bounds=piece_bounds(roots.rie, comp))
     if notes is not None:
         notes.extend(_height_notes(report, plans))
 

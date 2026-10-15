@@ -43,7 +43,7 @@ class RangeJoinTests(unittest.TestCase):
         p = plans[0]
         self.assertEqual(p.peak, 22000)
         self.assertEqual((p.join_before, p.join_after), (16000, 22000))
-        self.assertAlmostEqual(p.join_scale, 2.0)
+        self.assertAlmostEqual(p.join_scale, 2.0, places=3)
         self.assertEqual(new.get(93, 80), 22000)
         self.assertEqual(new.get(91, 80), G + 2 * 3000)  # (cur - foot) scaled by the same factor
         self.assertEqual(new.get(100, 80), G)  # flat ground at the foot stays
@@ -114,6 +114,17 @@ class RangeJoinTests(unittest.TestCase):
         want = G + 6000 * (1 + (plans[0].join_scale - 1) * wgt)
         self.assertAlmostEqual(new.get(70 + near, 73), want, delta=2)
         self.assertEqual(new.get(70 + rad + 2, 73), 16000)
+
+    def test_the_scale_is_solved_for_the_faded_height_not_a_far_maximum(self):
+        """The highest pixel stands in the fade (weight 0.5); s is raised so the scaled range still reaches the peak."""
+        pm, grid = plain(w=200, h=200)
+        set_rect(grid, 70 + 45, 70 + 45, 72, 74, 18000, w=200)
+        set_rect(grid, 92, 95, 72, 85, 17000, w=200)  # a nearer, lower ridge at full weight
+        new, plans = run(pm, grid, [dm.GateSite("c_a", "c_x", 70, 70, (0.0, 1.0))], overrides=PIN0)
+        self.assertEqual(plans[0].join_before, 18000)
+        self.assertGreater(plans[0].join_scale, 1.7)  # 12000 / 7000; a plain (peak - g) / (m - g) gives 1.5
+        self.assertEqual(plans[0].join_after, 22000)
+        self.assertEqual(max(new.values), 22000)
 
     def test_gates_join_in_key_order_whatever_the_input_order(self):
         pm, grid = self.ridge(16000)

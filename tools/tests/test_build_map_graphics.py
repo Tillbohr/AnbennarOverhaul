@@ -359,6 +359,13 @@ INSTALLED = ROOTS.rie.is_dir() and (ROOTS.anbennar / "gfx/map/terrain/materials.
 _BUILD = []
 
 
+def _impassable():
+    folder = ROOTS.anbennar / "map_data"
+    if not (folder / "default.map").is_file():
+        return set()
+    return dm.default_map_sets((folder / "default.map").read_text(encoding="utf-8-sig", errors="replace"))[1]
+
+
 def real_build():
     """(files, notes) of one build_all on the installed mods, shared by every real-data test (about a minute)."""
     if not _BUILD:
@@ -888,6 +895,18 @@ class GateOverlayRealTests(unittest.TestCase):
             self.assertIn(name + "_mapobject", names)
 
 
+@unittest.skipUnless(INSTALLED, "RiE and Anbennar are not installed")
+class PieceBoundsTests(unittest.TestCase):
+    def test_bounds_are_mesh_bounds_times_the_asset_scale(self):
+        comp = gt.load_composition(ROOTS.rie)
+        bounds = bmg.piece_bounds(ROOTS.rie, comp)
+        self.assertEqual(set(bounds), {o.mesh for o in comp.objects})
+        x0, z0, x1, z1 = bounds["mountain_01_mesh"]
+        self.assertAlmostEqual(x0, -6.71 * 1.5, delta=0.1)
+        self.assertAlmostEqual(x1, 7.07 * 1.5, delta=0.1)
+        self.assertLess(z0, z1)
+
+
 @unittest.skipUnless(INSTALLED and (ROOTS.anbennar / "map_data/provinces.png").is_file(),
                      "RiE and Anbennar are not installed")
 class ConeRealTests(unittest.TestCase):
@@ -901,8 +920,11 @@ class ConeRealTests(unittest.TestCase):
         cls.placed = [(s, z, p) for s, z, _, p in bmg.placed_gates(cls.sites, data.GATE_SCALE, data.GATE_YAW_OFFSET,
                                                                   data.GATE_INSET, data.GATE_OVERRIDES)]
         cls.comp = gt.load_composition(ROOTS.rie)
+        cls.impassable = _impassable()
+        cls.bounds = bmg.piece_bounds(ROOTS.rie, cls.comp)
         cls.new, cls.plans = gt.transplant(cls.lifted, cls.pm, cls.water, cls.placed, cls.comp,
-                                           data.TRANSPLANT_OVERRIDES)
+                                           data.TRANSPLANT_OVERRIDES, ranges=set(cls.dwarven) | cls.impassable,
+                                           piece_bounds=cls.bounds)
         cls.site = {(s.dwarven_county, s.normal_county): s for s, _, _ in cls.placed}
 
     def frame(self, plan):
@@ -913,20 +935,65 @@ class ConeRealTests(unittest.TestCase):
         files = real_build()[0]
         self.assertEqual(pngio.write_png(self.new.to_png()), files["map_data/heightmap.png"])
 
-    def test_nothing_changes_in_front_of_a_face_or_outside_the_cones(self):
+    def test_changes_stay_near_a_gate_and_nothing_is_lowered(self):
+        """Every changed pixel is in a cone, or in a gate's range-join region (behind its face, within the join
+        radius), or in its footprint/apron (the gate's own frame, plus the blend)."""
         w = self.pm.width
-        union = set()
+        allowed = set()
         for plan in self.plans:
+            allowed.update(plan.weights)
             (ux, uy), _ = self.frame(plan)
-            for i, c in plan.weights.items():
-                y, x = divmod(i, w)
-                self.assertGreaterEqual((x - plan.x) * ux + (y - plan.y) * uy, 0, (plan.key, x, y))
-                self.assertTrue(0 < c <= 1)
-            union.update(plan.weights)
+            (gux, guy), (gvx, gvy) = gt.frame(plan.gate_yaw)
+            r = data.RANGE_JOIN_RADIUS + 1
+            for y in range(max(0, int(plan.y) - r), min(self.pm.height, int(plan.y) + r + 1)):
+                for x in range(max(0, int(plan.x) - r), min(w, int(plan.x) + r + 1)):
+                    dx, dy = x - plan.x, y - plan.y
+                    if dx * ux + dy * uy >= 0 and math.hypot(dx, dy) <= data.RANGE_JOIN_RADIUS:
+                        allowed.add(y * w + x)
+                    t, l = dx * gux + dy * guy, dx * gvx + dy * gvy
+                    if (-data.GATE_APRON * plan.size / 1.6 - data.GATE_APRON_FADE <= t
+                            <= data.GATE_MODEL_DEPTH * plan.size + data.GATE_APRON_FADE
+                            and abs(l) <= data.GATE_MODEL_HALF_WIDTH * plan.size + 1 + data.GATE_APRON_FADE):
+                        allowed.add(y * w + x)
         changed = [i for i, (a, b) in enumerate(zip(self.lifted.values, self.new.values)) if a != b]
         self.assertTrue(changed)
-        self.assertLessEqual(set(changed), union)
+        self.assertLessEqual(set(changed), allowed)
         self.assertTrue(all(b >= a for a, b in zip(self.lifted.values, self.new.values)))
+        for plan in self.plans:
+            for i, c in plan.weights.items():
+                self.assertTrue(0 < c <= 1)
+
+    def test_every_range_joins_its_cone_peak(self):
+        """The range behind each cone is scaled toward the cone's peak (at most RANGE_JOIN_MAX): its highest point
+        after is at least min(peak - 2000, the capped scaling of its highest point before)."""
+        for plan in self.plans:
+            m, g = plan.join_before, plan.foot
+            capped = g + data.RANGE_JOIN_MAX * (m - g) if m > g else m
+            self.assertGreaterEqual(plan.join_after, min(plan.peak - 2000, capped) if plan.peak else m, plan.key)
+            self.assertGreaterEqual(plan.join_after, m, plan.key)
+
+    def test_footprint_and_apron_are_at_or_above_the_foot(self):
+        ids, w = self.pm.ids, self.pm.width
+        for plan in self.plans:
+            (ux, uy), (vx, vy) = gt.frame(plan.gate_yaw)
+            half = data.GATE_MODEL_HALF_WIDTH * plan.size + 1
+            checked = 0
+            for y in range(int(plan.y) - 14, int(plan.y) + 15):
+                for x in range(int(plan.x) - 14, int(plan.x) + 15):
+                    dx, dy = x - plan.x, y - plan.y
+                    t, l = dx * ux + dy * uy, dx * vx + dy * vy
+                    i = y * w + x
+                    if (-data.GATE_APRON * plan.size / 1.6 <= t <= data.GATE_MODEL_DEPTH * plan.size
+                            and abs(l) <= half and ids[i] and ids[i] not in self.water):
+                        checked += 1
+                        self.assertGreaterEqual(self.new.values[i], plan.foot, (plan.key, x, y))
+            self.assertGreater(checked, 0, plan.key)
+
+    def test_no_piece_overlaps_its_gates_keep_out(self):
+        for plan in self.plans:
+            for o in plan.objects:
+                self.assertFalse(gt.overlaps_keep_out(plan, o, self.bounds[o.mesh]), (plan.key, o.mesh))
+            self.assertLessEqual(len(plan.pushed_names), len(plan.objects))
 
     def test_water_and_unassigned_pixels_never_change(self):
         ids, w = self.pm.ids, self.pm.width
@@ -939,7 +1006,8 @@ class ConeRealTests(unittest.TestCase):
     def test_steps_outside_the_core(self):
         """Adjacent-pixel steps among cone pixels with weight < 0.4. The face wall (t < 1.5 RiE units, where the
         cone rises from the ground in about two pixels) is steep by design (measured 6k to 18k); the rest of the
-        cone's flank stays below 11k (Old Passage's overlapping gates are the worst)."""
+        cone's flank stays below 13k (measured 4k to 12.7k; the range join scales ridges next to the flank by up to
+        2x, and Old Passage's three overlapping gates are the worst)."""
         w, h = self.pm.width, self.pm.height
         values = self.new.values
         for plan in self.plans:
@@ -952,7 +1020,7 @@ class ConeRealTests(unittest.TestCase):
                 for j, ok in ((i - 1, x > 0), (i + 1, x + 1 < w), (i - w, y > 0), (i + w, y + 1 < h)):
                     if ok:
                         worst = max(worst, abs(values[i] - values[j]))
-            self.assertLessEqual(worst, 11000, (plan.key, worst))
+            self.assertLessEqual(worst, 13000, (plan.key, worst))
 
     def test_kept_pieces_have_t_nonnegative_and_cone_weight(self):
         for plan in self.plans:

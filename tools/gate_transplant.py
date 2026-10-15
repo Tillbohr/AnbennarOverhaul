@@ -397,10 +397,16 @@ def _cone_pixels(plan, comp, yaw, w, h, blocked, offsets):
 
 
 def _join_range(new, plan, w, h, ids, blocked, ranges, offsets):
-    """Scale the range behind the gate's cone up so its highest point reaches the cone's peak (see `transplant`);
-    sets plan.join_before, join_after and join_scale."""
+    """Scale the range behind the gate's cone up so it reaches the cone's peak (see `transplant`); sets
+    plan.join_before (the region's highest pixel before), join_after (after) and join_scale.
+
+    A region pixel above the foot g becomes max(cur, soft_ceiling(g + (cur - g) * (1 + (s - 1) * wgt))) where wgt is 1
+    within RANGE_JOIN_FULL px of the gate and a cosine fade to 0 at RANGE_JOIN_RADIUS, times the water fade; pixels
+    of the gate's own cone core (weight >= RANGE_JOIN_CORE) are not in the region. s is the smallest scale in [1, RANGE_JOIN_MAX] with which the highest scaled pixel reaches the cone's peak; for a range whose
+    highest pixel stands within RANGE_JOIN_FULL px that is (peak - g) / (highest - g)."""
     (ux, uy), _ = frame(plan.yaw)
     radius, full = data.RANGE_JOIN_RADIUS, data.RANGE_JOIN_FULL
+    g = plan.foot
     region = []
     m = 0
     for y in range(max(0, int(plan.y) - radius - 1), min(h, int(plan.y) + radius + 2)):
@@ -410,25 +416,36 @@ def _join_range(new, plan, w, h, ids, blocked, ranges, offsets):
                 continue
             dx, dy = x - plan.x, y - plan.y
             d = math.hypot(dx, dy)
-            if d > radius or dx * ux + dy * uy < 0 or plan.weights.get(i, 0.0) >= data.RANGE_JOIN_CORE:
+            c = plan.weights.get(i, 0.0)
+            if d > radius or dx * ux + dy * uy < 0 or c >= data.RANGE_JOIN_CORE:
                 continue
-            region.append((i, x, y, d))
-            m = max(m, new[i])
-    g = plan.foot
-    plan.join_before = m
-    if m > g and plan.peak > m:
-        plan.join_scale = min(data.RANGE_JOIN_MAX, max(1.0, (plan.peak - g) / (m - g)))
-    s = plan.join_scale
-    if s > 1.0:
-        for i, x, y, d in region:
             cur = new[i]
+            m = max(m, cur)
             if cur <= g:
                 continue
             wgt = 1.0 if d <= full else _ease((d - full) / (radius - full))
-            wgt *= _water_factor(blocked, x, y, w, h, offsets)
             if wgt > 0:
-                new[i] = max(cur, dm.soft_ceiling(g + (cur - g) * (1 + (s - 1) * wgt)))
-    plan.join_after = max((new[i] for i, _, _, _ in region), default=0)
+                wgt *= _water_factor(blocked, x, y, w, h, offsets)
+            if wgt > 0:
+                region.append((i, cur - g, wgt))
+    plan.join_before = m
+
+    def reach(s):
+        return max((dm.soft_ceiling(g + e * (1 + (s - 1) * wgt)) for _, e, wgt in region), default=0)
+
+    if region and plan.peak > g and reach(1.0) < plan.peak:
+        lo, hi = 1.0, data.RANGE_JOIN_MAX
+        if reach(hi) < plan.peak:
+            lo = hi
+        else:
+            for _ in range(40):
+                mid = (lo + hi) / 2
+                lo, hi = (mid, hi) if reach(mid) < plan.peak else (lo, mid)
+            lo = hi
+        plan.join_scale = lo
+        for i, e, wgt in region:
+            new[i] = max(new[i], dm.soft_ceiling(g + e * (1 + (lo - 1) * wgt)))
+    plan.join_after = max((new[i] for i, _, _ in region), default=m) if region else m
 
 
 def _level_footprint(new, plan, w, h, blocked):
