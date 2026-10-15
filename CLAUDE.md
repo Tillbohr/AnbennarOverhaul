@@ -108,6 +108,11 @@ the whole `mod/` folder instead. Current baseline: 4 `temple_citadel_holding` mo
 inherited from Anbennar's holdings file, and 1 `other_rulers` missing-item error in the generated `gui/hud.gui`
 (vanilla HUD code referring to a dynastic-cycle group that Anbennar's `tgp_dynastic_cycle.txt` drops), and 5 missing `<government>_realm` localization warnings in the generated government files (celestial, steppe_admin, meritocratic, japan_administrative, japan_feudal; Anbennar and vanilla lack them too), and 2 warnings on
 `relative_fog_color` in the copied RiE `gfx/map/environment/environment.txt` (RiE's value, kept so the lighting matches; vanilla's `environment.txt` has the identical line, so this is a tiger false positive on a vanilla value). 1 `duplicate-item` warning for `ZOOM_STEPS_MIN_TILT` in `common/defines/graphic/aov_map_graphics_defines.txt` (intended: it overrides Anbennar's and vanilla's value, the later-loaded mod wins; tiger flags every cross-mod define override). The baseline's `other_rulers` entry had its `linenr` refreshed from a stale 1722 to 1742 (same report, no new one).
+75 reports in the generated `common/buildings/zz_aov_holding_models.txt`, all in code copied verbatim from Anbennar's
+castle/temple and the game's city buildings (Anbennar drops these vanilla graphical faiths and entities): 8 errors for
+`building_emishi_temple_01/02_entity`, 62 warnings for the graphical faiths `zoroastrian_gfx`, `shinto_gfx`,
+`tengrism_gfx`, `kamuyism_gfx`, and 5 mandala-effect scope warnings. Regenerating that file can shift their line
+numbers; re-baseline only after checking that the new reports are the same ones.
 
 ## Systems
 

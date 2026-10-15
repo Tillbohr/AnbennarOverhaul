@@ -5,6 +5,174 @@
   "key": "missing-item",
   "locations": [
     {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 32,
+      "line": "\t\t\tname = \"building_emishi_temple_01_entity\"",
+      "linenr": 4996,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "entity building_emishi_temple_01_entity not defined in gfx/models/",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 32,
+      "line": "\t\t\tname = \"building_emishi_temple_01_entity\"",
+      "linenr": 5012,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "entity building_emishi_temple_01_entity not defined in gfx/models/",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 32,
+      "line": "\t\t\tname = \"building_emishi_temple_01_entity\"",
+      "linenr": 6049,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "entity building_emishi_temple_01_entity not defined in gfx/models/",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 32,
+      "line": "\t\t\tname = \"building_emishi_temple_01_entity\"",
+      "linenr": 6065,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "entity building_emishi_temple_01_entity not defined in gfx/models/",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 32,
+      "line": "\t\t\tname = \"building_emishi_temple_02_entity\"",
+      "linenr": 6931,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "entity building_emishi_temple_02_entity not defined in gfx/models/",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 32,
+      "line": "\t\t\tname = \"building_emishi_temple_02_entity\"",
+      "linenr": 6947,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "entity building_emishi_temple_02_entity not defined in gfx/models/",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 32,
+      "line": "\t\t\tname = \"building_emishi_temple_02_entity\"",
+      "linenr": 7805,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "entity building_emishi_temple_02_entity not defined in gfx/models/",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 32,
+      "line": "\t\t\tname = \"building_emishi_temple_02_entity\"",
+      "linenr": 7821,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "entity building_emishi_temple_02_entity not defined in gfx/models/",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
       "column": 80,
       "from": "MOD",
       "fullpath": ".\\gui\\hud.gui",
@@ -18,6 +186,1308 @@
   ],
   "message": "situation participant group other_rulers not defined in common/situation/situations/",
   "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\tgraphical_faiths = { \"zoroastrian_gfx\" } #+1",
+      "linenr": 4804,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\tgraphical_faiths = { \"zoroastrian_gfx\" } #+1",
+      "linenr": 4815,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\t\tzoroastrian_gfx",
+      "linenr": 4907,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\t\tzoroastrian_gfx",
+      "linenr": 4927,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\t\tzoroastrian_gfx",
+      "linenr": 4946,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\t\tzoroastrian_gfx",
+      "linenr": 4965,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 12,
+      "line": "\t\t\tgraphical_faiths = { \"tengrism_gfx\" } #+1",
+      "linenr": 4983,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith tengrism_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 12,
+      "line": "\t\t\tgraphical_faiths = { \"kamuyism_gfx\" } #+1",
+      "linenr": 5000,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith kamuyism_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 12,
+      "line": "\t\t\tgraphical_faiths = { \"tengrism_gfx\" \"pagan_gfx\"} #+1",
+      "linenr": 5028,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith tengrism_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 25,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\tgraphical_faiths = { shinto_gfx } #+1",
+      "linenr": 5041,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tshinto_gfx",
+      "linenr": 5053,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 12,
+      "line": "\t\t\t\tkamuyism_gfx",
+      "linenr": 5055,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith kamuyism_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 12,
+      "line": "\t\t\t\tkamuyism_gfx",
+      "linenr": 5098,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith kamuyism_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
+      "linenr": 5207,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
+      "linenr": 5227,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
+      "linenr": 5247,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
+      "linenr": 5267,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\tgraphical_faiths = { \"zoroastrian_gfx\" } #+1",
+      "linenr": 5856,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\tgraphical_faiths = { \"zoroastrian_gfx\" } #+1",
+      "linenr": 5867,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\t\tzoroastrian_gfx",
+      "linenr": 5959,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\t\tzoroastrian_gfx",
+      "linenr": 5979,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\t\tzoroastrian_gfx",
+      "linenr": 5998,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\t\tzoroastrian_gfx",
+      "linenr": 6017,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 12,
+      "line": "\t\t\tgraphical_faiths = { \"tengrism_gfx\" } #+1",
+      "linenr": 6037,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith tengrism_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 12,
+      "line": "\t\t\tgraphical_faiths = { \"kamuyism_gfx\" } #+1",
+      "linenr": 6053,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith kamuyism_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 12,
+      "line": "\t\t\tgraphical_faiths = { \"tengrism_gfx\" \"pagan_gfx\"} #+1",
+      "linenr": 6081,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith tengrism_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 25,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\tgraphical_faiths = { shinto_gfx } #+1",
+      "linenr": 6094,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 25,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\tgraphical_faiths = { shinto_gfx } #+1",
+      "linenr": 6105,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
+      "linenr": 6252,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
+      "linenr": 6272,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
+      "linenr": 6292,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
+      "linenr": 6312,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\tgraphical_faiths = { \"zoroastrian_gfx\" } #+1",
+      "linenr": 6738,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\tgraphical_faiths = { \"zoroastrian_gfx\" } #+1",
+      "linenr": 6749,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\t\tzoroastrian_gfx",
+      "linenr": 6840,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\t\tzoroastrian_gfx",
+      "linenr": 6860,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\t\tzoroastrian_gfx",
+      "linenr": 6880,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\t\tzoroastrian_gfx",
+      "linenr": 6900,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 12,
+      "line": "\t\t\tgraphical_faiths = { \"tengrism_gfx\" } #+1",
+      "linenr": 6918,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith tengrism_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 12,
+      "line": "\t\t\tgraphical_faiths = { \"kamuyism_gfx\" } #+1",
+      "linenr": 6935,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith kamuyism_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 12,
+      "line": "\t\t\tgraphical_faiths = { \"tengrism_gfx\" \"pagan_gfx\"} #+1",
+      "linenr": 6963,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith tengrism_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 25,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\tgraphical_faiths = { shinto_gfx } #+1",
+      "linenr": 6976,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 25,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\tgraphical_faiths = { shinto_gfx } #+1",
+      "linenr": 6987,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
+      "linenr": 7133,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
+      "linenr": 7153,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
+      "linenr": 7173,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
+      "linenr": 7193,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\tgraphical_faiths = { \"zoroastrian_gfx\" } #+1",
+      "linenr": 7610,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\tgraphical_faiths = { \"zoroastrian_gfx\" } #+1",
+      "linenr": 7621,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\t\tzoroastrian_gfx",
+      "linenr": 7715,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\t\tzoroastrian_gfx",
+      "linenr": 7735,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\t\tzoroastrian_gfx",
+      "linenr": 7754,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\t\tzoroastrian_gfx",
+      "linenr": 7773,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 12,
+      "line": "\t\t\tgraphical_faiths = { \"tengrism_gfx\" } #+1",
+      "linenr": 7792,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith tengrism_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 12,
+      "line": "\t\t\tgraphical_faiths = { \"kamuyism_gfx\" } #+1",
+      "linenr": 7809,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith kamuyism_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 12,
+      "line": "\t\t\tgraphical_faiths = { \"tengrism_gfx\" \"pagan_gfx\"} #+1",
+      "linenr": 7837,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith tengrism_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 25,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\tgraphical_faiths = { shinto_gfx } #+1",
+      "linenr": 7850,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 25,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\tgraphical_faiths = { shinto_gfx } #+1",
+      "linenr": 7861,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
+      "linenr": 8008,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
+      "linenr": 8028,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
+      "linenr": 8048,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
+      "linenr": 8068,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
   "wiki": null
 },
 {
@@ -101,6 +1571,221 @@
     }
   ],
   "message": "modifier format temple_citadel_holding_holding_build_prestige_cost not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "scopes",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 53,
+      "line": "\t\t\tcreator_mandala_upgraded_regular_holding_piety_effect = yes",
+      "linenr": 1626,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_effects\\tgp_mandala_scripted_effects.txt",
+      "length": 6,
+      "line": "\t\tcounty.holder = { save_scope_as = character }",
+      "linenr": 2122,
+      "path": "common\\scripted_effects\\tgp_mandala_scripted_effects.txt",
+      "stage": null,
+      "tag": "expected scope was deduced from `county` here"
+    },
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 11,
+      "line": "\ton_complete = {",
+      "linenr": 1603,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": "actual scope was supplied by the game engine"
+    }
+  ],
+  "message": "`creator_mandala_upgraded_regular_holding_piety_effect` expects scope to be province or landed title but scope seems to be character",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "scopes",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 53,
+      "line": "\t\t\tcreator_mandala_upgraded_regular_holding_piety_effect = yes",
+      "linenr": 2140,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_effects\\tgp_mandala_scripted_effects.txt",
+      "length": 6,
+      "line": "\t\tcounty.holder = { save_scope_as = character }",
+      "linenr": 2122,
+      "path": "common\\scripted_effects\\tgp_mandala_scripted_effects.txt",
+      "stage": null,
+      "tag": "expected scope was deduced from `county` here"
+    },
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 11,
+      "line": "\ton_complete = {",
+      "linenr": 2117,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": "actual scope was supplied by the game engine"
+    }
+  ],
+  "message": "`creator_mandala_upgraded_regular_holding_piety_effect` expects scope to be province or landed title but scope seems to be character",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "scopes",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 38,
+      "line": "\t\t\t\tmandala_upgraded_temple_holding_effect = yes",
+      "linenr": 6456,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_effects\\tgp_mandala_scripted_effects.txt",
+      "length": 6,
+      "line": "\t\tcounty.holder = { save_scope_as = character }",
+      "linenr": 1971,
+      "path": "common\\scripted_effects\\tgp_mandala_scripted_effects.txt",
+      "stage": null,
+      "tag": "expected scope was deduced from `county` here"
+    },
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 11,
+      "line": "\ton_complete = {",
+      "linenr": 6392,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": "actual scope was supplied by the game engine"
+    }
+  ],
+  "message": "`mandala_upgraded_temple_holding_effect` expects scope to be province or landed title but scope seems to be character",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "scopes",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 38,
+      "line": "\t\t\t\tmandala_upgraded_temple_holding_effect = yes",
+      "linenr": 7335,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_effects\\tgp_mandala_scripted_effects.txt",
+      "length": 6,
+      "line": "\t\tcounty.holder = { save_scope_as = character }",
+      "linenr": 1971,
+      "path": "common\\scripted_effects\\tgp_mandala_scripted_effects.txt",
+      "stage": null,
+      "tag": "expected scope was deduced from `county` here"
+    },
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 11,
+      "line": "\ton_complete = {",
+      "linenr": 7271,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": "actual scope was supplied by the game engine"
+    }
+  ],
+  "message": "`mandala_upgraded_temple_holding_effect` expects scope to be province or landed title but scope seems to be character",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "scopes",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 38,
+      "line": "\t\t\t\tmandala_upgraded_temple_holding_effect = yes",
+      "linenr": 8211,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_effects\\tgp_mandala_scripted_effects.txt",
+      "length": 6,
+      "line": "\t\tcounty.holder = { save_scope_as = character }",
+      "linenr": 1971,
+      "path": "common\\scripted_effects\\tgp_mandala_scripted_effects.txt",
+      "stage": null,
+      "tag": "expected scope was deduced from `county` here"
+    },
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 11,
+      "line": "\ton_complete = {",
+      "linenr": 8146,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": "actual scope was supplied by the game engine"
+    }
+  ],
+  "message": "`mandala_upgraded_temple_holding_effect` expects scope to be province or landed title but scope seems to be character",
   "severity": "warning",
   "wiki": null
 },
