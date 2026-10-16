@@ -10,7 +10,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 32,
       "line": "\t\t\tname = \"building_emishi_temple_01_entity\"",
-      "linenr": 5097,
+      "linenr": 5036,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -31,7 +31,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 32,
       "line": "\t\t\tname = \"building_emishi_temple_01_entity\"",
-      "linenr": 5113,
+      "linenr": 5052,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -52,7 +52,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 32,
       "line": "\t\t\tname = \"building_emishi_temple_01_entity\"",
-      "linenr": 6153,
+      "linenr": 6103,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -73,7 +73,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 32,
       "line": "\t\t\tname = \"building_emishi_temple_01_entity\"",
-      "linenr": 6169,
+      "linenr": 6119,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -94,7 +94,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 32,
       "line": "\t\t\tname = \"building_emishi_temple_02_entity\"",
-      "linenr": 7038,
+      "linenr": 6999,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -115,7 +115,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 32,
       "line": "\t\t\tname = \"building_emishi_temple_02_entity\"",
-      "linenr": 7054,
+      "linenr": 7015,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -136,7 +136,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 32,
       "line": "\t\t\tname = \"building_emishi_temple_02_entity\"",
-      "linenr": 7915,
+      "linenr": 7887,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -157,7 +157,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 32,
       "line": "\t\t\tname = \"building_emishi_temple_02_entity\"",
-      "linenr": 7931,
+      "linenr": 7903,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -178,7 +178,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 30,
       "line": "\t\t\t\t\"building_emishi_tribal_01_mesh\"",
-      "linenr": 8357,
+      "linenr": 8329,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -199,7 +199,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 30,
       "line": "\t\t\t\t\"building_emishi_tribal_02_mesh\"",
-      "linenr": 8518,
+      "linenr": 8490,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -220,7 +220,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_walls.txt",
       "length": 28,
       "line": "\t\t\t\"building_emishi_wall_01_mesh\"",
-      "linenr": 20,
+      "linenr": 64,
       "path": "common\\buildings\\zz_aov_holding_walls.txt",
       "stage": null,
       "tag": null
@@ -241,7 +241,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_walls.txt",
       "length": 28,
       "line": "\t\t\t\"building_emishi_wall_01_mesh\"",
-      "linenr": 118,
+      "linenr": 164,
       "path": "common\\buildings\\zz_aov_holding_walls.txt",
       "stage": null,
       "tag": null
@@ -262,7 +262,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_walls.txt",
       "length": 28,
       "line": "\t\t\t\"building_emishi_wall_02_mesh\"",
-      "linenr": 288,
+      "linenr": 336,
       "path": "common\\buildings\\zz_aov_holding_walls.txt",
       "stage": null,
       "tag": null
@@ -283,7 +283,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_walls.txt",
       "length": 28,
       "line": "\t\t\t\"building_emishi_wall_03_mesh\"",
-      "linenr": 423,
+      "linenr": 473,
       "path": "common\\buildings\\zz_aov_holding_walls.txt",
       "stage": null,
       "tag": null
@@ -304,7 +304,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_walls.txt",
       "length": 28,
       "line": "\t\t\t\"building_emishi_wall_04_mesh\"",
-      "linenr": 587,
+      "linenr": 622,
       "path": "common\\buildings\\zz_aov_holding_walls.txt",
       "stage": null,
       "tag": null
@@ -346,7 +346,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 15,
       "line": "\t\t\tgraphical_faiths = { \"zoroastrian_gfx\" } #+1",
-      "linenr": 4905,
+      "linenr": 4844,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -367,7 +367,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 15,
       "line": "\t\t\tgraphical_faiths = { \"zoroastrian_gfx\" } #+1",
-      "linenr": 4916,
+      "linenr": 4855,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -388,7 +388,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 15,
       "line": "\t\t\t\tzoroastrian_gfx",
-      "linenr": 5008,
+      "linenr": 4947,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -409,7 +409,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 15,
       "line": "\t\t\t\tzoroastrian_gfx",
-      "linenr": 5028,
+      "linenr": 4967,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -430,7 +430,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 15,
       "line": "\t\t\t\tzoroastrian_gfx",
-      "linenr": 5047,
+      "linenr": 4986,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -451,7 +451,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 15,
       "line": "\t\t\t\tzoroastrian_gfx",
-      "linenr": 5066,
+      "linenr": 5005,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -472,7 +472,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 12,
       "line": "\t\t\tgraphical_faiths = { \"tengrism_gfx\" } #+1",
-      "linenr": 5084,
+      "linenr": 5023,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -493,7 +493,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 12,
       "line": "\t\t\tgraphical_faiths = { \"kamuyism_gfx\" } #+1",
-      "linenr": 5101,
+      "linenr": 5040,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -514,7 +514,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 12,
       "line": "\t\t\tgraphical_faiths = { \"tengrism_gfx\" \"pagan_gfx\"} #+1",
-      "linenr": 5129,
+      "linenr": 5068,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -535,7 +535,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 10,
       "line": "\t\t\tgraphical_faiths = { shinto_gfx } #+1",
-      "linenr": 5142,
+      "linenr": 5081,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -556,7 +556,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 10,
       "line": "\t\t\t\tshinto_gfx",
-      "linenr": 5154,
+      "linenr": 5093,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -577,7 +577,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 12,
       "line": "\t\t\t\tkamuyism_gfx",
-      "linenr": 5156,
+      "linenr": 5095,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -598,7 +598,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 12,
       "line": "\t\t\t\tkamuyism_gfx",
-      "linenr": 5199,
+      "linenr": 5138,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -619,7 +619,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 10,
       "line": "\t\t\t\tsinitic_gfx shinto_gfx",
-      "linenr": 5308,
+      "linenr": 5247,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -640,7 +640,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 10,
       "line": "\t\t\t\tsinitic_gfx shinto_gfx",
-      "linenr": 5328,
+      "linenr": 5267,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -661,7 +661,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 10,
       "line": "\t\t\t\tsinitic_gfx shinto_gfx",
-      "linenr": 5348,
+      "linenr": 5287,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -682,7 +682,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 10,
       "line": "\t\t\t\tsinitic_gfx shinto_gfx",
-      "linenr": 5368,
+      "linenr": 5307,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -703,7 +703,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 15,
       "line": "\t\t\tgraphical_faiths = { \"zoroastrian_gfx\" } #+1",
-      "linenr": 5960,
+      "linenr": 5910,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -724,7 +724,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 15,
       "line": "\t\t\tgraphical_faiths = { \"zoroastrian_gfx\" } #+1",
-      "linenr": 5971,
+      "linenr": 5921,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -745,7 +745,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 15,
       "line": "\t\t\t\tzoroastrian_gfx",
-      "linenr": 6063,
+      "linenr": 6013,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -766,7 +766,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 15,
       "line": "\t\t\t\tzoroastrian_gfx",
-      "linenr": 6083,
+      "linenr": 6033,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -787,7 +787,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 15,
       "line": "\t\t\t\tzoroastrian_gfx",
-      "linenr": 6102,
+      "linenr": 6052,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -808,7 +808,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 15,
       "line": "\t\t\t\tzoroastrian_gfx",
-      "linenr": 6121,
+      "linenr": 6071,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -829,7 +829,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 12,
       "line": "\t\t\tgraphical_faiths = { \"tengrism_gfx\" } #+1",
-      "linenr": 6141,
+      "linenr": 6091,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -850,322 +850,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 12,
       "line": "\t\t\tgraphical_faiths = { \"kamuyism_gfx\" } #+1",
-      "linenr": 6157,
-      "path": "common\\buildings\\zz_aov_holding_models.txt",
-      "stage": null,
-      "tag": null
-    }
-  ],
-  "message": "graphical faith kamuyism_gfx not defined in common/religion/religions/",
-  "severity": "warning",
-  "wiki": null
-},
-{
-  "confidence": "strong",
-  "info": null,
-  "key": "missing-item",
-  "locations": [
-    {
-      "column": 26,
-      "from": "MOD",
-      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
-      "length": 12,
-      "line": "\t\t\tgraphical_faiths = { \"tengrism_gfx\" \"pagan_gfx\"} #+1",
-      "linenr": 6185,
-      "path": "common\\buildings\\zz_aov_holding_models.txt",
-      "stage": null,
-      "tag": null
-    }
-  ],
-  "message": "graphical faith tengrism_gfx not defined in common/religion/religions/",
-  "severity": "warning",
-  "wiki": null
-},
-{
-  "confidence": "strong",
-  "info": null,
-  "key": "missing-item",
-  "locations": [
-    {
-      "column": 25,
-      "from": "MOD",
-      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
-      "length": 10,
-      "line": "\t\t\tgraphical_faiths = { shinto_gfx } #+1",
-      "linenr": 6198,
-      "path": "common\\buildings\\zz_aov_holding_models.txt",
-      "stage": null,
-      "tag": null
-    }
-  ],
-  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
-  "severity": "warning",
-  "wiki": null
-},
-{
-  "confidence": "strong",
-  "info": null,
-  "key": "missing-item",
-  "locations": [
-    {
-      "column": 25,
-      "from": "MOD",
-      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
-      "length": 10,
-      "line": "\t\t\tgraphical_faiths = { shinto_gfx } #+1",
-      "linenr": 6209,
-      "path": "common\\buildings\\zz_aov_holding_models.txt",
-      "stage": null,
-      "tag": null
-    }
-  ],
-  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
-  "severity": "warning",
-  "wiki": null
-},
-{
-  "confidence": "strong",
-  "info": null,
-  "key": "missing-item",
-  "locations": [
-    {
-      "column": 17,
-      "from": "MOD",
-      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
-      "length": 10,
-      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
-      "linenr": 6356,
-      "path": "common\\buildings\\zz_aov_holding_models.txt",
-      "stage": null,
-      "tag": null
-    }
-  ],
-  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
-  "severity": "warning",
-  "wiki": null
-},
-{
-  "confidence": "strong",
-  "info": null,
-  "key": "missing-item",
-  "locations": [
-    {
-      "column": 17,
-      "from": "MOD",
-      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
-      "length": 10,
-      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
-      "linenr": 6376,
-      "path": "common\\buildings\\zz_aov_holding_models.txt",
-      "stage": null,
-      "tag": null
-    }
-  ],
-  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
-  "severity": "warning",
-  "wiki": null
-},
-{
-  "confidence": "strong",
-  "info": null,
-  "key": "missing-item",
-  "locations": [
-    {
-      "column": 17,
-      "from": "MOD",
-      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
-      "length": 10,
-      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
-      "linenr": 6396,
-      "path": "common\\buildings\\zz_aov_holding_models.txt",
-      "stage": null,
-      "tag": null
-    }
-  ],
-  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
-  "severity": "warning",
-  "wiki": null
-},
-{
-  "confidence": "strong",
-  "info": null,
-  "key": "missing-item",
-  "locations": [
-    {
-      "column": 17,
-      "from": "MOD",
-      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
-      "length": 10,
-      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
-      "linenr": 6416,
-      "path": "common\\buildings\\zz_aov_holding_models.txt",
-      "stage": null,
-      "tag": null
-    }
-  ],
-  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
-  "severity": "warning",
-  "wiki": null
-},
-{
-  "confidence": "strong",
-  "info": null,
-  "key": "missing-item",
-  "locations": [
-    {
-      "column": 26,
-      "from": "MOD",
-      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
-      "length": 15,
-      "line": "\t\t\tgraphical_faiths = { \"zoroastrian_gfx\" } #+1",
-      "linenr": 6845,
-      "path": "common\\buildings\\zz_aov_holding_models.txt",
-      "stage": null,
-      "tag": null
-    }
-  ],
-  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
-  "severity": "warning",
-  "wiki": null
-},
-{
-  "confidence": "strong",
-  "info": null,
-  "key": "missing-item",
-  "locations": [
-    {
-      "column": 26,
-      "from": "MOD",
-      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
-      "length": 15,
-      "line": "\t\t\tgraphical_faiths = { \"zoroastrian_gfx\" } #+1",
-      "linenr": 6856,
-      "path": "common\\buildings\\zz_aov_holding_models.txt",
-      "stage": null,
-      "tag": null
-    }
-  ],
-  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
-  "severity": "warning",
-  "wiki": null
-},
-{
-  "confidence": "strong",
-  "info": null,
-  "key": "missing-item",
-  "locations": [
-    {
-      "column": 5,
-      "from": "MOD",
-      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
-      "length": 15,
-      "line": "\t\t\t\tzoroastrian_gfx",
-      "linenr": 6947,
-      "path": "common\\buildings\\zz_aov_holding_models.txt",
-      "stage": null,
-      "tag": null
-    }
-  ],
-  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
-  "severity": "warning",
-  "wiki": null
-},
-{
-  "confidence": "strong",
-  "info": null,
-  "key": "missing-item",
-  "locations": [
-    {
-      "column": 5,
-      "from": "MOD",
-      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
-      "length": 15,
-      "line": "\t\t\t\tzoroastrian_gfx",
-      "linenr": 6967,
-      "path": "common\\buildings\\zz_aov_holding_models.txt",
-      "stage": null,
-      "tag": null
-    }
-  ],
-  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
-  "severity": "warning",
-  "wiki": null
-},
-{
-  "confidence": "strong",
-  "info": null,
-  "key": "missing-item",
-  "locations": [
-    {
-      "column": 5,
-      "from": "MOD",
-      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
-      "length": 15,
-      "line": "\t\t\t\tzoroastrian_gfx",
-      "linenr": 6987,
-      "path": "common\\buildings\\zz_aov_holding_models.txt",
-      "stage": null,
-      "tag": null
-    }
-  ],
-  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
-  "severity": "warning",
-  "wiki": null
-},
-{
-  "confidence": "strong",
-  "info": null,
-  "key": "missing-item",
-  "locations": [
-    {
-      "column": 5,
-      "from": "MOD",
-      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
-      "length": 15,
-      "line": "\t\t\t\tzoroastrian_gfx",
-      "linenr": 7007,
-      "path": "common\\buildings\\zz_aov_holding_models.txt",
-      "stage": null,
-      "tag": null
-    }
-  ],
-  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
-  "severity": "warning",
-  "wiki": null
-},
-{
-  "confidence": "strong",
-  "info": null,
-  "key": "missing-item",
-  "locations": [
-    {
-      "column": 26,
-      "from": "MOD",
-      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
-      "length": 12,
-      "line": "\t\t\tgraphical_faiths = { \"tengrism_gfx\" } #+1",
-      "linenr": 7025,
-      "path": "common\\buildings\\zz_aov_holding_models.txt",
-      "stage": null,
-      "tag": null
-    }
-  ],
-  "message": "graphical faith tengrism_gfx not defined in common/religion/religions/",
-  "severity": "warning",
-  "wiki": null
-},
-{
-  "confidence": "strong",
-  "info": null,
-  "key": "missing-item",
-  "locations": [
-    {
-      "column": 26,
-      "from": "MOD",
-      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
-      "length": 12,
-      "line": "\t\t\tgraphical_faiths = { \"kamuyism_gfx\" } #+1",
-      "linenr": 7042,
+      "linenr": 6107,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1186,7 +871,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 12,
       "line": "\t\t\tgraphical_faiths = { \"tengrism_gfx\" \"pagan_gfx\"} #+1",
-      "linenr": 7070,
+      "linenr": 6135,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1207,7 +892,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 10,
       "line": "\t\t\tgraphical_faiths = { shinto_gfx } #+1",
-      "linenr": 7083,
+      "linenr": 6148,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1228,7 +913,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 10,
       "line": "\t\t\tgraphical_faiths = { shinto_gfx } #+1",
-      "linenr": 7094,
+      "linenr": 6159,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1249,7 +934,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 10,
       "line": "\t\t\t\tsinitic_gfx shinto_gfx",
-      "linenr": 7240,
+      "linenr": 6306,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1270,7 +955,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 10,
       "line": "\t\t\t\tsinitic_gfx shinto_gfx",
-      "linenr": 7260,
+      "linenr": 6326,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1291,7 +976,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 10,
       "line": "\t\t\t\tsinitic_gfx shinto_gfx",
-      "linenr": 7280,
+      "linenr": 6346,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1312,7 +997,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 10,
       "line": "\t\t\t\tsinitic_gfx shinto_gfx",
-      "linenr": 7300,
+      "linenr": 6366,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1333,7 +1018,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 15,
       "line": "\t\t\tgraphical_faiths = { \"zoroastrian_gfx\" } #+1",
-      "linenr": 7720,
+      "linenr": 6806,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1354,7 +1039,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 15,
       "line": "\t\t\tgraphical_faiths = { \"zoroastrian_gfx\" } #+1",
-      "linenr": 7731,
+      "linenr": 6817,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1375,7 +1060,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 15,
       "line": "\t\t\t\tzoroastrian_gfx",
-      "linenr": 7825,
+      "linenr": 6908,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1396,7 +1081,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 15,
       "line": "\t\t\t\tzoroastrian_gfx",
-      "linenr": 7845,
+      "linenr": 6928,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1417,7 +1102,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 15,
       "line": "\t\t\t\tzoroastrian_gfx",
-      "linenr": 7864,
+      "linenr": 6948,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1438,7 +1123,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 15,
       "line": "\t\t\t\tzoroastrian_gfx",
-      "linenr": 7883,
+      "linenr": 6968,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1459,7 +1144,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 12,
       "line": "\t\t\tgraphical_faiths = { \"tengrism_gfx\" } #+1",
-      "linenr": 7902,
+      "linenr": 6986,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1480,33 +1165,348 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 12,
       "line": "\t\t\tgraphical_faiths = { \"kamuyism_gfx\" } #+1",
+      "linenr": 7003,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith kamuyism_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 12,
+      "line": "\t\t\tgraphical_faiths = { \"tengrism_gfx\" \"pagan_gfx\"} #+1",
+      "linenr": 7031,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith tengrism_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 25,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\tgraphical_faiths = { shinto_gfx } #+1",
+      "linenr": 7044,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 25,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\tgraphical_faiths = { shinto_gfx } #+1",
+      "linenr": 7055,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
+      "linenr": 7201,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
+      "linenr": 7221,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
+      "linenr": 7241,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 10,
+      "line": "\t\t\t\tsinitic_gfx shinto_gfx",
+      "linenr": 7261,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith shinto_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\tgraphical_faiths = { \"zoroastrian_gfx\" } #+1",
+      "linenr": 7692,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\tgraphical_faiths = { \"zoroastrian_gfx\" } #+1",
+      "linenr": 7703,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\t\tzoroastrian_gfx",
+      "linenr": 7797,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\t\tzoroastrian_gfx",
+      "linenr": 7817,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\t\tzoroastrian_gfx",
+      "linenr": 7836,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 15,
+      "line": "\t\t\t\tzoroastrian_gfx",
+      "linenr": 7855,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith zoroastrian_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 12,
+      "line": "\t\t\tgraphical_faiths = { \"tengrism_gfx\" } #+1",
+      "linenr": 7874,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith tengrism_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 12,
+      "line": "\t\t\tgraphical_faiths = { \"kamuyism_gfx\" } #+1",
+      "linenr": 7891,
+      "path": "common\\buildings\\zz_aov_holding_models.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "graphical faith kamuyism_gfx not defined in common/religion/religions/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 26,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
+      "length": 12,
+      "line": "\t\t\tgraphical_faiths = { \"tengrism_gfx\" \"pagan_gfx\"} #+1",
       "linenr": 7919,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
     }
   ],
-  "message": "graphical faith kamuyism_gfx not defined in common/religion/religions/",
-  "severity": "warning",
-  "wiki": null
-},
-{
-  "confidence": "strong",
-  "info": null,
-  "key": "missing-item",
-  "locations": [
-    {
-      "column": 26,
-      "from": "MOD",
-      "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
-      "length": 12,
-      "line": "\t\t\tgraphical_faiths = { \"tengrism_gfx\" \"pagan_gfx\"} #+1",
-      "linenr": 7947,
-      "path": "common\\buildings\\zz_aov_holding_models.txt",
-      "stage": null,
-      "tag": null
-    }
-  ],
   "message": "graphical faith tengrism_gfx not defined in common/religion/religions/",
   "severity": "warning",
   "wiki": null
@@ -1522,7 +1522,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 10,
       "line": "\t\t\tgraphical_faiths = { shinto_gfx } #+1",
-      "linenr": 7960,
+      "linenr": 7932,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1543,7 +1543,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 10,
       "line": "\t\t\tgraphical_faiths = { shinto_gfx } #+1",
-      "linenr": 7971,
+      "linenr": 7943,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1564,7 +1564,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 10,
       "line": "\t\t\t\tsinitic_gfx shinto_gfx",
-      "linenr": 8118,
+      "linenr": 8090,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1585,7 +1585,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 10,
       "line": "\t\t\t\tsinitic_gfx shinto_gfx",
-      "linenr": 8138,
+      "linenr": 8110,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1606,7 +1606,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 10,
       "line": "\t\t\t\tsinitic_gfx shinto_gfx",
-      "linenr": 8158,
+      "linenr": 8130,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1627,7 +1627,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 10,
       "line": "\t\t\t\tsinitic_gfx shinto_gfx",
-      "linenr": 8178,
+      "linenr": 8150,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1732,7 +1732,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 53,
       "line": "\t\t\tcreator_mandala_upgraded_regular_holding_piety_effect = yes",
-      "linenr": 1664,
+      "linenr": 1637,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1754,7 +1754,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 11,
       "line": "\ton_complete = {",
-      "linenr": 1641,
+      "linenr": 1614,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": "actual scope was supplied by the game engine"
@@ -1775,7 +1775,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 53,
       "line": "\t\t\tcreator_mandala_upgraded_regular_holding_piety_effect = yes",
-      "linenr": 2190,
+      "linenr": 2154,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1797,7 +1797,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 11,
       "line": "\ton_complete = {",
-      "linenr": 2167,
+      "linenr": 2131,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": "actual scope was supplied by the game engine"
@@ -1818,7 +1818,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 38,
       "line": "\t\t\t\tmandala_upgraded_temple_holding_effect = yes",
-      "linenr": 6560,
+      "linenr": 6510,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1840,7 +1840,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 11,
       "line": "\ton_complete = {",
-      "linenr": 6496,
+      "linenr": 6446,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": "actual scope was supplied by the game engine"
@@ -1861,7 +1861,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 38,
       "line": "\t\t\t\tmandala_upgraded_temple_holding_effect = yes",
-      "linenr": 7442,
+      "linenr": 7403,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1883,7 +1883,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 11,
       "line": "\ton_complete = {",
-      "linenr": 7378,
+      "linenr": 7339,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": "actual scope was supplied by the game engine"
@@ -1904,7 +1904,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 38,
       "line": "\t\t\t\tmandala_upgraded_temple_holding_effect = yes",
-      "linenr": 8321,
+      "linenr": 8293,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1926,7 +1926,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 11,
       "line": "\ton_complete = {",
-      "linenr": 8256,
+      "linenr": 8228,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": "actual scope was supplied by the game engine"
@@ -1947,7 +1947,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 1,
       "line": "\tnext_building = tribe_02",
-      "linenr": 8440,
+      "linenr": 8412,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -1958,7 +1958,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 1,
       "line": "\tnext_building = tribe_02",
-      "linenr": 8491,
+      "linenr": 8463,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": "the other one is here"
@@ -1979,7 +1979,7 @@
       "fullpath": ".\\common\\buildings\\zz_aov_holding_models.txt",
       "length": 1,
       "line": "\t\tOR = {",
-      "linenr": 8598,
+      "linenr": 8570,
       "path": "common\\buildings\\zz_aov_holding_models.txt",
       "stage": null,
       "tag": null
@@ -2018,6 +2018,38 @@
     }
   ],
   "message": "define is redefined by another define",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "duplicate-item",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\common\\genes\\06_genes_special_accessories_headgear.txt",
+      "length": 12,
+      "line": "\t\t\tmena_royalty = {",
+      "linenr": 507,
+      "path": "common\\genes\\06_genes_special_accessories_headgear.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\common\\genes\\06_genes_special_accessories_headgear.txt",
+      "length": 12,
+      "line": "\t\t\tmena_royalty = {",
+      "linenr": 606,
+      "path": "common\\genes\\06_genes_special_accessories_headgear.txt",
+      "stage": null,
+      "tag": "the other accessory gene template is here"
+    }
+  ],
+  "message": "accessory gene template is redefined by another accessory gene template",
   "severity": "warning",
   "wiki": null
 },
@@ -2166,6 +2198,1074 @@
   ],
   "message": "color values should be between 0.0 and 1.0",
   "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 14,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "length": 30,
+      "line": "\t\ttemplate = kheteratan_hairstyles_straight",
+      "linenr": 655,
+      "path": "gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "length": 4,
+      "line": "\t\t\t\t\t2 = bald",
+      "linenr": 96,
+      "path": "common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "stage": null,
+      "tag": "this setting"
+    }
+  ],
+  "message": "missing localization key PORTRAIT_MODIFIER_custom_hair_bald",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 14,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "length": 30,
+      "line": "\t\ttemplate = kheteratan_hairstyles_straight",
+      "linenr": 655,
+      "path": "gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "length": 21,
+      "line": "\t\t\t\t\t1 = female_hair_custom_06",
+      "linenr": 106,
+      "path": "common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "stage": null,
+      "tag": "this setting"
+    }
+  ],
+  "message": "missing localization key PORTRAIT_MODIFIER_custom_hair_female_hair_custom_06",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 14,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "length": 30,
+      "line": "\t\ttemplate = kheteratan_hairstyles_straight",
+      "linenr": 655,
+      "path": "gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "length": 21,
+      "line": "\t\t\t\t\t2 = female_hair_custom_03",
+      "linenr": 111,
+      "path": "common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "stage": null,
+      "tag": "this setting"
+    }
+  ],
+  "message": "missing localization key PORTRAIT_MODIFIER_custom_hair_female_hair_custom_03",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 14,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "length": 30,
+      "line": "\t\ttemplate = kheteratan_hairstyles_straight",
+      "linenr": 655,
+      "path": "gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "length": 21,
+      "line": "\t\t\t\t\t2 = female_hair_custom_04",
+      "linenr": 112,
+      "path": "common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "stage": null,
+      "tag": "this setting"
+    }
+  ],
+  "message": "missing localization key PORTRAIT_MODIFIER_custom_hair_female_hair_custom_04",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 14,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "length": 30,
+      "line": "\t\ttemplate = kheteratan_hairstyles_straight",
+      "linenr": 655,
+      "path": "gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "length": 21,
+      "line": "\t\t\t\t\t2 = female_hair_custom_05",
+      "linenr": 113,
+      "path": "common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "stage": null,
+      "tag": "this setting"
+    }
+  ],
+  "message": "missing localization key PORTRAIT_MODIFIER_custom_hair_female_hair_custom_05",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 14,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "length": 27,
+      "line": "\t\ttemplate = kheteratan_hairstyles_curly",
+      "linenr": 665,
+      "path": "gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "length": 4,
+      "line": "\t\t\t\t\t2 = bald",
+      "linenr": 147,
+      "path": "common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "stage": null,
+      "tag": "this setting"
+    }
+  ],
+  "message": "missing localization key PORTRAIT_MODIFIER_custom_hair_bald",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 14,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "length": 27,
+      "line": "\t\ttemplate = kheteratan_hairstyles_curly",
+      "linenr": 665,
+      "path": "gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "length": 21,
+      "line": "\t\t\t\t\t1 = female_hair_custom_06",
+      "linenr": 157,
+      "path": "common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "stage": null,
+      "tag": "this setting"
+    }
+  ],
+  "message": "missing localization key PORTRAIT_MODIFIER_custom_hair_female_hair_custom_06",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 14,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "length": 27,
+      "line": "\t\ttemplate = kheteratan_hairstyles_curly",
+      "linenr": 665,
+      "path": "gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "length": 21,
+      "line": "\t\t\t\t\t2 = female_hair_custom_03",
+      "linenr": 161,
+      "path": "common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "stage": null,
+      "tag": "this setting"
+    }
+  ],
+  "message": "missing localization key PORTRAIT_MODIFIER_custom_hair_female_hair_custom_03",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 14,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "length": 27,
+      "line": "\t\ttemplate = kheteratan_hairstyles_curly",
+      "linenr": 665,
+      "path": "gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "length": 21,
+      "line": "\t\t\t\t\t2 = female_hair_custom_04",
+      "linenr": 162,
+      "path": "common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "stage": null,
+      "tag": "this setting"
+    }
+  ],
+  "message": "missing localization key PORTRAIT_MODIFIER_custom_hair_female_hair_custom_04",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 14,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "length": 27,
+      "line": "\t\ttemplate = kheteratan_hairstyles_curly",
+      "linenr": 665,
+      "path": "gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "length": 21,
+      "line": "\t\t\t\t\t2 = female_hair_custom_05",
+      "linenr": 163,
+      "path": "common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "stage": null,
+      "tag": "this setting"
+    }
+  ],
+  "message": "missing localization key PORTRAIT_MODIFIER_custom_hair_female_hair_custom_05",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 14,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "length": 26,
+      "line": "\t\ttemplate = kheteratan_hairstyles_afro",
+      "linenr": 675,
+      "path": "gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "length": 4,
+      "line": "\t\t\t\t\t2 = bald",
+      "linenr": 172,
+      "path": "common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "stage": null,
+      "tag": "this setting"
+    }
+  ],
+  "message": "missing localization key PORTRAIT_MODIFIER_custom_hair_bald",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 14,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "length": 26,
+      "line": "\t\ttemplate = kheteratan_hairstyles_afro",
+      "linenr": 675,
+      "path": "gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "length": 21,
+      "line": "\t\t\t\t\t1 = female_hair_custom_06",
+      "linenr": 182,
+      "path": "common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "stage": null,
+      "tag": "this setting"
+    }
+  ],
+  "message": "missing localization key PORTRAIT_MODIFIER_custom_hair_female_hair_custom_06",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 14,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "length": 26,
+      "line": "\t\ttemplate = kheteratan_hairstyles_afro",
+      "linenr": 675,
+      "path": "gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "length": 21,
+      "line": "\t\t\t\t\t2 = female_hair_custom_03",
+      "linenr": 186,
+      "path": "common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "stage": null,
+      "tag": "this setting"
+    }
+  ],
+  "message": "missing localization key PORTRAIT_MODIFIER_custom_hair_female_hair_custom_03",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 14,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "length": 26,
+      "line": "\t\ttemplate = kheteratan_hairstyles_afro",
+      "linenr": 675,
+      "path": "gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "length": 21,
+      "line": "\t\t\t\t\t2 = female_hair_custom_04",
+      "linenr": 187,
+      "path": "common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "stage": null,
+      "tag": "this setting"
+    }
+  ],
+  "message": "missing localization key PORTRAIT_MODIFIER_custom_hair_female_hair_custom_04",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 14,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "length": 26,
+      "line": "\t\ttemplate = kheteratan_hairstyles_afro",
+      "linenr": 675,
+      "path": "gfx\\portraits\\portrait_modifiers\\00_custom_hair.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "length": 21,
+      "line": "\t\t\t\t\t2 = female_hair_custom_05",
+      "linenr": 188,
+      "path": "common\\genes\\03_genes_special_accessories_hairstyles.txt",
+      "stage": null,
+      "tag": "this setting"
+    }
+  ],
+  "message": "missing localization key PORTRAIT_MODIFIER_custom_hair_female_hair_custom_05",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": "This closing brace is at the start of the line but does not close a top-level block.",
+  "key": "brace-placement",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\common\\genes\\07_genes_special_accessories_misc.txt",
+      "length": 1,
+      "line": "}",
+      "linenr": 1937,
+      "path": "common\\genes\\07_genes_special_accessories_misc.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "possible brace error",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 112,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 134,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 156,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 176,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 198,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 220,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 22,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_hairstyles_base.txt",
+      "length": 1,
+      "line": "                OR = {",
+      "linenr": 27,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_hairstyles_base.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_headgear_base.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 270,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_headgear_base.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 98,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 13,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\tOR = {",
+      "linenr": 133,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 14,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\t\tOR = {",
+      "linenr": 153,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 11,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "length": 1,
+      "line": "\t\t\t\t\tOR = {",
+      "linenr": 163,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 13,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\tOR = {",
+      "linenr": 199,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 14,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\t\tOR = {",
+      "linenr": 219,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 11,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "length": 1,
+      "line": "\t\t\t\t\tOR = {",
+      "linenr": 229,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_headgear_armor.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 134,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_headgear_armor.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "you can remove the AND and just have the item there",
+  "key": "performance",
+  "locations": [
+    {
+      "column": 11,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "length": 1,
+      "line": "\t\t\t\tAND = {",
+      "linenr": 316,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "AND with only one item inside is useless",
+  "severity": "tips",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "you can remove the AND and just have the item there",
+  "key": "performance",
+  "locations": [
+    {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "length": 1,
+      "line": "\t\t\t\t\tAND = {",
+      "linenr": 350,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "AND with only one item inside is useless",
+  "severity": "tips",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "you can remove the AND and just have the item there",
+  "key": "performance",
+  "locations": [
+    {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "length": 1,
+      "line": "\t\t\t\t\tAND = {",
+      "linenr": 369,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "AND with only one item inside is useless",
+  "severity": "tips",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "you can remove the AND and just have the item there",
+  "key": "performance",
+  "locations": [
+    {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "length": 1,
+      "line": "\t\t\t\t\tAND = {",
+      "linenr": 397,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "AND with only one item inside is useless",
+  "severity": "tips",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "you can remove the AND and just have the item there",
+  "key": "performance",
+  "locations": [
+    {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "length": 1,
+      "line": "\t\t\t\t\tAND = {",
+      "linenr": 409,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "AND with only one item inside is useless",
+  "severity": "tips",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "you can remove the AND and just have the item there",
+  "key": "performance",
+  "locations": [
+    {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
+      "length": 1,
+      "line": "\t\t\t\t\tAND = {",
+      "linenr": 438,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "AND with only one item inside is useless",
+  "severity": "tips",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "you can remove the AND and just have the item there",
+  "key": "performance",
+  "locations": [
+    {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
+      "length": 1,
+      "line": "\t\t\t\t\tAND = {",
+      "linenr": 461,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "AND with only one item inside is useless",
+  "severity": "tips",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "you can remove the AND and just have the item there",
+  "key": "performance",
+  "locations": [
+    {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
+      "length": 1,
+      "line": "\t\t\t\t\tAND = {",
+      "linenr": 495,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "AND with only one item inside is useless",
+  "severity": "tips",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "you can remove the AND and just have the item there",
+  "key": "performance",
+  "locations": [
+    {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
+      "length": 1,
+      "line": "\t\t\t\t\tAND = {",
+      "linenr": 507,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "AND with only one item inside is useless",
+  "severity": "tips",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "you can remove the AND and just have the item there",
+  "key": "performance",
+  "locations": [
+    {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_headgear_armor.txt",
+      "length": 1,
+      "line": "\t\t\t\t\tAND = {",
+      "linenr": 222,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_headgear_armor.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "AND with only one item inside is useless",
+  "severity": "tips",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "you can remove the AND and just have the item there",
+  "key": "performance",
+  "locations": [
+    {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_headgear_armor.txt",
+      "length": 1,
+      "line": "\t\t\t\t\tAND = {",
+      "linenr": 248,
+      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_headgear_armor.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "AND with only one item inside is useless",
+  "severity": "tips",
   "wiki": null
 }
 ]
