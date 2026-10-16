@@ -17,7 +17,7 @@
 	
 	coa_gfx = { western_coa_gfx }
 	building_gfx = { aov_high_elf_building_gfx western_building_gfx } # Anbennar Overhaul
-	clothing_gfx = { elvish_clothing_gfx western_clothing_gfx }
+	clothing_gfx = { aov_elven_clothing_gfx elvish_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
 	unit_gfx = { aov_moon_elf_unit_gfx western_unit_gfx } # Anbennar Overhaul
 	
 	ethnicities = {
@@ -46,7 +46,7 @@ sun_elvish = {
 	
 	coa_gfx = { western_coa_gfx }
 	building_gfx = { aov_high_elf_building_gfx western_building_gfx } # Anbennar Overhaul
-	clothing_gfx = { elvish_clothing_gfx western_clothing_gfx }
+	clothing_gfx = { aov_elven_clothing_gfx elvish_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
 	unit_gfx = { aov_sun_elf_unit_gfx western_unit_gfx } # Anbennar Overhaul
 	
 	ethnicities = {
@@ -76,7 +76,7 @@ wood_elvish = {
 	
 	coa_gfx = { western_coa_gfx }
 	building_gfx = { aov_wood_elf_building_gfx western_building_gfx } # Anbennar Overhaul
-	clothing_gfx = { elvish_clothing_gfx western_clothing_gfx }
+	clothing_gfx = { aov_lasgalendrim_clothing_gfx elvish_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
 	unit_gfx = { aov_wood_elf_unit_gfx western_unit_gfx } # Anbennar Overhaul
 	
 	ethnicities = {

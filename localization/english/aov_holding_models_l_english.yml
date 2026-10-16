@@ -8,3 +8,8 @@
  aov_sun_elf_unit_gfx:0 "Sun Elven"
  aov_moon_elf_unit_gfx:0 "Moon Elven"
  aov_dwarven_unit_gfx:0 "Dwarven"
+ aov_hobbit_clothing_gfx:0 "Hobbit"
+ aov_elven_clothing_gfx:0 "Elven"
+ aov_lasgalendrim_clothing_gfx:0 "Silvan Elven"
+ aov_southern_dwarf_clothing_gfx:0 "Dwarven (Southern)"
+ aov_dwarf_clothing_gfx:0 "Dwarven"

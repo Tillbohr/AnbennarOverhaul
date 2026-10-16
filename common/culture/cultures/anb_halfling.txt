@@ -1,0 +1,290 @@
+﻿bluefoot_halfling = {
+	color = { 74 66 179 }
+	created = 1200.1.1 #placeholder for a more accurate date
+	parents = { gawedi hillfoot_halfling }
+
+	ethos = ethos_communal
+	heritage = heritage_halfling
+	language = language_small_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_agrarian
+		tradition_pastoralists
+		tradition_forest_folk
+		tradition_family_entrepreneurship
+	}
+	
+	name_list = name_list_halfling
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { western_building_gfx }
+	clothing_gfx = { aov_hobbit_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { western_unit_gfx }
+
+    ethnicities = {
+        100 = halfling
+    }
+}
+
+redfoot_halfling = {
+	color = { 199 35 50 }
+	created = 1200.1.1 #placeholder for a more accurate date
+	parents = { lorentish hillfoot_halfling }
+
+	ethos = ethos_communal
+	heritage = heritage_halfling
+	language = language_small_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_agrarian
+		tradition_horse_breeder
+		tradition_castle_keepers
+		tradition_welcoming
+		tradition_little_lords
+	}
+	
+	name_list = name_list_halfling
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { western_building_gfx }
+	clothing_gfx = { aov_hobbit_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { western_unit_gfx }
+
+    ethnicities = {
+        100 = halfling
+    }
+}
+
+visfoot_halfling = {
+	color = { 200 200 200 }
+	created = 1200.1.1 #placeholder for a more accurate date
+	parents = { hillfoot_halfling }
+
+	ethos = ethos_courtly
+	heritage = heritage_halfling
+	language = language_small_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_city_keepers
+		tradition_astute_diplomats
+		tradition_xenophilic
+	}
+	dlc_tradition = {
+		trait = tradition_artisans
+		requires_dlc_flag = royal_court
+	}
+	
+	name_list = name_list_halfling
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { western_building_gfx }
+	clothing_gfx = { aov_hobbit_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { western_unit_gfx }
+
+    ethnicities = {
+        100 = halfling
+    }
+}
+
+imperial_halfling = {
+	color = { 185 255 87 }
+	created = 1221.1.1 #placeholder for a more accurate date
+	parents = { beefoot_halfling }
+
+	ethos = ethos_bureaucratic
+	heritage = heritage_halfling
+	language = language_damerian_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_hard_working
+		tradition_legalistic
+		tradition_xenophilic
+		tradition_republican_legacy
+	}
+	
+	name_list = name_list_halfling
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { western_building_gfx }
+	clothing_gfx = { aov_hobbit_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { western_unit_gfx }
+
+    ethnicities = {
+        100 = halfling
+    }
+}
+
+ciderfoot_halfling = {
+	color = { 233 173 55 }
+
+	ethos = ethos_courtly
+	heritage = heritage_halfling
+	language = language_small_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_agrarian
+		tradition_culinary_art
+		tradition_family_entrepreneurship
+		tradition_welcoming
+	}
+	
+	name_list = name_list_halfling
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { western_building_gfx }
+	clothing_gfx = { aov_hobbit_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { western_unit_gfx }
+
+    ethnicities = {
+        100 = halfling
+    }
+}
+
+roysfoot_halfling = {
+	color = { 61 83 116 }
+
+	ethos = ethos_stoic
+	heritage = heritage_halfling
+	language = language_small_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_agrarian
+		tradition_castle_keepers
+		tradition_modest
+		tradition_hit_and_run
+		tradition_little_lords
+	}
+	
+	name_list = name_list_halfling
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { western_building_gfx }
+	clothing_gfx = { aov_hobbit_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { western_unit_gfx }
+
+    ethnicities = {
+        100 = halfling
+    }
+}
+
+oakfoot_halfling = {
+	color = { 99 128 32 }
+
+	ethos = ethos_bellicose
+	heritage = heritage_halfling
+	language = language_small_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_elk_hunters
+		tradition_hunters
+		tradition_forest_fighters
+		tradition_storytellers
+	}
+	
+	name_list = name_list_halfling
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { western_building_gfx }
+	clothing_gfx = { aov_hobbit_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { western_unit_gfx }
+
+    ethnicities = {
+        100 = halfling
+    }
+}
+
+beefoot_halfling = {
+	color = { 185 255 87 }
+
+	ethos = ethos_bureaucratic
+	heritage = heritage_halfling
+	language = language_small_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_maritime_mercantilism
+		tradition_hard_working
+		tradition_republican_legacy
+		tradition_welcoming
+	}
+	
+	name_list = name_list_halfling
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { western_building_gfx }
+	clothing_gfx = { aov_hobbit_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { western_unit_gfx }
+
+    ethnicities = {
+        100 = halfling
+    }
+}
+
+hillfoot_halfling = {
+	color = { 198 216 207 }
+
+	ethos = ethos_communal
+	heritage = heritage_halfling
+	language = language_small_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_agrarian
+		tradition_hill_dwellers
+		tradition_xenophilic
+		tradition_test_maa_anb_wren_hedge_witches
+	}
+	dlc_tradition = {
+		trait = tradition_artisans
+		requires_dlc_flag = royal_court
+	}
+	
+	name_list = name_list_halfling
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { western_building_gfx }
+	clothing_gfx = { aov_hobbit_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { western_unit_gfx }
+
+    ethnicities = {
+        100 = halfling
+    }
+}
+
+moonfoot_halfling = {
+	color = { 50 114 142 }
+
+	ethos = ethos_communal
+	heritage = heritage_halfling
+	language = language_damerian_common
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_agrarian
+		tradition_legalistic
+		tradition_republican_legacy
+	}
+	dlc_tradition = {
+		trait = tradition_fp2_malleable_subjects
+		requires_dlc_flag = the_fate_of_iberia
+		fallback = tradition_xenophilic
+	}
+	
+	name_list = name_list_halfling
+	
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { western_building_gfx }
+	clothing_gfx = { aov_hobbit_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { western_unit_gfx }
+
+    ethnicities = {
+        100 = halfling
+    }
+}

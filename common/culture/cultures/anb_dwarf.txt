@@ -22,7 +22,7 @@ ruby_dwarvish = {
 	
 	coa_gfx = { western_coa_gfx }
 	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
-	clothing_gfx = { northern_clothing_gfx western_clothing_gfx }
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
 	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
 	
 	ethnicities = {
@@ -52,7 +52,7 @@ silver_dwarvish = {
 	
 	coa_gfx = { western_coa_gfx }
 	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
-	clothing_gfx = { northern_clothing_gfx western_clothing_gfx }
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
 	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
 	
 	ethnicities = {
@@ -82,7 +82,7 @@ stone_dwarvish = {
 	
 	coa_gfx = { western_coa_gfx }
 	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
-	clothing_gfx = { northern_clothing_gfx western_clothing_gfx }
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
 	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
 	
 	ethnicities = {
@@ -108,7 +108,7 @@ agate_dwarvish = {
 	
 	coa_gfx = { western_coa_gfx }
 	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
-	clothing_gfx = { northern_clothing_gfx western_clothing_gfx }
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
 	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
 	
 	ethnicities = {
@@ -136,7 +136,7 @@ copper_dwarvish = {
 	
 	coa_gfx = { western_coa_gfx }
 	building_gfx = { aov_dwarven_mena_building_gfx mena_building_gfx } # Anbennar Overhaul
-	clothing_gfx = { dde_abbasid_clothing_gfx mena_clothing_gfx }
+	clothing_gfx = { aov_southern_dwarf_clothing_gfx aov_dwarf_clothing_gfx dde_abbasid_clothing_gfx mena_clothing_gfx } # Anbennar Overhaul
 	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
 	
 	ethnicities = {
@@ -163,7 +163,7 @@ citrine_dwarvish = {
 	
 	coa_gfx = { western_coa_gfx }
 	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
-	clothing_gfx = { northern_clothing_gfx western_clothing_gfx }
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
 	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
 	
 	ethnicities = {
@@ -190,7 +190,7 @@ gold_dwarvish = {
 	
 	coa_gfx = { western_coa_gfx }
 	building_gfx = { aov_dwarven_mena_building_gfx mena_building_gfx } # Anbennar Overhaul
-	clothing_gfx = { dde_abbasid_clothing_gfx mena_clothing_gfx }
+	clothing_gfx = { aov_southern_dwarf_clothing_gfx aov_dwarf_clothing_gfx dde_abbasid_clothing_gfx mena_clothing_gfx } # Anbennar Overhaul
 	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
 	
 	ethnicities = {
@@ -220,7 +220,7 @@ pyrite_dwarvish = {
 	
 	coa_gfx = { western_coa_gfx }
 	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
-	clothing_gfx = { northern_clothing_gfx western_clothing_gfx }
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
 	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
 	
 	ethnicities = {
@@ -247,7 +247,7 @@ titanium_dwarvish = {
 	
 	coa_gfx = { western_coa_gfx }
 	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
-	clothing_gfx = { northern_clothing_gfx western_clothing_gfx }
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
 	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
 	
 	ethnicities = {
@@ -274,7 +274,7 @@ topaz_dwarvish = {
 	
 	coa_gfx = { western_coa_gfx }
 	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
-	clothing_gfx = { northern_clothing_gfx western_clothing_gfx }
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
 	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
 
 	ethnicities = {
@@ -300,7 +300,7 @@ marble_dwarvish = {
 	
 	coa_gfx = { western_coa_gfx }
 	building_gfx = { aov_dwarven_mena_building_gfx mena_building_gfx } # Anbennar Overhaul
-	clothing_gfx = { dde_abbasid_clothing_gfx mena_clothing_gfx }
+	clothing_gfx = { aov_southern_dwarf_clothing_gfx aov_dwarf_clothing_gfx dde_abbasid_clothing_gfx mena_clothing_gfx } # Anbennar Overhaul
 	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
 	
 	ethnicities = {

@@ -97,7 +97,7 @@ def block_heritage(body: str):
 
 def resolve_cultures(files: dict, groups=None) -> dict:
     """Group name -> culture keys, from {file name: text}, for groups (default data.GROUPS) that name either
-    'cultures' or a 'heritage'. Raises on a group that resolves to nothing."""
+    'cultures', a 'heritage' or 'heritages'. Raises on a group that resolves to nothing."""
     found = {}
     for text in files.values():
         for key, _start, _end, body in culture_blocks(text):
@@ -110,7 +110,8 @@ def resolve_cultures(files: dict, groups=None) -> dict:
             if missing:
                 raise GeneratorError(f"group {name}: cultures not found: {', '.join(missing)}")
         else:
-            keys = [key for key, heritage in found.items() if heritage == group["heritage"]]
+            heritages = group["heritages"] if "heritages" in group else (group["heritage"],)
+            keys = [key for key, heritage in found.items() if heritage in heritages]
         if not keys:
             raise GeneratorError(f"group {name} resolves to no cultures")
         result[name] = keys
@@ -267,23 +268,28 @@ def culture_texts(roots: Roots) -> dict:
 
 
 def build_cultures(roots: Roots) -> dict:
-    """The culture files with a target culture: building_gfx keys (holding models) and unit_gfx keys (army
-    models, tools/rie_units.py) prepended."""
+    """The culture files with a target culture: building_gfx keys (holding models), unit_gfx keys (army models,
+    tools/rie_units.py) and clothing_gfx keys (RiE portraits, tools/build_portraits.py) prepended."""
+    import build_portraits
     import rie_units
     roots.check()
     texts = culture_texts(roots)
     targets, _group_keys = assign_gfx(texts)
     unit_targets = rie_units.unit_targets(texts)
+    clothing_targets = build_portraits.clothing_targets(texts)
     out = {}
     for filename, text in texts.items():
         keys = [key for key, *_ in culture_blocks(text)]
         wanted = {key: targets[key] for key in keys if key in targets}
         units = {key: unit_targets[key] for key in keys if key in unit_targets}
+        clothing = {key: clothing_targets[key] for key in keys if key in clothing_targets}
         if wanted:
             text = override_culture_file(text, wanted)
         if units:
             text = rie_units.override_unit_gfx(text, units)
-        if wanted or units:
+        if clothing:
+            text = build_portraits.override_clothing_gfx(text, clothing)
+        if wanted or units or clothing:
             out[f"{CULTURES_DIR}/{filename}"] = text.encode("utf-8")
     return out
 
@@ -623,10 +629,13 @@ def build_walls(roots: Roots) -> dict:
 
 
 def build_localization(roots: Roots) -> dict:
-    """Names of the new graphical-culture keys (shown in the culture creation screen), building and unit keys."""
+    """Names of the new graphical-culture keys (shown in the culture creation screen): building, unit and clothing
+    keys."""
+    import build_portraits
     import rie_units
     _targets, group_keys = assign_gfx(culture_texts(roots))
-    lines = [BOM + "l_english:"] + localization_lines(group_keys) + rie_units.localization_lines()
+    lines = ([BOM + "l_english:"] + localization_lines(group_keys) + rie_units.localization_lines()
+             + build_portraits.localization_lines())
     return {LOCALIZATION_FILE: ("\n".join(lines) + "\n").encode("utf-8")}
 
 
