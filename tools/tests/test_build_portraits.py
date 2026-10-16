@@ -173,6 +173,20 @@ class GeneTests(unittest.TestCase):
         bp._texts.cache_clear()
 
 
+class AccessoryRenameTests(unittest.TestCase):
+    def test_only_names_inside_our_insertions_change(self):
+        begin = "\t\t# Anbennar Overhaul: Realms in Exile templates (tools/build_portraits.py)\n"
+        end = "\t\t# Anbennar Overhaul: end of Realms in Exile templates\n"
+        text = ("\t\t\tkheteratan = {\n\t\t\t\tfemale = { 1 = female_hair_custom_05 }\n\t\t\t}\n" + begin +
+                "\t\t\tdwarven = {\n\t\t\t\tfemale = { 1 = female_hair_custom_05 1 = female_hair_custom_050 }\n"
+                "\t\t\t}\n" + end)
+        out = bp.rename_accessories_in_templates({"g.txt": text.encode()},
+                                                 {"female_hair_custom_05": "aov_rie_female_hair_custom_05"})
+        new = out["g.txt"].decode()
+        self.assertIn("kheteratan = {\n\t\t\t\tfemale = { 1 = female_hair_custom_05 }", new)  # Anbennar's own
+        self.assertIn("1 = aov_rie_female_hair_custom_05 1 = female_hair_custom_050 }", new)
+
+
 class PlaceFileTests(unittest.TestCase):
     def test_vanilla_path_is_never_overridden(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -253,6 +267,34 @@ class RealTests(unittest.TestCase):
         self.assertTrue(renamed)
         names = [rel.rsplit("/", 1)[-1] for rel in renamed]
         self.assertEqual(len(names), len(set(names)))  # one copy each (CK3 finds textures by name)
+
+    def test_anbennars_reused_model_names_get_rie_copies(self):
+        """Anbennar reuses female_hair_custom_01..08 for Kheteratan hairstyles; RiE's lists mean its AGOT hairs."""
+        hair = self.files[f"{bp.GENES_DIR}/03_genes_special_accessories_hairstyles.txt"].decode("utf-8-sig")
+        inserted = "".join(re.findall(r"Realms in Exile templates \(tools/build_portraits.py\)\n(.*?)# Anbennar Overhaul: "
+                                      r"end", hair, re.S))
+        self.assertIn("= aov_rie_female_hair_custom_05", inserted)
+        self.assertNotRegex(inserted, r"= female_hair_custom_0[1-8]\b")
+        base = (REAL.anbennar / bp.GENES_DIR / "03_genes_special_accessories_hairstyles.txt").read_bytes().decode("utf-8-sig")
+        outside = hair.replace(inserted, "")
+        self.assertEqual(outside.count("female_hair_custom_05"), base.count("female_hair_custom_05"))  # Kheteratan's
+        accessories = self.files[bp.ACCESSORIES_FILE].decode("utf-8-sig")
+        self.assertIn('entity = "aov_rie_female_hair_custom_05_entity"', accessories)
+        asset = next(c.decode("utf-8-sig") for rel, c in self.files.items()
+                     if rel.endswith("female_hair_custom_05/aov_rie_female_hair_custom_05.asset"))
+        self.assertIn('name = "aov_rie_female_hair_custom_05_mesh"', asset)
+        self.assertIn('pdxmesh = "aov_rie_female_hair_custom_05_mesh"', asset)
+
+    def test_no_copied_block_names_a_clashing_model(self):
+        for rel, content in self.files.items():
+            if rel.endswith(".asset") or rel == bp.ACCESSORIES_FILE:
+                for kind, name in re.findall(r'\b(pdxmesh|entity)\s*=\s*"?([A-Za-z_][A-Za-z0-9_.]*)',
+                                             bp.code(content.decode("utf-8-sig"))):
+                    self.assertFalse(bp.model_clash(REAL, kind, name), f"{rel}: {kind} {name}")
+
+    def test_gnomes_keep_anbennars_look(self):
+        self.assertNotIn("common/culture/cultures/anb_gnome.txt", bhm.build_cultures(REAL))
+        self.assertFalse((bp.SUBMOD / "common/culture/cultures/anb_gnome.txt").exists())
 
     def test_groups_are_game_only_with_rie_priority(self):
         text = self.files[f"{bp.MODIFIERS_DIR}/aov_rie_04_clothes_armor.txt"].decode("utf-8-sig")

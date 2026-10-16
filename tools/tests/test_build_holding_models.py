@@ -157,9 +157,9 @@ class RealDataTests(unittest.TestCase):
                     self.assertIn(field, ("building_gfx", "unit_gfx", "clothing_gfx"))
                     changed[field] += 1
                     self.assertTrue(b.rstrip().endswith("# Anbennar Overhaul"))
-        # 28 building_gfx lines; 14 unit_gfx lines (3 elves, 11 dwarves; tools/rie_units.py); 29 clothing_gfx lines
-        # (10 halflings, 5 gnomes, 3 elves, 11 dwarves; tools/build_portraits.py)
-        self.assertEqual(changed, Counter(building_gfx=28, unit_gfx=14, clothing_gfx=29))
+        # 28 building_gfx lines; 14 unit_gfx lines (3 elves, 11 dwarves; tools/rie_units.py); 24 clothing_gfx lines
+        # (10 halflings, 3 elves, 11 dwarves; tools/build_portraits.py)
+        self.assertEqual(changed, Counter(building_gfx=28, unit_gfx=14, clothing_gfx=24))
 
     def test_regions_cover_anbennars_graphical_regions(self):
         regions = bhm.graphical_regions(REAL.anbennar)

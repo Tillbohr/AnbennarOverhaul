@@ -9,7 +9,7 @@ helmets, hairstyles and beards.
 
 | Anbennar cultures | RiE look | clothing_gfx key |
 |---|---|---|
-| every `heritage_halfling` and `heritage_gnomish` culture | Hobbit | `aov_hobbit_clothing_gfx` |
+| every `heritage_halfling` culture | Hobbit | `aov_hobbit_clothing_gfx` |
 | `sun_elvish` | Vanyar (white and gold) | `aov_vanyar_clothing_gfx` |
 | `moon_elvish` | Noldor | `aov_noldor_clothing_gfx` |
 | `wood_elvish` | Lasgalendrim (Silvan) | `aov_lasgalendrim_clothing_gfx` |
@@ -20,7 +20,8 @@ User choices: all clothing layers plus hair and beards; southern dwarf variant f
 Halflings and gnomes lose their beards (RiE hobbits are beardless). Round 2 (in-game feedback, 2026-10-16): no female
 dwarf beards; sun elves Vanyar and moon elves Noldor, because RiE's generic elves wear vanilla clothes; western
 dwarves keep RiE's western set (vanilla HRE-style clothes, as in RiE). Hobbit women and hobbit hats stay
-vanilla-styled: RiE has none of its own.
+vanilla-styled: RiE has none of its own. Round 3: gnomes keep Anbennar's look (user choice; the hobbit outfit
+clipped on them), and Anbennar's reuse of AGOT hair model names is handled (below).
 
 ## How CK3 picks the look
 
@@ -78,6 +79,11 @@ The triggers (`common/scripted_triggers/aov_rie_portrait_triggers.txt`) follow v
   textures that only the game has stay the game's.
 - A template the entries name that Anbennar defines with different content (`dwarven_hairstyles`) is copied from RiE
   as `aov_rie_<name>`, and the entries point at the copy.
+- Anbennar reuses AGOT hair model names (`female_hair_custom_01/02/03/05/07/08`) for its Kheteratan hairstyles, so RiE's
+  hair lists showed dwarf and elf women in white Kheteratan wigs. A pdxmesh/entity name Anbennar (not the game) defines
+  with other content than RiE is copied from RiE as `aov_rie_<name>`, the accessories naming it are copied as
+  `aov_rie_<accessory>`, our template insertions point at those, and a texture whose name Anbennar or the game has
+  with other content is copied renamed as well.
 - Accessory variations (`variation`, `pattern_textures`, `color_palette` blocks) the meshes name are copied into
   `gfx/portraits/accessory_variations/aov_rie_portraits.txt` when Anbennar and the game lack them.
 - Every shader the copied meshes name must exist in the game's or this mod's portrait shaders.
@@ -91,6 +97,6 @@ list that starts with a new key must continue identically (checked).
 ## Risks to confirm in game
 
 1. Equal-priority groups apply in file order (documented in `_portrait_modifiers.info`; our files sort last).
-2. RiE's hobbit clothes on Anbennar's halfling and gnome bodies (both are small; the meshes carry body blend shapes).
+2. RiE's hobbit clothes on Anbennar's halfling bodies (the meshes carry body blend shapes).
 3. The 255 index cap for gene templates.
 4. Texture lookups by name for meshes copied at their RiE paths.

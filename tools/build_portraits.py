@@ -517,22 +517,69 @@ def top_blocks(files) -> dict:
     return index
 
 
-def build_accessories(roots: Roots, names: list) -> tuple:
+def accessory_renames(roots: Roots, names: list) -> dict:
+    """accessory -> aov_rie_<accessory> for every accessory the templates name that Anbennar or the game defines but
+    whose entities clash (Anbennar reuses female_hair_custom_01..08 for its Kheteratan hairstyles, RiE's are AGOT
+    hairs): RiE's accessory is copied under the new name, pointing at RiE's renamed entities."""
+    ours = top_blocks(effective_texts(roots, "gfx/portraits/accessories"))
+    renames = {}
+    for name in names:
+        if name in ours and any(model_clash(roots, "entity", e) for e in ACCESSORY_ENTITY.findall(code(ours[name][2]))):
+            renames[name] = RENAMED_PREFIX + name
+    return renames
+
+
+def rename_accessories_in_templates(files: dict, renames: dict) -> dict:
+    """The gene files with the renamed accessories' names replaced inside our RiE template insertions."""
+    if not renames:
+        return files
+    begin = f"{MARKER}: Realms in Exile templates (tools/build_portraits.py)\n"
+    end = f"{MARKER}: end of Realms in Exile templates\n"
+    pattern = re.compile(r"(=\s*\"?)(" + "|".join(re.escape(n) for n in sorted(renames, key=len, reverse=True)) + r")\b")
+    out = {}
+    for rel, content in files.items():
+        text = content.decode("utf-8")
+        pieces, rest = [], text
+        while begin in rest:
+            before, rest = rest.split(begin, 1)
+            inside, rest = rest.split(end, 1)
+            pieces += [before, begin, pattern.sub(lambda m: m.group(1) + renames[m.group(2)], inside), end]
+        out[rel] = ("".join(pieces) + rest).encode("utf-8")
+    return out
+
+
+def rename_model_refs(roots: Roots, body: str) -> str:
+    """body with every pdxmesh/entity/clone reference to a clashing model name pointed at its aov_rie_ copy."""
+    def sub(match):
+        kind = "pdxmesh" if match.group(1) == "pdxmesh" else "entity"
+        name = match.group(4)
+        return match.group(0) if not model_clash(roots, kind, name) else \
+            f"{match.group(1)}{match.group(2)}{match.group(3)}{RENAMED_PREFIX}{name}"
+    return re.sub(r"\b(pdxmesh|entity|clone)(\s*=\s*)(\"?)([A-Za-z_][A-Za-z0-9_.]*)", sub, body)
+
+
+def build_accessories(roots: Roots, names: list, renames=None) -> tuple:
+    """(accessory file, entities the copied accessories use (their RiE names), count). renames: accessory -> the name
+    RiE's is copied under although Anbennar or the game defines it."""
+    renames = renames or {}
     ours = top_blocks(effective_texts(roots, "gfx/portraits/accessories"))
     rie = top_blocks(_texts(str(roots.rie / "gfx/portraits/accessories"), "*.txt"))
     lines = [BOM + HEADER()[0], HEADER()[1], "# Realms in Exile accessories the RiE gene templates use."]
     entities, count = [], 0
     for name in names:
-        if name in ours:
+        if name in ours and name not in renames:
             continue
         if name not in rie:
             raise GeneratorError(f"accessory {name} is in neither Anbennar, the game nor RiE")
         _kind, path, body = rie[name]
-        lines += ["", f"# from RiE gfx/portraits/accessories/{path}", lf(body).rstrip("\n")]
-        count += 1
         for entity in ACCESSORY_ENTITY.findall(code(body)):
             if entity not in entities:
                 entities.append(entity)
+        if name in renames:
+            body = re.sub(rf"^(\s*){re.escape(name)}(\s*=)", rf"\g<1>{renames[name]}\2", body, count=1)
+        body = rename_model_refs(roots, body)
+        lines += ["", f"# from RiE gfx/portraits/accessories/{path}", lf(body).rstrip("\n")]
+        count += 1
     return {ACCESSORIES_FILE: ("\n".join(lines) + "\n").encode("utf-8")}, entities, count
 
 
@@ -570,16 +617,32 @@ def external_models(roots: Roots) -> set:
     return names
 
 
+def _norm(text: str) -> str:
+    return re.sub(r"\s+", " ", code(text)).strip()
+
+
+def model_clash(roots: Roots, kind: str, name: str) -> bool:
+    """Anbennar (not the game) defines this pdxmesh/entity name with other content than RiE: Anbennar reused the name
+    for its own model, so RiE's is copied as aov_rie_<name>."""
+    key = (kind, name)
+    anbennar = model_index(str(roots.anbennar / "gfx/models"))
+    rie = model_index(str(roots.rie / "gfx/models"))
+    if key not in anbennar or key not in rie or key in model_index(str(roots.game / "game/gfx/models")):
+        return False
+    return _norm(anbennar[key][1]) != _norm(rie[key][1])
+
+
 def collect_models(roots: Roots, entities: list) -> list:
     """[(kind, name, rie asset path, block)] of the RiE blocks the entities need (dependencies first); names Anbennar
-    or the game define are theirs and are not copied."""
+    or the game define are theirs and are not copied, unless Anbennar's clashes (model_clash: copied, renamed by
+    build_models)."""
     rie = model_index(str(roots.rie / "gfx/models"))
     external = external_models(roots)
     done, order = set(), []
 
     def visit(kind, name, chain):
         key = (kind, name)
-        if key in done or key in external:
+        if key in done or (key in external and not model_clash(roots, kind, name)):
             return
         if key in chain:
             raise GeneratorError(f"{kind} {name} refers to itself")
@@ -643,15 +706,28 @@ RENAMED = []  # (RiE path, copied path) of files RiE edited at a vanilla path (r
 RENAMED_DIR = "gfx/models/portraits/aov_rie_edited"
 
 
+def _texture_name_clash(roots: Roots, rel: str, content: bytes) -> bool:
+    """A texture Anbennar or the game has under the same file name with other content (CK3 finds textures by name),
+    e.g. RiE's AGOT female_hair_custom_05_diffuse.dds and Anbennar's Kheteratan one."""
+    name = rel.rsplit("/", 1)[-1].lower()
+    if not name.endswith((".dds", ".png", ".tga")):
+        return False
+    for root in (roots.anbennar / "gfx", roots.game / "game/gfx"):
+        if any(path.read_bytes() != content for path in file_names(str(root)).get(name, [])):
+            return True
+    return False
+
+
 def place_file(roots: Roots, ref: str, rel: str, files: dict, home: str):
     """Copy the RiE file rel that a block names as ref; return the reference the copied block must use instead, or
     None to keep ref. A file Anbennar or the game has at rel is never overridden (it would change vanilla characters
-    too): when RiE's differs (RiE edits some vanilla hair textures in place, and its own meshes depend on the edit),
+    too), and neither is a texture they have under the same name: when RiE's differs (RiE edits some vanilla hair
+    textures in place and its own meshes depend on the edit; Anbennar reuses AGOT hair names),
     RiE's goes to home/aov_rie_<name> and the block is pointed at it (a plain name stays plain; home is RENAMED_DIR
     for those, the file's own folder for a path)."""
     content = (roots.rie / rel).read_bytes()
     outside = _exists_outside(roots, rel)
-    if outside is None:
+    if outside is None and not _texture_name_clash(roots, rel, content):
         files[rel] = content
         return None
     if outside == content:
@@ -672,6 +748,9 @@ def build_models(roots: Roots, entities: list) -> tuple:
     by_asset, files, variations = {}, {}, []
     for kind, name, path, body in order:
         asset_dir = "gfx/models/" + path.rsplit("/", 1)[0] if "/" in path else "gfx/models"
+        if model_clash(roots, kind, name):
+            body = re.sub(rf'(\bname\s*=\s*"?){re.escape(name)}\b', rf"\g<1>{RENAMED_PREFIX}{name}", body, count=1)
+        body = rename_model_refs(roots, body)
         for ref in sorted(set(FILE_REF.findall(code(body)))):
             rel = resolve_file(roots, ref, asset_dir)
             if rel:
@@ -771,9 +850,13 @@ def build_all(roots: Roots, notes=None) -> dict:
     files.update(modifier_files(entries))
     files.update(triggers_file())
     genes, accessory_names, gene_notes = build_genes(roots, entries, renames)
-    files.update(genes)
+    acc_renames = accessory_renames(roots, accessory_names)
+    files.update(rename_accessories_in_templates(genes, acc_renames))
     notes += gene_notes
-    accessories, entities, count = build_accessories(roots, accessory_names)
+    if acc_renames:
+        notes.append("RiE accessories copied under a new name (Anbennar reuses their model names): "
+                     + ", ".join(acc_renames))
+    accessories, entities, count = build_accessories(roots, accessory_names, acc_renames)
     files.update(accessories)
     models, variation_names, order = build_models(roots, entities)
     check_shaders(roots, order)

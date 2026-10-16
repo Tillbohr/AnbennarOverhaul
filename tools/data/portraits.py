@@ -3,10 +3,10 @@ modifiers are copied (spec docs/superpowers/specs/2026-10-15-rie-portraits-desig
 
 # Clothing groups: the clothing_gfx key prepended to the cultures' clothing_gfx lists (in data order, so a culture in
 # two groups lists both keys, the earlier group's first), and either explicit culture keys or heritages. User choice:
-# moon elves wear RiE's Noldor look, sun elves its Vanyar look (RiE's generic elves wear vanilla clothes).
+# moon elves wear RiE's Noldor look, sun elves its Vanyar look (RiE's generic elves wear vanilla clothes); gnomes keep
+# Anbennar's look (user choice after the first in-game test).
 CLOTHING_GROUPS = {
-    "hobbit": {"label": "Hobbit", "clothing_gfx": "aov_hobbit_clothing_gfx",
-               "heritages": ("heritage_halfling", "heritage_gnomish")},
+    "hobbit": {"label": "Hobbit", "clothing_gfx": "aov_hobbit_clothing_gfx", "heritages": ("heritage_halfling",)},
     "vanyar": {"label": "Vanyarin Elven", "clothing_gfx": "aov_vanyar_clothing_gfx", "cultures": ("sun_elvish",)},
     "noldor": {"label": "Noldorin Elven", "clothing_gfx": "aov_noldor_clothing_gfx", "cultures": ("moon_elvish",)},
     "lasgalendrim": {"label": "Silvan Elven", "clothing_gfx": "aov_lasgalendrim_clothing_gfx",
@@ -142,8 +142,8 @@ EXTRA_ENTRIES = {
                "beards", "no_beard", ["portrait_aov_hobbit_clothing_trigger = yes"]),
     ],
     "cloaks": [
-        # Vanilla cloaks clip through RiE's hobbit outfit, and RiE gives its elves no vanilla cloaks (they are not in
-        # its proxy lists); war cloaks come from the armour group, which applies later.
+        # Vanilla cloaks clip through RiE's hobbit outfit (seen on a gnome), and RiE gives its elves no vanilla cloaks
+        # (they are not in its proxy lists); war cloaks come from the armour group, which applies later.
         _entry("aov_hobbit_no_cloak", "vanilla cloaks clip through RiE's hobbit outfit", "cloaks", "no_cloak",
                ["is_male = yes", "portrait_aov_hobbit_clothing_trigger = yes"]),
         _entry("aov_elf_no_cloak", "RiE's elves wear no vanilla cloaks", "cloaks", "no_cloak",
