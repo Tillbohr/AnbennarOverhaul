@@ -46,33 +46,3 @@ entity = {
         }
 	}
 }
-
-entity = {
-	name = "male_headgear_epe_southern_dwarf_lo_nob_02_entity"
-	pdxmesh = "male_Cuman_Hat_02_mesh"
-	
-
-	game_data = {
-        portrait_entity_user_data = {
-			portrait_accessory = {
-			pattern_mask = "gfx/models/portraits/m_headgear/cuman/Cuman_High-Late_Hat_02/Cuman_Hat_02_mask.dds"		
-			variation = "eastern_iranian_non_islamic_common_02"	#A "variation" object in gfx/portraits/accessory_variations/
-			}
-        }
-	}
-}
-
-entity = {
-	name = "male_headgear_epe_southern_dwarf_hi_nob_02_entity"
-	pdxmesh = "male_Cuman_Hat_02_mesh"
-	
-
-	game_data = {
-        portrait_entity_user_data = {
-			portrait_accessory = {
-			pattern_mask = "gfx/models/portraits/m_headgear/cuman/Cuman_High-Late_Hat_02/Cuman_Hat_02_mask.dds"		
-			variation = "southern_dwarf_high_01"	#A "variation" object in gfx/portraits/accessory_variations/
-			}
-        }
-	}
-}

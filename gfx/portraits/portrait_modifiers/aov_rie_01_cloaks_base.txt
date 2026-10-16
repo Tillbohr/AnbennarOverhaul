@@ -39,10 +39,10 @@ aov_rie_cloaks = {
 				NOT = { portrait_has_trait_trigger = { TRAIT = berserker } }
 				culture = {
 					NOR = {
-						aov_rie_eastern_dwarf_culture_trigger = yes
-						aov_rie_eastern_dwarf_culture_trigger = yes
-						aov_rie_southern_dwarf_culture_trigger = yes
-						aov_rie_southern_dwarf_culture_trigger = yes
+						aov_rie_other_dwarf_culture_trigger = yes
+						aov_rie_other_dwarf_culture_trigger = yes
+						aov_rie_other_dwarf_culture_trigger = yes
+						aov_rie_other_dwarf_culture_trigger = yes
 					}
 				}			
 			}

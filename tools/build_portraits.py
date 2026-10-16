@@ -181,8 +181,9 @@ def map_input(value: str, overrides: dict) -> str:
 def transform(text: str, rie_keys: set, overrides=None) -> str:
     """An RiE modifier with our culture inputs, triggers, heritages, game rules and literal replacements."""
     overrides = overrides or {}
-    text = re.sub(r"\bCULTURE_INPUT(\s*=\s*)(\w+)", lambda m: f"CULTURE_INPUT{m.group(1)}{map_input(m.group(2), overrides)}",
-                  text)
+    # INPUT_PARAMETER: the court fashion scripted modifiers pass it on as their trigger's CULTURE_INPUT.
+    text = re.sub(r"\b(CULTURE_INPUT|INPUT_PARAMETER)(\s*=\s*)(\w+)",
+                  lambda m: f"{m.group(1)}{m.group(2)}{map_input(m.group(3), overrides)}", text)
 
     def trigger(match):
         key = match.group(1)
@@ -227,17 +228,19 @@ def up_to_emperor(text: str) -> str:
 
 @lru_cache(maxsize=None)
 def rie_group(rie: str, filename: str, group: str) -> tuple:
-    """(settings lines, [(entry name, entry text)]) of one group of an RiE portrait modifier file."""
+    """(settings lines, [(entry name, entry text)]) of one group of a portrait modifier file under root (RiE, or
+    Anbennar for "source": "anbennar" entries)."""
     path = Path(rie) / MODIFIERS_DIR / filename
     if not path.is_file():
-        raise GeneratorError(f"RiE portrait modifier file {path} not found")
+        raise GeneratorError(f"portrait modifier file {path} not found")
     text = read(path)
-    group_block = [(s, e) for names, s, e in blocks(text, 1) if names == (group,)]
+    group_block = [(s, e) for names, s, e in blocks(text, 1, strict=False) if names == (group,)]
     if len(group_block) != 1:
         raise GeneratorError(f"{filename}: group {group} found {len(group_block)} times")
     start, end = group_block[0]
-    entries = [(names[1], text[s:e]) for names, s, e in blocks(text, 2) if names[0] == group and start <= s < end]
-    head_end = min((s for _n, s, _e in blocks(text, 2) if start <= s < end), default=end)
+    entries = [(names[1], text[s:e]) for names, s, e in blocks(text, 2, strict=False)
+               if names[0] == group and start <= s < end]
+    head_end = min((s for _n, s, _e in blocks(text, 2, strict=False) if start <= s < end), default=end)
     head = code(text[start:head_end])
     settings = []
     for key in ("priority", "selection_behavior"):
@@ -253,13 +256,17 @@ def copied_entries(roots: Roots) -> dict:
     out = {}
     for filename, groups in data.ENTRIES.items():
         for group, items in groups.items():
-            settings, entries = rie_group(str(roots.rie), filename, group)
+            settings, rie_entries = rie_group(str(roots.rie), filename, group)
             texts, seen = [], {}
             for item in items:
                 name, options = _entry_spec(item)
+                source = options.get("source", "rie")
+                if source not in ("rie", "anbennar"):
+                    raise GeneratorError(f"{filename}: {name}: unknown source {source}")
+                entries = rie_entries if source == "rie" else rie_group(str(roots.anbennar), filename, group)[1]
                 found = [body for entry, body in entries if entry == name]
                 if not found:
-                    raise GeneratorError(f"{filename}: {group} has no modifier {name}")
+                    raise GeneratorError(f"{source} {filename}: {group} has no modifier {name}")
                 for body in found:
                     seen[name] = seen.get(name, 0) + 1
                     if seen[name] > 1:

@@ -2691,7 +2691,7 @@
       "fullpath": ".\\common\\genes\\07_genes_special_accessories_misc.txt",
       "length": 1,
       "line": "}",
-      "linenr": 1922,
+      "linenr": 1937,
       "path": "common\\genes\\07_genes_special_accessories_misc.txt",
       "stage": null,
       "tag": null
@@ -2707,54 +2707,12 @@
   "key": "logic",
   "locations": [
     {
-      "column": 22,
+      "column": 10,
       "from": "MOD",
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "length": 1,
-      "line": "                OR = {",
-      "linenr": 70,
-      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
-      "stage": null,
-      "tag": null
-    }
-  ],
-  "message": "OR with only one item inside is probably not what you intended",
-  "severity": "warning",
-  "wiki": null
-},
-{
-  "confidence": "weak",
-  "info": null,
-  "key": "logic",
-  "locations": [
-    {
-      "column": 22,
-      "from": "MOD",
-      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
-      "length": 1,
-      "line": "                OR = {",
-      "linenr": 92,
-      "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
-      "stage": null,
-      "tag": null
-    }
-  ],
-  "message": "OR with only one item inside is probably not what you intended",
-  "severity": "warning",
-  "wiki": null
-},
-{
-  "confidence": "weak",
-  "info": null,
-  "key": "logic",
-  "locations": [
-    {
-      "column": 22,
-      "from": "MOD",
-      "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
-      "length": 1,
-      "line": "                OR = {",
-      "linenr": 114,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 112,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "stage": null,
       "tag": null
@@ -2775,7 +2733,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "length": 1,
       "line": "\t\t\t\tOR = {",
-      "linenr": 136,
+      "linenr": 134,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "stage": null,
       "tag": null
@@ -2796,7 +2754,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "length": 1,
       "line": "\t\t\t\tOR = {",
-      "linenr": 158,
+      "linenr": 156,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "stage": null,
       "tag": null
@@ -2817,7 +2775,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "length": 1,
       "line": "\t\t\t\tOR = {",
-      "linenr": 180,
+      "linenr": 176,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "stage": null,
       "tag": null
@@ -2838,7 +2796,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "length": 1,
       "line": "\t\t\t\tOR = {",
-      "linenr": 287,
+      "linenr": 198,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "stage": null,
       "tag": null
@@ -2859,7 +2817,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "length": 1,
       "line": "\t\t\t\tOR = {",
-      "linenr": 309,
+      "linenr": 220,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "stage": null,
       "tag": null
@@ -2901,7 +2859,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_headgear_base.txt",
       "length": 1,
       "line": "\t\t\t\tOR = {",
-      "linenr": 245,
+      "linenr": 270,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_headgear_base.txt",
       "stage": null,
       "tag": null
@@ -2922,7 +2880,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\tOR = {",
-      "linenr": 85,
+      "linenr": 98,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -2943,7 +2901,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\t\t\t\tOR = {",
-      "linenr": 120,
+      "linenr": 133,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -2964,7 +2922,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\t\t\t\t\tOR = {",
-      "linenr": 140,
+      "linenr": 153,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -2985,7 +2943,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\t\tOR = {",
-      "linenr": 150,
+      "linenr": 163,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -3006,7 +2964,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\t\t\t\tOR = {",
-      "linenr": 186,
+      "linenr": 199,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -3027,7 +2985,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\t\t\t\t\tOR = {",
-      "linenr": 206,
+      "linenr": 219,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -3048,7 +3006,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\t\tOR = {",
-      "linenr": 216,
+      "linenr": 229,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -3069,7 +3027,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_headgear_armor.txt",
       "length": 1,
       "line": "\t\t\t\tOR = {",
-      "linenr": 91,
+      "linenr": 134,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_headgear_armor.txt",
       "stage": null,
       "tag": null
@@ -3090,7 +3048,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\tAND = {",
-      "linenr": 303,
+      "linenr": 316,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -3111,7 +3069,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\t\tAND = {",
-      "linenr": 337,
+      "linenr": 350,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -3132,7 +3090,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\t\tAND = {",
-      "linenr": 356,
+      "linenr": 369,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -3153,7 +3111,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\t\tAND = {",
-      "linenr": 384,
+      "linenr": 397,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -3174,7 +3132,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\t\tAND = {",
-      "linenr": 396,
+      "linenr": 409,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -3195,7 +3153,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
       "length": 1,
       "line": "\t\t\t\t\tAND = {",
-      "linenr": 287,
+      "linenr": 438,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
       "stage": null,
       "tag": null
@@ -3216,7 +3174,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
       "length": 1,
       "line": "\t\t\t\t\tAND = {",
-      "linenr": 310,
+      "linenr": 461,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
       "stage": null,
       "tag": null
@@ -3237,7 +3195,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
       "length": 1,
       "line": "\t\t\t\t\tAND = {",
-      "linenr": 344,
+      "linenr": 495,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
       "stage": null,
       "tag": null
@@ -3258,7 +3216,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
       "length": 1,
       "line": "\t\t\t\t\tAND = {",
-      "linenr": 356,
+      "linenr": 507,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
       "stage": null,
       "tag": null
@@ -3279,7 +3237,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_headgear_armor.txt",
       "length": 1,
       "line": "\t\t\t\t\tAND = {",
-      "linenr": 179,
+      "linenr": 222,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_headgear_armor.txt",
       "stage": null,
       "tag": null
@@ -3300,7 +3258,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_headgear_armor.txt",
       "length": 1,
       "line": "\t\t\t\t\tAND = {",
-      "linenr": 205,
+      "linenr": 248,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_headgear_armor.txt",
       "stage": null,
       "tag": null

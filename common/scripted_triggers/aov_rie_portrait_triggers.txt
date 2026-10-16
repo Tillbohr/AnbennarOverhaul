@@ -72,30 +72,6 @@ portrait_aov_dwarf_clothing_spouse_trigger = {
 	}
 }
 
-portrait_aov_southern_dwarf_clothing_trigger = {
-	portrait_shared_clothing_contents_trigger = {
-		CULTURE_SCOPE = scope:culture
-		CULTURE_FLAG = aov_southern_dwarf
-	}
-}
-
-portrait_aov_southern_dwarf_clothing_spouse_trigger = {
-	portrait_shared_clothing_contents_trigger = {
-		CULTURE_SCOPE = culture
-		CULTURE_FLAG = aov_southern_dwarf
-	}
-}
-
-portrait_aov_western_dwarf_clothing_trigger = {
-	portrait_aov_dwarf_clothing_trigger = yes
-	NOT = { portrait_aov_southern_dwarf_clothing_trigger = yes }
-}
-
-portrait_aov_western_dwarf_clothing_spouse_trigger = {
-	portrait_aov_dwarf_clothing_spouse_trigger = yes
-	NOT = { portrait_aov_southern_dwarf_clothing_spouse_trigger = yes }
-}
-
 portrait_aov_rie_none_clothing_trigger = {
 	always = no
 }
@@ -106,11 +82,8 @@ portrait_aov_rie_none_clothing_spouse_trigger = {
 
 # Culture scope: RiE's dwarf heritages.
 aov_rie_western_dwarf_culture_trigger = {
-	has_clothing_gfx = aov_dwarf_clothing_gfx NOT = { has_clothing_gfx = aov_southern_dwarf_clothing_gfx }
+	has_clothing_gfx = aov_dwarf_clothing_gfx
 }
-aov_rie_southern_dwarf_culture_trigger = {
-	has_clothing_gfx = aov_southern_dwarf_clothing_gfx
-}
-aov_rie_eastern_dwarf_culture_trigger = {
+aov_rie_other_dwarf_culture_trigger = {
 	always = no
 }

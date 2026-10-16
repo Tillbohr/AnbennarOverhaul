@@ -2277,55 +2277,6 @@ special_genes = {
 				boy = male
 				girl = female
 			}
-			dwarven_eastern_hairstyles = {
-				index = 90
-				male = {
-					1 = bald					
-					1 = male_hair_fp2_iberian_muslim_03 # Long Windswept - straight					
-					1 = m_hair_fp3_iranian_01 # Long Split in Strands - straight					
-					1 = male_hair_custom_12_no_dye # Strider's Hair - straight
-					1 = male_hair_custom_14 # Ponytail Over The Shoulder - straight
-					1 = male_hair_custom_16 # Long and Practical - straight
-					1 = mesohair_2n3 # Long Straight A - straight
-					1 = mesohair_2n4 # Long Straight B - straight
-					1 = am_fp1_hair_combo_d2 # Long Straight D - straight
-					1 = male_hair_western_09 # Short Wavy - wavy
-					1 = male_hair_fp1_02 # Ponytail - wavy
-					1 = male_hair_fp2_iberian_christian_03 # Low Single Braid - wavy
-					1 = m_hair_fp3_iranian_02 # Easterling Braids - wavy
- 					1 = m_hair_fp3_iranian_03 # Medium with Wavy Ends - wavy
-					1 = m_hair_ep3_byzantine_01 # Greek Noble's Middle Part - wavy
-					1 = m_hair_sp4_mena_01 # Scribe's Braid - wavy
-					1 = m_hair_fp4_western_07_bald # Long Flowing Balding - wavy
-					1 = mesohair_northern_01 # Long Wavy Messy Long A - wavy 
-					1 = mesohair_northern_01b # Long Wavy Messy Long B - wavy 
-					1 = am_combo_hair_6 # Messy Long C - wavy
-					1 = male_hair_mena_02 # Medium Curls - curly
-					1 = male_hair_mena_04 # Curly Long - curly
-					1 = m_hair_fp3_iranian_02 # Easterling Braids - wavy
- 					1 = m_hair_fp3_iranian_03 # Medium with Wavy Ends - wavy					
-				}
-			
-				female = {
-					1 = female_hair_northern_02 # Single Braid - straight
-					1 = aov_rie_female_hair_custom_08 # Rolled Up Braids (no jewelry) - straight
- 					1 = aov_rie_female_hair_custom_03 # Jeweled Bun (no jewelry) - straight
-					1 = f_hair_fp3_iranian_02_common # Long Split in Strands - straight	
-					1 = female_hair_western_02 # Very Long Wavy - wavy
-					1 = female_hair_western_03 # Bun - wavy
- 					1 = aov_rie_female_hair_custom_01 # Wavy Sides (no jewelry) - wavy
-					1 = f_hair_fp3_iranian_03_common # Medium Buns - wavy
-					1 = f_hair_fp3_iranian_02_common # Long Split in Strands - straight
-					1 = f_hair_sp4_western_01 # Noblewoman's Locks - wavy
-					1 = aov_rie_female_hair_custom_05 # Long Curly  (no jewelry)- curly
-					1 = female_hair_custom_40 # Boyish Curls - curly
-					1 = f_hair_fp3_iranian_01_common # Medium Curls - curly
-					1 = female_hair_fp2_iberian_muslim_01_common # Framing Curls - curly
-					1 = f_hair_sp4_mena_01 # Turkic Lady's Hair - curly					
-				}
-				boy = male
-				girl = female
-			}
 		# Anbennar Overhaul: end of Realms in Exile templates
 		}
 	}

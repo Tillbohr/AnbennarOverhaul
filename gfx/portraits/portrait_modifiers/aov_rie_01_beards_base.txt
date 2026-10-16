@@ -66,33 +66,6 @@ aov_rie_beards = {
         }
     }
 
-	dwarven_males_eastern = {
-        dna_modifiers = {
-            accessory = {
-                mode = add
-                gene = beards
-                template = dwarven_beards_eastern
-                range = { 0 1 } # For the randomness to work correctly
-            }
-        }   
-        weight = {
-            base = 0
-            modifier = {
-                add = 1010
-                is_male = yes
-				portrait_aov_dwarf_clothing_trigger = yes
-                culture = {
-					OR = {
-						aov_rie_eastern_dwarf_culture_trigger = yes
-						aov_rie_eastern_dwarf_culture_trigger = yes
-                        aov_rie_southern_dwarf_culture_trigger = yes
-						aov_rie_southern_dwarf_culture_trigger = yes
-					}
-				}			
-            }
-        }
-    }
-
 	aov_hobbit_no_beard = { # RiE hobbits are beardless (its has_no_beard entry also covers other cases)
 		dna_modifiers = {
 			accessory = {

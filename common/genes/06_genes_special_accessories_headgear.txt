@@ -4112,43 +4112,8 @@ special_genes = {
 				boy = male
 				girl = female
 			}
-			southern_dwarf_low_headgear = {
-				index = 247
-				male = {
-					#commoners / low nobles
-					50 = empty
-					20 = m_headgear_southern_dwarf_nob_01
-					10 = male_headgear_secular_byzantine_common_01
-					10 = male_headgear_epe_southern_dwarf_lo_nob_02
-					10 = male_headgear_epe_southern_dwarf_lo_nob_03	
-				}
-				female = {
-					#commoners / low nobles
-					50 = empty
-					50 = female_headgear_southern_dwarf_common
-				}
-				boy = male
-				girl = female
-			}
-			southern_dwarf_high_headgear = {
-				index = 248
-				male = {
-					#high nobles
-					60 = empty
-					30 = m_headgear_southern_dwarf_nob_02
-					5 = male_headgear_epe_southern_dwarf_hi_nob_02
-					5 = male_headgear_epe_southern_dwarf_hi_nob_03
-				}
-				female = {
-					#high nobles
-					60 = empty
-					40 = female_headgear_southern_dwarf_noble
-				}
-				boy = male
-				girl = female
-			}
 			dwarf_royalty_headgear = {
-				index = 249
+				index = 247
 				male = {
 					#western royalty
 					15 = male_headgear_dwarven_crown_01 #standard
@@ -4186,7 +4151,7 @@ special_genes = {
 				girl = female
 			}
 			eriador_war_headgear = {
-				index = 250
+				index = 248
 				male = {
 					##hobbits
 					10 = empty
@@ -4214,7 +4179,7 @@ special_genes = {
 				girl = female
 			}						
 			elven_war_headgear = {#elven#
-				index = 251
+				index = 249
 				male = {
 					5 = male_headgear_elven_war_01
 					5 = male_headgear_elven_war_silvan_01
@@ -4245,7 +4210,7 @@ special_genes = {
 				girl = female
 			}
 			dwarf_war_headgear = {
-				index = 252
+				index = 250
 				male = {
 					# default
 					5 = male_headgear_dwarf_war_01_steel #generic

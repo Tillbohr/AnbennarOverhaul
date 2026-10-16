@@ -317,7 +317,7 @@ aov_rie_headgear = {
 				portrait_wear_armor_trigger = no
 				NOT = { is_female = yes }
                 portrait_commoner_headgear_fallback_trigger = {
-                    CULTURE_INPUT = aov_western_dwarf
+                    CULTURE_INPUT = aov_dwarf
                 }
 				culture = {
 					OR = {
@@ -332,7 +332,7 @@ aov_rie_headgear = {
 				portrait_wear_armor_trigger = no
 				NOT = { is_female = yes }
 				portrait_commoner_clothing_trigger = {
-					CULTURE_INPUT = aov_western_dwarf
+					CULTURE_INPUT = aov_dwarf
 				}
 				culture = {
 					OR = {
@@ -361,7 +361,7 @@ aov_rie_headgear = {
 				portrait_wear_armor_trigger = no
 				is_female = yes
                 portrait_commoner_headgear_fallback_trigger = {
-                    CULTURE_INPUT = aov_western_dwarf
+                    CULTURE_INPUT = aov_dwarf
                 }
 				culture = {
 					OR = {
@@ -376,7 +376,7 @@ aov_rie_headgear = {
 				portrait_wear_armor_trigger = no
 				is_female = yes
 				portrait_commoner_clothing_trigger = {
-					CULTURE_INPUT = aov_western_dwarf
+					CULTURE_INPUT = aov_dwarf
 				}
 				culture = {
 					OR = {
@@ -405,7 +405,7 @@ aov_rie_headgear = {
 				portrait_wear_armor_trigger = no
 				NOT = { is_female = yes }
 				portrait_low_nobles_clothing_trigger = {
-					CULTURE_INPUT = aov_western_dwarf
+					CULTURE_INPUT = aov_dwarf
 				}	
 				culture = {
 					OR = {
@@ -434,7 +434,7 @@ aov_rie_headgear = {
 				portrait_wear_armor_trigger = no
 				is_female = yes
 				portrait_low_nobles_clothing_trigger = {
-					CULTURE_INPUT = aov_western_dwarf
+					CULTURE_INPUT = aov_dwarf
 				}
 				culture = {
 					OR = {
@@ -462,83 +462,11 @@ aov_rie_headgear = {
 				add = 102
 				portrait_wear_armor_trigger = no
                 portrait_high_nobles_headgear_trigger = {
-                    CULTURE_INPUT = aov_western_dwarf
-                }
-			}	
-		}	
-	}
-
-	dwarf_southern_low = {
-		dna_modifiers = {
-			accessory = {
-				mode = add
-				gene = headgear
-				template = southern_dwarf_low_headgear
-				range = { 0 1 } # For the randomness to work correctly
-			}
-		}	
-		weight = {
-			base = 0
-			modifier = {
-				add = 110
-				portrait_wear_armor_trigger = no
-                portrait_commoner_headgear_fallback_trigger = {
                     CULTURE_INPUT = aov_dwarf
                 }
-				culture = {
-					OR = {
-						aov_rie_southern_dwarf_culture_trigger = yes
-						aov_rie_southern_dwarf_culture_trigger = yes
-					}
-				}
-			}
-			modifier = {
-				add = 110
-				portrait_wear_armor_trigger = no
-				portrait_commoner_clothing_trigger = {
-					CULTURE_INPUT = aov_dwarf
-				}	
-				culture = {
-					OR = {
-						aov_rie_southern_dwarf_culture_trigger = yes
-						aov_rie_southern_dwarf_culture_trigger = yes
-					}
-				}
-			}
-		}
-	}
-
-	dwarf_southern_high = {
-		dna_modifiers = {
-			accessory = {
-				mode = add
-				gene = headgear
-				template = southern_dwarf_high_headgear
-				range = { 0 1 } # For the randomness to work correctly
-			}
-		}	
-		weight = {
-			base = 0
-			modifier = {
-				add = 110
-				portrait_wear_armor_trigger = no
-               	OR = {
-					portrait_low_nobles_clothing_trigger = {
-						CULTURE_INPUT = aov_dwarf
-					}
-					portrait_high_nobles_headgear_trigger = {
-						CULTURE_INPUT = aov_dwarf
-					}
-				}
-				culture = {
-					OR = {
-						aov_rie_southern_dwarf_culture_trigger = yes
-						aov_rie_southern_dwarf_culture_trigger = yes
-					}
-				}	
 			}	
 		}	
-	}	
+	}
 
 	dwarf_royalty = {
 		dna_modifiers = {

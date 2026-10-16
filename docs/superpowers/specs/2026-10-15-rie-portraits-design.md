@@ -13,15 +13,18 @@ helmets, hairstyles and beards.
 | `sun_elvish` | Vanyar (white and gold) | `aov_vanyar_clothing_gfx` |
 | `moon_elvish` | Noldor | `aov_noldor_clothing_gfx` |
 | `wood_elvish` | Lasgalendrim (Silvan) | `aov_lasgalendrim_clothing_gfx` |
-| every `heritage_dwarven` culture | Dwarf (RiE's Longbeard/Firebeard/Broadbeam, "western") | `aov_dwarf_clothing_gfx` |
-| `copper_dwarvish`, `gold_dwarvish`, `marble_dwarvish` (Anbennar's MENA-dressed dwarves) | Dwarf plus RiE's southern dwarf (Blacklock/Stonefoot) clothes and hats | `aov_southern_dwarf_clothing_gfx` first, then `aov_dwarf_clothing_gfx` |
+| every `heritage_dwarven` culture | Dwarf (RiE's Longbeard/Firebeard/Broadbeam hats, crowns, boots, armour, hair, beards) over Anbennar's vanilla northern European clothes | `aov_dwarf_clothing_gfx` |
+| `copper_dwarvish`, `gold_dwarvish`, `marble_dwarvish` (Anbennar's MENA-dressed dwarves) | the same | `aov_southern_dwarf_clothing_gfx` first (unused; keeps their list apart), then `aov_dwarf_clothing_gfx` |
 
 User choices: all clothing layers plus hair and beards; southern dwarf variant for the three MENA-dressed dwarf cultures.
 Halflings and gnomes lose their beards (RiE hobbits are beardless). Round 2 (in-game feedback, 2026-10-16): no female
 dwarf beards; sun elves Vanyar and moon elves Noldor, because RiE's generic elves wear vanilla clothes; western
 dwarves keep RiE's western set (vanilla HRE-style clothes, as in RiE). Hobbit women and hobbit hats stay
 vanilla-styled: RiE has none of its own. Round 3: gnomes keep Anbennar's look (user choice; the hobbit outfit
-clipped on them), and Anbennar's reuse of AGOT hair model names is handled (below).
+clipped on them), and Anbennar's reuse of AGOT hair model names is handled (below). Round 4: every dwarf wears
+Anbennar's own northern European everyday clothes (its `northern_*` clothes entries, copied with
+`"source": "anbennar"` and input `aov_dwarf`) under RiE's dwarf hats, crowns, boots, armour, hair and beards; RiE's
+southern and eastern dwarf styles are dropped.
 
 ## How CK3 picks the look
 
@@ -38,11 +41,10 @@ token renames so they refer to our cultures:
 - `CULTURE_INPUT` and the `portrait_<key>_clothing(_spouse)_trigger` names: `hobbit`/`elven`/`noldor`/`lasgalendrim`/
   `dwarf` become `aov_hobbit`/`aov_vanyar`/`aov_noldor`/`aov_lasgalendrim`/`aov_dwarf` (RiE's Vanyar culture has the
   generic elven key; its Vanyar entries add `culture:vanyar`); every other RiE culture key becomes `aov_rie_none`
-  (always false). Western dwarf entries use `aov_western_dwarf` (dwarf and not southern), so southern dwarves only see
-  the southern entries.
-- RiE dwarf heritages: `heritage_longbeard`/`firebeard`/`broadbeam` become `aov_rie_western_dwarf_culture_trigger`,
-  `heritage_blacklock`/`stonefoot` become `aov_rie_southern_dwarf_culture_trigger`, `heritage_ironfist`/`stiffbeard`
-  become `aov_rie_eastern_dwarf_culture_trigger` (always false).
+  (always false). The court fashion modifiers' `INPUT_PARAMETER` is renamed the same way.
+- RiE dwarf heritages: `heritage_longbeard`/`firebeard`/`broadbeam` become `aov_rie_western_dwarf_culture_trigger`
+  (every dwarf of ours), `heritage_blacklock`/`stonefoot`/`ironfist`/`stiffbeard` become
+  `aov_rie_other_dwarf_culture_trigger` (always false).
 - RiE's dwarf beard game rules become `always = no` (no female dwarf beards; their entries are not copied either).
 - Per-entry literal replacements in the data for anything else (e.g. `culture:lasgalendrim`).
 - Inside a group the first modifier weighing 100 or more wins, so a culture's specific entry is listed before the

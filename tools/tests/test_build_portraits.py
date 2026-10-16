@@ -51,10 +51,15 @@ class TransformTests(unittest.TestCase):
         self.assertIn("portrait_aov_hobbit_clothing_trigger = yes", out)
         self.assertIn("portrait_aov_rie_none_clothing_spouse_trigger = no", out)
         self.assertIn("has_clothing_gfx = aov_vanyar_clothing_gfx", out)  # RiE's Vanyar have the generic elven key
-        self.assertIn("always = no\naov_rie_southern", out)  # sindar_clothing_gfx: no culture of ours
-        self.assertIn("aov_rie_southern_dwarf_culture_trigger = yes", out)
+        self.assertIn("always = no\naov_rie_other", out)  # sindar_clothing_gfx: no culture of ours
+        self.assertIn("aov_rie_other_dwarf_culture_trigger = yes", out)  # RiE's southern clans: none of ours
         self.assertIn("has_cultural_pillar = heritage_elven", out)
         self.assertIn("always = no\nhas_game_rule = other_rule", out)  # no female dwarf beards
+
+    def test_input_parameter_is_renamed_like_culture_input(self):
+        out = bp.transform("court_fashion_level_5_modifier = { INPUT_PARAMETER = northern }\n", KEYS,
+                           {"northern": "aov_dwarf"})
+        self.assertEqual(out, "court_fashion_level_5_modifier = { INPUT_PARAMETER = aov_dwarf }\n")
 
     def test_input_override(self):
         out = bp.transform("CULTURE_INPUT = dwarf\nportrait_dwarf_clothing_trigger = yes\n", KEYS,
@@ -110,10 +115,16 @@ class TriggerTests(unittest.TestCase):
                       "\t\tCULTURE_SCOPE = scope:culture\n\t\tCULTURE_FLAG = aov_hobbit\n\t}\n}", text)
         self.assertIn("portrait_aov_hobbit_clothing_spouse_trigger = {\n\tportrait_shared_clothing_contents_trigger = {\n"
                       "\t\tCULTURE_SCOPE = culture\n", text)
-        self.assertIn("portrait_aov_western_dwarf_clothing_trigger = {\n\tportrait_aov_dwarf_clothing_trigger = yes\n"
-                      "\tNOT = { portrait_aov_southern_dwarf_clothing_trigger = yes }\n}", text)
         self.assertIn("portrait_aov_rie_none_clothing_trigger = {\n\talways = no\n}", text)
         self.assertEqual(sorted(re.findall(r"^(\w+) = \{", text, re.M)), sorted(bp.TRIGGER_NAMES()))
+
+    def test_combined_input(self):
+        with mock.patch.object(data, "COMBINED_INPUTS", {"aov_x": ("aov_dwarf", "aov_hobbit")}):
+            text = bp.triggers_file()[bp.TRIGGERS_FILE].decode("utf-8-sig")
+        self.assertIn("portrait_aov_x_clothing_trigger = {\n\tportrait_aov_dwarf_clothing_trigger = yes\n"
+                      "\tNOT = { portrait_aov_hobbit_clothing_trigger = yes }\n}", text)
+        self.assertIn("portrait_aov_x_clothing_spouse_trigger = {\n\tportrait_aov_dwarf_clothing_spouse_trigger = yes\n",
+                      text)
 
 
 GENE_FILE = ("special_genes = {\n\taccessory_genes = {\n\t\tclothes = {\n"
@@ -291,6 +302,16 @@ class RealTests(unittest.TestCase):
                 for kind, name in re.findall(r'\b(pdxmesh|entity)\s*=\s*"?([A-Za-z_][A-Za-z0-9_.]*)',
                                              bp.code(content.decode("utf-8-sig"))):
                     self.assertFalse(bp.model_clash(REAL, kind, name), f"{rel}: {kind} {name}")
+
+    def test_dwarves_wear_anbennars_northern_clothes(self):
+        text = self.files[f"{bp.MODIFIERS_DIR}/aov_rie_01_clothes_base.txt"].decode("utf-8-sig")
+        for template in ("northern_commoner_clothes", "northern_low_nobility_clothes", "northern_high_nobility_clothes"):
+            self.assertIn(f"template = {template}", text)
+        self.assertIn("portrait_royalty_clothing_trigger = { CULTURE_INPUT = aov_dwarf }", text)
+        self.assertNotIn("western_dwarf", text)
+        for rel, content in self.files.items():
+            if rel.startswith(bp.MODIFIERS_DIR):
+                self.assertNotRegex(content.decode("utf-8-sig"), r"southern_dwarf|blacklock|stonefoot|dwarven_eastern", rel)
 
     def test_gnomes_keep_anbennars_look(self):
         self.assertNotIn("common/culture/cultures/anb_gnome.txt", bhm.build_cultures(REAL))

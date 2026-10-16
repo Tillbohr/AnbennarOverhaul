@@ -413,29 +413,4 @@ aov_rie_legwear = {
             }
 		}
 	}
-
-	dwarf_southern_legwear = {
-
-		dna_modifiers = {
-			accessory = {
-				mode = add
-				gene = legwear
-				template = generic_boots_legwear
-				range = { 0.34 0.66 } # For the randomness to work correctly
-			}
-		}	
-		weight = {
-			base = 0
-			modifier = {
-				add = 120
-				portrait_aov_dwarf_clothing_trigger = yes
-				culture = {
-					OR = {
-						aov_rie_southern_dwarf_culture_trigger = yes
-						aov_rie_southern_dwarf_culture_trigger = yes
-					}
-				}
-			}		
-		}
-	}
 }
