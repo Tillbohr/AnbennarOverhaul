@@ -7,3 +7,7 @@ Map graphics (terrain textures, dwarven gates, shaders, environment, skybox, sno
   The gh_ shaders (gh_snowfall, gh_utils, gh_atmospheric and related), as adapted by Realms in Exile.
 - Victoria 3 (Paradox Interactive)
   The fog of war shader (gh_vic3_fog_of_war) is based on Victoria 3's.
+
+Holding models (castles, cities and temples of the Dunedain/Gondor, high-elf (Noldor) cities, Sindarin/Silvan sanctuaries, dwarven holds):
+- Lord of the Rings: Realms in Exile - https://steamcommunity.com/sharedfiles/filedetails/?id=2291024373
+  The dunedain_castle, gondor_city and dunedain_temple models (Escanni), the highelves models (moon and sun elves), the Sindarin sanctuary models (wood elves) the dwarven_holding models (dwarven holds and dwarf castles and cities in the mountains), and the wall models (highelves_fort_wall, sindarin_hedge_wall, dunedain_walls), with their meshes and textures.

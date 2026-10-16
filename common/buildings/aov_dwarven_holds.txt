@@ -18,6 +18,14 @@ dwarven_hold_01 = {
 	construction_time = slow_construction_time
 
 	assets = {
+		asset = {  # Anbennar Overhaul: RiE dwarf hold model
+			type = pdxmesh
+			name = "dwarven_holding_01_mesh"
+			illustration = @holding_illustration_western
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 0 } }
+			provinces = { 62 64 185 186 189 526 655 912 1230 1232 2609 2610 2855 2856 2914 3020 3021 3022 3023 3024 3025 3026 3027 3028 3029 3030 3031 3032 3033 3034 3035 3036 3037 3038 3039 3040 3041 3042 3043 3044 3045 3046 3047 3048 3049 3050 3051 4021 4022 4023 4024 4025 4026 4027 4028 4029 4030 4070 4071 4072 4073 4074 4075 4076 4077 4078 4082 4090 4091 4097 4111 4112 4113 4114 4124 4218 4231 4643 4644 4645 4646 6301 6302 6303 6304 6445 6446 6447 6448 6449 6450 6451 6452 6453 6454 6455 6456 6457 6458 6459 6467 6468 6469 6470 6471 6472 6473 6474 6475 6476 6771 6772 6773 6774 6775 6776 6777 6778 }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
+		}
 		asset = {
 			type = pdxmesh
 			name = "fp1_building_norse_castle_01_mesh"
@@ -387,6 +395,14 @@ dwarven_hold_02 = {
 	construction_time = slow_construction_time
 
 	assets = {
+		asset = {  # Anbennar Overhaul: RiE dwarf hold model
+			type = pdxmesh
+			name = "dwarven_holding_01_mesh"
+			illustration = @holding_illustration_western
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 0 } }
+			provinces = { 62 64 185 186 189 526 655 912 1230 1232 2609 2610 2855 2856 2914 3020 3021 3022 3023 3024 3025 3026 3027 3028 3029 3030 3031 3032 3033 3034 3035 3036 3037 3038 3039 3040 3041 3042 3043 3044 3045 3046 3047 3048 3049 3050 3051 4021 4022 4023 4024 4025 4026 4027 4028 4029 4030 4070 4071 4072 4073 4074 4075 4076 4077 4078 4082 4090 4091 4097 4111 4112 4113 4114 4124 4218 4231 4643 4644 4645 4646 6301 6302 6303 6304 6445 6446 6447 6448 6449 6450 6451 6452 6453 6454 6455 6456 6457 6458 6459 6467 6468 6469 6470 6471 6472 6473 6474 6475 6476 6771 6772 6773 6774 6775 6776 6777 6778 }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
+		}
 		asset = {
 			type = pdxmesh
 			name = "fp1_building_norse_castle_01_mesh"
@@ -756,6 +772,14 @@ dwarven_hold_03 = {
 	construction_time = slow_construction_time
 
 	assets = {
+		asset = {  # Anbennar Overhaul: RiE dwarf hold model
+			type = pdxmesh
+			name = "dwarven_holding_02_mesh"
+			illustration = @holding_illustration_western
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 1 } }
+			provinces = { 62 64 185 186 189 526 655 912 1230 1232 2609 2610 2855 2856 2914 3020 3021 3022 3023 3024 3025 3026 3027 3028 3029 3030 3031 3032 3033 3034 3035 3036 3037 3038 3039 3040 3041 3042 3043 3044 3045 3046 3047 3048 3049 3050 3051 4021 4022 4023 4024 4025 4026 4027 4028 4029 4030 4070 4071 4072 4073 4074 4075 4076 4077 4078 4082 4090 4091 4097 4111 4112 4113 4114 4124 4218 4231 4643 4644 4645 4646 6301 6302 6303 6304 6445 6446 6447 6448 6449 6450 6451 6452 6453 6454 6455 6456 6457 6458 6459 6467 6468 6469 6470 6471 6472 6473 6474 6475 6476 6771 6772 6773 6774 6775 6776 6777 6778 }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
+		}
 		asset = {
 			type = pdxmesh
 			name = "fp1_building_norse_castle_02_mesh"
@@ -1109,6 +1133,14 @@ dwarven_hold_04 = {
 	construction_time = slow_construction_time
 
 	assets = {
+		asset = {  # Anbennar Overhaul: RiE dwarf hold model
+			type = pdxmesh
+			name = "dwarven_holding_02_mesh"
+			illustration = @holding_illustration_western
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 1 } }
+			provinces = { 62 64 185 186 189 526 655 912 1230 1232 2609 2610 2855 2856 2914 3020 3021 3022 3023 3024 3025 3026 3027 3028 3029 3030 3031 3032 3033 3034 3035 3036 3037 3038 3039 3040 3041 3042 3043 3044 3045 3046 3047 3048 3049 3050 3051 4021 4022 4023 4024 4025 4026 4027 4028 4029 4030 4070 4071 4072 4073 4074 4075 4076 4077 4078 4082 4090 4091 4097 4111 4112 4113 4114 4124 4218 4231 4643 4644 4645 4646 6301 6302 6303 6304 6445 6446 6447 6448 6449 6450 6451 6452 6453 6454 6455 6456 6457 6458 6459 6467 6468 6469 6470 6471 6472 6473 6474 6475 6476 6771 6772 6773 6774 6775 6776 6777 6778 }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
+		}
 		asset = {
 			type = pdxmesh
 			name = "fp1_building_norse_castle_02_mesh"
@@ -1462,6 +1494,14 @@ dwarven_hold_05 = {
 	construction_time = slow_construction_time
 
 	assets = {
+		asset = {  # Anbennar Overhaul: RiE dwarf hold model
+			type = pdxmesh
+			name = "dwarven_holding_03_mesh"
+			illustration = @holding_illustration_western
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 2 } }
+			provinces = { 62 64 185 186 189 526 655 912 1230 1232 2609 2610 2855 2856 2914 3020 3021 3022 3023 3024 3025 3026 3027 3028 3029 3030 3031 3032 3033 3034 3035 3036 3037 3038 3039 3040 3041 3042 3043 3044 3045 3046 3047 3048 3049 3050 3051 4021 4022 4023 4024 4025 4026 4027 4028 4029 4030 4070 4071 4072 4073 4074 4075 4076 4077 4078 4082 4090 4091 4097 4111 4112 4113 4114 4124 4218 4231 4643 4644 4645 4646 6301 6302 6303 6304 6445 6446 6447 6448 6449 6450 6451 6452 6453 6454 6455 6456 6457 6458 6459 6467 6468 6469 6470 6471 6472 6473 6474 6475 6476 6771 6772 6773 6774 6775 6776 6777 6778 }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
+		}
 		asset = {
 			type = pdxmesh
 			name = "fp1_building_norse_castle_03_mesh"
@@ -1820,6 +1860,14 @@ dwarven_hold_06 = {
 	construction_time = slow_construction_time
 
 	assets = {
+		asset = {  # Anbennar Overhaul: RiE dwarf hold model
+			type = pdxmesh
+			name = "dwarven_holding_03_mesh"
+			illustration = @holding_illustration_western
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 2 } }
+			provinces = { 62 64 185 186 189 526 655 912 1230 1232 2609 2610 2855 2856 2914 3020 3021 3022 3023 3024 3025 3026 3027 3028 3029 3030 3031 3032 3033 3034 3035 3036 3037 3038 3039 3040 3041 3042 3043 3044 3045 3046 3047 3048 3049 3050 3051 4021 4022 4023 4024 4025 4026 4027 4028 4029 4030 4070 4071 4072 4073 4074 4075 4076 4077 4078 4082 4090 4091 4097 4111 4112 4113 4114 4124 4218 4231 4643 4644 4645 4646 6301 6302 6303 6304 6445 6446 6447 6448 6449 6450 6451 6452 6453 6454 6455 6456 6457 6458 6459 6467 6468 6469 6470 6471 6472 6473 6474 6475 6476 6771 6772 6773 6774 6775 6776 6777 6778 }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
+		}
 		asset = {
 			type = pdxmesh
 			name = "fp1_building_norse_castle_03_mesh"
@@ -2178,6 +2226,14 @@ dwarven_hold_07 = {
 	construction_time = slow_construction_time
 
 	assets = {
+		asset = {  # Anbennar Overhaul: RiE dwarf hold model
+			type = pdxmesh
+			name = "dwarven_holding_04_mesh"
+			illustration = @holding_illustration_western
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 2 } }
+			provinces = { 62 64 185 186 189 526 655 912 1230 1232 2609 2610 2855 2856 2914 3020 3021 3022 3023 3024 3025 3026 3027 3028 3029 3030 3031 3032 3033 3034 3035 3036 3037 3038 3039 3040 3041 3042 3043 3044 3045 3046 3047 3048 3049 3050 3051 4021 4022 4023 4024 4025 4026 4027 4028 4029 4030 4070 4071 4072 4073 4074 4075 4076 4077 4078 4082 4090 4091 4097 4111 4112 4113 4114 4124 4218 4231 4643 4644 4645 4646 6301 6302 6303 6304 6445 6446 6447 6448 6449 6450 6451 6452 6453 6454 6455 6456 6457 6458 6459 6467 6468 6469 6470 6471 6472 6473 6474 6475 6476 6771 6772 6773 6774 6775 6776 6777 6778 }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
+		}
 		asset = {
 			type = pdxmesh
 			name = "fp1_building_norse_castle_03_mesh"
@@ -2536,6 +2592,14 @@ dwarven_hold_08 = {
 	construction_time = slow_construction_time
 
 	assets = {
+		asset = {  # Anbennar Overhaul: RiE dwarf hold model
+			type = pdxmesh
+			name = "dwarven_holding_04_mesh"
+			illustration = @holding_illustration_western
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 3 } }
+			provinces = { 62 64 185 186 189 526 655 912 1230 1232 2609 2610 2855 2856 2914 3020 3021 3022 3023 3024 3025 3026 3027 3028 3029 3030 3031 3032 3033 3034 3035 3036 3037 3038 3039 3040 3041 3042 3043 3044 3045 3046 3047 3048 3049 3050 3051 4021 4022 4023 4024 4025 4026 4027 4028 4029 4030 4070 4071 4072 4073 4074 4075 4076 4077 4078 4082 4090 4091 4097 4111 4112 4113 4114 4124 4218 4231 4643 4644 4645 4646 6301 6302 6303 6304 6445 6446 6447 6448 6449 6450 6451 6452 6453 6454 6455 6456 6457 6458 6459 6467 6468 6469 6470 6471 6472 6473 6474 6475 6476 6771 6772 6773 6774 6775 6776 6777 6778 }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
+		}
 		asset = {
 			type = pdxmesh
 			name = "fp1_building_norse_castle_04_mesh"
@@ -2894,6 +2958,14 @@ dwarven_hold_09 = {
 	construction_time = slow_construction_time
 
 	assets = {
+		asset = {  # Anbennar Overhaul: RiE dwarf hold model
+			type = pdxmesh
+			name = "dwarven_holding_05_mesh"
+			illustration = @holding_illustration_western
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 3 } }
+			provinces = { 62 64 185 186 189 526 655 912 1230 1232 2609 2610 2855 2856 2914 3020 3021 3022 3023 3024 3025 3026 3027 3028 3029 3030 3031 3032 3033 3034 3035 3036 3037 3038 3039 3040 3041 3042 3043 3044 3045 3046 3047 3048 3049 3050 3051 4021 4022 4023 4024 4025 4026 4027 4028 4029 4030 4070 4071 4072 4073 4074 4075 4076 4077 4078 4082 4090 4091 4097 4111 4112 4113 4114 4124 4218 4231 4643 4644 4645 4646 6301 6302 6303 6304 6445 6446 6447 6448 6449 6450 6451 6452 6453 6454 6455 6456 6457 6458 6459 6467 6468 6469 6470 6471 6472 6473 6474 6475 6476 6771 6772 6773 6774 6775 6776 6777 6778 }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
+		}
 		asset = {
 			type = pdxmesh
 			name = "fp1_building_norse_castle_04_mesh"
@@ -3252,6 +3324,14 @@ dwarven_hold_10 = {
 	construction_time = slow_construction_time
 
 	assets = {
+		asset = {  # Anbennar Overhaul: RiE dwarf hold model
+			type = pdxmesh
+			name = "dwarven_holding_05_mesh"
+			illustration = @holding_illustration_western
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/Castle/western_castle" soundparameter = { "Tier" = 3 } }
+			provinces = { 62 64 185 186 189 526 655 912 1230 1232 2609 2610 2855 2856 2914 3020 3021 3022 3023 3024 3025 3026 3027 3028 3029 3030 3031 3032 3033 3034 3035 3036 3037 3038 3039 3040 3041 3042 3043 3044 3045 3046 3047 3048 3049 3050 3051 4021 4022 4023 4024 4025 4026 4027 4028 4029 4030 4070 4071 4072 4073 4074 4075 4076 4077 4078 4082 4090 4091 4097 4111 4112 4113 4114 4124 4218 4231 4643 4644 4645 4646 6301 6302 6303 6304 6445 6446 6447 6448 6449 6450 6451 6452 6453 6454 6455 6456 6457 6458 6459 6467 6468 6469 6470 6471 6472 6473 6474 6475 6476 6771 6772 6773 6774 6775 6776 6777 6778 }
+			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
+		}
 		asset = {
 			type = pdxmesh
 			name = "fp1_building_norse_castle_04_mesh"
