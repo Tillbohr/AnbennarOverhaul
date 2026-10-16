@@ -9727,11 +9727,11 @@ character_view_bg = {
 		trigger = { aov_rie_court_view_wood_elf_kingdom_or_above_trigger = yes }
 	}
 	texture = {
-		reference = "event_scenes/lotr_throneroom_woodelf.dds"
+		reference = "character_view/throneroom_forest_avari_ai.dds"
 		trigger = { aov_rie_court_view_wood_elf_below_kingdom_trigger = yes }
 	}
 	environment = {
-		reference = "environment_fp1_cw_tribal_main"
+		reference = "environment_event_forest_pine"
 		trigger = { aov_rie_court_view_wood_elf_below_kingdom_trigger = yes }
 	}
 	# RiE Falathrim court (Lindon; RiE's Noldor thronerooms)

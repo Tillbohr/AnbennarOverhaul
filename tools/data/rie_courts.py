@@ -1,8 +1,9 @@
 """Data for tools/build_rie_courts.py: Realms in Exile's character-window backgrounds and royal court scenes for the
 dwarves, wood elves and moon elves (user choice)."""
 
-# Terrains of a dwarven court: dwarves get RiE's dwarf backgrounds and court only while their capital is on one of them.
-DWARF_TERRAINS = ("dwarven_hold", "dwarven_hold_surface", "dwarven_road")
+# Terrains of a dwarven court: dwarves get RiE's dwarf backgrounds and court only while their capital is on one of them
+# (user choice: holds, dwarven roads and caverns).
+DWARF_TERRAINS = ("dwarven_hold", "dwarven_hold_surface", "dwarven_road", "cavern")
 
 TIERS = {
     "above_kingdom": "highest_held_title_tier > tier_kingdom",
@@ -34,10 +35,11 @@ COURTS = {
     "wood_elf": {
         "label": "RiE Lasgalendrim court (Greenwood)",
         "condition": ["culture = { has_clothing_gfx = aov_lasgalendrim_clothing_gfx }"],
-        # RiE has two Greenwood pictures: Thranduil's halls for the realm's king, the tree hall for everyone else.
+        # Thranduil's halls for kings and above; counts and dukes (and below) get RiE's forest hall with mountain
+        # windows (its Forest Avari throneroom, user choice), with the lighting RiE pairs it with.
         "backgrounds": [
             ("kingdom_or_above", "event_scenes/lotr_throneroom_thranduils_halls.dds", "environment_event_study"),
-            ("below_kingdom", "event_scenes/lotr_throneroom_woodelf.dds", "environment_fp1_cw_tribal_main"),
+            ("below_kingdom", "character_view/throneroom_forest_avari_ai.dds", "environment_event_forest_pine"),
         ],
         "scene_culture": "moriquendi",
         "scenes": ["scene_settings_rie_elf_1.txt"],

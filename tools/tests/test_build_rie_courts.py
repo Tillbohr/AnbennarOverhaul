@@ -127,7 +127,8 @@ class FreshnessTests(unittest.TestCase):
     def test_no_orphan_files(self):
         produced = set(self.files)
         orphans = []
-        for folder in ("gfx/models/court", "gfx/models/artifacts", "gfx/court_scene/scene_settings"):
+        for folder in ("gfx/models/court", "gfx/models/artifacts", "gfx/court_scene/scene_settings",
+                       "gfx/interface/illustrations/character_view", "gfx/interface/illustrations/event_scenes"):
             root = rc.SUBMOD / folder
             if root.is_dir():
                 orphans += [p.relative_to(rc.SUBMOD).as_posix() for p in root.rglob("*")

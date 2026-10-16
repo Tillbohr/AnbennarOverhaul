@@ -8,13 +8,14 @@ The character window's background picture (by realm level) and the royal court s
 
 | Who | Backgrounds (realm level) | Royal court (RiE scene culture) |
 |---|---|---|
-| dwarves (`aov_dwarf_clothing_gfx`) whose capital is on `dwarven_hold`, `dwarven_hold_surface` or `dwarven_road` terrain | `throneroom_dwarf_highest` (empire), `_high` (kingdom), `_mid` (duchy), `_low` (county and below) | `dwarven` (Durin's Folk hall) |
-| wood elves (`aov_lasgalendrim_clothing_gfx`) | Thranduil's halls (kingdom and above), the Greenwood tree hall (below) | `moriquendi` (Lasgalen tree hall) |
+| dwarves (`aov_dwarf_clothing_gfx`) whose capital is on `dwarven_hold`, `dwarven_hold_surface`, `dwarven_road` or `cavern` terrain | `throneroom_dwarf_highest` (empire), `_high` (kingdom), `_mid` (duchy), `_low` (county and below) | `dwarven` (Durin's Folk hall) |
+| wood elves (`aov_lasgalendrim_clothing_gfx`) | Thranduil's halls (kingdom and above), RiE's Forest Avari forest hall (`throneroom_forest_avari_ai`, below) | `moriquendi` (Lasgalen tree hall) |
 | moon elves (`aov_noldor_clothing_gfx`) | `throneroom_noldor_high` (kingdom and above), `_mid` (duchy), `_low` (county and below): RiE's Lindon/Falathrim thronerooms | `noldor` (Lindon hall, 2 layouts x 3 grandeur levels) |
 
-User choices: dwarves only in dwarven terrain (holds and dwarven roads; caverns are not listed), Lasgalendrim for wood
-elves, Falathrim (RiE's Noldor thronerooms and court) for moon elves, backgrounds by realm level. RiE has only two
-Greenwood pictures, so wood elves get two levels.
+User choices: dwarves only in dwarven terrain (holds, dwarven roads and, after the first in-game test, caverns),
+Lasgalendrim for wood elves, Falathrim (RiE's Noldor thronerooms and court) for moon elves, backgrounds by realm level.
+Wood elves get two levels: Thranduil's halls, and below kingdom RiE's Forest Avari hall (user choice after the first
+in-game test; it replaced the Greenwood tree hall).
 
 ## Backgrounds
 
@@ -25,7 +26,7 @@ with our `texture`/`environment` pairs inserted right before Anbennar's first th
 travel and camp entries above it keep winning. Each entry tests `aov_rie_court_view_<group>_<tier>_trigger`: the
 character, else a non-ruling spouse, the betrothed or the host (RiE's and vanilla's pattern) holds such a court at that
 tier. Pictures are copied from RiE at their paths; the Noldor and dwarf portrait environments are copied into
-`gfx/portraits/environments/aov_rie_environments.txt`, the two Greenwood ones are vanilla's.
+`gfx/portraits/environments/aov_rie_environments.txt`, the two wood elf ones are vanilla's.
 
 ## Royal courts
 

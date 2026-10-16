@@ -6,7 +6,7 @@
 aov_rie_court_dwarf_trigger = {
 	exists = capital_province
 	culture = { has_clothing_gfx = aov_dwarf_clothing_gfx }
-	capital_province = { OR = { terrain = dwarven_hold terrain = dwarven_hold_surface terrain = dwarven_road } }
+	capital_province = { OR = { terrain = dwarven_hold terrain = dwarven_hold_surface terrain = dwarven_road terrain = cavern } }
 }
 aov_rie_court_dwarf_above_kingdom_trigger = {
 	aov_rie_court_dwarf_trigger = yes
