@@ -7,6 +7,7 @@ import re
 import sys
 import tempfile
 import unittest
+from collections import Counter
 from pathlib import Path
 from unittest import mock
 
@@ -145,17 +146,19 @@ class RealDataTests(unittest.TestCase):
     def test_overrides_differ_only_in_target_lines(self):
         texts = bhm.culture_texts(REAL)
         files = bhm.build_cultures(REAL)
-        changed = 0
+        changed = Counter()
         for rel, content in files.items():
             old = texts[Path(rel).name].splitlines(keepends=True)
             new = content.decode("utf-8").splitlines(keepends=True)
             self.assertEqual(len(old), len(new))
             for a, b in zip(old, new):
                 if a != b:
-                    changed += 1
-                    self.assertIn("building_gfx", a)
+                    field = a.split("=")[0].strip()
+                    self.assertIn(field, ("building_gfx", "unit_gfx"))
+                    changed[field] += 1
                     self.assertTrue(b.rstrip().endswith("# Anbennar Overhaul"))
-        self.assertEqual(changed, 28)
+        # 28 building_gfx lines; 14 unit_gfx lines (3 elves, 11 dwarves; tools/rie_units.py)
+        self.assertEqual(changed, Counter(building_gfx=28, unit_gfx=14))
 
     def test_regions_cover_anbennars_graphical_regions(self):
         regions = bhm.graphical_regions(REAL.anbennar)

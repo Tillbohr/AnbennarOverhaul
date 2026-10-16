@@ -2,7 +2,7 @@
 
 Gives Anbennar's elven, dwarven and Escanni cultures Realms in Exile's holding models: culture files
 with the new building_gfx keys, the holding buildings with RiE assets (dwarf assets limited by province), and
-the elven wall buildings. Rerun after
+the elven wall buildings. Also gives the elves and dwarves RiE's army models (tools/rie_units.py). Rerun after
 an Anbennar or RiE update:
 
     python -I tools/build_holding_models.py [--rie PATH] [--anbennar PATH] [--game PATH]
@@ -95,14 +95,15 @@ def block_heritage(body: str):
     return None
 
 
-def resolve_cultures(files: dict) -> dict:
-    """Group name -> culture keys, from {file name: text}. Raises on a group that resolves to nothing."""
+def resolve_cultures(files: dict, groups=None) -> dict:
+    """Group name -> culture keys, from {file name: text}, for groups (default data.GROUPS) that name either
+    'cultures' or a 'heritage'. Raises on a group that resolves to nothing."""
     found = {}
     for text in files.values():
         for key, _start, _end, body in culture_blocks(text):
             found[key] = block_heritage(body)
     result = {}
-    for name, group in data.GROUPS.items():
+    for name, group in (data.GROUPS if groups is None else groups).items():
         if "cultures" in group:
             keys = [key for key in group["cultures"] if key in found]
             missing = [key for key in group["cultures"] if key not in found]
@@ -193,8 +194,9 @@ def graphical_regions(anbennar: Path) -> list:
     return regions
 
 
-def override_culture_file(text: str, targets: dict) -> str:
-    """Prepend each target culture's gfx key to its building_gfx line, marked; all else unchanged."""
+def override_culture_file(text: str, targets: dict, line_pattern=GFX_LINE, field="building_gfx") -> str:
+    """Prepend each target culture's gfx key to its gfx line (line_pattern, default building_gfx), marked; all
+    else unchanged."""
     pieces, last, remaining = [], 0, dict(targets)
     for key, start, end, body in culture_blocks(text):
         if key not in remaining:
@@ -202,14 +204,14 @@ def override_culture_file(text: str, targets: dict) -> str:
         gfx = remaining.pop(key)
         lines, done = body.splitlines(keepends=True), False
         for index, line in enumerate(lines):
-            match = GFX_LINE.match(line.rstrip("\r\n")) if not line.lstrip().startswith("#") else None
+            match = line_pattern.match(line.rstrip("\r\n")) if not line.lstrip().startswith("#") else None
             if match:
                 ending = line[len(line.rstrip("\r\n")):]
                 lines[index] = f"{match.group(1)} {gfx}{match.group(2)} {MARKER}{ending}"
                 done = True
                 break
         if not done:
-            raise GeneratorError(f"culture {key} has no building_gfx line")
+            raise GeneratorError(f"culture {key} has no {field} line")
         pieces.append(text[last:start])
         pieces.append("".join(lines))
         last = end
@@ -265,14 +267,24 @@ def culture_texts(roots: Roots) -> dict:
 
 
 def build_cultures(roots: Roots) -> dict:
+    """The culture files with a target culture: building_gfx keys (holding models) and unit_gfx keys (army
+    models, tools/rie_units.py) prepended."""
+    import rie_units
     roots.check()
     texts = culture_texts(roots)
     targets, _group_keys = assign_gfx(texts)
+    unit_targets = rie_units.unit_targets(texts)
     out = {}
     for filename, text in texts.items():
-        wanted = {key: targets[key] for key, *_ in culture_blocks(text) if key in targets}
+        keys = [key for key, *_ in culture_blocks(text)]
+        wanted = {key: targets[key] for key in keys if key in targets}
+        units = {key: unit_targets[key] for key in keys if key in unit_targets}
         if wanted:
-            out[f"{CULTURES_DIR}/{filename}"] = override_culture_file(text, wanted).encode("utf-8")
+            text = override_culture_file(text, wanted)
+        if units:
+            text = rie_units.override_unit_gfx(text, units)
+        if wanted or units:
+            out[f"{CULTURES_DIR}/{filename}"] = text.encode("utf-8")
     return out
 
 
@@ -611,9 +623,10 @@ def build_walls(roots: Roots) -> dict:
 
 
 def build_localization(roots: Roots) -> dict:
-    """Names of the new graphical-culture keys (shown in the culture creation screen)."""
+    """Names of the new graphical-culture keys (shown in the culture creation screen), building and unit keys."""
+    import rie_units
     _targets, group_keys = assign_gfx(culture_texts(roots))
-    lines = [BOM + "l_english:"] + localization_lines(group_keys)
+    lines = [BOM + "l_english:"] + localization_lines(group_keys) + rie_units.localization_lines()
     return {LOCALIZATION_FILE: ("\n".join(lines) + "\n").encode("utf-8")}
 
 
@@ -762,6 +775,8 @@ def build_all(roots: Roots) -> dict:
     files.update(build_buildings(roots))
     files.update(build_localization(roots))
     files.update(build_assets(roots))
+    import rie_units
+    files.update(rie_units.build_units(roots))
     return files
 
 
