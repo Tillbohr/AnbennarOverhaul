@@ -11,3 +11,7 @@ Map graphics (terrain textures, dwarven gates, shaders, environment, skybox, sno
 Holding models (castles, cities and temples of the Dunedain/Gondor, high-elf (Noldor) cities, Sindarin/Silvan sanctuaries, dwarven holds):
 - Lord of the Rings: Realms in Exile - https://steamcommunity.com/sharedfiles/filedetails/?id=2291024373
   The dunedain_castle, gondor_city and dunedain_temple models (Escanni), the highelves models (moon and sun elves), the Sindarin sanctuary models (wood elves) the dwarven_holding models (dwarven holds and dwarf castles and cities in the mountains), and the wall models (highelves_fort_wall, sindarin_hedge_wall, dunedain_walls), with their meshes and textures.
+
+Army models (wood, sun and moon elves; dwarves):
+- Lord of the Rings: Realms in Exile - https://steamcommunity.com/sharedfiles/filedetails/?id=2291024373
+  The Woodland Realm, Lindon and Imladris elf army models and the Firebeards, Erebor and Khazad dwarf army models, with the weapons and shields they carry, their meshes and textures.

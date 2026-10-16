@@ -4,3 +4,7 @@
  aov_dwarven_building_gfx:0 "Dwarven"
  aov_dwarven_mena_building_gfx:0 "Dwarven (Southern)"
  aov_castanorian_building_gfx:0 "Castanorian"
+ aov_wood_elf_unit_gfx:0 "Wood Elven"
+ aov_sun_elf_unit_gfx:0 "Sun Elven"
+ aov_moon_elf_unit_gfx:0 "Moon Elven"
+ aov_dwarven_unit_gfx:0 "Dwarven"
