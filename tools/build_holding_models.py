@@ -593,12 +593,17 @@ def build_walls(roots: Roots) -> dict:
             if key in ("walls_01_tribal", "walls_01", "walls_02"):
                 lines.insert(at[0] + 1, f"\t\talways = no {LEVEL_MARKER}\n")
         if key in data.CASTANORIAN_WALLS:
-            first = next((i for i, line in enumerate(lines) if ASSET_START.match(strip_comment(line))), None)
-            if first is None or not lines[first].startswith("\tasset"):
-                raise GeneratorError(f"{key}: first asset not found at one tab")
+            # after the last asset, not before the first: vanilla's regional wall assets have no graphical_cultures
+            # (score 4), so a first-listed Dunedain asset would win the region-only tie for every culture; listed
+            # last it wins only for the Escanni (culture 2 + region 4 = 6)
+            starts = [i for i, line in enumerate(lines)
+                      if line.startswith("\tasset") and ASSET_START.match(strip_comment(line))]
+            if not starts:
+                raise GeneratorError(f"{key}: no asset found at one tab")
+            after = block_end(lines, starts[-1])
             asset = asset_block(data.CASTANORIAN_WALLS[key], group_keys["castanorian"], regions)
             indented = "".join(line[1:] + "\n" for line in asset.splitlines())
-            lines[first:first] = [f"\t{MARKER}: RiE holding wall\n", indented, "\n"]
+            lines[after:after] = [f"\t{MARKER}: RiE holding wall\n", indented, "\n"]
         blocks.append("".join(lines))
     header = "\n".join(HEADER()) + "\n\n"
     return {WALLS_FILE: (BOM + header + elven).encode("utf-8"),

@@ -430,14 +430,6 @@ walls_02 = {
 walls_03 = {
 	is_graphical_background = yes
 
-	# Anbennar Overhaul: RiE holding wall
-	asset = {
-		type = pdxmesh
-		name = "dunedain_walls_03_mesh"
-		graphical_cultures = { aov_castanorian_building_gfx }
-		graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
-	}
-
 	asset = {
 		type = pdxmesh
 		graphical_regions = { graphical_western }
@@ -566,6 +558,14 @@ walls_03 = {
 			"mpo_mongol_wall_03_mesh"
 		}
 	}
+	# Anbennar Overhaul: RiE holding wall
+	asset = {
+		type = pdxmesh
+		name = "dunedain_walls_03_mesh"
+		graphical_cultures = { aov_castanorian_building_gfx }
+		graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
+	}
+
 
 	is_enabled = {
 		NOT = { scope:holder ?= { culture = { OR = { has_building_gfx = aov_high_elf_building_gfx has_building_gfx = aov_wood_elf_building_gfx } } } } # Anbennar Overhaul: elven walls
@@ -580,14 +580,6 @@ walls_03 = {
 
 walls_04 = {
 	is_graphical_background = yes
-
-	# Anbennar Overhaul: RiE holding wall
-	asset = {
-		type = pdxmesh
-		name = "dunedain_walls_04_mesh"
-		graphical_cultures = { aov_castanorian_building_gfx }
-		graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
-	}
 
 	asset = {
 		type = pdxmesh
@@ -714,6 +706,14 @@ walls_04 = {
 			"mpo_mongol_wall_04_mesh"
 		}
 	}
+	# Anbennar Overhaul: RiE holding wall
+	asset = {
+		type = pdxmesh
+		name = "dunedain_walls_04_mesh"
+		graphical_cultures = { aov_castanorian_building_gfx }
+		graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
+	}
+
 
 	is_enabled = {
 		NOT = { scope:holder ?= { culture = { OR = { has_building_gfx = aov_high_elf_building_gfx has_building_gfx = aov_wood_elf_building_gfx } } } } # Anbennar Overhaul: elven walls

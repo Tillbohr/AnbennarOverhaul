@@ -220,3 +220,12 @@ Walls now follow the HOLDING LEVEL for every culture (user decision), `WALL_LEVE
    exclusion and the elven and dwarven lines stay; a tribal holder with a level 3-4 holding gets `walls_00`.
 5. The now unused Escanni entries are gone: `western_walls_00_mesh` in `walls_01_tribal`/`walls_01`, `dunedain_walls_02_mesh`
    in `walls_02` (`GAME_MESHES` removed, `dunedain_walls_02.asset/.mesh` no longer copied).
+
+### Round 6
+
+In game, Gondor walls showed on holdings of every culture at level 3-4. Vanilla's regional `walls_03`/`walls_04` assets
+carry only `graphical_regions` (score 4) and no `graphical_cultures`, so the first-listed Dunedain asset (region 4 for any
+culture) won the tie everywhere. The Dunedain asset is now inserted after the last original asset: the Escanni still
+pick it (culture 2 + region 4 = 6), everyone else keeps vanilla's walls by order. The holding assets stay first: every
+Anbennar `building_gfx` list matches a vanilla culture asset in `castle_01`, `city_01` and `temple_01`, so no culture
+falls to a region-only tie there.

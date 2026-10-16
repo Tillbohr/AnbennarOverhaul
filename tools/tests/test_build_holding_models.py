@@ -600,10 +600,14 @@ class RealWallTests(unittest.TestCase):
             block = "".join(self._block_lines(self.overrides, key))
             self.assertEqual("dunedain_walls" in block, key in ("walls_03", "walls_04"), key)
             self.assertEqual("RiE holding wall" in block, key in ("walls_03", "walls_04"), key)
+        # last, not first: vanilla's regional wall assets carry no graphical_cultures (score 4), so a first-listed
+        # Dunedain asset (region 4 for any culture) would win the tie for every non-Escanni holding; listed last it
+        # still wins for the Escanni (culture 2 + region 4 = 6) and loses the tie for everyone else
         for key, mesh in data.CASTANORIAN_WALLS.items():
             lines = self._block_lines(self.overrides, key)
-            firsts = [i for i, line in enumerate(lines) if line == "\tasset = {\n"]
-            self.assertIn(f'"{mesh}"', lines[firsts[0] + 2], key)
+            starts = [i for i, line in enumerate(lines) if line == "\tasset = {\n"]
+            self.assertGreater(len(starts), 1, key)
+            self.assertIn(f'"{mesh}"', lines[starts[-1] + 2], key)
 
     def _check_common(self, key, old, new):
         """new = old with the elven and dwarven lines inserted at the top of is_enabled; returns the rest of both."""
