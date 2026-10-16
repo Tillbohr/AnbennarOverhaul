@@ -436,13 +436,13 @@ accessory_genes = {
 				boy = male
 				girl = female
 			}
-			elven_common_legwear = {
+			elven_war_noldor_legwear = {
 				index = 29
 				male = {
-					1 = male_legwear_secular_western_common_01
+					1 = male_legwear_elven_war_noldor_01
 				}
 				female = {
-					1 = female_legwear_secular_western_common_01
+					1 = female_legwear_elven_war_noldor_01
 				}
 				boy = male
 				girl = female
@@ -931,8 +931,23 @@ accessory_genes = {
 					1 = female_northern_fur_coat_01
 				}
 			}
-			elven_war_cloaks_generic = {
+			elven_war_cloaks_calaquendi = {
 				index = 26
+				male = {
+					25 = male_cloaks_elven_war_calaquendi
+					25 = male_cloaks_secular_ep1_noldor_01
+					25 = male_cloaks_secular_ep1_noldor_coa_01
+					25 = male_cloaks_secular_ep1_noldor_03					
+				}
+				female = {
+					1 = female_cloaks_elven_war_calaquendi
+					1 = female_cloaks_secular_ep1_noldor_01
+					1 = female_cloaks_secular_ep1_noldor_coa_01
+					1 = female_cloaks_secular_ep1_noldor_03
+				}
+			}
+			elven_war_cloaks_generic = {
+				index = 27
 				male = {
 					1 = male_cloaks_elven_war_generic
 				}
@@ -941,7 +956,7 @@ accessory_genes = {
 				}
 			}
 			elven_war_cloaks_silvan = {
-				index = 27
+				index = 28
 				male = {
 					1 = male_cloaks_elven_war_silvan
 				}

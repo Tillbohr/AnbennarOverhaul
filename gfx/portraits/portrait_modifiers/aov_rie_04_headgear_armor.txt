@@ -30,6 +30,49 @@ aov_rie_headgear_armor = {
 		}
 	}
 
+	elven_war_valinor = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = headgear
+				template = elven_war_headgear
+				range = { 0.21 0.29 } # For the randomness to work correctly
+			}
+		}
+		outfit_tags = { military_outfit elven_war_valinor }
+		weight = {
+			base = 0
+			modifier = {
+                add = 500
+				scope:culture = { has_clothing_gfx = aov_vanyar_clothing_gfx }
+                portrait_war_nobles_helmet_trigger = {
+                    CULTURE_INPUT = aov_vanyar
+                }
+            }
+		}			
+	}
+
+	elven_war_noldor = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = headgear
+				template = elven_war_headgear
+				range = { 0.21 0.29 } # For the randomness to work correctly
+			}
+		}
+		outfit_tags = { military_outfit elven_war_noldor }
+		weight = {
+			base = 0
+            modifier = {
+                add = 250
+				portrait_war_nobles_helmet_trigger = {
+                    CULTURE_INPUT = aov_noldor
+                }
+            }
+		}			
+	}
+
 	elven_war = {
 		dna_modifiers = {
 			accessory = {
@@ -45,7 +88,7 @@ aov_rie_headgear_armor = {
             modifier = {
                 add = 100
 				portrait_war_nobles_helmet_trigger = {
-                    CULTURE_INPUT = aov_elven
+                    CULTURE_INPUT = aov_vanyar
                 }
             }
 		}

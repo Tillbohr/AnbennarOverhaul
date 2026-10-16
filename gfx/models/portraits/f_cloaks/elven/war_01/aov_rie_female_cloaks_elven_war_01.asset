@@ -24,6 +24,26 @@ pdxmesh = {
 }
 
 entity = {
+	name = "female_cloaks_elven_war_calaquendi_entity"
+	pdxmesh = "female_cloaks_elven_war_01_mesh"
+	
+	attribute = { name = "bs_body_infant_1"					blend_shape = "female_cloaks_elven_war_01_bs_infant" }
+	attribute = { name = "bs_body_fat_1"					blend_shape = "female_cloaks_elven_war_01_bs_fat" }
+	attribute = { name = "bs_body_gaunt_1"					blend_shape = "female_cloaks_elven_war_01_bs_gaunt" }
+	attribute = { name = "bs_body_muscular_1"					blend_shape = "female_cloaks_elven_war_01_bs_muscular" }	
+	attribute = { name = "bs_body_dwarf_1"					blend_shape = "female_cloaks_elven_war_01_bs_dwarf" }
+	
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/m_cloaks/ep1/adventurer_01/m_cloaks_secular_ep1_adventurer_01_masks.dds"
+				variation = "lotr_elven_cloak_calaquendi"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
 	name = "female_cloaks_elven_war_generic_entity"
 	pdxmesh = "female_cloaks_elven_war_01_mesh"
 	

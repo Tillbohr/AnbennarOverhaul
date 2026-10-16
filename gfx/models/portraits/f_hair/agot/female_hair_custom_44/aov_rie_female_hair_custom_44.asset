@@ -28,7 +28,7 @@ pdxmesh = {
 	meshsettings = {
 		name = "female_hair_custom_44_1Shape"
 		index = 0
-		texture_diffuse = "f_hair_ep2_western_02_diffuse.dds"
+		texture_diffuse = "aov_rie_f_hair_ep2_western_02_diffuse.dds"
 		texture_normal = "f_hair_ep2_western_02_normal.dds"
 		texture_specular = "f_hair_ep2_western_02_properties.dds"
 		texture = { file = "black_ssao_color.dds" index = 3 }			
@@ -38,8 +38,8 @@ pdxmesh = {
 	meshsettings = {
 		name = "female_hair_custom_44_2Shape"
 		index = 0
-		texture_diffuse = "f_hair_fp2_iberian_muslim_01_diffuse.dds"
-		texture_normal = "f_hair_fp2_iberian_muslim_01_normal.dds"
+		texture_diffuse = "aov_rie_f_hair_fp2_iberian_muslim_01_diffuse.dds"
+		texture_normal = "aov_rie_f_hair_fp2_iberian_muslim_01_normal.dds"
 		texture_specular = "f_hair_fp2_iberian_muslim_01_properties.dds"
 		texture = { file = "black_ssao_color.dds" index = 3 }			
 		shader = "portrait_hair_opaque"

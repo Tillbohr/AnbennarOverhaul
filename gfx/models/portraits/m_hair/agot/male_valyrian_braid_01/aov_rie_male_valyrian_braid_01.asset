@@ -16,7 +16,7 @@ pdxmesh = {
 	meshsettings = {
 		name = "m_hair_valyrian_braid_01Shape"
 		index = 0
-		texture_diffuse = "f_hair_ep2_western_02_diffuse.dds"
+		texture_diffuse = "aov_rie_f_hair_ep2_western_02_diffuse.dds"
 		texture_normal = "f_hair_ep2_western_02_normal.dds"
 		texture_specular = "f_hair_ep2_western_02_properties.dds"
 		texture = { file = "black_ssao_color.dds" index = 3 } 

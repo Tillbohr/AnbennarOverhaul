@@ -4015,44 +4015,79 @@ special_genes = {
 				boy = male
 				girl = female				
 			}
-			elven_low_clothes = {#elven; western_proxy
+			vanyar_low_clothes = {
 				index = 68
 
 				male = {
-					2 = male_clothes_secular_western_nobility_01_common
-					2 = male_clothes_secular_western_nobility_02_common
-					2 = male_clothes_secular_western_nobility_01_low
-					2 = male_clothes_secular_western_nobility_02_low
+					1 = male_clothes_vanyar_nobility_01_low
+					1 = male_clothes_vanyar_nobility_02_low					
 				}
 
 				female = {
-					2 = female_clothes_secular_western_nobility_01_common
-					2 = female_clothes_secular_western_nobility_02_common
-					2 = female_clothes_secular_western_nobility_01_low
-					2 = female_clothes_secular_western_nobility_02_low
+					1 = female_clothes_vanyar_nobility_01_low
+					1 = female_clothes_vanyar_nobility_02_low					
 				}
 
 				boy = male
 				girl = female
 			}
-			elven_high_clothes = {#elven: western_proxy
+			vanyar_high_clothes = {
 				index = 83
 
 				male = {
-					2 = male_clothes_secular_western_nobility_01_high
-					2 = male_clothes_secular_western_nobility_02_high
+					1 = male_clothes_vanyar_nobility_01_high
+					1 = male_clothes_vanyar_nobility_02_high
 				}
 
 				female = {
-					2 = female_clothes_secular_western_nobility_01_high
-					2 = female_clothes_secular_western_nobility_02_high
+					1 = female_clothes_vanyar_nobility_01_high
+					1 = female_clothes_vanyar_nobility_02_high
+				}
+
+				boy = male
+				girl = female
+			}
+			noldor_low_clothes = {#noldor
+				index = 100
+
+				male = {
+					1 = male_clothes_noldor_nobility_01_low
+					1 = male_clothes_noldor_nobility_02_low
+				}
+
+				female = {
+					1 = female_clothes_noldor_nobility_01_low
+					1 = female_clothes_noldor_nobility_02_low
+					1 = female_clothes_secular_crownlands_dress_02
+					1 = female_clothes_secular_crownlands_dress_03
+				}
+
+				boy = male
+				girl = female
+			}
+			noldor_high_clothes = {#noldor
+				index = 213
+
+				male = {
+					50 = male_clothes_noldor_nobility_01_high
+					40 = male_clothes_noldor_nobility_02_high
+					5 = male_clothes_elrond_01
+					5 = male_clothes_elrond_02
+				}
+
+				female = {
+					30 = female_clothes_noldor_nobility_01_high
+					30 = female_clothes_noldor_nobility_02_high
+					30 = female_clothes_secular_crownlands_dress_01		
+					5 = female_clothes_secular_crownlands_dress_galadriel
+					5 = female_clothes_secular_crownlands_dress_idril					
 				}
 
 				boy = male
 				girl = female
 			}
 			silvan_low_clothes = {#lasgalendrim
-				index = 100
+				index = 214
 
 				male = {
 					20 = male_clothes_silvan_nobility_01_common
@@ -4080,7 +4115,7 @@ special_genes = {
 				girl = female
 			}
 			silvan_high_clothes = {#lasgalendrim
-				index = 213
+				index = 215
 
 				male = {
 					40 = male_clothes_silvan_nobility_01_high
@@ -4102,7 +4137,7 @@ special_genes = {
 				girl = female
 			}
 			western_dwarf_low_clothes = {
-				index = 214
+				index = 216
 
 				male = {
 					1 = male_clothes_secular_dde_hre_nobility_01_common
@@ -4124,7 +4159,7 @@ special_genes = {
 				girl = female
 			}
 			western_dwarf_high_clothes = {
-				index = 215
+				index = 217
 
 				male = {
 					#dukes
@@ -4147,7 +4182,7 @@ special_genes = {
 				girl = female
 			}
 			southern_dwarf_low_clothes = {
-				index = 216
+				index = 218
 
 				male = {
 					1 = m_clothes_epe_non_islamic_eastern_iranian_nob_06_common
@@ -4161,7 +4196,7 @@ special_genes = {
 				girl = female
 			}
 			southern_dwarf_high_clothes = {
-				index = 217
+				index = 219
 
 				male = {
 					1 = male_clothes_secular_early_islamic_iranian_nobility_01_high
@@ -4173,8 +4208,54 @@ special_genes = {
 				boy = male
 				girl = female
 			}
+			elven_war_high_clothes = {
+				index = 220
+
+				male = {
+					10 = m_clothes_noldor_war_golden #Elrond variant
+					5 = m_clothes_noldor_war_glorfindel #Glorfindel only
+					5 = m_clothes_noldor_war_valinor
+					#Feanorian
+					10 = m_clothes_noldor_war_feanorian #Feanorian variant
+					#Falathrim/Sindar
+					10 = m_clothes_noldor_war_01
+					10 = m_clothes_noldor_war_02 #Noldor
+					10 = m_clothes_noldor_war_peredhel #Imladris
+					#Gil-Galad
+					10 = m_clothes_noldor_war_high_king
+					#High King
+					10 = m_clothes_noldor_war_herald
+					10 = m_clothes_noldor_war_coa_01
+					10 = m_clothes_noldor_war_coa_golden
+					10 = m_clothes_noldor_war_coa_02
+					10 = m_clothes_noldor_war_coa_silver
+				}
+
+				female = {
+					10 = f_clothes_noldor_war_golden #Elrond variant
+					5 = f_clothes_noldor_war_glorfindel #Glorfindel only but here to balance the index					
+					5 = f_clothes_noldor_war_valinor
+					#Feanorian
+					10 = f_clothes_noldor_war_feanorian #Feanorian variant
+					#Falathrim/Sindar
+					10 = f_clothes_noldor_war_01
+					10 = f_clothes_noldor_war_02 #Noldor
+					10 = f_clothes_noldor_war_peredhel #Imladris
+					#Gil-Galad
+					10 = f_clothes_noldor_war_high_king
+					#High King
+					10 = f_clothes_noldor_war_herald
+					10 = f_clothes_noldor_war_coa_01
+					10 = f_clothes_noldor_war_coa_golden
+					10 = f_clothes_noldor_war_coa_02
+					10 = f_clothes_noldor_war_coa_silver
+				}
+
+				boy = male
+				girl = female
+			}
 			elven_war_clothes = {#elven
-				index = 218
+				index = 221
 
 				male = {
 					1 = male_clothes_elven_war_01
@@ -4192,7 +4273,7 @@ special_genes = {
 				girl = female
 			}
 			elven_war_silvan_clothes = {#lasgalendrim
-				index = 219
+				index = 222
 
 				male = {
 					1 = male_clothes_elven_war_silvan_01
@@ -4208,7 +4289,7 @@ special_genes = {
 				girl = female
 			}
 			dwarf_war_steel = {#dwarf
-				index = 220
+				index = 223
 
 				male = {
 					1 = male_clothes_dwarf_war_01_steel
@@ -4224,7 +4305,7 @@ special_genes = {
 				girl = female				
 			}	
 			dwarf_war_longbeard = {#dwarf
-				index = 221
+				index = 224
 
 				male = {
 					1 = m_clothes_dwarf_war_02
@@ -4240,7 +4321,7 @@ special_genes = {
 				girl = female				
 			}			
 			dwarf_war_eastern = {#dwarf
-				index = 222
+				index = 225
 
 				male = {
 					10 = m_clothes_ironfist_war_nob_01_lo

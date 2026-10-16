@@ -31,6 +31,56 @@ aov_rie_hairstyles = {
         }
     }
 
+    high_elven = {
+        dna_modifiers = {
+            accessory = {
+                mode = add
+                gene = hairstyles
+                template = high_elvish_hairstyles
+                range = { 0 1 } 
+            }
+        }   
+        weight = {
+            base = 0
+            modifier = {
+                add = 250
+                AND = {
+					has_fp2_dlc_trigger = yes					
+					has_fp3_dlc_trigger = yes
+				}				
+				OR = {
+					portrait_aov_noldor_clothing_trigger = yes
+                    portrait_aov_rie_none_clothing_trigger = yes
+					portrait_aov_rie_none_clothing_trigger = yes
+					portrait_aov_rie_none_clothing_trigger = yes		
+				}
+            }
+        }
+    }
+
+    high_elven_no_dlc = {
+        dna_modifiers = {
+            accessory = {
+                mode = add
+                gene = hairstyles
+                template = high_elvish_hairstyles_no_dlc
+                range = { 0 1 } 
+            }
+        }   
+        weight = {
+            base = 0
+            modifier = {
+                add = 150
+				OR = {
+					portrait_aov_noldor_clothing_trigger = yes
+                    portrait_aov_rie_none_clothing_trigger = yes
+					portrait_aov_rie_none_clothing_trigger = yes
+					portrait_aov_rie_none_clothing_trigger = yes		
+				}
+            }
+        }
+    }
+
     low_elven = {
         dna_modifiers = {
             accessory = {
@@ -50,7 +100,7 @@ aov_rie_hairstyles = {
 					has_fp3_dlc_trigger = yes
 				}								
 				OR = {
-					portrait_aov_elven_clothing_trigger = yes
+					portrait_aov_vanyar_clothing_trigger = yes
 					portrait_aov_lasgalendrim_clothing_trigger = yes
 				}
             }
@@ -71,7 +121,7 @@ aov_rie_hairstyles = {
             modifier = {
                 add = 150
 				OR = {
-					portrait_aov_elven_clothing_trigger = yes
+					portrait_aov_vanyar_clothing_trigger = yes
 					portrait_aov_lasgalendrim_clothing_trigger = yes
 				}
             }
@@ -83,7 +133,7 @@ aov_rie_hairstyles = {
             accessory = {
                 mode = add
                 gene = hairstyles
-                template = dwarven_hairstyles
+                template = aov_rie_dwarven_hairstyles
                 range = { 0 1 } # For the randomness to work correctly
             }
         }   
@@ -112,7 +162,7 @@ aov_rie_hairstyles = {
             accessory = {
                 mode = add
                 gene = hairstyles
-                template = dwarven_hairstyles
+                template = aov_rie_dwarven_hairstyles
                 range = { 0 1 } # For the randomness to work correctly
             }
         }   
@@ -136,7 +186,7 @@ aov_rie_hairstyles = {
             accessory = {
                 mode = add
                 gene = hairstyles
-                template = dwarven_hairstyles
+                template = aov_rie_dwarven_hairstyles
                 range = { 0 1 } # For the randomness to work correctly
             }
         }   

@@ -212,6 +212,19 @@ def _entry_spec(item) -> tuple:
     return (item, {}) if isinstance(item, str) else item
 
 
+HIGH_NOBLES = re.compile(r"\bportrait_high_nobles_clothing_trigger\s*=\s*\{\s*CULTURE_INPUT\s*=\s*(\w+)\s*\}")
+
+
+def up_to_emperor(text: str) -> str:
+    """The entry with its high-noble clothing trigger widened to kings and emperors."""
+    out, count = HIGH_NOBLES.subn(
+        lambda m: "OR = { " + " ".join(f"portrait_{rank}_clothing_trigger = {{ CULTURE_INPUT = {m.group(1)} }}"
+                                       for rank in ("high_nobles", "royalty", "imperial")) + " }", text)
+    if not count:
+        raise GeneratorError("up_to_emperor: the entry has no portrait_high_nobles_clothing_trigger")
+    return out
+
+
 @lru_cache(maxsize=None)
 def rie_group(rie: str, filename: str, group: str) -> tuple:
     """(settings lines, [(entry name, entry text)]) of one group of an RiE portrait modifier file."""
@@ -251,7 +264,10 @@ def copied_entries(roots: Roots) -> dict:
                     seen[name] = seen.get(name, 0) + 1
                     if seen[name] > 1:
                         body = re.sub(rf"\b{re.escape(name)}(\s*=\s*\{{)", rf"{name}_{seen[name]}\1", body, count=1)
-                    texts.append(lf(transform(body, rie_keys, options.get("inputs"))))
+                    text = transform(body, rie_keys, options.get("inputs"))
+                    if options.get("up_to_emperor"):
+                        text = up_to_emperor(text)
+                    texts.append(lf(text))
             texts += data.EXTRA_ENTRIES.get(group, [])
             out.setdefault(filename, {})[group] = (settings, texts)
     for group in data.EXTRA_ENTRIES:
@@ -373,8 +389,62 @@ def gene_index(files, strict=True) -> dict:
     return index
 
 
-def build_genes(roots: Roots, entries: dict) -> tuple:
-    """(overridden gene files, accessory names the new templates use, notes)."""
+RENAMED_PREFIX = "aov_rie_"
+
+
+def _template_key(text: str) -> str:
+    """A template's content for comparison: no comments, index or whitespace differences."""
+    return re.sub(r"\s+", " ", INDEX.sub("", code(text), count=1)).strip()
+
+
+def template_renames(roots: Roots, entries: dict) -> dict:
+    """(gene, template) -> aov_rie_<template> for every template the entries name that Anbennar also defines with
+    different content (e.g. its own dwarven_hairstyles): ours would silently replace RiE's look, so RiE's is copied
+    under the new name. Only genes in Anbennar's gene files (which we override) can take the copy."""
+    ours = effective_texts(roots, GENES_DIR)
+    texts, ours_index = dict(ours), gene_index(ours, strict=False)
+    rie = list(_texts(str(roots.rie / GENES_DIR), "*.txt"))
+    rie_texts, rie_index = dict(rie), gene_index(rie, strict=False)
+    anbennar_files = {path for path, _t in _texts(str(roots.anbennar / GENES_DIR), "*.txt")}
+    renames = {}
+    for gene, template in gene_uses(entries):
+        key = (gene, template)
+        if key not in ours_index or key not in rie_index or ours_index[key][0] not in anbennar_files:
+            continue
+        mine, theirs = ours_index[key], rie_index[key]
+        if _template_key(texts[mine[0]][mine[1]:mine[2]]) != _template_key(rie_texts[theirs[0]][theirs[1]:theirs[2]]):
+            renames[key] = RENAMED_PREFIX + template
+    return renames
+
+
+def apply_template_renames(entries: dict, renames: dict) -> dict:
+    """The entries with each renamed (gene, template) pointed at its new name (inside that gene's modifier blocks)."""
+    if not renames:
+        return entries
+
+    def rename(text):
+        pieces, last = [], 0
+        for names, start, end in sorted(blocks(text), key=lambda b: b[1]):
+            if names[-1] not in ("accessory", "morph") or start < last:
+                continue
+            part = text[start:end]
+            gene = re.search(r"\bgene\s*=\s*(\w+)", code(part))
+            template = re.search(r"\btemplate\s*=\s*(\w+)", code(part))
+            if gene and template and (gene.group(1), template.group(1)) in renames:
+                new = renames[(gene.group(1), template.group(1))]
+                part = re.sub(rf"(\btemplate\s*=\s*){re.escape(template.group(1))}\b", rf"\g<1>{new}", part, count=1)
+                pieces += [text[last:start], part]
+                last = end
+        return "".join(pieces) + text[last:]
+
+    return {filename: {group: (settings, [rename(t) for t in texts]) for group, (settings, texts) in groups.items()}
+            for filename, groups in entries.items()}
+
+
+def build_genes(roots: Roots, entries: dict, renames=None) -> tuple:
+    """(overridden gene files, accessory names the new templates use, notes). renames: (gene, RiE template) ->
+    the name it is copied under."""
+    sources = {(gene, new): template for (gene, template), new in (renames or {}).items()}
     ours = effective_texts(roots, GENES_DIR)
     texts = dict(ours)
     ours_index = gene_index(ours, strict=False)
@@ -386,15 +456,18 @@ def build_genes(roots: Roots, entries: dict) -> tuple:
     for gene, template in gene_uses(entries):
         if (gene, template) in ours_index:
             continue
-        if (gene, template) not in rie_index:
+        source = sources.get((gene, template), template)
+        if (gene, source) not in rie_index:
             raise GeneratorError(f"gene {gene} template {template} is in neither Anbennar, the game nor RiE")
         if ("gene", gene) not in ours_index:
             raise GeneratorError(f"gene {gene} is not defined by Anbennar or the game")
         path = ours_index[("gene", gene)][0]
         if path not in anbennar_files:
             raise GeneratorError(f"gene {gene} lives in the game's {path}, which Anbennar does not override")
-        rpath, start, end = rie_index[(gene, template)]
+        rpath, start, end = rie_index[(gene, source)]
         body = rie_texts[rpath][start:end]
+        if source != template:
+            body = re.sub(rf"^(\s*){re.escape(source)}(\s*=)", rf"\g<1>{template}\2", body, count=1)
         additions.setdefault((path, gene), []).append((template, body))
         for name in TEMPLATE_ACCESSORY.findall(code(body)):
             if name != "empty" and name not in accessories:
@@ -564,18 +637,33 @@ def resolve_file(roots: Roots, ref: str, asset_dir: str):
     raise GeneratorError(f"{ref} (named in {asset_dir}) not found in RiE, Anbennar or the game")
 
 
-KEPT = []  # RiE paths where Anbennar or the game has its own different file, which stays (reported as a note)
+RENAMED = []  # (RiE path, copied path) of files RiE edited at a vanilla path (reported as a note)
+# Where those files go when a block names them by plain file name: CK3 finds a texture by its name (tiger reports a
+# name found twice), so one copy serves every block.
+RENAMED_DIR = "gfx/models/portraits/aov_rie_edited"
 
 
-def copy_file(roots: Roots, rel: str, files: dict) -> None:
-    """Copy an RiE file at its RiE path, unless Anbennar or the game has a file there: never override theirs (RiE
-    edits some vanilla files in place; overriding them would change vanilla characters too)."""
+def place_file(roots: Roots, ref: str, rel: str, files: dict, home: str):
+    """Copy the RiE file rel that a block names as ref; return the reference the copied block must use instead, or
+    None to keep ref. A file Anbennar or the game has at rel is never overridden (it would change vanilla characters
+    too): when RiE's differs (RiE edits some vanilla hair textures in place, and its own meshes depend on the edit),
+    RiE's goes to home/aov_rie_<name> and the block is pointed at it (a plain name stays plain; home is RENAMED_DIR
+    for those, the file's own folder for a path)."""
+    content = (roots.rie / rel).read_bytes()
     outside = _exists_outside(roots, rel)
-    if outside is not None:
-        if outside != (roots.rie / rel).read_bytes() and rel not in KEPT:
-            KEPT.append(rel)
-        return
-    files[rel] = (roots.rie / rel).read_bytes()
+    if outside is None:
+        files[rel] = content
+        return None
+    if outside == content:
+        return None
+    name = RENAMED_PREFIX + rel.rsplit("/", 1)[-1]
+    target = f"{home}/{name}"
+    if files.get(target, content) != content:
+        raise GeneratorError(f"{target} would get two different files")
+    files[target] = content
+    if (rel, target) not in RENAMED:
+        RENAMED.append((rel, target))
+    return target if ("/" in ref or "\\" in ref) else name
 
 
 def build_models(roots: Roots, entities: list) -> tuple:
@@ -583,12 +671,15 @@ def build_models(roots: Roots, entities: list) -> tuple:
     order = collect_models(roots, entities)
     by_asset, files, variations = {}, {}, []
     for kind, name, path, body in order:
-        by_asset.setdefault(path, []).append((kind, name, body))
         asset_dir = "gfx/models/" + path.rsplit("/", 1)[0] if "/" in path else "gfx/models"
-        for ref in FILE_REF.findall(code(body)):
+        for ref in sorted(set(FILE_REF.findall(code(body)))):
             rel = resolve_file(roots, ref, asset_dir)
             if rel:
-                copy_file(roots, rel, files)
+                plain = "/" not in ref and "\\" not in ref
+                new = place_file(roots, ref, rel, files, RENAMED_DIR if plain else rel.rsplit("/", 1)[0])
+                if new:
+                    body = body.replace(f'"{ref}"', f'"{new}"')
+        by_asset.setdefault(path, []).append((kind, name, body))
         for variation in VARIATION_REF.findall(code(body)):
             if variation not in variations:
                 variations.append(variation)
@@ -642,13 +733,17 @@ def build_variations(roots: Roots, names: list) -> tuple:
         if key not in rie:
             raise GeneratorError(f"{key[0]} {key[1]} is in neither Anbennar, the game nor RiE")
         copied.append(key)
-        body = code(rie[key][1])
+        path, block = rie[key]
+        body = code(block)
         wanted += [("pattern_textures", n) for n in re.findall(r'\btextures\s*=\s*"([^"]+)"', body)]
         wanted += [("pattern_layout", n) for n in re.findall(r'\blayout\s*=\s*"([^"]+)"', body)]
-        for ref in FILE_REF.findall(body):
+        for ref in sorted(set(FILE_REF.findall(body))):
             rel = resolve_file(roots, ref, "gfx/portraits/accessory_variations")
             if rel:
-                copy_file(roots, rel, files)
+                new = place_file(roots, ref, rel, files, rel.rsplit("/", 1)[0])
+                if new:
+                    block = block.replace(f'"{ref}"', f'"{new}"')
+        rie[key] = (path, block)
     lines = [BOM + HEADER()[0], HEADER()[1], "# Realms in Exile accessory variations the copied models use."]
     for kind in ("pattern_layout", "pattern_textures", "variation"):
         for key in copied:
@@ -664,13 +759,18 @@ def build_variations(roots: Roots, names: list) -> tuple:
 def build_all(roots: Roots, notes=None) -> dict:
     roots.check()
     notes = [] if notes is None else notes
-    KEPT.clear()
+    RENAMED.clear()
     entries = copied_entries(roots)
     check_references(roots, entries)
+    renames = template_renames(roots, entries)
+    entries = apply_template_renames(entries, renames)
+    if renames:
+        notes.append("RiE templates copied under a new name (Anbennar has its own of that name): "
+                     + ", ".join(f"{gene} {old} -> {new}" for (gene, old), new in renames.items()))
     files = {}
     files.update(modifier_files(entries))
     files.update(triggers_file())
-    genes, accessory_names, gene_notes = build_genes(roots, entries)
+    genes, accessory_names, gene_notes = build_genes(roots, entries, renames)
     files.update(genes)
     notes += gene_notes
     accessories, entities, count = build_accessories(roots, accessory_names)
@@ -680,9 +780,9 @@ def build_all(roots: Roots, notes=None) -> dict:
     files.update(models)
     variations, variation_count = build_variations(roots, variation_names)
     files.update(variations)
-    if KEPT:
-        notes.append(f"{len(KEPT)} files RiE changed at vanilla paths keep Anbennar's or the game's version: "
-                     + ", ".join(KEPT))
+    if RENAMED:
+        notes.append(f"{len(RENAMED)} files RiE edited at vanilla paths are copied under aov_rie_ names: "
+                     + ", ".join(target for _rel, target in RENAMED))
     notes.append(f"{count} accessories, {len(order)} model blocks, {variation_count} variation blocks, "
                  f"{sum(1 for rel in files if not rel.endswith(('.txt', '.asset')))} meshes and textures "
                  f"({sum(len(c) for rel, c in files.items() if not rel.endswith(('.txt', '.asset'))) / 2**20:.0f} MiB)")

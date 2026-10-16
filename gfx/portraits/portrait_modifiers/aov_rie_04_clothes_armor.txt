@@ -52,6 +52,69 @@ aov_rie_clothes_armor = {
         }
     }
 
+    elven_war_valinor = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = clothes
+				template = elven_war_high_clothes
+				range = { 0.13 0.14 } # For the randomness to work correctly
+			}
+			accessory = {
+				mode = add
+				gene = cloaks
+				template = elven_war_cloaks_calaquendi
+				range = { 0.76 0.99 }
+			}			
+		}
+        outfit_tags = { military_outfit elven_war_valinor }	
+        weight = {
+			base = 0
+            modifier = {
+                add = 250
+                culture ?= { has_elvish_heritage = yes }
+				portrait_wear_armor_trigger = yes
+                scope:culture = { has_clothing_gfx = aov_vanyar_clothing_gfx }
+                OR = { 
+                    portrait_commoner_armor_trigger = { 
+                        CULTURE_INPUT = aov_vanyar
+                    }
+                    portrait_low_nobles_armor_trigger = { 
+                        CULTURE_INPUT = aov_vanyar
+                    }
+                    portrait_high_nobles_armor_trigger = { 
+                        CULTURE_INPUT = aov_vanyar
+                    }
+                }
+            }
+            modifier = {
+                add = 21   
+                culture ?= { has_elvish_heritage = yes }
+				portrait_wear_armor_trigger = yes     
+                scope:culture = { has_clothing_gfx = aov_vanyar_clothing_gfx }
+                OR = { 
+                    portrait_commoner_armor_in_army_trigger = { 
+                        CULTURE_INPUT = aov_vanyar
+                    }
+                    portrait_low_nobles_armor_in_army_trigger = { 
+                        CULTURE_INPUT = aov_vanyar
+                    }
+                    portrait_high_nobles_armor_in_army_trigger = { 
+                        CULTURE_INPUT = aov_vanyar
+                    }
+                }
+            }
+            modifier = {
+                add = 999
+				always = no
+            }
+            modifier = {
+                add = 999
+				always = no
+            }
+		}	
+	}
+
     elven_war = {
 		dna_modifiers = {
 			accessory = {
@@ -75,13 +138,13 @@ aov_rie_clothes_armor = {
                 culture ?= { has_elvish_heritage = yes }
                 OR = {
                     portrait_commoner_armor_trigger = { 
-                        CULTURE_INPUT = aov_elven
+                        CULTURE_INPUT = aov_vanyar
                     }
                     portrait_low_nobles_armor_trigger = { 
-                        CULTURE_INPUT = aov_elven
+                        CULTURE_INPUT = aov_vanyar
                     }
                     portrait_high_nobles_armor_trigger = { 
-                        CULTURE_INPUT = aov_elven
+                        CULTURE_INPUT = aov_vanyar
                     }
                 }
             }
@@ -90,16 +153,104 @@ aov_rie_clothes_armor = {
                 culture ?= { has_elvish_heritage = yes }    
                 OR = {
                     portrait_commoner_armor_in_army_trigger = { 
-                        CULTURE_INPUT = aov_elven
+                        CULTURE_INPUT = aov_vanyar
                     }
                     portrait_low_nobles_armor_in_army_trigger = { 
-                        CULTURE_INPUT = aov_elven
+                        CULTURE_INPUT = aov_vanyar
                     }
                     portrait_high_nobles_armor_in_army_trigger = { 
-                        CULTURE_INPUT = aov_elven
+                        CULTURE_INPUT = aov_vanyar
                     }
                 }
             }			
+		}
+	}
+
+    elven_war_noldor_high = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = clothes
+				template = elven_war_high_clothes
+				range = { 0.84 1 } # For the randomness to work correctly
+			}
+			accessory = {
+				mode = add
+				gene = cloaks
+				template = elven_war_cloaks_calaquendi
+				range = { 0.51 0.74 }
+			}			
+		}	
+        outfit_tags = { military_outfit elven_war_noldor_high }
+		weight = {
+			base = 0
+            modifier = {
+                add = 250
+				culture ?= { has_elvish_heritage = yes }
+                highest_held_title_tier >= tier_duchy
+                portrait_high_nobles_armor_trigger = { 
+                    CULTURE_INPUT = aov_noldor
+                }
+			}	
+            modifier = {
+                add = 21
+                culture ?= { has_elvish_heritage = yes }
+                highest_held_title_tier >= tier_duchy       
+                portrait_high_nobles_armor_in_army_trigger = { 
+                    CULTURE_INPUT = aov_noldor
+                }
+            }
+		}
+	}
+
+	elven_war_noldor = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = clothes
+				template = elven_war_high_clothes
+				range = { 0.34 0.40 } # For the randomness to work correctly
+			}
+			accessory = {
+				mode = add
+				gene = cloaks
+				template = elven_war_cloaks_calaquendi
+				range = { 0.26 0.49 }
+			}			
+		}	
+        outfit_tags = { military_outfit elven_war_noldor }
+		weight = {
+			base = 0
+            modifier = {
+                add = 201
+				culture ?= { has_elvish_heritage = yes }
+                OR = {
+                    portrait_commoner_armor_trigger = { 
+					    CULTURE_INPUT = aov_noldor
+				    }
+					portrait_low_nobles_armor_trigger = { 
+						CULTURE_INPUT = aov_noldor
+					}
+					portrait_high_nobles_armor_trigger = { 
+						CULTURE_INPUT = aov_noldor
+					}
+				}
+			}	
+            modifier = {
+                add = 21
+                culture ?= { has_elvish_heritage = yes }
+                OR = {
+                    portrait_commoner_armor_in_army_trigger = { 
+                        CULTURE_INPUT = aov_noldor
+                    }
+                    portrait_low_nobles_armor_in_army_trigger = { 
+                        CULTURE_INPUT = aov_noldor
+                    }
+                    portrait_high_nobles_armor_in_army_trigger = { 
+                        CULTURE_INPUT = aov_noldor
+                    }
+                }
+            }
 		}
 	}
 

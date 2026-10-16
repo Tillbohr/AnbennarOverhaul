@@ -60,10 +60,10 @@ aov_rie_headgear = {
 				add = 80
 				OR = {
 					portrait_commoner_headgear_fallback_trigger = {
-						CULTURE_INPUT = aov_elven
+						CULTURE_INPUT = aov_vanyar
 					}
 					portrait_commoner_headgear_fallback_trigger = {
-						CULTURE_INPUT = aov_rie_none
+						CULTURE_INPUT = aov_noldor
 					}
 					portrait_commoner_headgear_fallback_trigger = {
 						CULTURE_INPUT = aov_rie_none
@@ -77,10 +77,10 @@ aov_rie_headgear = {
 				add = 50
 				OR = {
 					portrait_commoner_clothing_trigger = {
-						CULTURE_INPUT = aov_elven
+						CULTURE_INPUT = aov_vanyar
 					}
 					portrait_commoner_clothing_trigger = {
-						CULTURE_INPUT = aov_rie_none
+						CULTURE_INPUT = aov_noldor
 					}
 					portrait_commoner_clothing_trigger = {
 						CULTURE_INPUT = aov_rie_none
@@ -108,10 +108,10 @@ aov_rie_headgear = {
 				add = 100
 				OR = {
 					portrait_low_nobles_clothing_trigger = {
-						CULTURE_INPUT = aov_elven
+						CULTURE_INPUT = aov_vanyar
 					}
 					portrait_low_nobles_clothing_trigger = {
-						CULTURE_INPUT = aov_rie_none
+						CULTURE_INPUT = aov_noldor
 					}
 					portrait_low_nobles_clothing_trigger = {
 						CULTURE_INPUT = aov_rie_none
@@ -140,13 +140,13 @@ aov_rie_headgear = {
 				highest_held_title_tier = tier_duchy				
 				OR = {
 					portrait_high_nobles_headgear_trigger = {
-						CULTURE_INPUT = aov_elven
+						CULTURE_INPUT = aov_vanyar
 					}
 					portrait_high_nobles_headgear_trigger = {
 						CULTURE_INPUT = aov_lasgalendrim
 					}
 					portrait_high_nobles_headgear_trigger = {
-						CULTURE_INPUT = aov_rie_none
+						CULTURE_INPUT = aov_noldor
 					}
 					portrait_high_nobles_headgear_trigger = {
 						CULTURE_INPUT = aov_rie_none
@@ -157,6 +157,31 @@ aov_rie_headgear = {
 				}
 			}	
 		}		
+	}
+
+	elven_royalty_noldor = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = headgear
+				template = elven_high_headgear
+				range = { 0.71 0.79 } # For the randomness to work correctly
+			}
+		}	
+		weight = {
+			base = 0
+			modifier = {
+				add = 150
+				OR = {
+					portrait_royalty_trigger = {
+						CULTURE_INPUT = aov_noldor
+					}
+					portrait_imperial_trigger = {
+						CULTURE_INPUT = aov_noldor
+					}					
+				}
+			}
+		}
 	}
 
 	elven_royalty_base = {
@@ -174,10 +199,10 @@ aov_rie_headgear = {
 				add = 125
 				OR = {
 					portrait_royalty_trigger = {
-						CULTURE_INPUT = aov_elven
+						CULTURE_INPUT = aov_vanyar
 					}
 					portrait_imperial_trigger = {
-						CULTURE_INPUT = aov_elven
+						CULTURE_INPUT = aov_vanyar
 					}					
 				}
 			}

@@ -25,22 +25,35 @@ aov_rie_legwear = {
 		}
 	}
 
-	elven_legwear = {
+	elven_war_vanyar_legwear = {
 
 		dna_modifiers = {
 			accessory = {
 				mode = add
 				gene = legwear
-				template = elven_common_legwear
+				template = elven_war_noldor_legwear
 				range = { 0 1 } # For the randomness to work correctly
 			}
 		}	
 		weight = {
 			base = 0
+            modifier = {
+                add = 110
+				culture ?= { has_elvish_heritage = yes }
+				portrait_wear_armor_trigger = yes
+				portrait_aov_vanyar_clothing_trigger = yes				
+				scope:culture = { has_clothing_gfx = aov_vanyar_clothing_gfx }
+            }
 			modifier = {
-				add = 50
-				portrait_aov_elven_clothing_trigger = yes
-			}
+                add = 999
+				portrait_wear_armor_trigger = yes
+				always = no
+            }
+			modifier = {
+                add = 999
+				portrait_wear_armor_trigger = yes
+				always = no
+            }
 		}
 	}
 
@@ -60,8 +73,8 @@ aov_rie_legwear = {
 				add = 100
 				portrait_wear_armor_trigger = yes
 				OR = {
-					portrait_aov_elven_clothing_trigger = yes
-					portrait_aov_rie_none_clothing_trigger = yes					
+					portrait_aov_vanyar_clothing_trigger = yes
+					portrait_aov_noldor_clothing_trigger = yes					
 				}
 			}
 		}

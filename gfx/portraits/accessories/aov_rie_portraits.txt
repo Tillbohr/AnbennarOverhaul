@@ -9,6 +9,144 @@ male_clothes_hobbit_common_01 = {
 }
 
 # from RiE gfx/portraits/accessories/lotr_clothes.txt
+male_clothes_vanyar_nobility_01_low = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_clothes_vanyar_nobility_01_low_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+male_clothes_vanyar_nobility_02_low = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_clothes_vanyar_nobility_02_low_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+female_clothes_vanyar_nobility_01_low = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_clothes_vanyar_nobility_01_low_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+female_clothes_vanyar_nobility_02_low = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_clothes_vanyar_nobility_02_low_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+male_clothes_vanyar_nobility_01_high = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_clothes_vanyar_nobility_01_high_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+male_clothes_vanyar_nobility_02_high = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_clothes_vanyar_nobility_02_high_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+female_clothes_vanyar_nobility_01_high = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_clothes_vanyar_nobility_01_high_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+female_clothes_vanyar_nobility_02_high = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_clothes_vanyar_nobility_02_high_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+male_clothes_noldor_nobility_01_low = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_clothes_noldor_nobility_01_low_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+male_clothes_noldor_nobility_02_low = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_clothes_noldor_nobility_02_low_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+female_clothes_noldor_nobility_01_low = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_clothes_noldor_nobility_01_low_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+female_clothes_noldor_nobility_02_low = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_clothes_noldor_nobility_02_low_entity }
+}
+
+# from RiE gfx/portraits/accessories/00_agot_clothes.txt
+female_clothes_secular_crownlands_dress_02 = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly" # agot_dress
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_clothes_secular_crownlands_dress_02_entity }
+}
+
+# from RiE gfx/portraits/accessories/00_agot_clothes.txt
+female_clothes_secular_crownlands_dress_03 = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly" # agot_dress
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_clothes_secular_crownlands_dress_03_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+male_clothes_noldor_nobility_01_high = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_clothes_noldor_nobility_01_high_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+male_clothes_noldor_nobility_02_high = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_clothes_noldor_nobility_02_high_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+male_clothes_elrond_01 = { # Red and salmon colour
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_clothes_elrond_01_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+male_clothes_elrond_02 = { # Gold colour
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_clothes_elrond_02_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+female_clothes_noldor_nobility_01_high = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_clothes_noldor_nobility_01_high_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+female_clothes_noldor_nobility_02_high = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_clothes_noldor_nobility_02_high_entity }
+}
+
+# from RiE gfx/portraits/accessories/00_agot_clothes.txt
+female_clothes_secular_crownlands_dress_01 = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly" # agot_dress
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_clothes_secular_crownlands_dress_01_entity }
+}
+
+# from RiE gfx/portraits/accessories/00_agot_clothes.txt
+female_clothes_secular_crownlands_dress_galadriel = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly" # agot_dress
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_clothes_secular_crownlands_dress_galadriel_entity }
+}
+
+# from RiE gfx/portraits/accessories/00_agot_clothes.txt
+female_clothes_secular_crownlands_dress_idril = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly" # agot_dress
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_clothes_secular_crownlands_dress_idril_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
 male_clothes_silvan_nobility_01_common = {
 	set_tags = "shrink_arms,shrink_chest,shrink_belly"
 	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_clothes_silvan_nobility_01_common_entity }
@@ -476,6 +614,18 @@ male_legwear_hobbit_common_01 = {
 }
 
 # from RiE gfx/portraits/accessories/lotr_legwear.txt
+male_legwear_elven_war_noldor_01 = {
+	set_tags = "shrink_legs"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_legwear_elven_war_noldor_01_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_legwear.txt
+female_legwear_elven_war_noldor_01 = {
+	set_tags = "shrink_legs"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_legwear_elven_war_noldor_01_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_legwear.txt
 male_legwear_elven_war_01 = {
 	set_tags = "shrink_legs"
 	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_legwear_elven_war_01_entity }
@@ -639,6 +789,41 @@ male_hair_custom_22 = {
 }
 
 # from RiE gfx/portraits/accessories/lotr_hair.txt
+male_hair_custom_06 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_custom_06_entity" }
+	
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+male_hair_custom_09 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_custom_09_entity" }
+	
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+male_hair_custom_15 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_custom_15_entity" }
+	
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+male_hair_custom_16 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_custom_16_entity" }
+	
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+male_hair_custom_17 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_custom_17_entity" }
+	
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
 male_valyrian_braid_02 = {
     entity = { required_tags = "no_hair"            shared_pose_entity = head         }
     entity = { required_tags = ""                    shared_pose_entity = head        entity = "male_valyrian_braid_02_entity" }
@@ -653,24 +838,31 @@ male_valyrian_loose_hair_01 = {
 }
 
 # from RiE gfx/portraits/accessories/lotr_hair.txt
-male_valyrian_braid_01 = {
+male_valyrian_loose_hair_02 = {
     entity = { required_tags = "no_hair"            shared_pose_entity = head         }
-    entity = { required_tags = ""                    shared_pose_entity = head        entity = "male_valyrian_braid_01_entity" }
+    entity = { required_tags = ""                    shared_pose_entity = head        entity = "male_valyrian_loose_hair_02_entity" }
     
 }
 
 # from RiE gfx/portraits/accessories/lotr_hair.txt
-male_hair_custom_17 = {
+male_hair_custom_07 = {
 	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
-	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_custom_17_entity" }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_custom_07_entity" }
 	
 }
 
 # from RiE gfx/portraits/accessories/lotr_hair.txt
-male_hair_custom_15 = {
+male_hair_custom_08 = {
 	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
-	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_custom_15_entity" }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_custom_08_entity" }
 	
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+male_valyrian_braid_01 = {
+    entity = { required_tags = "no_hair"            shared_pose_entity = head         }
+    entity = { required_tags = ""                    shared_pose_entity = head        entity = "male_valyrian_braid_01_entity" }
+    
 }
 
 # from RiE gfx/portraits/accessories/lotr_hair.txt
@@ -688,10 +880,87 @@ male_hair_custom_18 = {
 }
 
 # from RiE gfx/portraits/accessories/lotr_hair.txt
-male_hair_custom_09 = {
+female_hair_custom_23 = {
 	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
-	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_custom_09_entity" }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "female_hair_custom_23_entity" }
 	
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+female_hair_custom_12 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "female_hair_custom_12_entity" }
+	
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+female_hair_custom_14 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "female_hair_custom_14_entity" }
+	
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+female_hair_custom_15 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "female_hair_custom_15_entity" }
+	
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+female_hair_custom_16 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "female_hair_custom_16_entity" }
+	
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+female_hair_custom_19 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "female_hair_custom_19_entity" }
+	
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+female_hair_custom_21 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "female_hair_custom_21_entity" }
+	
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+female_hair_custom_24 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "female_hair_custom_24_entity" }
+	
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+female_hair_custom_26 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "female_hair_custom_26_entity" }
+	
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+female_hair_custom_27 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "female_hair_custom_27_entity" }
+	
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+female_hair_custom_41 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "female_hair_custom_41_entity" }
+	
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+female_hair_custom_43 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "female_hair_custom_43_entity" }
+
 }
 
 # from RiE gfx/portraits/accessories/amerindian_accessories.txt
@@ -735,34 +1004,6 @@ mesohair_northern_01b = {
 }
 
 # from RiE gfx/portraits/accessories/lotr_hair.txt
-female_hair_custom_12 = {
-	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
-	entity = { required_tags = ""					shared_pose_entity = head		entity = "female_hair_custom_12_entity" }
-	
-}
-
-# from RiE gfx/portraits/accessories/lotr_hair.txt
-female_hair_custom_24 = {
-	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
-	entity = { required_tags = ""					shared_pose_entity = head		entity = "female_hair_custom_24_entity" }
-	
-}
-
-# from RiE gfx/portraits/accessories/lotr_hair.txt
-female_hair_custom_41 = {
-	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
-	entity = { required_tags = ""					shared_pose_entity = head		entity = "female_hair_custom_41_entity" }
-	
-}
-
-# from RiE gfx/portraits/accessories/lotr_hair.txt
-female_hair_custom_43 = {
-	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
-	entity = { required_tags = ""					shared_pose_entity = head		entity = "female_hair_custom_43_entity" }
-
-}
-
-# from RiE gfx/portraits/accessories/lotr_hair.txt
 female_hair_custom_42 = {
 	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
 	entity = { required_tags = ""					shared_pose_entity = head		entity = "female_hair_custom_42_entity" }
@@ -777,16 +1018,37 @@ female_hair_custom_44 = {
 }
 
 # from RiE gfx/portraits/accessories/lotr_hair.txt
-male_hair_custom_12_no_dye = { #Nerdman3000 from AGOT
+male_hair_custom_11 = {
 	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
-	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_custom_12_no_dye_entity" }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_custom_11_entity" }
+	
+}
 
+# from RiE gfx/portraits/accessories/amerindian_hairstyles.txt
+meso_hair_steppe_02 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "meso_hair_steppe_02_entity" }
+	
 }
 
 # from RiE gfx/portraits/accessories/lotr_hair.txt
-male_hair_custom_16 = {
+male_hair_custom_03 = {
 	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
-	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_custom_16_entity" }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_custom_03_entity" }
+	
+}
+
+# from RiE gfx/portraits/accessories/amerindian_hairstyles.txt
+male_hair_mesowestern_04 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_mesowestern_04_entity" }
+	
+}
+
+# from RiE gfx/portraits/accessories/amerindian_hairstyles.txt
+meso_hair_steppe_02b = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "meso_hair_steppe_02b_entity" }
 	
 }
 
@@ -802,10 +1064,24 @@ am_combo_hair_6 = {
 }
 
 # from RiE gfx/portraits/accessories/lotr_hair.txt
+female_hair_custom_22 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "female_hair_custom_22_entity" }
+	
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
 female_hair_custom_40 = {
 	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
 	entity = { required_tags = ""					shared_pose_entity = head		entity = "female_hair_custom_40_entity" }
 	
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+male_hair_custom_12_no_dye = { #Nerdman3000 from AGOT
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_custom_12_no_dye_entity" }
+
 }
 
 # from RiE gfx/portraits/accessories/lotr_beards.txt
@@ -1028,6 +1304,202 @@ f_beard_fp3_iranian_03 = {
 female_beard_western_10 = {
 	entity = { required_tags = "no_beard"	shared_pose_entity = head }
 	entity = {  shared_pose_entity = head   entity = female_beard_western_10_entity }	
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+m_clothes_noldor_war_golden = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = m_clothes_noldor_war_golden_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+m_clothes_noldor_war_glorfindel = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = m_clothes_noldor_war_glorfindel_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+m_clothes_noldor_war_valinor = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = m_clothes_noldor_war_valinor_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+m_clothes_noldor_war_feanorian = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = m_clothes_noldor_war_feanorian_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+m_clothes_noldor_war_01 = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = m_clothes_noldor_war_01_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+m_clothes_noldor_war_02 = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = m_clothes_noldor_war_02_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+m_clothes_noldor_war_peredhel = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = m_clothes_noldor_war_peredhel_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+m_clothes_noldor_war_high_king = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = m_clothes_noldor_war_high_king_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+m_clothes_noldor_war_herald = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = m_clothes_noldor_war_herald_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+m_clothes_noldor_war_coa_01 = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = m_clothes_noldor_war_coa_01_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+m_clothes_noldor_war_coa_golden = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = m_clothes_noldor_war_coa_golden_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+m_clothes_noldor_war_coa_02 = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = m_clothes_noldor_war_coa_02_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+m_clothes_noldor_war_coa_silver = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = m_clothes_noldor_war_coa_silver_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+f_clothes_noldor_war_golden = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = f_clothes_noldor_war_golden_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+f_clothes_noldor_war_glorfindel = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = f_clothes_noldor_war_glorfindel_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+f_clothes_noldor_war_valinor = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = f_clothes_noldor_war_valinor_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+f_clothes_noldor_war_feanorian = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = f_clothes_noldor_war_feanorian_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+f_clothes_noldor_war_01 = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = f_clothes_noldor_war_01_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+f_clothes_noldor_war_02 = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = f_clothes_noldor_war_02_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+f_clothes_noldor_war_peredhel = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = f_clothes_noldor_war_peredhel_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+f_clothes_noldor_war_high_king = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = f_clothes_noldor_war_high_king_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+f_clothes_noldor_war_herald = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = f_clothes_noldor_war_herald_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+f_clothes_noldor_war_coa_01 = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = f_clothes_noldor_war_coa_01_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+f_clothes_noldor_war_coa_golden = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = f_clothes_noldor_war_coa_golden_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+f_clothes_noldor_war_coa_02 = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = f_clothes_noldor_war_coa_02_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+f_clothes_noldor_war_coa_silver = {
+	set_tags = "shrink_hands,shrink_arms,shrink_chest,shrink_belly,shrink_legs"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = f_clothes_noldor_war_coa_silver_entity 	 }
+}
+
+# from RiE gfx/portraits/accessories/lotr_cloaks.txt
+male_cloaks_elven_war_calaquendi = {
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_cloaks_elven_war_calaquendi_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_cloaks.txt
+male_cloaks_secular_ep1_noldor_01 = {
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_cloaks_secular_ep1_noldor_01_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_cloaks.txt
+male_cloaks_secular_ep1_noldor_coa_01 = {
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_cloaks_secular_ep1_noldor_coa_01_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_cloaks.txt
+male_cloaks_secular_ep1_noldor_03 = {
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_cloaks_secular_ep1_noldor_03_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_cloaks.txt
+female_cloaks_elven_war_calaquendi = {
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_cloaks_elven_war_calaquendi_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_cloaks.txt
+female_cloaks_secular_ep1_noldor_01 = {
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_cloaks_secular_ep1_noldor_01_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_cloaks.txt
+female_cloaks_secular_ep1_noldor_coa_01 = {
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_cloaks_secular_ep1_noldor_coa_01_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_cloaks.txt
+female_cloaks_secular_ep1_noldor_03 = {
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_cloaks_secular_ep1_noldor_03_entity }
 }
 
 # from RiE gfx/portraits/accessories/lotr_clothes.txt

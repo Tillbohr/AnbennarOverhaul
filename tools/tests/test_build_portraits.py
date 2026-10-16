@@ -18,7 +18,7 @@ from data import portraits as data  # noqa: E402
 
 REAL = bp.Roots.default()
 HAVE_REAL = REAL.rie.is_dir() and REAL.anbennar.is_dir() and REAL.game.is_dir()
-KEYS = {"hobbit", "dwarf", "dwarf_bronze", "elven", "noldor"}
+KEYS = {"hobbit", "dwarf", "dwarf_bronze", "elven", "noldor", "sindar"}
 
 
 class ParserTests(unittest.TestCase):
@@ -39,9 +39,9 @@ class ParserTests(unittest.TestCase):
 class TransformTests(unittest.TestCase):
     def test_inputs_triggers_gfx_heritages_rules(self):
         text = ("portrait_commoner_clothing_trigger = { CULTURE_INPUT = dwarf }\n"
-                "portrait_high_nobles_clothing_trigger = { CULTURE_INPUT = noldor }\n"
+                "portrait_high_nobles_clothing_trigger = { CULTURE_INPUT = sindar }\n"
                 "portrait_hobbit_clothing_trigger = yes\nportrait_dwarf_bronze_clothing_spouse_trigger = no\n"
-                "has_clothing_gfx = elven_clothing_gfx\nhas_clothing_gfx = noldor_clothing_gfx\n"
+                "has_clothing_gfx = elven_clothing_gfx\nhas_clothing_gfx = sindar_clothing_gfx\n"
                 "has_cultural_pillar = heritage_blacklock\nhas_cultural_pillar = heritage_elven\n"
                 "has_game_rule = short_dwarven_beards\nhas_game_rule = other_rule\n")
         out = bp.transform(text, KEYS)
@@ -50,16 +50,34 @@ class TransformTests(unittest.TestCase):
         self.assertIn("portrait_commoner_clothing_trigger", out)  # a rank trigger, not a culture key
         self.assertIn("portrait_aov_hobbit_clothing_trigger = yes", out)
         self.assertIn("portrait_aov_rie_none_clothing_spouse_trigger = no", out)
-        self.assertIn("has_clothing_gfx = aov_elven_clothing_gfx", out)
-        self.assertIn("always = no\naov_rie_southern", out)  # noldor_clothing_gfx: no culture of ours
+        self.assertIn("has_clothing_gfx = aov_vanyar_clothing_gfx", out)  # RiE's Vanyar have the generic elven key
+        self.assertIn("always = no\naov_rie_southern", out)  # sindar_clothing_gfx: no culture of ours
         self.assertIn("aov_rie_southern_dwarf_culture_trigger = yes", out)
         self.assertIn("has_cultural_pillar = heritage_elven", out)
-        self.assertIn("always = yes\nhas_game_rule = other_rule", out)
+        self.assertIn("always = no\nhas_game_rule = other_rule", out)  # no female dwarf beards
 
     def test_input_override(self):
         out = bp.transform("CULTURE_INPUT = dwarf\nportrait_dwarf_clothing_trigger = yes\n", KEYS,
                            {"dwarf": "aov_western_dwarf"})
         self.assertEqual(out, "CULTURE_INPUT = aov_western_dwarf\nportrait_aov_western_dwarf_clothing_trigger = yes\n")
+
+    def test_up_to_emperor(self):
+        out = bp.up_to_emperor("x = {\n\tportrait_high_nobles_clothing_trigger = {\n\t\tCULTURE_INPUT = aov_noldor\n\t}\n}\n")
+        self.assertEqual(out, "x = {\n\tOR = { portrait_high_nobles_clothing_trigger = { CULTURE_INPUT = aov_noldor } "
+                              "portrait_royalty_clothing_trigger = { CULTURE_INPUT = aov_noldor } "
+                              "portrait_imperial_clothing_trigger = { CULTURE_INPUT = aov_noldor } }\n}\n")
+        with self.assertRaises(bp.GeneratorError):
+            bp.up_to_emperor("x = { }\n")
+
+    def test_apply_template_renames_only_in_that_gene(self):
+        entries = {"f.txt": {"g": ([], ["\ta = {\n\t\tdna_modifiers = {\n"
+                                        "\t\t\taccessory = { mode = add gene = hairstyles template = dwarven_hairstyles }\n"
+                                        "\t\t\taccessory = { mode = add gene = beards template = dwarven_hairstyles }\n"
+                                        "\t\t}\n\t}\n"])}}
+        out = bp.apply_template_renames(entries, {("hairstyles", "dwarven_hairstyles"): "aov_rie_dwarven_hairstyles"})
+        text = out["f.txt"]["g"][1][0]
+        self.assertIn("gene = hairstyles template = aov_rie_dwarven_hairstyles }", text)
+        self.assertIn("gene = beards template = dwarven_hairstyles }", text)
 
 
 class CultureTests(unittest.TestCase):
@@ -155,22 +173,27 @@ class GeneTests(unittest.TestCase):
         bp._texts.cache_clear()
 
 
-class CopyFileTests(unittest.TestCase):
-    def test_vanilla_path_keeps_vanilla(self):
+class PlaceFileTests(unittest.TestCase):
+    def test_vanilla_path_is_never_overridden(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             roots = bp.Roots(rie=root / "rie", anbennar=root / "anb", game=root / "game")
             for base, content in ((roots.rie, b"rie"), (roots.game / "game", b"vanilla")):
                 (base / "gfx/x").mkdir(parents=True)
-                (base / "gfx/x/same.dds").write_bytes(content)
+                (base / "gfx/x/edited.dds").write_bytes(content)
+                (base / "gfx/x/same.dds").write_bytes(b"same")
             (roots.rie / "gfx/x/new.dds").write_bytes(b"new")
             files = {}
-            bp.KEPT.clear()
-            bp.copy_file(roots, "gfx/x/same.dds", files)
-            bp.copy_file(roots, "gfx/x/new.dds", files)
-        self.assertEqual(files, {"gfx/x/new.dds": b"new"})
-        self.assertEqual(bp.KEPT, ["gfx/x/same.dds"])
-        bp.KEPT.clear()
+            bp.RENAMED.clear()
+            self.assertIsNone(bp.place_file(roots, "new.dds", "gfx/x/new.dds", files, "gfx/shared"))
+            self.assertIsNone(bp.place_file(roots, "same.dds", "gfx/x/same.dds", files, "gfx/shared"))
+            self.assertEqual(bp.place_file(roots, "edited.dds", "gfx/x/edited.dds", files, "gfx/shared"),
+                             "aov_rie_edited.dds")
+            self.assertEqual(bp.place_file(roots, "gfx/x/edited.dds", "gfx/x/edited.dds", files, "gfx/x"),
+                             "gfx/x/aov_rie_edited.dds")
+        self.assertEqual(files, {"gfx/x/new.dds": b"new", "gfx/shared/aov_rie_edited.dds": b"rie",
+                                 "gfx/x/aov_rie_edited.dds": b"rie"})
+        bp.RENAMED.clear()
 
 
 @unittest.skipUnless(HAVE_REAL, "RiE, Anbennar and game needed")
@@ -195,6 +218,41 @@ class RealTests(unittest.TestCase):
                 self.assertLessEqual(inputs, set(bp.our_inputs()), rel)
                 self.assertNotRegex(text, r"heritage_(longbeard|firebeard|broadbeam|blacklock|stonefoot|ironfist|stiffbeard)")
                 self.assertNotIn("has_game_rule = short_dwarven_beards", text)
+
+    def test_no_female_dwarf_beards(self):
+        text = self.files[f"{bp.MODIFIERS_DIR}/aov_rie_01_beards_base.txt"].decode("utf-8-sig")
+        self.assertNotIn("dwarven_females", text)
+        self.assertIn("dwarven_males_vanilla", text)
+
+    def test_elves_and_hobbit_men_wear_no_vanilla_cloak(self):
+        text = self.files[f"{bp.MODIFIERS_DIR}/aov_rie_01_cloaks_base.txt"].decode("utf-8-sig")
+        self.assertIn("aov_elf_no_cloak", text)
+        self.assertIn("aov_hobbit_no_cloak", text)
+
+    def test_high_elves_wear_their_rie_culture(self):
+        text = self.files[f"{bp.MODIFIERS_DIR}/aov_rie_01_clothes_base.txt"].decode("utf-8-sig")
+        self.assertIn("template = noldor_high_clothes", text)
+        self.assertIn("template = vanyar_high_clothes", text)
+        self.assertNotIn("elven_low_clothes", text)  # RiE's generic elves wear vanilla clothes
+        self.assertIn("portrait_royalty_clothing_trigger = { CULTURE_INPUT = aov_noldor }", text)
+
+    def test_clashing_template_is_copied_under_a_new_name(self):
+        hair = self.files[f"{bp.MODIFIERS_DIR}/aov_rie_01_hairstyles_base.txt"].decode("utf-8-sig")
+        self.assertIn("template = aov_rie_dwarven_hairstyles", hair)
+        self.assertNotRegex(hair, r"template = dwarven_hairstyles\b")
+        genes = self.files[f"{bp.GENES_DIR}/03_genes_special_accessories_hairstyles.txt"].decode("utf-8-sig")
+        self.assertRegex(genes, r"\n\t+aov_rie_dwarven_hairstyles = \{")
+
+    def test_edited_vanilla_textures_are_copied_once_under_new_names(self):
+        braid = next(c.decode("utf-8-sig") for rel, c in self.files.items()
+                     if rel.endswith("female_hair_custom_43/aov_rie_female_hair_custom_43.asset"))
+        self.assertIn('"aov_rie_f_hair_western_08_diffuse.dds"', braid)
+        self.assertNotIn('"f_hair_western_08_diffuse.dds"', braid)
+        renamed = [rel for rel in self.files if rel.rsplit("/", 1)[-1].startswith(bp.RENAMED_PREFIX)
+                   and rel.endswith(".dds")]
+        self.assertTrue(renamed)
+        names = [rel.rsplit("/", 1)[-1] for rel in renamed]
+        self.assertEqual(len(names), len(set(names)))  # one copy each (CK3 finds textures by name)
 
     def test_groups_are_game_only_with_rie_priority(self):
         text = self.files[f"{bp.MODIFIERS_DIR}/aov_rie_04_clothes_armor.txt"].decode("utf-8-sig")

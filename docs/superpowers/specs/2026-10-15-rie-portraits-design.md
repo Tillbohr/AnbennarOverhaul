@@ -10,14 +10,17 @@ helmets, hairstyles and beards.
 | Anbennar cultures | RiE look | clothing_gfx key |
 |---|---|---|
 | every `heritage_halfling` and `heritage_gnomish` culture | Hobbit | `aov_hobbit_clothing_gfx` |
-| `sun_elvish`, `moon_elvish` | Elven (RiE's generic elf entries) | `aov_elven_clothing_gfx` |
+| `sun_elvish` | Vanyar (white and gold) | `aov_vanyar_clothing_gfx` |
+| `moon_elvish` | Noldor | `aov_noldor_clothing_gfx` |
 | `wood_elvish` | Lasgalendrim (Silvan) | `aov_lasgalendrim_clothing_gfx` |
 | every `heritage_dwarven` culture | Dwarf (RiE's Longbeard/Firebeard/Broadbeam, "western") | `aov_dwarf_clothing_gfx` |
 | `copper_dwarvish`, `gold_dwarvish`, `marble_dwarvish` (Anbennar's MENA-dressed dwarves) | Dwarf plus RiE's southern dwarf (Blacklock/Stonefoot) clothes and hats | `aov_southern_dwarf_clothing_gfx` first, then `aov_dwarf_clothing_gfx` |
 
 User choices: all clothing layers plus hair and beards; southern dwarf variant for the three MENA-dressed dwarf cultures.
-Halflings and gnomes lose their beards (RiE hobbits are beardless). Female dwarves get RiE's beards with RiE's
-default game rule (short beards), hard-coded; the rule itself is not ported.
+Halflings and gnomes lose their beards (RiE hobbits are beardless). Round 2 (in-game feedback, 2026-10-16): no female
+dwarf beards; sun elves Vanyar and moon elves Noldor, because RiE's generic elves wear vanilla clothes; western
+dwarves keep RiE's western set (vanilla HRE-style clothes, as in RiE). Hobbit women and hobbit hats stay
+vanilla-styled: RiE has none of its own.
 
 ## How CK3 picks the look
 
@@ -31,17 +34,23 @@ The groups have `usage = game`, so they never show in the barbershop.
 The modifiers are RiE's own entries, copied from a hand-picked list (`tools/data/portraits.py`, `ENTRIES`) with
 token renames so they refer to our cultures:
 
-- `CULTURE_INPUT` and the `portrait_<key>_clothing(_spouse)_trigger` names: `hobbit`/`elven`/`lasgalendrim`/`dwarf`
-  become `aov_hobbit`/`aov_elven`/`aov_lasgalendrim`/`aov_dwarf`; every other RiE culture key becomes `aov_rie_none`
+- `CULTURE_INPUT` and the `portrait_<key>_clothing(_spouse)_trigger` names: `hobbit`/`elven`/`noldor`/`lasgalendrim`/
+  `dwarf` become `aov_hobbit`/`aov_vanyar`/`aov_noldor`/`aov_lasgalendrim`/`aov_dwarf` (RiE's Vanyar culture has the
+  generic elven key; its Vanyar entries add `culture:vanyar`); every other RiE culture key becomes `aov_rie_none`
   (always false). Western dwarf entries use `aov_western_dwarf` (dwarf and not southern), so southern dwarves only see
   the southern entries.
 - RiE dwarf heritages: `heritage_longbeard`/`firebeard`/`broadbeam` become `aov_rie_western_dwarf_culture_trigger`,
   `heritage_blacklock`/`stonefoot` become `aov_rie_southern_dwarf_culture_trigger`, `heritage_ironfist`/`stiffbeard`
   become `aov_rie_eastern_dwarf_culture_trigger` (always false).
-- RiE's dwarf beard game rules become `always = yes` (short) or `always = no` (long, long and short).
+- RiE's dwarf beard game rules become `always = no` (no female dwarf beards; their entries are not copied either).
 - Per-entry literal replacements in the data for anything else (e.g. `culture:lasgalendrim`).
+- Inside a group the first modifier weighing 100 or more wins, so a culture's specific entry is listed before the
+  generic one it should beat. Option `up_to_emperor` widens an entry's high-noble clothing trigger to kings and
+  emperors where RiE has no royal entry (Vanyar, Noldor, hobbit), so those kings do not fall back to vanilla robes.
+- Extra entries: hobbits beardless; no vanilla cloaks for elves (RiE gives its elves none) and for hobbit-dressed
+  halfling and gnome men (vanilla cloaks clip through RiE's hobbit outfit).
 
-Entries for RiE-only cultures (Silvan, Vanyar, Noldor, Cuind, Kinn-lai, Penni, Bree), eastern dwarves, title-specific
+Entries for RiE-only cultures (Sindar, Galadhrim, Falathrim, Cuind, Kinn-lai, Penni, Bree), eastern dwarves, title-specific
 crowns (Khazad-dum, Erebor), the Greybeard religion, sickness, the barbershop and body weight are left out, and so are
 entries that hinge on RiE-only content: the hobbit travel cloak (a flag RiE's duel events set), the dwarf mining cloak
 and headgear (RiE's `activity_mining`) and Oropher's helmet (RiE's `dynasty_oropher`). RiE's `is_elf` and
@@ -63,8 +72,12 @@ The triggers (`common/scripted_triggers/aov_rie_portrait_triggers.txt`) follow v
 - Entities and pdxmeshes the accessories use are copied block by block into `.asset` files at their RiE paths, with
   every mesh, texture, pattern mask and accessory variation they name, also at their RiE paths, because RiE refers to
   pattern masks and variation textures by full path. A file whose path Anbennar or the game also has is never
-  overwritten: RiE edits some vanilla files in place (20 hair textures), and those keep the game's version (listed in
-  a build note). Entities and textures that only the game has stay the game's.
+  overwritten. RiE edits some vanilla files in place (23 hair and hood textures) and its own meshes depend on the
+  edits (with vanilla's strand texture RiE's opaque hair shader drew elf hair flat white), so RiE's version is copied
+  as `aov_rie_<name>` into `gfx/models/portraits/aov_rie_edited/` and the copied blocks point at it. Entities and
+  textures that only the game has stay the game's.
+- A template the entries name that Anbennar defines with different content (`dwarven_hairstyles`) is copied from RiE
+  as `aov_rie_<name>`, and the entries point at the copy.
 - Accessory variations (`variation`, `pattern_textures`, `color_palette` blocks) the meshes name are copied into
   `gfx/portraits/accessory_variations/aov_rie_portraits.txt` when Anbennar and the game lack them.
 - Every shader the copied meshes name must exist in the game's or this mod's portrait shaders.

@@ -61,4 +61,41 @@ aov_rie_cloaks = {
 			}			
 		}
 	}
+
+	aov_hobbit_no_cloak = { # vanilla cloaks clip through RiE's hobbit outfit
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = cloaks
+				template = no_cloak
+				range = { 0 1 } # For the randomness to work correctly
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 1000
+				is_male = yes
+				portrait_aov_hobbit_clothing_trigger = yes
+			}
+		}
+	}
+
+	aov_elf_no_cloak = { # RiE's elves wear no vanilla cloaks
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = cloaks
+				template = no_cloak
+				range = { 0 1 } # For the randomness to work correctly
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 1000
+				OR = { portrait_aov_vanyar_clothing_trigger = yes portrait_aov_noldor_clothing_trigger = yes portrait_aov_lasgalendrim_clothing_trigger = yes }
+			}
+		}
+	}
 }

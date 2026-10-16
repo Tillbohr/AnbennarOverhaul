@@ -16,17 +16,31 @@ portrait_aov_hobbit_clothing_spouse_trigger = {
 	}
 }
 
-portrait_aov_elven_clothing_trigger = {
+portrait_aov_vanyar_clothing_trigger = {
 	portrait_shared_clothing_contents_trigger = {
 		CULTURE_SCOPE = scope:culture
-		CULTURE_FLAG = aov_elven
+		CULTURE_FLAG = aov_vanyar
 	}
 }
 
-portrait_aov_elven_clothing_spouse_trigger = {
+portrait_aov_vanyar_clothing_spouse_trigger = {
 	portrait_shared_clothing_contents_trigger = {
 		CULTURE_SCOPE = culture
-		CULTURE_FLAG = aov_elven
+		CULTURE_FLAG = aov_vanyar
+	}
+}
+
+portrait_aov_noldor_clothing_trigger = {
+	portrait_shared_clothing_contents_trigger = {
+		CULTURE_SCOPE = scope:culture
+		CULTURE_FLAG = aov_noldor
+	}
+}
+
+portrait_aov_noldor_clothing_spouse_trigger = {
+	portrait_shared_clothing_contents_trigger = {
+		CULTURE_SCOPE = culture
+		CULTURE_FLAG = aov_noldor
 	}
 }
 
