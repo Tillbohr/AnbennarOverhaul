@@ -19,3 +19,7 @@ Army models (wood, sun and moon elves; dwarves):
 Portraits (halflings and gnomes as hobbits, elves, dwarves):
 - Lord of the Rings: Realms in Exile - https://steamcommunity.com/sharedfiles/filedetails/?id=2291024373
   The hobbit, elven, Silvan and dwarven clothes, headgear, legwear, cloaks, armour, hairstyles and beards: portrait modifiers, gene templates, accessories, accessory variations, models, meshes and textures.
+
+Character backgrounds and royal courts (dwarves, wood elves, moon elves):
+- Lord of the Rings: Realms in Exile - https://steamcommunity.com/sharedfiles/filedetails/?id=2291024373
+  The dwarf, Noldor, Thranduil's halls and Greenwood throneroom pictures and portrait environments, and the dwarven, Lasgalen and Lindon royal court scenes with their models (the Lindon court reuses Elder Kings 2's Ayleid court assets, as adapted by RiE).

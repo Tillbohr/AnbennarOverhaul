@@ -336,6 +336,216 @@
   "wiki": null
 },
 {
+  "confidence": "reasonable",
+  "info": "DDS file is 2867x1526, which can cause scaling problems and graphical artifacts",
+  "key": "image-size",
+  "locations": [
+    {
+      "column": null,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\character_view\\throneroom_noldor_high.dds",
+      "length": 1,
+      "line": null,
+      "linenr": null,
+      "path": "gfx\\interface\\illustrations\\character_view\\throneroom_noldor_high.dds",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "compressed DDS must have width and height divisible by 4",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "validation",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 6,
+      "line": "\t\t\tradius = 1000",
+      "linenr": 367,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "`radius = ` is only for spot_light or point_light",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "validation",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 7,
+      "line": "\t\t\tfalloff = 10",
+      "linenr": 368,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "`falloff = ` is only for spot_light or point_light",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "unknown-field",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\court_scene\\scene_settings\\scene_settings_Dwarven_1_g3.txt",
+      "length": 5,
+      "line": "\t\tscale=0.7",
+      "linenr": 1098,
+      "path": "gfx\\court_scene\\scene_settings\\scene_settings_Dwarven_1_g3.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "unknown field `scale`",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "unknown-field",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\court_scene\\scene_settings\\scene_settings_Dwarven_1_g3.txt",
+      "length": 5,
+      "line": "\t\tscale=0.7",
+      "linenr": 1105,
+      "path": "gfx\\court_scene\\scene_settings\\scene_settings_Dwarven_1_g3.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "unknown field `scale`",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "unknown-field",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\court_scene\\scene_settings\\scene_settings_Dwarven_1_g3.txt",
+      "length": 5,
+      "line": "\t\tscale=1.2",
+      "linenr": 1112,
+      "path": "gfx\\court_scene\\scene_settings\\scene_settings_Dwarven_1_g3.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "unknown field `scale`",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "unknown-field",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\court_scene\\scene_settings\\scene_settings_Dwarven_1_g3.txt",
+      "length": 5,
+      "line": "\t\tscale=1.473346",
+      "linenr": 1153,
+      "path": "gfx\\court_scene\\scene_settings\\scene_settings_Dwarven_1_g3.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "unknown field `scale`",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "unknown-field",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\court_scene\\scene_settings\\scene_settings_Dwarven_1_g3.txt",
+      "length": 5,
+      "line": "\t\tscale=1.311151",
+      "linenr": 1160,
+      "path": "gfx\\court_scene\\scene_settings\\scene_settings_Dwarven_1_g3.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "unknown field `scale`",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "unknown-field",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\court_scene\\scene_settings\\scene_settings_rie_elf_1.txt",
+      "length": 5,
+      "line": "\t\tscale=0.800000",
+      "linenr": 840,
+      "path": "gfx\\court_scene\\scene_settings\\scene_settings_rie_elf_1.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "unknown field `scale`",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "unknown-field",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\court_scene\\scene_settings\\scene_settings_rie_elf_1.txt",
+      "length": 5,
+      "line": "\t\tscale=0.800000",
+      "linenr": 847,
+      "path": "gfx\\court_scene\\scene_settings\\scene_settings_rie_elf_1.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "unknown field `scale`",
+  "severity": "error",
+  "wiki": null
+},
+{
   "confidence": "strong",
   "info": null,
   "key": "missing-item",
@@ -1722,6 +1932,132 @@
   "wiki": null
 },
 {
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 13,
+      "line": "\t\treference = \"tgp_farm_asia\"",
+      "linenr": 5910,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "portrait environment tgp_farm_asia not defined in gfx/portraits/environments/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 13,
+      "line": "\t\treference = \"tgp_camp_asia\"",
+      "linenr": 7212,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "portrait environment tgp_camp_asia not defined in gfx/portraits/environments/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 19,
+      "line": "\t\treference = \"character_view_main\"",
+      "linenr": 11727,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "portrait environment character_view_main not defined in gfx/portraits/environments/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 21,
+      "line": "\t\treference = \"character_view_spouse\"",
+      "linenr": 11735,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "portrait environment character_view_spouse not defined in gfx/portraits/environments/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 19,
+      "line": "\t\treference = \"character_view_main\"",
+      "linenr": 11834,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "portrait environment character_view_main not defined in gfx/portraits/environments/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 21,
+      "line": "\t\treference = \"character_view_spouse\"",
+      "linenr": 11842,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "portrait environment character_view_spouse not defined in gfx/portraits/environments/",
+  "severity": "warning",
+  "wiki": null
+},
+{
   "confidence": "reasonable",
   "info": null,
   "key": "scopes",
@@ -2155,6 +2491,371 @@
     }
   ],
   "message": "missing english localization key japan_feudal_government_realm",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-file",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 40,
+      "line": "\t\treference = \"event_scenes/ep2_events_generic_hunt.dds\"",
+      "linenr": 2031,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "file gfx/interface/illustrations/event_scenes/ep2_events_generic_hunt.dds does not exist",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "scopes",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 43,
+      "line": "\t\t\t\t\t\thas_graphical_african_culture_group_trigger = yes",
+      "linenr": 3097,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_illustration_triggers.txt",
+      "length": 16,
+      "line": "\thas_building_gfx = african_building_gfx",
+      "linenr": 58,
+      "path": "common\\scripted_triggers\\00_illustration_triggers.txt",
+      "stage": null,
+      "tag": "expected scope was deduced from `has_building_gfx` here"
+    },
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 8,
+      "line": "\t\t\tis_alive = no",
+      "linenr": 136,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": "actual scope was deduced from `is_alive` here"
+    }
+  ],
+  "message": "`has_graphical_african_culture_group_trigger` expects scope to be culture but scope seems to be character",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "scopes",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 42,
+      "line": "\t\t\t\t\t\thas_graphical_steppe_culture_group_trigger = yes",
+      "linenr": 3098,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_illustration_triggers.txt",
+      "length": 16,
+      "line": "\thas_building_gfx = steppe_building_gfx",
+      "linenr": 62,
+      "path": "common\\scripted_triggers\\00_illustration_triggers.txt",
+      "stage": null,
+      "tag": "expected scope was deduced from `has_building_gfx` here"
+    },
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 8,
+      "line": "\t\t\tis_alive = no",
+      "linenr": 136,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": "actual scope was deduced from `is_alive` here"
+    }
+  ],
+  "message": "`has_graphical_steppe_culture_group_trigger` expects scope to be culture but scope seems to be character",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "scopes",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 43,
+      "line": "\t\t\t\t\t\thas_graphical_african_culture_group_trigger = yes",
+      "linenr": 3106,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_illustration_triggers.txt",
+      "length": 16,
+      "line": "\thas_building_gfx = african_building_gfx",
+      "linenr": 58,
+      "path": "common\\scripted_triggers\\00_illustration_triggers.txt",
+      "stage": null,
+      "tag": "expected scope was deduced from `has_building_gfx` here"
+    },
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 14,
+      "line": "\t\t\t\tprimary_spouse ?= { # Primary Spouse",
+      "linenr": 3101,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": "actual scope was deduced from `primary_spouse` here"
+    }
+  ],
+  "message": "`has_graphical_african_culture_group_trigger` expects scope to be culture but scope seems to be character",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "scopes",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 42,
+      "line": "\t\t\t\t\t\thas_graphical_steppe_culture_group_trigger = yes",
+      "linenr": 3107,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_illustration_triggers.txt",
+      "length": 16,
+      "line": "\thas_building_gfx = steppe_building_gfx",
+      "linenr": 62,
+      "path": "common\\scripted_triggers\\00_illustration_triggers.txt",
+      "stage": null,
+      "tag": "expected scope was deduced from `has_building_gfx` here"
+    },
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 14,
+      "line": "\t\t\t\tprimary_spouse ?= { # Primary Spouse",
+      "linenr": 3101,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": "actual scope was deduced from `primary_spouse` here"
+    }
+  ],
+  "message": "`has_graphical_steppe_culture_group_trigger` expects scope to be culture but scope seems to be character",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "scopes",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 43,
+      "line": "\t\t\t\t\t\thas_graphical_african_culture_group_trigger = yes",
+      "linenr": 3124,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_illustration_triggers.txt",
+      "length": 16,
+      "line": "\thas_building_gfx = african_building_gfx",
+      "linenr": 58,
+      "path": "common\\scripted_triggers\\00_illustration_triggers.txt",
+      "stage": null,
+      "tag": "expected scope was deduced from `has_building_gfx` here"
+    },
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 8,
+      "line": "\t\t\tis_alive = no",
+      "linenr": 136,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": "actual scope was deduced from `is_alive` here"
+    }
+  ],
+  "message": "`has_graphical_african_culture_group_trigger` expects scope to be culture but scope seems to be character",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "scopes",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 42,
+      "line": "\t\t\t\t\t\thas_graphical_steppe_culture_group_trigger = yes",
+      "linenr": 3125,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_illustration_triggers.txt",
+      "length": 16,
+      "line": "\thas_building_gfx = steppe_building_gfx",
+      "linenr": 62,
+      "path": "common\\scripted_triggers\\00_illustration_triggers.txt",
+      "stage": null,
+      "tag": "expected scope was deduced from `has_building_gfx` here"
+    },
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 8,
+      "line": "\t\t\tis_alive = no",
+      "linenr": 136,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": "actual scope was deduced from `is_alive` here"
+    }
+  ],
+  "message": "`has_graphical_steppe_culture_group_trigger` expects scope to be culture but scope seems to be character",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "scopes",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 43,
+      "line": "\t\t\t\t\t\thas_graphical_african_culture_group_trigger = yes",
+      "linenr": 3133,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_illustration_triggers.txt",
+      "length": 16,
+      "line": "\thas_building_gfx = african_building_gfx",
+      "linenr": 58,
+      "path": "common\\scripted_triggers\\00_illustration_triggers.txt",
+      "stage": null,
+      "tag": "expected scope was deduced from `has_building_gfx` here"
+    },
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 14,
+      "line": "\t\t\t\tprimary_spouse ?= { # Primary Spouse",
+      "linenr": 3128,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": "actual scope was deduced from `primary_spouse` here"
+    }
+  ],
+  "message": "`has_graphical_african_culture_group_trigger` expects scope to be culture but scope seems to be character",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "scopes",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 42,
+      "line": "\t\t\t\t\t\thas_graphical_steppe_culture_group_trigger = yes",
+      "linenr": 3134,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_illustration_triggers.txt",
+      "length": 16,
+      "line": "\thas_building_gfx = steppe_building_gfx",
+      "linenr": 62,
+      "path": "common\\scripted_triggers\\00_illustration_triggers.txt",
+      "stage": null,
+      "tag": "expected scope was deduced from `has_building_gfx` here"
+    },
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 14,
+      "line": "\t\t\t\tprimary_spouse ?= { # Primary Spouse",
+      "linenr": 3128,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": "actual scope was deduced from `primary_spouse` here"
+    }
+  ],
+  "message": "`has_graphical_steppe_culture_group_trigger` expects scope to be culture but scope seems to be character",
   "severity": "warning",
   "wiki": null
 },
@@ -2707,6 +3408,741 @@
   "key": "logic",
   "locations": [
     {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\court_scene\\scene_cultures\\00_default_cultures.txt",
+      "length": 1,
+      "line": "\t\tOR = {",
+      "linenr": 292,
+      "path": "gfx\\court_scene\\scene_cultures\\00_default_cultures.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 530,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 10,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 548,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 13,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\tOR = {",
+      "linenr": 571,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 13,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\tOR = {",
+      "linenr": 587,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 13,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\tOR = {",
+      "linenr": 603,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 11,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\tOR = {",
+      "linenr": 3432,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 11,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\tOR = {",
+      "linenr": 3465,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 14,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\t\tOR = {",
+      "linenr": 3502,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 14,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\t\tOR = {",
+      "linenr": 3532,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 14,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\t\tOR = {",
+      "linenr": 3562,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 11,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\tOR = {",
+      "linenr": 3602,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 11,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\tOR = {",
+      "linenr": 3635,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 14,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\t\tOR = {",
+      "linenr": 3672,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 14,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\t\tOR = {",
+      "linenr": 3702,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 14,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\t\tOR = {",
+      "linenr": 3732,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\tOR = { should_use_temple_character_background_trigger = yes }",
+      "linenr": 9072,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 14,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\t\tOR = {",
+      "linenr": 9782,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 14,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\t\tOR = {",
+      "linenr": 9798,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 11,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\tOR = {",
+      "linenr": 9815,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 14,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\t\tOR = {",
+      "linenr": 9843,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 14,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\t\tOR = {",
+      "linenr": 9859,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 11,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\tOR = {",
+      "linenr": 9876,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\tOR = {",
+      "linenr": 9902,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\tOR = {",
+      "linenr": 9919,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\tOR = {",
+      "linenr": 9936,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\tOR = {",
+      "linenr": 10130,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 14,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\t\tOR = {",
+      "linenr": 10138,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 14,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\t\tOR = {",
+      "linenr": 10149,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\tOR = {",
+      "linenr": 10175,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 14,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\t\tOR = {",
+      "linenr": 10183,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 14,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\t\tOR = {",
+      "linenr": 10194,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\tOR = {",
+      "linenr": 11459,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\tOR = {",
+      "linenr": 12446,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\tOR = {",
+      "linenr": 12459,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
       "column": 10,
       "from": "MOD",
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
@@ -3035,6 +4471,817 @@
   ],
   "message": "OR with only one item inside is probably not what you intended",
   "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\touter_cone_angle = 35",
+      "linenr": 29,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "outer_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\tinner_cone_angle = 5",
+      "linenr": 30,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "inner_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\touter_cone_angle = 45",
+      "linenr": 48,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "outer_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\tinner_cone_angle = 0",
+      "linenr": 49,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "inner_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\touter_cone_angle = 35",
+      "linenr": 100,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "outer_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\tinner_cone_angle = 5",
+      "linenr": 101,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "inner_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\touter_cone_angle = 45",
+      "linenr": 119,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "outer_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\tinner_cone_angle = 0",
+      "linenr": 120,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "inner_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\touter_cone_angle = 35",
+      "linenr": 171,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "outer_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\tinner_cone_angle = 5",
+      "linenr": 172,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "inner_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\touter_cone_angle = 45",
+      "linenr": 190,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "outer_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\tinner_cone_angle = 0",
+      "linenr": 191,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "inner_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\touter_cone_angle = 35",
+      "linenr": 242,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "outer_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\tinner_cone_angle = 5",
+      "linenr": 243,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "inner_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\touter_cone_angle = 45",
+      "linenr": 261,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "outer_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\tinner_cone_angle = 0",
+      "linenr": 262,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "inner_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\touter_cone_angle = 35",
+      "linenr": 318,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "outer_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\tinner_cone_angle = 0",
+      "linenr": 319,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "inner_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\touter_cone_angle = 55",
+      "linenr": 346,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "outer_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\tinner_cone_angle = 0",
+      "linenr": 347,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "inner_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\touter_cone_angle = 85",
+      "linenr": 371,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "outer_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\tinner_cone_angle = 0",
+      "linenr": 372,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "inner_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\touter_cone_angle = 35",
+      "linenr": 411,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "outer_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\tinner_cone_angle = 5",
+      "linenr": 412,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "inner_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\touter_cone_angle = 45",
+      "linenr": 430,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "outer_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\tinner_cone_angle = 0",
+      "linenr": 431,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "inner_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\touter_cone_angle = 35",
+      "linenr": 482,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "outer_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\tinner_cone_angle = 5",
+      "linenr": 483,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "inner_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\touter_cone_angle = 45",
+      "linenr": 501,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "outer_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\tinner_cone_angle = 0",
+      "linenr": 502,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "inner_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "you can remove the AND and just have the item there",
+  "key": "performance",
+  "locations": [
+    {
+      "column": 9,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_illustration_triggers.txt",
+      "length": 1,
+      "line": "\t\tAND = {",
+      "linenr": 787,
+      "path": "common\\scripted_triggers\\00_illustration_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\thigh_tier_throne_room_spouse_trigger = { REGION = iberia }",
+      "linenr": 10549,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "AND with only one item inside is useless",
+  "severity": "tips",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "you can remove the AND and just have the item there",
+  "key": "performance",
+  "locations": [
+    {
+      "column": 9,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_illustration_triggers.txt",
+      "length": 1,
+      "line": "\t\tAND = {",
+      "linenr": 787,
+      "path": "common\\scripted_triggers\\00_illustration_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\thigh_tier_throne_room_spouse_trigger = { REGION = mediterranean }",
+      "linenr": 10640,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "AND with only one item inside is useless",
+  "severity": "tips",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "you can remove the AND and just have the item there",
+  "key": "performance",
+  "locations": [
+    {
+      "column": 9,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_illustration_triggers.txt",
+      "length": 1,
+      "line": "\t\tAND = {",
+      "linenr": 787,
+      "path": "common\\scripted_triggers\\00_illustration_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\thigh_tier_throne_room_spouse_trigger = { REGION = mena }",
+      "linenr": 10938,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "AND with only one item inside is useless",
+  "severity": "tips",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "you can remove the AND and just have the item there",
+  "key": "performance",
+  "locations": [
+    {
+      "column": 9,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_illustration_triggers.txt",
+      "length": 1,
+      "line": "\t\tAND = {",
+      "linenr": 787,
+      "path": "common\\scripted_triggers\\00_illustration_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\thigh_tier_throne_room_spouse_trigger = { REGION = india }",
+      "linenr": 11029,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "AND with only one item inside is useless",
+  "severity": "tips",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "you can remove the AND and just have the item there",
+  "key": "performance",
+  "locations": [
+    {
+      "column": 9,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_illustration_triggers.txt",
+      "length": 1,
+      "line": "\t\tAND = {",
+      "linenr": 787,
+      "path": "common\\scripted_triggers\\00_illustration_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\thigh_tier_throne_room_spouse_trigger = { REGION = western }",
+      "linenr": 11120,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "AND with only one item inside is useless",
+  "severity": "tips",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "you can remove the AND and just have the item there",
+  "key": "performance",
+  "locations": [
+    {
+      "column": 11,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\tAND = {",
+      "linenr": 10898,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "AND with only one item inside is useless",
+  "severity": "tips",
   "wiki": null
 },
 {
