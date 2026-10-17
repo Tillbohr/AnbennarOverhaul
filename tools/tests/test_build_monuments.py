@@ -2,6 +2,7 @@ import re
 import sys
 import unittest
 from pathlib import Path
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # python -I does not add the tools folder
 import build_monuments as bm  # noqa: E402
@@ -13,6 +14,13 @@ FILES = bm.render_all("cannor") if LIVE else {}
 B = FILES.get("common/buildings/aov_monuments_cannor.txt", "")
 H = FILES.get("history/provinces/aov_monuments_cannor.txt", "")
 L = FILES.get("localization/english/aov_monuments_cannor_l_english.yml", "")
+ILLUSTRATION_ART = [a for a in bm.EXTRA_ART if a["style"] == "illustration"]
+
+
+def painting_gui():
+    """The county view lines of the painting-style backgrounds only (monuments and "painting" EXTRA_ART entries)."""
+    with mock.patch.object(bm, "EXTRA_ART", [a for a in bm.EXTRA_ART if a["style"] == "painting"]):
+        return "\n".join(bm.painting_backgrounds(bm.all_monuments()))
 
 
 def block(text, key):
@@ -706,7 +714,7 @@ class ArtTests(unittest.TestCase):
     def test_painting_keeps_its_top(self):
         """EU4 spires reach almost to the frame: anchor the painting at the top (fittype start, which vanilla uses
         for wide art at the top of a tall area) and keep the mask's top fade short."""
-        gui = "\n".join(bm.painting_backgrounds(bm.all_monuments()))
+        gui = painting_gui()
         self.assertIn("fittype = start", gui)
         self.assertNotIn("centercrop", gui)
 
@@ -716,7 +724,7 @@ class ArtTests(unittest.TestCase):
         lines = bm.painting_backgrounds(bm.all_monuments())
         painted = len([m for m in bm.all_monuments() if m["art"]])
         self.assertEqual(bm.PAINTING_MARGIN_BOTTOM, 63)
-        self.assertEqual(lines.count("\tmargin_bottom = 63"), painted + len(bm.EXTRA_ART))
+        self.assertEqual(lines.count("\tmargin_bottom = 63"), painted + len(bm.EXTRA_ART) - len(ILLUSTRATION_ART))
         self.assertLessEqual(bm.MASK_FADE["top"], 0.06)
         self.assertEqual(bm.FRAME_CROP, 7)
 
@@ -769,7 +777,7 @@ class ArtTests(unittest.TestCase):
         self.assertGreater(mean, 180)  # vanilla's mask averages ~108
 
     def test_paintings_use_lighter_mask_at_full_alpha(self):
-        gui = "\n".join(bm.painting_backgrounds(bm.all_monuments()))
+        gui = painting_gui()
         self.assertIn(f'texture = "{bm.PAINTING_MASK}"', gui)
         self.assertNotIn("mask_holding_illustration", gui)
         self.assertNotIn("alpha = 0.95", gui)
@@ -819,6 +827,30 @@ class ArtTests(unittest.TestCase):
         self.assertLess(cl.index("aov_monument_art_ruined_hold"), cl.index("fallback = yes"))
         self.assertIn("aov_hold_is_ruined = yes", cl)
         self.assertEqual(bm.render_shared()[bm.SHARED_LOC].count(" aov_monument_art_ruined_hold:"), 1)
+
+    def test_dwarven_terrain_art_for_built_holdings(self):
+        """A built holding on a dwarven terrain shows Anbennar's EU4 terrain picture (the one an empty holding there
+        shows) instead of vanilla's castle art, drawn like the vanilla illustration; a ruined hold keeps its picture."""
+        cl = bm.render_shared()[bm.SHARED]
+        gui = "\n".join(bm.painting_backgrounds(bm.all_monuments()))
+        for t in ("dwarven_hold", "dwarven_hold_surface", "cavern", "dwarven_road"):
+            self.assertIn(f"\t\t\thas_holding = yes\n\t\t\tterrain = {t}\n\t\t}}\n"
+                          f"\t\tlocalization_key = aov_monument_art_terrain_{t}", cl)
+            self.assertLess(cl.index("aov_monument_art_ruined_hold"), cl.index(f"aov_monument_art_terrain_{t}"))
+            self.assertLess(cl.index(f"aov_monument_art_terrain_{t}"), cl.index("fallback = yes"))
+            block = gui[gui.index(f"Localize('aov_monument_art_terrain_{t}')"):]
+            block = block[:block.index("\n}")]
+            self.assertIn(f'texture = "gfx/interface/illustrations/terrain_types/{t}.dds"', block)
+            self.assertIn("fittype = centercrop", block)
+            self.assertIn(f'texture = "{bm.VANILLA_MASK}"', block)
+
+    def test_extra_art_checks(self):
+        good = dict(bm.EXTRA_ART[0])
+        for bad in ({"key": "none"}, {"style": "x"}, {"trigger": " "}, {"texture": "gfx/nowhere.dds"}):
+            with self.subTest(bad=bad), mock.patch.object(bm, "EXTRA_ART", [{**good, **bad}]):
+                with self.assertRaises(bm.GeneratorError):
+                    bm.check_extra_art([], roots=(bm.SUBMOD, bm.SUBMOD, bm.SUBMOD))
+        bm.check_extra_art(bm.all_monuments())
 
     def test_ruined_background_uses_vanilla_art(self):
         gui = "\n".join(bm.painting_backgrounds(bm.all_monuments()))

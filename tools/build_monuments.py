@@ -24,7 +24,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # python -I does not add the script's folder
 from data.monuments import translation  # noqa: E402
-from data import holds  # noqa: E402
+from data import holding_art  # noqa: E402
 import eu4_monuments  # noqa: E402
 from build_spells import read_bgra, write_bgra  # noqa: E402
 
@@ -55,9 +55,11 @@ PAINTING_MARGIN_BOTTOM = 63
 FRAME_CROP = 7  # the 6 px frame and the row of DXT1 bleed next to it
 STRIP_END = 150
 STRIP_ROWS = {7: 0.2, 8: 0.06, 9: 0.78, **{y: 1.0 for y in range(10, 29)}, 29: 0.71}
-# Pictures that are not monument paintings: (key, province trigger, texture). They come after every monument entry in
-# the custom loc (a monument painting wins, e.g. ruined Khugdihr) and may use a texture outside ART_DIR.
-EXTRA_ART = [("ruined_hold", "aov_hold_is_ruined = yes", holds.RUINED_ART)]
+# Pictures that are not monument paintings (ruined holds, dwarven terrain art): tools/data/holding_art.py. They come
+# after every monument entry in the custom loc (a monument painting wins, e.g. ruined Khugdihr).
+EXTRA_ART = holding_art.HOLDING_ART
+ART_STYLES = ("painting", "illustration")
+VANILLA_MASK = "gfx/interface/window_county/mask_holding_illustration.dds"
 CUSTOM = "HoldingView.GetProvince.Custom('AovMonumentIllustration')"
 
 
@@ -502,9 +504,9 @@ def illustration(monuments: list) -> str:
         if m["art"]:
             out += ["\ttext = {", "\t\ttrigger = {", f"\t\t\thas_building_or_higher = {m['levels'][0]}", "\t\t}",
                     f"\t\tlocalization_key = aov_monument_art_{m['eu4_key']}", "\t}", ""]
-    for key, trigger, _ in EXTRA_ART:
-        out += ["\ttext = {", "\t\ttrigger = {", f"\t\t\t{trigger}", "\t\t}",
-                f"\t\tlocalization_key = aov_monument_art_{key}", "\t}", ""]
+    for a in EXTRA_ART:
+        out += ["\ttext = {", "\t\ttrigger = {", *[f"\t\t\t{line}" for line in a["trigger"].splitlines()], "\t\t}",
+                f"\t\tlocalization_key = aov_monument_art_{a['key']}", "\t}", ""]
     out += ["\ttext = {", "\t\tfallback = yes", "\t\tlocalization_key = aov_monument_art_none", "\t}", "}", ""]
     return NL.join(out)
 
@@ -513,7 +515,7 @@ def illustration_loc(monuments: list) -> str:
     """The art loc keys of every region, defined once (a key in each region's file is a duplicate-key error)."""
     out = ["l_english:"]
     out += [f' aov_monument_art_{m["eu4_key"]}: "{ART_DIR}/{m["eu4_key"]}.dds"' for m in monuments if m["art"]]
-    out += [f' aov_monument_art_{key}: "{texture}"' for key, _, texture in EXTRA_ART]
+    out += [f' aov_monument_art_{a["key"]}: "{a["texture"]}"' for a in EXTRA_ART]
     out.append(' aov_monument_art_none: ""')
     return NL.join(out) + NL
 
@@ -524,21 +526,49 @@ def painting_backgrounds(monuments: list) -> list:
     that monument's art loc text. CK3 does not load a texture whose path comes from localized text, so the path is
     never taken from the custom loc; the comparison against Localize() follows Princes of Darkness' Custom() checks.
     Inline, not a `using` template: template backgrounds are drawn beneath every inline background, so the panel's
-    dark background and the vanilla art covered them. Drawn at full alpha through the lighter PAINTING_MASK."""
-    arts = [(m["eu4_key"], f'{ART_DIR}/{m["eu4_key"]}.dds') for m in monuments if m["art"]]
+    dark background and the vanilla art covered them. Paintings are drawn at full alpha through the lighter
+    PAINTING_MASK; EXTRA_ART entries of style "illustration" exactly like the vanilla holding illustration they replace."""
+    arts = [(m["eu4_key"], f'{ART_DIR}/{m["eu4_key"]}.dds', "painting") for m in monuments if m["art"]]
     out = []
-    for key, texture in arts + [(k, t) for k, _, t in EXTRA_ART]:
+    for key, texture, style in arts + [(a["key"], a["texture"], a["style"]) for a in EXTRA_ART]:
         out += ["background = {",
                 f"	visible = \"[EqualTo_string( {CUSTOM}, Localize('aov_monument_art_{key}') )]\"",
-                f'	texture = "{texture}"',
-                "	fittype = start",  # anchored at the top: EU4 spires reach almost to the frame
-                f"	margin_bottom = {PAINTING_MARGIN_BOTTOM}",
-                "	modify_texture = {",
-                f'		texture = "{PAINTING_MASK}"',
-                "		blend_mode = alphamultiply",
-                "	}",
-                "}"]
+                f'	texture = "{texture}"']
+        if style == "painting":
+            out += ["	fittype = start",  # anchored at the top: EU4 spires reach almost to the frame
+                    f"	margin_bottom = {PAINTING_MARGIN_BOTTOM}",
+                    "	modify_texture = {",
+                    f'		texture = "{PAINTING_MASK}"',
+                    "		blend_mode = alphamultiply",
+                    "	}"]
+        else:  # the vanilla holding illustration's own settings (window_county_view.gui)
+            out += ["	alpha = 0.8",
+                    "	fittype = centercrop",
+                    "	modify_texture = {",
+                    f'		texture = "{VANILLA_MASK}"',
+                    "		blend_mode = alphamultiply",
+                    "		alpha = 0.95",
+                    "	}"]
+        out.append("}")
     return out
+
+
+def check_extra_art(monuments: list, roots=(SUBMOD, ANBENNAR_CK3, GAME)) -> None:
+    """Raises GeneratorError for an EXTRA_ART entry with a duplicate key (also against the monument art keys), an
+    unknown style, an empty trigger, or a texture that this mod, Anbennar and the game all lack (the texture is
+    checked only when Anbennar and the game are installed)."""
+    seen = {m["eu4_key"] for m in monuments if m["art"]} | {"none"}
+    for a in EXTRA_ART:
+        if a["key"] in seen:
+            raise GeneratorError(f"holding art {a['key']}: duplicate key")
+        seen.add(a["key"])
+        if a["style"] not in ART_STYLES:
+            raise GeneratorError(f"holding art {a['key']}: style {a['style']!r} is not one of {ART_STYLES}")
+        if not a["trigger"].strip():
+            raise GeneratorError(f"holding art {a['key']}: empty trigger")
+        if all(Path(r).is_dir() for r in roots[1:]) and not any((Path(r) / a["texture"]).is_file() for r in roots):
+            raise GeneratorError(f"holding art {a['key']}: texture {a['texture']} not found in the mod, Anbennar or "
+                                 "the game")
 
 
 def _strip_factor(x: int) -> float:
@@ -734,6 +764,7 @@ def render_shared(regions=REGIONS) -> dict:
                                      f"{seen[m['province']]}")
             seen[m["province"]] = f"{m['eu4_key']} ({region})"
             monuments.append(m)
+    check_extra_art(monuments)
     return {SHARED: illustration(monuments), SHARED_LOC: illustration_loc(monuments)}
 
 

@@ -515,6 +515,38 @@ AovMonumentIllustration = {
 	}
 
 	text = {
+		trigger = {
+			has_holding = yes
+			terrain = dwarven_hold
+		}
+		localization_key = aov_monument_art_terrain_dwarven_hold
+	}
+
+	text = {
+		trigger = {
+			has_holding = yes
+			terrain = dwarven_hold_surface
+		}
+		localization_key = aov_monument_art_terrain_dwarven_hold_surface
+	}
+
+	text = {
+		trigger = {
+			has_holding = yes
+			terrain = cavern
+		}
+		localization_key = aov_monument_art_terrain_cavern
+	}
+
+	text = {
+		trigger = {
+			has_holding = yes
+			terrain = dwarven_road
+		}
+		localization_key = aov_monument_art_terrain_dwarven_road
+	}
+
+	text = {
 		fallback = yes
 		localization_key = aov_monument_art_none
 	}
