@@ -1,4 +1,15 @@
+
+
+
+
 **Anbennar Overhaul Master TODO List**
+
+
+
+**Bugfixes**
+
+* Remove random allocation of magic traits and lifestyle points at game start unless the character has magical ability.
+* Fix clipping for dwarf capes and halfling capes.
 
 
 
@@ -57,6 +68,7 @@
 * Balance and change the writing of some artifice inventions
 * might need to nerf elves after their gameplay features have been implemented. They are just better humans.
 * Rebalance and rework all magical spells.
+* Add extra life expectancy for magic characters
 
 
 
@@ -122,7 +134,7 @@
 * Venail
 
   * Situation where Venail has to maintain their isolationism while being a vassal of sorncost. Sorcost will try to reduce Venail independence while venail will try to maintain it. This can either result in a diplomatic agreement with Sorncost to maintain isolationism while incurring penalties or go to war for independence.
-  * After the starting situation another situation will start where venail can send expeditions out towards the aelnar. None of these expeditions get far at all but they set the stage for venails relocation in EU4 Anbennar 
+  * After the starting situation another situation will start where venail can send expeditions out towards the aelnar. None of these expeditions get far at all but they set the stage for venails relocation in EU4 Anbennar
 
 
 
