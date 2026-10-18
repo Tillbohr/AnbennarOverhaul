@@ -49,6 +49,8 @@ DROP_STATEMENTS = (
     r"has_dynasty_perk\s*=\s*lotr_\w+",
     r"has_innovation\s*=\s*innovation_iron_hills_goat_domestication",
     r"has_building_or_higher\s*=\s*elven_settlement_\d+",
+    # RiE's crafting lifestyle (Anbennar has none, so the modifier does not exist; like the crafting effect_desc).
+    r"monthly_crafting_lifestyle_xp_gain_mult\s*=\s*-?[\d.]+",
 )
 DROP_BLOCKS = ("province_dynasty_modifier",)
 UNGATED_PARAMETERS = ("unlock_full_delving",)
