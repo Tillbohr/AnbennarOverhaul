@@ -77,7 +77,8 @@ class CountyViewTests(unittest.TestCase):
         self.assertEqual(name_vbox(out).count("aov_monuments/"), 0)
         self.assertLess(out.index("HoldingView.GetHolding.GetIllustration"), out.index("aov_monuments/"))
         self.assertLess(out.rindex("aov_monuments/"), out.index("GetTerrain"))
-        self.assertEqual(out.count("fittype = start"), painted + len(bm.EXTRA_ART))
+        self.assertEqual(out.count("fittype = start"),
+                         painted + len([a for a in bm.EXTRA_ART if a["style"] == "painting"]))
         self.assertEqual(out.count("{"), out.count("}"))
 
     def test_no_texture_from_custom_loc(self):

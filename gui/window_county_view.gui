@@ -1788,6 +1788,50 @@ window = {
 						blend_mode = alphamultiply
 					}
 				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_terrain_dwarven_hold') )]"
+					texture = "gfx/interface/illustrations/terrain_types/dwarven_hold.dds"
+					alpha = 0.8
+					fittype = centercrop
+					modify_texture = {
+						texture = "gfx/interface/window_county/mask_holding_illustration.dds"
+						blend_mode = alphamultiply
+						alpha = 0.95
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_terrain_dwarven_hold_surface') )]"
+					texture = "gfx/interface/illustrations/terrain_types/dwarven_hold_surface.dds"
+					alpha = 0.8
+					fittype = centercrop
+					modify_texture = {
+						texture = "gfx/interface/window_county/mask_holding_illustration.dds"
+						blend_mode = alphamultiply
+						alpha = 0.95
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_terrain_cavern') )]"
+					texture = "gfx/interface/illustrations/terrain_types/cavern.dds"
+					alpha = 0.8
+					fittype = centercrop
+					modify_texture = {
+						texture = "gfx/interface/window_county/mask_holding_illustration.dds"
+						blend_mode = alphamultiply
+						alpha = 0.95
+					}
+				}
+				background = {
+					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_terrain_dwarven_road') )]"
+					texture = "gfx/interface/illustrations/terrain_types/dwarven_road.dds"
+					alpha = 0.8
+					fittype = centercrop
+					modify_texture = {
+						texture = "gfx/interface/window_county/mask_holding_illustration.dds"
+						blend_mode = alphamultiply
+						alpha = 0.95
+					}
+				}
 
 				background = {
 					visible = "[Not(HoldingView.HasHolding)]"
