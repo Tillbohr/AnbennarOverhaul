@@ -8,6 +8,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
@@ -105,6 +106,47 @@ class StopTests(unittest.TestCase):
                 rd.build_all(roots)
 
 
+    def _loc_build(self, tmp: Path, name: str) -> rd.Build:
+        roots = fake_roots(tmp, "dwarven_test_01 = {\n\tcost_gold = 10\n}\n")
+        (roots.rie / "localization/english").mkdir(parents=True)
+        (roots.rie / "localization/english/x_l_english.yml").write_text(
+            f'﻿l_english:\n building_dwarven_test_01: "{name}"\n building_type_dwarven_test_01: "Test"\n',
+            encoding="utf-8")
+        build = rd.Build(roots, [])
+        rd.render_buildings(build)
+        return build
+
+    def test_unmapped_concept_stops_build(self):
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(data, "LOC_OVERRIDES", {}):
+            build = self._loc_build(Path(tmp), "A [made_up_concept|E] hall")
+            with self.assertRaisesRegex(rd.GeneratorError, "building_dwarven_test_01: game concept made_up_concept"):
+                rd.render_loc(build)
+
+    def test_mapped_concept_becomes_words(self):
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(data, "LOC_OVERRIDES", {}):
+            build = self._loc_build(Path(tmp), "[dwarves|E] dig. Then [dwarves|E] drink with [middleearth|e].")
+            rd.render_loc(build)
+            text = build.files[rd.LOC_FILE].decode("utf-8-sig")
+            self.assertIn('building_dwarven_test_01: "Dwarves dig. Then dwarves drink with Halann."', text)
+
+    def test_unoverridden_lore_stops_build(self):
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(data, "LOC_OVERRIDES", {}):
+            build = self._loc_build(Path(tmp), "Hall of the Iron Hills")
+            with self.assertRaisesRegex(rd.GeneratorError, "Middle-earth lore.*building_dwarven_test_01"):
+                rd.render_loc(build)
+
+    def test_override_replaces_line_and_stale_override_stops(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with mock.patch.object(data, "LOC_OVERRIDES", {"building_dwarven_test_01": "Hall of Halann"}):
+                build = self._loc_build(Path(tmp), "Hall of the Iron Hills")
+                rd.render_loc(build)
+                self.assertIn('building_dwarven_test_01: "Hall of Halann"',
+                              build.files[rd.LOC_FILE].decode("utf-8-sig"))
+            with mock.patch.object(data, "LOC_OVERRIDES", {"building_gone_01": "x"}):
+                with self.assertRaisesRegex(rd.GeneratorError, "building_gone_01"):
+                    rd.render_loc(build)
+
+
 class HelperTests(unittest.TestCase):
     def test_reindent_uses_tabs_by_depth(self):
         text = "a = {\n \tb = 1\n    c = {\n  d = 2   \n\t\t}\n}\n"
@@ -200,6 +242,14 @@ class RealTests(unittest.TestCase):
             self.assertTrue(has(key), key)
         for ore in data.ORES:
             self.assertTrue(has(f"mining_{ore}_province_modifier"), ore)
+
+    def test_loc_has_no_middle_earth_lore_or_undefined_concepts(self):
+        lines = self.texts[rd.LOC_FILE].split("\n")[3:]
+        self.assertEqual([line for line in lines if re.search(data.FORBIDDEN_LORE, line)], [])
+        concepts = {c for line in lines for c in rd.CONCEPT_REF.findall(line)}
+        self.assertEqual(sorted(concepts - rd.external_concepts(REAL)), [])
+        for key, text in data.LOC_OVERRIDES.items():
+            self.assertIn(f' {key}: "{text}"\n', self.texts[rd.LOC_FILE])
 
     def test_type_icons_exist(self):
         icons = set(re.findall(r'\btype_icon\s*=\s*"([^"]+)"', self.ours))
