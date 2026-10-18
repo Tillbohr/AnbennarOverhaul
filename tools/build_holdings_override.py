@@ -12,10 +12,14 @@ The base path defaults to ../anbennar-ck3-dev-master next to this submod.
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))  # python -I does not add the tools folder
+
+from data import rie_dwarves as rie  # noqa: E402
+
 # holding type -> buildings the overhaul adds to its build list
 ADDITIONS = {
-    "castle_holding": ["artificer_academy_01"],
-    "city_holding": ["artificer_academy_01"],
+    "castle_holding": ["artificer_academy_01"] + rie.SURFACE_BUILDINGS + rie.MINE_BUILDINGS,
+    "city_holding": ["artificer_academy_01"] + rie.SURFACE_BUILDINGS + rie.MINE_BUILDINGS,
 }
 # new holding type -> the holding whose build list it starts from (after ADDITIONS), its primary building and
 # the buildings added on top
@@ -23,7 +27,7 @@ NEW_HOLDINGS = {
     "dwarven_hold_holding": {
         "copy_buildings_from": "castle_holding",
         "primary_building": "dwarven_hold_01",
-        "extra": ["deep_mine_01", "runeforge_01", "hall_of_the_ancestors_01"],
+        "extra": rie.HOLD_BUILDINGS,
     },
 }
 MARKER = "# Anbennar Overhaul"
@@ -72,7 +76,9 @@ def add_holding(text: str, key: str, spec: dict) -> str:
         name = line.split("#")[0].strip()
         if name and name not in buildings:
             buildings.append(name)
-    buildings += [b for b in spec["extra"] if b not in buildings]
+    for b in spec["extra"]:
+        if b not in buildings:  # duplicates drop, the first occurrence stays
+            buildings.append(b)
     block = [f"{key} = {{ {MARKER}", f"\tprimary_building = {spec['primary_building']}", "\tbuildings = {"]
     block += [f"\t\t{b}" for b in buildings]
     block += ["\t}", "}"]

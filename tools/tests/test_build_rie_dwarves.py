@@ -22,8 +22,24 @@ HAVE_REAL = REAL.rie.is_dir() and REAL.anbennar.is_dir() and REAL.game.is_dir()
 LEFTOVER = re.compile(r"\blotr_|\bis_dwarf\b|\bis_orc\b|dwarven_depths_|elven_settlement_")
 
 
+def write_holdings(rie: Path) -> None:
+    """RiE's two holdings files, as far as check_holding_lists reads them, agreeing with the data."""
+    def group(title, keys):
+        return "\t\t#" + title + "\n" + "".join(f"\t\t{key}\n" for key in keys) + "\n"
+    mines = len(data.MINE_BUILDINGS)
+    hold = ("dwarven_holding = {\n\tbuildings = {\n" + group("Crafting Resource Mines", data.HOLD_BUILDINGS[:mines])
+            + group("Dwarven buildings", data.HOLD_BUILDINGS[mines:]) + group("orcish buildings", ["slave_farms_01"])
+            + "\t}\n}\n")
+    castle = ("castle_holding = {\n\tbuildings = {\n" + group("Dwarven buildings", data.SURFACE_BUILDINGS)
+              + group("Crafting Resource Mines", data.MINE_BUILDINGS) + "\t}\n}\n")
+    for rel, text in (("common/holdings/lotr_holdings.txt", hold), ("common/holdings/00_holdings.txt", castle)):
+        (rie / rel).parent.mkdir(parents=True, exist_ok=True)
+        (rie / rel).write_text(text, encoding="utf-8")
+
+
 def fake_roots(tmp: Path, dwarf_text: str, anbennar_buildings: str = "") -> rd.Roots:
     rie, anbennar, game = tmp / "rie", tmp / "anbennar", tmp / "game"
+    write_holdings(rie)
     for rel, text in ((data.RIE_BUILDING_FILES[0], dwarf_text), (data.RIE_BUILDING_FILES[1], "")):
         (rie / rel).parent.mkdir(parents=True, exist_ok=True)
         (rie / rel).write_text(text, encoding="utf-8")
@@ -147,6 +163,80 @@ class StopTests(unittest.TestCase):
                     rd.render_loc(build)
 
 
+class DepositTests(unittest.TestCase):
+    def _effects(self, tmp: str) -> str:
+        build = rd.Build(fake_roots(Path(tmp), ""), [])
+        rd.render_deposit_effects(build)
+        return build.files[rd.DEPOSIT_EFFECTS_FILE].decode("utf-8-sig")
+
+    def test_unknown_start_ore_stops_build(self):
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(data, "START_DEPOSITS", {"b_x": "adamant"}):
+            with self.assertRaisesRegex(rd.GeneratorError, "adamant"):
+                self._effects(tmp)
+
+    def test_roll_weights(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            roll = block_of(self._effects(tmp), "aov_expedition_roll_deposit_effect")
+        weights = {ore: int(w) for w, ore in re.findall(
+            r"(?m)^\t+(\d+) = \{\n\t+add_province_modifier = mining_(\w+)_province_modifier\n", roll)}
+        self.assertEqual(weights, data.ORE_WEIGHTS)
+        for ore in data.ORES:
+            self.assertIn(f"set_variable = {{ name = aov_expedition_ore value = flag:{ore} }}", roll)
+
+    def test_roll_and_setup_skip_provinces_with_a_deposit(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            text = self._effects(tmp)
+        guard = "NOT = { aov_rie_has_deposit_trigger = yes }"
+        self.assertIn(guard, block_of(text, "aov_expedition_roll_deposit_effect"))
+        self.assertEqual(block_of(text, "aov_rie_deposit_setup_effect").count(guard), len(data.START_DEPOSITS))
+
+    def test_start_deposits(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            setup = block_of(self._effects(tmp), "aov_rie_deposit_setup_effect")
+        for barony, ore in (("b_hul_az_amekh", "ruby"), ("b_gulandhum", "gold"), ("b_anvilwright", "silver")):
+            self.assertRegex(setup, rf"title:{barony}\.title_province = \{{\n\t\tif = \{{\n(?:.*\n)*?\t+add_province_modifier = "
+                                    rf"mining_{ore}_province_modifier", barony)
+
+    def test_triggers_rendered(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            build = rd.Build(fake_roots(Path(tmp), ""), [])
+            rd.render_triggers(build)
+            text = build.files[rd.TRIGGERS_FILE].decode("utf-8-sig")
+        self.assertEqual(top_keys(text), ["aov_rie_hold_province_trigger", "aov_rie_mountain_terrain_trigger",
+                                          "aov_rie_hill_terrain_trigger", "aov_rie_dwarven_holder_trigger",
+                                          "aov_rie_surface_dwarf_trigger", "aov_rie_has_deposit_trigger"])
+        self.assertIn("has_holding_type = dwarven_hold_holding", block_of(text, "aov_rie_hold_province_trigger"))
+        for terrain in data.HILL_TERRAINS:
+            self.assertIn(f"terrain = {terrain}\n", block_of(text, "aov_rie_hill_terrain_trigger"))
+        self.assertNotIn("terrain = hills", block_of(text, "aov_rie_mountain_terrain_trigger"))
+        self.assertIn("scope:holder = { is_dwarvish_culture = yes }", block_of(text, "aov_rie_dwarven_holder_trigger"))
+        surface = block_of(text, "aov_rie_surface_dwarf_trigger")
+        self.assertIn("text = aov_rie_surface_dwarf_tt", surface)
+        self.assertIn("NOT = { has_holding_type = dwarven_hold_holding }", surface)
+        deposit = block_of(text, "aov_rie_has_deposit_trigger")
+        for ore in data.ORES:
+            self.assertIn(f"has_province_modifier = mining_{ore}_province_modifier", deposit)
+
+    def test_surface_tooltip_has_loc(self):
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(data, "LOC_OVERRIDES", {}):
+            build = rd.Build(fake_roots(Path(tmp), ""), [])
+            rd.render_loc(build)
+        self.assertIn("\n aov_rie_surface_dwarf_tt:", build.files[rd.LOC_FILE].decode("utf-8-sig"))
+
+
+class HoldingListTests(unittest.TestCase):
+    def test_drift_from_rie_stops_build(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            roots = fake_roots(Path(tmp), "")
+            rd.check_holding_lists(roots)
+            with mock.patch.object(data, "SURFACE_BUILDINGS", data.SURFACE_BUILDINGS[:-1]):
+                with self.assertRaisesRegex(rd.GeneratorError, "SURFACE_BUILDINGS"):
+                    rd.check_holding_lists(roots)
+            with mock.patch.object(data, "HOLD_BUILDINGS", data.HOLD_BUILDINGS[:-1]):
+                with self.assertRaisesRegex(rd.GeneratorError, "HOLD_BUILDINGS"):
+                    rd.check_holding_lists(roots)
+
+
 class HelperTests(unittest.TestCase):
     def test_reindent_uses_tabs_by_depth(self):
         text = "a = {\n \tb = 1\n    c = {\n  d = 2   \n\t\t}\n}\n"
@@ -258,6 +348,42 @@ class RealTests(unittest.TestCase):
             rel = f"{rd.ICON_DIR}/{icon}"
             self.assertTrue(rel in self.files or bp._exists_outside(REAL, rel) is not None, icon)
 
+    def test_holding_lists_match_rie(self):
+        rd.check_holding_lists(REAL)
+        hold = rd.rie_holding_groups(REAL, "common/holdings/lotr_holdings.txt", "dwarven_holding")
+        castle = rd.rie_holding_groups(REAL, "common/holdings/00_holdings.txt", "castle_holding")
+        self.assertEqual(sorted(data.HOLD_BUILDINGS[:15]), sorted(hold["crafting resource mines"]))
+        self.assertEqual(data.HOLD_BUILDINGS[15:], hold["dwarven buildings"])
+        self.assertEqual(data.SURFACE_BUILDINGS, castle["dwarven buildings"])
+        self.assertEqual(sorted(data.MINE_BUILDINGS), sorted(castle["crafting resource mines"]))
+        self.assertEqual(len(data.HOLD_BUILDINGS), 35)
+
+    def test_start_baronies_exist(self):
+        titles = "\n".join(text for _path, text in bp._texts(str(REAL.anbennar / "common/landed_titles"), "*.txt"))
+        for barony in data.START_DEPOSITS:
+            self.assertRegex(titles, rf"(?m)^\s*{barony}\s*=\s*\{{", barony)
+
+    def test_every_renamed_trigger_defined(self):
+        triggers = set(top_keys(self.texts[rd.TRIGGERS_FILE]))
+        for name in data.TOKEN_RENAMES.values():
+            if name.endswith("_trigger"):
+                self.assertIn(name, triggers)
+
+    def test_renamed_triggers_are_used_in_province_scope(self):
+        """No terrain, hold or surface-dwarf trigger sits under a character-scope block (scope:holder, culture)."""
+        pattern = re.compile(r"aov_rie_(?:hold_province|mountain_terrain|hill_terrain|surface_dwarf)_trigger\s*=\s*yes")
+        stack, used = [], 0
+        for line in self.ours.split("\n"):
+            code = line.split("#")[0]
+            if pattern.search(code):
+                used += 1
+                self.assertEqual([n for n in stack if n.startswith("scope:") or n in ("culture", "faith")], [], line)
+            stack += re.findall(r"([\w:.]+)\s*\??=\s*\{", code)
+            for _ in range(code.count("}")):
+                if stack:
+                    stack.pop()
+        self.assertGreater(used, 200)
+
     def test_files_have_bom_and_lf(self):
         for rel, content in self.files.items():
             if rel.endswith((".txt", ".yml")):
@@ -305,10 +431,11 @@ class FreshnessTests(unittest.TestCase):
         root = rd.SUBMOD / rd.ICON_DIR
         if root.is_dir():
             orphans += [p.relative_to(rd.SUBMOD).as_posix() for p in root.rglob("*") if p.is_file()]
-        for folder in rd.OWNED_FOLDERS:
+        for folder, patterns in rd.OWNED_FOLDERS.items():
             root = rd.SUBMOD / folder
             if root.is_dir():
-                orphans += [p.relative_to(rd.SUBMOD).as_posix() for p in root.glob("aov_rie_*") if p.is_file()]
+                orphans += [p.relative_to(rd.SUBMOD).as_posix() for pattern in patterns for p in root.glob(pattern)
+                            if p.is_file()]
         self.assertEqual(sorted(o for o in orphans if o not in produced), [], "leftover files: delete them")
 
 

@@ -35,11 +35,23 @@ BUILDINGS_FILE = "common/buildings/aov_rie_dwarven_buildings.txt"
 MINES_FILE = "common/buildings/aov_rie_mines.txt"
 ORE_MODIFIERS_FILE = "common/modifiers/aov_rie_ore_modifiers.txt"
 VALUES_FILE = "common/script_values/aov_rie_dwarf_values.txt"
+TRIGGERS_FILE = "common/scripted_triggers/aov_rie_dwarf_triggers.txt"
+DEPOSIT_EFFECTS_FILE = "common/scripted_effects/aov_rie_deposit_effects.txt"
+RIE_HOLDINGS_FILE = "common/holdings/lotr_holdings.txt"
+RIE_CASTLE_FILE = "common/holdings/00_holdings.txt"
 LOC_FILE = "localization/english/aov_rie_dwarves_l_english.yml"
 ICON_DIR = "gfx/interface/icons/building_types"
 OUTPUTS = {data.RIE_BUILDING_FILES[0]: BUILDINGS_FILE, data.RIE_BUILDING_FILES[1]: MINES_FILE}
 # Folders where this generator's files are the aov_rie_* ones (FreshnessTests scans them for orphans).
-OWNED_FOLDERS = ("common/buildings", "common/modifiers", "common/script_values", "localization/english")
+OWNED_FOLDERS = {"common/buildings": ("aov_rie_*",), "common/modifiers": ("aov_rie_*",),
+                 "common/script_values": ("aov_rie_*",), "localization/english": ("aov_rie_*",),
+                 "common/scripted_triggers": ("aov_rie_dwarf_*",), "common/scripted_effects": ("aov_rie_deposit_*",)}
+# Localization of keys the generator itself defines (not copied from RiE).
+OWN_LOC = {
+    "aov_rie_surface_dwarf_tt": "Held by a dwarf outside a dwarven hold",
+    "aov_rie_mountain_terrain_tt": "In mountains or dwarven terrain",
+    "aov_rie_hill_terrain_tt": "In hills, mountains or dwarven terrain",
+}
 HOLD_LEVELS = tuple(f"dwarven_hold_{n:02d}" for n in range(1, 11))  # defined by tools/build_holds.py
 VALUE_FIELDS = ("cost_gold", "cost_prestige", "cost_piety", "levy", "max_garrison", "garrison_reinforcement_factor",
                 "construction_time")
@@ -421,6 +433,110 @@ def render_depth_values(build: Build) -> None:
     build.notes.append(removal_note("hold level effects from RiE's dwarven_depths", list(notes)))
 
 
+# --------------------------------------------------------------------------------- triggers and deposit effects
+
+def _block(name: str, *lines: str) -> str:
+    return f"{name} = {{\n" + "\n".join(f"\t{line}" if line else "" for line in lines) + "\n}\n"
+
+
+def _terrain_trigger(name: str, terrains) -> str:
+    """OR of terrains inside a custom_tooltip (an untooltipped OR is too complex for failure-only tooltips)."""
+    return _block(name, "custom_tooltip = {", f"\ttext = {name[:-len('_trigger')]}_tt", "\tOR = {",
+                  *(f"\t\tterrain = {terrain}" for terrain in terrains), "\t}", "}")
+
+
+def render_triggers(build: Build) -> None:
+    """The scripted triggers the rewritten buildings name (province scope; see TOKEN_RENAMES)."""
+    deposits = [f"\thas_province_modifier = mining_{ore}_province_modifier" for ore in data.ORES]
+    pieces = [
+        "# Province scope: a dwarven hold.",
+        _block("aov_rie_hold_province_trigger", "has_holding_type = dwarven_hold_holding"),
+        "# Province scope: mountain terrains (RiE's mountain building requirement).",
+        _terrain_trigger("aov_rie_mountain_terrain_trigger", data.MOUNTAIN_TERRAINS),
+        "# Province scope: mountain or hill terrains (RiE's hill building requirement).",
+        _terrain_trigger("aov_rie_hill_terrain_trigger", data.HILL_TERRAINS),
+        "# Province scope: the holder is a dwarf.",
+        _block("aov_rie_dwarven_holder_trigger", "scope:holder = { is_dwarvish_culture = yes }"),
+        "# Province scope: a dwarf holding something other than a dwarven hold.",
+        _block("aov_rie_surface_dwarf_trigger", "custom_tooltip = {", "\ttext = aov_rie_surface_dwarf_tt",
+               "\taov_rie_dwarven_holder_trigger = yes", "\tNOT = { has_holding_type = dwarven_hold_holding }", "}"),
+        "# Province scope: the province has one of the 15 ore deposits.",
+        _block("aov_rie_has_deposit_trigger", "OR = {", *deposits, "}"),
+    ]
+    build.files[TRIGGERS_FILE] = txt_file(pieces)
+
+
+def render_deposit_effects(build: Build) -> None:
+    """Ore deposit effects: the Dwarven Expedition's weighted roll (province scope, skips a province that has a
+    deposit) and the game-start deposits (no scope, same guard)."""
+    ores = set(data.ORES)
+    if set(data.ORE_WEIGHTS) != ores:
+        raise GeneratorError("ORE_WEIGHTS must have exactly the ores of ORES: "
+                             + ", ".join(sorted(set(data.ORE_WEIGHTS) ^ ores)))
+    unknown = sorted({ore for ore in data.START_DEPOSITS.values() if ore not in ores})
+    if unknown:
+        raise GeneratorError(f"START_DEPOSITS names ores that have no modifier: {', '.join(unknown)}")
+    guard = ["if = {", "\tlimit = { NOT = { aov_rie_has_deposit_trigger = yes } }"]
+    roll = []
+    for ore in data.ORES:
+        roll += [f"\t\t{data.ORE_WEIGHTS[ore]} = {{", f"\t\t\tadd_province_modifier = mining_{ore}_province_modifier",
+                 f"\t\t\tscope:activity ?= {{ set_variable = {{ name = aov_expedition_ore value = flag:{ore} }} }}",
+                 "\t\t}"]
+    setup = []
+    for barony, ore in data.START_DEPOSITS.items():
+        setup += [f"title:{barony}.title_province = {{", *[f"\t{line}" for line in guard],
+                  f"\t\tadd_province_modifier = mining_{ore}_province_modifier", "\t}", "}"]
+    pieces = [
+        "# Province scope; scope:activity is the Dwarven Expedition. Gives the province one ore deposit unless it has one.",
+        _block("aov_expedition_roll_deposit_effect", *guard, "\trandom_list = {", *roll, "\t}", "}"),
+        "# No scope: the ore deposits present at game start.",
+        _block("aov_rie_deposit_setup_effect", *setup),
+    ]
+    build.files[DEPOSIT_EFFECTS_FILE] = txt_file(pieces)
+
+
+# ------------------------------------------------------------------------------------------------- holding lists
+
+def rie_holding_groups(roots: Roots, rel: str, holding: str) -> dict:
+    """{group heading (lower case) -> [building keys]} of RiE's holding `holding` build list: a group starts at an
+    own-line comment of several words (`#Dwarven buildings`) and runs to the next one."""
+    text = bp.lf(bp.read(roots.rie / rel))
+    body = dict(top_level_items(text)).get(holding)
+    if body is None:
+        raise GeneratorError(f"{rel} has no {holding}")
+    groups, current = {}, None
+    for line in body.split("\n"):
+        stripped = line.strip()
+        if stripped.startswith("#"):
+            heading = stripped.lstrip("#").strip()
+            if " " in heading:
+                current = heading.lower()
+            continue
+        name = bhm.strip_comment(line).strip()
+        if current and re.fullmatch(r"\w+", name):
+            groups.setdefault(current, []).append(name)
+    return groups
+
+
+def check_holding_lists(roots: Roots) -> None:
+    """The data's HOLD_BUILDINGS, SURFACE_BUILDINGS and MINE_BUILDINGS agree with RiE's dwarven_holding and
+    castle_holding build lists (mines may differ in order only)."""
+    hold = rie_holding_groups(roots, RIE_HOLDINGS_FILE, "dwarven_holding")
+    castle = rie_holding_groups(roots, RIE_CASTLE_FILE, "castle_holding")
+    mines, dwarven = "crafting resource mines", "dwarven buildings"
+    problems = []
+    count = len(hold.get(mines, []))
+    if (sorted(data.HOLD_BUILDINGS[:count]) != sorted(hold.get(mines, []))
+            or data.HOLD_BUILDINGS[count:] != hold.get(dwarven, [])):
+        problems.append("HOLD_BUILDINGS differs from RiE's dwarven_holding mines and dwarven buildings")
+    if data.SURFACE_BUILDINGS != castle.get(dwarven, []):
+        problems.append("SURFACE_BUILDINGS differs from RiE's castle_holding dwarven buildings")
+    if sorted(data.MINE_BUILDINGS) != sorted(castle.get(mines, [])):
+        problems.append("MINE_BUILDINGS differs from RiE's castle_holding mines")
+    if problems:
+        raise GeneratorError("; ".join(problems))
+
+
 # --------------------------------------------------------------------------------------------------- script values
 
 def _variable_refs(code: str) -> list:
@@ -503,6 +619,7 @@ def render_loc(build: Build) -> None:
     if lore:
         raise GeneratorError(f"copied loc names Middle-earth lore; add LOC_OVERRIDES for: {', '.join(lore)}")
     lines = [BOM + "l_english:"] + [f" {line}" for line in HEADER()] + [f" {line}" for line in copied.values()]
+    lines += [f' {key}: "{text}"' for key, text in OWN_LOC.items()]
     build.files[LOC_FILE] = ("\n".join(lines) + "\n").encode("utf-8")
     build.notes.append(f"{len(copied)} localization lines copied from RiE, {len(data.LOC_OVERRIDES)} of them with "
                        "our wording (LOC_OVERRIDES)")
@@ -539,11 +656,14 @@ def replace_concepts(key: str, line: str, known: frozenset, replaced: Counter) -
 def build_all(roots: Roots, notes=None) -> dict:
     """{relative path: bytes} of every generated file."""
     roots.check()
+    check_holding_lists(roots)
     notes = [] if notes is None else notes
     bp.RENAMED.clear()
     build = Build(roots, notes)
     render_buildings(build)
     render_ore_modifiers(build)
+    render_triggers(build)
+    render_deposit_effects(build)
     render_depth_values(build)
     render_values(build)
     render_loc(build)

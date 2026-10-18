@@ -975,3 +975,6 @@
  building_dwarven_mine_09_desc: "Guided by the Stone-Singers, dwarves flood cracks in the stone with pressurized water to force them open. Pickaxes carve away the weakened stone with frightening efficiency."
  building_dwarven_mine_10: "Veins of the Earth"
  building_dwarven_mine_10_desc: "Within the innumerable tunnels running the length and breadth of the mountain, countless dwarves toil to extract the riches of the earth. Yet even at this scale, the hold is expanding ever onwards into the unknowable depths. For Rock and Stone!"
+ aov_rie_surface_dwarf_tt: "Held by a dwarf outside a dwarven hold"
+ aov_rie_mountain_terrain_tt: "In mountains or dwarven terrain"
+ aov_rie_hill_terrain_tt: "In hills, mountains or dwarven terrain"
