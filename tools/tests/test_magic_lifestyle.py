@@ -159,6 +159,26 @@ class TraitFocusTests(unittest.TestCase):
         self.assertIn("martial = 1", block(f, "magic_duelist_focus"))
 
 
+AFFINITY_GATE = "{\n\t\thas_trait = magical_affinity\n\t}"
+
+
+class MagesOnlyTests(unittest.TestCase):
+    """The engine gives game-start characters a focus and perks by auto_selection_weight; the
+    magic lifestyle's own is_valid does not stop it, so each focus and perk needs its own gate."""
+
+    def test_focuses_need_affinity(self):
+        f = read("common/focuses/zz_aov_magic_focuses.txt")
+        for k in TREE_OF_FOCUS:
+            self.assertIn("is_shown = " + AFFINITY_GATE, block(f, k), k)
+            self.assertIn("is_valid = " + AFFINITY_GATE, block(f, k), k)
+
+    def test_perks_need_affinity(self):
+        perks = all_perks()
+        self.assertEqual(len(perks), 27)
+        for k, body in perks.items():
+            self.assertIn("can_be_picked = " + AFFINITY_GATE, body, k)
+
+
 class LocTests(unittest.TestCase):
     def test_every_key_has_loc(self):
         loc = read("localization/english/aov_magic_lifestyle_l_english.yml")

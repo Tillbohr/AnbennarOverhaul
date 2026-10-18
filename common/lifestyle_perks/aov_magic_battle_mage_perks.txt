@@ -5,6 +5,10 @@ aov_spark_of_battle_perk = {
 	position = { 0 0 }
 	icon = node_magic
 
+	can_be_picked = {
+		has_trait = magical_affinity
+	}
+
 	auto_selection_weight = {
 		value = 11
 		if = {
@@ -58,6 +62,10 @@ aov_overchannel_perk = {
 	position = { 0 1 }
 	icon = node_magic
 
+	can_be_picked = {
+		has_trait = magical_affinity
+	}
+
 	parent = aov_spark_of_battle_perk
 
 	auto_selection_weight = {
@@ -106,6 +114,10 @@ aov_firestorm_tactics_perk = {
 	position = { 0 2 }
 	icon = node_magic
 
+	can_be_picked = {
+		has_trait = magical_affinity
+	}
+
 	parent = aov_overchannel_perk
 
 	auto_selection_weight = {
@@ -153,6 +165,10 @@ aov_summoners_circle_perk = {
 	tree = aov_battle_mage
 	position = { 2 0 }
 	icon = node_magic
+
+	can_be_picked = {
+		has_trait = magical_affinity
+	}
 
 	auto_selection_weight = {
 		value = 11
@@ -207,6 +223,10 @@ aov_conjured_provisions_perk = {
 	position = { 2 1 }
 	icon = node_magic
 
+	can_be_picked = {
+		has_trait = magical_affinity
+	}
+
 	parent = aov_summoners_circle_perk
 
 	auto_selection_weight = {
@@ -255,6 +275,10 @@ aov_bound_elementals_perk = {
 	position = { 2 2 }
 	icon = node_magic
 
+	can_be_picked = {
+		has_trait = magical_affinity
+	}
+
 	parent = aov_conjured_provisions_perk
 
 	auto_selection_weight = {
@@ -298,6 +322,10 @@ aov_battle_meditation_perk = {
 	tree = aov_battle_mage
 	position = { 1 3 }
 	icon = node_magic
+
+	can_be_picked = {
+		has_trait = magical_affinity
+	}
 
 	parent = aov_firestorm_tactics_perk
 	parent = aov_bound_elementals_perk
@@ -343,6 +371,10 @@ aov_mage_knight_perk = {
 	tree = aov_battle_mage
 	position = { 1 4 }
 	icon = node_magic
+
+	can_be_picked = {
+		has_trait = magical_affinity
+	}
 
 	parent = aov_battle_meditation_perk
 
@@ -392,6 +424,10 @@ aov_battle_mage_perk = {
 	tree = aov_battle_mage
 	position = { 1 5 }
 	icon = trait_battle_mage
+
+	can_be_picked = {
+		has_trait = magical_affinity
+	}
 
 	parent = aov_mage_knight_perk
 

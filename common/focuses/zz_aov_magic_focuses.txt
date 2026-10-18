@@ -2,6 +2,13 @@
 magic_duelist_focus = {
 	lifestyle = magic_lifestyle
 
+	is_shown = {
+		has_trait = magical_affinity
+	}
+	is_valid = {
+		has_trait = magical_affinity
+	}
+
 	modifier = {
 		prowess = 3
 		martial = 1
@@ -46,6 +53,13 @@ magic_duelist_focus = {
 magic_arcane_study_focus = {
 	lifestyle = magic_lifestyle
 
+	is_shown = {
+		has_trait = magical_affinity
+	}
+	is_valid = {
+		has_trait = magical_affinity
+	}
+
 	modifier = {
 		learning = 2
 	}
@@ -83,6 +97,13 @@ magic_arcane_study_focus = {
 
 magic_mindweaving_focus = {
 	lifestyle = magic_lifestyle
+
+	is_shown = {
+		has_trait = magical_affinity
+	}
+	is_valid = {
+		has_trait = magical_affinity
+	}
 
 	modifier = {
 		intrigue = 1

@@ -176,7 +176,10 @@ numbers; re-baseline only after checking that the new reports are the same ones.
 - **Magic lifestyle:** fills the "Known gaps" magic-lifestyle skeleton listed in the base mod's CLAUDE.md (which cannot be edited). Anbennar's stub `magic_lifestyle` made full: three trees of 9 perks (Arcane Scholar, Battle Mage,
   Mindweaver; `common/lifestyle_perks/aov_magic_*_perks.txt`), each ending in a trait
   (`common/traits/aov_magic_lifestyle_traits.txt`), and three focuses (`common/focuses/zz_aov_magic_focuses.txt`;
-  Anbennar's `magic_duelist_focus` is overridden as Battle Mage, name via `localization/replace/`). Perks feed magic only
+  Anbennar's `magic_duelist_focus` is overridden as Battle Mage, name via `localization/replace/`). Mages only: every
+  magic focus has `is_shown`/`is_valid` and every magic perk `can_be_picked` = `has_trait = magical_affinity`, because
+  the engine picks game-start focuses and perks by `auto_selection_weight` without checking the lifestyle's `is_valid`
+  (`MagesOnlyTests`). Perks feed magic only
   through `common/script_values/aov_magic_lifestyle_values.txt` (the bonus layer: study rate, spell cost and duration,
   mana, dark-magic risk), so tune balance there. Spell cost and duration are per-caster values
   `aov_spell_<k>_cost` / `_years` generated into `common/script_values/aov_spell_values.txt`; casting also grants
