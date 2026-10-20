@@ -208,20 +208,36 @@ aov_delve_deeper_decision = {
 	is_valid = {
 		is_available_adult = yes
 		save_temporary_scope_as = digger
+		# A hold that could be dug but still lacks its next level's buildings counts here, so the picker opens and
+		# shows it greyed out with the missing buildings.
 		custom_description = {
 			text = aov_delve_deeper_no_hold
 			any_held_title = {
 				tier = tier_barony
-				title_province = { aov_can_dig_at = yes }
+				title_province = { aov_can_start_dig_base = yes }
 			}
 		}
 		custom_description = {
+			# Players: the dig cost of one such hold. The AI needs a hold it can really dig (it never opens a picker
+			# it cannot use).
 			text = aov_delve_deeper_no_gold
-			any_held_title = {
-				tier = tier_barony
-				title_province = {
-					aov_can_dig_at = yes
-					scope:digger.gold >= aov_dig_cost
+			trigger_if = {
+				limit = { is_ai = yes }
+				any_held_title = {
+					tier = tier_barony
+					title_province = {
+						aov_can_dig_at = yes
+						scope:digger.gold >= aov_dig_cost
+					}
+				}
+			}
+			trigger_else = {
+				any_held_title = {
+					tier = tier_barony
+					title_province = {
+						aov_can_start_dig_base = yes
+						scope:digger.gold >= aov_dig_cost
+					}
 				}
 			}
 		}

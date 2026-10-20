@@ -19,17 +19,23 @@ aov_hold_dig_running = {
 	has_variable = aov_dig_target_level
 }
 
-# Province scope, scope:digger is the character who would dig: a working hold below level 10 that has the
-# buildings RiE's next depths level needs (aov_rie_dwarf_triggers.txt; checked only when a dig starts, so a dig keeps
-# going if they are lost later), not already being dug, not occupied, held by the digger, who is a dwarf.
-aov_can_dig_at = {
+# Province scope, scope:digger is the character who would dig: a working hold below level 10, not already being
+# dug, not occupied, held by the digger, who is a dwarf. The hold may still lack the buildings of its next level
+# (Delve Deeper opens its picker for such holds and shows them greyed out).
+aov_can_start_dig_base = {
 	aov_hold_is_working = yes
 	aov_hold_level < 10
-	aov_hold_dig_requirements_met_trigger = yes
 	NOT = { aov_hold_dig_running = yes }
 	is_occupied = no
 	barony.holder = scope:digger
 	scope:digger = {
 		is_dwarvish_culture = yes
 	}
+}
+
+# Province scope, scope:digger as above: the base conditions and the buildings RiE's next depths level needs
+# (aov_rie_dwarf_triggers.txt; checked only when a dig starts, so a dig keeps going if they are lost later).
+aov_can_dig_at = {
+	aov_can_start_dig_base = yes
+	aov_hold_dig_requirements_met_trigger = yes
 }

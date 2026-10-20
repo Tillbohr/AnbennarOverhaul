@@ -247,7 +247,8 @@ class SetupTests(unittest.TestCase):
 
     def test_triggers_defined(self):
         t = (SUBMOD / "common/scripted_triggers/aov_hold_triggers.txt").read_text(encoding="utf-8-sig")
-        for k in ("aov_is_hold", "aov_hold_is_ruined", "aov_hold_is_working", "aov_can_dig_at"):
+        for k in ("aov_is_hold", "aov_hold_is_ruined", "aov_hold_is_working", "aov_can_start_dig_base",
+                  "aov_can_dig_at"):
             self.assertIn(f"{k} = {{", t)
 
 
@@ -291,7 +292,31 @@ class DigRequirementTests(unittest.TestCase):
 
     def test_dig_start_checks_requirements(self):
         triggers = parse_blocks(self.hand("common/scripted_triggers/aov_hold_triggers.txt"))
-        self.assertIn("\taov_hold_dig_requirements_met_trigger = yes\n", triggers["aov_can_dig_at"])
+        self.assertEqual(triggers["aov_can_dig_at"],
+                         "\taov_can_start_dig_base = yes\n\taov_hold_dig_requirements_met_trigger = yes\n")
+        base = triggers["aov_can_start_dig_base"]
+        for line in ("aov_hold_is_working = yes", "aov_hold_level < 10", "NOT = { aov_hold_dig_running = yes }",
+                     "is_occupied = no", "barony.holder = scope:digger", "is_dwarvish_culture = yes"):
+            self.assertIn(line, base)
+        self.assertNotIn("aov_hold_dig_requirements", base)
+
+    def test_decision_opens_picker_for_holds_lacking_buildings(self):
+        text = (SUBMOD / "common/decisions/aov_hold_decisions.txt").read_text(encoding="utf-8-sig")
+        decision = parse_blocks(text)["aov_delve_deeper_decision"]
+        valid = re.search(r"(?m)^\tis_valid = \{\n(.*?)^\t\}\n", decision, re.S).group(1)
+        no_hold = re.search(r"text = aov_delve_deeper_no_hold\n(.*?)\n\t\t\}\n", valid, re.S).group(1)
+        self.assertIn("aov_can_start_dig_base = yes", no_hold)
+        self.assertNotIn("aov_can_dig_at", no_hold)
+        self.assertNotIn("aov_hold_dig_requirements", no_hold)
+        no_gold = re.search(r"text = aov_delve_deeper_no_gold\n(.*?)\n\t\t\}\n", valid, re.S).group(1)
+        ai, player = no_gold.split("trigger_else = {")
+        self.assertIn("limit = { is_ai = yes }", ai)
+        self.assertIn("aov_can_dig_at = yes", ai)  # the AI never opens a picker it cannot use
+        self.assertNotIn("aov_can_start_dig_base", ai)
+        self.assertIn("aov_can_start_dig_base = yes", player)
+        ai_will_do = decision[decision.index("\tai_will_do = {"):]
+        self.assertIn("aov_can_dig_at = yes", ai_will_do)
+        self.assertNotIn("aov_can_start_dig_base", ai_will_do)
 
     def test_running_dig_ignores_requirements(self):
         for rel in ("common/on_action/aov_hold_on_actions.txt", "common/on_action/aov_hold_dig_on_actions.txt",
@@ -299,6 +324,7 @@ class DigRequirementTests(unittest.TestCase):
             text = self.hand(rel)
             self.assertNotIn("aov_hold_dig_requirements", text, rel)
             self.assertNotIn("aov_can_dig_at = yes", text, rel)
+            self.assertNotIn("aov_can_start_dig_base", text, rel)
 
     def test_picker_shows_blocked_holds(self):
         text = self.hand("events/aov_hold_delve_events.txt")
@@ -306,8 +332,12 @@ class DigRequirementTests(unittest.TestCase):
         self.assertEqual(len(options), len(holds.HOLDS))
         for h, option in zip(holds.HOLDS, options):
             self.assertIn(f"\t\t\ttitle:{h['barony']} = {{ holder = root }}\n", option, h["name"])
-            self.assertIn(f"\t\tshow_as_unavailable = {{ title:{h['barony']} = {{ holder = root }} }}\n", option,
-                          h["name"])
+            self.assertIn(f"\t\tshow_as_unavailable = {{\n\t\t\ttitle:{h['barony']} = {{ holder = root }}\n"
+                          "\t\t\tsave_temporary_scope_as = digger\n"
+                          f"\t\t\ttitle:{h['barony']}.title_province = {{ aov_can_start_dig_base = yes }}\n\t\t}}\n",
+                          option, h["name"])
+            trigger = re.search(r"\t\ttrigger = \{\n(.*?)\n\t\t\}\n", option, re.S).group(1)
+            self.assertIn("aov_can_dig_at = yes", trigger, h["name"])  # the option itself needs the buildings
 
     def test_game_start_sets_deposits(self):
         effect = parse_blocks(self.hand("common/on_action/aov_hold_on_actions.txt"))["aov_hold_game_start"]

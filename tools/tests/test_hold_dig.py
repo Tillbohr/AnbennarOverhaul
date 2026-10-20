@@ -69,7 +69,8 @@ class HoldDigTests(unittest.TestCase):
         self.assertIn("has_variable = aov_dig_target_level", trigger_block("aov_hold_dig_running"))
 
     def test_can_dig_needs_level_below_ten(self):
-        t = trigger_block("aov_can_dig_at")
+        self.assertIn("aov_can_start_dig_base = yes", trigger_block("aov_can_dig_at"))
+        t = trigger_block("aov_can_start_dig_base")
         self.assertIn("aov_hold_is_working = yes", t)
         self.assertIn("aov_hold_level < 10", t)
         self.assertRegex(t, r"NOT = \{ aov_hold_dig_running = yes \}")
@@ -132,7 +133,7 @@ class HoldDigTests(unittest.TestCase):
         self.assertIn("aov_dig_cost", d)
 
     def test_can_dig_excludes_occupied_holds(self):
-        self.assertIn("is_occupied = no", trigger_block("aov_can_dig_at"))
+        self.assertIn("is_occupied = no", trigger_block("aov_can_start_dig_base"))
 
     def test_decision_shows_both_failures_and_costs(self):
         d = decision_block("aov_delve_deeper_decision")

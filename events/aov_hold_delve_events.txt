@@ -27,8 +27,13 @@ aov_hold_delve.1 = {
 				}
 			}
 		}
-		# Shown greyed out, with the reason, while the ruler holds the hold but cannot dig there yet.
-		show_as_unavailable = { title:b_marrhold = { holder = root } }
+		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
+		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		show_as_unavailable = {
+			title:b_marrhold = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_marrhold.title_province = { aov_can_start_dig_base = yes }
+		}
 		title:b_marrhold.title_province = {
 			save_scope_value_as = { name = dig_cost value = aov_dig_cost }
 			barony.holder = { remove_short_term_gold = scope:dig_cost }
@@ -64,8 +69,13 @@ aov_hold_delve.1 = {
 				}
 			}
 		}
-		# Shown greyed out, with the reason, while the ruler holds the hold but cannot dig there yet.
-		show_as_unavailable = { title:b_anvilwright = { holder = root } }
+		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
+		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		show_as_unavailable = {
+			title:b_anvilwright = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_anvilwright.title_province = { aov_can_start_dig_base = yes }
+		}
 		title:b_anvilwright.title_province = {
 			save_scope_value_as = { name = dig_cost value = aov_dig_cost }
 			barony.holder = { remove_short_term_gold = scope:dig_cost }
@@ -101,8 +111,13 @@ aov_hold_delve.1 = {
 				}
 			}
 		}
-		# Shown greyed out, with the reason, while the ruler holds the hold but cannot dig there yet.
-		show_as_unavailable = { title:b_gulandhum = { holder = root } }
+		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
+		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		show_as_unavailable = {
+			title:b_gulandhum = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_gulandhum.title_province = { aov_can_start_dig_base = yes }
+		}
 		title:b_gulandhum.title_province = {
 			save_scope_value_as = { name = dig_cost value = aov_dig_cost }
 			barony.holder = { remove_short_term_gold = scope:dig_cost }
@@ -138,8 +153,13 @@ aov_hold_delve.1 = {
 				}
 			}
 		}
-		# Shown greyed out, with the reason, while the ruler holds the hold but cannot dig there yet.
-		show_as_unavailable = { title:b_kar_fimthrun = { holder = root } }
+		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
+		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		show_as_unavailable = {
+			title:b_kar_fimthrun = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_kar_fimthrun.title_province = { aov_can_start_dig_base = yes }
+		}
 		title:b_kar_fimthrun.title_province = {
 			save_scope_value_as = { name = dig_cost value = aov_dig_cost }
 			barony.holder = { remove_short_term_gold = scope:dig_cost }
@@ -175,8 +195,13 @@ aov_hold_delve.1 = {
 				}
 			}
 		}
-		# Shown greyed out, with the reason, while the ruler holds the hold but cannot dig there yet.
-		show_as_unavailable = { title:b_irovar = { holder = root } }
+		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
+		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		show_as_unavailable = {
+			title:b_irovar = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_irovar.title_province = { aov_can_start_dig_base = yes }
+		}
 		title:b_irovar.title_province = {
 			save_scope_value_as = { name = dig_cost value = aov_dig_cost }
 			barony.holder = { remove_short_term_gold = scope:dig_cost }
@@ -212,8 +237,13 @@ aov_hold_delve.1 = {
 				}
 			}
 		}
-		# Shown greyed out, with the reason, while the ruler holds the hold but cannot dig there yet.
-		show_as_unavailable = { title:b_hul_az_amekh = { holder = root } }
+		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
+		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		show_as_unavailable = {
+			title:b_hul_az_amekh = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_hul_az_amekh.title_province = { aov_can_start_dig_base = yes }
+		}
 		title:b_hul_az_amekh.title_province = {
 			save_scope_value_as = { name = dig_cost value = aov_dig_cost }
 			barony.holder = { remove_short_term_gold = scope:dig_cost }
@@ -249,8 +279,13 @@ aov_hold_delve.1 = {
 				}
 			}
 		}
-		# Shown greyed out, with the reason, while the ruler holds the hold but cannot dig there yet.
-		show_as_unavailable = { title:b_kar_hargun = { holder = root } }
+		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
+		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		show_as_unavailable = {
+			title:b_kar_hargun = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_kar_hargun.title_province = { aov_can_start_dig_base = yes }
+		}
 		title:b_kar_hargun.title_province = {
 			save_scope_value_as = { name = dig_cost value = aov_dig_cost }
 			barony.holder = { remove_short_term_gold = scope:dig_cost }
@@ -286,8 +321,13 @@ aov_hold_delve.1 = {
 				}
 			}
 		}
-		# Shown greyed out, with the reason, while the ruler holds the hold but cannot dig there yet.
-		show_as_unavailable = { title:b_topazhjardan = { holder = root } }
+		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
+		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		show_as_unavailable = {
+			title:b_topazhjardan = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_topazhjardan.title_province = { aov_can_start_dig_base = yes }
+		}
 		title:b_topazhjardan.title_province = {
 			save_scope_value_as = { name = dig_cost value = aov_dig_cost }
 			barony.holder = { remove_short_term_gold = scope:dig_cost }
@@ -323,8 +363,13 @@ aov_hold_delve.1 = {
 				}
 			}
 		}
-		# Shown greyed out, with the reason, while the ruler holds the hold but cannot dig there yet.
-		show_as_unavailable = { title:b_aghatehargun = { holder = root } }
+		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
+		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		show_as_unavailable = {
+			title:b_aghatehargun = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_aghatehargun.title_province = { aov_can_start_dig_base = yes }
+		}
 		title:b_aghatehargun.title_province = {
 			save_scope_value_as = { name = dig_cost value = aov_dig_cost }
 			barony.holder = { remove_short_term_gold = scope:dig_cost }
