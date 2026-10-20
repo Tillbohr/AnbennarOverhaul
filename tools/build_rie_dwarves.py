@@ -74,6 +74,7 @@ YES_NO = re.compile(r"(?<![\w.:])([A-Za-z_]\w*)\s*=\s*(?:yes|no)\b")
 BLOCK_NAME = re.compile(r"(?<![\w.:])([A-Za-z_]\w*)\s*=\s*\{")
 BUILDING_REF = re.compile(r"\b(has_building|has_building_or_higher|next_building)\s*=\s*(\w+)")
 PARAMETER_REF = re.compile(r"\b(?:parameter|has_cultural_parameter)\s*=\s*(\w+)")
+INNOVATION_REF = re.compile(r"\bhas_innovation\s*=\s*(\w+)")
 VALUE_REF = re.compile(r"(?m)^\s*(" + "|".join(VALUE_FIELDS) + r")\s*=\s*([A-Za-z_]\w*)\s*$")
 MODIFIER_LINE = re.compile(r"(?m)^\s*([A-Za-z_]\w*)\s*=\s*([^\s{}#]+)")
 LOC_REF = re.compile(r"\b(?:text|effect_desc|desc)\s*=\s*([A-Za-z_]\w*)")
@@ -153,6 +154,11 @@ def _names(texts) -> frozenset:
 @lru_cache(maxsize=None)
 def external_buildings(roots: Roots) -> frozenset:
     return _names(bp.effective_texts(roots, "common/buildings"))
+
+
+@lru_cache(maxsize=None)
+def external_innovations(roots: Roots) -> frozenset:
+    return _names(bp.effective_texts(roots, "common/culture/innovations"))
 
 
 @lru_cache(maxsize=None)
@@ -318,6 +324,9 @@ def check_block(build: Build, key: str, text: str, buildings: set) -> None:
     for name in PARAMETER_REF.findall(code):
         if name not in known_parameters(roots):
             raise GeneratorError(f"{key}: cultural parameter {name} is not defined by Anbennar or the game")
+    for name in INNOVATION_REF.findall(code):
+        if name not in external_innovations(roots):
+            raise GeneratorError(f"{key}: innovation {name} is not defined by Anbennar or the game")
     check_values_and_modifiers(build, key, text)
 
 
@@ -373,11 +382,20 @@ def render_buildings(build: Build) -> None:
     buildings = set(keys) | external_buildings(roots) | set(HOLD_LEVELS)
     parameters = known_parameters(roots)
     removed, nexts, copied = [], set(), []
-    for out, blocks in sources.items():
+    rewritten = {out: [(key, *rw.rewrite_block(body, parameters)) for key, body in blocks]
+                 for out, blocks in sources.items()}
+    surface, hold = {line_of(key) for key in data.SURFACE_BUILDINGS}, {line_of(key) for key in data.HOLD_BUILDINGS}
+    own_terrain = {line_of(key) for blocks in rewritten.values() for key, text, _notes in blocks
+                   if line_of(key) in surface and rw.has_terrain_gate(text)}
+    gated = {}  # what was added -> lines
+    for out, blocks in rewritten.items():
         pieces = []
-        for key, body in blocks:
-            text, notes = rw.rewrite_block(body, parameters)
+        for key, text, notes in blocks:
             removed += notes
+            line = line_of(key)
+            text, added = rw.gate_surface(text, line in surface - own_terrain, line in hold)
+            for why in added:
+                gated.setdefault(why, set()).add(line)
             check_block(build, key, text, buildings)
             text = place_icons(build, key, text)
             nexts.update(re.findall(r"\bnext_building\s*=\s*(\w+)", bp.code(text)))
@@ -392,6 +410,14 @@ def render_buildings(build: Build) -> None:
     for key in copied:
         build.want_loc(f"building_type_{key}", key not in nexts)
     build.notes.append(removal_note("removed from RiE's buildings", removed))
+    build.notes.append("surface buildings gated (rie_dwarf_rewrite.gate_surface): " + "; ".join(
+        f"{why}: {', '.join(sorted(lines))}" for why, lines in sorted(gated.items()))
+        + f"; RiE's own terrain gates kept: {', '.join(sorted(own_terrain))}")
+
+
+def line_of(key: str) -> str:
+    """The building line of a level key (dwarven_tavern_03 -> dwarven_tavern)."""
+    return re.sub(r"_\d\d$", "", key)
 
 
 def render_ore_modifiers(build: Build) -> None:

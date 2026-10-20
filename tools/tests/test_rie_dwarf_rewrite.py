@@ -58,14 +58,24 @@ class RewriteTests(unittest.TestCase):
         self.assertNotIn("dynasty", out)
         self.assertIn("is_dwarvish_culture", out)
 
-    def test_goat_innovation_condition_removed(self):
-        out, _ = rw.rewrite_block(enabled(
-            "\t\tscope:holder = {\n\t\t\tculture = { has_innovation = innovation_iron_hills_goat_domestication }\n\t\t}\n"
-            "\t\talways = yes\n"), set())
-        self.assertNotIn("innovation", out)
-        self.assertNotIn("culture", out)
-        self.assertNotIn("scope:holder", out)
-        self.assertIn("always = yes", out)
+    def test_goat_innovation_becomes_dwarf_holder_check(self):
+        # RiE's goat pastures need its Iron Hills innovation (Anbennar has none): the holder gate becomes a dwarf
+        # check, so a non-dwarf is never offered a building it cannot enable.
+        for source in (
+                "\t\tscope:holder = {\n\t\t\tculture = {\n\t\t\t\thas_innovation = innovation_iron_hills_goat_domestication"
+                "\n\t\t\t}\n\t\t}\n\t\talways = yes\n",
+                "\t\tscope:holder = {\n\t\t\tculture = { has_innovation = innovation_iron_hills_goat_domestication }\n"
+                "\t\t}\n\t\talways = yes\n"):
+            out, notes = rw.rewrite_block(enabled(source), set())
+            self.assertNotIn("innovation", out)
+            self.assertNotIn("culture = {", out)
+            self.assertIn("scope:holder = { is_dwarvish_culture = yes }", out)
+            self.assertIn("always = yes", out)
+            self.assertTrue(any("innovation_iron_hills_goat_domestication" in n for n in notes), notes)
+
+    def test_goat_innovation_is_no_longer_a_plain_drop(self):
+        self.assertFalse(any("goat" in pattern for pattern in data.DROP_STATEMENTS))
+        self.assertTrue(any("goat" in pattern for pattern, _new in data.BLOCK_REPLACEMENTS))
 
     def test_unlock_full_delving_ungated(self):
         out, _ = rw.rewrite_block(
@@ -133,6 +143,87 @@ class RewriteTests(unittest.TestCase):
 
     def test_prune_empty_recursive(self):
         self.assertEqual(rw.prune_empty("a = {\n\tb = {\n\t\tc = { }\n\t}\n}\nkeep = yes\n"), "keep = yes\n")
+
+
+def surface_block(potential, enabled_inner="\t\taov_rie_surface_dwarf_trigger = yes\n"):
+    return ("x_01 = {\n\tis_enabled = {\n" + enabled_inner + "\t}\n\tcan_construct_potential = {\n" + potential
+            + "\t}\n\tcost_gold = 10\n}\n")
+
+
+def potential_of(text):
+    masked = rw.mask(text)
+    for start, name, op, cl in rw.scan(masked):
+        if name == "can_construct_potential":
+            return " ".join(rw.mask(text[op + 1:cl]).split())
+    return None
+
+
+HOLD_NO = "aov_rie_hold_province_trigger = no"
+DWARF = "scope:holder = { is_dwarvish_culture = yes }"
+HILL = "aov_rie_hill_terrain_trigger = yes"
+
+
+class SurfaceGateTests(unittest.TestCase):
+    def test_surface_enabled_block_excluded_from_holds_and_needs_a_dwarf(self):
+        out, notes = rw.gate_surface(surface_block("\t\tbuilding_requirement_castle_city_church = { LEVEL = 01 }\n"),
+                                     surface_line=False, hold_line=False)
+        potential = potential_of(out)
+        self.assertIn(HOLD_NO, potential)
+        self.assertIn(DWARF, potential)
+        self.assertIn("building_requirement_castle_city_church = { LEVEL = 01 }", potential)
+        self.assertNotIn(HILL, potential)
+        self.assertEqual(sorted(notes), ["dwarven holder", "not in holds"])
+        self.assertIn("# Anbennar Overhaul", out)
+
+    def test_existing_checks_not_duplicated(self):
+        source = surface_block(f"\t\t{DWARF}\n\t\t{HOLD_NO}\n\t\t{HILL}\n")
+        out, notes = rw.gate_surface(source, surface_line=True, hold_line=False)
+        self.assertEqual(out, source)
+        self.assertEqual(notes, [])
+
+    def test_block_without_surface_trigger_untouched(self):
+        source = surface_block("\t\talways = yes\n", "\t\tscope:holder = { is_dwarvish_culture = yes }\n")
+        out, notes = rw.gate_surface(source, surface_line=False, hold_line=False)
+        self.assertEqual(out, source)
+        self.assertEqual(notes, [])
+
+    def test_surface_line_gets_hill_gate(self):
+        source = surface_block(f"\t\t{DWARF}\n\t\t{HOLD_NO}\n", "\t\talways = yes\n")
+        out, notes = rw.gate_surface(source, surface_line=True, hold_line=True)
+        potential = potential_of(out)
+        self.assertIn(HILL, potential)
+        self.assertNotIn("OR", potential)  # the block already leaves holds out: plain gate
+        self.assertEqual(notes, ["hill terrain"])
+
+    def test_hold_line_keeps_hold_availability(self):
+        source = surface_block(f"\t\t{DWARF}\n", "\t\talways = yes\n")
+        out, notes = rw.gate_surface(source, surface_line=True, hold_line=True)
+        self.assertIn(f"OR = {{ aov_rie_hold_province_trigger = yes {HILL} }}", potential_of(out))
+        self.assertEqual(notes, ["hill terrain"])
+
+    def test_one_line_potential(self):
+        source = "x_01 = {\n\tis_enabled = { aov_rie_surface_dwarf_trigger = yes }\n\tcan_construct_potential = { always = yes }\n}\n"
+        out, _notes = rw.gate_surface(source, surface_line=True, hold_line=False)
+        potential = potential_of(out)
+        for statement in ("always = yes", HOLD_NO, DWARF, HILL):
+            self.assertIn(statement, potential)
+        self.assertEqual(rw.prune_empty(out), out)
+
+    def test_missing_potential_created(self):
+        source = "x_01 = {\n\tis_enabled = {\n\t\taov_rie_surface_dwarf_trigger = yes\n\t}\n\tcost_gold = 10\n}\n"
+        out, _notes = rw.gate_surface(source, surface_line=False, hold_line=False)
+        potential = potential_of(out)
+        self.assertIn(HOLD_NO, potential)
+        self.assertIn(DWARF, potential)
+        self.assertIn("cost_gold = 10", out)
+
+    def test_terrain_gated_line_detection(self):
+        self.assertTrue(rw.has_terrain_gate("a = { aov_rie_hill_terrain_trigger = no }"))
+        self.assertTrue(rw.has_terrain_gate("a = { building_logging_camps_requirement_terrain = yes }"))
+        self.assertTrue(rw.has_terrain_gate("a = { terrain = hills }"))
+        self.assertFalse(rw.has_terrain_gate("a = { aov_rie_hold_province_trigger = no "
+                                             "building_requirement_castle_city_church = { LEVEL = 01 } }"))
+        self.assertFalse(rw.has_terrain_gate("a = { # terrain = hills\n}"))
 
 
 class DataTests(unittest.TestCase):

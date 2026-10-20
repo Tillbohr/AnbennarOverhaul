@@ -47,15 +47,37 @@ TOKEN_RENAMES = {
 DROP_STATEMENTS = (
     r"is_orc\s*=\s*yes",
     r"has_dynasty_perk\s*=\s*lotr_\w+",
-    r"has_innovation\s*=\s*innovation_iron_hills_goat_domestication",
     r"has_building_or_higher\s*=\s*elven_settlement_\d+",
     # RiE's crafting lifestyle (Anbennar has none, so the modifier does not exist; like the crafting effect_desc).
     r"monthly_crafting_lifestyle_xp_gain_mult\s*=\s*-?[\d.]+",
+)
+# (regex of a whole statement or block, its replacement), matched over code (comments blanked, any whitespace).
+# RiE's goat pastures need its Iron Hills goat innovation, which Anbennar lacks: the holder gate becomes a dwarf check,
+# so nobody else is offered a building whose is_enabled needs a dwarf. The build stops on any other innovation that
+# neither Anbennar nor the game defines.
+BLOCK_REPLACEMENTS = (
+    (r"scope:holder\s*=\s*\{\s*culture\s*=\s*\{\s*has_innovation\s*=\s*innovation_iron_hills_goat_domestication"
+     r"\s*\}\s*\}", "scope:holder = { is_dwarvish_culture = yes }"),
 )
 DROP_BLOCKS = ("province_dynasty_modifier",)
 UNGATED_PARAMETERS = ("unlock_full_delving",)
 DROP_EFFECT_DESC = r"_artifact_crafting_buff$"
 DEPTHS_RENAME = (r"\bdwarven_depths_(\d\d)\b", r"dwarven_hold_\1")
+
+# --- surface-building gates (rie_dwarf_rewrite.gate_surface, after the rewrite; user choice: surface buildings in
+# dwarf-held castles and cities on mountain, hill or dwarven-surface terrain) ---
+# A block that needs a surface dwarf (aov_rie_surface_dwarf_trigger in is_enabled or can_construct*) gets these in its
+# can_construct_potential when absent, so a hold or a non-dwarf is never offered a building it cannot enable.
+SURFACE_HOLD_EXCLUSION = "aov_rie_hold_province_trigger = no"
+SURFACE_HOLDER_CHECK = "scope:holder = { is_dwarvish_culture = yes }"
+# Every block of a SURFACE_BUILDINGS line with no terrain gate of its own (TERRAIN_GATE in none of the line's blocks)
+# gets SURFACE_TERRAIN_GATE; in a line also in HOLD_BUILDINGS, a block that does not exclude holds gets
+# SURFACE_TERRAIN_GATE_OR_HOLD instead, keeping RiE's hold availability. Lines RiE gates by terrain itself (forest,
+# "not hills", "not mountains") keep RiE's gates: adding the hill gate would make them unbuildable or split a line.
+SURFACE_TERRAIN_GATE = "aov_rie_hill_terrain_trigger = yes"
+SURFACE_TERRAIN_GATE_OR_HOLD = "OR = { aov_rie_hold_province_trigger = yes aov_rie_hill_terrain_trigger = yes }"
+TERRAIN_GATE = r"(?<![\w.])(?:aov_rie_(?:mountain|hill)_terrain_trigger|\w+_requirement_terrain|terrain)\s*="
+SURFACE_GATE_MARK = "# Anbennar Overhaul: surface building gate"
 
 # --- holding lists (level-01 keys) ---
 MINE_BUILDINGS = [f"{ore}_mines_01" for ore in ORES]

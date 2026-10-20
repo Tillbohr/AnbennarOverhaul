@@ -8106,6 +8106,7 @@ dwarven_outpost_01 = {
 	can_construct_potential = {
 		scope:holder = { is_dwarvish_culture = yes }
 		aov_rie_hold_province_trigger = no
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -8156,6 +8157,7 @@ dwarven_outpost_02 = {
 	can_construct_potential = {
 		scope:holder = { is_dwarvish_culture = yes }
 		aov_rie_hold_province_trigger = no
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -8202,6 +8204,7 @@ dwarven_outpost_03 = {
 		scope:holder = { is_dwarvish_culture = yes }
 		aov_rie_hold_province_trigger = no
 		building_requirement_castle_city_church = { LEVEL = 02 }
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -8245,6 +8248,7 @@ dwarven_outpost_04 = {
 		scope:holder = { is_dwarvish_culture = yes }
 		aov_rie_hold_province_trigger = no
 		building_requirement_castle_city_church = { LEVEL = 02 }
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -8289,6 +8293,7 @@ dwarven_outpost_05 = {
 		scope:holder = { is_dwarvish_culture = yes }
 		aov_rie_hold_province_trigger = no
 		building_requirement_castle_city_church = { LEVEL = 03 }
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -8333,6 +8338,7 @@ dwarven_outpost_06 = {
 		scope:holder = { is_dwarvish_culture = yes }
 		aov_rie_hold_province_trigger = no
 		building_requirement_castle_city_church = { LEVEL = 03 }
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -8619,6 +8625,7 @@ dwarven_market_01 = {
 	can_construct_potential = {
 		scope:holder = { is_dwarvish_culture = yes }
 		aov_rie_hold_province_trigger = no
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -8662,6 +8669,7 @@ dwarven_market_02 = {
 	can_construct_potential = {
 		scope:holder = { is_dwarvish_culture = yes }
 		aov_rie_hold_province_trigger = no
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -8702,6 +8710,7 @@ dwarven_market_03 = {
 		scope:holder = { is_dwarvish_culture = yes }
 		aov_rie_hold_province_trigger = no
 		building_requirement_castle_city_church = { LEVEL = 02 }
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -8738,6 +8747,7 @@ dwarven_market_04 = {
 		scope:holder = { is_dwarvish_culture = yes }
 		aov_rie_hold_province_trigger = no
 		building_requirement_castle_city_church = { LEVEL = 02 }
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -8775,6 +8785,7 @@ dwarven_market_05 = {
 		scope:holder = { is_dwarvish_culture = yes }
 		aov_rie_hold_province_trigger = no
 		building_requirement_castle_city_church = { LEVEL = 03 }
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -8812,6 +8823,7 @@ dwarven_market_06 = {
 		scope:holder = { is_dwarvish_culture = yes }
 		aov_rie_hold_province_trigger = no
 		building_requirement_castle_city_church = { LEVEL = 03 }
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -8855,6 +8867,7 @@ dwarven_surface_forge_01 = {
 		building_requirement_castle_city_church = { LEVEL = 01 }
 		aov_rie_hold_province_trigger = no
 		aov_rie_surface_dwarf_trigger = yes
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	cost_gold = normal_building_tier_1_cost
@@ -8893,6 +8906,7 @@ dwarven_surface_forge_02 = {
 		building_requirement_castle_city_church = { LEVEL = 01 }
 		aov_rie_hold_province_trigger = no
 		aov_rie_surface_dwarf_trigger = yes
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	cost_gold = normal_building_tier_2_cost
@@ -8931,6 +8945,7 @@ dwarven_surface_forge_03 = {
 		building_requirement_castle_city_church = { LEVEL = 02 }
 		aov_rie_hold_province_trigger = no
 		aov_rie_surface_dwarf_trigger = yes
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	cost_gold = normal_building_tier_3_cost
@@ -8969,6 +8984,7 @@ dwarven_surface_forge_04 = {
 		building_requirement_castle_city_church = { LEVEL = 02 }
 		aov_rie_hold_province_trigger = no
 		aov_rie_surface_dwarf_trigger = yes
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	cost_gold = normal_building_tier_4_cost
@@ -9007,6 +9023,7 @@ dwarven_surface_forge_05 = {
 		building_requirement_castle_city_church = { LEVEL = 03 }
 		aov_rie_hold_province_trigger = no
 		aov_rie_surface_dwarf_trigger = yes
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	cost_gold = normal_building_tier_5_cost
@@ -9045,6 +9062,7 @@ dwarven_surface_forge_06 = {
 		building_requirement_castle_city_church = { LEVEL = 03 }
 		aov_rie_hold_province_trigger = no
 		aov_rie_surface_dwarf_trigger = yes
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	cost_gold = normal_building_tier_6_cost
@@ -9083,6 +9101,7 @@ dwarven_surface_workshop_01 = {
 		aov_rie_hold_province_trigger = no
 		aov_rie_surface_dwarf_trigger = yes
 		building_requirement_castle_city_church = { LEVEL = 01 }
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -9125,6 +9144,7 @@ dwarven_surface_workshop_02 = {
 		aov_rie_hold_province_trigger = no
 		aov_rie_surface_dwarf_trigger = yes
 		building_requirement_castle_city_church = { LEVEL = 02 }
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -9167,6 +9187,7 @@ dwarven_surface_workshop_03 = {
 		aov_rie_hold_province_trigger = no
 		aov_rie_surface_dwarf_trigger = yes
 		building_requirement_castle_city_church = { LEVEL = 03 }
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -9209,6 +9230,7 @@ dwarven_surface_workshop_04 = {
 		aov_rie_hold_province_trigger = no
 		aov_rie_surface_dwarf_trigger = yes
 		building_requirement_castle_city_church = { LEVEL = 04 }
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -9250,6 +9272,7 @@ dwarven_mustering_grounds_01 = {
 		scope:holder = { is_dwarvish_culture = yes }
 		aov_rie_hold_province_trigger = no
 		building_requirement_castle_city_church = { LEVEL = 01 }
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -9288,6 +9311,7 @@ dwarven_mustering_grounds_02 = {
 		scope:holder = { is_dwarvish_culture = yes }
 		aov_rie_hold_province_trigger = no
 		building_requirement_castle_city_church = { LEVEL = 01 }
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -9326,6 +9350,7 @@ dwarven_mustering_grounds_03 = {
 		scope:holder = { is_dwarvish_culture = yes }
 		aov_rie_hold_province_trigger = no
 		building_requirement_castle_city_church = { LEVEL = 02 }
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -9366,6 +9391,7 @@ dwarven_mustering_grounds_04 = {
 		scope:holder = { is_dwarvish_culture = yes }
 		aov_rie_hold_province_trigger = no
 		building_requirement_castle_city_church = { LEVEL = 02 }
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -9406,6 +9432,7 @@ dwarven_mustering_grounds_05 = {
 		scope:holder = { is_dwarvish_culture = yes }
 		aov_rie_hold_province_trigger = no
 		building_requirement_castle_city_church = { LEVEL = 03 }
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -9450,6 +9477,7 @@ dwarven_mustering_grounds_06 = {
 		scope:holder = { is_dwarvish_culture = yes }
 		aov_rie_hold_province_trigger = no
 		building_requirement_castle_city_church = { LEVEL = 03 }
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 
 	can_construct_showing_failures_only = {
@@ -9774,6 +9802,8 @@ dwarven_tavern_01 = {
 	can_construct_potential = {
 		scope:holder = { is_dwarvish_culture = yes }
 		building_requirement_castle_city_church = { LEVEL = 01 }
+		aov_rie_hold_province_trigger = no # Anbennar Overhaul: surface building gate: not in holds
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 	can_construct_showing_failures_only = {
 		building_requirement_tribal = no
@@ -9813,6 +9843,8 @@ dwarven_tavern_02 = {
 	can_construct_potential = {
 		scope:holder = { is_dwarvish_culture = yes }
 		building_requirement_castle_city_church = { LEVEL = 01 }
+		aov_rie_hold_province_trigger = no # Anbennar Overhaul: surface building gate: not in holds
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 	can_construct_showing_failures_only = {
 		building_requirement_tribal = no
@@ -9857,6 +9889,8 @@ dwarven_tavern_03 = {
 	can_construct_potential = {
 		scope:holder = { is_dwarvish_culture = yes }
 		building_requirement_castle_city_church = { LEVEL = 02 }
+		aov_rie_hold_province_trigger = no # Anbennar Overhaul: surface building gate: not in holds
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 	can_construct_showing_failures_only = {
 		building_requirement_tribal = no
@@ -9901,6 +9935,8 @@ dwarven_tavern_04 = {
 	can_construct_potential = {
 		scope:holder = { is_dwarvish_culture = yes }
 		building_requirement_castle_city_church = { LEVEL = 02 }
+		aov_rie_hold_province_trigger = no # Anbennar Overhaul: surface building gate: not in holds
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 	can_construct_showing_failures_only = {
 		building_requirement_tribal = no
@@ -9945,6 +9981,8 @@ dwarven_tavern_05 = {
 	can_construct_potential = {
 		scope:holder = { is_dwarvish_culture = yes }
 		building_requirement_castle_city_church = { LEVEL = 03 }
+		aov_rie_hold_province_trigger = no # Anbennar Overhaul: surface building gate: not in holds
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 	can_construct_showing_failures_only = {
 		building_requirement_tribal = no
@@ -9989,6 +10027,8 @@ dwarven_tavern_06 = {
 	can_construct_potential = {
 		scope:holder = { is_dwarvish_culture = yes }
 		building_requirement_castle_city_church = { LEVEL = 03 }
+		aov_rie_hold_province_trigger = no # Anbennar Overhaul: surface building gate: not in holds
+		aov_rie_hill_terrain_trigger = yes # Anbennar Overhaul: surface building gate: hill terrain
 	}
 	can_construct_showing_failures_only = {
 		building_requirement_tribal = no
@@ -10124,6 +10164,7 @@ dwarven_forestry_03 = {
 		scope:holder = { is_dwarvish_culture = yes }
 		building_logging_camps_requirement_terrain = yes
 		building_requirement_castle_city_church = { LEVEL = 02 }
+		aov_rie_hold_province_trigger = no # Anbennar Overhaul: surface building gate: not in holds
 	}
 
 	can_construct_showing_failures_only = {
@@ -10171,6 +10212,7 @@ dwarven_forestry_04 = {
 		scope:holder = { is_dwarvish_culture = yes }
 		building_logging_camps_requirement_terrain = yes
 		building_requirement_castle_city_church = { LEVEL = 02 }
+		aov_rie_hold_province_trigger = no # Anbennar Overhaul: surface building gate: not in holds
 	}
 
 	can_construct_showing_failures_only = {
@@ -10218,6 +10260,7 @@ dwarven_forestry_05 = {
 		scope:holder = { is_dwarvish_culture = yes }
 		building_logging_camps_requirement_terrain = yes
 		building_requirement_castle_city_church = { LEVEL = 03 }
+		aov_rie_hold_province_trigger = no # Anbennar Overhaul: surface building gate: not in holds
 	}
 
 	can_construct_showing_failures_only = {
@@ -10265,6 +10308,7 @@ dwarven_forestry_06 = {
 		scope:holder = { is_dwarvish_culture = yes }
 		building_logging_camps_requirement_terrain = yes
 		building_requirement_castle_city_church = { LEVEL = 03 }
+		aov_rie_hold_province_trigger = no # Anbennar Overhaul: surface building gate: not in holds
 	}
 
 	can_construct_showing_failures_only = {
@@ -10312,6 +10356,8 @@ goat_pastures_01 = {
 		# building_pastures_requirement_terrain = yes
 		building_requirement_castle_city_church = { LEVEL = 01 }
 		aov_rie_hill_terrain_trigger = yes
+		scope:holder = { is_dwarvish_culture = yes }
+		aov_rie_hold_province_trigger = no # Anbennar Overhaul: surface building gate: not in holds
 	}
 
 	can_construct_showing_failures_only = {
@@ -10354,6 +10400,8 @@ goat_pastures_02 = {
 	can_construct_potential = {
 		building_requirement_castle_city_church = { LEVEL = 01 }
 		aov_rie_hill_terrain_trigger = yes
+		scope:holder = { is_dwarvish_culture = yes }
+		aov_rie_hold_province_trigger = no # Anbennar Overhaul: surface building gate: not in holds
 	}
 
 	can_construct_showing_failures_only = {
@@ -10396,6 +10444,8 @@ goat_pastures_03 = {
 	can_construct_potential = {
 		building_requirement_castle_city_church = { LEVEL = 02 }
 		aov_rie_hill_terrain_trigger = yes
+		scope:holder = { is_dwarvish_culture = yes }
+		aov_rie_hold_province_trigger = no # Anbennar Overhaul: surface building gate: not in holds
 	}
 
 	can_construct_showing_failures_only = {
@@ -10438,6 +10488,8 @@ goat_pastures_04 = {
 	can_construct_potential = {
 		building_requirement_castle_city_church = { LEVEL = 02 }
 		aov_rie_hill_terrain_trigger = yes
+		scope:holder = { is_dwarvish_culture = yes }
+		aov_rie_hold_province_trigger = no # Anbennar Overhaul: surface building gate: not in holds
 	}
 
 	can_construct_showing_failures_only = {
@@ -10480,6 +10532,8 @@ goat_pastures_05 = {
 	can_construct_potential = {
 		building_requirement_castle_city_church = { LEVEL = 03 }
 		aov_rie_hill_terrain_trigger = yes
+		scope:holder = { is_dwarvish_culture = yes }
+		aov_rie_hold_province_trigger = no # Anbennar Overhaul: surface building gate: not in holds
 	}
 
 	can_construct_showing_failures_only = {
@@ -10522,6 +10576,8 @@ goat_pastures_06 = {
 	can_construct_potential = {
 		building_requirement_castle_city_church = { LEVEL = 03 }
 		aov_rie_hill_terrain_trigger = yes
+		scope:holder = { is_dwarvish_culture = yes }
+		aov_rie_hold_province_trigger = no # Anbennar Overhaul: surface building gate: not in holds
 	}
 
 	can_construct_showing_failures_only = {
@@ -10564,6 +10620,8 @@ goat_pastures_07 = {
 	can_construct_potential = {
 		building_requirement_castle_city_church = { LEVEL = 04 }
 		aov_rie_hill_terrain_trigger = yes
+		scope:holder = { is_dwarvish_culture = yes }
+		aov_rie_hold_province_trigger = no # Anbennar Overhaul: surface building gate: not in holds
 	}
 
 	can_construct_showing_failures_only = {
@@ -10606,6 +10664,8 @@ goat_pastures_08 = {
 	can_construct_potential = {
 		building_requirement_castle_city_church = { LEVEL = 04 }
 		aov_rie_hill_terrain_trigger = yes
+		scope:holder = { is_dwarvish_culture = yes }
+		aov_rie_hold_province_trigger = no # Anbennar Overhaul: surface building gate: not in holds
 	}
 
 	can_construct_showing_failures_only = {

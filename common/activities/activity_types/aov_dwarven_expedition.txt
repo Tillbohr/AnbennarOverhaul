@@ -97,6 +97,10 @@ activity_dwarven_expedition = {
 	ui_predicted_cost = {
 		gold = {
 			value = aov_expedition_base_cost
+			add = { # the Mining option's cost (the usual type), as that option writes it
+				value = standard_activity_base_cost
+				multiply = 0.5
+			}
 			add = { # average crew cost
 				value = aov_expedition_crew_skilled_cost
 				add = aov_expedition_crew_master_cost
@@ -250,6 +254,7 @@ activity_dwarven_expedition = {
 				}
 			}
 			aov_expedition_archaeology = {
+				default = yes # the fallback: Mining's conditional default comes first and wins when true
 				is_valid = {
 					custom_tooltip = {
 						text = aov_expedition_archaeology_no_location_tt

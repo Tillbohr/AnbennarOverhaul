@@ -94,6 +94,25 @@ class StopTests(unittest.TestCase):
             with self.assertRaisesRegex(rd.GeneratorError, "RiE scripted trigger rie_only_trigger has no rename"):
                 rd.build_all(roots)
 
+    def test_unknown_innovation_stops_build(self):
+        # The goat innovation is rewritten away; any other RiE innovation Anbennar lacks must stop the build.
+        with tempfile.TemporaryDirectory() as tmp:
+            roots = fake_roots(Path(tmp), "dwarven_test_01 = {\n\tcan_construct_potential = {\n\t\tscope:holder = {"
+                                          " culture = { has_innovation = innovation_rie_only } }\n\t}\n}\n")
+            with self.assertRaisesRegex(rd.GeneratorError, "dwarven_test_01: innovation innovation_rie_only"):
+                rd.render_buildings(rd.Build(roots, []))
+
+    def test_goat_innovation_rewritten_in_build(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            roots = fake_roots(Path(tmp), "dwarven_test_01 = {\n\tcan_construct_potential = {\n\t\tscope:holder = {\n"
+                                          "\t\t\tculture = {\n\t\t\t\thas_innovation = "
+                                          "innovation_iron_hills_goat_domestication\n\t\t\t}\n\t\t}\n\t}\n}\n")
+            build = rd.Build(roots, [])
+            rd.render_buildings(build)
+            out = build.files[rd.BUILDINGS_FILE].decode("utf-8-sig")
+            self.assertIn("scope:holder = { is_dwarvish_culture = yes }", out)
+            self.assertNotIn("innovation", out)
+
     def test_unknown_modifier_stops_build(self):
         with tempfile.TemporaryDirectory() as tmp:
             roots = fake_roots(Path(tmp), "dwarven_test_01 = {\n\tprovince_modifier = {\n\t\tmade_up_mult = 1\n\t}\n}\n")
@@ -489,7 +508,68 @@ class RealTests(unittest.TestCase):
                                    r"innovation_iron_hills_goat_domestication|has_building_or_higher = elven_settlement_NN|"
                                    r"province_dynasty_modifier \(lotr_\w+\)|effect_desc \w+_artifact_crafting_buff|"
                                    r"monthly_crafting_lifestyle_xp_gain_mult = N|\w+ block gated on parameter \w+)"
-                                   r"|ungated parameter unlock_full_delving)$")
+                                   r"|ungated parameter unlock_full_delving"
+                                   r"|replaced scope:holder = \{ culture = \{ has_innovation = "
+                                   r"innovation_iron_hills_goat_domestication \} \} with scope:holder = \{ "
+                                   r"is_dwarvish_culture = yes \})$")
+
+    # --- surface buildings: dwarves only, never in a hold, hills, mountains or dwarven terrain (findings 1-3) ---
+
+    def potential(self, key):
+        return " ".join(bp.code(sub_block(block_of(self.ours, key), "can_construct_potential")).split())
+
+    def test_goat_pastures_need_a_dwarven_holder(self):
+        goats = [key for key in self.keys if key.startswith("goat_pastures_")]
+        self.assertEqual(len(goats), 8)
+        for key in goats:
+            potential = self.potential(key)
+            self.assertIn("scope:holder = { is_dwarvish_culture = yes }", potential, key)
+            self.assertIn("aov_rie_hill_terrain_trigger = yes", potential, key)
+            self.assertNotIn("innovation", block_of(self.ours, key), key)
+
+    def test_surface_enabled_buildings_not_offered_in_holds(self):
+        gated = []
+        for key in self.keys:
+            body = block_of(self.ours, key)
+            uses = " ".join(bp.code(sub_block(body, name)) for name in (
+                "is_enabled", "can_construct", "can_construct_showing_failures_only"))
+            if "aov_rie_surface_dwarf_trigger" not in uses:
+                continue
+            gated.append(key)
+            potential = self.potential(key)
+            self.assertIn("aov_rie_hold_province_trigger = no", potential, key)
+            self.assertRegex(potential, r"scope:holder = \{ is_dwarvish_culture = yes \}", key)
+        self.assertGreater(len(gated), 50)
+        for key in ("dwarven_tavern_01", "dwarven_tavern_06", "goat_pastures_01", "goat_pastures_08"):
+            self.assertIn(key, gated)
+
+    def test_surface_lines_on_hills_mountains_or_dwarven_terrain(self):
+        lines = {key[:-3] for key in data.SURFACE_BUILDINGS}
+        hold_lines = {key[:-3] for key in data.HOLD_BUILDINGS}
+        own = {line for line in lines if any(rw.has_terrain_gate(bp.code(rw.rewrite_block(body, set())[0]))
+                                             for key, body in self.rie.items() if key[:-3] == line)}
+        # RiE gives these lines terrain gates of their own (forest, not hills, not mountains, hills): kept as RiE has them.
+        self.assertEqual(own, {"dwarven_forestry", "dwarven_pit_mine", "dwarven_surface_farm", "dwarven_terrace_farm",
+                               "goat_pastures"})
+        gated = lines - own
+        self.assertEqual(gated, {"dwarven_outpost", "dwarven_market", "dwarven_surface_forge",
+                                 "dwarven_surface_workshop", "dwarven_mustering_grounds", "dwarven_tavern"})
+        for key in self.keys:
+            if key[:-3] not in gated:
+                continue
+            potential = self.potential(key)
+            if key[:-3] in hold_lines and "aov_rie_hold_province_trigger = no" not in potential:
+                self.assertIn("OR = { aov_rie_hold_province_trigger = yes aov_rie_hill_terrain_trigger = yes }",
+                              potential, key)
+            else:
+                self.assertIn("aov_rie_hill_terrain_trigger = yes", potential, key)
+        # Lines in both lists keep RiE's hold availability: terrace farms in holds, outposts never.
+        self.assertIn("OR = { aov_rie_hold_province_trigger = yes aov_rie_hill_terrain_trigger = yes }",
+                      self.potential("dwarven_terrace_farm_01"))
+        self.assertIn("aov_rie_hold_province_trigger = no", self.potential("dwarven_outpost_01"))
+        note = next(n for n in self.notes if n.startswith("surface buildings gated"))
+        for line in sorted(gated):
+            self.assertIn(line, note)
 
 
 @unittest.skipUnless(HAVE_REAL, "RiE, Anbennar and game needed")

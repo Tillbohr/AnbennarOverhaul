@@ -157,6 +157,21 @@ class ActivityTests(unittest.TestCase):
         self.assertIn("aov_expedition_crew_skilled_cost", block(option("aov_expedition_crew_skilled"), "cost"))
         self.assertIn("aov_expedition_crew_master_cost", block(option("aov_expedition_crew_master"), "cost"))
 
+    def test_predicted_cost_includes_mining_surcharge(self):
+        # The planner's estimate adds the Mining option's cost (the usual type), written as the option writes it.
+        mining = squash(block(block(option("aov_expedition_mining"), "cost"), "gold"))
+        self.assertIn("value = standard_activity_base_cost multiply = 0.5", mining)
+        predicted = squash(block(activity(), "ui_predicted_cost"))
+        self.assertIn("add = { value = standard_activity_base_cost multiply = 0.5 }", predicted)
+        self.assertIn("value = aov_expedition_base_cost", predicted)
+
+    def test_expedition_type_has_unconditional_default(self):
+        # Mining's conditional default comes first (the first true default wins); Archaeology is the fallback.
+        types = block(block(activity(), "options"), TYPE_CATEGORY)
+        self.assertLess(types.index("aov_expedition_mining = {"), types.index("aov_expedition_archaeology = {"))
+        self.assertRegex(option("aov_expedition_archaeology"), r"(?m)^\s*default = yes\s*$")
+        self.assertIn("any_realm_province", block(option("aov_expedition_mining"), "default"))
+
     def test_change_success_effect_clamps(self):
         effect = squash(block(read(EFFECTS), "aov_expedition_change_success_effect"))
         self.assertIn("add = $AMOUNT$", effect)
