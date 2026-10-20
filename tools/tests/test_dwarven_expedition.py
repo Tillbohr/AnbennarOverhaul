@@ -15,7 +15,8 @@ VALUES = "common/script_values/aov_expedition_values.txt"
 EFFECTS = "common/scripted_effects/aov_expedition_effects.txt"
 LOC = "localization/english/aov_dwarven_expedition_l_english.yml"
 WIDGET = "gui/activity_window_widgets/aov_expedition_success_chance.gui"
-FILES = (ACTIVITY, ON_ACTIONS, VALUES, EFFECTS, LOC, WIDGET)
+EVENTS = "events/aov_dwarven_expedition_events.txt"
+FILES = (ACTIVITY, ON_ACTIONS, VALUES, EFFECTS, LOC, WIDGET, EVENTS)
 
 KEY = "activity_dwarven_expedition"
 TYPE_CATEGORY = "aov_expedition_type"
@@ -244,6 +245,163 @@ class ActivityTests(unittest.TestCase):
             self.assertNotIn(b"\r", raw, rel)
             if not rel.endswith(".yml"):  # script indented with tabs
                 self.assertNotRegex(raw.decode("utf-8-sig"), r"(?m)^ ", rel)
+
+
+PULSES = tuple(range(101, 107))
+OUTCOMES = (900, 901, 902)
+EVENT_IDS = (1,) + PULSES + OUTCOMES
+STEPS = {f"aov_expedition_success_{size}{loss}_value"
+         for size in ("minor", "medium", "major") for loss in ("", "_loss")}
+MINING_OPTION = f"has_activity_option = {{ category = {TYPE_CATEGORY} option = aov_expedition_mining }}"
+ARCHAEOLOGY_OPTION = f"has_activity_option = {{ category = {TYPE_CATEGORY} option = aov_expedition_archaeology }}"
+
+
+def events():
+    """aov_expedition.<n> -> event body (comments removed)."""
+    text = re.sub(r"[ \t]*#[^\n]*", "", read(EVENTS))  # also the space a comment after a brace leaves
+    return {int(m.group(1)): m.group(2)
+            for m in re.finditer(r"^aov_expedition\.(\d+) = \{\n(.*?)^\}", text, re.M | re.S)}
+
+
+def event_trigger(body):
+    """The event's own trigger (one tab in), not a portrait's, background's or triggered desc's."""
+    return re.search(r"^\ttrigger = \{\n(.*?)^\t\}", body, re.M | re.S).group(1)
+
+
+def options(body):
+    return re.findall(r"^\toption = \{\n(.*?)^\t\}", body, re.M | re.S)
+
+
+def loc_lines():
+    return dict(re.findall(r"^ ([\w.]+):\d* \"(.*)\"$", read(LOC), re.M))
+
+
+class EventTests(unittest.TestCase):
+    def test_every_event_has_loc_and_options(self):
+        parsed, keys = events(), loc_keys()
+        self.assertEqual(sorted(parsed), sorted(EVENT_IDS))
+        self.assertRegex(read(EVENTS), r"(?m)^namespace = aov_expedition$")
+        for n, body in parsed.items():
+            self.assertRegex(body, rf"(?m)^\ttitle = aov_expedition\.{n}\.t$", n)
+            self.assertRegex(body, r"(?m)^\tdesc = ", n)
+            used = set(re.findall(r"\b(?:title|desc|name) = (aov_expedition\.[\w.]+)", body))
+            self.assertIn(f"aov_expedition.{n}.t", used)
+            self.assertEqual(sorted(used - keys), [], n)
+            count = len(options(body))
+            self.assertIn(count, (2, 3) if n in PULSES or n == 1 else (1,), n)
+            for opt in options(body):
+                self.assertRegex(opt, rf"^\t\tname = aov_expedition\.{n}\.\w+\n", n)
+            self.assertIn("exists = scope:activity", event_trigger(body), n)
+            self.assertIn(f"has_activity_type = {KEY}", event_trigger(body), n)
+            self.assertNotIn("involved_activity", body, n)  # test_hold_dig forbids it repo-wide
+
+    def test_on_actions_fire_the_events(self):
+        text = read(ON_ACTIONS)
+        self.assertEqual(re.findall(r"aov_expedition\.\d+", block(block(text, "aov_expedition_start_events"), "events")),
+                         ["aov_expedition.1"])
+
+    def test_pulse_on_action_lists_the_six_pulses(self):
+        pulse = block(block(read(ON_ACTIONS), "aov_expedition_random_pulse"), "random_events")
+        self.assertEqual({int(n) for n in re.findall(r"(?m)^\s*\d+ = aov_expedition\.(\d+)\b", pulse)}, set(PULSES))
+        self.assertEqual(len(re.findall(r"aov_expedition\.\d+", pulse)), len(PULSES))
+        for n in PULSES:  # one of each per expedition: three pulses never repeat an event
+            self.assertRegex(squash(events()[n]), r"cooldown = \{ years = 1 \}", n)
+
+    def test_pulses_change_success_by_spec_steps(self):
+        values = read(VALUES)
+        self.assertEqual({name for name in STEPS if re.search(rf"(?m)^{name} = ", values)}, STEPS)
+        text = squash(strip_comments(read(EVENTS)))
+        amounts = re.findall(r"aov_expedition_change_success_effect = \{ AMOUNT = (\S+) \}", text)
+        self.assertEqual(len(amounts), text.count("aov_expedition_change_success_effect"))
+        self.assertEqual(len(amounts),
+                         text.count("scope:activity = { aov_expedition_change_success_effect = { AMOUNT = "))
+        self.assertEqual(sorted(set(amounts) - STEPS), [])
+        self.assertNotIn("aov_expedition_success_chance", text.replace("var:aov_expedition_success_chance", "")
+                         .replace("aov_expedition_success_chance_value", ""))  # never set by hand
+        for n in (1,) + PULSES:
+            self.assertIn("aov_expedition_change_success_effect", events()[n], n)
+        # every change is shown to the player by a tooltip naming the same step
+        loc = loc_lines()
+        changes = re.findall(r"custom_tooltip = (aov_expedition_success_(gain|loss)_(minor|medium|major)_tt) "
+                             r"scope:activity = \{ aov_expedition_change_success_effect = \{ AMOUNT = (\S+) \}", text)
+        self.assertEqual(len(changes), len(amounts))
+        for key, sign, size, amount in changes:
+            self.assertEqual(amount, f"aov_expedition_success_{size}{'_loss' if sign == 'loss' else ''}_value")
+            step = re.search(rf"(?m)^aov_expedition_success_{size}_value = (\d+)$", values).group(1)
+            self.assertIn(f"{'+' if sign == 'gain' else '-'}{step}%", loc[key], key)
+        for n in OUTCOMES:
+            self.assertNotIn("aov_expedition_change_success_effect", events()[n], n)
+
+    def test_costly_options_check_gold(self):
+        found = 0
+        for n, body in events().items():
+            for opt in options(body):
+                for gold in re.findall(r"remove_short_term_gold = (\w+)", opt):
+                    found += 1
+                    self.assertRegex(block(opt, "trigger"), rf"\b(?:short_term_)?gold >= {gold}\b", n)
+                    self.assertIn("show_as_unavailable", opt, n)
+        self.assertGreater(found, 3)
+
+    def test_outcome_rolls_against_success(self):
+        outcome = squash(block(block(read(ON_ACTIONS), "aov_expedition_outcome"), "effect"))
+        self.assertRegex(outcome, rf"^ if = \{{ limit = \{{ scope:activity = \{{ {re.escape(ARCHAEOLOGY_OPTION)} \}} \}} "
+                                  r"trigger_event = aov_expedition\.902 \} else = \{")
+        self.assertRegex(outcome, r"random = \{ chance = scope:activity\.var:aov_expedition_success_chance "
+                                  r"scope:activity = \{ set_variable = aov_expedition_struck \} \}")
+        self.assertRegex(outcome, r"if = \{ limit = \{ scope:activity = \{ has_variable = aov_expedition_struck \} \} "
+                                  r"trigger_event = aov_expedition\.900 \} else = \{ trigger_event = aov_expedition\.901 \}")
+        self.assertEqual(sorted(re.findall(r"aov_expedition\.(\d+)", outcome)), ["900", "901", "902"])
+        parsed = events()
+        for n in (900, 901):
+            self.assertIn(MINING_OPTION, squash(event_trigger(parsed[n])), n)
+        self.assertIn(ARCHAEOLOGY_OPTION, squash(event_trigger(parsed[902])))
+        self.assertIn("aov_expedition_archaeology_outcome_effect = yes", parsed[902])
+        # the host gets the outcome whether AI or player: no player-only gate
+        self.assertNotIn("is_ai", block(read(ON_ACTIONS), "aov_expedition_outcome"))
+        for n in OUTCOMES:
+            self.assertNotIn("is_ai", parsed[n], n)
+        self.assertIn("aov_expedition_failure_refund_value", parsed[901])
+        self.assertRegex(read(VALUES), r"(?m)^aov_expedition_failure_refund_value = \{")
+
+    def test_success_rolls_a_deposit(self):
+        body, loc = events()[900], loc_lines()
+        self.assertRegex(squash(block(body, "immediate")),
+                         r"scope:activity\.activity_location = \{ [^{}]*aov_expedition_roll_deposit_effect = yes \}")
+        for n in (901, 902):
+            self.assertNotIn("aov_expedition_roll_deposit_effect", events()[n], n)
+        desc = squash(block(block(body, "desc"), "first_valid"))
+        ores = re.findall(r"triggered_desc = \{ trigger = \{ scope:activity\.var:aov_expedition_ore \?= flag:(\w+) \} "
+                          r"desc = (aov_expedition\.900\.desc\.\w+) \}", desc)
+        self.assertEqual([ore for ore, _ in ores], list(rie_dwarves.ORES))
+        names = read("localization/english/aov_rie_dwarves_l_english.yml")
+        for ore, key in ores:
+            self.assertEqual(key, f"aov_expedition.900.desc.{ore}")
+            self.assertRegex(names, rf"(?m)^ mining_{ore}_province_modifier:\d* \"")
+            self.assertIn(f"$mining_{ore}_province_modifier$", loc[key], ore)
+        # an unset ore (the province had a deposit after all): a fallback with no ore name
+        fallback = re.search(r"\} desc = (aov_expedition\.900\.desc\.\w+) $", desc).group(1)
+        self.assertNotIn(fallback, dict(ores).values())
+        self.assertNotIn("mining_", loc[fallback])
+        self.assertIn("exists = scope:activity.var:aov_expedition_ore", squash(body))
+
+    def test_backgrounds_are_ours(self):
+        parsed = events()
+        for n, body in parsed.items():
+            refs = re.findall(r"override_background = \{.*?reference = (\w+)", body, re.S)
+            self.assertTrue(refs, n)
+            self.assertEqual(sorted(set(refs) - set(rie_dwarves.BACKGROUNDS)), [], n)
+        self.assertEqual(re.findall(r"reference = (\w+)", parsed[1]), ["aov_expedition_gate"])
+        for n in PULSES + OUTCOMES:
+            backgrounds = squash(" ".join(re.findall(r"override_background = \{(.*?)\n\t\}", parsed[n], re.S)))
+            self.assertEqual(re.findall(r"reference = (\w+)", backgrounds),
+                             ["aov_expedition_halls", "aov_expedition_cave"], n)
+            for check in ("aov_rie_hold_province_trigger = yes", "terrain = cavern", "terrain = dwarven_road"):
+                self.assertIn(check, backgrounds, n)
+            self.assertIn("NOR = {", backgrounds, n)  # the cave is the halls' complement
+
+    def test_loc_has_no_middle_earth(self):
+        text = read(LOC) + read(EVENTS)
+        self.assertIsNone(re.search(rie_dwarves.FORBIDDEN_LORE, text))
 
 
 if __name__ == "__main__":

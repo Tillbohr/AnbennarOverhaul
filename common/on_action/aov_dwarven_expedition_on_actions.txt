@@ -1,13 +1,16 @@
 ﻿# Anbennar Overhaul: on_actions of the Dwarven Expedition (RiE's mining on_actions, lotr_mining_on_actions.txt).
 # Fired from the expedition phase's on_phase_active (common/activities/activity_types/aov_dwarven_expedition.txt).
-# The events (namespace aov_expedition: .1 setting out, .101-.106 pulses, .900-.902 outcomes) are added by the
-# expedition events task; until then these on_actions fire nothing.
+# Events in events/aov_dwarven_expedition_events.txt (namespace aov_expedition: .1 setting out, .101-.106 pulses,
+# .900-.902 outcomes).
 
 # Root = the host, when the phase starts. Setting-out event.
 aov_expedition_start_events = {
 	trigger = {
 		exists = scope:activity
 		scope:activity.activity_host = this
+	}
+	events = {
+		aov_expedition.1 # setting out
 	}
 }
 
@@ -17,16 +20,50 @@ aov_expedition_random_pulse = {
 		exists = scope:activity
 		is_ai = no
 	}
+	random_events = {
+		chance_of_no_event = { # the host always gets one; guests half the time (RiE's rule)
+			if = {
+				limit = { scope:activity.activity_host = this }
+				value = 0
+			}
+			else = { value = 50 }
+		}
+		100 = aov_expedition.101 # a rich vein
+		100 = aov_expedition.102 # a cave-in
+		100 = aov_expedition.103 # a flooded shaft
+		100 = aov_expedition.104 # old dwarven carvings
+		100 = aov_expedition.105 # a lost miner
+		100 = aov_expedition.106 # a quarrel among the delvers
+	}
 	effect = { # lets later events require that some progress was made
 		scope:activity = { set_variable = aov_expedition_pulsed }
 	}
 }
 
 # Root = the host, at month 7. Outcome: Mining rolls against the success chance (aov_expedition_roll_deposit_effect),
-# Archaeology runs aov_expedition_archaeology_outcome_effect.
+# Archaeology runs aov_expedition_archaeology_outcome_effect. For AI hosts too (their expeditions must find deposits).
 aov_expedition_outcome = {
 	trigger = {
 		exists = scope:activity
 		scope:activity.activity_host = this
+	}
+	effect = {
+		if = {
+			limit = { scope:activity = { has_activity_option = { category = aov_expedition_type option = aov_expedition_archaeology } } }
+			trigger_event = aov_expedition.902
+		}
+		else = { # Mining: success with probability aov_expedition_success_chance (0-90)
+			random = {
+				chance = scope:activity.var:aov_expedition_success_chance
+				scope:activity = { set_variable = aov_expedition_struck }
+			}
+			if = {
+				limit = { scope:activity = { has_variable = aov_expedition_struck } }
+				trigger_event = aov_expedition.900
+			}
+			else = {
+				trigger_event = aov_expedition.901
+			}
+		}
 	}
 }

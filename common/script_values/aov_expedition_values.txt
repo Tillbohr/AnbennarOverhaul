@@ -23,6 +23,12 @@ aov_expedition_crew_master_cost = {
 
 aov_expedition_cooldown_years = 4
 
+# Root = the host. Gold a failed Mining expedition gets back (aov_expedition.901): half the base cost.
+aov_expedition_failure_refund_value = {
+	value = aov_expedition_base_cost
+	multiply = 0.5
+}
+
 ## Success chance
 
 # Pulse events move the activity variable aov_expedition_success_chance by these steps (RiE's values), through

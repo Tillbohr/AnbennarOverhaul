@@ -1,0 +1,978 @@
+﻿namespace = aov_expedition
+
+# Anbennar Overhaul: events of the Dwarven Expedition (common/activities/activity_types/aov_dwarven_expedition.txt),
+# on the pattern of Realms in Exile's mining events. scope:activity is the expedition throughout.
+#	.1		setting out (the host, from aov_expedition_start_events)
+#	.101-.106	pulses (a human attendee, from aov_expedition_random_pulse at months 2, 4 and 6); their options
+#			move the success chance by aov_expedition_success_minor/medium/major (3/5/10), through
+#			aov_expedition_change_success_effect, with a tooltip naming the step
+#	.900-.902	outcomes (the host, AI or player, from aov_expedition_outcome at month 7): Mining success,
+#			Mining failure, Archaeology
+# Backgrounds: the gate when setting out; in the deep, the halls in a hold or on cavern / dwarven road terrain, else the
+# cave (common/event_backgrounds/aov_dwarven_expedition_backgrounds.txt).
+
+##################################################
+# Setting out
+##################################################
+
+aov_expedition.1 = {
+	type = activity_event
+	title = aov_expedition.1.t
+	theme = stewardship
+
+	trigger = {
+		exists = scope:activity
+		scope:activity = { has_activity_type = activity_dwarven_expedition }
+		scope:activity.activity_host = root
+	}
+
+	desc = aov_expedition.1.desc
+
+	override_background = { reference = aov_expedition_gate }
+
+	left_portrait = {
+		character = root
+		animation = personality_bold
+	}
+	right_portrait = {
+		trigger = { exists = scope:aov_expedition_companion }
+		character = scope:aov_expedition_companion
+		animation = happiness
+	}
+
+	immediate = {
+		scope:activity = {
+			random_attending_character = {
+				limit = { NOT = { this = root } }
+				save_scope_as = aov_expedition_companion
+			}
+		}
+	}
+
+	option = { # a speech before the gate
+		name = aov_expedition.1.a
+		custom_tooltip = aov_expedition_success_gain_minor_tt
+		scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_minor_value } }
+		add_prestige = miniscule_prestige_gain
+		ai_chance = {
+			base = 50
+		}
+	}
+
+	option = { # the best lamps, rope and pit props
+		name = aov_expedition.1.b
+		trigger = {
+			short_term_gold >= minor_gold_value
+		}
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = minor_gold_value
+		custom_tooltip = aov_expedition_success_gain_medium_tt
+		scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_medium_value } }
+		stress_impact = {
+			greedy = minor_stress_impact_gain
+		}
+		ai_chance = {
+			base = 50
+			modifier = {
+				has_trait = greedy
+				factor = 0.2
+			}
+		}
+	}
+
+	option = { # the oldest delver leads the way
+		name = aov_expedition.1.c
+		random_list = {
+			50 = {
+				custom_tooltip = aov_expedition_success_gain_medium_tt
+				scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_medium_value } }
+			}
+			50 = {
+				custom_tooltip = aov_expedition_success_loss_minor_tt
+				scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_minor_loss_value } }
+			}
+		}
+		ai_chance = {
+			base = 25
+		}
+	}
+}
+
+##################################################
+# Pulses
+##################################################
+
+# A rich vein glitters in a side passage.
+aov_expedition.101 = {
+	type = activity_event
+	title = aov_expedition.101.t
+	theme = stewardship
+
+	trigger = {
+		exists = scope:activity
+		scope:activity = { has_activity_type = activity_dwarven_expedition }
+	}
+
+	desc = aov_expedition.101.desc
+
+	override_background = {
+		trigger = {
+			scope:activity.activity_location = {
+				OR = {
+					aov_rie_hold_province_trigger = yes
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+		reference = aov_expedition_halls
+	}
+	override_background = {
+		trigger = {
+			scope:activity.activity_location = {
+				NOR = {
+					aov_rie_hold_province_trigger = yes
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+		reference = aov_expedition_cave
+	}
+
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+	right_portrait = {
+		trigger = { exists = scope:aov_expedition_companion }
+		character = scope:aov_expedition_companion
+		animation = admiration
+	}
+
+	cooldown = { years = 1 }
+
+	immediate = {
+		scope:activity = {
+			random_attending_character = {
+				limit = { NOT = { this = root } }
+				save_scope_as = aov_expedition_companion
+			}
+		}
+	}
+
+	option = { # follow it deeper
+		name = aov_expedition.101.a
+		custom_tooltip = aov_expedition_success_gain_medium_tt
+		scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_medium_value } }
+	}
+
+	option = { # more hands and timber to work it properly
+		name = aov_expedition.101.b
+		trigger = {
+			short_term_gold >= minor_gold_value
+		}
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = minor_gold_value
+		custom_tooltip = aov_expedition_success_gain_major_tt
+		scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_major_value } }
+	}
+
+	option = { # chip out what the crew can carry
+		name = aov_expedition.101.c
+		add_gold = tiny_gold_value
+		custom_tooltip = aov_expedition_success_loss_minor_tt
+		scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_minor_loss_value } }
+		stress_impact = {
+			greedy = minor_stress_impact_loss
+			diligent = minor_stress_impact_gain
+		}
+	}
+}
+
+# A tunnel comes down behind the lead crew.
+aov_expedition.102 = {
+	type = activity_event
+	title = aov_expedition.102.t
+	theme = dread
+
+	trigger = {
+		exists = scope:activity
+		scope:activity = { has_activity_type = activity_dwarven_expedition }
+	}
+
+	desc = aov_expedition.102.desc
+
+	override_background = {
+		trigger = {
+			scope:activity.activity_location = {
+				OR = {
+					aov_rie_hold_province_trigger = yes
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+		reference = aov_expedition_halls
+	}
+	override_background = {
+		trigger = {
+			scope:activity.activity_location = {
+				NOR = {
+					aov_rie_hold_province_trigger = yes
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+		reference = aov_expedition_cave
+	}
+
+	left_portrait = {
+		character = root
+		animation = fear
+	}
+	right_portrait = {
+		trigger = { exists = scope:aov_expedition_companion }
+		character = scope:aov_expedition_companion
+		animation = worry
+	}
+
+	cooldown = { years = 1 }
+
+	immediate = {
+		scope:activity = {
+			random_attending_character = {
+				limit = { NOT = { this = root } }
+				save_scope_as = aov_expedition_companion
+			}
+		}
+	}
+
+	option = { # timber to shore it up, then dig them out
+		name = aov_expedition.102.a
+		trigger = {
+			short_term_gold >= minor_gold_value
+		}
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = minor_gold_value
+		custom_tooltip = aov_expedition_success_loss_minor_tt
+		scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_minor_loss_value } }
+	}
+
+	option = { # dig with your own hands
+		name = aov_expedition.102.b
+		custom_tooltip = aov_expedition_success_loss_minor_tt
+		scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_minor_loss_value } }
+		add_prestige = minor_prestige_gain
+		random = {
+			chance = 25
+			increase_wounds_effect = { REASON = accident }
+		}
+		stress_impact = {
+			brave = minor_stress_impact_loss
+			craven = medium_stress_impact_gain
+		}
+	}
+
+	option = { # leave the passage sealed and go round
+		name = aov_expedition.102.c
+		custom_tooltip = aov_expedition_success_loss_major_tt
+		scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_major_loss_value } }
+		stress_impact = {
+			compassionate = medium_stress_impact_gain
+			callous = minor_stress_impact_loss
+		}
+	}
+}
+
+# The way down is a flooded shaft.
+aov_expedition.103 = {
+	type = activity_event
+	title = aov_expedition.103.t
+	theme = stewardship
+
+	trigger = {
+		exists = scope:activity
+		scope:activity = { has_activity_type = activity_dwarven_expedition }
+	}
+
+	desc = aov_expedition.103.desc
+
+	override_background = {
+		trigger = {
+			scope:activity.activity_location = {
+				OR = {
+					aov_rie_hold_province_trigger = yes
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+		reference = aov_expedition_halls
+	}
+	override_background = {
+		trigger = {
+			scope:activity.activity_location = {
+				NOR = {
+					aov_rie_hold_province_trigger = yes
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+		reference = aov_expedition_cave
+	}
+
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+	right_portrait = {
+		trigger = { exists = scope:aov_expedition_companion }
+		character = scope:aov_expedition_companion
+		animation = worry
+	}
+
+	cooldown = { years = 1 }
+
+	immediate = {
+		scope:activity = {
+			random_attending_character = {
+				limit = { NOT = { this = root } }
+				save_scope_as = aov_expedition_companion
+			}
+		}
+	}
+
+	option = { # rig pumps and bail it dry
+		name = aov_expedition.103.a
+		trigger = {
+			short_term_gold >= minor_gold_value
+		}
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = minor_gold_value
+		custom_tooltip = aov_expedition_success_gain_minor_tt
+		scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_minor_value } }
+	}
+
+	option = { # send the strongest swimmers down on ropes
+		name = aov_expedition.103.b
+		random_list = {
+			50 = {
+				custom_tooltip = aov_expedition_success_gain_medium_tt
+				scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_medium_value } }
+			}
+			50 = {
+				custom_tooltip = aov_expedition_success_loss_medium_tt
+				scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_medium_loss_value } }
+			}
+		}
+		stress_impact = {
+			brave = minor_stress_impact_loss
+			craven = minor_stress_impact_gain
+		}
+	}
+
+	option = { # seal it and work elsewhere
+		name = aov_expedition.103.c
+		custom_tooltip = aov_expedition_success_loss_medium_tt
+		scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_medium_loss_value } }
+	}
+}
+
+# Old dwarven carvings on a forgotten wall.
+aov_expedition.104 = {
+	type = activity_event
+	title = aov_expedition.104.t
+	theme = learning
+
+	trigger = {
+		exists = scope:activity
+		scope:activity = { has_activity_type = activity_dwarven_expedition }
+	}
+
+	desc = aov_expedition.104.desc
+
+	override_background = {
+		trigger = {
+			scope:activity.activity_location = {
+				OR = {
+					aov_rie_hold_province_trigger = yes
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+		reference = aov_expedition_halls
+	}
+	override_background = {
+		trigger = {
+			scope:activity.activity_location = {
+				NOR = {
+					aov_rie_hold_province_trigger = yes
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+		reference = aov_expedition_cave
+	}
+
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+	right_portrait = {
+		trigger = { exists = scope:aov_expedition_companion }
+		character = scope:aov_expedition_companion
+		animation = admiration
+	}
+
+	cooldown = { years = 1 }
+
+	immediate = {
+		scope:activity = {
+			random_attending_character = {
+				limit = { NOT = { this = root } }
+				save_scope_as = aov_expedition_companion
+			}
+		}
+	}
+
+	option = { # follow the old marks
+		name = aov_expedition.104.a
+		custom_tooltip = aov_expedition_success_gain_medium_tt
+		scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_medium_value } }
+	}
+
+	option = { # copy them for the hold's loremasters
+		name = aov_expedition.104.b
+		add_prestige = minor_prestige_gain
+		custom_tooltip = aov_expedition_success_loss_minor_tt
+		scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_minor_loss_value } }
+		stress_impact = {
+			scholar = minor_stress_impact_loss
+		}
+	}
+}
+
+# A miner does not come back from the lower galleries.
+aov_expedition.105 = {
+	type = activity_event
+	title = aov_expedition.105.t
+	theme = dread
+
+	trigger = {
+		exists = scope:activity
+		scope:activity = { has_activity_type = activity_dwarven_expedition }
+	}
+
+	desc = aov_expedition.105.desc
+
+	override_background = {
+		trigger = {
+			scope:activity.activity_location = {
+				OR = {
+					aov_rie_hold_province_trigger = yes
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+		reference = aov_expedition_halls
+	}
+	override_background = {
+		trigger = {
+			scope:activity.activity_location = {
+				NOR = {
+					aov_rie_hold_province_trigger = yes
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+		reference = aov_expedition_cave
+	}
+
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+	right_portrait = {
+		trigger = { exists = scope:aov_expedition_companion }
+		character = scope:aov_expedition_companion
+		animation = worry
+	}
+
+	cooldown = { years = 1 }
+
+	immediate = {
+		scope:activity = {
+			random_attending_character = {
+				limit = { NOT = { this = root } }
+				save_scope_as = aov_expedition_companion
+			}
+		}
+	}
+
+	option = { # a search party with lamps and rope
+		name = aov_expedition.105.a
+		trigger = {
+			short_term_gold >= tiny_gold_value
+		}
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = tiny_gold_value
+		custom_tooltip = aov_expedition_success_loss_minor_tt
+		scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_minor_loss_value } }
+		stress_impact = {
+			compassionate = minor_stress_impact_loss
+		}
+	}
+
+	option = { # search the galleries yourself
+		name = aov_expedition.105.b
+		random_list = {
+			60 = {
+				desc = aov_expedition.105.b.found
+				custom_tooltip = aov_expedition_success_gain_minor_tt
+				scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_minor_value } }
+				add_prestige = minor_prestige_gain
+			}
+			40 = {
+				desc = aov_expedition.105.b.lost
+				custom_tooltip = aov_expedition_success_loss_medium_tt
+				scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_medium_loss_value } }
+			}
+		}
+		stress_impact = {
+			brave = minor_stress_impact_loss
+			craven = minor_stress_impact_gain
+		}
+	}
+
+	option = { # the expedition cannot wait for one delver
+		name = aov_expedition.105.c
+		custom_tooltip = aov_expedition_success_gain_minor_tt
+		scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_minor_value } }
+		add_prestige = minor_prestige_loss
+		stress_impact = {
+			compassionate = medium_stress_impact_gain
+			callous = minor_stress_impact_loss
+		}
+	}
+}
+
+# Two delvers quarrel over how to cut the next gallery.
+aov_expedition.106 = {
+	type = activity_event
+	title = aov_expedition.106.t
+	theme = diplomacy
+
+	trigger = {
+		exists = scope:activity
+		scope:activity = { has_activity_type = activity_dwarven_expedition }
+	}
+
+	desc = aov_expedition.106.desc
+
+	override_background = {
+		trigger = {
+			scope:activity.activity_location = {
+				OR = {
+					aov_rie_hold_province_trigger = yes
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+		reference = aov_expedition_halls
+	}
+	override_background = {
+		trigger = {
+			scope:activity.activity_location = {
+				NOR = {
+					aov_rie_hold_province_trigger = yes
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+		reference = aov_expedition_cave
+	}
+
+	left_portrait = {
+		character = root
+		animation = anger
+	}
+	right_portrait = {
+		trigger = { exists = scope:aov_expedition_companion }
+		character = scope:aov_expedition_companion
+		animation = thinking
+	}
+
+	cooldown = { years = 1 }
+
+	immediate = {
+		scope:activity = {
+			random_attending_character = {
+				limit = { NOT = { this = root } }
+				save_scope_as = aov_expedition_companion
+			}
+		}
+	}
+
+	option = { # the old foreman's way
+		name = aov_expedition.106.a
+		custom_tooltip = aov_expedition_success_gain_minor_tt
+		scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_minor_value } }
+		stress_impact = {
+			stubborn = minor_stress_impact_loss
+		}
+	}
+
+	option = { # the young delver's bold cut
+		name = aov_expedition.106.b
+		random_list = {
+			50 = {
+				custom_tooltip = aov_expedition_success_gain_major_tt
+				scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_major_value } }
+			}
+			50 = {
+				custom_tooltip = aov_expedition_success_loss_medium_tt
+				scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_medium_loss_value } }
+			}
+		}
+		stress_impact = {
+			stubborn = minor_stress_impact_gain
+		}
+	}
+
+	option = { # a cask of ale for both crews
+		name = aov_expedition.106.c
+		trigger = {
+			short_term_gold >= tiny_gold_value
+		}
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = tiny_gold_value
+		custom_tooltip = aov_expedition_success_gain_medium_tt
+		scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_medium_value } }
+		stress_impact = {
+			greedy = minor_stress_impact_gain
+		}
+	}
+}
+
+##################################################
+# Outcomes (the host, AI or player)
+##################################################
+
+# Mining success: the location gets an ore deposit (none if it found one in the meantime: aov_expedition_ore unset).
+aov_expedition.900 = {
+	type = activity_event
+	title = aov_expedition.900.t
+	theme = stewardship
+
+	trigger = {
+		exists = scope:activity
+		scope:activity = {
+			has_activity_type = activity_dwarven_expedition
+			has_activity_option = { category = aov_expedition_type option = aov_expedition_mining }
+		}
+		scope:activity.activity_host = root
+	}
+
+	desc = {
+		desc = aov_expedition.900.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:activity.var:aov_expedition_ore ?= flag:mithril }
+				desc = aov_expedition.900.desc.mithril
+			}
+			triggered_desc = {
+				trigger = { scope:activity.var:aov_expedition_ore ?= flag:gold }
+				desc = aov_expedition.900.desc.gold
+			}
+			triggered_desc = {
+				trigger = { scope:activity.var:aov_expedition_ore ?= flag:silver }
+				desc = aov_expedition.900.desc.silver
+			}
+			triggered_desc = {
+				trigger = { scope:activity.var:aov_expedition_ore ?= flag:iron }
+				desc = aov_expedition.900.desc.iron
+			}
+			triggered_desc = {
+				trigger = { scope:activity.var:aov_expedition_ore ?= flag:copper }
+				desc = aov_expedition.900.desc.copper
+			}
+			triggered_desc = {
+				trigger = { scope:activity.var:aov_expedition_ore ?= flag:tin }
+				desc = aov_expedition.900.desc.tin
+			}
+			triggered_desc = {
+				trigger = { scope:activity.var:aov_expedition_ore ?= flag:lead }
+				desc = aov_expedition.900.desc.lead
+			}
+			triggered_desc = {
+				trigger = { scope:activity.var:aov_expedition_ore ?= flag:diamond }
+				desc = aov_expedition.900.desc.diamond
+			}
+			triggered_desc = {
+				trigger = { scope:activity.var:aov_expedition_ore ?= flag:ruby }
+				desc = aov_expedition.900.desc.ruby
+			}
+			triggered_desc = {
+				trigger = { scope:activity.var:aov_expedition_ore ?= flag:sapphire }
+				desc = aov_expedition.900.desc.sapphire
+			}
+			triggered_desc = {
+				trigger = { scope:activity.var:aov_expedition_ore ?= flag:emerald }
+				desc = aov_expedition.900.desc.emerald
+			}
+			triggered_desc = {
+				trigger = { scope:activity.var:aov_expedition_ore ?= flag:amethyst }
+				desc = aov_expedition.900.desc.amethyst
+			}
+			triggered_desc = {
+				trigger = { scope:activity.var:aov_expedition_ore ?= flag:onyx }
+				desc = aov_expedition.900.desc.onyx
+			}
+			triggered_desc = {
+				trigger = { scope:activity.var:aov_expedition_ore ?= flag:peridot }
+				desc = aov_expedition.900.desc.peridot
+			}
+			triggered_desc = {
+				trigger = { scope:activity.var:aov_expedition_ore ?= flag:quartz }
+				desc = aov_expedition.900.desc.quartz
+			}
+			desc = aov_expedition.900.desc.known
+		}
+	}
+
+	override_background = {
+		trigger = {
+			scope:activity.activity_location = {
+				OR = {
+					aov_rie_hold_province_trigger = yes
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+		reference = aov_expedition_halls
+	}
+	override_background = {
+		trigger = {
+			scope:activity.activity_location = {
+				NOR = {
+					aov_rie_hold_province_trigger = yes
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+		reference = aov_expedition_cave
+	}
+
+	center_portrait = {
+		character = root
+		animation = personality_bold
+	}
+	left_portrait = {
+		trigger = { exists = scope:aov_expedition_companion }
+		character = scope:aov_expedition_companion
+		animation = throne_room_cheer_1
+	}
+	right_portrait = {
+		trigger = { exists = scope:aov_expedition_companion_2 }
+		character = scope:aov_expedition_companion_2
+		animation = throne_room_cheer_2
+	}
+
+	immediate = {
+		scope:activity.activity_location = { save_scope_as = aov_expedition_site }
+		scope:activity.activity_location = { aov_expedition_roll_deposit_effect = yes }
+		scope:activity = {
+			random_attending_character = {
+				limit = { NOT = { this = root } }
+				save_scope_as = aov_expedition_companion
+			}
+			random_attending_character = {
+				limit = {
+					NOR = {
+						this = root
+						this = scope:aov_expedition_companion
+					}
+				}
+				save_scope_as = aov_expedition_companion_2
+			}
+		}
+	}
+
+	option = {
+		name = aov_expedition.900.a
+		scope:activity = {
+			add_activity_log_entry = {
+				key = aov_expedition_mining_success_log
+				tags = { good }
+				score = 80
+				character = root
+				show_in_conclusion = yes
+				root = {
+					if = {
+						limit = { exists = scope:activity.var:aov_expedition_ore }
+						add_prestige = medium_prestige_gain
+					}
+					else = {
+						add_prestige = minor_prestige_gain
+					}
+				}
+			}
+		}
+	}
+}
+
+# Mining failure: barren rock; part of the outlay comes back.
+aov_expedition.901 = {
+	type = activity_event
+	title = aov_expedition.901.t
+	theme = stewardship
+
+	trigger = {
+		exists = scope:activity
+		scope:activity = {
+			has_activity_type = activity_dwarven_expedition
+			has_activity_option = { category = aov_expedition_type option = aov_expedition_mining }
+		}
+		scope:activity.activity_host = root
+	}
+
+	desc = aov_expedition.901.desc
+
+	override_background = {
+		trigger = {
+			scope:activity.activity_location = {
+				OR = {
+					aov_rie_hold_province_trigger = yes
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+		reference = aov_expedition_halls
+	}
+	override_background = {
+		trigger = {
+			scope:activity.activity_location = {
+				NOR = {
+					aov_rie_hold_province_trigger = yes
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+		reference = aov_expedition_cave
+	}
+
+	center_portrait = {
+		character = root
+		animation = disappointed
+	}
+	left_portrait = {
+		trigger = { exists = scope:aov_expedition_companion }
+		character = scope:aov_expedition_companion
+		animation = sadness
+	}
+
+	immediate = {
+		scope:activity.activity_location = { save_scope_as = aov_expedition_site }
+		scope:activity = {
+			random_attending_character = {
+				limit = { NOT = { this = root } }
+				save_scope_as = aov_expedition_companion
+			}
+		}
+	}
+
+	option = {
+		name = aov_expedition.901.a
+		scope:activity = {
+			add_activity_log_entry = {
+				key = aov_expedition_mining_failure_log
+				tags = { bad }
+				score = 50
+				character = root
+				show_in_conclusion = yes
+				root = { add_gold = aov_expedition_failure_refund_value }
+			}
+		}
+	}
+}
+
+# Archaeology: the placeholder outcome (aov_expedition_archaeology_outcome_effect).
+aov_expedition.902 = {
+	type = activity_event
+	title = aov_expedition.902.t
+	theme = learning
+
+	trigger = {
+		exists = scope:activity
+		scope:activity = {
+			has_activity_type = activity_dwarven_expedition
+			has_activity_option = { category = aov_expedition_type option = aov_expedition_archaeology }
+		}
+		scope:activity.activity_host = root
+	}
+
+	desc = aov_expedition.902.desc
+
+	override_background = {
+		trigger = {
+			scope:activity.activity_location = {
+				OR = {
+					aov_rie_hold_province_trigger = yes
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+		reference = aov_expedition_halls
+	}
+	override_background = {
+		trigger = {
+			scope:activity.activity_location = {
+				NOR = {
+					aov_rie_hold_province_trigger = yes
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+		reference = aov_expedition_cave
+	}
+
+	center_portrait = {
+		character = root
+		animation = thinking
+	}
+	left_portrait = {
+		trigger = { exists = scope:aov_expedition_companion }
+		character = scope:aov_expedition_companion
+		animation = admiration
+	}
+
+	immediate = {
+		scope:activity.activity_location = { save_scope_as = aov_expedition_site }
+		scope:activity = {
+			random_attending_character = {
+				limit = { NOT = { this = root } }
+				save_scope_as = aov_expedition_companion
+			}
+		}
+	}
+
+	option = {
+		name = aov_expedition.902.a
+		aov_expedition_archaeology_outcome_effect = yes
+	}
+}
