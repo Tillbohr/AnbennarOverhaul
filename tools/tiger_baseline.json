@@ -337,6 +337,69 @@
 },
 {
   "confidence": "reasonable",
+  "info": "DDS file is 78x78, which can cause scaling problems and graphical artifacts",
+  "key": "image-size",
+  "locations": [
+    {
+      "column": null,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\icons\\activity_types\\aov_expedition_archaeology_icon.dds",
+      "length": 1,
+      "line": null,
+      "linenr": null,
+      "path": "gfx\\interface\\icons\\activity_types\\aov_expedition_archaeology_icon.dds",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "compressed DDS must have width and height divisible by 4",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "DDS file is 78x78, which can cause scaling problems and graphical artifacts",
+  "key": "image-size",
+  "locations": [
+    {
+      "column": null,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\icons\\activity_types\\aov_expedition_mining_icon.dds",
+      "length": 1,
+      "line": null,
+      "linenr": null,
+      "path": "gfx\\interface\\icons\\activity_types\\aov_expedition_mining_icon.dds",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "compressed DDS must have width and height divisible by 4",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "DDS file is 150x130, which can cause scaling problems and graphical artifacts",
+  "key": "image-size",
+  "locations": [
+    {
+      "column": null,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\icons\\building_types\\icon_building_goat_pastures.dds",
+      "length": 1,
+      "line": null,
+      "linenr": null,
+      "path": "gfx\\interface\\icons\\building_types\\icon_building_goat_pastures.dds",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "compressed DDS must have width and height divisible by 4",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
   "info": "DDS file is 2867x1526, which can cause scaling problems and graphical artifacts",
   "key": "image-size",
   "locations": [
@@ -348,6 +411,27 @@
       "line": null,
       "linenr": null,
       "path": "gfx\\interface\\illustrations\\character_view\\throneroom_noldor_high.dds",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "compressed DDS must have width and height divisible by 4",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "DDS file is 1262x633, which can cause scaling problems and graphical artifacts",
+  "key": "image-size",
+  "locations": [
+    {
+      "column": null,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\event_scenes\\lotr_halls.dds",
+      "length": 1,
+      "line": null,
+      "linenr": null,
+      "path": "gfx\\interface\\illustrations\\event_scenes\\lotr_halls.dds",
       "stage": null,
       "tag": null
     }
@@ -1858,7 +1942,7 @@
       "fullpath": ".\\common\\holdings\\00_holdings.txt",
       "length": 22,
       "line": "temple_citadel_holding = {",
-      "linenr": 245,
+      "linenr": 297,
       "path": "common\\holdings\\00_holdings.txt",
       "stage": null,
       "tag": null
@@ -1879,7 +1963,7 @@
       "fullpath": ".\\common\\holdings\\00_holdings.txt",
       "length": 22,
       "line": "temple_citadel_holding = {",
-      "linenr": 245,
+      "linenr": 297,
       "path": "common\\holdings\\00_holdings.txt",
       "stage": null,
       "tag": null
@@ -1900,7 +1984,7 @@
       "fullpath": ".\\common\\holdings\\00_holdings.txt",
       "length": 22,
       "line": "temple_citadel_holding = {",
-      "linenr": 245,
+      "linenr": 297,
       "path": "common\\holdings\\00_holdings.txt",
       "stage": null,
       "tag": null
@@ -1921,7 +2005,7 @@
       "fullpath": ".\\common\\holdings\\00_holdings.txt",
       "length": 22,
       "line": "temple_citadel_holding = {",
-      "linenr": 245,
+      "linenr": 297,
       "path": "common\\holdings\\00_holdings.txt",
       "stage": null,
       "tag": null
@@ -2054,6 +2138,153 @@
     }
   ],
   "message": "portrait environment character_view_spouse not defined in gfx/portraits/environments/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\aov_rie_dwarven_buildings.txt",
+      "length": 1,
+      "line": "\t\tOR = {",
+      "linenr": 938,
+      "path": "common\\buildings\\aov_rie_dwarven_buildings.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\aov_rie_dwarven_buildings.txt",
+      "length": 1,
+      "line": "\t\tOR = {",
+      "linenr": 988,
+      "path": "common\\buildings\\aov_rie_dwarven_buildings.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\aov_rie_dwarven_buildings.txt",
+      "length": 1,
+      "line": "\t\tOR = {",
+      "linenr": 1038,
+      "path": "common\\buildings\\aov_rie_dwarven_buildings.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\aov_rie_dwarven_buildings.txt",
+      "length": 1,
+      "line": "\t\tOR = {",
+      "linenr": 1088,
+      "path": "common\\buildings\\aov_rie_dwarven_buildings.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\aov_rie_dwarven_buildings.txt",
+      "length": 1,
+      "line": "\t\tOR = {",
+      "linenr": 1138,
+      "path": "common\\buildings\\aov_rie_dwarven_buildings.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\aov_rie_dwarven_buildings.txt",
+      "length": 1,
+      "line": "\t\tOR = {",
+      "linenr": 1192,
+      "path": "common\\buildings\\aov_rie_dwarven_buildings.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\common\\buildings\\aov_rie_dwarven_buildings.txt",
+      "length": 1,
+      "line": "\t\tOR = {",
+      "linenr": 1246,
+      "path": "common\\buildings\\aov_rie_dwarven_buildings.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
   "severity": "warning",
   "wiki": null
 },
@@ -5260,6 +5491,27 @@
     }
   ],
   "message": "AND with only one item inside is useless",
+  "severity": "tips",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "this may be slower and lower quality because PNG format does not have mipmaps",
+  "key": "image-format",
+  "locations": [
+    {
+      "column": null,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\activity_header_backgrounds\\activity_dwarven_expedition.dds",
+      "length": 1,
+      "line": null,
+      "linenr": null,
+      "path": "gfx\\interface\\illustrations\\activity_header_backgrounds\\activity_dwarven_expedition.dds",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "actually a PNG",
   "severity": "tips",
   "wiki": null
 },
