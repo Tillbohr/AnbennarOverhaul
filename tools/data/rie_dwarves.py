@@ -89,8 +89,18 @@ BACKGROUNDS = {
         "gfx/interface/illustrations/event_scenes/lotr_dwarven_gate.dds",
         "environment_travel_mountain_settlement", "event:/SFX/Events/Backgrounds/mountains_day"),
 }
-# RiE path -> our path; Task 5 fills it.
-ACTIVITY_ICONS = {}
+# RiE icon -> our icon, both under gfx/interface/icons/ (RiE's Mining activity icons for the dwarven expedition;
+# names follow the game's convention activities/<key>.dds, <key>_header.dds, activity_phases/<phase>.dds,
+# activity_option_categories/<category>.dds, activity_types/<option>_icon.dds).
+ACTIVITY_ICONS = {
+    "activities/activity_mining.dds": "activities/activity_dwarven_expedition.dds",
+    "activities/activity_mining_header.dds": "activities/activity_dwarven_expedition_header.dds",
+    "activity_phases/mining_phase.dds": "activity_phases/aov_expedition_phase.dds",
+    "activity_option_categories/mining_option_surveyors.dds": "activity_option_categories/aov_expedition_crew.dds",
+    "activity_option_categories/mining_option_party_size.dds": "activity_option_categories/aov_expedition_type.dds",
+    "activity_types/mining_type_prospecting_icon.dds": "activity_types/aov_expedition_mining_icon.dds",
+    "activity_types/mining_type_standard_icon.dds": "activity_types/aov_expedition_archaeology_icon.dds",
+}
 
 # --- localization (tools/build_rie_dwarves.py render_loc) ---
 # RiE game concepts Anbennar and the game lack -> the words that replace `[concept|E]` in copied loc (capitalised at

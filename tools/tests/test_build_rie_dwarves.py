@@ -336,7 +336,7 @@ class RealTests(unittest.TestCase):
 
     def test_no_rie_identifiers_left(self):
         for rel, text in self.texts.items():
-            if rel.endswith(".txt"):
+            if rel.endswith(".txt") and rel != rd.BACKGROUNDS_FILE:  # its pictures keep RiE's lotr_ file names
                 self.assertIsNone(LEFTOVER.search(bp.code(text)), rel)
 
     def test_dwarf_gates_survive(self):
@@ -490,6 +490,42 @@ class RealTests(unittest.TestCase):
                                    r"province_dynasty_modifier \(lotr_\w+\)|effect_desc \w+_artifact_crafting_buff|"
                                    r"monthly_crafting_lifestyle_xp_gain_mult = N|\w+ block gated on parameter \w+)"
                                    r"|ungated parameter unlock_full_delving)$")
+
+
+@unittest.skipUnless(HAVE_REAL, "RiE, Anbennar and game needed")
+class ExpeditionArtTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.files = rd.build_all(REAL)
+
+    def test_backgrounds_defined_with_copied_pictures(self):
+        text = self.files[rd.BACKGROUNDS_FILE].decode("utf-8-sig")
+        environments = (REAL.game / "game/gfx/portraits/environments/portrait_environments.txt").read_text(
+            encoding="utf-8-sig")
+        self.assertEqual(set(top_keys(text)), set(data.BACKGROUNDS))
+        for key, (picture, environment, ambience) in data.BACKGROUNDS.items():
+            body = block_of(text, key)
+            self.assertIn(f'reference = "{picture}"', body)
+            self.assertIn(f'environment = "{environment}"', body)
+            self.assertIn(f'ambience = "{ambience}"', body)
+            self.assertTrue(picture in self.files or bp._exists_outside(REAL, picture) is not None, picture)
+            self.assertRegex(environments, re.compile(rf"^{environment}\s*=\s*\{{", re.M))
+
+    def test_activity_icons_copied(self):
+        self.assertEqual(len(data.ACTIVITY_ICONS), 7)
+        for source, target in data.ACTIVITY_ICONS.items():
+            rel = f"gfx/interface/icons/{target}"
+            self.assertEqual(self.files[rel], (REAL.rie / f"gfx/interface/icons/{source}").read_bytes())
+
+    def test_background_clash_stops_build(self):
+        picture = next(iter(data.BACKGROUNDS.values()))[0]
+        with tempfile.TemporaryDirectory() as tmp:
+            roots = fake_roots(Path(tmp), "")
+            for root, content in ((roots.rie, b"rie"), (roots.anbennar, b"other")):
+                (root / picture).parent.mkdir(parents=True, exist_ok=True)
+                (root / picture).write_bytes(content)
+            with self.assertRaisesRegex(rd.GeneratorError, "lotr_cave_interior"):
+                rd.render_expedition_art(rd.Build(roots, []))
 
 
 @unittest.skipUnless(HAVE_REAL, "RiE, Anbennar and game needed")

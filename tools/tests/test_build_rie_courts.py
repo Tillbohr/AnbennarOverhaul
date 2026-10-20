@@ -12,6 +12,7 @@ from unittest import mock
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import build_portraits as bp  # noqa: E402
+import build_rie_dwarves  # noqa: E402
 import build_rie_courts as rc  # noqa: E402
 from data import rie_courts as data  # noqa: E402
 
@@ -125,7 +126,7 @@ class FreshnessTests(unittest.TestCase):
         self.assertEqual(stale, [], "stale: rerun python -I tools/build_rie_courts.py")
 
     def test_no_orphan_files(self):
-        produced = set(self.files)
+        produced = set(self.files) | set(build_rie_dwarves.build_all(REAL))
         orphans = []
         for folder in ("gfx/models/court", "gfx/models/artifacts", "gfx/court_scene/scene_settings",
                        "gfx/interface/illustrations/character_view", "gfx/interface/illustrations/event_scenes"):
