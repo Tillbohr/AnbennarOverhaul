@@ -1,0 +1,606 @@
+﻿# Anbennar Overhaul: the Dwarven Expedition, on the skeleton of Realms in Exile's mining activity
+# (common/activities/activity_types/lotr_mining.txt), without its landless-adventurer, court-position, intent-event,
+# crafting and region branches. Spec: docs/superpowers/specs/2026-10-17-rie-dwarves-design.md, section 4.
+# Values in common/script_values/aov_expedition_values.txt, effects in common/scripted_effects/aov_expedition_effects.txt,
+# on_actions in common/on_action/aov_dwarven_expedition_on_actions.txt.
+
+activity_dwarven_expedition = {
+	is_shown = {
+		highest_held_title_tier > tier_barony
+		is_playable_character = yes
+		is_landed = yes # the expedition goes to a province of the host's realm
+		is_dwarvish_culture = yes
+		trigger_if = {
+			limit = { is_ai = yes }
+			is_at_war = no
+			short_term_gold >= aov_expedition_base_cost
+			NOT = { has_realm_law = uncrowned } # the game's rule: an uncrowned AI crowns itself first
+		}
+	}
+
+	# One valid province for at least one expedition type.
+	can_start = {
+		custom_tooltip = {
+			text = aov_expedition_no_location_tt
+			any_realm_province = {
+				aov_rie_mountain_terrain_trigger = yes
+				OR = {
+					NOT = { aov_rie_has_deposit_trigger = yes }
+					terrain = dwarven_hold
+					terrain = dwarven_hold_surface
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+	}
+
+	can_start_showing_failures_only = {
+		is_available_adult = yes
+	}
+
+	# Guests are optional, so no "nobody came" check. The expedition ends if the host dies, is imprisoned, becomes
+	# incapable or loses the location's realm.
+	is_valid = {
+		scope:host = {
+			is_alive = yes
+			is_imprisoned = no
+			is_playable_character = yes
+			NOT = { is_incapable = yes }
+		}
+		activity_location = {
+			province_owner ?= {
+				OR = {
+					this = scope:host
+					is_vassal_or_below_of = scope:host
+				}
+			}
+		}
+	}
+
+	on_invalidated = {
+		scope:activity = {
+			activity_type = { save_scope_as = activity_type }
+		}
+		if = {
+			limit = {
+				scope:host = {
+					is_alive = yes
+					is_incapable = yes
+				}
+			}
+			scope:host = { trigger_event = activity_system.0330 }
+		}
+	}
+
+	cooldown = { years = aov_expedition_cooldown_years }
+
+	# RiE's cost: the game's base activity cost scaled by era.
+	cost = {
+		gold = {
+			add = {
+				add = {
+					value = standard_activity_base_cost
+					desc = aov_expedition_base_cost_desc
+				}
+				add = {
+					value = standard_activity_base_cost
+					multiply = activity_cost_scale_by_era
+					subtract = standard_activity_base_cost
+					desc = activity_cost_scale_by_era_desc
+				}
+				max = 500
+			}
+		}
+	}
+
+	ui_predicted_cost = {
+		gold = {
+			value = aov_expedition_base_cost
+			add = { # average crew cost
+				value = aov_expedition_crew_skilled_cost
+				add = aov_expedition_crew_master_cost
+				divide = 3
+			}
+			divide = 5
+			ceiling = yes
+			multiply = 5
+		}
+	}
+
+	host_description = {
+		desc = activity_dwarven_expedition_host_desc
+	}
+
+	conclusion_description = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:activity = {
+						has_activity_option = { category = aov_expedition_type option = aov_expedition_archaeology }
+					}
+				}
+				desc = activity_dwarven_expedition_conclusion_desc_archaeology
+			}
+			triggered_desc = {
+				trigger = { exists = scope:activity.var:aov_expedition_ore }
+				desc = activity_dwarven_expedition_conclusion_desc_found
+			}
+			desc = activity_dwarven_expedition_conclusion_desc
+		}
+	}
+
+	###################
+	# LOCATION
+	###################
+
+	is_single_location = yes
+
+	province_filter = domicile_realm
+	ai_province_filter = domicile_domain
+
+	# Root = the province.
+	is_location_valid = {
+		aov_rie_mountain_terrain_trigger = yes
+		trigger_if = {
+			limit = { scope:special_option ?= flag:aov_expedition_mining }
+			# A province with a deposit never gets a second one: no Mining where one exists or another Mining
+			# expedition is under way (aov_expedition_roll_deposit_effect also does nothing on a province with a
+			# deposit and then leaves aov_expedition_ore unset).
+			custom_tooltip = {
+				text = aov_expedition_location_has_deposit_tt
+				NOT = { aov_rie_has_deposit_trigger = yes }
+			}
+			custom_tooltip = {
+				text = aov_expedition_location_being_mined_tt
+				NOT = {
+					any_activity = {
+						has_activity_type = activity_dwarven_expedition
+						has_activity_option = { category = aov_expedition_type option = aov_expedition_mining }
+						activity_location = prev
+					}
+				}
+			}
+		}
+		trigger_else = {
+			custom_tooltip = {
+				text = aov_expedition_location_not_dwarven_tt
+				OR = {
+					terrain = dwarven_hold
+					terrain = dwarven_hold_surface
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+	}
+
+	province_score = {
+		value = 1
+		if = {
+			limit = { aov_rie_hold_province_trigger = yes }
+			add = 5
+		}
+		if = {
+			limit = { has_variable = aov_expedition_recent }
+			subtract = 1
+		}
+	}
+
+	province_description = {
+		desc = activity_dwarven_expedition_province_desc
+		triggered_desc = {
+			trigger = { scope:special_option ?= flag:aov_expedition_mining }
+			desc = activity_dwarven_expedition_province_desc_mining
+		}
+		triggered_desc = {
+			trigger = { scope:special_option ?= flag:aov_expedition_archaeology }
+			desc = activity_dwarven_expedition_province_desc_archaeology
+		}
+		triggered_desc = {
+			trigger = { aov_rie_hold_province_trigger = yes }
+			desc = activity_dwarven_expedition_province_desc_hold
+		}
+	}
+
+	###################
+	# OPTIONS
+	###################
+
+	special_option_category = aov_expedition_type
+
+	options = {
+		aov_expedition_type = {
+			aov_expedition_mining = {
+				default = {
+					any_realm_province = {
+						aov_rie_mountain_terrain_trigger = yes
+						NOT = { aov_rie_has_deposit_trigger = yes }
+					}
+				}
+				is_valid = {
+					custom_tooltip = {
+						text = aov_expedition_mining_no_location_tt
+						any_realm_province = {
+							aov_rie_mountain_terrain_trigger = yes
+							NOT = { aov_rie_has_deposit_trigger = yes }
+						}
+					}
+				}
+				cost = { # RiE's prospecting rate
+					gold = {
+						add = {
+							value = standard_activity_base_cost
+							multiply = 0.5
+							desc = aov_expedition_mining
+						}
+					}
+				}
+				ai_will_do = {
+					value = 0
+					if = {
+						limit = {
+							any_realm_province = {
+								aov_rie_mountain_terrain_trigger = yes
+								NOT = { aov_rie_has_deposit_trigger = yes }
+							}
+						}
+						value = 100
+					}
+				}
+			}
+			aov_expedition_archaeology = {
+				is_valid = {
+					custom_tooltip = {
+						text = aov_expedition_archaeology_no_location_tt
+						any_realm_province = {
+							OR = {
+								terrain = dwarven_hold
+								terrain = dwarven_hold_surface
+								terrain = cavern
+								terrain = dwarven_road
+							}
+						}
+					}
+				}
+				ai_will_do = {
+					value = 0
+				}
+			}
+		}
+
+		aov_expedition_crew = {
+			aov_expedition_crew_local = {
+				ai_will_do = {
+					value = 10
+				}
+			}
+			aov_expedition_crew_skilled = {
+				default = yes
+				is_valid = {
+					can_make_expensive_purchase_trigger = { PRICE = root.aov_expedition_crew_skilled_cost }
+				}
+				cost = {
+					gold = {
+						add = {
+							value = aov_expedition_crew_skilled_cost
+							desc = aov_expedition_crew_skilled
+						}
+					}
+				}
+				ai_will_do = {
+					value = 25
+				}
+			}
+			aov_expedition_crew_master = {
+				is_valid = {
+					can_make_expensive_purchase_trigger = { PRICE = root.aov_expedition_crew_master_cost }
+				}
+				cost = {
+					gold = {
+						add = {
+							value = aov_expedition_crew_master_cost
+							desc = aov_expedition_crew_master
+						}
+					}
+				}
+				ai_will_do = {
+					value = 10
+				}
+			}
+		}
+	}
+
+	###################
+	# PHASES
+	###################
+
+	max_guest_arrival_delay_time = { months = 8 }
+
+	phases = {
+		aov_expedition_phase = {
+			is_predefined = yes
+
+			on_phase_active = { # fires for every attendee; the host schedules the expedition's events
+				if = {
+					limit = { this = scope:host }
+					scope:activity = { progress_activity_phase_after = { months = 8 } }
+					trigger_event = { on_action = aov_expedition_start_events }
+					scope:activity = {
+						every_attending_character = {
+							limit = { is_ai = no }
+							trigger_event = { on_action = aov_expedition_random_pulse months = 2 }
+							trigger_event = { on_action = aov_expedition_random_pulse months = 4 }
+							trigger_event = { on_action = aov_expedition_random_pulse months = 6 }
+						}
+					}
+					trigger_event = { on_action = aov_expedition_outcome months = 7 }
+				}
+			}
+		}
+	}
+
+	###################
+	# AI
+	###################
+
+	ai_check_interval = 60
+
+	ai_will_select_province = {
+		value = 50
+		add = {
+			value = scope:score # from province_score
+			multiply = 10
+		}
+	}
+
+	# Root = the host. Higher with gold to spare; only with a province to mine.
+	ai_will_do = {
+		value = 0
+		add = {
+			value = 30
+			desc = "base"
+		}
+		add = {
+			value = ai_greed
+			desc = "ai_greed"
+		}
+		add = {
+			value = ai_energy
+			desc = "ai_energy"
+		}
+		if = {
+			limit = { has_trait = lazy }
+			add = {
+				value = -20
+				desc = "lazy"
+			}
+		}
+		if = {
+			limit = { has_trait = diligent }
+			add = {
+				value = 20
+				desc = "diligent"
+			}
+		}
+		if = {
+			limit = { has_trait = greedy }
+			add = {
+				value = 20
+				desc = "greedy"
+			}
+		}
+		if = {
+			limit = { has_trait = avaricious }
+			add = {
+				value = 50
+				desc = "avaricious"
+			}
+		}
+		if = {
+			limit = { has_trait = education_stewardship }
+			add = {
+				value = 25
+				desc = "education_stewardship"
+			}
+		}
+		if = {
+			limit = { short_term_gold >= major_gold_value }
+			add = {
+				value = 30
+				desc = "gold to spare"
+			}
+		}
+		if = { # build first
+			limit = {
+				exists = capital_county
+				capital_county.title_province = { free_building_slots > 0 }
+			}
+			add = {
+				value = -35
+				desc = "free building slots"
+			}
+		}
+		if = { # the AI only goes Mining
+			limit = {
+				NOT = {
+					any_realm_province = {
+						aov_rie_mountain_terrain_trigger = yes
+						NOT = { aov_rie_has_deposit_trigger = yes }
+					}
+				}
+			}
+			multiply = 0
+		}
+	}
+
+	###################
+	# GUESTS
+	###################
+
+	guest_invite_rules = { # RiE's rules without its miners rule
+		rules = {
+			2 = activity_invite_rule_rivals
+			2 = activity_invite_rule_lovers
+			3 = activity_invite_rule_close_family
+			3 = activity_invite_rule_extended_family
+			3 = activity_invite_rule_knights
+			4 = activity_invite_rule_guests
+			6 = activity_invite_mp
+		}
+		defaults = {
+			1 = activity_invite_rule_friends
+			1 = activity_invite_rule_confederates
+			3 = activity_invite_rule_liege
+			3 = activity_invite_rule_vassals
+			4 = activity_invite_rule_courtiers
+			4 = activity_invite_rule_fellow_vassals
+		}
+	}
+
+	max_guests = 10
+
+	can_be_activity_guest = {
+		is_adult = yes
+		NOT = { has_trait = incapable }
+		in_diplomatic_range = scope:host
+	}
+
+	host_intents = {
+		intents = { reduce_stress_intent }
+		default = reduce_stress_intent
+		player_defaults = { reduce_stress_intent }
+	}
+
+	guest_intents = {
+		intents = { reduce_stress_intent }
+		default = reduce_stress_intent
+		player_defaults = { reduce_stress_intent }
+	}
+
+	guest_join_chance = {
+		base = 10
+		base_activity_modifier = yes
+		activity_guest_shared_ai_accept_modifier = yes
+	}
+
+	allow_zero_guest_invites = yes
+
+	# Root = the activity.
+	on_start = {
+		set_variable = {
+			name = aov_expedition_success_chance
+			value = aov_expedition_success_chance_value
+		}
+	}
+
+	# Root = each attendee. The host marks the location as recently explored (lowers its score for 4 years).
+	on_complete = {
+		if = {
+			limit = { this = scope:host }
+			scope:activity.activity_location = {
+				set_variable = {
+					name = aov_expedition_recent
+					years = 4
+				}
+			}
+		}
+	}
+
+	###################
+	# GRAPHICS
+	###################
+
+	map_entity = "building_special_mines_entity"
+
+	background = { # travelling from dwarf-held mountains or hills
+		trigger = {
+			NOT = { scope:host.location = scope:activity.activity_location }
+			scope:host.location = {
+				aov_rie_hill_terrain_trigger = yes
+				province_owner ?= { is_dwarvish_culture = yes }
+			}
+		}
+		texture = "gfx/interface/illustrations/event_scenes/lotr_dwarven_gate.dds"
+		environment = "environment_travel_mountain_settlement"
+		ambience = "event:/SFX/Events/Backgrounds/mountains_day"
+	}
+
+	background = { # in a hold or the deep tunnels
+		trigger = {
+			activity_location ?= {
+				OR = {
+					aov_rie_hold_province_trigger = yes
+					terrain = cavern
+					terrain = dwarven_road
+				}
+			}
+		}
+		texture = "gfx/interface/illustrations/event_scenes/lotr_halls.dds"
+		environment = "environment_event_alley"
+		ambience = "event:/SFX/Events/Backgrounds/city_alley_night"
+	}
+
+	background = { # fallback: RiE's mining cave
+		texture = "gfx/interface/illustrations/activity_backgrounds/lotr_cave_interior.dds"
+		environment = "environment_event_alley"
+		ambience = "event:/SFX/Events/Backgrounds/city_alley_night"
+	}
+
+	activity_window_widgets = {
+		aov_expedition_success_chance = "activity_plugin_widgets_summary"
+	}
+
+	window_characters = {
+		host = {
+			camera = camera_body
+			effect = {
+				if = {
+					limit = { scope:host.location = scope:activity.activity_location }
+					scope:host = { add_to_list = characters }
+				}
+			}
+			scripted_animation = {
+				animation = personality_bold
+			}
+		}
+		travel_host = {
+			camera = camera_body
+			effect = {
+				if = {
+					limit = {
+						NOT = { scope:host.location = scope:activity.activity_location }
+					}
+					scope:host = { add_to_list = characters }
+				}
+			}
+			scripted_animation = {
+				triggered_animation = {
+					trigger = {
+						scope:character.location = { is_sea_province = yes }
+					}
+					animation = { idle }
+				}
+				animation = jockey_walk
+			}
+		}
+		guest = {
+			camera = camera_body
+			effect = {
+				if = {
+					limit = { scope:host.location = scope:activity.activity_location }
+					every_attending_character = {
+						limit = {
+							location = scope:activity.activity_location
+							NOT = { this = scope:host }
+						}
+						add_to_list = characters
+					}
+				}
+			}
+			scripted_animation = {
+				animation = lantern
+			}
+		}
+	}
+}

@@ -1,0 +1,35 @@
+﻿# Anbennar Overhaul: Dwarven Expedition effects.
+
+# Activity scope (the expedition). Moves the success chance by AMOUNT (a number or one of the
+# aov_expedition_success_*_value / *_loss_value script values), kept between 0 and 90.
+# Usage: scope:activity = { aov_expedition_change_success_effect = { AMOUNT = aov_expedition_success_minor_value } }
+aov_expedition_change_success_effect = {
+	if = {
+		limit = { NOT = { has_variable = aov_expedition_success_chance } }
+		set_variable = { name = aov_expedition_success_chance value = aov_expedition_success_chance_value }
+	}
+	change_variable = { name = aov_expedition_success_chance add = $AMOUNT$ }
+	if = {
+		limit = { var:aov_expedition_success_chance > 90 }
+		set_variable = { name = aov_expedition_success_chance value = 90 }
+	}
+	else_if = {
+		limit = { var:aov_expedition_success_chance < 0 }
+		set_variable = { name = aov_expedition_success_chance value = 0 }
+	}
+}
+
+# Character scope (the host); scope:activity is the expedition. The outcome of an Archaeology expedition.
+# PLACEHOLDER: the archaeology design (what is found in the old dwarven halls and what it gives) is the user's to
+# develop; for now the host gains prestige and the log records that nothing was catalogued yet.
+aov_expedition_archaeology_outcome_effect = {
+	save_scope_as = aov_expedition_archaeologist
+	scope:activity = {
+		add_activity_log_entry = {
+			key = aov_expedition_archaeology_log
+			character = scope:aov_expedition_archaeologist
+			score = 50
+			scope:aov_expedition_archaeologist = { add_prestige = medium_prestige_gain }
+		}
+	}
+}

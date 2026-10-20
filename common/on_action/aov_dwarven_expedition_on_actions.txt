@@ -1,0 +1,32 @@
+﻿# Anbennar Overhaul: on_actions of the Dwarven Expedition (RiE's mining on_actions, lotr_mining_on_actions.txt).
+# Fired from the expedition phase's on_phase_active (common/activities/activity_types/aov_dwarven_expedition.txt).
+# The events (namespace aov_expedition: .1 setting out, .101-.106 pulses, .900-.902 outcomes) are added by the
+# expedition events task; until then these on_actions fire nothing.
+
+# Root = the host, when the phase starts. Setting-out event.
+aov_expedition_start_events = {
+	trigger = {
+		exists = scope:activity
+		scope:activity.activity_host = this
+	}
+}
+
+# Root = a human attendee (host or guest), at months 2, 4 and 6. Pulse events that move the success chance.
+aov_expedition_random_pulse = {
+	trigger = {
+		exists = scope:activity
+		is_ai = no
+	}
+	effect = { # lets later events require that some progress was made
+		scope:activity = { set_variable = aov_expedition_pulsed }
+	}
+}
+
+# Root = the host, at month 7. Outcome: Mining rolls against the success chance (aov_expedition_roll_deposit_effect),
+# Archaeology runs aov_expedition_archaeology_outcome_effect.
+aov_expedition_outcome = {
+	trigger = {
+		exists = scope:activity
+		scope:activity.activity_host = this
+	}
+}

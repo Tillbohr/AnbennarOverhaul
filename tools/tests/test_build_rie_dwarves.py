@@ -516,6 +516,10 @@ class ExpeditionArtTests(unittest.TestCase):
         for source, target in data.ACTIVITY_ICONS.items():
             rel = f"gfx/interface/icons/{target}"
             self.assertEqual(self.files[rel], (REAL.rie / f"gfx/interface/icons/{source}").read_bytes())
+        self.assertEqual(len(data.ACTIVITY_ILLUSTRATIONS), 3)
+        for source, target in data.ACTIVITY_ILLUSTRATIONS.items():
+            rel = f"gfx/interface/illustrations/{target}"
+            self.assertEqual(self.files[rel], (REAL.rie / f"gfx/interface/illustrations/{source}").read_bytes())
 
     def test_background_clash_stops_build(self):
         picture = next(iter(data.BACKGROUNDS.values()))[0]

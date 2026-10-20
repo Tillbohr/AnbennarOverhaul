@@ -101,6 +101,14 @@ ACTIVITY_ICONS = {
     "activity_types/mining_type_prospecting_icon.dds": "activity_types/aov_expedition_mining_icon.dds",
     "activity_types/mining_type_standard_icon.dds": "activity_types/aov_expedition_archaeology_icon.dds",
 }
+# RiE illustration -> ours, both under gfx/interface/illustrations/ (the activity's header background
+# activity_header_backgrounds/<key>.dds and each expedition type's picture activity_types/<option>.dds, which the game
+# requires for every option of the special option category).
+ACTIVITY_ILLUSTRATIONS = {
+    "activity_header_backgrounds/activity_mining.dds": "activity_header_backgrounds/activity_dwarven_expedition.dds",
+    "activity_types/mining_type_prospecting.dds": "activity_types/aov_expedition_mining.dds",
+    "activity_types/mining_type_standard.dds": "activity_types/aov_expedition_archaeology.dds",
+}
 
 # --- localization (tools/build_rie_dwarves.py render_loc) ---
 # RiE game concepts Anbennar and the game lack -> the words that replace `[concept|E]` in copied loc (capitalised at

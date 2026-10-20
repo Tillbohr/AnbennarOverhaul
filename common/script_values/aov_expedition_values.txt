@@ -1,0 +1,83 @@
+﻿# Anbennar Overhaul: Dwarven Expedition values (RiE's mining activity values, lotr_mining_values.txt).
+
+## Costs and cooldown
+
+# Root = the host. RiE's activity cost: the game's base activity cost scaled by era.
+aov_expedition_base_cost = {
+	value = standard_activity_base_cost
+	multiply = activity_cost_scale_by_era
+}
+
+# Root = the host. Crew options (RiE's option costs 0, 10 and 35, scaled by tier and era).
+aov_expedition_crew_skilled_cost = {
+	value = 10
+	multiply = activity_cost_scale_by_tier
+	multiply = activity_cost_scale_by_era
+}
+
+aov_expedition_crew_master_cost = {
+	value = 35
+	multiply = activity_cost_scale_by_tier
+	multiply = activity_cost_scale_by_era
+}
+
+aov_expedition_cooldown_years = 4
+
+## Success chance
+
+# Pulse events move the activity variable aov_expedition_success_chance by these steps (RiE's values), through
+# aov_expedition_change_success_effect.
+aov_expedition_success_minor_value = 3
+aov_expedition_success_medium_value = 5
+aov_expedition_success_major_value = 10
+
+aov_expedition_success_minor_loss_value = {
+	value = aov_expedition_success_minor_value
+	multiply = -1
+}
+aov_expedition_success_medium_loss_value = {
+	value = aov_expedition_success_medium_value
+	multiply = -1
+}
+aov_expedition_success_major_loss_value = {
+	value = aov_expedition_success_major_value
+	multiply = -1
+}
+
+# Root = the activity. Set once on start into the activity variable aov_expedition_success_chance: base 30, the host's
+# stewardship / 4 (at most 10), the crew, 10 more in a dwarven hold; 0 to 90.
+aov_expedition_success_chance_value = {
+	value = 30
+	activity_host = {
+		add = {
+			value = stewardship
+			divide = 4
+			ceiling = yes
+			max = 10
+			desc = aov_expedition_success_stewardship
+		}
+	}
+	if = {
+		limit = { has_activity_option = { category = aov_expedition_crew option = aov_expedition_crew_skilled } }
+		add = {
+			value = 10
+			desc = aov_expedition_crew_skilled
+		}
+	}
+	else_if = {
+		limit = { has_activity_option = { category = aov_expedition_crew option = aov_expedition_crew_master } }
+		add = {
+			value = 20
+			desc = aov_expedition_crew_master
+		}
+	}
+	if = {
+		limit = { activity_location = { aov_rie_hold_province_trigger = yes } }
+		add = {
+			value = 10
+			desc = aov_expedition_success_hold
+		}
+	}
+	max = 90
+	min = 0
+}

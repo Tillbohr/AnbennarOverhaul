@@ -54,7 +54,9 @@ OWNED_FOLDERS = {"common/buildings": ("aov_rie_*",), "common/modifiers": ("aov_r
                  "gfx/interface/icons/activities": ("activity_dwarven_expedition*.dds",),
                  "gfx/interface/icons/activity_phases": ("aov_expedition_*.dds",),
                  "gfx/interface/icons/activity_option_categories": ("aov_expedition_*.dds",),
-                 "gfx/interface/icons/activity_types": ("aov_expedition_*.dds",)}
+                 "gfx/interface/icons/activity_types": ("aov_expedition_*.dds",),
+                 "gfx/interface/illustrations/activity_header_backgrounds": ("activity_dwarven_expedition.dds",),
+                 "gfx/interface/illustrations/activity_types": ("aov_expedition_*.dds",)}
 # Localization of keys the generator itself defines (not copied from RiE).
 OWN_LOC = {
     "aov_rie_surface_dwarf_tt": "Held by a dwarf outside a dwarven hold",
@@ -336,7 +338,7 @@ def place_icons(build: Build, key: str, text: str) -> str:
 
 def render_expedition_art(build: Build) -> None:
     """The event backgrounds of the dwarven expedition, RiE's pictures at RiE's paths and its Mining activity icons
-    under our names. A picture Anbennar or the game has with other bytes is an error (it would change their events)."""
+    and illustrations under our names. A picture Anbennar or the game has with other bytes is an error (it would change their events)."""
     roots = build.roots
     blocks = []
     for key, (picture, environment, ambience) in data.BACKGROUNDS.items():
@@ -348,13 +350,14 @@ def render_expedition_art(build: Build) -> None:
         blocks.append(f'{key} = {{\n\tbackground = {{\n\t\treference = "{picture}"\n'
                       f'\t\tenvironment = "{environment}"\n\t\tambience = "{ambience}"\n\t}}\n}}\n')
     build.files[BACKGROUNDS_FILE] = txt_file(blocks)
-    for source, target in data.ACTIVITY_ICONS.items():
-        src, dest = f"gfx/interface/icons/{source}", f"gfx/interface/icons/{target}"
-        if not (roots.rie / src).is_file():
-            raise GeneratorError(f"activity icon {src} is not in RiE")
-        if bp._exists_outside(roots, dest) is not None:
-            raise GeneratorError(f"activity icon {dest} already exists in Anbennar or the game")
-        build.files[dest] = (roots.rie / src).read_bytes()
+    for folder, art in (("icons", data.ACTIVITY_ICONS), ("illustrations", data.ACTIVITY_ILLUSTRATIONS)):
+        for source, target in art.items():
+            src, dest = f"gfx/interface/{folder}/{source}", f"gfx/interface/{folder}/{target}"
+            if not (roots.rie / src).is_file():
+                raise GeneratorError(f"activity art {src} is not in RiE")
+            if bp._exists_outside(roots, dest) is not None:
+                raise GeneratorError(f"activity art {dest} already exists in Anbennar or the game")
+            build.files[dest] = (roots.rie / src).read_bytes()
 
 
 def render_buildings(build: Build) -> None:
