@@ -224,6 +224,64 @@ class DepositTests(unittest.TestCase):
         self.assertIn("\n aov_rie_surface_dwarf_tt:", build.files[rd.LOC_FILE].decode("utf-8-sig"))
 
 
+DEPTHS_5 = """dwarven_depths_05 = {
+	can_construct_potential = {
+		scope:holder = { is_dwarvish_culture = yes }
+	}
+	can_construct = {
+		OR = {
+			has_building_or_higher = dwarven_quarry_01
+		}
+		has_building_or_higher = dwarven_hold_04
+		custom_tooltip = {
+			text = has_mines_04_or_higher
+			OR = {
+				has_building_or_higher = iron_mines_04
+				has_building_or_higher = tin_mines_04
+			}
+		}
+	}
+	levy = 5
+}
+"""
+
+
+class DigRequirementTests(unittest.TestCase):
+    def test_previous_level_dropped_and_single_or_unwrapped(self):
+        body = rd.requirement_body(5, DEPTHS_5)
+        self.assertEqual(body, "\thas_building_or_higher = dwarven_quarry_01\n\tcustom_tooltip = {\n"
+                               "\t\ttext = has_mines_04_or_higher\n\t\tOR = {\n"
+                               "\t\t\thas_building_or_higher = iron_mines_04\n"
+                               "\t\t\thas_building_or_higher = tin_mines_04\n\t\t}\n\t}\n")
+
+    def test_or_around_previous_level_means_all_required(self):
+        """RiE's depths_04 puts every requirement in the orc alternative's OR next to the previous level; with the
+        orc branch gone they are all required (spec Section 2 table)."""
+        text = DEPTHS_5.replace("\t\tOR = {\n\t\t\thas_building_or_higher = dwarven_quarry_01\n\t\t}\n"
+                                "\t\thas_building_or_higher = dwarven_hold_04\n",
+                                "\t\tOR = {\n\t\t\thas_building_or_higher = dwarven_quarry_01\n"
+                                "\t\t\thas_building_or_higher = dwarven_hold_04\n")
+        text = text.replace("\t\t}\n\t}\n\tlevy", "\t\t}\n\t\t}\n\t}\n\tlevy")
+        self.assertIn("\t\t\thas_building_or_higher = dwarven_hold_04\n\t\tcustom_tooltip", text)  # inside the OR
+        notes = []
+        self.assertEqual(rd.requirement_body(5, text, notes), rd.requirement_body(5, DEPTHS_5))
+        self.assertEqual(len(notes), 1)
+        self.assertIn("dwarven_depths_05", notes[0])
+
+    def test_other_hold_level_stops_build(self):
+        with self.assertRaisesRegex(rd.GeneratorError, "dwarven_hold_04"):
+            rd.requirement_body(6, DEPTHS_5)
+
+    def test_no_requirement_is_always_true(self):
+        self.assertEqual(rd.requirement_body(5, "dwarven_depths_05 = {\n\tlevy = 5\n}\n"), "\talways = yes\n")
+
+    def test_dispatch_on_level(self):
+        text = rd.requirements_met_trigger()
+        for n in range(2, 11):
+            self.assertIn(f"\ttrigger_if = {{\n\t\tlimit = {{ aov_hold_level = {n - 1} }}\n"
+                          f"\t\taov_hold_dig_requirements_{n}_trigger = yes\n\t}}\n", text)
+
+
 class HoldingListTests(unittest.TestCase):
     def test_drift_from_rie_stops_build(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -403,6 +461,26 @@ class RealTests(unittest.TestCase):
             self.assertNotIn("parameter", bp.code(text), n)
             self.assertIsNone(LEFTOVER.search(bp.code(text)), n)
             self.assertNotRegex(text, r"\b(?:can_construct|is_enabled|asset|ai_value|next_building|cost_gold)\b", n)
+
+    def test_dig_requirements_rendered_with_loc(self):
+        triggers = self.texts[rd.TRIGGERS_FILE]
+        keys = top_keys(triggers)
+        self.assertEqual(keys[-10:], [f"aov_hold_dig_requirements_{n}_trigger" for n in range(2, 11)]
+                         + ["aov_hold_dig_requirements_met_trigger"])
+        loc = set(re.findall(r"(?m)^ ([\w.\-']+):\d*\s", self.texts[rd.LOC_FILE])) | rd.external_loc_keys(REAL)
+        for n in range(2, 11):
+            body = block_of(triggers, f"aov_hold_dig_requirements_{n}_trigger")
+            self.assertIsNone(re.search(r"dwarven_hold_\d", body), n)
+            for key in re.findall(r"\btext = (\w+)", body):
+                self.assertIn(key, loc, key)
+        self.assertIn("has_building_or_higher = dwarven_toolmaker_guild_06",
+                      block_of(triggers, "aov_hold_dig_requirements_10_trigger"))
+        four = block_of(triggers, "aov_hold_dig_requirements_4_trigger")  # quarry 3 and any mine 3 (spec table)
+        self.assertRegex(four, r"\n\thas_building_or_higher = dwarven_quarry_03\n\tcustom_tooltip = \{\n"
+                               r"\t\ttext = has_mines_03_or_higher\n")
+        for n in range(4, 11):  # past level 3 a hold needs a mine
+            self.assertRegex(block_of(triggers, f"aov_hold_dig_requirements_{n}_trigger"),
+                             rf"\n\tcustom_tooltip = \{{\n\t\ttext = has_mines_{n - 1:02d}_or_higher\n", n)
 
     def test_removal_note_lists_only_rule_removals(self):
         note = next(n for n in self.notes if n.startswith("removed from RiE's buildings"))

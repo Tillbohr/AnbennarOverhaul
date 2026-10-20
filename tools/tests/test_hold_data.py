@@ -41,21 +41,12 @@ class HoldDataTests(unittest.TestCase):
             self.assertIn(EXPECTED_EU4[h["eu4_province"]], re.findall(r"\b(?:dig_\d+|ruined_hold|infested_hold)\b", text),
                           h["name"])
 
-    def test_levels_rise(self):
-        self.assertEqual(len(holds.LEVELS), 10)
-        for key in ("fort_level", "defender_holding_advantage", "levy_size", "tax_mult", "garrison_size"):
-            values = [l[key] for l in holds.LEVELS]
-            self.assertEqual(values, sorted(values), key)
-        self.assertLessEqual(max(l["fort_level"] for l in holds.LEVELS), 8)
-
     def test_start_levels(self):
         self.assertEqual({h["name"]: h["start_level"] for h in holds.HOLDS},
                          {"Marrhold": 1, "Anvilwright": 1, "Verkal Gulan": 2, "Seghdihr": 2, "Ovdal Tûngr": 2,
                           "Rubyhold": 2, "Hehodovar": 2, "Gor Ozumbrog": 2, "Khugdihr": 1})
 
     def test_buildings_and_constants(self):
-        self.assertEqual([(b["key"], b["min_level"]) for b in holds.DWARVEN_BUILDINGS],
-                         [("deep_mine", 3), ("runeforge", 5), ("hall_of_the_ancestors", 7)])
         self.assertEqual(set(holds.ASSET_BAND), set(range(1, 11)))
 
 

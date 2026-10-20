@@ -8,9 +8,11 @@ on_game_start = {
 	on_actions = { aov_hold_game_start }
 }
 
+# Converts the holds, then places the ore deposits present at game start (Rubyhold, Verkal Gulan, Anvilwright).
 aov_hold_game_start = {
 	effect = {
 		aov_hold_setup_effect = yes
+		aov_rie_deposit_setup_effect = yes
 	}
 }
 

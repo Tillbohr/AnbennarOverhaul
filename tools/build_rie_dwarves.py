@@ -5,8 +5,9 @@ tools/data/rie_dwarves.py; spec docs/superpowers/specs/2026-10-17-rie-dwarves-de
 scripted trigger, cultural parameter, script value and modifier it names must exist in Anbennar or the game or be
 copied with it (RiE-only script values go to VALUES_FILE), and no building key may be one Anbennar or the game
 defines. Also writes RiE's 15 ore deposit modifiers verbatim, the localization of everything copied and the building
-type icons, and gives tools/build_holds.py the hold level effects (depths_level_effects). Rerun after an RiE,
-Anbennar or CK3 update:
+type icons, gives tools/build_holds.py the hold level effects (depths_level_effects) and writes the dig
+prerequisites of each hold level (aov_hold_dig_requirements_<n>_trigger, from RiE's depths levels). Rerun after an
+RiE, Anbennar or CK3 update:
 
     python -I tools/build_rie_dwarves.py [--rie PATH] [--anbennar PATH] [--game PATH]
 """
@@ -403,19 +404,25 @@ def _effect_lines(text: str) -> str:
 
 
 @lru_cache(maxsize=None)
-def _depths(roots: Roots) -> tuple:
-    """((n, effects), ...) and the rewrite notes of RiE's dwarven_depths_01..10."""
+def _depths_texts(roots: Roots) -> tuple:
+    """((n, rewritten block text), ...) and the rewrite notes of RiE's dwarven_depths_01..10."""
     levels, notes = {}, []
     for key, body in rie_blocks(roots, data.DEPTHS_FILE):
         match = DEPTHS_KEY.match(key)
         if match:
             text, block_notes = rw.rewrite_block(body, known_parameters(roots))
-            effects = _effect_lines(text)
             notes += block_notes
-            levels[int(match.group(1))] = effects
+            levels[int(match.group(1))] = text
     if sorted(levels) != list(range(1, 11)):
         raise GeneratorError(f"{data.DEPTHS_FILE}: expected dwarven_depths_01..10, found {sorted(levels)}")
     return tuple(sorted(levels.items())), tuple(notes)
+
+
+@lru_cache(maxsize=None)
+def _depths(roots: Roots) -> tuple:
+    """((n, effects), ...) and the rewrite notes of RiE's dwarven_depths_01..10."""
+    levels, notes = _depths_texts(roots)
+    return tuple((n, _effect_lines(text)) for n, text in levels), notes
 
 
 def depths_level_effects(roots: Roots) -> dict:
@@ -431,6 +438,91 @@ def render_depth_values(build: Build) -> None:
         key = f"dwarven_depths_{n:02d}"
         check_values_and_modifiers(build, key, f"{key} = {{\n{effects}}}\n")
     build.notes.append(removal_note("hold level effects from RiE's dwarven_depths", list(notes)))
+
+
+# ------------------------------------------------------------------------------------------- dig prerequisites
+
+SINGLE_STATEMENT = re.compile(r"[\w:.@$?]+\s*(?:\?=|>=|<=|!=|=|<|>)\s*[^\s{}=]+")
+
+
+def _unwrap_single(text: str) -> str:
+    """text with every OR/AND block that holds one plain statement replaced by that statement (a one-item OR or AND
+    only adds a tiger warning)."""
+    while True:
+        masked = rw.mask(text)
+        for start, name, op, cl in rw.scan(masked):
+            inner = masked[op + 1:cl].strip()
+            if name in ("OR", "AND") and SINGLE_STATEMENT.fullmatch(inner):
+                text = text[:start] + inner + text[cl + 1:]
+                break
+        else:
+            return text
+
+
+def requirement_body(n: int, text: str, notes=None) -> str:
+    """The prerequisites to dig a hold to level n: the can_construct of RiE's rewritten dwarven_depths_<n> block
+    without its "previous level" line (a dig to n starts at n - 1), one tab deep; `always = yes` when it has none.
+    An OR holding the previous-level line is RiE's orc alternative around the dwarf requirements (depths_04: `OR =
+    { is_orc quarry depths_03 mines }`); with the orc branch gone its items are all required, so it is flattened
+    (spec Section 2 table: quarry 3 and any mine 3) and noted."""
+    found = [(start, end) for names, start, end in bp.blocks(text, 2, strict=False) if names[-1] == "can_construct"]
+    if not found:
+        return "\talways = yes\n"
+    block = text[found[0][0]:found[0][1]]
+    inner = block[block.index("{") + 1:block.rindex("}")]
+    previous = rf"has_building_or_higher\s*=\s*dwarven_hold_{n - 1:02d}\b"
+    while True:
+        masked = rw.mask(inner)
+        match = re.search(previous, masked)
+        holder = match and rw.innermost(rw.scan(masked), match.start())
+        if not holder or holder[1] != "OR":
+            break
+        start, _name, op, cl = holder
+        inner = inner[:start] + inner[op + 1:cl] + inner[cl + 1:]
+        if notes is not None:
+            notes.append(f"dwarven_depths_{n:02d}: the OR around the previous level is read as all required")
+    inner = re.sub(rf"(?m)^[ \t]*{previous}[ \t]*(?:#[^\n]*)?\n", "", inner)
+    inner = re.sub(previous, "", inner)
+    inner = _unwrap_single(rw.prune_empty(inner))
+    left = re.search(r"\b(?:dwarven_hold|dwarven_depths)_\d\d\b", bp.code(inner))
+    if left:
+        raise GeneratorError(f"dwarven_depths_{n:02d}: can_construct names {left.group(0)} besides the previous level")
+    lines = [line for line in reindent(inner, 1).split("\n") if line.strip() and not line.strip().startswith("#")]
+    return "\n".join(lines) + "\n" if lines else "\talways = yes\n"
+
+
+def requirements_met_trigger() -> str:
+    """Province scope: the prerequisites of the dig to the hold's next level (a level-10 hold never digs)."""
+    return _block("aov_hold_dig_requirements_met_trigger", *[
+        line for n in range(2, 11) for line in (
+            "trigger_if = {", f"\tlimit = {{ aov_hold_level = {n - 1} }}",
+            f"\taov_hold_dig_requirements_{n}_trigger = yes", "}")])
+
+
+def render_dig_requirements(build: Build) -> None:
+    """aov_hold_dig_requirements_<n>_trigger (n = 2..10, province scope) from RiE's depths levels and the dispatcher
+    on the hold's level, appended to TRIGGERS_FILE; Delve Deeper checks them when a dig starts (never while it runs).
+    Their tooltip keys are copied with the other loc."""
+    roots = build.roots
+    levels, _notes = _depths_texts(roots)
+    buildings = ({key for rel in OUTPUTS for key, _body in rie_blocks(roots, rel)} | external_buildings(roots)
+                 | set(HOLD_LEVELS))
+    pieces = []
+    for n, text in levels:
+        if n == 1:
+            continue
+        key = f"aov_hold_dig_requirements_{n}_trigger"
+        body = requirement_body(n, text, build.notes)
+        for field, name in BUILDING_REF.findall(body):
+            if name not in buildings:
+                raise GeneratorError(f"{key}: {field} {name} is neither copied nor defined by Anbennar or the game")
+        check_trigger_names(roots, key, body)
+        for loc_key in LOC_REF.findall(body):
+            build.want_loc(loc_key)
+        pieces += [f"# Province scope: RiE's prerequisites to dig a hold to level {n} (dwarven_depths_{n:02d}).",
+                   f"{key} = {{\n{body}}}\n"]
+    pieces += ["# Province scope: the prerequisites of the dig to the hold's next level.", requirements_met_trigger()]
+    build.files[TRIGGERS_FILE] += ("\n" + "\n".join(pieces)).encode("utf-8")
 
 
 # --------------------------------------------------------------------------------- triggers and deposit effects
@@ -663,6 +755,7 @@ def build_all(roots: Roots, notes=None) -> dict:
     render_buildings(build)
     render_ore_modifiers(build)
     render_triggers(build)
+    render_dig_requirements(build)
     render_deposit_effects(build)
     render_depth_values(build)
     render_values(build)

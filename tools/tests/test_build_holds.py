@@ -5,13 +5,17 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # python -I does not add the tools folder
 import build_holds as bh  # noqa: E402
+import build_portraits as bp  # noqa: E402
+import build_rie_dwarves as rd  # noqa: E402
 from data import holds  # noqa: E402
 from data.holding_models import HOLD_DWARF_MESHES  # noqa: E402
 
 LIVE = bh.ANBENNAR_CK3.is_dir()
+REAL = bp.Roots.default()
+HAVE_REAL = REAL.rie.is_dir() and REAL.anbennar.is_dir() and REAL.game.is_dir()
 SUBMOD = bh.SUBMOD
 KEYS = [f"dwarven_hold_{n:02d}" for n in range(1, 11)]
-BUILDING_KEYS = [f"{b['key']}_{n:02d}" for b in holds.DWARVEN_BUILDINGS for n in (1, 2, 3)]
+OLD_BUILDINGS = re.compile(r"deep_mine|runeforge|hall_of_the_ancestors")
 
 
 def parse_blocks(text):
@@ -24,11 +28,11 @@ def value(block, name):
     return float(m.group(1))
 
 
-@unittest.skipUnless(LIVE, "Anbennar CK3 not present")
+@unittest.skipUnless(HAVE_REAL, "RiE, Anbennar and game needed")
 class HoldBuildingTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.text = bh.render_buildings()
+        cls.text = bh.render_buildings(REAL)
         cls.blocks = parse_blocks(cls.text)
 
     def test_levels_chain_and_are_not_buildable(self):
@@ -39,39 +43,43 @@ class HoldBuildingTests(unittest.TestCase):
             self.assertIn("aov_hold_ruined", block)
             self.assertEqual(f"next_building = dwarven_hold_{n + 1:02d}" in block, n < 10)
 
-    def test_level_effects_match_data(self):
-        for n, lvl in enumerate(holds.LEVELS, 1):
+    def test_level_effects_come_from_rie(self):
+        effects = rd.depths_level_effects(REAL)
+        for n in range(1, 11):
+            self.assertIn(effects[n], self.blocks[f"dwarven_hold_{n:02d}"], n)
+
+    def test_level_ten_matches_rie(self):
+        province = re.search(r"\tprovince_modifier = \{\n(.*?)\n\t\}", self.blocks["dwarven_hold_10"], re.S).group(1)
+        self.assertRegex(province, r"(?m)^\t\tfort_level = 20$")
+        self.assertRegex(province, r"(?m)^\t\tbuilding_slot_add = 9\b")
+
+    def test_levels_still_not_buildable(self):
+        for n in range(1, 11):
             block = self.blocks[f"dwarven_hold_{n:02d}"]
-            for name, val in lvl.items():
-                if isinstance(val, str):
-                    self.assertRegex(block, rf"\b{name} = {val}\n", msg=f"{n} {name}")
-                    continue
-                if not val:
-                    self.assertNotIn(name, block)
-                    continue
-                self.assertAlmostEqual(value(block, name), val, msg=f"{n} {name}")
+            self.assertIn("\tcan_construct_potential = {\n\t\talways = no\n\t}\n", block, n)
+            self.assertNotRegex(block, r"\bcan_construct = ", n)
+            self.assertEqual(re.findall(r"\tis_enabled = \{\n.*?\n\t\}\n", block, re.S), [bh.IS_ENABLED.rstrip("\n") + "\n"],
+                             n)
+            self.assertIn("scope:holder = {\n\t\t\tis_dwarvish_culture = yes", bh.IS_ENABLED)
+            self.assertIn("NOT = { has_variable = aov_hold_ruined }", bh.IS_ENABLED)
+
+    def test_old_dwarven_buildings_gone(self):
+        self.assertIsNone(OLD_BUILDINGS.search(self.text))
+        self.assertIsNone(OLD_BUILDINGS.search(bh.render_loc()))
+        self.assertIsNone(OLD_BUILDINGS.search((Path(bh.__file__).parent / "data/holds.py").read_text(encoding="utf-8")))
+        self.assertIsNone(OLD_BUILDINGS.search(Path(bh.__file__).read_text(encoding="utf-8")))
+        for name in ("DWARVEN_BUILDINGS", "LEVELS", "FLAT_VALUES", "_FLAT_TIERS", "_LEVEL_ROWS"):
+            self.assertFalse(hasattr(holds, name), name)
 
     def test_flat_values_placed_like_castles(self):
         for n in range(1, 11):
             block = self.blocks[f"dwarven_hold_{n:02d}"]
-            for name in ("levy", "max_garrison", "garrison_reinforcement_factor"):
-                self.assertRegex(block, rf"(?m)^\t{name} = \w+$", f"{n} {name}")
+            for name in ("levy", "max_garrison", "garrison_reinforcement_factor"):  # RiE's numbers or script values
+                self.assertRegex(block, rf"(?m)^\t{name} = [\w.]+$", f"{n} {name}")
             province = re.search(r"\tprovince_modifier = \{\n(.*?)\n\t\}", block, re.S).group(1)
             self.assertIn("monthly_income = ", province, n)
 
-    def test_dwarven_buildings_switch_off_like_levels(self):
-        for key in BUILDING_KEYS:
-            enabled = re.search(r"\tis_enabled = \{\n(.*?)\n\t\}", self.blocks[key], re.S)
-            self.assertTrue(enabled, key)
-            self.assertRegex(enabled.group(1), r"scope:holder = \{\s*is_dwarvish_culture = yes\s*\}", key)
-            self.assertIn("NOT = { has_variable = aov_hold_ruined }", enabled.group(1), key)
-
-    def test_ai_builds_dwarven_buildings_but_never_levels(self):
-        for key in BUILDING_KEYS:
-            ai = re.search(r"\tai_value = \{\n(.*?)\n\t\}", self.blocks[key], re.S).group(1)
-            self.assertGreater(value(ai, "base"), 0, key)
-            self.assertIn("ai_general_building_modifier = yes", ai, key)
-            self.assertEqual("ai_tier_1_building_modifier = yes" in ai, key.endswith("_01"), key)
+    def test_ai_never_builds_levels(self):
         for n in range(1, 11):
             ai = re.search(r"\tai_value = \{\n(.*?)\n\t\}", self.blocks[f"dwarven_hold_{n:02d}"], re.S).group(1)
             self.assertEqual(value(ai, "base"), 0, n)
@@ -123,74 +131,6 @@ class HoldBuildingTests(unittest.TestCase):
         self.assertTrue(vars_)
         for var in vars_:
             self.assertIn(f"{var} =", self.text)
-
-    def test_dwarven_buildings_gated_on_level(self):
-        self.assertIn("has_building_or_higher = dwarven_hold_03", self.blocks["deep_mine_01"])
-        self.assertIn("has_building_or_higher = dwarven_hold_05", self.blocks["runeforge_01"])
-        self.assertIn("has_building_or_higher = dwarven_hold_07", self.blocks["hall_of_the_ancestors_01"])
-        for key in BUILDING_KEYS:
-            self.assertIn("is_dwarvish_culture = yes", self.blocks[key])
-
-    def test_dwarven_building_effects_scale(self):
-        self.assertAlmostEqual(value(self.blocks["deep_mine_03"], "tax_mult"), 0.15)
-        self.assertIn("next_building = deep_mine_02", self.blocks["deep_mine_01"])
-        self.assertNotIn("next_building", self.blocks["deep_mine_03"])
-        self.assertIn("normal_building_tier_3_cost", self.blocks["runeforge_03"])
-
-
-FLAT_KEYS = ("levy", "max_garrison", "garrison_reinforcement_factor", "monthly_income")
-BUILDING_VALUES = "common/script_values/00_building_values.txt"
-
-
-def script_value_resolver(root):
-    """Resolve Anbennar's flat building script values (`name = @[expr]` over `@var = expr`) to numbers."""
-    text = (Path(root) / BUILDING_VALUES).read_text(encoding="utf-8-sig")
-    defs = {m.group(1): m.group(2).strip() for m in re.finditer(r"^(@?\w+) = ([^{#\n]+)", text, re.M)}
-
-    def resolve(name):
-        expr = defs[name]
-        if expr.startswith("@["):
-            expr = expr[2:-1]
-        elif expr.startswith("@"):
-            expr = expr[1:]
-
-        def sub(m):
-            ident = m.group(0)
-            return repr(resolve("@" + ident if "@" + ident in defs else ident))
-
-        expr = re.sub(r"\b[a-z_]\w*\b", sub, expr)
-        return eval(expr, {"__builtins__": {}})  # numbers and + - * / only
-
-    return resolve
-
-
-def castle_flat_values(root):
-    """castle_0N -> {flat key: script value name} from Anbennar's castle buildings."""
-    text = (Path(root) / bh.CASTLE_FILE).read_text(encoding="utf-8-sig")
-    out = {}
-    for key, body in parse_blocks(text).items():
-        if re.fullmatch(r"castle_0\d", key):
-            out[key] = {k: re.search(rf"\b{k} = (\w+)", body).group(1) for k in FLAT_KEYS}
-    return out
-
-
-@unittest.skipUnless(LIVE, "Anbennar CK3 not present")
-class FlatValueTests(unittest.TestCase):
-    def test_every_level_has_flat_values_at_least_its_castle(self):
-        resolve = script_value_resolver(bh.ANBENNAR_CK3)
-        castles = castle_flat_values(bh.ANBENNAR_CK3)
-        self.assertEqual(set(castles), {"castle_01", "castle_02", "castle_03", "castle_04"})
-        for n, lvl in enumerate(holds.LEVELS, 1):
-            castle = castles[holds.ASSET_BAND[n]]
-            for k in FLAT_KEYS:
-                self.assertIn(k, lvl, f"{n} {k}")
-                self.assertGreaterEqual(resolve(lvl[k]), resolve(castle[k]), f"level {n} {k}")
-
-    def test_flat_values_never_fall(self):
-        resolve = script_value_resolver(bh.ANBENNAR_CK3)
-        for k in FLAT_KEYS:
-            values = [resolve(lvl[k]) for lvl in holds.LEVELS]
-            self.assertEqual(values, sorted(values), k)
 
 
 CASTLE_LEVEL_TO_HOLD = {"01": 1, "02": 3, "03": 5, "04": 8}
@@ -260,10 +200,10 @@ class ValueAndLocTests(unittest.TestCase):
                      "TRAIT_BONUS", "DIG_TARGET_PER_LEVEL"):
             self.assertFalse(hasattr(holds, name), name)
 
-    def test_loc_for_every_level_and_building(self):
+    def test_loc_for_every_level(self):
         loc = bh.render_loc()
         self.assertTrue(loc.startswith("l_english:"))
-        for key in KEYS + BUILDING_KEYS:
+        for key in KEYS:
             for k in (f"building_{key}", f"building_{key}_desc", f"building_type_{key}", f"building_type_{key}_desc"):
                 self.assertIn(f" {k}:0 \"", loc)
 
@@ -311,10 +251,73 @@ class SetupTests(unittest.TestCase):
             self.assertIn(f"{k} = {{", t)
 
 
-@unittest.skipUnless(LIVE, "Anbennar CK3 not present")
+TRIGGER_BLOCK = re.compile(r"^(aov_hold_dig_requirements_\w+) = \{\n(.*?)^\}", re.M | re.S)
+
+
+class DigRequirementTests(unittest.TestCase):
+    """The dig prerequisites: RiE's depths can_construct, checked when a dig starts and never while it runs."""
+
+    def hand(self, rel):
+        return (SUBMOD / rel).read_text(encoding="utf-8-sig")
+
+    def test_dig_requirements_for_levels_2_to_10(self):
+        triggers = dict(TRIGGER_BLOCK.findall(self.hand(rd.TRIGGERS_FILE)))
+        self.assertEqual(set(triggers), {f"aov_hold_dig_requirements_{n}_trigger" for n in range(2, 11)}
+                         | {"aov_hold_dig_requirements_met_trigger"})
+        for n in range(2, 11):
+            body = triggers[f"aov_hold_dig_requirements_{n}_trigger"]
+            self.assertNotIn(f"dwarven_hold_{n - 1:02d}", body, n)
+            self.assertNotRegex(body, r"dwarven_(?:hold|depths)_\d", n)
+            self.assertNotRegex(body, r"\b(?:OR|AND) = \{\s*\}", n)
+        five = triggers["aov_hold_dig_requirements_5_trigger"]
+        self.assertIn("has_building_or_higher = dwarven_quarry_03", five)
+        self.assertIn("text = has_mines_04_or_higher", five)
+        mines = re.search(r"text = has_mines_04_or_higher\n\t+OR = \{\n(.*?)\n\t+\}", five, re.S).group(1)
+        self.assertEqual(sorted(re.findall(r"has_building_or_higher = (\w+)_mines_04", mines)), sorted(rd.data.ORES))
+        self.assertIn("has_building_or_higher = dwarven_quarry_01", triggers["aov_hold_dig_requirements_2_trigger"])
+        met = triggers["aov_hold_dig_requirements_met_trigger"]
+        for n in range(2, 11):
+            self.assertRegex(met, rf"trigger_(?:else_)?if = \{{\n\t+limit = \{{ aov_hold_level = {n - 1} \}}\n"
+                                  rf"\t+aov_hold_dig_requirements_{n}_trigger = yes\n", n)
+        self.assertNotIn("aov_hold_level = 10", met)
+
+    def test_requirement_tooltips_have_loc(self):
+        loc = self.hand(rd.LOC_FILE)
+        bodies = "".join(body for _name, body in TRIGGER_BLOCK.findall(self.hand(rd.TRIGGERS_FILE)))
+        keys = set(re.findall(r"\btext = (\w+)", bodies))
+        self.assertIn("has_specialization_01_or_higher", keys)
+        for key in keys:
+            self.assertRegex(loc, rf"(?m)^ {key}:\d* ?\"", key)
+
+    def test_dig_start_checks_requirements(self):
+        triggers = parse_blocks(self.hand("common/scripted_triggers/aov_hold_triggers.txt"))
+        self.assertIn("\taov_hold_dig_requirements_met_trigger = yes\n", triggers["aov_can_dig_at"])
+
+    def test_running_dig_ignores_requirements(self):
+        for rel in ("common/on_action/aov_hold_on_actions.txt", "common/on_action/aov_hold_dig_on_actions.txt",
+                    "common/scripted_effects/aov_hold_effects.txt", "events/aov_hold_dig_events.txt"):
+            text = self.hand(rel)
+            self.assertNotIn("aov_hold_dig_requirements", text, rel)
+            self.assertNotIn("aov_can_dig_at = yes", text, rel)
+
+    def test_picker_shows_blocked_holds(self):
+        text = self.hand("events/aov_hold_delve_events.txt")
+        options = re.findall(r"\toption = \{\n\t\tname = aov_hold_delve\.1\.hold_\d\n.*?\n\t\}\n", text, re.S)
+        self.assertEqual(len(options), len(holds.HOLDS))
+        for h, option in zip(holds.HOLDS, options):
+            self.assertIn(f"\t\t\ttitle:{h['barony']} = {{ holder = root }}\n", option, h["name"])
+            self.assertIn(f"\t\tshow_as_unavailable = {{ title:{h['barony']} = {{ holder = root }} }}\n", option,
+                          h["name"])
+
+    def test_game_start_sets_deposits(self):
+        effect = parse_blocks(self.hand("common/on_action/aov_hold_on_actions.txt"))["aov_hold_game_start"]
+        self.assertRegex(effect, r"aov_hold_setup_effect = yes\n\t+aov_rie_deposit_setup_effect = yes\n")
+
+
+@unittest.skipUnless(HAVE_REAL, "RiE, Anbennar and game needed")
 class FreshTests(unittest.TestCase):
     def test_written_files_are_fresh(self):
-        for rel, text in bh.render_all().items():
+        for rel, text in bh.render_all(roots=REAL).items():
             data = (SUBMOD / rel).read_bytes()
             self.assertTrue(data.startswith(b"\xef\xbb\xbf"), rel)
             self.assertEqual(data[3:].decode("utf-8"), text, rel)
