@@ -141,7 +141,9 @@ class ScriptValueTests(unittest.TestCase):
             ("buildings", "b", "county_modifier"):
                 "county = { every_county_province = { limit = { has_building = b } add = 0.1 } }",
             ("buildings", "b", "duchy_capital_county_modifier"):
-                "if = { limit = { county.duchy.title_province = { has_building = b } } add = 0.1 }",
+                # title_province only works on counties and baronies: a duchy is reached through its capital county
+                "if = { limit = { exists = county.duchy "
+                "county.duchy.title_capital_county.title_province = { has_building = b } } add = 0.1 }",
             ("buildings", "b", "character_modifier"):
                 "if = { limit = { province_owner = { any_directly_owned_province = { has_building = b } } } add = 0.1 }",
             ("culture/traditions", "t", "character_modifier"):

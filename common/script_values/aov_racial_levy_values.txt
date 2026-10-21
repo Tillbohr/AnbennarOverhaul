@@ -4,9 +4,9 @@
 # Province scope: the summed levy_size of the covered sources that apply to this holding.
 aov_holding_levy_size_bonus = {
 	value = 0
-	if = { limit = { county.duchy.title_province = { has_building = royal_armory_01 county.holder = { has_title = prev.duchy } } } add = 0.2 } # buildings royal_armory_01
-	if = { limit = { county.duchy.title_province = { has_building = royal_armory_02 county.holder = { has_title = prev.duchy } } } add = 0.3 } # buildings royal_armory_02
-	if = { limit = { county.duchy.title_province = { has_building = royal_armory_03 county.holder = { has_title = prev.duchy } } } add = 0.4 } # buildings royal_armory_03
+	if = { limit = { exists = county.duchy county.duchy.title_capital_county.title_province = { has_building = royal_armory_01 county.holder = { has_title = prev.duchy } } } add = 0.2 } # buildings royal_armory_01
+	if = { limit = { exists = county.duchy county.duchy.title_capital_county.title_province = { has_building = royal_armory_02 county.holder = { has_title = prev.duchy } } } add = 0.3 } # buildings royal_armory_02
+	if = { limit = { exists = county.duchy county.duchy.title_capital_county.title_province = { has_building = royal_armory_03 county.holder = { has_title = prev.duchy } } } add = 0.4 } # buildings royal_armory_03
 	if = { limit = { has_building = paddy_fields_01 terrain = terraced_hills county.culture = { has_cultural_parameter = champa_rice_building_bonuses } } add = 0.02 } # buildings paddy_fields_01
 	if = { limit = { has_building = paddy_fields_01 terrain = wetlands county.culture = { has_cultural_parameter = champa_rice_building_bonuses } } add = 0.02 } # buildings paddy_fields_01
 	if = { limit = { has_building = paddy_fields_01 terrain = floodplains county.culture = { has_cultural_parameter = champa_rice_building_bonuses } } add = 0.02 } # buildings paddy_fields_01
@@ -216,9 +216,9 @@ aov_holding_levy_size_bonus = {
 	if = { limit = { has_building = dwarven_terrace_farm_08 province_owner = { is_dwarvish_culture = yes } } add = 0.08 } # buildings dwarven_terrace_farm_08
 	if = { limit = { has_building = dwarven_terrace_farm_09 province_owner = { is_dwarvish_culture = yes } } add = 0.09 } # buildings dwarven_terrace_farm_09
 	if = { limit = { has_building = dwarven_terrace_farm_10 province_owner = { is_dwarvish_culture = yes } } add = 0.1 } # buildings dwarven_terrace_farm_10
-	if = { limit = { county.duchy.title_province = { has_building = military_specialization_01 province_owner = { is_dwarvish_culture = yes } county.holder = { has_title = prev.duchy } } } add = 0.05 } # buildings military_specialization_01
-	if = { limit = { county.duchy.title_province = { has_building = military_specialization_02 province_owner = { is_dwarvish_culture = yes } county.holder = { has_title = prev.duchy } } } add = 0.1 } # buildings military_specialization_02
-	if = { limit = { county.duchy.title_province = { has_building = military_specialization_03 province_owner = { is_dwarvish_culture = yes } county.holder = { has_title = prev.duchy } } } add = 0.15 } # buildings military_specialization_03
+	if = { limit = { exists = county.duchy county.duchy.title_capital_county.title_province = { has_building = military_specialization_01 province_owner = { is_dwarvish_culture = yes } county.holder = { has_title = prev.duchy } } } add = 0.05 } # buildings military_specialization_01
+	if = { limit = { exists = county.duchy county.duchy.title_capital_county.title_province = { has_building = military_specialization_02 province_owner = { is_dwarvish_culture = yes } county.holder = { has_title = prev.duchy } } } add = 0.1 } # buildings military_specialization_02
+	if = { limit = { exists = county.duchy county.duchy.title_capital_county.title_province = { has_building = military_specialization_03 province_owner = { is_dwarvish_culture = yes } county.holder = { has_title = prev.duchy } } } add = 0.15 } # buildings military_specialization_03
 	if = { limit = { has_building = dwarven_surface_farm_01 } add = 0.02 } # buildings dwarven_surface_farm_01
 	if = { limit = { has_building = dwarven_surface_farm_02 } add = 0.04 } # buildings dwarven_surface_farm_02
 	if = { limit = { has_building = dwarven_surface_farm_03 } add = 0.07 } # buildings dwarven_surface_farm_03

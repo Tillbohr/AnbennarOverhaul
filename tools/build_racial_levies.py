@@ -282,7 +282,9 @@ def _source_script(src: Source) -> str:
         if block == "county_modifier":
             return _county_count([has], src.value)
         if block == "duchy_capital_county_modifier":  # every de jure county of the duchy whose capital has it
-            return _if([f"county.duchy.title_province = {{ {has} }}"], src.value)
+            # title_province only works on counties and baronies, so go through the duchy's capital county
+            return _if(["exists = county.duchy", f"county.duchy.title_capital_county.title_province = {{ {has} }}"],
+                       src.value)
         if block == "county_culture_modifier":
             return _county_count([has] + _parameter(src, "county.culture"), src.value)
         if block == "county_faith_modifier":
