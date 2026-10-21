@@ -13,12 +13,10 @@ Spec: `docs/superpowers/specs/2026-10-21-racial-armies-design.md` (every stat an
 ## System
 
 - **Heritages** (`common/culture/pillars/zz_aov_racial_heritages.txt`, single-object overrides of Anbennar's four bare
-  heritages; `type`, `is_shown`, `audio_parameter` copied). By the ruler's culture (`character_modifier`). Every
-  ruler's whole levy pool follows their own race: their own holdings (`levy_size`) and what their vassals send them,
-  whatever the vassals' race (`vassal_levy_contribution_mult`), all at the ruler's levy quality. A vassal raising
-  their own army uses their own race.
+  heritages; `type`, `is_shown`, `audio_parameter` copied). By the ruler's culture (`character_modifier`), so levy
+  count and levy quality always come from one culture:
 
-  | Heritage | `levy_size` and `vassal_levy_contribution_mult` | Levy damage / toughness | `domain_limit` | Levies vs a human ruler |
+  | Heritage | `levy_size` | Levy damage / toughness | `domain_limit` | Levies vs a human holding |
   |---|---|---|---|---|
   | Elven | −0.75 | +30 / +30 (40 per man) | −1 | 25% |
   | Dwarven | −0.40 | +7 / +7 (17) | −2 | 60% |
@@ -26,8 +24,7 @@ Spec: `docs/superpowers/specs/2026-10-21-racial-armies-design.md` (every stat an
   | Kobold | +0.50 | −3 / −3 (7) | 0 | 150% |
 
   Count × quality equals a human's, so levy power is unchanged; races differ in how many men they field. Each also
-  sets the parameter `aov_racial_levy_<race>`. A racial vassal's own levies are already at their share, so what it
-  sends a racial liege is cut again (an elf vassal sends an elf liege a quarter of its quarter).
+  sets the parameter `aov_racial_levy_<race>`.
 - **Levy correction.** CK3 adds every `levy_size` into one total, so a flat −75% would let elven levies grow about
   twice as fast as human ones as buildings add bonuses. For a holding whose owner has a racial heritage, with S the
   holding's summed covered levy bonus, the province modifier `aov_racial_levy_<race>_<n>` (n = S / 0.05 rounded,
@@ -51,11 +48,6 @@ Spec: `docs/superpowers/specs/2026-10-21-racial-armies-design.md` (every stat an
     de jure duchy), `on_title_gain` (every province of a county, the province of a barony), `on_holding_razed`, and
     yearly (`yearly_playable_pulse`) for every holding of the counties of rulers who are racial or have a corrected
     holding there (this reaches vassal barons' temples and cities).
-- **Vassal contribution correction.** The same drift applies to `vassal_levy_contribution_mult` (crown authority
-  laws, the large-levies perk, a tradition, three monuments add to it), so each racial ruler gets the character
-  modifier `aov_racial_contribution_<race>_<n>` taking back the race's share of those bonuses
-  (`aov_ruler_contribution_bonus`, character scope; same tiers and range). `aov_refresh_ruler_contribution_correction`
-  runs at game start for every racial ruler, on `on_title_gain` for the new holder, and in the same yearly pulse.
 - **Removed traditions** (`common/culture/traditions/zz_aov_racial_traditions.txt`, hidden and unpickable; removed
   from every culture by `aov_racial_armies_game_start`): `tradition_sundancer_legions` (its units belong to every sun
   elf culture) and `tradition_test_maa_anb_dwarven_handgunners` (`dwarven_handgunners` is overridden with

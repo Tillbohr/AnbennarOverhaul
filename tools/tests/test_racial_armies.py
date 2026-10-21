@@ -56,7 +56,7 @@ BASE_HERITAGE_FILE = "common/culture/pillars/anb_heritage.txt"
 TRIGGER_FILE = "common/scripted_triggers/aov_racial_maa_triggers.txt"
 CLANS = ("ruby", "silver", "stone", "agate", "copper", "citrine", "gold", "pyrite", "titanium", "topaz", "marble")
 
-HERITAGES = {  # levy_size (and vassal_levy_contribution_mult), levy_attack/levy_toughness, domain_limit, parameter
+HERITAGES = {  # levy_size, levy_attack/levy_toughness, domain_limit, parameter
     "heritage_elven": ("-0.75", "30", "-1", "aov_racial_levy_elven"),
     "heritage_dwarven": ("-0.40", "7", "-2", "aov_racial_levy_dwarven"),
     "heritage_gnomish": ("-0.50", "10", "-1", "aov_racial_levy_gnomish"),
@@ -76,8 +76,6 @@ class HeritageTests(unittest.TestCase):
             inner = parse_blocks(self.ours[key])
             mod = inner.get("character_modifier", "")
             self.assertEqual(field(mod, "levy_size"), levy, key)
-            # a ruler's whole levy pool is cut by race: what vassals send too, not only their own holdings
-            self.assertEqual(field(mod, "vassal_levy_contribution_mult"), levy, key)
             self.assertEqual(field(mod, "levy_attack"), quality, key)
             self.assertEqual(field(mod, "levy_toughness"), quality, key)
             self.assertEqual(field(mod, "domain_limit"), domain, key)
@@ -391,7 +389,6 @@ class MaaTests(unittest.TestCase):
 
 
 REFRESH = "aov_refresh_holding_levy_correction = yes"
-RULER_REFRESH = "aov_refresh_ruler_contribution_correction = yes"
 RACIAL_PARAMS = ("aov_racial_levy_elven", "aov_racial_levy_dwarven", "aov_racial_levy_gnomish", "aov_racial_levy_kobold")
 
 
@@ -430,23 +427,19 @@ class RefreshHookTests(unittest.TestCase):
         # vassal barons' holdings (temples, cities) sit in their count's counties and get no pulse of their own
         self.assertEqual(self.effect("aov_racial_levy_yearly"),
                          f"every_held_title = {{ limit = {{ tier = tier_county }} every_county_province = {{ {REFRESH} }} }} "
-                         f"every_directly_owned_province = {{ {REFRESH} }} {RULER_REFRESH}")
+                         f"every_directly_owned_province = {{ {REFRESH} }}")
         trigger = squash(parse_blocks(self.on_actions["aov_racial_levy_yearly"]).get("trigger", ""))
         for param in RACIAL_PARAMS:
             self.assertIn(f"has_cultural_parameter = {param}", trigger)
         self.assertIn("any_held_title = { tier = tier_county any_county_province = { has_variable = aov_racial_levy_tier } }",
                       trigger)
         self.assertIn("any_directly_owned_province = { has_variable = aov_racial_levy_tier }", trigger)
-        self.assertIn("has_variable = aov_racial_contribution_tier", trigger)
-
-    def test_title_gain_refreshes_the_new_holder(self):
-        self.assertTrue(self.effect("aov_racial_levy_title_gain").endswith(RULER_REFRESH))
 
     def test_game_start_refreshes_racial_provinces(self):
         effect = self.effect("aov_racial_armies_game_start")
         self.assertRegex(effect, rf"every_ruler = {{ limit = {{ culture = {{ OR = {{ "
                                  rf"{' '.join(f'has_cultural_parameter = {p}' for p in RACIAL_PARAMS)} }} }} }} "
-                                 rf"every_directly_owned_province = {{ {REFRESH} }} {RULER_REFRESH} }}")
+                                 rf"every_directly_owned_province = {{ {REFRESH} }} }}")
 
 
 if __name__ == "__main__":

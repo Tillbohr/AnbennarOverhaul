@@ -29,7 +29,6 @@ aov_racial_armies_game_start = {
 				}
 			}
 			every_directly_owned_province = { aov_refresh_holding_levy_correction = yes }
-			aov_refresh_ruler_contribution_correction = yes
 		}
 	}
 }
@@ -86,7 +85,6 @@ aov_racial_levy_title_gain = {
 				title_province = { aov_refresh_holding_levy_correction = yes }
 			}
 		}
-		aov_refresh_ruler_contribution_correction = yes # root, the new holder: their vassals may have changed
 	}
 }
 
@@ -116,7 +114,6 @@ aov_racial_levy_yearly = {
 				any_county_province = { has_variable = aov_racial_levy_tier }
 			}
 			any_directly_owned_province = { has_variable = aov_racial_levy_tier }
-			has_variable = aov_racial_contribution_tier
 		}
 	}
 	effect = {
@@ -125,6 +122,5 @@ aov_racial_levy_yearly = {
 			every_county_province = { aov_refresh_holding_levy_correction = yes }
 		}
 		every_directly_owned_province = { aov_refresh_holding_levy_correction = yes }
-		aov_refresh_ruler_contribution_correction = yes
 	}
 }

@@ -124,20 +124,6 @@ class CollectTests(Fixture):
                          "if = { limit = { has_building = farm_01 province_owner = { is_dwarvish_culture = yes } "
                          "county = { development_level >= 5 } } add = 0.05 }")
 
-    def test_contribution_sources_collected(self):
-        tree(self.vanilla, {
-            "common/laws/l.txt": "crown = { crown_1 = { modifier = { vassal_levy_contribution_mult = 0.1 } } }",
-            "common/lifestyle_perks/p.txt": "large_levies = { government_character_modifier = { flag = "
-                                            "government_is_landless_adventurer invert_check = yes "
-                                            "vassal_levy_contribution_mult = 0.2 } }",
-            "common/modifiers/m.txt": "feast = { vassal_levy_contribution_mult = 0.1 }",
-            "common/culture/pillars/h.txt": "heritage_elven = { character_modifier = { vassal_levy_contribution_mult = -0.75 } }"})
-        found = {(s.database, s.key, s.block, s.value, tuple(sorted(s.condition.items())))
-                 for s in brl.collect_sources(self.roots, submod=self.sub, modifier=brl.CONTRIBUTION)}
-        self.assertEqual(found, {("laws", "crown_1", "modifier", 0.1, ()),
-                                 ("lifestyle_perks", "large_levies", "government_character_modifier", 0.2,
-                                  (("flag", "government_is_landless_adventurer"), ("invert_check", "yes")))})
-
     def test_nested_object_keys(self):
         tree(self.vanilla, {"common/laws/l.txt": "decree = { decree_a = { modifier = { levy_size = -0.1 } } }",
                          "common/religion/doctrine_types/d.txt": "tenet_x = { character_modifier = { levy_size = 0.1 } }"})
@@ -190,41 +176,6 @@ class ScriptValueTests(unittest.TestCase):
                          "if = { limit = { has_building = b terrain = hills is_coastal = no } add = 0.1 }")
 
 
-class ContributionScriptTests(unittest.TestCase):
-    def cond(self, database, key, block, condition=None):
-        src = brl.Source(database, key, block, 0.1, condition or {})
-        return " ".join(brl.contribution_script(src).split())
-
-    def test_contribution_conditions(self):
-        cases = {
-            ("laws", "crown_1", "modifier"): "if = { limit = { has_realm_law = crown_1 } add = 0.1 }",
-            ("culture/traditions", "t", "character_modifier"):
-                "if = { limit = { culture = { has_cultural_tradition = t } } add = 0.1 }",
-            ("lifestyle_perks", "p", "character_modifier"): "if = { limit = { has_perk = p } add = 0.1 }",
-            ("traits", "tr", ""): "if = { limit = { has_trait = tr } add = 0.1 }",
-        }
-        for args, want in cases.items():
-            self.assertEqual(self.cond(*args), want, args)
-        self.assertEqual(self.cond("lifestyle_perks", "p", "government_character_modifier",
-                                   {"flag": "government_is_landless_adventurer", "invert_check": "yes"}),
-                         "if = { limit = { has_perk = p NOT = { government_has_flag = government_is_landless_adventurer } }"
-                         " add = 0.1 }")
-
-    def test_contribution_tier_modifiers(self):
-        text = brl.modifiers_file()
-        self.assertIn("aov_racial_contribution_elven_m10 = {\n\tvassal_levy_contribution_mult = 0.375\n}", text)
-        self.assertIn("aov_racial_contribution_kobold_4 = {\n\tvassal_levy_contribution_mult = 0.1\n}", text)
-
-    def test_ruler_refresh_removes_before_adding(self):
-        text = brl.effects_file()
-        start = text.find("aov_refresh_ruler_contribution_correction = {")
-        self.assertGreater(start, 0)
-        body = text[start:]
-        remove, add = body.find("remove_character_modifier"), body.find("add_character_modifier")
-        self.assertTrue(0 <= remove < add)
-        self.assertIn("set_variable = { name = aov_racial_contribution_tier value = aov_ruler_contribution_tier }", body)
-
-
 class TierTests(unittest.TestCase):
     def test_tier_math(self):
         for race, f in RACES.items():
@@ -245,8 +196,7 @@ class TierTests(unittest.TestCase):
 
     def test_every_nonzero_tier_has_a_modifier(self):
         keys = set(re.findall(r"^(\w+) = \{", brl.modifiers_file(), re.M))
-        want = {brl.tier_key(r, n, family) for family in ("levy", "contribution") for r in RACES
-                for n in range(brl.tier(S_MIN), brl.tier(S_MAX) + 1) if n}
+        want = {brl.tier_key(r, n) for r in RACES for n in range(brl.tier(S_MIN), brl.tier(S_MAX) + 1) if n}
         self.assertEqual(keys, want)
 
     def test_refresh_removes_before_adding_and_skips_non_racial(self):
