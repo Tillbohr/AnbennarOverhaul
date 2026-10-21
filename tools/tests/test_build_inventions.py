@@ -1,6 +1,6 @@
 """Tests for tools/data/inventions.py and tools/build_inventions.py.
 
-    python -I -m unittest discover -s tools/tests -v
+    python -I -m unittest discover -s tools/tests -p "test_build_inventions.py"
 """
 
 import collections
@@ -296,25 +296,6 @@ class GuiOutputTests(unittest.TestCase):
             # EU4's society strip has a colour frame 1 (same as frame 2), so frame 1 is greyed in CK3
             self.assertIn('effectname = "GreyedOut"', frames[1].split("highlight_icon")[0] + b.split("frame = 1\n")[0].rsplit("highlight_icon", 1)[1])
 
-    def test_dx10_bgra_converts_to_legacy_header(self):
-        import struct
-        w, h = 6, 2
-        pixels = bytes(range(w * h * 4))
-        head = bytearray(128)
-        head[0:4] = b"DDS "
-        struct.pack_into("<I", head, 4, 124)
-        struct.pack_into("<II", head, 12, h, w)
-        head[84:88] = b"DX10"
-        src = bytes(head) + struct.pack("<IIIII", 91, 3, 0, 1, 0) + pixels
-        out = bi.dx10_bgra_to_legacy(src)
-        self.assertEqual(len(out), 128 + len(pixels))
-        self.assertEqual(out[128:], pixels)
-        self.assertEqual(struct.unpack("<II", out[12:20]), (h, w))
-        self.assertEqual(struct.unpack("<I", out[80:84])[0], 0x41)        # DDPF_RGB | DDPF_ALPHAPIXELS
-        self.assertEqual(struct.unpack("<5I", out[88:108]), (32, 0x00FF0000, 0x0000FF00, 0x000000FF, 0xFF000000))
-        with self.assertRaises(bi.GeneratorError):
-            bi.dx10_bgra_to_legacy(bytes(head) + struct.pack("<IIIII", 98, 3, 0, 1, 0) + pixels)  # BC7
-
     def test_tooltip_has_name_description_effects_and_status(self):
         text = bi.gui(INVENTIONS)
         for i in INVENTIONS:
@@ -367,37 +348,12 @@ class GuiOutputTests(unittest.TestCase):
             raw = (Path(tmp) / "a" / "b.txt").read_bytes()
             self.assertEqual(raw, b"\xef\xbb\xbfx = {\n}\n")
 
-    def test_copy_icons_copies_each_distinct_icon(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            eu4, root = Path(tmp, "eu4"), Path(tmp, "mod")
-            (eu4 / bi.EU4_ICONS).mkdir(parents=True)
-            for name in {i["icon"] for i in INVENTIONS}:
-                (eu4 / bi.EU4_ICONS / name).write_bytes(b"DDS ")
-            bi.copy_icons(INVENTIONS, eu4, root)
-            self.assertEqual(len(list((root / bi.ICON_DIR).glob("Artf_*.dds"))), len({i["icon"] for i in INVENTIONS}))
+    def test_committed_icons_exist(self):
+        bi.check_icons(INVENTIONS, bi.SUBMOD)
 
-    def test_copy_button_icons_converts_each_category(self):
-        import struct
-        with tempfile.TemporaryDirectory() as tmp:
-            eu4, root = Path(tmp, "eu4"), Path(tmp, "mod")
-            (eu4 / bi.EU4_BUTTONS).mkdir(parents=True)
-            head = bytearray(128)
-            head[0:4] = b"DDS "
-            struct.pack_into("<II", head, 12, 78, 234)
-            head[84:88] = b"DX10"
-            for c in bi.CATEGORIES:
-                (eu4 / bi.EU4_BUTTONS / f"artificery_innovation_{c}.dds").write_bytes(
-                    bytes(head) + struct.pack("<IIIII", 91, 3, 0, 1, 0) + bytes(234 * 78 * 4))
-            bi.copy_button_icons(eu4, root)
-            for c in bi.CATEGORIES:
-                out = (root / bi.ICON_DIR / f"aov_invention_button_{c}.dds").read_bytes()
-                self.assertNotEqual(out[84:88], b"DX10")
-
-    def test_copy_icons_missing_source(self):
+    def test_missing_icon_stops_the_build(self):
         with tempfile.TemporaryDirectory() as tmp:
             with self.assertRaises(bi.GeneratorError):
-                bi.copy_icons(INVENTIONS, Path(tmp, "nope"), Path(tmp, "mod"))
-
-
+                bi.check_icons(INVENTIONS, Path(tmp))
 if __name__ == "__main__":
     unittest.main()

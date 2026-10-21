@@ -7,8 +7,14 @@ The Magic HUD tab sits in the generated `gui/hud.gui` (see artificery.md).
 | File | Generator | Why |
 |---|---|---|
 | `gui/window_character_lifestyle.gui` | `python -I tools/build_lifestyle_override.py` | The lifestyle window is whole-file only. The script copies Anbennar's `gui/window_character_lifestyle.gui` if it has one, else the game's, and adds a `magic_lifestyle` copy after each of the three `wanderer_lifestyle` blocks (XP bar background, progress bar, unspent-points icon) using the magic art (marked `# Anbennar Overhaul: magic lifestyle`). Never edit the output by hand. |
-| `common/modifiers/aov_spell_modifiers.txt`, `common/scripted_triggers/aov_spell_triggers.txt`, `common/scripted_effects/aov_spell_effects.txt`, `common/scripted_guis/aov_spell_sgui.txt`, `common/character_interactions/aov_spell_interactions.txt`, `gui/aov_magic_generated.gui`, `localization/english/aov_spells_l_english.yml`, `gfx/interface/icons/aov_magic/`, `gfx/interface/skinned/hud_maintab/aov_maintab_magic.dds` | `python -I tools/build_spells.py` | One block per spell, generated from `tools/data/spells.py` (edit the data, then rerun). |
-| `gfx/interface/icons/{lifestyles,focuses,traits,lifestyles_perks,lifestyle_tree_backgrounds}/` magic files, `gfx/interface/illustrations/lifestyles_background/magic_lifestyle.dds`, `gfx/interface/progressbars/aov_progress_magic*.dds` | `python -I tools/build_magic_lifestyle_art.py` | Magic lifestyle art (18 DDS files) composed from EU4 Anbennar magic art and uncompressed vanilla files; the output list is `OUTPUTS` in the script. |
+| `common/modifiers/aov_spell_modifiers.txt`, `common/scripted_triggers/aov_spell_triggers.txt`, `common/scripted_effects/aov_spell_effects.txt`, `common/scripted_guis/aov_spell_sgui.txt`, `common/character_interactions/aov_spell_interactions.txt`, `gui/aov_magic_generated.gui`, `localization/english/aov_spells_l_english.yml`, `gfx/interface/icons/aov_magic/`, `gfx/interface/skinned/hud_maintab/aov_maintab_magic.dds` | `python -I tools/build_spells.py` | One block per spell, generated from `tools/data/spells.py` (edit the data, then rerun). The magic art (`gfx/interface/icons/aov_magic/`, the Magic tab icon) was imported once from EU4 Anbennar and is committed (not rebuilt); the build stops when a file the GUI names is missing. |
+
+## Imported files (no generator)
+
+The magic lifestyle art (18 DDS files: `gfx/interface/icons/{lifestyles,focuses,traits,lifestyles_perks,lifestyle_tree_backgrounds}/`
+magic files, `gfx/interface/illustrations/lifestyles_background/magic_lifestyle.dds`,
+`gfx/interface/progressbars/aov_progress_magic*.dds`) was composed once from EU4 Anbennar magic art and vanilla files.
+Its generator `tools/build_magic_lifestyle_art.py` was removed; replace the files directly to change them.
 
 ## System
 
@@ -32,6 +38,6 @@ The Magic HUD tab sits in the generated `gui/hud.gui` (see artificery.md).
   through `common/script_values/aov_magic_lifestyle_values.txt` (the bonus layer: study rate, spell cost and duration,
   mana, dark-magic risk), so tune balance there. Spell cost and duration are per-caster values
   `aov_spell_<k>_cost` / `_years` generated into `common/script_values/aov_spell_values.txt`; casting also grants
-  magic lifestyle XP. `magic_mastery` = school levels + magic perks. Art and the lifestyle window override come from
-  `tools/build_magic_lifestyle_art.py` and `tools/build_lifestyle_override.py`. Spec
+  magic lifestyle XP. `magic_mastery` = school levels + magic perks. The art is imported (above); the lifestyle window override comes from
+  `tools/build_lifestyle_override.py`. Spec
   `docs/superpowers/specs/2026-10-08-magic-lifestyle-design.md`.

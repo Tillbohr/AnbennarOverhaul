@@ -4,16 +4,15 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # python -I does not add the tools folder
 import build_monuments as bm  # noqa: E402
-import import_eu4_monuments as imp  # noqa: E402
+import pdx_script  # noqa: E402
 from data.monuments import translation as tr  # noqa: E402
 from data.monuments.cannor import EXCLUDED, MONUMENTS  # noqa: E402
 
-ANBENNAR_CK3 = imp.DEFAULT_ANBENNAR_CK3
+ANBENNAR_CK3 = pdx_script.ANBENNAR_CK3
 LIVE = ANBENNAR_CK3.is_dir()
 if LIVE:
-    _TITLES = imp.ck3_titles(ANBENNAR_CK3)
-    CK3_PROVINCE_OF = _TITLES[1]
-    ANBENNAR_SLOT_PROVINCES = set(imp.anbennar_slots(ANBENNAR_CK3))
+    CK3_PROVINCE_OF = pdx_script.ck3_titles(ANBENNAR_CK3)[0]
+    ANBENNAR_SLOT_PROVINCES = set(pdx_script.anbennar_slots(ANBENNAR_CK3))
 else:
     CK3_PROVINCE_OF, ANBENNAR_SLOT_PROVINCES = {}, set()
 

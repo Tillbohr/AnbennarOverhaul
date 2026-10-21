@@ -10,7 +10,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # python -I does not add the tools folder
 import build_governments_override as gov  # noqa: E402
-from eu4_monuments import parse_blocks  # noqa: E402
+from pdx_script import parse_blocks  # noqa: E402
 
 GOV_FIXTURE = """feudal_government = {
 \tfallback = 1

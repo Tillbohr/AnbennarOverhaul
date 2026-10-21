@@ -1,6 +1,8 @@
 """Generate the great-project monument buildings, province history and localization, region by region.
 
-Source: tools/data/monuments/<region>.py (monument data) and translation.py (icons). Rerun after editing them:
+Source: tools/data/monuments/<region>.py (monument data, imported once from EU4 Anbennar; edit it there) and
+translation.py (allowed modifier keys, icons). The paintings in gfx/interface/illustrations/aov_monuments/ were
+converted once from EU4 and are committed; this script only writes their mask. Rerun after editing the data:
 
     python -I tools/build_monuments.py [--region cannor|dwarovar|bulwar|salahad|deepwoods]   (default: every region)
 
@@ -25,8 +27,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # python -I does not add the script's folder
 from data.monuments import translation  # noqa: E402
 from data import holding_art  # noqa: E402
-import eu4_monuments  # noqa: E402
-from build_spells import read_bgra, write_bgra  # noqa: E402
+from eu4_import import write_bgra  # noqa: E402
 
 SUBMOD = Path(__file__).resolve().parent.parent
 ANBENNAR_CK3 = SUBMOD.parent / "anbennar-ck3-dev-master"
@@ -46,15 +47,9 @@ PAINTING_MASK = "gfx/interface/window_county/aov_monument_painting_mask.dds"
 MASK_SIZE = (618, 311)  # vanilla gfx/interface/window_county/mask_holding_illustration.dds
 MASK_PEAK = 242  # 95% opacity in the middle
 MASK_FADE = {"left": 0.10, "right": 0.08, "top": 0.06, "bottom": 0.10}  # short at the top: spires reach it
-LANCZOS_A = 3
 # The painting ends at the garrison box, above the building slot row of the county view's holding panel:
 # holding_info margin 5 + widget_building_item 55 + spacing 3 (GUI units, so the same at any UI scale).
 PAINTING_MARGIN_BOTTOM = 63
-# Every EU4 great-project painting (300x150) has a 6 px black and gold frame and a ~50% dark name plate baked
-# into its top left (rows 9-29, fading out by x=150); vanilla's dim holding mask hid both.
-FRAME_CROP = 7  # the 6 px frame and the row of DXT1 bleed next to it
-STRIP_END = 150
-STRIP_ROWS = {7: 0.2, 8: 0.06, 9: 0.78, **{y: 1.0 for y in range(10, 29)}, 29: 0.71}
 # Pictures that are not monument paintings (ruined holds, dwarven terrain art): tools/data/holding_art.py. They come
 # after every monument entry in the custom loc (a monument painting wins, e.g. ruined Khugdihr).
 EXTRA_ART = holding_art.HOLDING_ART
@@ -571,93 +566,6 @@ def check_extra_art(monuments: list, roots=(SUBMOD, ANBENNAR_CK3, GAME)) -> None
                                  "the game")
 
 
-def _strip_factor(x: int) -> float:
-    """How much EU4's name plate darkens column x of a 300x150 painting: 0.46 at the left, back to 1 at x=150
-    (median over all 72 paintings, fitted to within ~0.03)."""
-    if x >= STRIP_END:
-        return 1.0
-    return 0.46 + 0.54 * (max(x - 18, 0) / (STRIP_END - 18)) ** 1.4
-
-
-def lift_title_strip(width: int, height: int, pixels: bytes) -> bytes:
-    """Undo the dark name plate EU4 bakes into the top left of every great-project painting (EU4 prints the
-    project's name there): divide the plate's rows by the darkening (STRIP_ROWS: share of the full darkening per
-    row; the plate's top and bottom rows are partly covered). Colour channels only, clamped to 255."""
-    px = bytearray(pixels)
-    for y, share in STRIP_ROWS.items():
-        if y >= height:
-            continue
-        for x in range(min(STRIP_END, width)):
-            factor = 1 - share * (1 - _strip_factor(x))
-            i = (y * width + x) * 4
-            for c in range(3):
-                px[i + c] = min(255, int(px[i + c] / factor + 0.5))
-    return bytes(px)
-
-
-def crop_frame(width: int, height: int, pixels: bytes) -> tuple:
-    """(width, height, BGRA) without EU4's black and gold frame (6 px): FRAME_CROP px off each side, which also drops
-    the picture row next to the frame, whose DXT1 blocks mix in frame colours. No more: spires reach the frame."""
-    m = FRAME_CROP
-    rows = [pixels[(y * width + m) * 4:(y * width + width - m) * 4] for y in range(m, height - m)]
-    return width - 2 * m, height - 2 * m, b"".join(rows)
-
-
-def _lanczos(x: float, a: int = LANCZOS_A) -> float:
-    if x == 0:
-        return 1.0
-    if abs(x) >= a:
-        return 0.0
-    px = math.pi * x
-    return a * math.sin(px) * math.sin(px / a) / (px * px)
-
-
-def _kernels() -> tuple:
-    """The two Lanczos kernels of an exact 2x upscale. Output pixel 2i sits at source i - 0.25 (taps i-3..i+2),
-    output pixel 2i+1 at source i + 0.25 (taps i-2..i+3); each kernel is normalised to sum 1."""
-    even = [_lanczos(-0.25 - d) for d in range(-LANCZOS_A, LANCZOS_A)]
-    odd = [_lanczos(0.25 - d) for d in range(-LANCZOS_A + 1, LANCZOS_A + 1)]
-    return [w / sum(even) for w in even], [w / sum(odd) for w in odd]
-
-
-def _upscale_line(values: list, kernels: tuple) -> list:
-    """One row or column of samples upscaled 2x (edges clamped)."""
-    n, a = len(values), LANCZOS_A
-    padded = [values[0]] * a + values + [values[-1]] * a  # padded[k + a] = values[k]
-    even_w, odd_w = kernels
-    even = [sum(w * v for w, v in zip(even_w, taps))
-            for taps in zip(*(padded[s:s + n] for s in range(0, 2 * a)))]  # padded index i + d + a, d = -a..a-1
-    odd = [sum(w * v for w, v in zip(odd_w, taps))
-           for taps in zip(*(padded[s:s + n] for s in range(1, 2 * a + 1)))]  # d = -a+1..a
-    out = [0.0] * (2 * n)
-    out[0::2], out[1::2] = even, odd
-    return out
-
-
-def upscale_2x(width: int, height: int, pixels: bytes) -> tuple:
-    """(2*width, 2*height, BGRA bytes): separable Lanczos-3 resampling, clamped to 0..255. The EU4 paintings are
-    300x150 and the county view panel ~600x320; this resamples better than the game's bilinear stretch, without
-    inventing detail."""
-    kernels = _kernels()
-    # Horizontal pass: rows[y][c] = channel c of source row y, 2*width samples.
-    rows = []
-    for y in range(height):
-        row = pixels[y * width * 4:(y + 1) * width * 4]
-        rows.append([_upscale_line(list(row[c::4]), kernels) for c in range(4)])
-    # Vertical pass on whole rows: output row 2i+p is the kernel-weighted sum of source rows around i.
-    w2, h2, a = 2 * width, 2 * height, LANCZOS_A
-    out = bytearray(w2 * h2 * 4)
-    clamp = lambda v: 0 if v < 0 else 255 if v > 255 else int(v + 0.5)  # noqa: E731
-    for i in range(height):
-        for parity, (weights, first) in enumerate(((kernels[0], -a), (kernels[1], -a + 1))):
-            sources = [rows[min(max(i + d, 0), height - 1)] for d in range(first, first + 2 * a)]
-            base = (2 * i + parity) * w2 * 4
-            for c in range(4):
-                mixed = [sum(w * v for w, v in zip(weights, column)) for column in zip(*(s[c] for s in sources))]
-                out[base + c:base + w2 * 4:4] = bytes(clamp(v) for v in mixed)
-    return w2, h2, bytes(out)
-
-
 def _smoothstep(t: float) -> float:
     t = min(max(t, 0.0), 1.0)
     return t * t * (3 - 2 * t)
@@ -676,40 +584,11 @@ def painting_mask() -> dict:
     return {PAINTING_MASK: write_bgra(w, h, px)}
 
 
-def render_art(region: str, roots=None) -> dict:
-    """Published path -> uncompressed BGRA DDS of each monument's EU4 painting: name plate lifted, frame cropped
-    and upscaled 2x (lift_title_strip, crop_frame, upscale_2x)."""
-    roots = roots or eu4_monuments.EU4_ROOTS
-    out = {}
-    for m in load_monuments(region):
-        if not m["art"]:
-            continue
-        src = eu4_monuments.art_file(roots, m["eu4_key"])
-        if src is None:
-            raise GeneratorError(f"EU4 painting for {m['eu4_key']} not found ({m['art']})")
-        data = src.read_bytes()
-        w, h, px = eu4_monuments.decode_dxt1(data) if data[84:88] == b"DXT1" else read_bgra(data)  # a few are already BGRA
-        w, h, px = crop_frame(w, h, lift_title_strip(w, h, bytes(px)))
-        out[f"{ART_DIR}/{m['eu4_key']}.dds"] = write_bgra(*upscale_2x(w, h, px))
-    return out
-
-
-def hand_keys(region: str) -> set:
-    """CK3 modifier keys the region's hand file sets in its tiers."""
-    try:
-        hand = importlib.import_module(f"data.monuments.{region}_hand").HAND
-    except ModuleNotFoundError:
-        return set()
-    return {k for fields in hand.values() for tier in fields.get("tiers", [])
-            for block in BLOCKS for k in (tier.get(block) or {})}
-
-
-def validate(monuments: list, known: set, extra_keys=()) -> None:
+def validate(monuments: list, known: set) -> None:
     """Raise GeneratorError naming the monument for: no barony or province, a province used twice, an empty name or
-    desc, a category without an icon, a modifier key that is no translation-table target (nor in `extra_keys`, the
-    hand file's keys), or a level without any effect (no modifier and no on_complete). Levels of chains that start
+    desc, a category without an icon, a modifier key not in translation.MODIFIER_KEYS, or a level without any effect (no modifier and no on_complete). Levels of chains that start
     with an Anbennar building carry Anbennar's effects, so they need no EU4 effect of their own."""
-    allowed = {row.ck3 for row in translation.MODIFIERS.values() if isinstance(row, translation.Row)} | set(extra_keys)
+    allowed = translation.MODIFIER_KEYS
     seen = {}
     for m in monuments:
         key = m.get("eu4_key", "?")
@@ -732,7 +611,7 @@ def validate(monuments: list, known: set, extra_keys=()) -> None:
             for block in BLOCKS:
                 for k in tier[block]:
                     if k not in allowed:
-                        fail(f"level {level} {block} key {k} is not a translation-table target or a hand key")
+                        fail(f"level {level} {block} key {k} is not in translation.MODIFIER_KEYS")
             if top is None and not (any(tier[b] for b in BLOCKS) or tier["on_complete"].strip()):
                 fail(f"level {level} has no effect (no modifier and no on_complete)")
 
@@ -741,7 +620,7 @@ def render_all(region: str, root: Path = ANBENNAR_CK3) -> dict:
     """The region's own files. The overrides file only exists for a region that extends Anbennar levels."""
     monuments = load_monuments(region)
     known = anbennar_keys(root)
-    validate(monuments, known, hand_keys(region))
+    validate(monuments, known)
     files = {
         f"common/buildings/aov_monuments_{region}.txt": buildings(monuments, known, root),
         f"history/provinces/aov_monuments_{region}.txt": history(monuments, known),
@@ -780,11 +659,10 @@ def main() -> None:
     parser.add_argument("--region", choices=REGIONS, help="one region (default: every region)")
     args = parser.parse_args()
     try:
-        files, art = {}, {}
+        files = {}
         for region in [args.region] if args.region else REGIONS:
             files.update(render_all(region))
-            art.update(render_art(region))
-        art.update(painting_mask())
+        art = painting_mask()
         files.update(render_shared())
         write_all(files, SUBMOD)
         for rel, data in art.items():
@@ -793,7 +671,7 @@ def main() -> None:
             out.write_bytes(data)
     except GeneratorError as e:
         sys.exit(f"error: {e}")
-    print(f"wrote {len(files)} files and {len(art)} paintings")
+    print(f"wrote {len(files)} files and the painting mask")
 
 
 if __name__ == "__main__":

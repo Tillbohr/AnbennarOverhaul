@@ -10,7 +10,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # python -I does not add the tools folder
 import build_holdings_override as hov  # noqa: E402
 from data import rie_dwarves as rie  # noqa: E402
-from eu4_monuments import parse_blocks  # noqa: E402
+from pdx_script import parse_blocks  # noqa: E402
 
 FIXTURE = """castle_holding = {
 \tprimary_building = castle_01

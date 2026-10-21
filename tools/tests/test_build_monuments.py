@@ -6,7 +6,6 @@ from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # python -I does not add the tools folder
 import build_monuments as bm  # noqa: E402
-import eu4_monuments  # noqa: E402
 from data.monuments.cannor import MONUMENTS  # noqa: E402
 
 LIVE = bm.ANBENNAR_CK3.is_dir()
@@ -676,7 +675,8 @@ class ValidationTests(unittest.TestCase):
         m = fake(county_modifier={"made_up_mult": 0.1})
         m.update(barony="b_x")
         self.assertRejected([m], "made_up_mult")
-        bm.validate([m], set(), {"made_up_mult"})  # a hand key is accepted
+        with mock.patch.object(bm.translation, "MODIFIER_KEYS", bm.translation.MODIFIER_KEYS | {"made_up_mult"}):
+            bm.validate([m], set())  # a key added to MODIFIER_KEYS is accepted
 
     def test_level_without_effect(self):
         self.assertRejected([fake() | {"barony": "b_x"}], "level 1 has no effect")
@@ -694,22 +694,18 @@ class ValidationTests(unittest.TestCase):
             with self.assertRaises(bm.GeneratorError):
                 bm.render_all("cannor")
 
-    def test_hand_keys(self):
-        self.assertIn("vassal_opinion", bm.hand_keys("cannor"))
-        self.assertEqual(bm.hand_keys("nowhere"), set())
 
 
-
-@unittest.skipUnless(LIVE and eu4_monuments.EU4_ROOTS["anbennar"].is_dir(), "EU4 Anbennar art not installed")
 class ArtTests(unittest.TestCase):
-    def test_art_written_for_monuments_with_paintings(self):
-        from build_spells import read_bgra
-        files = bm.render_art("cannor")
-        for m in MONUMENTS:
+    def test_every_painting_is_committed(self):
+        """The paintings were converted once from EU4 (572x272 uncompressed BGRA); build_monuments.py no longer
+        writes them, so each monument with art needs its file in the mod."""
+        from eu4_import import read_dds as read_bgra
+        for m in bm.all_monuments():
             if m["art"]:
-                w, h, _ = read_bgra(files[f"gfx/interface/illustrations/aov_monuments/{m['eu4_key']}.dds"])
-                # EU4's 300x150 without its 6 px frame and the row of DXT1 bleed (286x136), upscaled 2x
-                self.assertEqual((w, h), (572, 272))
+                path = bm.SUBMOD / bm.ART_DIR / f"{m['eu4_key']}.dds"
+                self.assertTrue(path.is_file(), path)
+                self.assertEqual(read_bgra(path.read_bytes())[:2], (572, 272), path)
 
     def test_painting_keeps_its_top(self):
         """EU4 spires reach almost to the frame: anchor the painting at the top (fittype start, which vanilla uses
@@ -726,46 +722,9 @@ class ArtTests(unittest.TestCase):
         self.assertEqual(bm.PAINTING_MARGIN_BOTTOM, 63)
         self.assertEqual(lines.count("\tmargin_bottom = 63"), painted + len(bm.EXTRA_ART) - len(ILLUSTRATION_ART))
         self.assertLessEqual(bm.MASK_FADE["top"], 0.06)
-        self.assertEqual(bm.FRAME_CROP, 7)
-
-    def test_frame_is_cropped(self):
-        w, h = 30, 24
-        px = bytearray(bytes([1, 1, 1, 255]) * (w * h))
-        px[(12 * w + 15) * 4:(12 * w + 15) * 4 + 4] = bytes([9, 9, 9, 255])  # one pixel inside the frame
-        cw, ch, out = bm.crop_frame(w, h, bytes(px))
-        self.assertEqual((cw, ch), (w - 2 * bm.FRAME_CROP, h - 2 * bm.FRAME_CROP))
-        x, y = 15 - bm.FRAME_CROP, 12 - bm.FRAME_CROP
-        self.assertEqual(out[(y * cw + x) * 4:(y * cw + x) * 4 + 4], bytes([9, 9, 9, 255]))
-
-    def test_title_strip_is_lifted(self):
-        """EU4 bakes a ~50% dark name plate into the top left of every painting (rows 9-29, fading out by x=150)."""
-        w, h = 300, 150
-        px = bm.lift_title_strip(w, h, bytes([50, 50, 50, 255]) * (w * h))
-        at = lambda x, y: px[(y * w + x) * 4]  # noqa: E731
-        self.assertEqual(at(18, 20), round(50 / 0.46))  # darkest part of the plate
-        self.assertGreater(at(18, 20), at(100, 20))  # the plate fades out to the right
-        self.assertGreater(at(100, 20), 50)
-        self.assertEqual((at(160, 20), at(18, 40), at(18, 5)), (50, 50, 50))  # outside the plate: unchanged
-        self.assertEqual(px[3::4], bytes([255]) * (w * h))  # alpha untouched
-        bright = bm.lift_title_strip(w, h, bytes([250, 250, 250, 255]) * (w * h))
-        self.assertEqual(bright[(20 * w + 18) * 4], 255)  # clamped
-
-    def test_upscale_2x_keeps_flat_colour_and_range(self):
-        flat = bytes([10, 20, 30, 255]) * (8 * 4)
-        w, h, px = bm.upscale_2x(8, 4, flat)
-        self.assertEqual((w, h), (16, 8))
-        self.assertEqual(px, bytes([10, 20, 30, 255]) * (16 * 8))
-        # a hard black/white edge: Lanczos rings, but values stay clamped to 0..255 and the far sides keep their colour
-        row = [0] * 4 + [255] * 4
-        edge = bytes(v for x in row for v in (x, x, x, 255)) * 2
-        w, h, px = bm.upscale_2x(8, 2, edge)
-        blues = list(px[0:w * 4:4])
-        self.assertEqual((blues[0], blues[-1]), (0, 255))
-        self.assertTrue(all(0 <= v <= 255 for v in px))
-        self.assertTrue(any(0 < v < 255 for v in blues[6:10]), blues)  # the edge is interpolated, not doubled
 
     def test_painting_mask(self):
-        from build_spells import read_bgra
+        from eu4_import import read_dds as read_bgra
         rel, data = next(iter(bm.painting_mask().items()))
         self.assertEqual(rel, bm.PAINTING_MASK)
         w, h, px = read_bgra(data)

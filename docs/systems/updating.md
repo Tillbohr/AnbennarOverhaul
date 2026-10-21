@@ -1,7 +1,7 @@
 # Updating to a new Anbennar version, CK3 patch or RiE update
 
 1. Replace `../anbennar-ck3-dev-master` with the new Anbennar release.
-2. Run `python -I tools/build_rie_dwarves.py` first (the next two import its output), then `python -I tools/build_holdings_override.py` and `python -I tools/build_holds.py` and `python -I tools/build_governments_override.py` and `python -I tools/build_hud_override.py` and `python -I tools/build_lifestyle_override.py` and `python -I tools/build_county_view_override.py`, and `python -I tools/build_map_graphics.py`, and `python -I tools/build_holding_models.py` (the culture files are whole-file overrides of Anbennar's) and `python -I tools/build_portraits.py` (the gene files are whole-file overrides of Anbennar's) and `python -I tools/build_rie_courts.py` (Anbennar's scripted illustrations and court scene cultures are whole-file overrides) and `python -I tools/build_monuments.py` (the monument overrides copy Anbennar's current definitions; it errors naming any monument key Anbennar no longer defines) and `python -I tools/build_deepwoods_groves.py` (it errors when a grove county was renamed or moved). The `map_data/` height files are whole-file overrides of Anbennar's, regenerated from its new heightmap by `build_map_graphics.py`.
+2. Run `python -I tools/build_rie_dwarves.py` first (the next two import its output), then `python -I tools/build_holdings_override.py` and `python -I tools/build_holds.py` and `python -I tools/build_governments_override.py` and `python -I tools/build_hud_override.py` and `python -I tools/build_lifestyle_override.py` and `python -I tools/build_county_view_override.py`, and `python -I tools/build_map_graphics.py`, and `python -I tools/build_holding_models.py` (the culture files are whole-file overrides of Anbennar's) and `python -I tools/build_portraits.py` (the gene files are whole-file overrides of Anbennar's) and `python -I tools/build_rie_courts.py` (Anbennar's scripted illustrations and court scene cultures are whole-file overrides) and `python -I tools/build_monuments.py` (the monument overrides copy Anbennar's current definitions; it errors naming any monument key Anbennar no longer defines); then check that the Deepwoods grove counties and baronies still exist (their arms and names are hand-maintained, see `deepwoods-groves.md`). The `map_data/` height files are whole-file overrides of Anbennar's, regenerated from its new heightmap by `build_map_graphics.py`.
 3. Run tiger and the tool tests (below) and fix anything that references renamed Anbennar content. The tests fail if
    Anbennar renames `anb_enhance_ability_interaction` or adds another way to start its Enhance Ability scheme (removed
    from the game; see `EnhanceAbilityRemovedTests`).
@@ -37,14 +37,11 @@ Rerun `python -I tools/build_rie_dwarves.py`, then `build_holds.py` and `build_h
 | Rebuild HUD override | `python -I tools/build_hud_override.py` |
 | Rebuild lifestyle window override | `python -I tools/build_lifestyle_override.py` |
 | Rebuild county view override | `python -I tools/build_county_view_override.py` |
-| Import EU4 monuments | `python -I tools/import_eu4_monuments.py --region <name>` (`cannor`, `dwarovar`, `bulwar`, `salahad`, `deepwoods`; needs the EU4 Anbennar, Cannorian and Dwarven Monuments mods installed; rewrites `tools/data/monuments/<region>.py`) |
 | Rebuild monuments | `python -I tools/build_monuments.py` (every region; `--region <name>` for one, the shared illustration file is always rebuilt from all) |
-| Run tool tests | `python -I -m unittest discover -s tools/tests -v` |
-| Rebuild inventions | `python -I tools/build_inventions.py` (needs EU4 Anbennar installed for icons) |
-| Rebuild spells | `python -I tools/build_spells.py` (needs EU4 Anbennar installed for magic art) |
-| Rebuild magic lifestyle art | `python -I tools/build_magic_lifestyle_art.py` (needs EU4 Anbennar and CK3 installed) |
+| Run tool tests | `python -I -m unittest discover -s tools/tests` |
+| Rebuild inventions | `python -I tools/build_inventions.py` (icons are committed; nothing is read from EU4) |
+| Rebuild spells | `python -I tools/build_spells.py` (art is committed; nothing is read from EU4) |
 | Rebuild map graphics | `python -I tools/build_map_graphics.py` (needs Realms in Exile installed) |
 | Rebuild holding models | `python -I tools/build_holding_models.py` (needs Realms in Exile installed) |
 | Rebuild RiE portraits | `python -I tools/build_portraits.py` (needs Realms in Exile installed; the clothing keys in the culture files come from `build_holding_models.py`) |
 | Rebuild RiE backgrounds and courts | `python -I tools/build_rie_courts.py` (needs Realms in Exile installed; uses the clothing keys of `build_portraits.py`) |
-| Rebuild Deepwoods grove arms and names | `python -I tools/build_deepwoods_groves.py` (needs EU4 Anbennar installed for the flags and province names) |

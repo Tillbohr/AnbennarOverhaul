@@ -1,0 +1,5 @@
+# Skipped by ripgrep (and Claude Code's Grep), still tracked by git.
+# Finished implementation plans: history only, full of stale identifiers.
+docs/superpowers/plans/
+# Accepted tiger reports, read by tools/validate.py.
+tools/tiger_baseline.json
