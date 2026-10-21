@@ -1,0 +1,131 @@
+﻿# Anbennar Overhaul: racial armies debug battles (docs/systems/racial-armies.md, in-game check 5).
+# Console, playing a ruler whose culture has no racial heritage:
+#   event aov_racial_armies_debug.0001   human vs a random elven ruler
+#   event aov_racial_armies_debug.0002   human vs a random dwarven ruler
+# Root declares war and both sides get an army at root's capital, each about 3 gold/month of MAA upkeep and
+# the same levy power (elves 1,000 levies at 40/40, dwarves 2,400 at 17/17, humans 4,000 at 10/10).
+# The result should be within about 15%.
+
+namespace = aov_racial_armies_debug
+
+# Human vs moon elves
+aov_racial_armies_debug.0001 = {
+	type = character_event
+	hidden = yes
+
+	trigger = {
+		debug_only = yes
+		is_playable_character = yes
+		culture = {
+			NOR = {
+				has_cultural_parameter = aov_racial_levy_elven
+				has_cultural_parameter = aov_racial_levy_dwarven
+				has_cultural_parameter = aov_racial_levy_gnomish
+				has_cultural_parameter = aov_racial_levy_kobold
+			}
+		}
+	}
+
+	immediate = {
+		random_ruler = {
+			limit = {
+				is_landed = yes
+				culture = { has_cultural_parameter = aov_racial_levy_elven }
+			}
+			save_scope_as = foe
+		}
+		if = {
+			limit = { exists = scope:foe }
+			start_war = {
+				cb = county_conquest_cb
+				target = scope:foe
+				target_title = scope:foe.capital_county
+			}
+			spawn_army = {
+				levies = 4000
+				men_at_arms = { type = armored_footmen stacks = 3 }
+				men_at_arms = { type = bowmen stacks = 5 }
+				men_at_arms = { type = pikemen_unit stacks = 3 }
+				location = root.capital_province
+				origin = root.capital_province
+				inheritable = no
+				uses_supply = no
+				name = aov_racial_armies_debug_army
+			}
+			scope:foe = {
+				spawn_army = {
+					levies = 1000
+					men_at_arms = { type = staochri stacks = 1 }
+					men_at_arms = { type = aithchri stacks = 2 }
+					men_at_arms = { type = sheahrna stacks = 2 }
+					location = root.capital_province
+					origin = root.capital_province
+					inheritable = no
+					uses_supply = no
+					name = aov_racial_armies_debug_army
+				}
+			}
+		}
+	}
+}
+
+# Human vs dwarves
+aov_racial_armies_debug.0002 = {
+	type = character_event
+	hidden = yes
+
+	trigger = {
+		debug_only = yes
+		is_playable_character = yes
+		culture = {
+			NOR = {
+				has_cultural_parameter = aov_racial_levy_elven
+				has_cultural_parameter = aov_racial_levy_dwarven
+				has_cultural_parameter = aov_racial_levy_gnomish
+				has_cultural_parameter = aov_racial_levy_kobold
+			}
+		}
+	}
+
+	immediate = {
+		random_ruler = {
+			limit = {
+				is_landed = yes
+				culture = { has_cultural_parameter = aov_racial_levy_dwarven }
+			}
+			save_scope_as = foe
+		}
+		if = {
+			limit = { exists = scope:foe }
+			start_war = {
+				cb = county_conquest_cb
+				target = scope:foe
+				target_title = scope:foe.capital_county
+			}
+			spawn_army = {
+				levies = 4000
+				men_at_arms = { type = armored_footmen stacks = 3 }
+				men_at_arms = { type = bowmen stacks = 5 }
+				men_at_arms = { type = pikemen_unit stacks = 3 }
+				location = root.capital_province
+				origin = root.capital_province
+				inheritable = no
+				uses_supply = no
+				name = aov_racial_armies_debug_army
+			}
+			scope:foe = {
+				spawn_army = {
+					levies = 2400
+					men_at_arms = { type = dwarven_guardians stacks = 2 }
+					men_at_arms = { type = armor_breakers stacks = 2 }
+					men_at_arms = { type = shieldwall stacks = 2 }
+					location = root.capital_province
+					origin = root.capital_province
+					inheritable = no
+					uses_supply = no
+					name = aov_racial_armies_debug_army
+				}
+			}
+		}
+	}
+}

@@ -40,3 +40,10 @@
  aov_copper_road_wardens_flavor:0 "#F By the Copper Road Pact, Gor Ozumbrog patrols the dwarven road to Ovdal Kanzad. Its ram riders know every tunnel and every goblin ambush along it.#!"
  aov_brightbeard_hammers:0 "Brightbeard Hammers"
  aov_brightbeard_hammers_flavor:0 "#F Shazstundihr honours Mhoki Brightbeard, who ended a 47-year siege by slaying the Precursor emperor with one blow of his warhammer. His heirs still crush armour with theirs.#!"
+ # Debug battles
+ aov_racial_armies_debug_army:0 "Test Army"
+ # Heritage parameters (heritage tooltip)
+ culture_parameter_aov_racial_levy_elven:0 "Holdings raise a quarter of a human holding's [levies|E], whatever levy bonuses they gain"
+ culture_parameter_aov_racial_levy_dwarven:0 "Holdings raise three fifths of a human holding's [levies|E], whatever levy bonuses they gain"
+ culture_parameter_aov_racial_levy_gnomish:0 "Holdings raise half of a human holding's [levies|E], whatever levy bonuses they gain"
+ culture_parameter_aov_racial_levy_kobold:0 "Holdings raise one and a half times a human holding's [levies|E], whatever levy bonuses they gain"

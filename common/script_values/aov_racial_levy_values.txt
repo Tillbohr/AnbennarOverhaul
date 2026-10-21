@@ -291,10 +291,6 @@ aov_holding_levy_size_bonus = {
 	if = { limit = { terrain = hills } if = { limit = { province_owner.faith = { has_doctrine = tenet_dragon_hoarding } } add = 0.3 } } # religion/doctrine_types tenet_dragon_hoarding
 	if = { limit = { terrain = cavern } if = { limit = { province_owner.faith = { has_doctrine = tenet_dragon_hoarding } } add = 0.3 } } # religion/doctrine_types tenet_dragon_hoarding
 	if = { limit = { terrain = hills } if = { limit = { province_owner.faith = { has_doctrine = tenet_holy_undeath } } add = 0.3 } } # religion/doctrine_types tenet_holy_undeath
-	if = { limit = { province_owner.faith = { controls_holy_site = damascus } } add = 0.05 } # religion/holy_site_types damascus
-	if = { limit = { province_owner.faith = { controls_holy_site = preslav } } add = 0.1 } # religion/holy_site_types preslav
-	if = { limit = { province_owner.faith = { controls_holy_site = yizhou } } add = 0.1 } # religion/holy_site_types yizhou
-	if = { limit = { province_owner.faith = { controls_holy_site = tate } } add = 0.1 } # religion/holy_site_types tate
 	if = { limit = { province_owner = { has_trait = education_adeanic_knight_0 } } add = -0.15 } # traits education_adeanic_knight_0
 	if = { limit = { province_owner = { has_trait = education_adeanic_knight_1 } } add = -0.15 } # traits education_adeanic_knight_1
 	if = { limit = { province_owner = { has_trait = education_adeanic_knight_2 } } add = -0.3 } # traits education_adeanic_knight_2

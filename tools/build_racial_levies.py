@@ -83,10 +83,23 @@ def parse(text: str) -> list:
     return block()
 
 
+def replaced_folders(anbennar: Path) -> list:
+    """Folders under common/ that Anbennar's descriptor.mod replaces outright (replace_path)."""
+    descriptor = anbennar / "descriptor.mod"
+    text = _read(descriptor) if descriptor.is_file() else ""
+    return [p[len("common/"):] for p in re.findall(r'^\s*replace_path\s*=\s*"([^"]+)"', text, re.M)
+            if p.startswith("common/")]
+
+
 def script_files(roots: Roots, submod: Path) -> dict:
-    """Relative path under common/ -> file; the submod replaces Anbennar, which replaces the game."""
+    """Relative path under common/ -> file; the submod replaces Anbennar, which replaces the game (and drops the
+    game's files in the folders its descriptor replaces)."""
     files = {}
+    replaced = replaced_folders(roots.anbennar)
     for root in (roots.game / "game", roots.anbennar, submod):  # Roots.game is the install folder
+        if root == roots.anbennar:
+            files = {rel: path for rel, path in files.items()
+                     if not any(rel.startswith(folder + "/") for folder in replaced)}
         common = root / "common"
         for folder, _dirs, names in os.walk(common):
             for name in names:

@@ -101,6 +101,12 @@ class CollectTests(Fixture):
         self.assertEqual([(s.key, s.value, s.condition) for s in self.sources()],
                          [("tradition_woods", 0.1, {"levy_terrain": "forest"})])
 
+    def test_anbennar_replace_path_drops_vanilla_folder(self):
+        tree(self.vanilla, {"common/religion/holy_site_types/00_sites.txt":
+                            "damascus = { character_modifier = { levy_size = 0.05 } }"})
+        tree(self.anb, {"descriptor.mod": 'name="Anbennar"\nreplace_path="common/religion/holy_site_types"\n'})
+        self.assertEqual(self.sources(), [])
+
     def test_nested_object_keys(self):
         tree(self.vanilla, {"common/laws/l.txt": "decree = { decree_a = { modifier = { levy_size = -0.1 } } }",
                          "common/religion/doctrine_types/d.txt": "tenet_x = { character_modifier = { levy_size = 0.1 } }"})
