@@ -1,0 +1,90 @@
+﻿# Anbennar Overhaul: racial heritages. Overrides Anbennar's heritage_elven, heritage_dwarven, heritage_gnomish and
+# heritage_kobold (common/culture/pillars/anb_heritage.txt): type, is_shown and audio_parameter are copied unchanged;
+# the parameters and character_modifier are new. See docs/systems/racial-armies.md.
+#
+# Levy count x levy quality equals a human's (elves 0.25 x 4, dwarves 0.6 x 1.7, gnomes 0.5 x 2, kobolds 1.5 x 0.7).
+# The aov_racial_levy_* parameter marks the race for the per-holding levy correction
+# (common/scripted_effects/aov_racial_levy_effects.txt), which keeps that share fixed as levy bonuses are added.
+
+# Elves
+
+heritage_elven = {
+	type = heritage
+	is_shown = {
+		heritage_is_shown_trigger = {
+			HERITAGE = heritage_elven
+		}
+	}
+	parameters = {
+		aov_racial_levy_elven = yes
+	}
+	character_modifier = {
+		levy_size = -0.75
+		levy_attack = 30
+		levy_toughness = 30
+		domain_limit = -1
+	}
+	audio_parameter = european
+}
+
+# Dwarves
+
+heritage_dwarven = {
+	type = heritage
+	is_shown = {
+		heritage_is_shown_trigger = {
+			HERITAGE = heritage_dwarven
+		}
+	}
+	parameters = {
+		aov_racial_levy_dwarven = yes
+	}
+	character_modifier = {
+		levy_size = -0.40
+		levy_attack = 7
+		levy_toughness = 7
+		domain_limit = -2
+	}
+	audio_parameter = european
+}
+
+# Gnomes
+
+heritage_gnomish = {
+	type = heritage
+	is_shown = {
+		heritage_is_shown_trigger = {
+			HERITAGE = heritage_gnomish
+		}
+	}
+	parameters = {
+		aov_racial_levy_gnomish = yes
+	}
+	character_modifier = {
+		levy_size = -0.50
+		levy_attack = 10
+		levy_toughness = 10
+		domain_limit = -1
+	}
+	audio_parameter = european
+}
+
+# Kobolds
+
+heritage_kobold = {
+	type = heritage
+	is_shown = {
+		heritage_is_shown_trigger = {
+			HERITAGE = heritage_kobold
+		}
+	}
+	parameters = {
+		aov_racial_levy_kobold = yes
+	}
+	character_modifier = {
+		levy_size = 0.50
+		levy_attack = -3
+		levy_toughness = -3
+	}
+	audio_parameter = european
+}

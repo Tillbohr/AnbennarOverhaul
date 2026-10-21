@@ -1,0 +1,115 @@
+﻿# Anbennar Overhaul: culture lineage triggers for racial men-at-arms (culture scope).
+# A culture belongs to a lineage when it is the root culture or descends from it (divergence or hybridization),
+# so splinter cultures keep their units. See docs/systems/racial-armies.md.
+
+# Sun elves: sun_elvish and its descendants.
+aov_sun_elven_lineage_trigger = {
+	OR = {
+		this = culture:sun_elvish
+		any_parent_culture_or_above = { this = culture:sun_elvish }
+	}
+}
+
+# Wood elves: wood_elvish and its descendants.
+aov_wood_elven_lineage_trigger = {
+	OR = {
+		this = culture:wood_elvish
+		any_parent_culture_or_above = { this = culture:wood_elvish }
+	}
+}
+
+# Moon elves: every other elven culture. Wood elves descend from moon_elvish, so both other lineages are
+# excluded explicitly; a sun/moon hybrid takes the sun roster.
+aov_moon_elven_lineage_trigger = {
+	has_cultural_pillar = heritage_elven
+	aov_sun_elven_lineage_trigger = no
+	aov_wood_elven_lineage_trigger = no
+}
+
+# Ruby dwarves.
+aov_ruby_dwarven_lineage_trigger = {
+	OR = {
+		this = culture:ruby_dwarvish
+		any_parent_culture_or_above = { this = culture:ruby_dwarvish }
+	}
+}
+
+# Silver dwarves.
+aov_silver_dwarven_lineage_trigger = {
+	OR = {
+		this = culture:silver_dwarvish
+		any_parent_culture_or_above = { this = culture:silver_dwarvish }
+	}
+}
+
+# Stone dwarves.
+aov_stone_dwarven_lineage_trigger = {
+	OR = {
+		this = culture:stone_dwarvish
+		any_parent_culture_or_above = { this = culture:stone_dwarvish }
+	}
+}
+
+# Agate dwarves.
+aov_agate_dwarven_lineage_trigger = {
+	OR = {
+		this = culture:agate_dwarvish
+		any_parent_culture_or_above = { this = culture:agate_dwarvish }
+	}
+}
+
+# Copper dwarves.
+aov_copper_dwarven_lineage_trigger = {
+	OR = {
+		this = culture:copper_dwarvish
+		any_parent_culture_or_above = { this = culture:copper_dwarvish }
+	}
+}
+
+# Citrine dwarves.
+aov_citrine_dwarven_lineage_trigger = {
+	OR = {
+		this = culture:citrine_dwarvish
+		any_parent_culture_or_above = { this = culture:citrine_dwarvish }
+	}
+}
+
+# Gold dwarves.
+aov_gold_dwarven_lineage_trigger = {
+	OR = {
+		this = culture:gold_dwarvish
+		any_parent_culture_or_above = { this = culture:gold_dwarvish }
+	}
+}
+
+# Pyrite dwarves.
+aov_pyrite_dwarven_lineage_trigger = {
+	OR = {
+		this = culture:pyrite_dwarvish
+		any_parent_culture_or_above = { this = culture:pyrite_dwarvish }
+	}
+}
+
+# Titanium dwarves.
+aov_titanium_dwarven_lineage_trigger = {
+	OR = {
+		this = culture:titanium_dwarvish
+		any_parent_culture_or_above = { this = culture:titanium_dwarvish }
+	}
+}
+
+# Topaz dwarves.
+aov_topaz_dwarven_lineage_trigger = {
+	OR = {
+		this = culture:topaz_dwarvish
+		any_parent_culture_or_above = { this = culture:topaz_dwarvish }
+	}
+}
+
+# Marble dwarves.
+aov_marble_dwarven_lineage_trigger = {
+	OR = {
+		this = culture:marble_dwarvish
+		any_parent_culture_or_above = { this = culture:marble_dwarvish }
+	}
+}
