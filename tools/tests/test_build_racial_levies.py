@@ -107,6 +107,23 @@ class CollectTests(Fixture):
         tree(self.anb, {"descriptor.mod": 'name="Anbennar"\nreplace_path="common/religion/holy_site_types"\n'})
         self.assertEqual(self.sources(), [])
 
+    def test_same_key_in_two_files_counts_once_last_loaded_wins(self):
+        tree(self.vanilla, {"common/buildings/00_city.txt": "city_01 = { province_modifier = { levy_size = 0.1 } }"})
+        tree(self.sub, {"common/buildings/zz_aov_city.txt": "city_01 = { province_modifier = { levy_size = 0.2 } }"})
+        self.assertEqual([(s.key, s.value) for s in self.sources()], [("city_01", 0.2)])
+
+    def test_building_is_enabled_copied_with_holder_as_owner(self):
+        tree(self.vanilla, {"common/buildings/00_test.txt":
+                            "farm_01 = {\n\tis_enabled = {\n\t\tscope:holder = { is_dwarvish_culture = yes } # gate\n"
+                            "\t\tscope:county = { development_level >= 5 }\n\t}\n"
+                            "\tprovince_modifier = { levy_size = 0.05 }\n}\n"})
+        src, = self.sources()
+        self.assertEqual(src.condition["enabled"],
+                         "province_owner = { is_dwarvish_culture = yes } county = { development_level >= 5 }")
+        self.assertEqual(" ".join(brl.source_script(src).split()),
+                         "if = { limit = { has_building = farm_01 province_owner = { is_dwarvish_culture = yes } "
+                         "county = { development_level >= 5 } } add = 0.05 }")
+
     def test_nested_object_keys(self):
         tree(self.vanilla, {"common/laws/l.txt": "decree = { decree_a = { modifier = { levy_size = -0.1 } } }",
                          "common/religion/doctrine_types/d.txt": "tenet_x = { character_modifier = { levy_size = 0.1 } }"})
@@ -123,6 +140,8 @@ class ScriptValueTests(unittest.TestCase):
             ("buildings", "b", "province_modifier"): "if = { limit = { has_building = b } add = 0.1 }",
             ("buildings", "b", "county_modifier"):
                 "county = { every_county_province = { limit = { has_building = b } add = 0.1 } }",
+            ("buildings", "b", "duchy_capital_county_modifier"):
+                "if = { limit = { county.duchy.title_province = { has_building = b } } add = 0.1 }",
             ("buildings", "b", "character_modifier"):
                 "if = { limit = { province_owner = { any_directly_owned_province = { has_building = b } } } add = 0.1 }",
             ("culture/traditions", "t", "character_modifier"):

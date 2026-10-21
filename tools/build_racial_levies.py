@@ -27,6 +27,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from build_holding_models import Roots  # noqa: E402
 from build_hud_override import GeneratorError  # noqa: E402
+from pdx_script import parse_blocks  # noqa: E402
 from data.racial_levies import (CLASSIFIED, IGNORED, OWN_KEYS, RACE_NAMES, RACES, S_MAX, S_MIN,  # noqa: E402
                                 SHARE_TEXT, STEP)
 
@@ -165,24 +166,46 @@ def resolve(value: str, local: dict, constants: dict, where: str) -> float:
     return table[value]
 
 
+def building_enabled(body: str) -> str:
+    """A building's is_enabled trigger, rewritten for a script value in its province's scope (scope:holder is the
+    province's owner, scope:county its county), or "" when it has none."""
+    gate = parse_blocks(body).get("is_enabled", "")
+    gate = " ".join(gate.split())
+    return re.sub(r"\bscope:county\b", "county", re.sub(r"\bscope:holder\b", "province_owner", gate))
+
+
+def _defined_keys(items: list, how: str) -> set:
+    if how == "nested":
+        return {key for _group, value in items if isinstance(value, list)
+                for key, inner in value if isinstance(inner, list)}
+    return {key for key, value in items if isinstance(value, list)}
+
+
 def collect_sources(roots: Roots, submod: Path = SUBMOD) -> list:
-    sources = []
+    """Every covered levy source, one per object definition: when several files define the same object, the one
+    loaded last (alphabetically by path, the submod over Anbennar over the game) wins and the others are dropped."""
+    by_object = {}  # (database, key) -> [Source]
     files = script_files(roots, submod)
     constants = constant_script_values(files)
     terrains = terrain_types(files)
     for rel, path in sorted(files.items()):
+        database, how = database_of(rel)
+        if how == "ignored":
+            continue
         text = _read(path)
+        if how is None:
+            if "levy_size" in text and list(_levy_sites(parse(text), [], terrains)):
+                raise GeneratorError(f"levy_size in common/{rel}, a folder tools/data/racial_levies.py neither "
+                                     f"classifies nor ignores")
+            continue
+        items = parse(text)
+        for key in _defined_keys(items, how):
+            by_object.pop((database, key), None)
         if "levy_size" not in text:
             continue
-        database, how = database_of(rel)
-        sites = list(_levy_sites(parse(text), [], terrains))
-        if not sites or how == "ignored":
-            continue
         local = {k: float(v) for k, v in _CONSTANT.findall(text) if k.startswith("@")}
-        if how is None:
-            raise GeneratorError(f"levy_size in common/{rel}, a folder tools/data/racial_levies.py neither "
-                                 f"classifies nor ignores")
-        for names, items, value, terrain in sites:
+        raw = parse_blocks(text) if database == "buildings" else {}
+        for names, block_items, value, terrain in _levy_sites(items, [], terrains):
             key = names[1] if how == "nested" and len(names) > 1 else names[0] if names else ""
             if key in OWN_KEYS:
                 continue
@@ -190,11 +213,14 @@ def collect_sources(roots: Roots, submod: Path = SUBMOD) -> list:
             if names and block == "" and len(names) > 1:
                 raise GeneratorError(f"levy_size outside a modifier block in common/{rel}: {' > '.join(names)}")
             number = resolve(value, local, constants, f"common/{rel} ({key})")
-            condition = {k: v for k, v in items if k in CONDITION_KEYS and not isinstance(v, list)}
+            condition = {k: v for k, v in block_items if k in CONDITION_KEYS and not isinstance(v, list)}
             if terrain:
                 condition["levy_terrain"] = terrain
-            sources.append(Source(database, key, block, number, condition))
-    return sources
+            enabled = building_enabled(raw.get(key, ""))
+            if enabled:
+                condition["enabled"] = enabled
+            by_object.setdefault((database, key), []).append(Source(database, key, block, number, condition))
+    return [src for sources in by_object.values() for src in sources]
 
 
 # --- writing ------------------------------------------------------------------------------------------------------
@@ -236,7 +262,7 @@ def source_script(src: Source) -> str:
 
 def _source_script(src: Source) -> str:
     db, key, block = src.database, src.key, src.block
-    has = f"has_building = {key}"
+    has = f"has_building = {key}" + (f" {src.condition['enabled']}" if src.condition.get("enabled") else "")
     if db == "buildings":
         if block == "province_modifier":
             return _if([has], src.value)
@@ -253,8 +279,10 @@ def _source_script(src: Source) -> str:
             if "is_riverside" in src.condition:
                 limits.append(f"is_riverside_province = {src.condition['is_riverside']}")
             return _if(limits + _parameter(src, "county.culture"), src.value)
-        if block in ("county_modifier", "duchy_capital_county_modifier"):
+        if block == "county_modifier":
             return _county_count([has], src.value)
+        if block == "duchy_capital_county_modifier":  # every de jure county of the duchy whose capital has it
+            return _if([f"county.duchy.title_province = {{ {has} }}"], src.value)
         if block == "county_culture_modifier":
             return _county_count([has] + _parameter(src, "county.culture"), src.value)
         if block == "county_faith_modifier":

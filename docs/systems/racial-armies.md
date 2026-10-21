@@ -32,19 +32,22 @@ Spec: `docs/superpowers/specs/2026-10-21-racial-armies-design.md` (every stat an
   the holding ends at share × (1 + S) and never below its share. Negative sources (administrative governments, some
   traits and laws) get a positive correction.
   - Covered (`aov_holding_levy_size_bonus`, province scope): buildings in the province (`province_modifier`, culture,
-    faith and terrain variants), buildings in the county (`county_modifier` and variants, counted per building, and
-    `duchy_capital_county_modifier`), the owner's buildings (`character_modifier`), traditions, innovations and pillars
+    faith and terrain variants), buildings in the county (`county_modifier` and variants, counted per building, since they stack),
+    duchy capital buildings (`duchy_capital_county_modifier`, every de jure county of the duchy), the owner's buildings (`character_modifier`), traditions, innovations and pillars
     (the owner's culture for `character_modifier`, the county's for `county_modifier`/`province_modifier`), doctrines
     and tenets (owner's faith), holy sites (owner's faith controls it), governments, realm laws and traits (owner).
-    `<terrain>_levy_size` counts only in a holding of that terrain.
+    `<terrain>_levy_size` counts only in a holding of that terrain. A building's `is_enabled` is copied into its
+    condition (`scope:holder` as `province_owner`, `scope:county` as `county`), and an object defined in several
+    files counts once, from the file loaded last.
   - Not covered (`IGNORED` in the data file): event, activity and festival modifiers, epidemics, estate (domicile)
     buildings, council and court positions, house aspirations, confederations, special subject contracts. They are
     temporary or narrow. Development and county control multiply levies and need no correction.
   - Refresh (`common/on_action/aov_racial_armies_on_actions.txt`): `aov_refresh_holding_levy_correction` (province
     scope; removes the tier recorded in `var:aov_racial_levy_tier`/`var:aov_racial_levy_race`, then adds the owner's)
-    runs at game start for every racial ruler's holdings, on `on_building_completed`, `on_title_gain` (every province
-    of a county, the province of a barony), `on_holding_razed`, and yearly (`yearly_playable_pulse`) for rulers who
-    are racial or still own a corrected holding.
+    runs at game start for every racial ruler's holdings, on `on_building_completed` (every holding of the building's
+    de jure duchy), `on_title_gain` (every province of a county, the province of a barony), `on_holding_razed`, and
+    yearly (`yearly_playable_pulse`) for every holding of the counties of rulers who are racial or have a corrected
+    holding there (this reaches vassal barons' temples and cities).
 - **Removed traditions** (`common/culture/traditions/zz_aov_racial_traditions.txt`, hidden and unpickable; removed
   from every culture by `aov_racial_armies_game_start`): `tradition_sundancer_legions` (its units belong to every sun
   elf culture) and `tradition_test_maa_anb_dwarven_handgunners` (`dwarven_handgunners` is overridden with

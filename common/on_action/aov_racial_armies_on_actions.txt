@@ -52,10 +52,23 @@ yearly_playable_pulse = {
 	on_actions = { aov_racial_levy_yearly }
 }
 
-# root = the province where the building finished
+# root = the province where the building finished. A county_modifier reaches every holding of its county and a
+# duchy_capital_county_modifier every county of the de jure duchy, so the whole duchy is refreshed.
 aov_racial_levy_building_completed = {
 	effect = {
-		aov_refresh_holding_levy_correction = yes
+		if = {
+			limit = { exists = county.duchy }
+			county.duchy = {
+				every_de_jure_county = {
+					every_county_province = { aov_refresh_holding_levy_correction = yes }
+				}
+			}
+		}
+		else = {
+			county = {
+				every_county_province = { aov_refresh_holding_levy_correction = yes }
+			}
+		}
 	}
 }
 
@@ -82,7 +95,9 @@ aov_racial_levy_holding_razed = {
 	}
 }
 
-# root = a playable ruler: racial, or still owning a corrected holding (so a converted ruler's corrections are cleared)
+# root = a playable ruler: racial, or with a corrected holding in their counties (so converted owners' corrections
+# are cleared). Every holding of their counties is refreshed, which reaches vassal barons' holdings (temples,
+# cities), whose holders get no pulse of their own.
 aov_racial_levy_yearly = {
 	trigger = {
 		OR = {
@@ -94,10 +109,18 @@ aov_racial_levy_yearly = {
 					has_cultural_parameter = aov_racial_levy_kobold
 				}
 			}
+			any_held_title = {
+				tier = tier_county
+				any_county_province = { has_variable = aov_racial_levy_tier }
+			}
 			any_directly_owned_province = { has_variable = aov_racial_levy_tier }
 		}
 	}
 	effect = {
+		every_held_title = {
+			limit = { tier = tier_county }
+			every_county_province = { aov_refresh_holding_levy_correction = yes }
+		}
 		every_directly_owned_province = { aov_refresh_holding_levy_correction = yes }
 	}
 }

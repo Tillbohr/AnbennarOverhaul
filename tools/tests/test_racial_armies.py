@@ -407,8 +407,12 @@ class RefreshHookTests(unittest.TestCase):
                               ("yearly_playable_pulse", "aov_racial_levy_yearly")):
             self.assertEqual(squash(self.on_actions.get(vanilla, "")), f"on_actions = {{ {ours} }}", vanilla)
 
-    def test_building_completed_refreshes_root(self):
-        self.assertEqual(self.effect("aov_racial_levy_building_completed"), REFRESH)
+    def test_building_completed_refreshes_its_de_jure_duchy(self):
+        # county_modifier reaches every holding of the county, duchy_capital_county_modifier every county of the duchy
+        self.assertEqual(self.effect("aov_racial_levy_building_completed"),
+                         f"if = {{ limit = {{ exists = county.duchy }} county.duchy = {{ every_de_jure_county = {{ "
+                         f"every_county_province = {{ {REFRESH} }} }} }} }} "
+                         f"else = {{ county = {{ every_county_province = {{ {REFRESH} }} }} }}")
 
     def test_title_gain_refreshes_every_county_province(self):
         effect = self.effect("aov_racial_levy_title_gain")
@@ -419,11 +423,16 @@ class RefreshHookTests(unittest.TestCase):
     def test_holding_razed_refreshes_scope_province(self):
         self.assertEqual(self.effect("aov_racial_levy_holding_razed"), f"scope:province = {{ {REFRESH} }}")
 
-    def test_yearly_refreshes_owned_provinces(self):
-        self.assertEqual(self.effect("aov_racial_levy_yearly"), f"every_directly_owned_province = {{ {REFRESH} }}")
+    def test_yearly_refreshes_every_holding_of_held_counties(self):
+        # vassal barons' holdings (temples, cities) sit in their count's counties and get no pulse of their own
+        self.assertEqual(self.effect("aov_racial_levy_yearly"),
+                         f"every_held_title = {{ limit = {{ tier = tier_county }} every_county_province = {{ {REFRESH} }} }} "
+                         f"every_directly_owned_province = {{ {REFRESH} }}")
         trigger = squash(parse_blocks(self.on_actions["aov_racial_levy_yearly"]).get("trigger", ""))
         for param in RACIAL_PARAMS:
             self.assertIn(f"has_cultural_parameter = {param}", trigger)
+        self.assertIn("any_held_title = { tier = tier_county any_county_province = { has_variable = aov_racial_levy_tier } }",
+                      trigger)
         self.assertIn("any_directly_owned_province = { has_variable = aov_racial_levy_tier }", trigger)
 
     def test_game_start_refreshes_racial_provinces(self):
