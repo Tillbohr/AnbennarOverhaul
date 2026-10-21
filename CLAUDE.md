@@ -75,6 +75,7 @@ Read only the doc for the system you are working on. Each holds the generated-fi
 | RiE character backgrounds and royal courts | `docs/systems/rie-courts.md` | `build_rie_courts.py` |
 | Deepwoods grove arms and EU4 names | `docs/systems/deepwoods-groves.md` | none (imported once; edit by hand) |
 | Map graphics: RiE shaders and terrain, raised dwarven mountains, dwarven gates | `docs/systems/map-graphics.md` | `build_map_graphics.py` |
+| Racial armies: levies, domain limit, elf and dwarf MAA (moon, sun, wood elves; dwarf clans), per-holding levy correction | `docs/systems/racial-armies.md` | `build_racial_levies.py` |
 
 ## Updating and validation
 
