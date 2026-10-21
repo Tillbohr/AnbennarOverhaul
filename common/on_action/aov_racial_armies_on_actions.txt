@@ -16,5 +16,88 @@ aov_racial_armies_game_start = {
 			limit = { has_cultural_tradition = tradition_test_maa_anb_dwarven_handgunners }
 			remove_culture_tradition = tradition_test_maa_anb_dwarven_handgunners
 		}
+		# First levy correction for every racial holding (common/scripted_effects/aov_racial_levy_effects.txt).
+		every_ruler = {
+			limit = {
+				culture = {
+					OR = {
+						has_cultural_parameter = aov_racial_levy_elven
+						has_cultural_parameter = aov_racial_levy_dwarven
+						has_cultural_parameter = aov_racial_levy_gnomish
+						has_cultural_parameter = aov_racial_levy_kobold
+					}
+				}
+			}
+			every_directly_owned_province = { aov_refresh_holding_levy_correction = yes }
+		}
+	}
+}
+
+# Keeping each racial holding's levy correction current: when a building finishes, a title changes hands or a
+# holding is razed, and once a year as a backstop (culture or faith conversion, new traditions or innovations).
+
+on_building_completed = {
+	on_actions = { aov_racial_levy_building_completed }
+}
+
+on_title_gain = {
+	on_actions = { aov_racial_levy_title_gain }
+}
+
+on_holding_razed = {
+	on_actions = { aov_racial_levy_holding_razed }
+}
+
+yearly_playable_pulse = {
+	on_actions = { aov_racial_levy_yearly }
+}
+
+# root = the province where the building finished
+aov_racial_levy_building_completed = {
+	effect = {
+		aov_refresh_holding_levy_correction = yes
+	}
+}
+
+# root = the new holder, scope:title = the title that changed hands
+aov_racial_levy_title_gain = {
+	effect = {
+		scope:title = {
+			if = {
+				limit = { tier = tier_county }
+				every_county_province = { aov_refresh_holding_levy_correction = yes }
+			}
+			else_if = {
+				limit = { tier = tier_barony }
+				title_province = { aov_refresh_holding_levy_correction = yes }
+			}
+		}
+	}
+}
+
+# root = the razing holder, scope:province = the razed holding's province
+aov_racial_levy_holding_razed = {
+	effect = {
+		scope:province = { aov_refresh_holding_levy_correction = yes }
+	}
+}
+
+# root = a playable ruler: racial, or still owning a corrected holding (so a converted ruler's corrections are cleared)
+aov_racial_levy_yearly = {
+	trigger = {
+		OR = {
+			culture = {
+				OR = {
+					has_cultural_parameter = aov_racial_levy_elven
+					has_cultural_parameter = aov_racial_levy_dwarven
+					has_cultural_parameter = aov_racial_levy_gnomish
+					has_cultural_parameter = aov_racial_levy_kobold
+				}
+			}
+			any_directly_owned_province = { has_variable = aov_racial_levy_tier }
+		}
+	}
+	effect = {
+		every_directly_owned_province = { aov_refresh_holding_levy_correction = yes }
 	}
 }

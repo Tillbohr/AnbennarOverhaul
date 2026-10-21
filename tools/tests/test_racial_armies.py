@@ -388,5 +388,50 @@ class MaaTests(unittest.TestCase):
                              "value = @cultural_maa_extra_ai_score", key)
 
 
+REFRESH = "aov_refresh_holding_levy_correction = yes"
+RACIAL_PARAMS = ("aov_racial_levy_elven", "aov_racial_levy_dwarven", "aov_racial_levy_gnomish", "aov_racial_levy_kobold")
+
+
+class RefreshHookTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.on_actions = blocks(ON_ACTION_FILE)
+
+    def effect(self, name):
+        return squash(parse_blocks(self.on_actions.get(name, "")).get("effect", ""))
+
+    def test_hooks_appended_to_vanilla_on_actions(self):
+        for vanilla, ours in (("on_building_completed", "aov_racial_levy_building_completed"),
+                              ("on_title_gain", "aov_racial_levy_title_gain"),
+                              ("on_holding_razed", "aov_racial_levy_holding_razed"),
+                              ("yearly_playable_pulse", "aov_racial_levy_yearly")):
+            self.assertEqual(squash(self.on_actions.get(vanilla, "")), f"on_actions = {{ {ours} }}", vanilla)
+
+    def test_building_completed_refreshes_root(self):
+        self.assertEqual(self.effect("aov_racial_levy_building_completed"), REFRESH)
+
+    def test_title_gain_refreshes_every_county_province(self):
+        effect = self.effect("aov_racial_levy_title_gain")
+        self.assertIn(f"if = {{ limit = {{ tier = tier_county }} every_county_province = {{ {REFRESH} }} }}", effect)
+        self.assertIn(f"else_if = {{ limit = {{ tier = tier_barony }} title_province = {{ {REFRESH} }} }}", effect)
+        self.assertTrue(effect.startswith("scope:title = {"))
+
+    def test_holding_razed_refreshes_scope_province(self):
+        self.assertEqual(self.effect("aov_racial_levy_holding_razed"), f"scope:province = {{ {REFRESH} }}")
+
+    def test_yearly_refreshes_owned_provinces(self):
+        self.assertEqual(self.effect("aov_racial_levy_yearly"), f"every_directly_owned_province = {{ {REFRESH} }}")
+        trigger = squash(parse_blocks(self.on_actions["aov_racial_levy_yearly"]).get("trigger", ""))
+        for param in RACIAL_PARAMS:
+            self.assertIn(f"has_cultural_parameter = {param}", trigger)
+        self.assertIn("any_directly_owned_province = { has_variable = aov_racial_levy_tier }", trigger)
+
+    def test_game_start_refreshes_racial_provinces(self):
+        effect = self.effect("aov_racial_armies_game_start")
+        self.assertRegex(effect, rf"every_ruler = {{ limit = {{ culture = {{ OR = {{ "
+                                 rf"{' '.join(f'has_cultural_parameter = {p}' for p in RACIAL_PARAMS)} }} }} }} "
+                                 rf"every_directly_owned_province = {{ {REFRESH} }} }}")
+
+
 if __name__ == "__main__":
     unittest.main()
