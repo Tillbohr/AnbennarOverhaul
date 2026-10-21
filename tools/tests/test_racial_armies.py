@@ -217,5 +217,122 @@ class PricingTests(unittest.TestCase):
                              f"value = {source} multiply = 1.3", suffix)
 
 
+OVERRIDE_MAA_FILE = "common/men_at_arms_types/zz_aov_racial_maa_overrides.txt"
+NEW_MAA_FILES = ("common/men_at_arms_types/aov_elven_maa_types.txt", "common/men_at_arms_types/aov_dwarven_maa_types.txt")
+BASE_MAA_FILES = ("common/men_at_arms_types/anb_cultural_maa_generics.txt",
+                  "common/men_at_arms_types/anb_cultural_maa_types.txt")
+LOC_FILE = "localization/english/aov_racial_armies_l_english.yml"
+REPLACE_LOC_FILE = "localization/replace/english/aov_racial_armies_replace_l_english.yml"
+
+MOON, SUN, WOOD = "aov_moon_elven_lineage_trigger", "aov_sun_elven_lineage_trigger", "aov_wood_elven_lineage_trigger"
+EXPECTED = {  # key -> type, stack, damage, toughness, pursuit, screen, gate (spec roster tables)
+    "aithchri": ("archers", 50, 120, 35, 0, 0, MOON),
+    "sheahrna": ("pikemen", 50, 90, 110, 0, 0, MOON),
+    "staochri": ("heavy_infantry", 25, 300, 200, 10, 10, MOON),
+    "marcairna": ("light_cavalry", 50, 90, 60, 90, 90, MOON),
+    "aov_elven_knights": ("heavy_cavalry", 25, 450, 160, 40, 0, MOON),
+    "aov_gladeguards": ("skirmishers", 50, 45, 70, 30, 60, MOON),
+    "sundancer_legions": ("heavy_infantry", 25, 280, 240, 20, 20, SUN),
+    "jaherkadezim": ("heavy_cavalry", 25, 480, 150, 40, 0, SUN),
+    "aov_sunspear_phalanx": ("pikemen", 50, 80, 130, 0, 0, SUN),
+    "aov_phoenix_bowmen": ("archers", 50, 110, 40, 0, 0, SUN),
+    "aov_sandwind_outriders": ("light_cavalry", 50, 80, 55, 100, 80, SUN),
+    "aov_duneblades": ("skirmishers", 50, 50, 60, 40, 50, SUN),
+    "ayethi": ("archers", 50, 110, 35, 0, 0, WOOD),
+    "felwyr": ("skirmishers", 50, 50, 70, 20, 60, WOOD),
+    "glaifes": ("pikemen", 50, 80, 110, 0, 0, WOOD),
+    "hyodeth": ("light_cavalry", 50, 90, 60, 90, 90, WOOD),
+    "aov_greatoak_wardens": ("heavy_infantry", 25, 260, 220, 10, 10, WOOD),
+}
+SUN_TERRAIN = {"desert": 0.2, "drylands": 0.2, "floodplains": 0.2, "plains": 0.2, "jungle": -0.2, "forest": -0.2}
+WOOD_TERRAIN = {"forest": 0.5, "taiga": 0.5, "jungle": 0.5, "wetlands": 0.5, "desert": -0.2, "drylands": -0.2,
+                "plains": -0.2}
+TERRAIN_SETS = {key: {} for key in EXPECTED}  # key -> terrain -> fraction of base damage/toughness
+TERRAIN_SETS.update({"aithchri": {"forest": 0.2, "hills": 0.2, "taiga": 0.2},
+                     "aov_gladeguards": {"forest": 0.5, "hills": 0.2, "taiga": 0.2}})
+TERRAIN_SETS.update({key: SUN_TERRAIN for key, row in EXPECTED.items() if row[6] == SUN})
+TERRAIN_SETS.update({key: WOOD_TERRAIN for key, row in EXPECTED.items() if row[6] == WOOD})
+WINTER_SETS = {key: {"normal_winter": -0.2, "harsh_winter": -0.2} for key, row in EXPECTED.items() if row[6] == SUN}
+CHANGED_FIELDS = ("stack", "damage", "toughness", "pursuit", "screen")
+CHANGED_BLOCKS = ("terrain_bonus", "winter_bonus", "can_recruit", "buy_cost", "low_maintenance_cost",
+                  "high_maintenance_cost", "ai_quality")
+
+
+def rnd(x):
+    """Round half away from zero, as the MAA files do."""
+    return int(abs(x) + 0.5) * (1 if x >= 0 else -1)
+
+
+def loc_keys(text):
+    return set(re.findall(r"^\s+([A-Za-z0-9_.]+):\d*\s", text, re.M))
+
+
+def bonus_table(body):
+    """terrain -> (damage, toughness) of a terrain_bonus / winter_bonus body."""
+    return {t: (int(field(b, "damage") or 0), int(field(b, "toughness") or 0)) for t, b in parse_blocks(body).items()}
+
+
+class MaaTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.units = blocks(OVERRIDE_MAA_FILE)
+        for rel in NEW_MAA_FILES:
+            cls.units.update(blocks(rel))
+        cls.base = {}
+        for rel in BASE_MAA_FILES:
+            cls.base.update(base_blocks(rel))
+        cls.loc = loc_keys(_text(SUBMOD / LOC_FILE)) | loc_keys(_text(SUBMOD / REPLACE_LOC_FILE))
+
+    def unit(self, key):
+        self.assertIn(key, self.units)
+        return self.units[key]
+
+    def test_units_have_spec_stats(self):
+        for key, (kind, stack, dmg, tough, pursuit, screen, _gate) in EXPECTED.items():
+            body = self.unit(key)
+            got = [field(body, f) for f in ("type", "stack", "damage", "toughness", "pursuit", "screen")]
+            self.assertEqual(got, [kind] + [str(v) for v in (stack, dmg, tough, pursuit, screen)], key)
+
+    def test_units_gated_by_their_lineage(self):
+        for key, row in EXPECTED.items():
+            gate = row[6]
+            want = (f"culture = {{ has_cultural_pillar = {gate} }}" if gate.startswith("heritage_")
+                    else f"culture = {{ {gate} = yes }}")
+            self.assertEqual(squash(parse_blocks(self.unit(key)).get("can_recruit", "")), want, key)
+
+    def test_units_use_their_cost_values(self):
+        for key in EXPECTED:
+            inner, p = parse_blocks(self.unit(key)), cost_prefix(key)
+            for block, suffix in (("buy_cost", "recruitment_cost"), ("low_maintenance_cost", "low_maint_cost"),
+                                  ("high_maintenance_cost", "high_maint_cost")):
+                self.assertEqual(squash(inner.get(block, "")), f"gold = {p}_{suffix}", key)
+
+    def test_retuned_units_keep_unchanged_fields(self):
+        def rest(body):
+            body = without_blocks(strip_comments(body), CHANGED_BLOCKS)
+            return squash(re.sub(rf"(?<![\w.:])(?:{'|'.join(CHANGED_FIELDS)})\s*=\s*\S+", "", body))
+        for key in EXPECTED:
+            if key in self.base:
+                self.assertEqual(rest(self.unit(key)), rest(self.base[key]), key)
+
+    def test_terrain_bonuses_follow_spec_percentages(self):
+        for key, terrains in TERRAIN_SETS.items():
+            row, inner = EXPECTED[key], parse_blocks(self.unit(key))
+            want = {t: (rnd(row[2] * f), rnd(row[3] * f)) for t, f in terrains.items()}
+            self.assertEqual(bonus_table(inner.get("terrain_bonus", "")), want, key)
+            winter = {t: (rnd(row[2] * f), rnd(row[3] * f)) for t, f in WINTER_SETS.get(key, {}).items()}
+            self.assertEqual(bonus_table(inner.get("winter_bonus", "")), winter, key)
+
+    def test_every_unit_has_name_and_flavor(self):
+        for key in EXPECTED:
+            self.assertIn(key, self.loc)
+            self.assertIn(f"{key}_flavor", self.loc)
+
+    def test_ai_quality_uses_cultural_extra_score(self):
+        for key in EXPECTED:
+            self.assertEqual(squash(parse_blocks(self.unit(key)).get("ai_quality", "")),
+                             "value = @cultural_maa_extra_ai_score", key)
+
+
 if __name__ == "__main__":
     unittest.main()

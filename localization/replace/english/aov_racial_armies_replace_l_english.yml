@@ -1,0 +1,25 @@
+﻿l_english:
+ # Anbennar Overhaul: racial armies (Anbennar's elven and dwarven men-at-arms, retuned)
+ # Moon elves (Anbennar's units, retuned; the placeholder flavor text is replaced)
+ aithchri:0 "Aithchri"
+ aithchri_flavor:0 "#F Moon elf archers who have drawn the same bow for longer than most human kingdoms have stood. Under ideal circumstances an enemy's strength is halved before the melee begins.#!"
+ sheahrna:0 "Sheáhrna"
+ sheahrna_flavor:0 "#F Moon elf spearmen who hold their ranks with the patience of centuries. Few horsemen survive a charge into their spears.#!"
+ staochri:0 "Stáochri"
+ staochri_flavor:0 "#F Moon elf blademasters, each with two hundred years of swordwork behind them. There are few of them, but they rarely need to be many.#!"
+ marcairna:0 "Marcairna"
+ marcairna_flavor:0 "#F Moon elf light riders who scout, screen and pursue. Their horses are bred in the vales of Lencenor, and their riders never seem to tire.#!"
+ # Sun elves (Anbennar's units; now recruited by every sun elf culture)
+ sundancer_legions:0 "Sundancer Legionaries"
+ sundancer_legions_flavor:0 "#F Elite soldiers armed with longswords and greatshields. They are organized in small units that gives the formation the flexibility to outmaneuver enemy shieldwalls.#!"
+ jaherkadezim:0 "Jaherkadezim"
+ jaherkadezim_flavor:0 "#F The Jaherian Companions are skilled heavy cavalrymen composed of the captains and top officials of the military vessels of the Sundancer fleet. Armed with heavy Precursor armor and long thrusting spears, few infantry forces in Halann can resist the charge of the Companions.#!"
+ # Wood elves (Anbennar's units, retuned; the placeholder flavor text is replaced)
+ ayethi:0 "Ayethi"
+ ayethi_flavor:0 "#F Wood elf archers of the Deepwoods. Under the canopy their arrows find every gap, and their enemies rarely see who loosed them.#!"
+ felwyr:0 "Felwyr"
+ felwyr_flavor:0 "#F Wood elf skirmishers who move through the undergrowth without a sound, screening their kin and drawing the enemy deeper into the trees.#!"
+ glaifes:0 "Glaifes"
+ glaifes_flavor:0 "#F Wood elf glaive-bearers who hold the forest paths. Their long blades keep riders and beasts at bay where the trees leave no room to flank.#!"
+ hyodeth:0 "Hyodeth"
+ hyodeth_flavor:0 "#F Wood elf riders on great stags, at home where no horse could pass. They strike from the trees and are gone before the enemy can turn.#!"

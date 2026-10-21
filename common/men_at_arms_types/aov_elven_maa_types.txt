@@ -1,0 +1,239 @@
+﻿# Anbennar Overhaul: racial armies. New elven men-at-arms (spec roster tables); costs in
+# common/script_values/aov_racial_maa_values.txt, gates in common/scripted_triggers/aov_racial_maa_triggers.txt.
+
+@cultural_maa_extra_ai_score = 80 # Anbennar's value (anb_cultural_maa_generics.txt)
+
+### Moon elves
+
+aov_elven_knights = {
+	type = heavy_cavalry
+
+	damage = 450
+	toughness = 160
+	pursuit = 40
+	screen = 0
+
+	counters = {
+		archers = 1
+		gunpowder = 1
+	}
+	can_recruit = {
+		culture = { aov_moon_elven_lineage_trigger = yes }
+	}
+	buy_cost = { gold = aov_elven_knights_recruitment_cost }
+	low_maintenance_cost = { gold = aov_elven_knights_low_maint_cost }
+	high_maintenance_cost = { gold = aov_elven_knights_high_maint_cost }
+	stack = 25
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = heavy_cavalry
+	allowed_in_hired_troops = no
+}
+
+aov_gladeguards = {
+	type = skirmishers
+
+	damage = 45
+	toughness = 70
+	pursuit = 30
+	screen = 60
+
+	counters = {
+		heavy_infantry = 1
+	}
+	terrain_bonus = {
+		forest = { damage = 23 toughness = 35 }
+		hills = { damage = 9 toughness = 14 }
+		taiga = { damage = 9 toughness = 14 }
+	}
+	can_recruit = {
+		culture = { aov_moon_elven_lineage_trigger = yes }
+	}
+	buy_cost = { gold = aov_gladeguards_recruitment_cost }
+	low_maintenance_cost = { gold = aov_gladeguards_low_maint_cost }
+	high_maintenance_cost = { gold = aov_gladeguards_high_maint_cost }
+	stack = 50
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = skirmishers
+	allowed_in_hired_troops = no
+}
+
+### Sun elves
+
+aov_sunspear_phalanx = {
+	type = pikemen
+
+	damage = 80
+	toughness = 130
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		light_cavalry = 1
+		heavy_cavalry = 1
+		camel_cavalry = 1
+		elephant_cavalry = 1
+	}
+	terrain_bonus = {
+		desert = { damage = 16 toughness = 26 }
+		drylands = { damage = 16 toughness = 26 }
+		floodplains = { damage = 16 toughness = 26 }
+		plains = { damage = 16 toughness = 26 }
+		jungle = { damage = -16 toughness = -26 }
+		forest = { damage = -16 toughness = -26 }
+	}
+	winter_bonus = {
+		normal_winter = { damage = -16 toughness = -26 }
+		harsh_winter = { damage = -16 toughness = -26 }
+	}
+	can_recruit = {
+		culture = { aov_sun_elven_lineage_trigger = yes }
+	}
+	buy_cost = { gold = aov_sunspear_phalanx_recruitment_cost }
+	low_maintenance_cost = { gold = aov_sunspear_phalanx_low_maint_cost }
+	high_maintenance_cost = { gold = aov_sunspear_phalanx_high_maint_cost }
+	stack = 50
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = pikemen
+	allowed_in_hired_troops = no
+}
+
+aov_phoenix_bowmen = {
+	type = archers
+
+	damage = 110
+	toughness = 40
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		skirmishers = 1
+	}
+	terrain_bonus = {
+		desert = { damage = 22 toughness = 8 }
+		drylands = { damage = 22 toughness = 8 }
+		floodplains = { damage = 22 toughness = 8 }
+		plains = { damage = 22 toughness = 8 }
+		jungle = { damage = -22 toughness = -8 }
+		forest = { damage = -22 toughness = -8 }
+	}
+	winter_bonus = {
+		normal_winter = { damage = -22 toughness = -8 }
+		harsh_winter = { damage = -22 toughness = -8 }
+	}
+	can_recruit = {
+		culture = { aov_sun_elven_lineage_trigger = yes }
+	}
+	buy_cost = { gold = aov_phoenix_bowmen_recruitment_cost }
+	low_maintenance_cost = { gold = aov_phoenix_bowmen_low_maint_cost }
+	high_maintenance_cost = { gold = aov_phoenix_bowmen_high_maint_cost }
+	stack = 50
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = bowmen
+	allowed_in_hired_troops = no
+}
+
+aov_sandwind_outriders = {
+	type = light_cavalry
+
+	damage = 80
+	toughness = 55
+	pursuit = 100
+	screen = 80
+
+	counters = {
+		archers = 1
+		gunpowder = 1
+	}
+	terrain_bonus = {
+		desert = { damage = 16 toughness = 11 }
+		drylands = { damage = 16 toughness = 11 }
+		floodplains = { damage = 16 toughness = 11 }
+		plains = { damage = 16 toughness = 11 }
+		jungle = { damage = -16 toughness = -11 }
+		forest = { damage = -16 toughness = -11 }
+	}
+	winter_bonus = {
+		normal_winter = { damage = -16 toughness = -11 }
+		harsh_winter = { damage = -16 toughness = -11 }
+	}
+	can_recruit = {
+		culture = { aov_sun_elven_lineage_trigger = yes }
+	}
+	buy_cost = { gold = aov_sandwind_outriders_recruitment_cost }
+	low_maintenance_cost = { gold = aov_sandwind_outriders_low_maint_cost }
+	high_maintenance_cost = { gold = aov_sandwind_outriders_high_maint_cost }
+	stack = 50
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = light_cavalry
+	allowed_in_hired_troops = no
+}
+
+aov_duneblades = {
+	type = skirmishers
+
+	damage = 50
+	toughness = 60
+	pursuit = 40
+	screen = 50
+
+	counters = {
+		heavy_infantry = 1
+	}
+	terrain_bonus = {
+		desert = { damage = 10 toughness = 12 }
+		drylands = { damage = 10 toughness = 12 }
+		floodplains = { damage = 10 toughness = 12 }
+		plains = { damage = 10 toughness = 12 }
+		jungle = { damage = -10 toughness = -12 }
+		forest = { damage = -10 toughness = -12 }
+	}
+	winter_bonus = {
+		normal_winter = { damage = -10 toughness = -12 }
+		harsh_winter = { damage = -10 toughness = -12 }
+	}
+	can_recruit = {
+		culture = { aov_sun_elven_lineage_trigger = yes }
+	}
+	buy_cost = { gold = aov_duneblades_recruitment_cost }
+	low_maintenance_cost = { gold = aov_duneblades_low_maint_cost }
+	high_maintenance_cost = { gold = aov_duneblades_high_maint_cost }
+	stack = 50
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = skirmishers
+	allowed_in_hired_troops = no
+}
+
+### Wood elves
+
+aov_greatoak_wardens = {
+	type = heavy_infantry
+
+	damage = 260
+	toughness = 220
+	pursuit = 10
+	screen = 10
+
+	counters = {
+		pikemen = 1
+		peasant_militia = 2
+	}
+	terrain_bonus = {
+		forest = { damage = 130 toughness = 110 }
+		taiga = { damage = 130 toughness = 110 }
+		jungle = { damage = 130 toughness = 110 }
+		wetlands = { damage = 130 toughness = 110 }
+		desert = { damage = -52 toughness = -44 }
+		drylands = { damage = -52 toughness = -44 }
+		plains = { damage = -52 toughness = -44 }
+	}
+	can_recruit = {
+		culture = { aov_wood_elven_lineage_trigger = yes }
+	}
+	buy_cost = { gold = aov_greatoak_wardens_recruitment_cost }
+	low_maintenance_cost = { gold = aov_greatoak_wardens_low_maint_cost }
+	high_maintenance_cost = { gold = aov_greatoak_wardens_high_maint_cost }
+	stack = 25
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = heavy_infantry
+	allowed_in_hired_troops = no
+}

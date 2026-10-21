@@ -1,0 +1,19 @@
+﻿l_english:
+ # Anbennar Overhaul: racial armies (new men-at-arms)
+ # Moon elves
+ aov_elven_knights:0 "Elven Knights"
+ aov_elven_knights_flavor:0 "#F Like their human counterparts, Elven Knights ride to war in plate, but they charge only once: after the lance breaks, centuries-honed reflexes decide the melee.#!"
+ aov_gladeguards:0 "Gladeguards"
+ aov_gladeguards_flavor:0 "#F Trained in secret to guard the moon elves' forest vales, Gladeguards loose from the boughs of the great oaks and are gone before the enemy reaches the treeline.#!"
+ # Sun elves
+ aov_sunspear_phalanx:0 "Sunspear Phalanx"
+ aov_sunspear_phalanx_flavor:0 "#F Jaher's phalangites hold the line of the Phoenix Empire with long spears and bronze-faced shields, a wall that Bulwari chariots have learned not to charge.#!"
+ aov_phoenix_bowmen:0 "Phoenix Bowmen"
+ aov_phoenix_bowmen_flavor:0 "#F Sun elf archers who learned their craft on the decks of the Sundancer fleet. Their volleys darken the desert sky before the Companions charge.#!"
+ aov_sandwind_outriders:0 "Sandwind Outriders"
+ aov_sandwind_outriders_flavor:0 "#F Light horsemen of the Phoenix Empire who scout ahead of the legions, run down broken enemies and vanish into the dunes as fast as the wind that names them.#!"
+ aov_duneblades:0 "Duneblades"
+ aov_duneblades_flavor:0 "#F Lightly armoured sun elf skirmishers who fight in loose order across the sands, screening the legions and harrying any foe slow enough to catch.#!"
+ # Wood elves
+ aov_greatoak_wardens:0 "Greatoak Wardens"
+ aov_greatoak_wardens_flavor:0 "#F The few wood elves who wear heavy armour stand as living walls before the groves of the Deepwoods. Under the canopy, no foe has ever broken them.#!"
