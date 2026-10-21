@@ -157,5 +157,65 @@ class TraditionRemovalTests(unittest.TestCase):
                                      rf"remove_culture_tradition = {key} }}")
 
 
+VALUES_FILE = "common/script_values/aov_racial_maa_values.txt"
+VANILLA = {  # regiment damage, regiment toughness, buy, low upkeep (spec, Pricing)
+    "skirmishers": (1000, 1600, 45, 0.15), "archers": (2500, 1000, 55, 0.2), "crossbow": (4200, 1800, 88, 0.3),
+    "pikemen": (2200, 2400, 75, 0.3), "heavy_infantry": (3200, 2200, 90, 0.4),
+    "light_cavalry": (2200, 1500, 85, 0.35), "heavy_cavalry": (5000, 1750, 200, 0.7),
+}
+ROSTER = {  # key -> role, men, damage, toughness (spec roster tables)
+    "aithchri": ("archers", 50, 120, 35), "sheahrna": ("pikemen", 50, 90, 110),
+    "staochri": ("heavy_infantry", 25, 300, 200), "marcairna": ("light_cavalry", 50, 90, 60),
+    "aov_elven_knights": ("heavy_cavalry", 25, 450, 160), "aov_gladeguards": ("skirmishers", 50, 45, 70),
+    "sundancer_legions": ("heavy_infantry", 25, 280, 240), "jaherkadezim": ("heavy_cavalry", 25, 480, 150),
+    "aov_sunspear_phalanx": ("pikemen", 50, 80, 130), "aov_phoenix_bowmen": ("archers", 50, 110, 40),
+    "aov_sandwind_outriders": ("light_cavalry", 50, 80, 55), "aov_duneblades": ("skirmishers", 50, 50, 60),
+    "ayethi": ("archers", 50, 110, 35), "felwyr": ("skirmishers", 50, 50, 70), "glaifes": ("pikemen", 50, 80, 110),
+    "hyodeth": ("light_cavalry", 50, 90, 60), "aov_greatoak_wardens": ("heavy_infantry", 25, 260, 220),
+    "dwarven_guardians": ("heavy_infantry", 80, 48, 60), "shieldwall": ("pikemen", 80, 30, 70),
+    "armor_breakers": ("crossbow", 80, 55, 35), "ramriders": ("light_cavalry", 50, 50, 45),
+    "aov_grudgebearers": ("pikemen", 80, 40, 60), "aov_tortoise_formation": ("pikemen", 80, 26, 110),
+    "aov_giantbane_crossbows": ("crossbow", 80, 65, 35), "aov_uthojdihr_marines": ("skirmishers", 80, 30, 50),
+    "aov_seg_band_gnollhunters": ("skirmishers", 80, 35, 40), "aov_golden_gate_guard": ("heavy_infantry", 50, 70, 160),
+    "aov_clockwork_bows": ("crossbow", 80, 80, 30), "aov_dauvek_veker": ("heavy_infantry", 50, 110, 90),
+    "aov_copper_road_wardens": ("light_cavalry", 50, 55, 55), "aov_brightbeard_hammers": ("heavy_infantry", 50, 100, 70),
+}
+
+
+def cost_prefix(key):
+    """Script value prefix of a unit's costs: aov_ + the key without its own aov_."""
+    return "aov_" + key.removeprefix("aov_")
+
+
+def flat_values(text):
+    """name -> number for `name = <number>` script values at the top level of a file."""
+    return {k: float(v) for k, v in re.findall(r"^([A-Za-z0-9_]+)\s*=\s*(-?[0-9.]+)\s*$", strip_comments(text), re.M)}
+
+
+class PricingTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        text = _text(SUBMOD / VALUES_FILE)
+        cls.values, cls.blocks = flat_values(text), parse_blocks(text)
+
+    def test_every_unit_priced_at_vanilla_power_per_gold(self):
+        for key, (role, men, dmg, tough) in ROSTER.items():
+            vd, vt, vb, vu = VANILLA[role]
+            factor = ((men * dmg / vd) * (men * tough / vt)) ** 0.5
+            p = cost_prefix(key)
+            buy, low, high = (self.values.get(f"{p}_{s}") for s in ("recruitment_cost", "low_maint_cost", "high_maint_cost"))
+            self.assertIsNotNone(buy, key)
+            self.assertAlmostEqual(buy, vb * factor, delta=vb * factor * 0.05, msg=key)
+            self.assertAlmostEqual(low, vu * factor, delta=vu * factor * 0.05, msg=key)
+            self.assertAlmostEqual(high, 3 * low, places=6, msg=key)
+
+    def test_engineer_corps_costs_scale_bombards(self):
+        for suffix, source in (("recruitment_cost", "dwarven_bombards_recruitment_cost"),
+                               ("low_maint_cost", "dwarven_bombard_low_maint_cost"),
+                               ("high_maint_cost", "dwarven_bombard_high_maint_cost")):
+            self.assertEqual(squash(self.blocks.get(f"aov_silverforge_engineers_{suffix}", "")),
+                             f"value = {source} multiply = 1.3", suffix)
+
+
 if __name__ == "__main__":
     unittest.main()
