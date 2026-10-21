@@ -23,3 +23,12 @@
  glaifes_flavor:0 "#F Wood elf glaive-bearers who hold the forest paths. Their long blades keep riders and beasts at bay where the trees leave no room to flank.#!"
  hyodeth:0 "Hyodeth"
  hyodeth_flavor:0 "#F Wood elf riders on great stags, at home where no horse could pass. They strike from the trees and are gone before the enemy can turn.#!"
+ # Dwarves, shared (Anbennar's units, retuned; the placeholder flavor text is replaced)
+ dwarven_guardians:0 "Guardians"
+ dwarven_guardians_flavor:0 "#F Heavily armoured dwarven infantry who hold the halls of their holds. Few things move a guardian who does not wish to move.#!"
+ shieldwall:0 "Shieldwall"
+ shieldwall_flavor:0 "#F An ancient tactic done best by its creators: a line of iron-plated tower shields with gaps for pikes, ensuring the safety of dwarves and the slow demise of their enemies.#!"
+ armor_breakers:0 "Armor Breakers"
+ armor_breakers_flavor:0 "#F Dwarven crossbowmen whose heavy bolts punch through plate. Knights who scorn foot soldiers rarely scorn them twice.#!"
+ ramriders:0 "Ramriders"
+ ramriders_flavor:0 "#F Cavalry has never been the heart of a dwarven army, but when an enemy refuses to break, a shattering charge of warbred rams usually settles the matter.#!"

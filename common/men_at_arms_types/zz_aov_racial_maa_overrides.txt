@@ -298,3 +298,171 @@ hyodeth = {
 	stack = 50
 	ai_quality = { value = @cultural_maa_extra_ai_score }
 }
+
+### Dwarves, shared
+
+dwarven_guardians = {
+	type = heavy_infantry
+	counters = {
+		archers = 1
+		pikemen = 1
+	}
+	icon = heavy_infantry
+
+	damage = 48
+	toughness = 60
+	pursuit = 0
+	screen = 15
+
+	terrain_bonus = {
+		hills = { damage = 14 toughness = 18 }
+		mountains = { damage = 22 toughness = 27 }
+		desert_mountains = { damage = 22 toughness = 27 }
+		dwarven_hold = { damage = 31 toughness = 39 }
+		dwarven_hold_surface = { damage = 31 toughness = 39 }
+		cavern = { damage = 31 toughness = 39 }
+		dwarven_road = { damage = 31 toughness = 39 }
+		forest = { damage = -7 toughness = -9 }
+	}
+	can_recruit = {
+		culture = { has_cultural_pillar = heritage_dwarven }
+	}
+	buy_cost = { gold = aov_dwarven_guardians_recruitment_cost }
+	low_maintenance_cost = { gold = aov_dwarven_guardians_low_maint_cost }
+	high_maintenance_cost = { gold = aov_dwarven_guardians_high_maint_cost }
+	stack = 80
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+}
+
+shieldwall = {
+	type = pikemen
+	counters = {
+		light_cavalry = 1
+		heavy_cavalry = 1
+	}
+	icon = pikemen
+
+	damage = 30
+	toughness = 70
+	pursuit = 0
+	screen = 0
+
+	terrain_bonus = {
+		hills = { damage = 9 toughness = 21 }
+		mountains = { damage = 14 toughness = 32 }
+		desert_mountains = { damage = 14 toughness = 32 }
+		dwarven_hold = { damage = 20 toughness = 46 }
+		dwarven_hold_surface = { damage = 20 toughness = 46 }
+		cavern = { damage = 20 toughness = 46 }
+		dwarven_road = { damage = 20 toughness = 46 }
+		forest = { damage = -5 toughness = -11 }
+	}
+	can_recruit = {
+		culture = { has_cultural_pillar = heritage_dwarven }
+	}
+	buy_cost = { gold = aov_shieldwall_recruitment_cost }
+	low_maintenance_cost = { gold = aov_shieldwall_low_maint_cost }
+	high_maintenance_cost = { gold = aov_shieldwall_high_maint_cost }
+	stack = 80
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+}
+
+armor_breakers = {
+	type = archers
+	counters = {
+		pikemen = 1
+		heavy_infantry = 1
+		heavy_cavalry = 1
+	}
+	icon = bowmen
+
+	damage = 55
+	toughness = 35
+	pursuit = 0
+	screen = 0
+
+	terrain_bonus = {
+		hills = { damage = 17 toughness = 11 }
+		mountains = { damage = 25 toughness = 16 }
+		desert_mountains = { damage = 25 toughness = 16 }
+		dwarven_hold = { damage = 36 toughness = 23 }
+		dwarven_hold_surface = { damage = 36 toughness = 23 }
+		cavern = { damage = 36 toughness = 23 }
+		dwarven_road = { damage = 36 toughness = 23 }
+		forest = { damage = -8 toughness = -5 }
+	}
+	can_recruit = {
+		culture = { has_cultural_pillar = heritage_dwarven }
+	}
+	buy_cost = { gold = aov_armor_breakers_recruitment_cost }
+	low_maintenance_cost = { gold = aov_armor_breakers_low_maint_cost }
+	high_maintenance_cost = { gold = aov_armor_breakers_high_maint_cost }
+	stack = 80
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+}
+
+ramriders = {
+	type = light_cavalry
+	counters = {
+		archers = 1
+	}
+	icon = light_cavalry
+
+	damage = 50
+	toughness = 45
+	pursuit = 25
+	screen = 40
+
+	terrain_bonus = {
+		hills = { damage = 15 toughness = 14 }
+		mountains = { damage = 23 toughness = 20 }
+		desert_mountains = { damage = 23 toughness = 20 }
+		dwarven_hold = { damage = 33 toughness = 29 }
+		dwarven_hold_surface = { damage = 33 toughness = 29 }
+		cavern = { damage = 33 toughness = 29 }
+		dwarven_road = { damage = 33 toughness = 29 }
+		forest = { damage = -8 toughness = -7 }
+	}
+	can_recruit = {
+		culture = { has_cultural_pillar = heritage_dwarven }
+	}
+	buy_cost = { gold = aov_ramriders_recruitment_cost }
+	low_maintenance_cost = { gold = aov_ramriders_low_maint_cost }
+	high_maintenance_cost = { gold = aov_ramriders_high_maint_cost }
+	stack = 50
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+}
+
+### Dwarven Handgunners: disabled (spec, Removed traditions and units). Anbennar's block with
+### can_recruit = { always = no }; the key stays defined for saves and Anbennar's debug tradition_test_maa.
+
+dwarven_handgunners = {
+	type = archers
+
+	damage = 65
+	toughness = 15
+	pursuit = 0
+	screen = 0
+
+	terrain_bonus = {
+		hills = { damage = 10 toughness = 8 }
+		desert = { damage = -10 toughness = -8 }
+		drylands = { damage = -10 toughness = -8 }
+		plains = { damage = -10 toughness = -8 }
+	}
+
+	counters = {
+		skirmishers = 1
+		heavy_infantry = 1
+	}
+
+	can_recruit = { always = no }
+	
+	buy_cost = { gold = dwarven_handgunners_recruitment_cost }
+	low_maintenance_cost = { gold = dwarven_handgunners_low_maint_cost }
+	high_maintenance_cost = { gold = dwarven_handgunners_high_maint_cost }
+	
+	stack = 50
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = crossbowmen
+}

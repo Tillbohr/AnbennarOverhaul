@@ -1,0 +1,383 @@
+﻿# Anbennar Overhaul: racial armies. New dwarven men-at-arms (spec roster tables); costs in
+# common/script_values/aov_racial_maa_values.txt, gates in common/scripted_triggers/aov_racial_maa_triggers.txt.
+
+@cultural_maa_extra_ai_score = 80 # Anbennar's value (anb_cultural_maa_generics.txt)
+
+### Clan signature units
+
+aov_grudgebearers = {
+	type = pikemen
+
+	damage = 40
+	toughness = 60
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		light_cavalry = 1
+		heavy_cavalry = 1
+		camel_cavalry = 1
+		elephant_cavalry = 1
+	}
+	terrain_bonus = {
+		hills = { damage = 12 toughness = 18 }
+		mountains = { damage = 18 toughness = 27 }
+		desert_mountains = { damage = 18 toughness = 27 }
+		dwarven_hold = { damage = 26 toughness = 39 }
+		dwarven_hold_surface = { damage = 26 toughness = 39 }
+		cavern = { damage = 26 toughness = 39 }
+		dwarven_road = { damage = 26 toughness = 39 }
+		forest = { damage = -6 toughness = -9 }
+		plains = { damage = 8 toughness = 12 }
+		farmlands = { damage = 8 toughness = 12 }
+	}
+	can_recruit = {
+		culture = { aov_ruby_dwarven_lineage_trigger = yes }
+	}
+	buy_cost = { gold = aov_grudgebearers_recruitment_cost }
+	low_maintenance_cost = { gold = aov_grudgebearers_low_maint_cost }
+	high_maintenance_cost = { gold = aov_grudgebearers_high_maint_cost }
+	stack = 80
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = pikemen
+	allowed_in_hired_troops = no
+}
+
+aov_tortoise_formation = {
+	type = pikemen
+
+	damage = 26
+	toughness = 110
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		light_cavalry = 1
+		heavy_cavalry = 1
+		camel_cavalry = 1
+		elephant_cavalry = 1
+	}
+	terrain_bonus = {
+		hills = { damage = 8 toughness = 33 }
+		mountains = { damage = 12 toughness = 50 }
+		desert_mountains = { damage = 12 toughness = 50 }
+		dwarven_hold = { damage = 17 toughness = 72 }
+		dwarven_hold_surface = { damage = 17 toughness = 72 }
+		cavern = { damage = 17 toughness = 72 }
+		dwarven_road = { damage = 17 toughness = 72 }
+		forest = { damage = -4 toughness = -17 }
+	}
+	can_recruit = {
+		culture = { aov_stone_dwarven_lineage_trigger = yes }
+	}
+	buy_cost = { gold = aov_tortoise_formation_recruitment_cost }
+	low_maintenance_cost = { gold = aov_tortoise_formation_low_maint_cost }
+	high_maintenance_cost = { gold = aov_tortoise_formation_high_maint_cost }
+	stack = 80
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = pikemen
+	allowed_in_hired_troops = no
+}
+
+aov_giantbane_crossbows = {
+	type = archers
+
+	damage = 65
+	toughness = 35
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		heavy_infantry = 1
+		heavy_cavalry = 1
+		beasts = 1
+		elephant_cavalry = 1
+	}
+	terrain_bonus = {
+		hills = { damage = 20 toughness = 11 }
+		mountains = { damage = 29 toughness = 16 }
+		desert_mountains = { damage = 29 toughness = 16 }
+		dwarven_hold = { damage = 42 toughness = 23 }
+		dwarven_hold_surface = { damage = 42 toughness = 23 }
+		cavern = { damage = 42 toughness = 23 }
+		dwarven_road = { damage = 42 toughness = 23 }
+		forest = { damage = -10 toughness = -5 }
+	}
+	can_recruit = {
+		culture = { aov_agate_dwarven_lineage_trigger = yes }
+	}
+	buy_cost = { gold = aov_giantbane_crossbows_recruitment_cost }
+	low_maintenance_cost = { gold = aov_giantbane_crossbows_low_maint_cost }
+	high_maintenance_cost = { gold = aov_giantbane_crossbows_high_maint_cost }
+	stack = 80
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = crossbowmen
+	allowed_in_hired_troops = no
+}
+
+aov_uthojdihr_marines = {
+	type = skirmishers
+
+	damage = 30
+	toughness = 50
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		heavy_infantry = 1
+	}
+	terrain_bonus = {
+		hills = { damage = 9 toughness = 15 }
+		mountains = { damage = 14 toughness = 23 }
+		desert_mountains = { damage = 14 toughness = 23 }
+		dwarven_hold = { damage = 20 toughness = 33 }
+		dwarven_hold_surface = { damage = 20 toughness = 33 }
+		cavern = { damage = 20 toughness = 33 }
+		dwarven_road = { damage = 20 toughness = 33 }
+		forest = { damage = -5 toughness = -8 }
+		wetlands = { damage = 15 toughness = 25 }
+		floodplains = { damage = 15 toughness = 25 }
+		oasis = { damage = 15 toughness = 25 }
+	}
+	can_recruit = {
+		culture = { aov_copper_dwarven_lineage_trigger = yes }
+	}
+	buy_cost = { gold = aov_uthojdihr_marines_recruitment_cost }
+	low_maintenance_cost = { gold = aov_uthojdihr_marines_low_maint_cost }
+	high_maintenance_cost = { gold = aov_uthojdihr_marines_high_maint_cost }
+	stack = 80
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = skirmishers
+	allowed_in_hired_troops = no
+}
+
+aov_seg_band_gnollhunters = {
+	type = skirmishers
+
+	damage = 35
+	toughness = 40
+	pursuit = 40
+	screen = 0
+
+	counters = {
+		heavy_infantry = 1
+	}
+	terrain_bonus = {
+		hills = { damage = 11 toughness = 12 }
+		mountains = { damage = 16 toughness = 18 }
+		desert_mountains = { damage = 18 toughness = 20 }
+		dwarven_hold = { damage = 23 toughness = 26 }
+		dwarven_hold_surface = { damage = 23 toughness = 26 }
+		cavern = { damage = 23 toughness = 26 }
+		dwarven_road = { damage = 23 toughness = 26 }
+		forest = { damage = -5 toughness = -6 }
+		desert = { damage = 18 toughness = 20 }
+		drylands = { damage = 18 toughness = 20 }
+	}
+	can_recruit = {
+		culture = { aov_citrine_dwarven_lineage_trigger = yes }
+	}
+	buy_cost = { gold = aov_seg_band_gnollhunters_recruitment_cost }
+	low_maintenance_cost = { gold = aov_seg_band_gnollhunters_low_maint_cost }
+	high_maintenance_cost = { gold = aov_seg_band_gnollhunters_high_maint_cost }
+	stack = 80
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = skirmishers
+	allowed_in_hired_troops = no
+}
+
+aov_golden_gate_guard = {
+	type = heavy_infantry
+
+	damage = 70
+	toughness = 160
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		pikemen = 1
+		peasant_militia = 2
+	}
+	terrain_bonus = {
+		hills = { damage = 21 toughness = 48 }
+		mountains = { damage = 32 toughness = 72 }
+		desert_mountains = { damage = 32 toughness = 72 }
+		dwarven_hold = { damage = 70 toughness = 160 }
+		dwarven_hold_surface = { damage = 46 toughness = 104 }
+		cavern = { damage = 46 toughness = 104 }
+		dwarven_road = { damage = 46 toughness = 104 }
+		forest = { damage = -11 toughness = -24 }
+	}
+	can_recruit = {
+		culture = { aov_gold_dwarven_lineage_trigger = yes }
+	}
+	buy_cost = { gold = aov_golden_gate_guard_recruitment_cost }
+	low_maintenance_cost = { gold = aov_golden_gate_guard_low_maint_cost }
+	high_maintenance_cost = { gold = aov_golden_gate_guard_high_maint_cost }
+	stack = 50
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = heavy_infantry
+	allowed_in_hired_troops = no
+}
+
+aov_clockwork_bows = {
+	type = archers
+
+	damage = 80
+	toughness = 30
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		heavy_infantry = 1
+		heavy_cavalry = 1
+		archer_cavalry = 0.5
+	}
+	terrain_bonus = {
+		hills = { damage = 24 toughness = 9 }
+		mountains = { damage = 36 toughness = 14 }
+		desert_mountains = { damage = 36 toughness = 14 }
+		dwarven_hold = { damage = 52 toughness = 20 }
+		dwarven_hold_surface = { damage = 52 toughness = 20 }
+		cavern = { damage = 52 toughness = 20 }
+		dwarven_road = { damage = 52 toughness = 20 }
+		forest = { damage = -12 toughness = -5 }
+	}
+	can_recruit = {
+		culture = { aov_pyrite_dwarven_lineage_trigger = yes }
+	}
+	buy_cost = { gold = aov_clockwork_bows_recruitment_cost }
+	low_maintenance_cost = { gold = aov_clockwork_bows_low_maint_cost }
+	high_maintenance_cost = { gold = aov_clockwork_bows_high_maint_cost }
+	stack = 80
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = crossbowmen
+	allowed_in_hired_troops = no
+}
+
+aov_dauvek_veker = {
+	type = heavy_infantry
+
+	damage = 110
+	toughness = 90
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		pikemen = 1
+		peasant_militia = 2
+		beasts = 2
+		elephant_cavalry = 2
+	}
+	terrain_bonus = {
+		hills = { damage = 33 toughness = 27 }
+		mountains = { damage = 50 toughness = 41 }
+		desert_mountains = { damage = 50 toughness = 41 }
+		dwarven_hold = { damage = 72 toughness = 59 }
+		dwarven_hold_surface = { damage = 72 toughness = 59 }
+		cavern = { damage = 72 toughness = 59 }
+		dwarven_road = { damage = 72 toughness = 59 }
+		forest = { damage = -17 toughness = -14 }
+	}
+	can_recruit = {
+		culture = { aov_titanium_dwarven_lineage_trigger = yes }
+	}
+	buy_cost = { gold = aov_dauvek_veker_recruitment_cost }
+	low_maintenance_cost = { gold = aov_dauvek_veker_low_maint_cost }
+	high_maintenance_cost = { gold = aov_dauvek_veker_high_maint_cost }
+	stack = 50
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = heavy_infantry
+	allowed_in_hired_troops = no
+}
+
+aov_copper_road_wardens = {
+	type = light_cavalry
+
+	damage = 55
+	toughness = 55
+	pursuit = 30
+	screen = 60
+
+	counters = {
+		archers = 1
+		gunpowder = 1
+	}
+	terrain_bonus = {
+		hills = { damage = 17 toughness = 17 }
+		mountains = { damage = 25 toughness = 25 }
+		desert_mountains = { damage = 25 toughness = 25 }
+		dwarven_hold = { damage = 36 toughness = 36 }
+		dwarven_hold_surface = { damage = 36 toughness = 36 }
+		cavern = { damage = 36 toughness = 36 }
+		dwarven_road = { damage = 55 toughness = 55 }
+		forest = { damage = -8 toughness = -8 }
+	}
+	can_recruit = {
+		culture = { aov_topaz_dwarven_lineage_trigger = yes }
+	}
+	buy_cost = { gold = aov_copper_road_wardens_recruitment_cost }
+	low_maintenance_cost = { gold = aov_copper_road_wardens_low_maint_cost }
+	high_maintenance_cost = { gold = aov_copper_road_wardens_high_maint_cost }
+	stack = 50
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = light_cavalry
+	allowed_in_hired_troops = no
+}
+
+aov_brightbeard_hammers = {
+	type = heavy_infantry
+
+	damage = 100
+	toughness = 70
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		pikemen = 1
+		peasant_militia = 2
+		heavy_infantry = 1
+	}
+	terrain_bonus = {
+		hills = { damage = 30 toughness = 21 }
+		mountains = { damage = 45 toughness = 32 }
+		desert_mountains = { damage = 45 toughness = 32 }
+		dwarven_hold = { damage = 65 toughness = 46 }
+		dwarven_hold_surface = { damage = 65 toughness = 46 }
+		cavern = { damage = 65 toughness = 46 }
+		dwarven_road = { damage = 65 toughness = 46 }
+		forest = { damage = -15 toughness = -11 }
+	}
+	can_recruit = {
+		culture = { aov_marble_dwarven_lineage_trigger = yes }
+	}
+	buy_cost = { gold = aov_brightbeard_hammers_recruitment_cost }
+	low_maintenance_cost = { gold = aov_brightbeard_hammers_low_maint_cost }
+	high_maintenance_cost = { gold = aov_brightbeard_hammers_high_maint_cost }
+	stack = 50
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = heavy_infantry
+	allowed_in_hired_troops = no
+}
+# Silver dwarves: the best siege unit (spec). Shaped like Anbennar's dwarven_bombards.
+aov_silverforge_engineers = {
+	type = siege_weapon
+	fights_in_main_phase = no
+
+	damage = 0
+	toughness = 40
+
+	siege_tier = 4
+	siege_value = 0.9
+
+	can_recruit = {
+		culture = { aov_silver_dwarven_lineage_trigger = yes }
+	}
+	buy_cost = { gold = aov_silverforge_engineers_recruitment_cost }
+	low_maintenance_cost = { gold = aov_silverforge_engineers_low_maint_cost }
+	high_maintenance_cost = { gold = aov_silverforge_engineers_high_maint_cost }
+	stack = 20
+	allowed_in_hired_troops = no
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = bombard
+}
