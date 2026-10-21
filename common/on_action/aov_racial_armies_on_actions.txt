@@ -1,0 +1,20 @@
+﻿# Anbennar Overhaul: racial armies on_actions. Appended to vanilla on_actions, no base file is edited.
+# See docs/systems/racial-armies.md.
+
+on_game_start = {
+	on_actions = { aov_racial_armies_game_start }
+}
+
+# Removes the two traditions zz_aov_racial_traditions.txt retires (they can no longer be picked either).
+aov_racial_armies_game_start = {
+	effect = {
+		every_culture_global = {
+			limit = { has_cultural_tradition = tradition_sundancer_legions }
+			remove_culture_tradition = tradition_sundancer_legions
+		}
+		every_culture_global = {
+			limit = { has_cultural_tradition = tradition_test_maa_anb_dwarven_handgunners }
+			remove_culture_tradition = tradition_test_maa_anb_dwarven_handgunners
+		}
+	}
+}

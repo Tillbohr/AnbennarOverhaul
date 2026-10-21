@@ -115,5 +115,47 @@ class LineageTriggerTests(unittest.TestCase):
             self.assertIn(part, body)
 
 
+TRADITION_FILE = "common/culture/traditions/zz_aov_racial_traditions.txt"
+BASE_TRADITION_FILE = "common/culture/traditions/anb_maa_traditions.txt"
+ON_ACTION_FILE = "common/on_action/aov_racial_armies_on_actions.txt"
+REMOVED = ("tradition_sundancer_legions", "tradition_test_maa_anb_dwarven_handgunners")
+
+
+def without_blocks(body, names):
+    """A block body with the named depth-0 sub-blocks removed."""
+    for name in names:
+        m = re.search(rf"(?<![\w.:]){name}\s*=\s*\{{", body)
+        if m:
+            body = body[:m.start()] + body[_balanced(body, m.end() - 1):]
+    return body
+
+
+class TraditionRemovalTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.ours = blocks(TRADITION_FILE)
+        cls.base = base_blocks(BASE_TRADITION_FILE)
+        cls.on_actions = blocks(ON_ACTION_FILE)
+
+    def test_removed_traditions_hidden_and_unpickable(self):
+        self.assertEqual(set(self.ours), set(REMOVED))
+        for key in REMOVED:
+            inner = parse_blocks(self.ours[key])
+            self.assertEqual(squash(inner.get("is_shown", "")), "always = no", key)
+            self.assertEqual(squash(inner.get("can_pick", "")), "always = no", key)
+
+    def test_overrides_match_anbennar_elsewhere(self):
+        for key in REMOVED:
+            self.assertEqual(squash(without_blocks(self.ours.get(key, ""), ("is_shown", "can_pick"))),
+                             squash(without_blocks(self.base[key], ("is_shown", "can_pick"))), key)
+
+    def test_game_start_removes_both(self):
+        self.assertIn("aov_racial_armies_game_start", squash(self.on_actions.get("on_game_start", "")))
+        effect = squash(self.on_actions.get("aov_racial_armies_game_start", ""))
+        for key in REMOVED:
+            self.assertRegex(effect, rf"every_culture_global = {{ limit = {{ has_cultural_tradition = {key} }} "
+                                     rf"remove_culture_tradition = {key} }}")
+
+
 if __name__ == "__main__":
     unittest.main()

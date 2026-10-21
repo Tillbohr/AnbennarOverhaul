@@ -1,0 +1,91 @@
+﻿# Anbennar Overhaul: racial armies. Overrides two Anbennar traditions (common/culture/traditions/anb_maa_traditions.txt)
+# so they can never be shown or picked; aov_racial_armies_game_start removes them from every culture. Everything
+# but is_shown and can_pick is copied unchanged. See docs/systems/racial-armies.md.
+
+# Sun elves: its units (sundancer_legions, jaherkadezim) belong to every sun elf culture instead.
+tradition_sundancer_legions = {
+	category = combat
+
+	layers = {
+		0 = martial
+		1 = mediterranean
+		4 = laurel.dds
+	}
+
+	is_shown = { always = no }
+	can_pick = { always = no }
+
+	parameters = {
+		unlock_maa_anb_jaherkadezim = yes
+		unlock_maa_anb_sundancer_legions = yes
+	}
+	
+	character_modifier = {
+		levy_size = -0.35
+		men_at_arms_recruitment_cost = -0.25
+		men_at_arms_maintenance = -0.35
+		levy_reinforcement_rate = -0.35
+		men_at_arms_cap = 1
+		hard_casualty_modifier = -0.15
+	}
+	
+	cost = {
+		prestige = {
+			add = {
+				value = tradition_base_cost
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+			if = {
+				limit = {
+					NOR = {
+						culture_pillar:ethos_bellicose = { is_in_list = traits }
+						culture_pillar:ethos_egalitarian = { is_in_list = traits }
+						culture_pillar:ethos_courtly = { is_in_list = traits }
+					}
+				}
+				add = {
+					value = tradition_incompatible_ethos_penalty
+					desc = not_bellicose_egalitarian_or_courtly_desc
+				}
+			}
+			
+			multiply = tradition_replacement_cost_if_relevant
+		}
+	}
+	
+	ai_will_do = {
+		value = 100
+	}
+}
+
+# Dwarves: dwarven_handgunners is disabled (common/men_at_arms_types/zz_aov_racial_maa_overrides.txt).
+tradition_test_maa_anb_dwarven_handgunners = {
+	category = combat
+	layers = {
+		0 = martial
+		1 = western
+		4 = bow.dds
+	}
+	
+	is_shown = { always = no }
+	can_pick = { always = no }
+	
+	parameters = {
+		unlock_maa_anb_dwarven_handgunners = yes
+	}
+	
+	cost = {
+		prestige = {
+			add = {
+				value = 1000
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+		}
+	}
+	
+	ai_will_do = {
+		value = 0
+	}
+}
