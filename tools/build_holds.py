@@ -138,6 +138,7 @@ def render_values() -> str:
 
 HOLDING_LOC = [
     ' dwarven_hold_holding:0 "Dwarven Hold"',
+    ' dwarven_hold_holding_concept_key:0 "Dwarven Hold"',  # the holding view's "Your ... Holding" (GetConceptName)
     ' dwarven_hold_holding_build_speed:0 "Dwarven Hold [buildings|E] Construction Time"',
     ' dwarven_hold_holding_build_gold_cost:0 "Dwarven Hold [buildings|E] Construction Cost"',
     ' dwarven_hold_holding_build_piety_cost:0 "Dwarven Hold [buildings|E] Piety Cost"',

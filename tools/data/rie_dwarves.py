@@ -123,6 +123,14 @@ ACTIVITY_ICONS = {
     "activity_types/mining_type_prospecting_icon.dds": "activity_types/aov_expedition_mining_icon.dds",
     "activity_types/mining_type_standard_icon.dds": "activity_types/aov_expedition_archaeology_icon.dds",
 }
+# RiE interface icon -> ours, both under gfx/interface/icons/: the building level numerals IX and X (a dwarven hold has
+# ten levels, the game draws I-VIII) and the holding type tab icon (holding_types_tab/<holding key>.dds), RiE's
+# delving icon for the dwarven hold.
+UI_ICONS = {
+    "building_types/building_level_09.dds": "building_types/building_level_09.dds",
+    "building_types/building_level_10.dds": "building_types/building_level_10.dds",
+    "holding_types_tab/dwarven_holding.dds": "holding_types_tab/dwarven_hold_holding.dds",
+}
 # RiE illustration -> ours, both under gfx/interface/illustrations/ (the activity's header background
 # activity_header_backgrounds/<key>.dds and each expedition type's picture activity_types/<option>.dds, which the game
 # requires for every option of the special option category).

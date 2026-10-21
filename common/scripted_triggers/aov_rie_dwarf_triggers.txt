@@ -51,6 +51,22 @@ aov_rie_surface_dwarf_trigger = {
 	}
 }
 
+# Province scope: false for a dwarf's holding in a hold, hills, mountains or dwarven terrain, where RiE's
+# dwarven buildings replace the vanilla ones (TERRAIN_GATES_FILE puts it first in every vanilla building
+# terrain trigger); true elsewhere and where no holder is in scope.
+aov_rie_vanilla_building_ground_trigger = {
+	custom_tooltip = {
+		text = aov_rie_vanilla_building_ground_tt
+		NAND = {
+			scope:holder ?= { is_dwarvish_culture = yes }
+			OR = {
+				has_holding_type = dwarven_hold_holding
+				aov_rie_hill_terrain_trigger = yes
+			}
+		}
+	}
+}
+
 # Province scope: the province has one of the 15 ore deposits.
 aov_rie_has_deposit_trigger = {
 	OR = {

@@ -218,6 +218,15 @@ class ActivityTests(unittest.TestCase):
                       block(activity(), "activity_window_widgets"))
         self.assertIn("'aov_expedition_success_chance'", read(WIDGET))
 
+    def test_success_widget_is_one_row(self):
+        # The summary row sits under the conclusion's Finish button: a label above the bar made the row taller than
+        # the intent row and pushed its background over the button. The text goes on the bar instead.
+        widget = read(WIDGET)
+        self.assertNotIn("text_label_center", widget)
+        bar = block(widget, "progressbar_standard")
+        self.assertRegex(squash(bar), r"text_single = \{[^{}]*text = \"aov_expedition_success_bar\"")
+        self.assertIn("size = { 300 30 }", bar)
+
     def test_every_option_category_and_phase_has_loc_and_icon(self):
         keys = loc_keys()
         icons = MOD / "gfx/interface/icons"

@@ -2727,6 +2727,741 @@
 },
 {
   "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 7,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 16,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 37,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 52,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 65,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\t\t\tOR = {",
+      "linenr": 68,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 101,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 110,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 120,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 131,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 171,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\t\t\tOR = {",
+      "linenr": 183,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 196,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 226,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 262,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 272,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 281,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 291,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 301,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 316,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\t\t\tOR = {",
+      "linenr": 318,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 337,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = { # Anbennar",
+      "linenr": 342,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 382,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\t\t\tOR = {",
+      "linenr": 395,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\t\t\tOR = {",
+      "linenr": 410,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\t\t\tOR = {",
+      "linenr": 428,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {\t",
+      "linenr": 534,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 551,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\t\t\tOR = {",
+      "linenr": 553,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\t\t\tOR = {",
+      "linenr": 563,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 586,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\t\t\tOR = {",
+      "linenr": 588,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\t\t\tOR = {",
+      "linenr": 596,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\t\tOR = { #Hardcoded Exceptions",
+      "linenr": 604,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
   "info": null,
   "key": "missing-file",
   "locations": [
@@ -3630,6 +4365,48 @@
     }
   ],
   "message": "possible brace error",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\t\t\tOR = {",
+      "linenr": 183,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "length": 1,
+      "line": "\t\tOR = { #Hardcoded Exceptions",
+      "linenr": 604,
+      "path": "common\\scripted_triggers\\zz_aov_rie_dwarf_terrain_gates.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
   "severity": "warning",
   "wiki": null
 },

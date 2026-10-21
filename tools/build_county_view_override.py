@@ -74,6 +74,67 @@ def dig_block() -> list:
     return [f"{MARKER}: hold dig progress"] + DIG_BLOCK.split("\n")
 
 
+# A dwarven hold has up to 9 more building slots than a castle, and vanilla's one right-aligned row of slots runs off
+# the panel. As in RiE's delving view, a hold's buildings sit in a two-row grid at the bottom left of the holding
+# panel (datamodel_wrap = 2 without flipdirection: two rows, filled column by column); the duchy, special and great
+# building slots stay under the holding box. IS_HOLD is the scripted GUI in common/scripted_guis/aov_hold_view_sgui.txt.
+IS_HOLD = "GetScriptedGui('aov_hold_view_is_hold').IsShown( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).End )"
+GRID_ANCHOR = 'name = "buildings_grid"'
+SPECIAL_ANCHOR = 'name = "special_building_no_others"'
+GRID_HIDDEN = f'visible = "[Not( {IS_HOLD} )]"'
+HOLD_GRID_BLOCK = f"""\
+vbox = {{
+\tname = "aov_hold_buildings_area"
+\tvisible = "[{IS_HOLD}]"
+\tlayoutpolicy_vertical = expanding
+\tmargin_left = 5
+
+\texpand = {{}}
+
+\tfixedgridbox = {{
+\t\tname = "aov_hold_buildings_grid"
+\t\tdatamodel = "[HoldingView.GetBuildings]"
+\t\tdatamodel_wrap = 2
+\t\taddcolumn = 58
+\t\taddrow = 58
+
+\t\titem = {{
+\t\t\twidget_building_item = {{}}
+\t\t}}
+\t}}
+}}"""
+
+
+def hold_grid_block() -> list:
+    """The inserted hold building grid lines: a marker and the vbox with the grid."""
+    return [f"{MARKER}: hold buildings grid"] + HOLD_GRID_BLOCK.split("\n")
+
+
+def insert_hold_grid(lines: list) -> None:
+    """Put the hold grid in the bottom hbox before the expand that follows the BOTTOM LEFT vbox (so it sits left),
+    and hide vanilla's building row in a hold."""
+    try:
+        special = next(i for i, l in enumerate(lines) if SPECIAL_ANCHOR in l)
+    except StopIteration:
+        raise GeneratorError(f"anchor '{SPECIAL_ANCHOR}' not found; did a CK3 or Anbennar update change the county view?")
+    try:
+        start = next(i for i in range(special, -1, -1)
+                     if lines[i].strip() == "vbox = {" and block_end(lines, i, "a vbox") > special)
+        expand = next(i for i in range(start - 1, -1, -1) if lines[i].strip())
+    except StopIteration:
+        raise GeneratorError("no vbox encloses the special building slot")
+    if lines[expand].strip() != "expand = {}":
+        raise GeneratorError("the vbox with the special building slot does not follow an 'expand = {}'")
+    indent = lines[expand][: len(lines[expand]) - len(lines[expand].lstrip("\t"))]
+    lines[expand:expand] = [indent + l if l else "" for l in hold_grid_block()] + [""]
+    try:
+        grid = next(i for i, l in enumerate(lines) if GRID_ANCHOR in l)
+    except StopIteration:
+        raise GeneratorError(f"anchor '{GRID_ANCHOR}' not found; did a CK3 or Anbennar update change the county view?")
+    indent = lines[grid][: len(lines[grid]) - len(lines[grid].lstrip("\t"))]
+    lines.insert(grid + 1, indent + GRID_HIDDEN)
+
+
 def block_end(lines: list, start: int, what: str) -> int:
     """The line closing the block opened on lines[start]."""
     depth = 0
@@ -120,6 +181,7 @@ def insert(text: str) -> str:
     indent = lines[start][: len(lines[start]) - len(lines[start].lstrip("\t"))]
     lines[end + 1:end + 1] = [""] + [indent + l if l else "" for l in block()]
     insert_dig(lines)
+    insert_hold_grid(lines)
     return "\n".join(lines)
 
 

@@ -37,6 +37,10 @@ MINES_FILE = "common/buildings/aov_rie_mines.txt"
 ORE_MODIFIERS_FILE = "common/modifiers/aov_rie_ore_modifiers.txt"
 VALUES_FILE = "common/script_values/aov_rie_dwarf_values.txt"
 TRIGGERS_FILE = "common/scripted_triggers/aov_rie_dwarf_triggers.txt"
+# zz_: loads after Anbennar's and the game's trigger files, so its single-object overrides win.
+TERRAIN_GATES_FILE = "common/scripted_triggers/zz_aov_rie_dwarf_terrain_gates.txt"
+# graphics/zz_: sorts after Anbennar's defines/graphics/00_graphics.txt and the game's defines/graphic/00_graphics.txt.
+LEVEL_DEFINES_FILE = "common/defines/graphics/zz_aov_rie_building_level_defines.txt"
 DEPOSIT_EFFECTS_FILE = "common/scripted_effects/aov_rie_deposit_effects.txt"
 RIE_HOLDINGS_FILE = "common/holdings/lotr_holdings.txt"
 RIE_CASTLE_FILE = "common/holdings/00_holdings.txt"
@@ -47,7 +51,8 @@ OUTPUTS = {data.RIE_BUILDING_FILES[0]: BUILDINGS_FILE, data.RIE_BUILDING_FILES[1
 # Folders where this generator's files are the aov_rie_* ones (FreshnessTests scans them for orphans).
 OWNED_FOLDERS = {"common/buildings": ("aov_rie_*",), "common/modifiers": ("aov_rie_*",),
                  "common/script_values": ("aov_rie_*",), "localization/english": ("aov_rie_*",),
-                 "common/scripted_triggers": ("aov_rie_dwarf_*",), "common/scripted_effects": ("aov_rie_deposit_*",),
+                 "common/scripted_triggers": ("aov_rie_dwarf_*", "zz_aov_rie_dwarf_*"),
+                 "common/scripted_effects": ("aov_rie_deposit_*",),
                  "common/event_backgrounds": ("aov_dwarven_expedition_*",),
                  "gfx/interface/illustrations/activity_backgrounds": ("lotr_cave_interior.dds",),
                  "gfx/interface/illustrations/event_scenes": ("lotr_halls.dds", "lotr_dwarven_gate.dds"),
@@ -56,18 +61,26 @@ OWNED_FOLDERS = {"common/buildings": ("aov_rie_*",), "common/modifiers": ("aov_r
                  "gfx/interface/icons/activity_option_categories": ("aov_expedition_*.dds",),
                  "gfx/interface/icons/activity_types": ("aov_expedition_*.dds",),
                  "gfx/interface/illustrations/activity_header_backgrounds": ("activity_dwarven_expedition.dds",),
-                 "gfx/interface/illustrations/activity_types": ("aov_expedition_*.dds",)}
+                 "gfx/interface/illustrations/activity_types": ("aov_expedition_*.dds",),
+                 "gfx/interface/icons/holding_types_tab": ("dwarven_hold_holding.dds",),
+                 "common/defines/graphics": ("zz_aov_rie_*",)}
 # Localization of keys the generator itself defines (not copied from RiE).
 OWN_LOC = {
     "aov_rie_surface_dwarf_tt": "Held by a dwarf outside a dwarven hold",
     "aov_rie_mountain_terrain_tt": "In mountains or dwarven terrain",
     "aov_rie_hill_terrain_tt": "In hills, mountains or dwarven terrain",
+    "aov_rie_vanilla_building_ground_tt": "Not held by a dwarf in a dwarven hold, hills, mountains or dwarven "
+                                          "terrain, where dwarves raise dwarven buildings instead",
 }
 HOLD_LEVELS = tuple(f"dwarven_hold_{n:02d}" for n in range(1, 11))  # defined by tools/build_holds.py
 VALUE_FIELDS = ("cost_gold", "cost_prestige", "cost_piety", "levy", "max_garrison", "garrison_reinforcement_factor",
                 "construction_time")
 LEVEL_FIELDS = ("levy", "max_garrison", "garrison_reinforcement_factor")
 DEPTHS_KEY = re.compile(r"dwarven_depths_(\d\d)$")
+TERRAIN_REQUIREMENT = re.compile(r"building_\w+_requirement_terrain")
+NEGATED_TERRAIN_REQUIREMENT = re.compile(r"\b(building_\w+_requirement_terrain)\s*=\s*no\b")
+GROUND_GATE = "aov_rie_vanilla_building_ground_trigger = yes"
+GROUND_GATE_MARK = "# Anbennar Overhaul: no vanilla building for a dwarf on dwarven ground"
 
 ITEM_START = re.compile(r"\s*([A-Za-z_@][\w.\-]*)\s*=")
 YES_NO = re.compile(r"(?<![\w.:])([A-Za-z_]\w*)\s*=\s*(?:yes|no)\b")
@@ -369,6 +382,37 @@ def render_expedition_art(build: Build) -> None:
             build.files[dest] = (roots.rie / src).read_bytes()
 
 
+def render_ui_icons(build: Build) -> None:
+    """RiE's interface icons under our names (UI_ICONS): never over a file Anbennar or the game has."""
+    for source, target in data.UI_ICONS.items():
+        src, dest = f"gfx/interface/icons/{source}", f"gfx/interface/icons/{target}"
+        if not (build.roots.rie / src).is_file():
+            raise GeneratorError(f"interface icon {src} is not in RiE")
+        if bp._exists_outside(build.roots, dest) is not None:
+            raise GeneratorError(f"interface icon {dest} already exists in Anbennar or the game")
+        build.files[dest] = (build.roots.rie / src).read_bytes()
+
+
+LEVEL_ICON_LIST = re.compile(r"\bBUILDING_LEVEL_ICONS\s*=\s*\{([^{}]*)\}")
+
+
+def render_level_icon_defines(build: Build) -> None:
+    """NGameIcons.BUILDING_LEVEL_ICONS (the building window's level circles, one picture per level) as the effective
+    list of Anbennar and the game plus the UI_ICONS level pictures, as RiE extends it: without it levels IX and X
+    show empty circles even with the pictures in place."""
+    current = None
+    for _path, text in sorted(bp.effective_texts(build.roots, "common/defines")):
+        for match in LEVEL_ICON_LIST.finditer(bp.code(text)):
+            current = re.findall(r'"([^"]+)"', match.group(1))
+    if not current:
+        raise GeneratorError("no NGameIcons BUILDING_LEVEL_ICONS list in Anbennar's or the game's defines")
+    extra = sorted(f"gfx/interface/icons/{target}" for target in data.UI_ICONS.values()
+                   if re.fullmatch(r"building_types/building_level_\d\d\.dds", target))
+    icons = current + [icon for icon in extra if icon not in current]
+    build.files[LEVEL_DEFINES_FILE] = txt_file(
+        ["NGameIcons = {\n\tBUILDING_LEVEL_ICONS = {\n" + "".join(f'\t\t"{icon}"\n' for icon in icons) + "\t}\n}\n"])
+
+
 def render_buildings(build: Build) -> None:
     roots = build.roots
     sources = {out: rie_blocks(roots, rel) for rel, out in OUTPUTS.items()}
@@ -612,10 +656,46 @@ def render_triggers(build: Build) -> None:
         "# Province scope: a dwarf holding something other than a dwarven hold.",
         _block("aov_rie_surface_dwarf_trigger", "custom_tooltip = {", "\ttext = aov_rie_surface_dwarf_tt",
                "\taov_rie_dwarven_holder_trigger = yes", "\tNOT = { has_holding_type = dwarven_hold_holding }", "}"),
+        "# Province scope: false for a dwarf's holding in a hold, hills, mountains or dwarven terrain, where RiE's",
+        "# dwarven buildings replace the vanilla ones (TERRAIN_GATES_FILE puts it first in every vanilla building",
+        "# terrain trigger); true elsewhere and where no holder is in scope.",
+        _block("aov_rie_vanilla_building_ground_trigger", "custom_tooltip = {",
+               "\ttext = aov_rie_vanilla_building_ground_tt", "\tNAND = {",
+               "\t\tscope:holder ?= { is_dwarvish_culture = yes }", "\t\tOR = {",
+               "\t\t\thas_holding_type = dwarven_hold_holding", "\t\t\taov_rie_hill_terrain_trigger = yes", "\t\t}",
+               "\t}", "}"),
         "# Province scope: the province has one of the 15 ore deposits.",
         _block("aov_rie_has_deposit_trigger", "OR = {", *deposits, "}"),
     ]
     build.files[TRIGGERS_FILE] = txt_file(pieces)
+
+
+def render_terrain_gates(build: Build) -> None:
+    """Single-object overrides of every building_*_requirement_terrain trigger of Anbennar and the game (the last
+    definition in load order), each with GROUND_GATE first: vanilla buildings name these triggers in
+    can_construct_potential, so a dwarf cannot build them in a hold, hills, mountains or dwarven terrain, where
+    RiE's dwarven buildings replace them (as RiE closes vanilla buildings to dwarves). A trigger one of our
+    buildings uses negated (`= no`) keeps its definition: the gate would open that building instead."""
+    negated = set()
+    for rel, content in build.files.items():
+        if rel.startswith("common/buildings/"):
+            negated |= set(NEGATED_TERRAIN_REQUIREMENT.findall(bp.code(content.decode("utf-8-sig"))))
+    found = {}
+    for path, text in sorted(bp.effective_texts(build.roots, "common/scripted_triggers")):
+        text = bp.lf(text)
+        for names, start, end in bp.blocks(text, 1, strict=False):
+            if TERRAIN_REQUIREMENT.fullmatch(names[0]):
+                found.pop(names[0], None)  # a later definition wins and moves to the end
+                found[names[0]] = (path, text[start:end])
+    pieces = []
+    for key, (path, block) in found.items():
+        if key in negated:
+            continue
+        brace = block.index("{") + 1
+        pieces.append(f"# {path}\n{block[:brace]}\n\t{GROUND_GATE} {GROUND_GATE_MARK}{block[brace:]}")
+    build.files[TERRAIN_GATES_FILE] = txt_file(pieces)
+    build.notes.append(f"{len(pieces)} building terrain triggers closed to dwarves on dwarven ground"
+                       + (f"; left open (used negated): {', '.join(sorted(negated))}" if negated else ""))
 
 
 def render_deposit_effects(build: Build) -> None:
@@ -813,7 +893,10 @@ def build_all(roots: Roots, notes=None) -> dict:
     bp.RENAMED.clear()
     build = Build(roots, notes)
     render_buildings(build)
+    render_terrain_gates(build)
     render_expedition_art(build)
+    render_ui_icons(build)
+    render_level_icon_defines(build)
     render_ore_modifiers(build)
     render_triggers(build)
     render_dig_requirements(build)

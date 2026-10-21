@@ -1,0 +1,9 @@
+﻿# Anbennar Overhaul: holding view of a dwarven hold (gui/window_county_view.gui, tools/build_county_view_override.py).
+
+# Province scope: the holding view shows a dwarven hold; its buildings then sit in a two-row grid (as in RiE).
+aov_hold_view_is_hold = {
+	scope = province
+	is_shown = {
+		has_holding_type = dwarven_hold_holding
+	}
+}

@@ -2636,6 +2636,28 @@ window = {
 						}
 					}
 
+					# Anbennar Overhaul: hold buildings grid
+					vbox = {
+						name = "aov_hold_buildings_area"
+						visible = "[GetScriptedGui('aov_hold_view_is_hold').IsShown( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).End )]"
+						layoutpolicy_vertical = expanding
+						margin_left = 5
+
+						expand = {}
+
+						fixedgridbox = {
+							name = "aov_hold_buildings_grid"
+							datamodel = "[HoldingView.GetBuildings]"
+							datamodel_wrap = 2
+							addcolumn = 58
+							addrow = 58
+
+							item = {
+								widget_building_item = {}
+							}
+						}
+					}
+
 					expand = {}
 
 					vbox = {
@@ -2879,6 +2901,7 @@ window = {
 								# Upgrade buildings
 								flowcontainer = {
 									name = "buildings_grid"
+									visible = "[Not( GetScriptedGui('aov_hold_view_is_hold').IsShown( GuiScope.SetRoot( HoldingView.GetProvince.MakeScope ).End ) )]"
 									datamodel = "[HoldingView.GetBuildings]"
 									ignoreinvisible = yes
 									spacing = 3

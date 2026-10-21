@@ -21,11 +21,12 @@ ADDITIONS = {
     "castle_holding": ["artificer_academy_01"] + rie.SURFACE_BUILDINGS + rie.MINE_BUILDINGS,
     "city_holding": ["artificer_academy_01"] + rie.SURFACE_BUILDINGS + rie.MINE_BUILDINGS,
 }
-# new holding type -> the holding whose build list it starts from (after ADDITIONS), its primary building and
-# the buildings added on top
+# new holding type -> the holding whose build list it starts from (after ADDITIONS; None starts empty), its primary
+# building and the buildings added on top. A dwarven hold lists only RiE's dwarven_holding buildings, as RiE does: no
+# castle (vanilla) building can be built in a hold.
 NEW_HOLDINGS = {
     "dwarven_hold_holding": {
-        "copy_buildings_from": "castle_holding",
+        "copy_buildings_from": None,
         "primary_building": "dwarven_hold_01",
         "extra": rie.HOLD_BUILDINGS,
     },
@@ -61,21 +62,22 @@ def add_buildings(text: str, holding: str, buildings: list[str]) -> str:
 
 
 def add_holding(text: str, key: str, spec: dict) -> str:
-    """Append a holding `key` whose build list is spec['copy_buildings_from']'s plus spec['extra']."""
+    """Append a holding `key` listing spec['copy_buildings_from']'s buildings (none if None) and spec['extra']."""
     source = spec["copy_buildings_from"]
-    lines = text.split("\n")
-    try:
-        start = next(i for i, l in enumerate(lines) if l.strip().startswith(f"{source} = {{"))
-        list_start = next(i for i in range(start, len(lines)) if l_is(lines[i], "buildings = {"))
-    except StopIteration:
-        sys.exit(f"error: could not find '{source}' buildings list in base file")
     buildings = []
-    for line in lines[list_start + 1:]:
-        if line.strip().startswith("}"):
-            break
-        name = line.split("#")[0].strip()
-        if name and name not in buildings:
-            buildings.append(name)
+    if source is not None:
+        lines = text.split("\n")
+        try:
+            start = next(i for i, l in enumerate(lines) if l.strip().startswith(f"{source} = {{"))
+            list_start = next(i for i in range(start, len(lines)) if l_is(lines[i], "buildings = {"))
+        except StopIteration:
+            sys.exit(f"error: could not find '{source}' buildings list in base file")
+        for line in lines[list_start + 1:]:
+            if line.strip().startswith("}"):
+                break
+            name = line.split("#")[0].strip()
+            if name and name not in buildings:
+                buildings.append(name)
     for b in spec["extra"]:
         if b not in buildings:  # duplicates drop, the first occurrence stays
             buildings.append(b)

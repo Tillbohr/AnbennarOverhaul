@@ -53,6 +53,31 @@ FIXTURE = """window = {
 \t\t\t\t}
 \t\t\t}
 \t\t}
+
+\t\thbox = {
+\t\t\t### BOTTOM LEFT
+\t\t\tvbox = {
+\t\t\t\texpand = {}
+\t\t\t}
+
+\t\t\texpand = {}
+
+\t\t\tvbox = {
+\t\t\t\texpand = {}
+
+\t\t\t\twidget_building_item = {
+\t\t\t\t\tname = "special_building_no_others"
+\t\t\t\t}
+\t\t\t}
+
+\t\t\t### BOTTOM RIGHT
+\t\t\tvbox = {
+\t\t\t\tflowcontainer = {
+\t\t\t\t\tname = "buildings_grid"
+\t\t\t\t\tdatamodel = "[HoldingView.GetBuildings]"
+\t\t\t\t}
+\t\t\t}
+\t\t}
 \t}
 }
 """
@@ -120,6 +145,39 @@ class CountyViewTests(unittest.TestCase):
         with self.assertRaises(GeneratorError):
             cvo.insert(FIXTURE.replace('name = "constructing_holding"', 'name = "x"'))
 
+    def test_hold_buildings_in_a_two_row_grid_at_the_bottom_left(self):
+        """A hold's buildings sit in RiE's two-row grid left of the holding box (vanilla's one right-aligned row runs
+        off the panel with a hold's extra slots); vanilla's row is hidden in a hold."""
+        out = cvo.insert(FIXTURE)
+        self.assertEqual(out.count(cvo.MARKER + ": hold buildings grid"), 1)
+        grid = out[out.index(cvo.MARKER + ": hold buildings grid"):]
+        grid = grid[:grid.index("\n\t\t\t}\n") + 5]
+        self.assertIn(f'visible = "[{cvo.IS_HOLD}]"', grid)
+        self.assertIn("fixedgridbox = {", grid)
+        self.assertIn('datamodel = "[HoldingView.GetBuildings]"', grid)
+        self.assertIn("datamodel_wrap = 2", grid)  # two rows, filled column by column (no flipdirection)
+        self.assertNotIn("flipdirection", grid)
+        self.assertIn("widget_building_item", grid)
+        # in the bottom hbox: after the BOTTOM LEFT vbox, before the expand that pushes the rest right
+        self.assertLess(out.index("### BOTTOM LEFT"), out.index(cvo.MARKER + ": hold buildings grid"))
+        after = out[out.index(cvo.MARKER + ": hold buildings grid"):]
+        self.assertLess(after.index("\n\t\t\texpand = {}"), after.index("special_building_no_others"))
+        # vanilla's row is hidden in a hold
+        row = out[out.index('name = "buildings_grid"'):]
+        self.assertEqual(row.split("\n")[1].strip(), cvo.GRID_HIDDEN)
+        self.assertEqual(out.count("{"), out.count("}"))
+
+    def test_hold_scripted_gui_exists(self):
+        sgui = (cvo.SUBMOD / "common/scripted_guis/aov_hold_view_sgui.txt").read_text(encoding="utf-8-sig")
+        self.assertIn("aov_hold_view_is_hold", cvo.IS_HOLD)
+        self.assertRegex(sgui, r"(?m)^aov_hold_view_is_hold = \{\n\tscope = province\n\tis_shown = \{\n"
+                               r"\t\thas_holding_type = dwarven_hold_holding\n")
+
+    def test_errors_without_grid_anchors(self):
+        for anchor in ('name = "buildings_grid"', 'name = "special_building_no_others"'):
+            with self.assertRaises(GeneratorError):
+                cvo.insert(FIXTURE.replace(anchor, 'name = "x"'))
+
     def test_dig_loc_and_values_exist(self):
         """The bar's loc keys and the script values they read are defined, and the loc's tick matches the data."""
         sys.path.insert(0, str(cvo.SUBMOD / "tools" / "data"))
@@ -159,11 +217,21 @@ class GeneratedFileTests(unittest.TestCase):
         dig_end = dig_start + len(cvo.dig_block())
         self.assertEqual([l.strip() for l in lines[dig_start:dig_end]], [l.strip() for l in cvo.dig_block()])
         self.assertLess(end, dig_start)
-        # Drop the header, the blank lines before the blocks and the blocks: what is left is Anbennar's file, byte for
-        # byte. The vanilla holding illustration's visible line is the one other change.
+        grid_start = next(i for i, l in enumerate(lines) if l.strip() == cvo.MARKER + ": hold buildings grid")
+        grid_end = grid_start + len(cvo.hold_grid_block())
+        self.assertEqual([l.strip() for l in lines[grid_start:grid_end]], [l.strip() for l in cvo.hold_grid_block()])
+        self.assertLess(dig_end, grid_start)
+        hidden = [i for i, l in enumerate(lines) if l.strip() == cvo.GRID_HIDDEN]
+        self.assertEqual(len(hidden), 1)
+        self.assertLess(grid_end, hidden[0])
+        # Drop the header, the blank lines around the blocks, the blocks and the line hiding vanilla's building row:
+        # what is left is Anbennar's file, byte for byte. The vanilla holding illustration's visible line is the one
+        # other change.
         self.assertEqual(lines[start - 1], "")
         self.assertEqual(lines[dig_start - 1], "")
-        rest = "\n".join(lines[2:start - 1] + lines[end:dig_start - 1] + lines[dig_end:])
+        self.assertEqual(lines[grid_end], "")
+        rest = "\n".join(lines[2:start - 1] + lines[end:dig_start - 1] + lines[dig_end:grid_start]
+                         + lines[grid_end + 1:hidden[0]] + lines[hidden[0] + 1:])
         self.assertEqual(rest.count(cvo.HIDDEN_UNDER_MONUMENT), 1)
         self.assertEqual(rest.replace(cvo.HIDDEN_UNDER_MONUMENT, cvo.VANILLA_VISIBLE), src)
         self.assertEqual(out.count(cvo.MARKER + ": monument painting"), 1)

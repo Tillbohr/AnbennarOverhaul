@@ -31,22 +31,22 @@ city_holding = {
 
 
 class NewHoldingTests(unittest.TestCase):
-    def test_new_holding_copies_castle_buildings(self):
-        out = hov.add_holding(FIXTURE, "dwarven_hold_holding", hov.NEW_HOLDINGS["dwarven_hold_holding"])
-        block = parse_blocks(out)["dwarven_hold_holding"]
-        self.assertIn("primary_building = dwarven_hold_01", block)
-        for b in ["castle_walls_01", "quarries_01"] + rie.HOLD_BUILDINGS:
-            self.assertIn(b, block)
-        for b in ("deep_mine_01", "runeforge_01", "hall_of_the_ancestors_01"):
-            self.assertNotIn(b, block)
-        self.assertNotIn("hall_of_heroes_01", block)  # commented in the source
-        self.assertNotIn("castle_01", block)
-        self.assertIn(hov.MARKER, out)
-
-    def test_new_holding_includes_additions(self):
+    def test_hold_has_only_rie_dwarven_buildings(self):
+        # RiE's dwarven_holding lists only dwarven buildings and mines: no castle (vanilla) building in a hold
         text = hov.add_buildings(FIXTURE, "castle_holding", ["artificer_academy_01"])
         out = hov.add_holding(text, "dwarven_hold_holding", hov.NEW_HOLDINGS["dwarven_hold_holding"])
-        self.assertIn("artificer_academy_01", parse_blocks(out)["dwarven_hold_holding"])
+        block = parse_blocks(out)["dwarven_hold_holding"]
+        self.assertIn("primary_building = dwarven_hold_01", block)
+        self.assertEqual(listed(block), rie.HOLD_BUILDINGS)
+        for b in ("castle_walls_01", "quarries_01", "artificer_academy_01", "castle_01"):
+            self.assertNotIn(b, block)
+        self.assertIn(hov.MARKER, out)
+
+    def test_copy_buildings_from_still_copies(self):
+        spec = {"copy_buildings_from": "castle_holding", "primary_building": "x_01", "extra": ["a_01"]}
+        block = parse_blocks(hov.add_holding(FIXTURE, "new_holding", spec))["new_holding"]
+        self.assertEqual(listed(block), ["castle_walls_01", "quarries_01", "a_01"])
+        self.assertNotIn("hall_of_heroes_01", block)  # commented in the source
 
     def test_source_holdings_unchanged(self):
         out = hov.add_holding(FIXTURE, "dwarven_hold_holding", hov.NEW_HOLDINGS["dwarven_hold_holding"])
@@ -70,9 +70,8 @@ class GeneratedFileTests(unittest.TestCase):
         out = parse_blocks((hov.SUBMOD / hov.REL_PATH).read_bytes().decode("utf-8-sig"))
         self.assertIn("artificer_academy_01", out["castle_holding"])
         hold = out["dwarven_hold_holding"]
-        self.assertIn("artificer_academy_01", hold)
-        for b in ["dwarven_hold_01", "quarries_01"] + rie.HOLD_BUILDINGS:
-            self.assertIn(b, hold)
+        self.assertIn("primary_building = dwarven_hold_01", hold)
+        self.assertEqual(listed(hold), rie.HOLD_BUILDINGS)
         base = parse_blocks((hov.DEFAULT_ANBENNAR / hov.REL_PATH).read_bytes().decode("utf-8-sig"))
         self.assertEqual(set(out) - set(base), {"dwarven_hold_holding"})
 

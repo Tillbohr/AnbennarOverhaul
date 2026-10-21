@@ -223,7 +223,8 @@ class DepositTests(unittest.TestCase):
             text = build.files[rd.TRIGGERS_FILE].decode("utf-8-sig")
         self.assertEqual(top_keys(text), ["aov_rie_hold_province_trigger", "aov_rie_mountain_terrain_trigger",
                                           "aov_rie_hill_terrain_trigger", "aov_rie_dwarven_holder_trigger",
-                                          "aov_rie_surface_dwarf_trigger", "aov_rie_has_deposit_trigger"])
+                                          "aov_rie_surface_dwarf_trigger", "aov_rie_vanilla_building_ground_trigger",
+                                          "aov_rie_has_deposit_trigger"])
         self.assertIn("has_holding_type = dwarven_hold_holding", block_of(text, "aov_rie_hold_province_trigger"))
         for terrain in data.HILL_TERRAINS:
             self.assertIn(f"terrain = {terrain}\n", block_of(text, "aov_rie_hill_terrain_trigger"))
@@ -232,6 +233,10 @@ class DepositTests(unittest.TestCase):
         surface = block_of(text, "aov_rie_surface_dwarf_trigger")
         self.assertIn("text = aov_rie_surface_dwarf_tt", surface)
         self.assertIn("NOT = { has_holding_type = dwarven_hold_holding }", surface)
+        ground = block_of(text, "aov_rie_vanilla_building_ground_trigger")
+        self.assertIn("text = aov_rie_vanilla_building_ground_tt", ground)
+        self.assertRegex(ground, r"NAND = \{\n\t+scope:holder \?= \{ is_dwarvish_culture = yes \}\n\t+OR = \{\n"
+                                 r"\t+has_holding_type = dwarven_hold_holding\n\t+aov_rie_hill_terrain_trigger = yes\n")
         deposit = block_of(text, "aov_rie_has_deposit_trigger")
         for ore in data.ORES:
             self.assertIn(f"has_province_modifier = mining_{ore}_province_modifier", deposit)
@@ -241,6 +246,84 @@ class DepositTests(unittest.TestCase):
             build = rd.Build(fake_roots(Path(tmp), ""), [])
             rd.render_loc(build)
         self.assertIn("\n aov_rie_surface_dwarf_tt:", build.files[rd.LOC_FILE].decode("utf-8-sig"))
+        self.assertIn("\n aov_rie_vanilla_building_ground_tt:", build.files[rd.LOC_FILE].decode("utf-8-sig"))
+
+
+TERRAIN_TRIGGERS = """building_requirement_tribal = {
+	scope:holder ?= { government_has_flag = government_is_tribal }
+}
+
+building_quarries_requirement_terrain = {
+	OR = {
+		terrain = mountains
+		#Anbennar
+		terrain = cavern
+	}
+}
+
+building_logging_camps_requirement_terrain = {
+	terrain = forest
+}
+"""
+
+
+class TerrainGateTests(unittest.TestCase):
+    def _gates(self, tmp: Path, used_negated=True):
+        roots = fake_roots(tmp, "")
+        (roots.anbennar / "common/scripted_triggers").mkdir(parents=True)
+        (roots.anbennar / "common/scripted_triggers/00_building_requirement_triggers.txt").write_text(
+            TERRAIN_TRIGGERS, encoding="utf-8")
+        (roots.game / "game/common/scripted_triggers").mkdir(parents=True)
+        (roots.game / "game/common/scripted_triggers/00_other.txt").write_text(
+            "building_hill_farms_requirement_terrain = { terrain = hills }\n", encoding="utf-8")
+        build = rd.Build(roots, [])
+        if used_negated:
+            build.files[rd.BUILDINGS_FILE] = rd.txt_file(
+                ["dwarven_forestry_01 = {\n\tcan_construct_potential = {\n"
+                 "\t\tbuilding_logging_camps_requirement_terrain = no\n\t}\n}\n"])
+        rd.render_terrain_gates(build)
+        return build.files[rd.TERRAIN_GATES_FILE].decode("utf-8-sig"), build.notes
+
+    def test_every_terrain_trigger_gets_the_ground_gate_first(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            text, _notes = self._gates(Path(tmp))
+        self.assertEqual(top_keys(text), ["building_quarries_requirement_terrain",
+                                          "building_hill_farms_requirement_terrain"])
+        quarries = block_of(text, "building_quarries_requirement_terrain")
+        self.assertTrue(quarries.startswith("building_quarries_requirement_terrain = {\n\t" + rd.GROUND_GATE), quarries)
+        self.assertIn("\n\tOR = {\n\t\tterrain = mountains\n\t\t#Anbennar\n\t\tterrain = cavern\n\t}\n}", quarries)
+        hills = block_of(text, "building_hill_farms_requirement_terrain")
+        self.assertTrue(hills.startswith("building_hill_farms_requirement_terrain = {\n\t" + rd.GROUND_GATE), hills)
+        self.assertIn(" terrain = hills }", hills)
+
+    def test_level_icon_define_extends_the_effective_list(self):
+        # the level circles read NGameIcons.BUILDING_LEVEL_ICONS: copying the IX and X pictures alone shows nothing
+        with tempfile.TemporaryDirectory() as tmp:
+            roots = fake_roots(Path(tmp), "")
+            icons = "".join(f'\t\t"gfx/interface/icons/building_types/building_level_0{n}.dds"\n' for n in range(1, 9))
+            (roots.anbennar / "common/defines/graphics").mkdir(parents=True)
+            (roots.anbennar / "common/defines/graphics/00_graphics.txt").write_text(
+                f"NGameIcons = {{\n\tX = 1\n\tBUILDING_LEVEL_ICONS = {{\n{icons}\t}}\n}}\n", encoding="utf-8")
+            build = rd.Build(roots, [])
+            rd.render_level_icon_defines(build)
+            text = build.files[rd.LEVEL_DEFINES_FILE].decode("utf-8-sig")
+        self.assertTrue(rd.LEVEL_DEFINES_FILE.startswith("common/defines/graphics/zz_"))
+        self.assertEqual(re.findall(r"building_level_(\d\d)\.dds", text), [f"{n:02d}" for n in range(1, 11)])
+        self.assertRegex(text, r"(?m)^NGameIcons = \{\n\tBUILDING_LEVEL_ICONS = \{\n")
+        self.assertNotIn("X = 1", text)
+
+    def test_level_icon_define_needs_the_list(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaisesRegex(rd.GeneratorError, "BUILDING_LEVEL_ICONS"):
+                rd.render_level_icon_defines(rd.Build(fake_roots(Path(tmp), ""), []))
+
+    def test_trigger_used_negated_is_left_alone(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            text, notes = self._gates(Path(tmp) / "a")
+            self.assertNotIn("building_logging_camps_requirement_terrain", top_keys(text))
+            self.assertTrue(any("building_logging_camps_requirement_terrain" in note for note in notes), notes)
+            text, _notes = self._gates(Path(tmp) / "b", used_negated=False)
+        self.assertIn("building_logging_camps_requirement_terrain", top_keys(text))
 
 
 DEPTHS_5 = """dwarven_depths_05 = {
@@ -440,6 +523,18 @@ class RealTests(unittest.TestCase):
         for barony in data.START_DEPOSITS:
             self.assertRegex(titles, rf"(?m)^\s*{barony}\s*=\s*\{{", barony)
 
+    def test_vanilla_terrain_triggers_gated(self):
+        gates = self.texts[rd.TERRAIN_GATES_FILE]
+        keys = top_keys(gates)
+        for key in ("building_hillside_grazing_requirement_terrain", "building_quarries_requirement_terrain",
+                    "building_curtain_walls_requirement_terrain", "building_hill_forts_requirement_terrain",
+                    "building_fungus_farms_requirement_terrain", "building_griffon_roosts_requirement_terrain"):
+            self.assertIn(key, keys)
+            self.assertEqual(block_of(gates, key).split("\n")[1].strip().split(" #")[0], rd.GROUND_GATE, key)
+        self.assertNotIn("building_logging_camps_requirement_terrain", keys)  # dwarven_forestry uses it negated
+        self.assertTrue(all(re.fullmatch(r"building_\w+_requirement_terrain", key) for key in keys), keys)
+        self.assertEqual(len(keys), len(set(keys)))
+
     def test_every_renamed_trigger_defined(self):
         triggers = set(top_keys(self.texts[rd.TRIGGERS_FILE]))
         for name in data.TOKEN_RENAMES.values():
@@ -600,6 +695,17 @@ class ExpeditionArtTests(unittest.TestCase):
         for source, target in data.ACTIVITY_ILLUSTRATIONS.items():
             rel = f"gfx/interface/illustrations/{target}"
             self.assertEqual(self.files[rel], (REAL.rie / f"gfx/interface/illustrations/{source}").read_bytes())
+
+    def test_ui_icons_copied(self):
+        self.assertEqual(data.UI_ICONS["holding_types_tab/dwarven_holding.dds"],
+                         "holding_types_tab/dwarven_hold_holding.dds")
+        for level in ("09", "10"):
+            self.assertIn(f"building_types/building_level_{level}.dds", data.UI_ICONS)
+        for source, target in data.UI_ICONS.items():
+            rel = f"gfx/interface/icons/{target}"
+            self.assertEqual(self.files[rel], (REAL.rie / f"gfx/interface/icons/{source}").read_bytes())
+        defines = self.files[rd.LEVEL_DEFINES_FILE].decode("utf-8-sig")
+        self.assertEqual(re.findall(r"building_level_(\d\d)\.dds", defines), [f"{n:02d}" for n in range(1, 11)])
 
     def test_background_clash_stops_build(self):
         picture = next(iter(data.BACKGROUNDS.values()))[0]
