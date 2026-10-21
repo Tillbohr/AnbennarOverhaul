@@ -304,3 +304,27 @@ aov_holding_levy_tier = {
 	min = -20
 	max = 60
 }
+
+# Character scope: the summed vassal_levy_contribution_mult of the covered sources that apply to this ruler.
+aov_ruler_contribution_bonus = {
+	value = 0
+	if = { limit = { any_directly_owned_province = { has_building = aov_monument_seghdihr_home_of_the_seg_band_01 province_owner = { custom_tooltip = { text = aov_monument_seghdihr_home_of_the_seg_band_gate OR = { culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } } } } } } add = 0.05 } # buildings aov_monument_seghdihr_home_of_the_seg_band_01
+	if = { limit = { any_directly_owned_province = { has_building = aov_monument_seghdihr_home_of_the_seg_band_02 province_owner = { custom_tooltip = { text = aov_monument_seghdihr_home_of_the_seg_band_gate OR = { culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } } } } } } add = 0.1 } # buildings aov_monument_seghdihr_home_of_the_seg_band_02
+	if = { limit = { any_directly_owned_province = { has_building = aov_monument_seghdihr_home_of_the_seg_band_03 province_owner = { custom_tooltip = { text = aov_monument_seghdihr_home_of_the_seg_band_gate OR = { culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } } } } } } add = 0.15 } # buildings aov_monument_seghdihr_home_of_the_seg_band_03
+	if = { limit = { culture = { has_cultural_tradition = tradition_fp2_malleable_subjects } } add = 0.25 } # culture/traditions tradition_fp2_malleable_subjects
+	if = { limit = { has_realm_law = crown_authority_2 } add = 0.1 } # laws crown_authority_2
+	if = { limit = { has_realm_law = crown_authority_3 } add = 0.25 } # laws crown_authority_3
+	if = { limit = { has_realm_law = mandala_decree_expansion } add = 0.25 } # laws mandala_decree_expansion
+	if = { limit = { has_realm_law = japanese_bureaucracy_2 } add = 0.1 } # laws japanese_bureaucracy_2
+	if = { limit = { has_realm_law = japanese_bureaucracy_3 } add = 0.15 } # laws japanese_bureaucracy_3
+	if = { limit = { has_perk = large_levies_perk NOT = { government_has_flag = government_is_landless_adventurer } } add = 0.2 } # lifestyle_perks large_levies_perk
+}
+
+# Character scope: the contribution correction tier, rounded and clamped like the holding tier.
+aov_ruler_contribution_tier = {
+	value = aov_ruler_contribution_bonus
+	divide = 0.05
+	round = yes
+	min = -20
+	max = 60
+}

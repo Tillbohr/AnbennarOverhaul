@@ -45,6 +45,23 @@ IGNORED = {
     "important_actions": "not a modifier definition",
 }
 
+# vassal_levy_contribution_mult: the heritages cut what vassals send a racial ruler by the same f, and these are the
+# lasting sources of that modifier the ruler-level correction takes back (character scope).
+CONTRIBUTION_CLASSIFIED = {
+    "laws": "nested",
+    "culture/traditions": "top",
+    "culture/innovations": "top",
+    "culture/pillars": "top",
+    "religion/doctrine_types": "top",
+    "religion/holy_site_types": "top",
+    "governments": "top",
+    "lifestyle_perks": "top",
+    "dynasty_perks": "top",
+    "traits": "top",
+    "buildings": "top",
+}
+CONTRIBUTION_IGNORED = {k: v for k, v in IGNORED.items() if k not in CONTRIBUTION_CLASSIFIED}
+
 # Keys whose levy_size is the racial base itself, never corrected.
 OWN_KEYS = {"heritage_elven", "heritage_dwarven", "heritage_gnomish", "heritage_kobold"}
 
