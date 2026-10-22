@@ -334,16 +334,75 @@ aov_adv_enchanted_create_trinket = {
 	aov_adv_enchanted_store = { KIND = trinket }
 }
 
+##########
+# Evocation: Battlemage Academy
+##########
+
+# The levels unlock the tiers of battlemage_academy_01-03 (common/buildings/aov_battlemage_academy.txt), whose
+# can_construct_potential reads aov_adv_battlemage_academy_level; nothing else to do here.
 aov_adv_battlemage_academy_1_effect = {
 	add_magic_lifestyle_xp = 100
+	custom_tooltip = aov_adv_battlemage_academy_1_effect_tt
 }
 
 aov_adv_battlemage_academy_2_effect = {
 	add_magic_lifestyle_xp = 100
+	custom_tooltip = aov_adv_battlemage_academy_2_effect_tt
 }
 
 aov_adv_battlemage_academy_3_effect = {
 	add_magic_lifestyle_xp = 100
+	custom_tooltip = aov_adv_battlemage_academy_3_effect_tt
+}
+
+# Recruit Battlemage Commander (common/decisions/aov_battlemage_decisions.txt): a mage commander, better with the
+# academy's tier; tier 3 recruits are trained to command (aov_battlemage_trained)
+aov_recruit_battlemage = {
+	if = {
+		limit = { aov_battlemage_academy_tier_at_least = { TIER = 3 } }
+		create_character = {
+			template = aov_battlemage_template_3
+			location = root.capital_province
+			culture = root.culture
+			faith = root.faith
+			save_scope_as = aov_battlemage
+		}
+		scope:aov_battlemage = {
+			add_character_modifier = { modifier = aov_battlemage_trained }
+			set_variable = { name = aov_school_evocation_progress value = aov_battlemage_evocation_3 }
+		}
+	}
+	else_if = {
+		limit = { aov_battlemage_academy_tier_at_least = { TIER = 2 } }
+		create_character = {
+			template = aov_battlemage_template_2
+			location = root.capital_province
+			culture = root.culture
+			faith = root.faith
+			save_scope_as = aov_battlemage
+		}
+		scope:aov_battlemage = {
+			set_variable = { name = aov_school_evocation_progress value = aov_battlemage_evocation_2 }
+		}
+	}
+	else = {
+		create_character = {
+			template = aov_battlemage_template_1
+			location = root.capital_province
+			culture = root.culture
+			faith = root.faith
+			save_scope_as = aov_battlemage
+		}
+		scope:aov_battlemage = {
+			set_variable = { name = aov_school_evocation_progress value = aov_battlemage_evocation_1 }
+		}
+	}
+	scope:aov_battlemage = {
+		add_trait = magical_affinity_1
+		aov_magic_init = yes
+		aov_magic_sync_mastery = yes
+	}
+	add_courtier = scope:aov_battlemage
 }
 
 aov_adv_mirror_image_1_effect = {

@@ -86,3 +86,15 @@ aov_adv_trinket_cost_cut = {
 		}
 	}
 }
+
+##########
+# Evocation: Battlemage Academy
+##########
+# Academy tiers (aov_battlemage_academy.txt): 600 / 900 / 1200 gold; +10% / +15% / +20% knight effectiveness and
+# +1 / +2 / +3 prowess for the holder; +10% garrison. aov_battlemage_trained: +5 advantage (tier-3 recruits).
+# Recruit Battlemage Commander: gold cost (5-year cooldown in the decision)
+aov_battlemage_recruit_gold = 150
+# Evocation progress a recruit starts with, by academy tier (school levels 1 / 2 / 3 need 300 / 800 / 2000)
+aov_battlemage_evocation_1 = 300
+aov_battlemage_evocation_2 = 800
+aov_battlemage_evocation_3 = 2000

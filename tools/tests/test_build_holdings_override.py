@@ -94,7 +94,7 @@ class GeneratedFileTests(unittest.TestCase):
 
     def test_additions_and_extra_come_from_the_data(self):
         for holding in ("castle_holding", "city_holding"):
-            self.assertEqual(hov.ADDITIONS[holding], ["artificer_academy_01"] + rie.SURFACE_BUILDINGS + rie.MINE_BUILDINGS)
+            self.assertEqual(hov.ADDITIONS[holding], ["artificer_academy_01", "battlemage_academy_01"] + rie.SURFACE_BUILDINGS + rie.MINE_BUILDINGS)
         self.assertEqual(hov.NEW_HOLDINGS["dwarven_hold_holding"]["extra"], rie.HOLD_BUILDINGS)
 
     def test_add_holding_drops_duplicates_keeping_the_first(self):

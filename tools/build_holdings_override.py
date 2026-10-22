@@ -18,8 +18,8 @@ from data import rie_dwarves as rie  # noqa: E402
 
 # holding type -> buildings the overhaul adds to its build list
 ADDITIONS = {
-    "castle_holding": ["artificer_academy_01"] + rie.SURFACE_BUILDINGS + rie.MINE_BUILDINGS,
-    "city_holding": ["artificer_academy_01"] + rie.SURFACE_BUILDINGS + rie.MINE_BUILDINGS,
+    "castle_holding": ["artificer_academy_01", "battlemage_academy_01"] + rie.SURFACE_BUILDINGS + rie.MINE_BUILDINGS,
+    "city_holding": ["artificer_academy_01", "battlemage_academy_01"] + rie.SURFACE_BUILDINGS + rie.MINE_BUILDINGS,
 }
 # new holding type -> the holding whose build list it starts from (after ADDITIONS; None starts empty), its primary
 # building and the buildings added on top. A dwarven hold lists only RiE's dwarven_holding buildings, as RiE does: no

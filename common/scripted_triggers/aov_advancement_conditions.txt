@@ -31,3 +31,48 @@ aov_adv_has_sacrifice = {
 aov_adv_can_become_lich = {
 	always = no
 }
+
+##########
+# Battlemage Academy
+##########
+
+# Character scope. TIER = 1-3: an academy of at least that tier in the domain
+aov_battlemage_academy_tier_at_least = {
+	any_directly_owned_province = {
+		has_building_or_higher = battlemage_academy_0$TIER$
+	}
+}
+
+# Province scope (building triggers), scope:holder = holder of the barony.
+# No other academy exists or is being built anywhere in the holder's domain
+battlemage_academy_none_in_domain_trigger = {
+	custom_tooltip = {
+		text = battlemage_academy_none_in_domain_tt
+		scope:holder = {
+			NOT = {
+				any_directly_owned_province = {
+					NOT = { this = root }
+					OR = {
+						has_building_with_flag = battlemage_academy
+						has_construction_with_flag = battlemage_academy
+					}
+				}
+			}
+		}
+	}
+}
+
+# At most one academy in the holder's domain; with two or more, all are disabled
+battlemage_academy_domain_limit_trigger = {
+	custom_tooltip = {
+		text = battlemage_academy_domain_limit_tt
+		scope:holder = {
+			NOT = {
+				any_directly_owned_province = {
+					count >= 2
+					has_building_with_flag = battlemage_academy
+				}
+			}
+		}
+	}
+}

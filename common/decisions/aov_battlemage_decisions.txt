@@ -1,0 +1,36 @@
+﻿# Anbennar Overhaul: Battlemage Academy decisions (Evocation advancement).
+
+aov_recruit_battlemage_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_invite_knights.dds"
+	}
+	decision_group_type = major
+	sort_order = 80
+	ai_check_interval = 60
+	cooldown = { years = 5 }
+
+	is_shown = {
+		is_landed = yes
+		aov_battlemage_academy_tier_at_least = { TIER = 1 }
+	}
+
+	is_valid_showing_failures_only = {
+		is_available_adult = yes
+	}
+
+	cost = {
+		gold = aov_battlemage_recruit_gold
+	}
+
+	effect = {
+		aov_recruit_battlemage = yes
+	}
+
+	ai_will_do = {
+		base = 25
+		modifier = {
+			factor = 0
+			NOT = { gold >= 400 }
+		}
+	}
+}

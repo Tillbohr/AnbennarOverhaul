@@ -59,6 +59,7 @@ castle_holding = {
 		winemaking_01
 		fungus_farms_01
 		artificer_academy_01 # Anbennar Overhaul
+		battlemage_academy_01 # Anbennar Overhaul
 		dwarven_terrace_farm_01 # Anbennar Overhaul
 		dwarven_outpost_01 # Anbennar Overhaul
 		dwarven_surface_farm_01 # Anbennar Overhaul
@@ -177,6 +178,7 @@ city_holding = {
 		winemaking_01
 		fungus_farms_01
 		artificer_academy_01 # Anbennar Overhaul
+		battlemage_academy_01 # Anbennar Overhaul
 		dwarven_terrace_farm_01 # Anbennar Overhaul
 		dwarven_outpost_01 # Anbennar Overhaul
 		dwarven_surface_farm_01 # Anbennar Overhaul

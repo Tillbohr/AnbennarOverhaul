@@ -1,0 +1,74 @@
+﻿# Anbennar Overhaul: magic advancement character templates.
+
+# Recruit Battlemage Commander (aov_recruit_battlemage): better with the academy's tier
+aov_battlemage_template_1 = {
+	age = { 22 40 }
+	gender_female_chance = 50
+	random_traits = no
+	martial = { 10 14 }
+	prowess = { 10 14 }
+	learning = { 8 12 }
+	random_traits_list = {
+		count = 1
+		strategist = {}
+		aggressive_attacker = {}
+		flexible_leader = {}
+		organizer = {}
+	}
+	random_traits_list = {
+		count = 1
+		brave = {}
+		wrathful = {}
+		ambitious = {}
+		diligent = {}
+	}
+	dynasty = none
+}
+
+aov_battlemage_template_2 = {
+	age = { 22 40 }
+	gender_female_chance = 50
+	random_traits = no
+	martial = { 13 17 }
+	prowess = { 13 17 }
+	learning = { 8 12 }
+	random_traits_list = {
+		count = 1
+		strategist = {}
+		aggressive_attacker = {}
+		flexible_leader = {}
+		organizer = {}
+	}
+	random_traits_list = {
+		count = 1
+		brave = {}
+		wrathful = {}
+		ambitious = {}
+		diligent = {}
+	}
+	dynasty = none
+}
+
+aov_battlemage_template_3 = {
+	age = { 22 40 }
+	gender_female_chance = 50
+	random_traits = no
+	martial = { 16 20 }
+	prowess = { 16 20 }
+	learning = { 8 12 }
+	random_traits_list = {
+		count = 1
+		strategist = {}
+		aggressive_attacker = {}
+		flexible_leader = {}
+		organizer = {}
+	}
+	random_traits_list = {
+		count = 1
+		brave = {}
+		wrathful = {}
+		ambitious = {}
+		diligent = {}
+	}
+	dynasty = none
+}

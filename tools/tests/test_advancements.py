@@ -267,6 +267,60 @@ class EnchantedArtifactTests(unittest.TestCase):
             self.assertIn("var:aov_adv_enchanted_type = flag:trinket", body)
 
 
+ACADEMY = "common/buildings/aov_battlemage_academy.txt"
+DECISIONS = "common/decisions/aov_battlemage_decisions.txt"
+TEMPLATES = "common/scripted_character_templates/aov_advancement_templates.txt"
+
+
+class BattlemageAcademyTests(unittest.TestCase):
+    def test_holdings_list_academy(self):
+        holdings = read("common/holdings/00_holdings.txt")
+        for h in ("castle_holding", "city_holding"):
+            self.assertIn("battlemage_academy_01", block(holdings, h))
+
+    def test_building_tiers_need_level(self):
+        b = read(ACADEMY)
+        for n in (1, 2, 3):
+            body = block(b, f"battlemage_academy_0{n}")
+            self.assertIn(f"aov_adv_battlemage_academy_level >= {n}", body)
+            self.assertIn("flag = battlemage_academy", body)
+            if n < 3:
+                self.assertIn(f"next_building = battlemage_academy_0{n + 1}", body)
+        self.assertIn("battlemage_academy_none_in_domain_trigger = yes", block(b, "battlemage_academy_01"))
+
+    def test_tier_trigger(self):
+        t = block(read(CONDITIONS), "aov_battlemage_academy_tier_at_least")
+        self.assertIn("has_building_or_higher = battlemage_academy_0$TIER$", t)
+
+    def test_decision_cooldown_and_recruit(self):
+        d = block(read(DECISIONS), "aov_recruit_battlemage_decision")
+        self.assertIn("cooldown = { years = 5 }", d)
+        self.assertIn("aov_battlemage_academy_tier_at_least = { TIER = 1 }", d)
+        self.assertIn("aov_recruit_battlemage = yes", d)
+
+    def test_recruits_scale_with_tier(self):
+        r = block(read(LEVEL_EFFECTS), "aov_recruit_battlemage")
+        temps = read(TEMPLATES)
+        for n in (1, 2, 3):
+            self.assertIn(f"template = aov_battlemage_template_{n}", r)
+            block(temps, f"aov_battlemage_template_{n}")
+        self.assertIn("add_trait = magical_affinity_1", r)
+        self.assertIn("aov_school_evocation_progress", r)
+        self.assertIn("add_courtier = scope:aov_battlemage", r)
+
+    def test_tier_3_recruits_get_advantage(self):
+        r = block(read(LEVEL_EFFECTS), "aov_recruit_battlemage")
+        self.assertIn("modifier = aov_battlemage_trained", r)
+        self.assertIn("advantage = ", block(read(MODIFIERS), "aov_battlemage_trained"))
+
+    def test_battlemage_maa_need_tier(self):
+        maa = read(MAA)
+        two = block(maa, "aov_battlemages")
+        self.assertIn("aov_battlemage_academy_tier_at_least = { TIER = 2 }", two)
+        self.assertIn("NOT = { aov_battlemage_academy_tier_at_least = { TIER = 3 } }", two)
+        self.assertIn("aov_battlemage_academy_tier_at_least = { TIER = 3 }", block(maa, "aov_battlemages_3"))
+
+
 class WindowTests(unittest.TestCase):
     def window(self):
         return read("gui/aov_window_magic.gui")

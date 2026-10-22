@@ -1,0 +1,133 @@
+﻿# Anbennar Overhaul: magic advancement buildings.
+
+##########
+# Battlemage Academy (Evocation advancement)
+##########
+
+# Each tier needs the builder's Battlemage Academy level (aov_adv_battlemage_academy_level). One per domain, like the
+# Artificer Academy. The building outlives the mage. Any academy unlocks the Recruit Battlemage Commander decision;
+# tier 2 the Battlemages men-at-arms, tier 3 stronger Battlemages and trained commanders.
+
+battlemage_academy_01 = {
+	construction_time = slow_construction_time
+
+	type_icon = "icon_building_hall_of_heroes.dds"
+
+	effect_desc = {
+		desc = battlemage_academy_01_effect_desc
+	}
+
+	can_construct_potential = {
+		building_requirement_tribal = no
+		building_requirement_castle_city_church = { LEVEL = 01 }
+		scope:holder = { aov_adv_battlemage_academy_level >= 1 }
+	}
+
+	can_construct = {
+		battlemage_academy_none_in_domain_trigger = yes
+	}
+
+	is_enabled = {
+		battlemage_academy_domain_limit_trigger = yes
+	}
+
+	show_disabled = yes
+
+	cost_gold = 600
+
+	character_modifier = {
+		knight_effectiveness_mult = 0.1
+		prowess = 1
+	}
+
+	county_modifier = {
+		garrison_size = 0.1
+	}
+
+	next_building = battlemage_academy_02
+
+	ai_value = {
+		base = 25
+		ai_general_building_modifier = yes
+	}
+
+	flag = battlemage_academy
+}
+
+battlemage_academy_02 = {
+	construction_time = slow_construction_time
+
+	type_icon = "icon_building_hall_of_heroes.dds"
+
+	effect_desc = {
+		desc = battlemage_academy_02_effect_desc
+	}
+
+	can_construct_potential = {
+		scope:holder = { aov_adv_battlemage_academy_level >= 2 }
+	}
+
+	is_enabled = {
+		battlemage_academy_domain_limit_trigger = yes
+	}
+
+	show_disabled = yes
+
+	cost_gold = 900
+
+	character_modifier = {
+		knight_effectiveness_mult = 0.15
+		prowess = 2
+	}
+
+	county_modifier = {
+		garrison_size = 0.1
+	}
+
+	next_building = battlemage_academy_03
+
+	ai_value = {
+		base = 25
+		ai_general_building_modifier = yes
+	}
+
+	flag = battlemage_academy
+}
+
+battlemage_academy_03 = {
+	construction_time = very_slow_construction_time
+
+	type_icon = "icon_building_hall_of_heroes.dds"
+
+	effect_desc = {
+		desc = battlemage_academy_03_effect_desc
+	}
+
+	can_construct_potential = {
+		scope:holder = { aov_adv_battlemage_academy_level >= 3 }
+	}
+
+	is_enabled = {
+		battlemage_academy_domain_limit_trigger = yes
+	}
+
+	show_disabled = yes
+
+	cost_gold = 1200
+
+	character_modifier = {
+		knight_effectiveness_mult = 0.2
+		prowess = 3
+	}
+
+	county_modifier = {
+		garrison_size = 0.1
+	}
+
+	ai_value = {
+		base = 25
+		ai_general_building_modifier = yes
+	}
+
+	flag = battlemage_academy
+}

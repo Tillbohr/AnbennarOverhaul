@@ -187,3 +187,13 @@ aov_enchanted_trinket_3 = {
 	learning = 1
 	monthly_magic_lifestyle_xp_gain_mult = 0.2
 }
+
+##########
+# Evocation: Battlemage Academy
+##########
+
+# Commanders recruited from a tier-3 academy
+aov_battlemage_trained = {
+	icon = martial_positive
+	advantage = 5
+}

@@ -97,3 +97,66 @@ aov_host_devils = {
 		reference = archers
 	}
 }
+
+# Battlemage Academy (Evocation advancement): ranged evokers. Tier 2 academies recruit aov_battlemages, tier 3 the
+# stronger aov_battlemages_3 (a base-type modifier would boost every archer). Stats: vanilla bowmen +60% / +100%.
+aov_battlemages = {
+	type = archers
+
+	damage = 40
+	toughness = 16
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		skirmishers = 1
+		heavy_infantry = 1
+	}
+
+	can_recruit = {
+		aov_battlemage_academy_tier_at_least = { TIER = 2 }
+		NOT = { aov_battlemage_academy_tier_at_least = { TIER = 3 } }
+	}
+
+	buy_cost = { gold = bowmen_recruitment_cost }
+	low_maintenance_cost = { gold = bowmen_low_maint_cost }
+	high_maintenance_cost = { gold = bowmen_high_maint_cost }
+	provision_cost = @provisions_cost_infantry_moderate
+
+	stack = 100
+	ai_quality = { value = culture_ai_weight_archers }
+
+	illustration = {
+		reference = archers
+	}
+}
+
+aov_battlemages_3 = {
+	type = archers
+
+	damage = 50
+	toughness = 20
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		skirmishers = 1
+		heavy_infantry = 1
+	}
+
+	can_recruit = {
+		aov_battlemage_academy_tier_at_least = { TIER = 3 }
+	}
+
+	buy_cost = { gold = bowmen_recruitment_cost }
+	low_maintenance_cost = { gold = bowmen_low_maint_cost }
+	high_maintenance_cost = { gold = bowmen_high_maint_cost }
+	provision_cost = @provisions_cost_infantry_moderate
+
+	stack = 100
+	ai_quality = { value = culture_ai_weight_archers }
+
+	illustration = {
+		reference = archers
+	}
+}
