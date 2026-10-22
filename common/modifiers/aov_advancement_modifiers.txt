@@ -85,3 +85,105 @@ aov_orb_3 = {
 	learning = 2
 	monthly_prestige = 1
 }
+
+##########
+# Enchantment: Enchanted Artifact (artifact modifiers; level n adds aov_enchanted_<kind>_n)
+##########
+
+aov_enchanted_weapon_1 = {
+	icon = prowess_positive
+	prowess = 6
+	knight_effectiveness_mult = 0.1
+}
+
+aov_enchanted_weapon_2 = {
+	icon = prowess_positive
+	prowess = 4
+	martial = 1
+	advantage = 1
+}
+
+aov_enchanted_weapon_3 = {
+	icon = prowess_positive
+	prowess = 5
+	martial = 1
+	advantage = 2
+	knight_effectiveness_mult = 0.1
+}
+
+aov_enchanted_armor_1 = {
+	icon = prowess_positive
+	prowess = 5
+	health = 0.25
+}
+
+aov_enchanted_armor_2 = {
+	icon = prowess_positive
+	prowess = 3
+	health = 0.25
+	army_toughness_mult = 0.05
+}
+
+aov_enchanted_armor_3 = {
+	icon = prowess_positive
+	prowess = 4
+	health = 0.5
+	army_toughness_mult = 0.05
+}
+
+aov_enchanted_crown_1 = {
+	icon = diplomacy_positive
+	diplomacy = 2
+	monthly_prestige = 1
+}
+
+aov_enchanted_crown_2 = {
+	icon = diplomacy_positive
+	diplomacy = 1
+	monthly_prestige = 1
+	vassal_opinion = 10
+}
+
+aov_enchanted_crown_3 = {
+	icon = diplomacy_positive
+	diplomacy = 1
+	monthly_prestige = 1
+	vassal_opinion = 5
+	general_opinion = 10
+}
+
+aov_enchanted_regalia_1 = {
+	icon = stewardship_positive
+	stewardship = 2
+	domain_tax_mult = 0.1
+}
+
+aov_enchanted_regalia_2 = {
+	icon = stewardship_positive
+	stewardship = 1
+	domain_limit = 1
+	build_gold_cost = -0.1
+}
+
+aov_enchanted_regalia_3 = {
+	icon = stewardship_positive
+	stewardship = 1
+	domain_tax_mult = 0.1
+	build_gold_cost = -0.1
+}
+
+aov_enchanted_trinket_1 = {
+	icon = learning_positive
+	learning = 2
+}
+
+aov_enchanted_trinket_2 = {
+	icon = learning_positive
+	learning = 1
+}
+
+aov_enchanted_trinket_3 = {
+	icon = learning_positive
+	learning = 1
+	monthly_magic_lifestyle_xp_gain_mult = 0.2
+}

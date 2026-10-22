@@ -145,16 +145,193 @@ aov_adv_orb_of_omniscience_3_effect = {
 	}
 }
 
+##########
+# Enchantment: Enchanted Artifact
+##########
+
+# Choose the kind (event aov_advancement.20), which crafts it with aov_adv_enchanted_create_<kind>
 aov_adv_enchanted_artifact_1_effect = {
 	add_magic_lifestyle_xp = 100
+	trigger_event = aov_advancement.20
 }
 
+# Levels 2-3 strengthen the same artifact (the start trigger needs the mage to own it)
 aov_adv_enchanted_artifact_2_effect = {
 	add_magic_lifestyle_xp = 100
+	if = {
+		limit = { aov_adv_owns_enchanted_artifact = yes }
+		if = {
+			limit = { var:aov_adv_enchanted_type = flag:weapon }
+			var:aov_adv_enchanted_artifact = { add_artifact_modifier = aov_enchanted_weapon_2 }
+		}
+		else_if = {
+			limit = { var:aov_adv_enchanted_type = flag:armor }
+			var:aov_adv_enchanted_artifact = { add_artifact_modifier = aov_enchanted_armor_2 }
+		}
+		else_if = {
+			limit = { var:aov_adv_enchanted_type = flag:crown }
+			var:aov_adv_enchanted_artifact = { add_artifact_modifier = aov_enchanted_crown_2 }
+		}
+		else_if = {
+			limit = { var:aov_adv_enchanted_type = flag:regalia }
+			var:aov_adv_enchanted_artifact = { add_artifact_modifier = aov_enchanted_regalia_2 }
+		}
+		else_if = {
+			limit = { var:aov_adv_enchanted_type = flag:trinket }
+			var:aov_adv_enchanted_artifact = { add_artifact_modifier = aov_enchanted_trinket_2 }
+		}
+	}
 }
 
 aov_adv_enchanted_artifact_3_effect = {
 	add_magic_lifestyle_xp = 100
+	if = {
+		limit = { aov_adv_owns_enchanted_artifact = yes }
+		if = {
+			limit = { var:aov_adv_enchanted_type = flag:weapon }
+			var:aov_adv_enchanted_artifact = { add_artifact_modifier = aov_enchanted_weapon_3 }
+		}
+		else_if = {
+			limit = { var:aov_adv_enchanted_type = flag:armor }
+			var:aov_adv_enchanted_artifact = { add_artifact_modifier = aov_enchanted_armor_3 }
+		}
+		else_if = {
+			limit = { var:aov_adv_enchanted_type = flag:crown }
+			var:aov_adv_enchanted_artifact = { add_artifact_modifier = aov_enchanted_crown_3 }
+		}
+		else_if = {
+			limit = { var:aov_adv_enchanted_type = flag:regalia }
+			var:aov_adv_enchanted_artifact = { add_artifact_modifier = aov_enchanted_regalia_3 }
+		}
+		else_if = {
+			limit = { var:aov_adv_enchanted_type = flag:trinket }
+			var:aov_adv_enchanted_artifact = { add_artifact_modifier = aov_enchanted_trinket_3 }
+		}
+	}
+}
+
+# One per mage per lifetime: aov_adv_enchanted_crafted stays set even if the artifact is lost
+aov_adv_enchanted_store = {
+	set_variable = { name = aov_adv_enchanted_artifact value = scope:newly_created_artifact }
+	set_variable = { name = aov_adv_enchanted_crafted value = yes }
+	set_variable = { name = aov_adv_enchanted_type value = flag:$KIND$ }
+}
+
+aov_adv_enchanted_create_weapon = {
+	save_scope_as = owner
+	set_artifact_rarity_illustrious = yes
+	create_artifact = {
+		name = aov_enchanted_weapon_name
+		description = aov_enchanted_weapon_desc
+		type = sword
+		visuals = sword
+		wealth = scope:wealth
+		quality = scope:quality
+		history = {
+			type = created
+			actor = root
+			recipient = root
+			location = root.capital_province
+		}
+		modifier = aov_enchanted_weapon_1
+		save_scope_as = newly_created_artifact
+		decaying = no
+	}
+	aov_adv_enchanted_store = { KIND = weapon }
+}
+
+aov_adv_enchanted_create_armor = {
+	save_scope_as = owner
+	set_artifact_rarity_illustrious = yes
+	create_artifact = {
+		name = aov_enchanted_armor_name
+		description = aov_enchanted_armor_desc
+		type = armor_plate
+		visuals = armor
+		wealth = scope:wealth
+		quality = scope:quality
+		history = {
+			type = created
+			actor = root
+			recipient = root
+			location = root.capital_province
+		}
+		modifier = aov_enchanted_armor_1
+		save_scope_as = newly_created_artifact
+		decaying = no
+	}
+	aov_adv_enchanted_store = { KIND = armor }
+}
+
+aov_adv_enchanted_create_crown = {
+	save_scope_as = owner
+	set_artifact_rarity_illustrious = yes
+	create_artifact = {
+		name = aov_enchanted_crown_name
+		description = aov_enchanted_crown_desc
+		type = helmet
+		visuals = crown
+		template = crown_wearable_template
+		wealth = scope:wealth
+		quality = scope:quality
+		history = {
+			type = created
+			actor = root
+			recipient = root
+			location = root.capital_province
+		}
+		modifier = aov_enchanted_crown_1
+		save_scope_as = newly_created_artifact
+		decaying = no
+	}
+	aov_adv_enchanted_store = { KIND = crown }
+}
+
+aov_adv_enchanted_create_regalia = {
+	save_scope_as = owner
+	set_artifact_rarity_illustrious = yes
+	create_artifact = {
+		name = aov_enchanted_regalia_name
+		description = aov_enchanted_regalia_desc
+		type = regalia
+		visuals = regalia
+		template = regalia_template
+		wealth = scope:wealth
+		quality = scope:quality
+		history = {
+			type = created
+			actor = root
+			recipient = root
+			location = root.capital_province
+		}
+		modifier = aov_enchanted_regalia_1
+		save_scope_as = newly_created_artifact
+		decaying = no
+	}
+	aov_adv_enchanted_store = { KIND = regalia }
+}
+
+aov_adv_enchanted_create_trinket = {
+	save_scope_as = owner
+	set_artifact_rarity_illustrious = yes
+	create_artifact = {
+		name = aov_enchanted_trinket_name
+		description = aov_enchanted_trinket_desc
+		type = miscellaneous
+		visuals = ring
+		wealth = scope:wealth
+		quality = scope:quality
+		history = {
+			type = created
+			actor = root
+			recipient = root
+			location = root.capital_province
+		}
+		modifier = aov_enchanted_trinket_1
+		save_scope_as = newly_created_artifact
+		decaying = no
+	}
+	aov_adv_enchanted_store = { KIND = trinket }
 }
 
 aov_adv_battlemage_academy_1_effect = {

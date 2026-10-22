@@ -208,6 +208,65 @@ class OrbOfOmniscienceTests(unittest.TestCase):
         self.assertIn("aov_adv_orb_of_omniscience_level >= 3", block(read(TUNING), "aov_adv_orb_spell_years_mult"))
 
 
+KINDS = {"weapon": "sword", "armor": "armor_plate", "crown": "helmet", "regalia": "regalia", "trinket": "miscellaneous"}
+
+
+class EnchantedArtifactTests(unittest.TestCase):
+    def test_one_artifact_per_lifetime(self):
+        cond = block(read(CONDITIONS), "aov_adv_can_craft_enchanted_artifact")
+        self.assertIn("NOT = { has_variable = aov_adv_enchanted_crafted }", cond)
+        store = block(read(LEVEL_EFFECTS), "aov_adv_enchanted_store")
+        self.assertIn("set_variable = { name = aov_adv_enchanted_crafted value = yes }", store)
+        self.assertIn("set_variable = { name = aov_adv_enchanted_artifact value = scope:newly_created_artifact }", store)
+
+    def test_owns_guarded(self):
+        cond = block(read(CONDITIONS), "aov_adv_owns_enchanted_artifact")
+        self.assertLess(cond.index("exists = var:aov_adv_enchanted_artifact"),
+                        cond.index("var:aov_adv_enchanted_artifact = {"))
+        self.assertIn("artifact_owner = { this = root }", cond)
+
+    def test_level_1_chooses_type(self):
+        self.assertIn("trigger_event = aov_advancement.20", level_effect("enchanted_artifact", 1))
+        ev = block(read(EVENTS), "aov_advancement.20")
+        self.assertEqual(ev.count("\toption = {"), 5)
+        for kind in KINDS:
+            self.assertIn(f"aov_adv_enchanted_create_{kind} = yes", ev)
+
+    def test_creation_per_kind(self):
+        eff = read(LEVEL_EFFECTS)
+        for kind, art_type in KINDS.items():
+            body = block(eff, f"aov_adv_enchanted_create_{kind}")
+            self.assertIn(f"type = {art_type}", body)
+            self.assertIn("decaying = no", body)
+            self.assertIn(f"modifier = aov_enchanted_{kind}_1", body)
+            self.assertIn(f"aov_adv_enchanted_store = {{ KIND = {kind} }}", body)
+
+    def test_five_kinds_three_levels(self):
+        mods = read(MODIFIERS)
+        for kind in KINDS:
+            for n in (1, 2, 3):
+                block(mods, f"aov_enchanted_{kind}_{n}")
+
+    def test_levels_2_3_strengthen_the_same_artifact(self):
+        for n in (2, 3):
+            eff = level_effect("enchanted_artifact", n)
+            self.assertIn("aov_adv_owns_enchanted_artifact = yes", eff)
+            for kind in KINDS:
+                self.assertIn(f"var:aov_adv_enchanted_type = flag:{kind}", eff)
+                self.assertIn(f"add_artifact_modifier = aov_enchanted_{kind}_{n}", eff)
+
+    def test_trinket_feeds_magic(self):
+        life = read("common/script_values/aov_magic_lifestyle_values.txt")
+        self.assertIn("add = aov_adv_trinket_mana_bonus", block(life, "aov_mana_max_bonus"))
+        for c in SCHOOLS:
+            self.assertIn("add = aov_adv_trinket_cost_cut", block(life, f"aov_cost_cut_{c}"))
+        tuning = read(TUNING)
+        for v in ("aov_adv_trinket_mana_bonus", "aov_adv_trinket_cost_cut"):
+            body = block(tuning, v)
+            self.assertIn("aov_adv_owns_enchanted_artifact = yes", body)
+            self.assertIn("var:aov_adv_enchanted_type = flag:trinket", body)
+
+
 class WindowTests(unittest.TestCase):
     def window(self):
         return read("gui/aov_window_magic.gui")

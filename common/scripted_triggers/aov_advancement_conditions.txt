@@ -1,12 +1,23 @@
 ﻿# Anbennar Overhaul: per-level start conditions named by tools/data/advancements.py (requires).
 # Character scope (the mage).
 
+# Enchanted Artifact: one per mage per lifetime
 aov_adv_can_craft_enchanted_artifact = {
-	always = no
+	custom_tooltip = {
+		text = aov_adv_can_craft_enchanted_artifact_tt
+		NOT = { has_variable = aov_adv_enchanted_crafted }
+	}
 }
 
+# Enchanted Artifact levels 2-3: the mage still owns the artifact they crafted
 aov_adv_owns_enchanted_artifact = {
-	always = no
+	custom_tooltip = {
+		text = aov_adv_owns_enchanted_artifact_tt
+		exists = var:aov_adv_enchanted_artifact
+		var:aov_adv_enchanted_artifact = {
+			artifact_owner = { this = root }
+		}
+	}
 }
 
 aov_adv_owns_phylactery = {

@@ -31,3 +31,58 @@ aov_adv_orb_spell_years_mult = {
 		value = 1.5
 	}
 }
+
+##########
+# Enchantment: Enchanted Artifact
+##########
+# Totals at level 3 (aov_enchanted_<kind>_<n> in aov_advancement_modifiers.txt):
+#   weapon:  +15 prowess, +2 Martial, +3 advantage, +20% knight effectiveness
+#   armor:   +12 prowess, +1 health, +10% army toughness
+#   crown:   +4 Diplomacy, +3 monthly prestige, +15 vassal opinion, +10 general opinion
+#   regalia: +4 Stewardship, +1 domain limit, +20% domain tax, -20% building cost
+#   trinket: +4 Learning, +20% magic lifestyle experience, and the two values below
+# Trinket: extra maximum mana, a share of the base pool (100 + 50 per affinity level): 20% / 35% / 50%
+aov_adv_trinket_mana_bonus = {
+	value = 0
+	if = {
+		limit = {
+			aov_adv_owns_enchanted_artifact = yes
+			var:aov_adv_enchanted_type = flag:trinket
+		}
+		value = aov_affinity_level
+		multiply = 50
+		add = 100
+		if = {
+			limit = { aov_adv_enchanted_artifact_level >= 3 }
+			multiply = 0.5
+		}
+		else_if = {
+			limit = { aov_adv_enchanted_artifact_level >= 2 }
+			multiply = 0.35
+		}
+		else = {
+			multiply = 0.2
+		}
+		floor = yes
+	}
+}
+
+# Trinket: spell cost cut, added to every school's aov_cost_cut_<school>: 10% / 18% / 25%
+aov_adv_trinket_cost_cut = {
+	value = 0
+	if = {
+		limit = {
+			aov_adv_owns_enchanted_artifact = yes
+			var:aov_adv_enchanted_type = flag:trinket
+		}
+		value = 0.1
+		if = {
+			limit = { aov_adv_enchanted_artifact_level >= 3 }
+			value = 0.25
+		}
+		else_if = {
+			limit = { aov_adv_enchanted_artifact_level >= 2 }
+			value = 0.18
+		}
+	}
+}

@@ -62,41 +62,49 @@ aov_study_mult_transmutation = {
 aov_cost_cut_abjuration = {
 	value = 0
 	if = { limit = { has_perk = aov_spellguard_perk } add = 0.25 }
+	add = aov_adv_trinket_cost_cut # Enchanted Artifact trinket
 }
 
 aov_cost_cut_conjuration = {
 	value = 0
 	if = { limit = { has_perk = aov_conjured_provisions_perk } add = 0.25 }
+	add = aov_adv_trinket_cost_cut # Enchanted Artifact trinket
 }
 
 aov_cost_cut_divination = {
 	value = 0
 	if = { limit = { has_perk = aov_read_the_stars_perk } add = 0.25 }
+	add = aov_adv_trinket_cost_cut # Enchanted Artifact trinket
 }
 
 aov_cost_cut_enchantment = {
 	value = 0
 	if = { limit = { has_perk = aov_hearts_desire_perk } add = 0.25 }
+	add = aov_adv_trinket_cost_cut # Enchanted Artifact trinket
 }
 
 aov_cost_cut_evocation = {
 	value = 0
 	if = { limit = { has_perk = aov_overchannel_perk } add = 0.25 }
+	add = aov_adv_trinket_cost_cut # Enchanted Artifact trinket
 }
 
 aov_cost_cut_illusion = {
 	value = 0
 	if = { limit = { has_perk = aov_mirror_image_perk } add = 0.25 }
+	add = aov_adv_trinket_cost_cut # Enchanted Artifact trinket
 }
 
 aov_cost_cut_necromancy = {
 	value = 0
 	if = { limit = { has_perk = aov_deathless_will_perk } add = 0.25 }
+	add = aov_adv_trinket_cost_cut # Enchanted Artifact trinket
 }
 
 aov_cost_cut_transmutation = {
 	value = 0
 	if = { limit = { has_perk = aov_ley_lines_perk } add = 0.25 }
+	add = aov_adv_trinket_cost_cut # Enchanted Artifact trinket
 }
 
 # Mana cost reduction by spell type
@@ -153,6 +161,7 @@ aov_mana_max_bonus = {
 	value = 0
 	if = { limit = { has_perk = aov_arcane_reservoir_perk } add = 50 }
 	if = { limit = { has_trait = arcane_scholar } add = 50 }
+	add = aov_adv_trinket_mana_bonus # Enchanted Artifact trinket
 }
 
 # Multiplier on the monthly mana refill: Ley Lines +25%, Battle Meditation +100% while at war
