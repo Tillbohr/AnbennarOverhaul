@@ -72,3 +72,24 @@ aov_battlemage_template_3 = {
 	}
 	dynasty = none
 }
+
+# Homunculus (aov_adv_homunculus_create): plain skills until refined (event aov_advancement.30)
+aov_homunculus_template = {
+	age = { 18 18 }
+	gender_female_chance = 50
+	random_traits = no
+	diplomacy = { 4 8 }
+	martial = { 4 8 }
+	stewardship = { 8 12 }
+	intrigue = { 4 8 }
+	learning = { 6 10 }
+	prowess = { 4 8 }
+	random_traits_list = {
+		count = 1
+		diligent = {}
+		patient = {}
+		humble = {}
+		calm = {}
+	}
+	dynasty = none
+}

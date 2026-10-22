@@ -1,0 +1,6 @@
+﻿# Anbennar Overhaul: magic advancement opinions.
+
+# A homunculus's devotion to its maker
+aov_homunculus_maker_opinion = {
+	opinion = 75
+}

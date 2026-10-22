@@ -402,6 +402,38 @@ class LichdomTests(unittest.TestCase):
         self.assertIn("aov_adv_lichdom_check = yes", block(read(ON_ACTIONS), "aov_adv_quarterly_pulse"))
 
 
+class HomunculusTests(unittest.TestCase):
+    def test_homunculus_trait_cannot_inherit_or_breed(self):
+        trait = block(read("common/traits/aov_homunculus_traits.txt"), "aov_homunculus")
+        for line in ("inheritance_blocker = all", "claim_inheritance_blocker = all", "can_have_children = no",
+                     "shown_in_ruler_designer = no"):
+            self.assertIn(line, trait)
+
+    def test_level_1_creates_a_courtier(self):
+        create = block(read(LEVEL_EFFECTS), "aov_adv_homunculus_create")
+        self.assertIn("template = aov_homunculus_template", create)
+        self.assertIn("add_trait = aov_homunculus", create)
+        self.assertIn("modifier = aov_homunculus_maker_opinion", create)
+        self.assertIn("add_courtier = scope:aov_homunculus", create)
+        self.assertIn("set_variable = { name = aov_adv_homunculus value = scope:aov_homunculus }", create)
+        self.assertIn("aov_adv_homunculus_create = yes", level_effect("homunculus", 1))
+        block(read(TEMPLATES), "aov_homunculus_template")
+
+    def test_level_2_recreates_if_dead(self):
+        eff = level_effect("homunculus", 2)
+        self.assertIn("is_alive = no", eff)
+        self.assertLess(eff.index("aov_adv_homunculus_create = yes"), eff.index("trigger_event = aov_advancement.30"))
+        ev = block(read(EVENTS), "aov_advancement.30")
+        for s in SKILLS[:5]:
+            self.assertIn(f"add_{s}_skill = aov_adv_homunculus_skill", ev)
+
+    def test_labour_modifier(self):
+        self.assertIn("add_character_modifier = { modifier = aov_homunculus_labour }", level_effect("homunculus", 3))
+        labour = block(read(MODIFIERS), "aov_homunculus_labour")
+        self.assertIn("build_speed = ", labour)
+        self.assertIn("development_growth_factor = ", labour)
+
+
 class WindowTests(unittest.TestCase):
     def window(self):
         return read("gui/aov_window_magic.gui")

@@ -1,0 +1,19 @@
+﻿# Anbennar Overhaul: the homunculus (Transmutation magic advancement, aov_adv_homunculus_create).
+
+aov_homunculus = {
+	category = health
+	icon = disfigured.dds
+
+	stewardship = 2
+	health = 0.5
+
+	flag = can_not_marry
+	inheritance_blocker = all
+	claim_inheritance_blocker = all
+	can_have_children = no
+
+	shown_in_ruler_designer = no
+
+	ai_greed = -50
+	ai_boldness = -25
+}

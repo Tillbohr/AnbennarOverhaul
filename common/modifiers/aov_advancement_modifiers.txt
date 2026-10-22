@@ -253,3 +253,14 @@ aov_phylactery = {
 	icon = learning_positive
 	learning = 1
 }
+
+##########
+# Transmutation: Homunculus
+##########
+
+# Level 3: homunculi work the domain
+aov_homunculus_labour = {
+	icon = stewardship_positive
+	build_speed = -0.2
+	development_growth_factor = 0.15
+}

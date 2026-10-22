@@ -155,3 +155,18 @@
  aov_advancement.41.t: "The Phylactery Is Lost"
  aov_advancement.41.desc: "The phylactery is no longer in [ROOT.Char.GetFirstName]'s hands. Without it, the ritual cannot be finished, and a new vessel must be made."
  aov_advancement.41.a: "I will make another."
+
+ # Homunculus
+ trait_aov_homunculus: "Homunculus"
+ trait_aov_homunculus_desc: "[ROOT.Char.GetFirstName] was not born but made, shaped in an alembic by a transmuter. Homunculi cannot have children or inherit."
+ trait_aov_homunculus_character_desc: "[ROOT.Char.GetFirstName] was not born but made, shaped in an alembic by a transmuter."
+ aov_homunculus_maker_opinion: "My Maker"
+ aov_homunculus_labour: "Homunculus Labour"
+ aov_homunculus_labour_desc: "Tireless homunculi labour in this character's fields and building sites."
+ aov_advancement.30.t: "Refining the Homunculus"
+ aov_advancement.30.desc: "[aov_homunculus.GetFirstName] lies still on the table while [ROOT.Char.GetFirstName] works. One gift can be woven into the homunculus's mind."
+ aov_advancement.30.diplomacy: "A silver tongue."
+ aov_advancement.30.martial: "A soldier's mind."
+ aov_advancement.30.stewardship: "A head for ledgers."
+ aov_advancement.30.intrigue: "A spy's eyes."
+ aov_advancement.30.learning: "A scholar's memory."

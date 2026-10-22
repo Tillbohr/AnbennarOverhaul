@@ -122,3 +122,11 @@ aov_adv_mirror_image_cost_cut = {
 # aov_lichdom_crime: +2 Learning, +5 dread. Phylactery (aov_phylactery): +1 Learning. Level 3 grants Anbennar's lich
 # trait (immortal, +5 all skills, +10 prowess, +50 dread, -20 general opinion). Each level rolls for Forbidden Magic
 # Practitioner where magic is illegal or shunned (aov_dark_magic_roll).
+
+##########
+# Transmutation: Homunculus
+##########
+# aov_homunculus trait: +2 Stewardship, +0.5 health, sterile, cannot inherit; +75 opinion of its maker.
+# aov_homunculus_labour: 20% faster construction, +15% development growth.
+# Level 2: skill points added to the chosen skill
+aov_adv_homunculus_skill = 8

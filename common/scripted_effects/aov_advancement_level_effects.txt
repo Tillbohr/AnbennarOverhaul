@@ -518,14 +518,52 @@ aov_adv_lichdom_check = {
 	}
 }
 
+##########
+# Transmutation: Homunculus
+##########
+
 aov_adv_homunculus_1_effect = {
 	add_magic_lifestyle_xp = 100
+	aov_adv_homunculus_create = yes
 }
 
+# Refine the homunculus (a new one if the first has died), then choose its skill (event aov_advancement.30)
 aov_adv_homunculus_2_effect = {
 	add_magic_lifestyle_xp = 100
+	if = {
+		limit = {
+			OR = {
+				NOT = { exists = var:aov_adv_homunculus }
+				var:aov_adv_homunculus = { is_alive = no }
+			}
+		}
+		aov_adv_homunculus_create = yes
+	}
+	var:aov_adv_homunculus = { save_scope_as = aov_homunculus }
+	trigger_event = aov_advancement.30
 }
 
 aov_adv_homunculus_3_effect = {
 	add_magic_lifestyle_xp = 100
+	add_character_modifier = { modifier = aov_homunculus_labour }
+}
+
+# A homunculus courtier at the capital (var:aov_adv_homunculus): sterile, cannot inherit, devoted to its maker
+aov_adv_homunculus_create = {
+	create_character = {
+		template = aov_homunculus_template
+		location = root.capital_province
+		culture = root.culture
+		faith = root.faith
+		save_scope_as = aov_homunculus
+	}
+	scope:aov_homunculus = {
+		add_trait = aov_homunculus
+		add_opinion = {
+			target = root
+			modifier = aov_homunculus_maker_opinion
+		}
+	}
+	add_courtier = scope:aov_homunculus
+	set_variable = { name = aov_adv_homunculus value = scope:aov_homunculus }
 }
