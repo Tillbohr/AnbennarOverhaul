@@ -445,6 +445,16 @@ class AiTests(unittest.TestCase):
         self.assertRegex(read(TUNING), r"(?m)^aov_adv_ai_chance = \d+")
 
 
+class MaaIconTests(unittest.TestCase):
+    def test_every_regiment_names_a_vanilla_icon(self):
+        """Without icon = the game looks for gfx/interface/icons/regimenttypes/<key>.dds (tiger: missing-file)."""
+        maa = read(MAA)
+        expected = {"aov_host_angels": "heavy_infantry", "aov_host_eldritch": "heavy_cavalry",
+                    "aov_host_devils": "bowmen", "aov_battlemages": "bowmen", "aov_battlemages_3": "bowmen"}
+        for key, icon in expected.items():
+            self.assertIn(f"\ticon = {icon}\n", block(maa, key) + "\n", key)
+
+
 class WindowTests(unittest.TestCase):
     def window(self):
         return read("gui/aov_window_magic.gui")

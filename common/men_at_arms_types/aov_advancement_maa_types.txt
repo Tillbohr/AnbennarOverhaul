@@ -6,6 +6,7 @@
 
 aov_host_angels = {
 	type = heavy_infantry
+	icon = heavy_infantry
 
 	damage = 40
 	toughness = 28
@@ -38,6 +39,7 @@ aov_host_angels = {
 
 aov_host_eldritch = {
 	type = heavy_cavalry
+	icon = heavy_cavalry
 
 	damage = 125
 	toughness = 44
@@ -69,6 +71,7 @@ aov_host_eldritch = {
 
 aov_host_devils = {
 	type = archers
+	icon = bowmen
 
 	damage = 31
 	toughness = 13
@@ -102,6 +105,7 @@ aov_host_devils = {
 # stronger aov_battlemages_3 (a base-type modifier would boost every archer). Stats: vanilla bowmen +60% / +100%.
 aov_battlemages = {
 	type = archers
+	icon = bowmen
 
 	damage = 40
 	toughness = 16
@@ -133,6 +137,7 @@ aov_battlemages = {
 
 aov_battlemages_3 = {
 	type = archers
+	icon = bowmen
 
 	damage = 50
 	toughness = 20
