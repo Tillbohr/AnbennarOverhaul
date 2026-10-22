@@ -136,6 +136,44 @@ class MagicalFortressTests(unittest.TestCase):
         self.assertIn("aov_adv_ward_days", read(TUNING))
 
 
+MAA = "common/men_at_arms_types/aov_advancement_maa_types.txt"
+HOSTS = {"angels": "heavy_infantry", "eldritch": "heavy_cavalry", "devils": "archers"}
+
+
+class SummonExtraplanarsTests(unittest.TestCase):
+    def test_level_1_chooses_host(self):
+        self.assertIn("trigger_event = aov_advancement.10", level_effect("summon_extraplanars", 1))
+
+    def test_host_choice_event_three_options(self):
+        ev = block(read(EVENTS), "aov_advancement.10")
+        self.assertEqual(ev.count("\toption = {"), 3)
+        for h in HOSTS:
+            self.assertIn(f"set_variable = {{ name = aov_adv_host value = flag:{h} }}", ev)
+
+    def test_maa_need_level_and_host(self):
+        maa = read(MAA)
+        for h, base in HOSTS.items():
+            body = block(maa, f"aov_host_{h}")
+            self.assertIn(f"type = {base}", body)
+            self.assertIn("aov_adv_summon_extraplanars_level >= 1", body)
+            self.assertIn(f"var:aov_adv_host = flag:{h}", body)
+
+    def test_level_modifiers_use_base_type(self):
+        mods = read(MODIFIERS)
+        for h, base in HOSTS.items():
+            self.assertIn(f"{base}_damage_mult", block(mods, f"aov_host_{h}_2"))
+            three = block(mods, f"aov_host_{h}_3")
+            self.assertIn(f"{base}_toughness_mult", three)
+            self.assertIn(f"{base}_max_size_add = 1", three)
+
+    def test_levels_2_3_add_the_hosts_modifier(self):
+        for n in (2, 3):
+            eff = level_effect("summon_extraplanars", n)
+            for h in HOSTS:
+                self.assertIn(f"var:aov_adv_host = flag:{h}", eff)
+                self.assertIn(f"add_character_modifier = {{ modifier = aov_host_{h}_{n} }}", eff)
+
+
 class WindowTests(unittest.TestCase):
     def window(self):
         return read("gui/aov_window_magic.gui")

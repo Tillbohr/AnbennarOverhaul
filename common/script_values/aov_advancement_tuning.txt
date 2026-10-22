@@ -11,3 +11,9 @@
 #   capital (levels 2-3): +5 defender holding advantage
 # Days a ward lasts; re-laid yearly, so it lapses about a year after the mage loses it
 aov_adv_ward_days = 400
+
+##########
+# Conjuration: Summon Extraplanars
+##########
+# Hosts (aov_advancement_maa_types.txt): vanilla armored_footmen / armored_horsemen / bowmen +25%
+# aov_host_<host>_2: +15% damage for the host's base type; aov_host_<host>_3: +15% toughness, +1 regiment size

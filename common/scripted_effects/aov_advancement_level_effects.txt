@@ -56,16 +56,47 @@ aov_adv_wards_refresh = {
 	}
 }
 
+##########
+# Conjuration: Summon Extraplanars
+##########
+
+# Choose the host (var:aov_adv_host); its men-at-arms are in aov_advancement_maa_types.txt
 aov_adv_summon_extraplanars_1_effect = {
 	add_magic_lifestyle_xp = 100
+	trigger_event = aov_advancement.10
 }
 
+# The host's base type grows stronger (CK3 has no per-regiment-type modifier for custom men-at-arms)
 aov_adv_summon_extraplanars_2_effect = {
 	add_magic_lifestyle_xp = 100
+	if = {
+		limit = { var:aov_adv_host = flag:angels }
+		add_character_modifier = { modifier = aov_host_angels_2 }
+	}
+	else_if = {
+		limit = { var:aov_adv_host = flag:eldritch }
+		add_character_modifier = { modifier = aov_host_eldritch_2 }
+	}
+	else_if = {
+		limit = { var:aov_adv_host = flag:devils }
+		add_character_modifier = { modifier = aov_host_devils_2 }
+	}
 }
 
 aov_adv_summon_extraplanars_3_effect = {
 	add_magic_lifestyle_xp = 100
+	if = {
+		limit = { var:aov_adv_host = flag:angels }
+		add_character_modifier = { modifier = aov_host_angels_3 }
+	}
+	else_if = {
+		limit = { var:aov_adv_host = flag:eldritch }
+		add_character_modifier = { modifier = aov_host_eldritch_3 }
+	}
+	else_if = {
+		limit = { var:aov_adv_host = flag:devils }
+		add_character_modifier = { modifier = aov_host_devils_3 }
+	}
 }
 
 aov_adv_orb_of_omniscience_1_effect = {

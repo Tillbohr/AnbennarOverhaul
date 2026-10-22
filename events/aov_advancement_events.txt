@@ -48,3 +48,28 @@ aov_advancement.1 = {
 		name = aov_advancement.1.a
 	}
 }
+
+# Summon Extraplanars, level 1: choose the host
+aov_advancement.10 = {
+	type = character_event
+	title = aov_advancement.10.t
+	desc = aov_advancement.10.desc
+	theme = learning
+	left_portrait = root
+
+	option = {
+		name = aov_advancement.10.a
+		set_variable = { name = aov_adv_host value = flag:angels }
+		custom_tooltip = aov_advancement.10.a.tt
+	}
+	option = {
+		name = aov_advancement.10.b
+		set_variable = { name = aov_adv_host value = flag:eldritch }
+		custom_tooltip = aov_advancement.10.b.tt
+	}
+	option = {
+		name = aov_advancement.10.c
+		set_variable = { name = aov_adv_host value = flag:devils }
+		custom_tooltip = aov_advancement.10.c.tt
+	}
+}

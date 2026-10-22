@@ -27,3 +27,40 @@ aov_ward_capital = {
 	icon = county_modifier_control_positive
 	defender_holding_advantage = 5
 }
+
+##########
+# Conjuration: Summon Extraplanars (character modifiers, levels 2 and 3, by var:aov_adv_host)
+##########
+
+aov_host_angels_2 = {
+	icon = martial_positive
+	heavy_infantry_damage_mult = 0.15
+}
+
+aov_host_angels_3 = {
+	icon = martial_positive
+	heavy_infantry_toughness_mult = 0.15
+	heavy_infantry_max_size_add = 1
+}
+
+aov_host_eldritch_2 = {
+	icon = martial_positive
+	heavy_cavalry_damage_mult = 0.15
+}
+
+aov_host_eldritch_3 = {
+	icon = martial_positive
+	heavy_cavalry_toughness_mult = 0.15
+	heavy_cavalry_max_size_add = 1
+}
+
+aov_host_devils_2 = {
+	icon = martial_positive
+	archers_damage_mult = 0.15
+}
+
+aov_host_devils_3 = {
+	icon = martial_positive
+	archers_toughness_mult = 0.15
+	archers_max_size_add = 1
+}
