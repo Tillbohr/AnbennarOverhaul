@@ -405,16 +405,26 @@ aov_recruit_battlemage = {
 	add_courtier = scope:aov_battlemage
 }
 
+##########
+# Illusion: Mirror Image
+##########
+
+# The three modifiers stack: +1 to every skill per level (+3 at level 3), plus each level's own effect. Level 2's body
+# double is on_imprison (aov_adv_body_double); level 3 also cheapens Illusion spells (aov_adv_mirror_image_cost_cut).
 aov_adv_mirror_image_1_effect = {
 	add_magic_lifestyle_xp = 100
+	add_character_modifier = { modifier = aov_mirror_image_1 }
 }
 
 aov_adv_mirror_image_2_effect = {
 	add_magic_lifestyle_xp = 100
+	add_character_modifier = { modifier = aov_mirror_image_2 }
+	custom_tooltip = aov_adv_mirror_image_2_effect_tt
 }
 
 aov_adv_mirror_image_3_effect = {
 	add_magic_lifestyle_xp = 100
+	add_character_modifier = { modifier = aov_mirror_image_3 }
 }
 
 aov_adv_lichdom_1_effect = {

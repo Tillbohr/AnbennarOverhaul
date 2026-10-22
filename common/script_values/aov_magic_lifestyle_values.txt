@@ -93,6 +93,7 @@ aov_cost_cut_illusion = {
 	value = 0
 	if = { limit = { has_perk = aov_mirror_image_perk } add = 0.25 }
 	add = aov_adv_trinket_cost_cut # Enchanted Artifact trinket
+	add = aov_adv_mirror_image_cost_cut # Mirror Image level 3
 }
 
 aov_cost_cut_necromancy = {

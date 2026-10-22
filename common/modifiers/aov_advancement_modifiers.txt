@@ -197,3 +197,43 @@ aov_battlemage_trained = {
 	icon = martial_positive
 	advantage = 5
 }
+
+##########
+# Illusion: Mirror Image (character modifiers; the three stack)
+##########
+
+# Illusory doubles
+aov_mirror_image_1 = {
+	icon = intrigue_positive
+	diplomacy = 1
+	martial = 1
+	stewardship = 1
+	intrigue = 1
+	learning = 1
+	prowess = 3
+	enemy_hostile_scheme_success_chance_add = -10
+}
+
+# Body double (the escape itself is on_imprison, aov_adv_body_double)
+aov_mirror_image_2 = {
+	icon = intrigue_positive
+	diplomacy = 1
+	martial = 1
+	stewardship = 1
+	intrigue = 1
+	learning = 1
+	prowess = 1
+}
+
+# Grand simulacrum
+aov_mirror_image_3 = {
+	icon = intrigue_positive
+	diplomacy = 1
+	martial = 1
+	stewardship = 1
+	intrigue = 1
+	learning = 1
+	prowess = 1
+	general_opinion = 10
+	owned_personal_scheme_success_chance_add = 10
+}

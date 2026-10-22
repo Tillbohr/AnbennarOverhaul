@@ -123,3 +123,15 @@
  aov_recruit_battlemage_decision_desc: "Our academy has trained a war-mage fit to lead our armies. Bring them to court."
  aov_recruit_battlemage_decision_tooltip: "A battlemage commander joins your court"
  aov_recruit_battlemage_decision_confirm: "Recruit"
+
+ # Mirror Image
+ aov_mirror_image_1: "Mirror Images"
+ aov_mirror_image_1_desc: "Doubles of light and shadow move with this character, confusing friend and foe alike."
+ aov_mirror_image_2: "Body Double"
+ aov_mirror_image_2_desc: "Somewhere, a perfect double of this character waits to take their place."
+ aov_mirror_image_3: "Grand Simulacrum"
+ aov_mirror_image_3_desc: "This character's simulacrum holds court, signs letters and charms guests while its maker is elsewhere."
+ aov_adv_mirror_image_2_effect_tt: "When imprisoned, a #V 50%#! chance a body double is taken instead"
+ aov_advancement.50.t: "The Body Double"
+ aov_advancement.50.desc: "The guards were very pleased with themselves, right up until their prisoner smiled, flickered, and was gone. By then the real [ROOT.Char.GetFirstName] was miles away."
+ aov_advancement.50.a: "They never had me at all."

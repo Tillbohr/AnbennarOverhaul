@@ -103,3 +103,23 @@ aov_advancement.20 = {
 		aov_adv_enchanted_create_trinket = yes
 	}
 }
+
+# Mirror Image level 2: the body double was taken; the mage walks free (aov_adv_body_double, on_imprison)
+aov_advancement.50 = {
+	type = character_event
+	title = aov_advancement.50.t
+	desc = aov_advancement.50.desc
+	theme = intrigue
+	left_portrait = root
+
+	immediate = {
+		if = {
+			limit = { is_imprisoned = yes }
+			release_from_prison = yes
+		}
+	}
+
+	option = {
+		name = aov_advancement.50.a
+	}
+}

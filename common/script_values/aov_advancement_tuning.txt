@@ -98,3 +98,20 @@ aov_battlemage_recruit_gold = 150
 aov_battlemage_evocation_1 = 300
 aov_battlemage_evocation_2 = 800
 aov_battlemage_evocation_3 = 2000
+
+##########
+# Illusion: Mirror Image
+##########
+# aov_mirror_image_1/2/3 stack: +1 to every skill each (+3 at level 3). Level 1 also +2 prowess and -10% success
+# for hostile schemes against the mage; level 3 +10 general opinion and +10% personal scheme success.
+# Level 2: chance (percent) that a body double is taken instead when the mage is imprisoned
+aov_adv_body_double_chance = 50
+
+# Level 3: Illusion spell cost cut, added to aov_cost_cut_illusion
+aov_adv_mirror_image_cost_cut = {
+	value = 0
+	if = {
+		limit = { aov_adv_mirror_image_level >= 3 }
+		value = 0.2
+	}
+}

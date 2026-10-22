@@ -321,6 +321,44 @@ class BattlemageAcademyTests(unittest.TestCase):
         self.assertIn("aov_battlemage_academy_tier_at_least = { TIER = 3 }", block(maa, "aov_battlemages_3"))
 
 
+SKILLS = ("diplomacy", "martial", "stewardship", "intrigue", "learning", "prowess")
+
+
+class MirrorImageTests(unittest.TestCase):
+    def test_skills_rise_one_per_level(self):
+        mods = read(MODIFIERS)
+        for n in (1, 2, 3):
+            body = block(mods, f"aov_mirror_image_{n}")
+            for s in SKILLS[:5]:
+                self.assertIn(f"\t{s} = 1\n", body + "\n")
+            self.assertRegex(body, r"\tprowess = [1-9]")
+            eff = level_effect("mirror_image", n)
+            self.assertIn(f"add_character_modifier = {{ modifier = aov_mirror_image_{n} }}", eff)
+            self.assertNotIn("remove_character_modifier", eff)
+
+    def test_level_extras(self):
+        mods = read(MODIFIERS)
+        self.assertIn("enemy_hostile_scheme_success_chance_add = -", block(mods, "aov_mirror_image_1"))
+        three = block(mods, "aov_mirror_image_3")
+        self.assertIn("general_opinion = ", three)
+        self.assertIn("owned_personal_scheme_success_chance_add = ", three)
+
+    def test_body_double_on_imprison(self):
+        oa = read(ON_ACTIONS)
+        self.assertIn("aov_adv_body_double", block(oa, "on_imprison"))
+        bd = block(oa, "aov_adv_body_double")
+        self.assertIn("aov_adv_mirror_image_level >= 2", bd)
+        self.assertIn("chance = aov_adv_body_double_chance", bd)
+        self.assertIn("id = aov_advancement.50", bd)
+        ev = block(read(EVENTS), "aov_advancement.50")
+        self.assertLess(ev.index("is_imprisoned = yes"), ev.index("release_from_prison = yes"))
+
+    def test_illusion_cost_cut_reads_level(self):
+        life = read("common/script_values/aov_magic_lifestyle_values.txt")
+        self.assertIn("add = aov_adv_mirror_image_cost_cut", block(life, "aov_cost_cut_illusion"))
+        self.assertIn("aov_adv_mirror_image_level >= 3", block(read(TUNING), "aov_adv_mirror_image_cost_cut"))
+
+
 class WindowTests(unittest.TestCase):
     def window(self):
         return read("gui/aov_window_magic.gui")

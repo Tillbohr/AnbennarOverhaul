@@ -26,3 +26,21 @@ aov_adv_wards_yearly = {
 		aov_adv_wards_refresh = yes
 	}
 }
+
+on_imprison = {
+	on_actions = { aov_adv_body_double }
+}
+
+# Root = the imprisoned character. Mirror Image level 2: a body double may be taken instead; the release waits a day
+# so vanilla's on_imprison effects finish first (event aov_advancement.50)
+aov_adv_body_double = {
+	trigger = {
+		aov_adv_mirror_image_level >= 2
+	}
+	effect = {
+		random = {
+			chance = aov_adv_body_double_chance
+			trigger_event = { id = aov_advancement.50 days = 1 }
+		}
+	}
+}
