@@ -66,7 +66,7 @@ Read only the doc for the system you are working on. Each holds the generated-fi
 | System | Doc | Generators |
 |---|---|---|
 | Gnomish artificery: tradition, academy, handgunners, Artificery tab, 60 inventions, research popup, artificer factions and influence | `docs/systems/artificery.md` | `build_inventions.py`, `build_hud_override.py` |
-| Magic schools (mana, knowledge, 48 spells, Magic tab) and the magic lifestyle (3 trees, focuses, traits) | `docs/systems/magic.md` | `build_spells.py`, `build_lifestyle_override.py` |
+| Magic schools (mana, knowledge, 48 spells, Magic tab with Advancements and Spells tabs), 8 magic advancements (one per school) and the magic lifestyle (3 trees, focuses, traits) | `docs/systems/magic.md` | `build_spells.py`, `build_advancements.py`, `build_lifestyle_override.py` |
 | Great projects: EU4 monuments in Cannor, Middle Dwarovar, Bulwar, Salahad, Deepwoods; county view paintings | `docs/systems/great-projects.md` | `build_monuments.py`, `build_county_view_override.py` |
 | Dwarven holds: `dwarven_hold_holding`, 10 levels, Delve Deeper digs, ruin and clear | `docs/systems/dwarven-holds.md` | `build_holds.py`, `build_holdings_override.py`, `build_governments_override.py` |
 | RiE dwarf buildings, ore deposits, mines and the Dwarven Expedition activity | `docs/systems/rie-dwarves.md` | `build_rie_dwarves.py` (run before `build_holds.py` and `build_holdings_override.py`) |

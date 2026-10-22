@@ -130,3 +130,9 @@ aov_adv_mirror_image_cost_cut = {
 # aov_homunculus_labour: 20% faster construction, +15% development growth.
 # Level 2: skill points added to the chosen skill
 aov_adv_homunculus_skill = 8
+
+##########
+# AI
+##########
+# Yearly chance (percent) that an AI ruling mage who can afford a level starts one (aov_adv_ai_yearly)
+aov_adv_ai_chance = 20

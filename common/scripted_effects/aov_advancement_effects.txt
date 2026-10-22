@@ -337,6 +337,126 @@ aov_adv_abandon = {
 	remove_variable = aov_adv_progress
 }
 
+# AI (aov_adv_ai_yearly): start one affordable level, weighted toward the mage's best schools
+aov_adv_ai_pick = {
+	if = {
+		limit = {
+			OR = {
+				aov_adv_magical_fortress_can_start = yes
+				aov_adv_summon_extraplanars_can_start = yes
+				aov_adv_orb_of_omniscience_can_start = yes
+				aov_adv_enchanted_artifact_can_start = yes
+				aov_adv_battlemage_academy_can_start = yes
+				aov_adv_mirror_image_can_start = yes
+				aov_adv_lichdom_can_start = yes
+				aov_adv_homunculus_can_start = yes
+			}
+		}
+		random_list = {
+			10 = {
+				trigger = {
+					aov_adv_magical_fortress_can_start = yes
+				}
+				modifier = {
+					add = {
+						value = aov_school_abjuration_level
+						multiply = 10
+					}
+				}
+				aov_adv_magical_fortress_start = yes
+			}
+			10 = {
+				trigger = {
+					aov_adv_summon_extraplanars_can_start = yes
+				}
+				modifier = {
+					add = {
+						value = aov_school_conjuration_level
+						multiply = 10
+					}
+				}
+				aov_adv_summon_extraplanars_start = yes
+			}
+			10 = {
+				trigger = {
+					aov_adv_orb_of_omniscience_can_start = yes
+				}
+				modifier = {
+					add = {
+						value = aov_school_divination_level
+						multiply = 10
+					}
+				}
+				aov_adv_orb_of_omniscience_start = yes
+			}
+			10 = {
+				trigger = {
+					aov_adv_enchanted_artifact_can_start = yes
+				}
+				modifier = {
+					add = {
+						value = aov_school_enchantment_level
+						multiply = 10
+					}
+				}
+				aov_adv_enchanted_artifact_start = yes
+			}
+			10 = {
+				trigger = {
+					aov_adv_battlemage_academy_can_start = yes
+				}
+				modifier = {
+					add = {
+						value = aov_school_evocation_level
+						multiply = 10
+					}
+				}
+				aov_adv_battlemage_academy_start = yes
+			}
+			10 = {
+				trigger = {
+					aov_adv_mirror_image_can_start = yes
+				}
+				modifier = {
+					add = {
+						value = aov_school_illusion_level
+						multiply = 10
+					}
+				}
+				aov_adv_mirror_image_start = yes
+			}
+			10 = {
+				trigger = {
+					aov_adv_lichdom_can_start = yes
+					OR = {
+						has_trait = forbidden_magic_practitioner
+						aov_dark_magic_risky = no
+					}
+				}
+				modifier = {
+					add = {
+						value = aov_school_necromancy_level
+						multiply = 10
+					}
+				}
+				aov_adv_lichdom_start = yes
+			}
+			10 = {
+				trigger = {
+					aov_adv_homunculus_can_start = yes
+				}
+				modifier = {
+					add = {
+						value = aov_school_transmutation_level
+						multiply = 10
+					}
+				}
+				aov_adv_homunculus_start = yes
+			}
+		}
+	}
+}
+
 # Quarterly (common/on_action/aov_advancement_on_actions.txt): three months of progress
 aov_adv_quarterly = {
 	if = {

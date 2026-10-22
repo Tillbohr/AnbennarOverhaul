@@ -4,7 +4,8 @@
 2. Run `python -I tools/build_rie_dwarves.py` first (the next two import its output), then `python -I tools/build_holdings_override.py` and `python -I tools/build_holds.py` and `python -I tools/build_governments_override.py` and `python -I tools/build_hud_override.py` and `python -I tools/build_lifestyle_override.py` and `python -I tools/build_county_view_override.py`, and `python -I tools/build_map_graphics.py`, and `python -I tools/build_holding_models.py` (the culture files are whole-file overrides of Anbennar's) and `python -I tools/build_portraits.py` (the gene files are whole-file overrides of Anbennar's) and `python -I tools/build_rie_courts.py` (Anbennar's scripted illustrations and court scene cultures are whole-file overrides) and `python -I tools/build_monuments.py` (the monument overrides copy Anbennar's current definitions; it errors naming any monument key Anbennar no longer defines); and `python -I tools/build_racial_levies.py` (new Anbennar levy sources; it errors on a `levy_size` in a folder it does not know); and `python -I tools/build_knight_icons.py` (its interface files are whole-file overrides of the game's and Anbennar's); then check that the Deepwoods grove counties and baronies still exist (their arms and names are hand-maintained, see `deepwoods-groves.md`). The `map_data/` height files are whole-file overrides of Anbennar's, regenerated from its new heightmap by `build_map_graphics.py`.
 3. Run tiger and the tool tests (below) and fix anything that references renamed Anbennar content. The tests fail if
    Anbennar renames `anb_enhance_ability_interaction` or adds another way to start its Enhance Ability scheme (removed
-   from the game; see `EnhanceAbilityRemovedTests`).
+   from the game; see `EnhanceAbilityRemovedTests`). If Anbennar changes the `lich` trait's `opposites`, copy them into
+   `aov_adv_can_become_lich` (`common/scripted_triggers/aov_advancement_conditions.txt`; Lichdom level 3).
 4. Re-copy Anbennar's `title_revocation_standard_can_pick_title_trigger` (`common/scripted_triggers/00_interaction_triggers.txt`)
    into `common/scripted_triggers/zz_aov_interaction_triggers.txt`, keeping the `# Anbennar Overhaul` faction-title exclusion.
 5. Re-copy Anbennar's `building_requirement_castle_city_church` and
@@ -47,6 +48,7 @@ Rerun `python -I tools/build_rie_dwarves.py`, then `build_holds.py` and `build_h
 | Run tool tests | `python -I -m unittest discover -s tools/tests` |
 | Rebuild inventions | `python -I tools/build_inventions.py` (icons are committed; nothing is read from EU4) |
 | Rebuild spells | `python -I tools/build_spells.py` (art is committed; nothing is read from EU4) |
+| Rebuild magic advancements | `python -I tools/build_advancements.py` (art is committed; nothing is read from EU4) |
 | Rebuild map graphics | `python -I tools/build_map_graphics.py` (needs Realms in Exile installed) |
 | Rebuild holding models | `python -I tools/build_holding_models.py` (needs Realms in Exile installed) |
 | Rebuild RiE portraits | `python -I tools/build_portraits.py` (needs Realms in Exile installed; the clothing keys in the culture files come from `build_holding_models.py`) |

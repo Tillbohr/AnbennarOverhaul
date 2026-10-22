@@ -229,13 +229,35 @@ class GeneratedTests(unittest.TestCase):
         defined = set(re.findall(r"^ (aov_adv_[a-z_0-9]+):", FILES[LOC], re.M))
         script_names = {"aov_adv_eligible", "aov_adv_is_committed", "aov_adv_working_on", "aov_adv_abandon",
                         "aov_adv_quarterly", "aov_adv_committed", "aov_adv_working_level", "aov_adv_progress",
-                        "aov_adv_progress_percent", "aov_adv_months_needed", "aov_adv_months_left"}
+                        "aov_adv_progress_percent", "aov_adv_months_needed", "aov_adv_months_left",
+                        "aov_adv_ai_pick", "aov_adv_ai_yearly"}
         requires = {t for a in ADVS for ts in a["requires"].values() for t in ts}
         self.assertEqual(sorted(used - defined - script_names - requires), [])
         for k in ba.ADV_OF_SCHOOL.values():
             for key in (f"aov_adv_{k}", f"aov_adv_{k}_desc", *(f"aov_adv_{k}_{n}" for n in (1, 2, 3)),
                         *(f"aov_adv_{k}_{n}_desc" for n in (1, 2, 3))):
                 self.assertIn(key, defined)
+
+
+class AiTests(unittest.TestCase):
+    def test_ai_pick_uses_can_start(self):
+        pick = block(FILES[EFF], "aov_adv_ai_pick")
+        options = pick.split("\t\t\t10 = {")[1:]
+        self.assertEqual(len(options), 8)
+        for k in ba.ADV_OF_SCHOOL.values():
+            option = next(o for o in options if f"aov_adv_{k}_start = yes" in o)
+            self.assertLess(option.index(f"aov_adv_{k}_can_start = yes"), option.index("modifier = {"))
+
+    def test_ai_prefers_its_best_schools(self):
+        pick = block(FILES[EFF], "aov_adv_ai_pick")
+        for c in ba.SCHOOLS:
+            self.assertIn(f"value = aov_school_{c}_level", pick)
+
+    def test_ai_skips_lichdom_unless_dark(self):
+        pick = block(FILES[EFF], "aov_adv_ai_pick")
+        lich = pick[pick.index("aov_adv_lichdom_can_start"):pick.index("aov_adv_lichdom_start")]
+        self.assertIn("has_trait = forbidden_magic_practitioner", lich)
+        self.assertIn("aov_dark_magic_risky = no", lich)
 
 
 class ArtTests(unittest.TestCase):

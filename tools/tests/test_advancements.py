@@ -434,6 +434,17 @@ class HomunculusTests(unittest.TestCase):
         self.assertIn("development_growth_factor = ", labour)
 
 
+class AiTests(unittest.TestCase):
+    def test_ai_pick_only_ai_uncommitted(self):
+        oa = read(ON_ACTIONS)
+        self.assertIn("aov_adv_ai_yearly", block(oa, "yearly_playable_pulse"))
+        y = block(oa, "aov_adv_ai_yearly")
+        for line in ("is_ai = yes", "aov_adv_eligible = yes", "NOT = { aov_adv_is_committed = yes }",
+                     "chance = aov_adv_ai_chance", "aov_adv_ai_pick = yes"):
+            self.assertIn(line, y)
+        self.assertRegex(read(TUNING), r"(?m)^aov_adv_ai_chance = \d+")
+
+
 class WindowTests(unittest.TestCase):
     def window(self):
         return read("gui/aov_window_magic.gui")

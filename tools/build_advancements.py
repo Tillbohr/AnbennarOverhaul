@@ -159,6 +159,19 @@ def effects(advs: list) -> str:
     dispatch = "".join(
         f"\t\t\t\t{'if' if i == 0 else 'else_if'} = {{\n\t\t\t\t\tlimit = {{ aov_adv_working_on = {{ KEY = {a['key']} }} }}\n"
         f"\t\t\t\t\taov_adv_{a['key']}_complete = yes\n\t\t\t\t}}\n" for i, a in enumerate(advs))
+    options = "".join(
+        # The AI keeps clear of Forbidden Magic Practitioner: no Lichdom where magic is illegal or shunned, unless
+        # already found out
+        f"\t\t10 = {{\n\t\t\ttrigger = {{\n\t\t\t\taov_adv_{a['key']}_can_start = yes\n"
+        + ("\t\t\t\tOR = {\n\t\t\t\t\thas_trait = forbidden_magic_practitioner\n\t\t\t\t\taov_dark_magic_risky = no\n\t\t\t\t}\n"
+           if a["school"] == "necromancy" else "")
+        + f"\t\t\t}}\n\t\t\tmodifier = {{\n\t\t\t\tadd = {{\n\t\t\t\t\tvalue = aov_school_{a['school']}_level\n"
+        f"\t\t\t\t\tmultiply = 10\n\t\t\t\t}}\n\t\t\t}}\n\t\t\taov_adv_{a['key']}_start = yes\n\t\t}}\n"
+        for a in advs)
+    guard = "".join(f"\t\t\t\taov_adv_{a['key']}_can_start = yes\n" for a in advs)
+    out.append("# AI (aov_adv_ai_yearly): start one affordable level, weighted toward the mage's best schools\n"
+               f"aov_adv_ai_pick = {{\n\tif = {{\n\t\tlimit = {{\n\t\t\tOR = {{\n{guard}\t\t\t}}\n\t\t}}\n"
+               f"\t\trandom_list = {{\n{indent(options, 1)}\t\t}}\n\t}}\n}}\n")
     out.append(
         "# Quarterly (common/on_action/aov_advancement_on_actions.txt): three months of progress\n"
         "aov_adv_quarterly = {\n\tif = {\n\t\tlimit = { aov_adv_is_committed = yes }\n"
