@@ -9,6 +9,7 @@ aov_adv_quarterly_pulse = {
 	trigger = { aov_is_mage = yes }
 	effect = {
 		aov_adv_quarterly = yes
+		aov_adv_lichdom_check = yes
 	}
 }
 

@@ -237,3 +237,19 @@ aov_mirror_image_3 = {
 	general_opinion = 10
 	owned_personal_scheme_success_chance_add = 10
 }
+
+##########
+# Necromancy: Lichdom
+##########
+
+aov_lichdom_crime = {
+	icon = learning_positive
+	learning = 2
+	dread_baseline_add = 5
+}
+
+# Artifact modifier on the phylactery
+aov_phylactery = {
+	icon = learning_positive
+	learning = 1
+}

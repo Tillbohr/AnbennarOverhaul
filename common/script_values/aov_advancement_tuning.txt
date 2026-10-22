@@ -115,3 +115,10 @@ aov_adv_mirror_image_cost_cut = {
 		value = 0.2
 	}
 }
+
+##########
+# Necromancy: Lichdom
+##########
+# aov_lichdom_crime: +2 Learning, +5 dread. Phylactery (aov_phylactery): +1 Learning. Level 3 grants Anbennar's lich
+# trait (immortal, +5 all skills, +10 prowess, +50 dread, -20 general opinion). Each level rolls for Forbidden Magic
+# Practitioner where magic is illegal or shunned (aov_dark_magic_roll).

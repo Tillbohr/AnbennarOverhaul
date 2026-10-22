@@ -427,16 +427,95 @@ aov_adv_mirror_image_3_effect = {
 	add_character_modifier = { modifier = aov_mirror_image_3 }
 }
 
+##########
+# Necromancy: Lichdom
+##########
+
+# Begin the Crime
 aov_adv_lichdom_1_effect = {
 	add_magic_lifestyle_xp = 100
+	add_character_modifier = { modifier = aov_lichdom_crime }
+	aov_dark_magic_roll = yes
 }
 
+# Craft the Phylactery (var:aov_adv_phylactery); losing it before the ritual drops Lichdom back to level 1
+# (aov_adv_lichdom_check)
 aov_adv_lichdom_2_effect = {
 	add_magic_lifestyle_xp = 100
+	save_scope_as = owner
+	set_artifact_rarity_famed = yes
+	create_artifact = {
+		name = aov_phylactery_name
+		description = aov_phylactery_desc
+		type = miscellaneous
+		visuals = necklace
+		wealth = scope:wealth
+		quality = scope:quality
+		history = {
+			type = created
+			actor = root
+			recipient = root
+			location = root.capital_province
+		}
+		modifier = aov_phylactery
+		save_scope_as = aov_phylactery
+		decaying = no
+	}
+	set_variable = { name = aov_adv_phylactery value = scope:aov_phylactery }
+	aov_dark_magic_roll = yes
 }
 
+# The Ritual: the player picks the prisoner (event aov_advancement.40). Without the phylactery or a prisoner it
+# fails: back to level 2, or to level 1 if the phylactery is gone
 aov_adv_lichdom_3_effect = {
 	add_magic_lifestyle_xp = 100
+	if = {
+		limit = {
+			aov_adv_owns_phylactery = yes
+			aov_adv_has_sacrifice = yes
+			aov_adv_can_become_lich = yes
+		}
+		trigger_event = aov_advancement.40
+	}
+	else = {
+		set_variable = { name = aov_adv_lichdom_lvl value = 2 }
+		custom_tooltip = aov_adv_lichdom_ritual_failed_tt
+		aov_adv_lichdom_check = yes
+	}
+}
+
+# VICTIM = the prisoner sacrificed
+aov_adv_lich_ritual = {
+	$VICTIM$ = {
+		death = {
+			death_reason = death_sacrificed_to_gods
+			killer = root
+		}
+	}
+	add_trait = lich
+	aov_dark_magic_roll = yes
+}
+
+# Quarterly (aov_adv_quarterly_pulse): a mage between the phylactery and the ritual who no longer holds the phylactery
+# falls back to level 1 and abandons the ritual
+aov_adv_lichdom_check = {
+	if = {
+		limit = {
+			NOT = { has_trait = lich }
+			aov_adv_lichdom_level = 2
+			aov_adv_owns_phylactery = no
+		}
+		set_variable = { name = aov_adv_lichdom_lvl value = 1 }
+		if = {
+			limit = { has_variable = aov_adv_phylactery }
+			remove_variable = aov_adv_phylactery
+		}
+		if = {
+			limit = { aov_adv_working_on = { KEY = lichdom } }
+			aov_adv_abandon = yes
+		}
+		trigger_event = aov_advancement.41
+	}
 }
 
 aov_adv_homunculus_1_effect = {

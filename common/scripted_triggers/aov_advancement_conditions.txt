@@ -20,16 +20,38 @@ aov_adv_owns_enchanted_artifact = {
 	}
 }
 
+# Lichdom: the mage holds the phylactery they crafted
 aov_adv_owns_phylactery = {
-	always = no
+	custom_tooltip = {
+		text = aov_adv_owns_phylactery_tt
+		exists = var:aov_adv_phylactery
+		var:aov_adv_phylactery = {
+			artifact_owner = { this = root }
+		}
+	}
 }
 
+# Lichdom level 3: a prisoner to sacrifice
 aov_adv_has_sacrifice = {
-	always = no
+	custom_tooltip = {
+		text = aov_adv_has_sacrifice_tt
+		any_prisoner = { count >= 1 }
+	}
 }
 
+# Lichdom level 3: nothing stops the lich trait being added (Anbennar's lich: opposites incapable vampire immortal
+# lycanthrope)
 aov_adv_can_become_lich = {
-	always = no
+	custom_tooltip = {
+		text = aov_adv_can_become_lich_tt
+		NOT = {
+			has_trait = lich
+			has_trait = incapable
+			has_trait = vampire
+			has_trait = immortal
+			has_trait = lycanthrope
+		}
+	}
 }
 
 ##########

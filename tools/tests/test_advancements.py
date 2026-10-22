@@ -359,6 +359,49 @@ class MirrorImageTests(unittest.TestCase):
         self.assertIn("aov_adv_mirror_image_level >= 3", block(read(TUNING), "aov_adv_mirror_image_cost_cut"))
 
 
+class LichdomTests(unittest.TestCase):
+    def test_level_3_conditions(self):
+        cond = read(CONDITIONS)
+        lich = block(cond, "aov_adv_can_become_lich")
+        for t in ("lich", "incapable", "vampire", "immortal", "lycanthrope"):
+            self.assertIn(f"has_trait = {t}", lich)
+        self.assertIn("any_prisoner = {", block(cond, "aov_adv_has_sacrifice"))
+
+    def test_phylactery_guarded(self):
+        own = block(read(CONDITIONS), "aov_adv_owns_phylactery")
+        self.assertLess(own.index("exists = var:aov_adv_phylactery"), own.index("var:aov_adv_phylactery = {"))
+        self.assertIn("artifact_owner = { this = root }", own)
+
+    def test_crime_rolls_dark_magic(self):
+        eff = level_effect("lichdom", 1)
+        self.assertIn("aov_dark_magic_roll = yes", eff)
+        self.assertIn("modifier = aov_lichdom_crime", eff)
+
+    def test_level_2_crafts_phylactery(self):
+        eff = level_effect("lichdom", 2)
+        self.assertIn("create_artifact = {", eff)
+        self.assertIn("decaying = no", eff)
+        self.assertIn("set_variable = { name = aov_adv_phylactery value = scope:aov_phylactery }", eff)
+
+    def test_ritual_grants_lich(self):
+        eff = level_effect("lichdom", 3)
+        self.assertIn("trigger_event = aov_advancement.40", eff)
+        ritual = block(read(LEVEL_EFFECTS), "aov_adv_lich_ritual")
+        self.assertIn("add_trait = lich", ritual)
+        self.assertIn("death = {", ritual)
+        ev = block(read(EVENTS), "aov_advancement.40")
+        self.assertIn("ordered_prisoner = {", ev)
+        self.assertIn("aov_adv_lich_ritual = { VICTIM = scope:aov_sacrifice_1 }", ev)
+
+    def test_lost_phylactery_resets_to_level_1(self):
+        check = block(read(LEVEL_EFFECTS), "aov_adv_lichdom_check")
+        self.assertIn("aov_adv_owns_phylactery = no", check)
+        self.assertIn("set_variable = { name = aov_adv_lichdom_lvl value = 1 }", check)
+        self.assertIn("aov_adv_abandon = yes", check)
+        self.assertIn("NOT = { has_trait = lich }", check)
+        self.assertIn("aov_adv_lichdom_check = yes", block(read(ON_ACTIONS), "aov_adv_quarterly_pulse"))
+
+
 class WindowTests(unittest.TestCase):
     def window(self):
         return read("gui/aov_window_magic.gui")

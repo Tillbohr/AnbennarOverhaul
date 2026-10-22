@@ -123,3 +123,67 @@ aov_advancement.50 = {
 		name = aov_advancement.50.a
 	}
 }
+
+# Lichdom level 3: choose the prisoner to sacrifice (the three oldest)
+aov_advancement.40 = {
+	type = character_event
+	title = aov_advancement.40.t
+	desc = aov_advancement.40.desc
+	theme = dread
+	left_portrait = root
+	right_portrait = scope:aov_sacrifice_1
+
+	immediate = {
+		ordered_prisoner = {
+			order_by = age
+			position = 0
+			save_scope_as = aov_sacrifice_1
+		}
+		ordered_prisoner = {
+			order_by = age
+			position = 1
+			save_scope_as = aov_sacrifice_2
+		}
+		ordered_prisoner = {
+			order_by = age
+			position = 2
+			save_scope_as = aov_sacrifice_3
+		}
+	}
+
+	option = {
+		name = aov_advancement.40.a
+		trigger = { exists = scope:aov_sacrifice_1 }
+		aov_adv_lich_ritual = { VICTIM = scope:aov_sacrifice_1 }
+	}
+	option = {
+		name = aov_advancement.40.a2
+		trigger = { exists = scope:aov_sacrifice_2 }
+		aov_adv_lich_ritual = { VICTIM = scope:aov_sacrifice_2 }
+	}
+	option = {
+		name = aov_advancement.40.a3
+		trigger = { exists = scope:aov_sacrifice_3 }
+		aov_adv_lich_ritual = { VICTIM = scope:aov_sacrifice_3 }
+	}
+
+	# The prisoners are gone: the ritual must wait
+	option = {
+		name = aov_advancement.40.b
+		trigger = { NOT = { exists = scope:aov_sacrifice_1 } }
+		set_variable = { name = aov_adv_lichdom_lvl value = 2 }
+	}
+}
+
+# Lichdom: the phylactery was lost before the ritual
+aov_advancement.41 = {
+	type = character_event
+	title = aov_advancement.41.t
+	desc = aov_advancement.41.desc
+	theme = dread
+	left_portrait = root
+
+	option = {
+		name = aov_advancement.41.a
+	}
+}
