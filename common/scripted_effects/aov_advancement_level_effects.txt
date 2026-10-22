@@ -2,16 +2,58 @@
 # (common/scripted_effects/aov_advancement_effects.txt, generated). Character scope (the mage).
 # Balance numbers: common/script_values/aov_advancement_tuning.txt
 
+##########
+# Abjuration: Magical Fortress
+##########
+
 aov_adv_magical_fortress_1_effect = {
 	add_magic_lifestyle_xp = 100
+	aov_adv_wards_refresh = yes
 }
 
 aov_adv_magical_fortress_2_effect = {
 	add_magic_lifestyle_xp = 100
+	aov_adv_wards_refresh = yes
 }
 
 aov_adv_magical_fortress_3_effect = {
 	add_magic_lifestyle_xp = 100
+	aov_adv_wards_refresh = yes
+}
+
+# Wards (common/modifiers/aov_advancement_modifiers.txt) on the counties the mage holds: the capital at level 1, the
+# whole domain from level 2. Re-laid yearly (aov_adv_wards_yearly); they lapse after aov_adv_ward_days when the mage
+# dies, loses the county or stops being a ruling mage.
+aov_adv_wards_refresh = {
+	every_held_county = {
+		remove_county_modifier = aov_ward_1
+		remove_county_modifier = aov_ward_3
+		remove_county_modifier = aov_ward_capital
+	}
+	if = {
+		limit = { aov_adv_magical_fortress_level = 1 }
+		capital_county = {
+			add_county_modifier = { modifier = aov_ward_1 days = aov_adv_ward_days }
+		}
+	}
+	else_if = {
+		limit = { aov_adv_magical_fortress_level = 2 }
+		every_held_county = {
+			add_county_modifier = { modifier = aov_ward_1 days = aov_adv_ward_days }
+		}
+		capital_county = {
+			add_county_modifier = { modifier = aov_ward_capital days = aov_adv_ward_days }
+		}
+	}
+	else_if = {
+		limit = { aov_adv_magical_fortress_level >= 3 }
+		every_held_county = {
+			add_county_modifier = { modifier = aov_ward_3 days = aov_adv_ward_days }
+		}
+		capital_county = {
+			add_county_modifier = { modifier = aov_ward_capital days = aov_adv_ward_days }
+		}
+	}
 }
 
 aov_adv_summon_extraplanars_1_effect = {

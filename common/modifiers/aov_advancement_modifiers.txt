@@ -1,0 +1,29 @@
+﻿# Anbennar Overhaul: magic advancement modifiers. Numbers mirror common/script_values/aov_advancement_tuning.txt.
+
+##########
+# Abjuration: Magical Fortress (county modifiers, aov_adv_wards_refresh)
+##########
+
+# Levels 1-2: the capital (1) or every domain county (2)
+aov_ward_1 = {
+	icon = county_modifier_control_positive
+	fort_level = 1
+	garrison_size = 0.25
+	hostile_raid_time = 0.25
+	development_growth_factor = 0.1
+}
+
+# Level 3: every domain county
+aov_ward_3 = {
+	icon = county_modifier_control_positive
+	fort_level = 2
+	garrison_size = 0.5
+	hostile_raid_time = 0.5
+	development_growth_factor = 0.2
+}
+
+# Levels 2-3: the capital
+aov_ward_capital = {
+	icon = county_modifier_control_positive
+	defender_holding_advantage = 5
+}

@@ -11,3 +11,18 @@ aov_adv_quarterly_pulse = {
 		aov_adv_quarterly = yes
 	}
 }
+
+yearly_playable_pulse = {
+	on_actions = { aov_adv_wards_yearly }
+}
+
+# Root = character. Magical Fortress: re-lay the wards (aov_advancement_level_effects.txt)
+aov_adv_wards_yearly = {
+	trigger = {
+		aov_adv_eligible = yes
+		aov_adv_magical_fortress_level >= 1
+	}
+	effect = {
+		aov_adv_wards_refresh = yes
+	}
+}

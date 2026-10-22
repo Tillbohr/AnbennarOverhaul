@@ -96,6 +96,46 @@ class InterlockTests(unittest.TestCase):
             self.assertIn(f"aov_advancement.1.desc.{key}", keys)
 
 
+def level_effect(key, n):
+    return block(read(LEVEL_EFFECTS), f"aov_adv_{key}_{n}_effect")
+
+
+class MagicalFortressTests(unittest.TestCase):
+    def test_levels_refresh_wards(self):
+        for n in (1, 2, 3):
+            self.assertIn("aov_adv_wards_refresh = yes", level_effect("magical_fortress", n))
+
+    def test_wards_refresh_yearly(self):
+        oa = read(ON_ACTIONS)
+        self.assertIn("aov_adv_wards_yearly", block(oa, "yearly_playable_pulse"))
+        y = block(oa, "aov_adv_wards_yearly")
+        self.assertIn("aov_adv_magical_fortress_level >= 1", y)
+        self.assertIn("aov_adv_eligible = yes", y)
+        self.assertIn("aov_adv_wards_refresh = yes", y)
+
+    def test_level_1_capital_only(self):
+        r = block(read(LEVEL_EFFECTS), "aov_adv_wards_refresh")
+        first = re.search(r"limit = \{ aov_adv_magical_fortress_level = 1 \}(.*?)\n\t\}", r, re.S).group(1)
+        self.assertIn("capital_county = {", first)
+        self.assertNotIn("every_held_county", first)
+
+    def test_wards_lapse(self):
+        r = block(read(LEVEL_EFFECTS), "aov_adv_wards_refresh")
+        adds = re.findall(r"add_county_modifier = \{[^}]*\}", r)
+        self.assertTrue(adds)
+        for a in adds:
+            self.assertIn("days = aov_adv_ward_days", a)
+
+    def test_ward_modifiers(self):
+        mods = read(MODIFIERS)
+        for m in ("aov_ward_1", "aov_ward_3"):
+            body = block(mods, m)
+            for key in ("development_growth_factor", "fort_level", "garrison_size", "hostile_raid_time"):
+                self.assertIn(key, body, m)
+        self.assertIn("defender_holding_advantage", block(mods, "aov_ward_capital"))
+        self.assertIn("aov_adv_ward_days", read(TUNING))
+
+
 class WindowTests(unittest.TestCase):
     def window(self):
         return read("gui/aov_window_magic.gui")

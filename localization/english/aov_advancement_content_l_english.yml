@@ -22,3 +22,11 @@
  aov_advancement.1.desc.mirror_image: "In every mirror of the palace, [ROOT.Char.GetFirstName] sees a face that is not quite a reflection."
  aov_advancement.1.desc.lichdom: "Another step taken on the dark road. There is no light behind, and only cold ahead."
  aov_advancement.1.desc.homunculus: "The alembic bubbles, and in the murk something small and patient opens its eyes."
+
+ # Magical Fortress
+ aov_ward_1: "Warded"
+ aov_ward_1_desc: "Wards woven into the stones of this county turn back besiegers and shelter the land within."
+ aov_ward_3: "Unbreakable Wards"
+ aov_ward_3_desc: "Wards of great power guard this county; its walls have never been stronger."
+ aov_ward_capital: "Warded Seat"
+ aov_ward_capital_desc: "The heart of the wards lies here, where they are strongest."

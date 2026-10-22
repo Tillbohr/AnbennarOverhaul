@@ -1,3 +1,13 @@
 ﻿# Anbennar Overhaul: magic advancement balance numbers (placeholders for the magic balance pass).
 # Costs and durations per level are in tools/data/advancements.py's generator (GOLD, MANA, YEARS).
 
+
+##########
+# Abjuration: Magical Fortress
+##########
+# Wards (aov_ward_1 / aov_ward_3 / aov_ward_capital in aov_advancement_modifiers.txt):
+#   levels 1-2: +1 fort level, +25% garrison, +25% hostile raid time, +10% development growth
+#   level 3:    +2 fort level, +50% garrison, +50% hostile raid time, +20% development growth
+#   capital (levels 2-3): +5 defender holding advantage
+# Days a ward lasts; re-laid yearly, so it lapses about a year after the mage loses it
+aov_adv_ward_days = 400
