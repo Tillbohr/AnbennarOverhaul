@@ -110,10 +110,15 @@ def triggers(advs: list) -> str:
         k, c = a["key"], a["school"]
         lvl = f"aov_adv_{k}_level"
         branches = []
+        # The engine rejects a trigger_else_if chain without a trigger_else: the last branch (2 levels done) is the
+        # trigger_else; with 3 done, AOV_ADV_REQ_NOT_DONE above already fails
         for done in (0, 1, 2):
             reqs = "".join(f"\t\t{t} = yes\n" for t in a["requires"].get(done + 1, []))
+            head = {0: f"trigger_if = {{\n\t\tlimit = {{ {lvl} = 0 }}\n",
+                    1: f"trigger_else_if = {{\n\t\tlimit = {{ {lvl} = 1 }}\n",
+                    2: "trigger_else = {\n"}[done]
             branches.append(
-                f"\t{'trigger_if' if done == 0 else 'trigger_else_if'} = {{\n\t\tlimit = {{ {lvl} = {done} }}\n"
+                f"\t{head}"
                 f"\t\tcustom_tooltip = {{\n\t\t\ttext = AOV_SPELL_REQ_{c.upper()}_{done + 1}\n"
                 f"\t\t\taov_school_level_at_least = {{ SCHOOL = {c} LEVEL = {done + 1} }}\n\t\t}}\n{reqs}\t}}\n")
         out.append(

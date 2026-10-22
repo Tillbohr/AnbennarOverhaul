@@ -111,8 +111,12 @@ def block(text, name):
 
 
 def branch(trigger_body, level):
-    """The trigger_if / trigger_else_if body that applies when the advancement has `level` levels done."""
-    m = re.search(rf"limit = \{{ aov_adv_\w+_level = {level} \}}\n(.*?)\n\t\}}", trigger_body, re.S)
+    """The trigger_if / trigger_else_if / trigger_else body that applies when the advancement has `level` levels done
+    (the last branch, for level 2, is the trigger_else)."""
+    if level == 2:
+        m = re.search(r"\ttrigger_else = \{\n(.*?)\n\t\}", trigger_body, re.S)
+    else:
+        m = re.search(rf"limit = \{{ aov_adv_\w+_level = {level} \}}\n(.*?)\n\t\}}", trigger_body, re.S)
     assert m, level
     return m.group(1)
 
@@ -146,6 +150,13 @@ class GeneratedTests(unittest.TestCase):
         t = block(FILES[TRIG], "aov_adv_lichdom_can_start")
         for done in (0, 1, 2):
             self.assertIn(f"aov_school_level_at_least = {{ SCHOOL = necromancy LEVEL = {done + 1} }}", branch(t, done))
+
+    def test_trigger_else_if_chain_ends_in_trigger_else(self):
+        """The engine rejects a trigger_else_if with no trigger_else (error.log: 'trigger_else_if with no trigger_else')."""
+        for k in ba.ADV_OF_SCHOOL.values():
+            t = block(FILES[TRIG], f"aov_adv_{k}_can_start")
+            self.assertIn("\ttrigger_else = {", t, k)
+            self.assertLess(t.rindex("trigger_else_if"), t.index("\ttrigger_else = {"), k)
 
     def test_requires_triggers_in_their_level(self):
         t = block(FILES[TRIG], "aov_adv_lichdom_can_start")

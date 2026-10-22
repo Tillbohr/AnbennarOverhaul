@@ -32,9 +32,6 @@ aov_host_angels = {
 	stack = 100
 	ai_quality = { value = culture_ai_weight_heavy_infantry }
 
-	illustration = {
-		reference = heavy_infantry
-	}
 }
 
 aov_host_eldritch = {
@@ -64,9 +61,6 @@ aov_host_eldritch = {
 	stack = 50
 	ai_quality = { value = culture_ai_weight_heavy_cavalry }
 
-	illustration = {
-		reference = heavy_cavalry
-	}
 }
 
 aov_host_devils = {
@@ -96,9 +90,6 @@ aov_host_devils = {
 	stack = 100
 	ai_quality = { value = culture_ai_weight_archers }
 
-	illustration = {
-		reference = archers
-	}
 }
 
 # Battlemage Academy (Evocation advancement): ranged evokers. Tier 2 academies recruit aov_battlemages, tier 3 the
@@ -130,9 +121,6 @@ aov_battlemages = {
 	stack = 100
 	ai_quality = { value = culture_ai_weight_archers }
 
-	illustration = {
-		reference = archers
-	}
 }
 
 aov_battlemages_3 = {
@@ -161,7 +149,4 @@ aov_battlemages_3 = {
 	stack = 100
 	ai_quality = { value = culture_ai_weight_archers }
 
-	illustration = {
-		reference = archers
-	}
 }

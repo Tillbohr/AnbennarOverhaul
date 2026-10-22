@@ -45,8 +45,7 @@ aov_adv_magical_fortress_can_start = {
 			aov_school_level_at_least = { SCHOOL = abjuration LEVEL = 2 }
 		}
 	}
-	trigger_else_if = {
-		limit = { aov_adv_magical_fortress_level = 2 }
+	trigger_else = {
 		custom_tooltip = {
 			text = AOV_SPELL_REQ_ABJURATION_3
 			aov_school_level_at_least = { SCHOOL = abjuration LEVEL = 3 }
@@ -89,8 +88,7 @@ aov_adv_summon_extraplanars_can_start = {
 			aov_school_level_at_least = { SCHOOL = conjuration LEVEL = 2 }
 		}
 	}
-	trigger_else_if = {
-		limit = { aov_adv_summon_extraplanars_level = 2 }
+	trigger_else = {
 		custom_tooltip = {
 			text = AOV_SPELL_REQ_CONJURATION_3
 			aov_school_level_at_least = { SCHOOL = conjuration LEVEL = 3 }
@@ -134,8 +132,7 @@ aov_adv_orb_of_omniscience_can_start = {
 		}
 		aov_adv_owns_orb = yes
 	}
-	trigger_else_if = {
-		limit = { aov_adv_orb_of_omniscience_level = 2 }
+	trigger_else = {
 		custom_tooltip = {
 			text = AOV_SPELL_REQ_DIVINATION_3
 			aov_school_level_at_least = { SCHOOL = divination LEVEL = 3 }
@@ -181,8 +178,7 @@ aov_adv_enchanted_artifact_can_start = {
 		}
 		aov_adv_owns_enchanted_artifact = yes
 	}
-	trigger_else_if = {
-		limit = { aov_adv_enchanted_artifact_level = 2 }
+	trigger_else = {
 		custom_tooltip = {
 			text = AOV_SPELL_REQ_ENCHANTMENT_3
 			aov_school_level_at_least = { SCHOOL = enchantment LEVEL = 3 }
@@ -226,8 +222,7 @@ aov_adv_battlemage_academy_can_start = {
 			aov_school_level_at_least = { SCHOOL = evocation LEVEL = 2 }
 		}
 	}
-	trigger_else_if = {
-		limit = { aov_adv_battlemage_academy_level = 2 }
+	trigger_else = {
 		custom_tooltip = {
 			text = AOV_SPELL_REQ_EVOCATION_3
 			aov_school_level_at_least = { SCHOOL = evocation LEVEL = 3 }
@@ -270,8 +265,7 @@ aov_adv_mirror_image_can_start = {
 			aov_school_level_at_least = { SCHOOL = illusion LEVEL = 2 }
 		}
 	}
-	trigger_else_if = {
-		limit = { aov_adv_mirror_image_level = 2 }
+	trigger_else = {
 		custom_tooltip = {
 			text = AOV_SPELL_REQ_ILLUSION_3
 			aov_school_level_at_least = { SCHOOL = illusion LEVEL = 3 }
@@ -314,8 +308,7 @@ aov_adv_lichdom_can_start = {
 			aov_school_level_at_least = { SCHOOL = necromancy LEVEL = 2 }
 		}
 	}
-	trigger_else_if = {
-		limit = { aov_adv_lichdom_level = 2 }
+	trigger_else = {
 		custom_tooltip = {
 			text = AOV_SPELL_REQ_NECROMANCY_3
 			aov_school_level_at_least = { SCHOOL = necromancy LEVEL = 3 }
@@ -361,8 +354,7 @@ aov_adv_homunculus_can_start = {
 			aov_school_level_at_least = { SCHOOL = transmutation LEVEL = 2 }
 		}
 	}
-	trigger_else_if = {
-		limit = { aov_adv_homunculus_level = 2 }
+	trigger_else = {
 		custom_tooltip = {
 			text = AOV_SPELL_REQ_TRANSMUTATION_3
 			aov_school_level_at_least = { SCHOOL = transmutation LEVEL = 3 }

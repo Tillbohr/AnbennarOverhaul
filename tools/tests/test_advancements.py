@@ -229,7 +229,7 @@ class OrbOfOmniscienceTests(unittest.TestCase):
         self.assertIn("aov_adv_orb_of_omniscience_level >= 3", block(read(TUNING), "aov_adv_orb_spell_years_mult"))
 
 
-KINDS = {"weapon": "sword", "armor": "armor_plate", "crown": "helmet", "regalia": "regalia", "trinket": "miscellaneous"}
+KINDS = {"weapon": "sword", "armor": "armor_plate", "crown": "helmet", "regalia": "regalia_simple", "trinket": "miscellaneous"}
 
 
 class EnchantedArtifactTests(unittest.TestCase):
@@ -252,6 +252,12 @@ class EnchantedArtifactTests(unittest.TestCase):
         self.assertEqual(ev.count("\toption = {"), 5)
         for kind in KINDS:
             self.assertIn(f"aov_adv_enchanted_create_{kind} = yes", ev)
+
+    def test_regalia_needs_no_missing_features(self):
+        """Anbennar comments out every regalia_clothes feature, which the 'regalia' type requires (error.log: create_artifact
+        'Failed to pick feature for group regalia_clothes'); 'regalia_simple' has the same slot and no required features."""
+        body = block(read(LEVEL_EFFECTS), "aov_adv_enchanted_create_regalia")
+        self.assertIn("type = regalia_simple", body)
 
     def test_creation_per_kind(self):
         eff = read(LEVEL_EFFECTS)
@@ -429,6 +435,14 @@ class LichdomTests(unittest.TestCase):
         self.assertIn("ordered_prisoner = {", ev)
         self.assertIn("aov_adv_lich_ritual = { VICTIM = scope:aov_sacrifice_1 }", ev)
 
+    def test_sacrifice_choices_are_distinct_prisoners(self):
+        """ordered_prisoner with a position past the list caps at the last prisoner (error.log), so the same prisoner
+        filled several options: positions 1 and 2 are only taken when there are that many prisoners."""
+        ev = block(read(EVENTS), "aov_advancement.40")
+        for pos, count in ((1, 2), (2, 3)):
+            m = re.search(rf"limit = \{{ any_prisoner = \{{ count >= {count} \}} \}}\s*ordered_prisoner = \{{\s*order_by = age\s*position = {pos}", ev)
+            self.assertTrue(m, pos)
+
     def test_lost_phylactery_resets_to_level_1(self):
         check = block(read(LEVEL_EFFECTS), "aov_adv_lichdom_check")
         self.assertIn("aov_adv_owns_phylactery = no", check)
@@ -489,6 +503,8 @@ class MaaIconTests(unittest.TestCase):
                     "aov_host_devils": "bowmen", "aov_battlemages": "bowmen", "aov_battlemages_3": "bowmen"}
         for key, icon in expected.items():
             self.assertIn(f"\ticon = {icon}\n", block(maa, key) + "\n", key)
+            # With both, the engine ignores icon (error.log: "Found both 'illustration' and 'icon' properties")
+            self.assertNotIn("illustration", block(maa, key), key)
 
 
 FAILED = "save_scope_value_as = { name = aov_adv_failed value = yes }"

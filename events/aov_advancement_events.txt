@@ -133,21 +133,28 @@ aov_advancement.40 = {
 	left_portrait = root
 	right_portrait = scope:aov_sacrifice_1
 
+	# A position past the end of the list caps at the last prisoner, so later positions need that many prisoners
 	immediate = {
 		ordered_prisoner = {
 			order_by = age
 			position = 0
 			save_scope_as = aov_sacrifice_1
 		}
-		ordered_prisoner = {
-			order_by = age
-			position = 1
-			save_scope_as = aov_sacrifice_2
+		if = {
+			limit = { any_prisoner = { count >= 2 } }
+			ordered_prisoner = {
+				order_by = age
+				position = 1
+				save_scope_as = aov_sacrifice_2
+			}
 		}
-		ordered_prisoner = {
-			order_by = age
-			position = 2
-			save_scope_as = aov_sacrifice_3
+		if = {
+			limit = { any_prisoner = { count >= 3 } }
+			ordered_prisoner = {
+				order_by = age
+				position = 2
+				save_scope_as = aov_sacrifice_3
+			}
 		}
 	}
 
