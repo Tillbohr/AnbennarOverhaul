@@ -187,6 +187,16 @@ def sguis(advs: list) -> str:
 
 ROOT = "GuiScope.SetRoot( GetPlayer.MakeScope ).End"
 ART_DIR = "gfx/interface/icons/aov_magic"
+# Committed art the pages name: EU4 Anbennar's magic-project plate and progress bar (gfx/interface/custom_gui/magic),
+# imported once with tools/eu4_import.py; the level strip and school icons come with the spells (build_spells.py)
+ART = ["project_button.dds", "project_progress_empty.dds", "project_progress_full.dds", "levels_strip.dds"]
+ART += [f"school_{s}.dds" for s in SCHOOLS]
+
+
+def check_art(root: Path) -> None:
+    missing = [f"{ART_DIR}/{n}" for n in ART if not (root / ART_DIR / n).is_file()]
+    if missing:
+        raise GeneratorError(f"advancement art missing: {', '.join(missing)}")
 
 
 def sgref(name: str, call: str) -> str:
@@ -232,17 +242,21 @@ def page(a) -> str:
     not_done = level_is(k, "LessThan", 3)
     start_row = (
         f'hbox = {{\n\tvisible = "[And( {not_done}, Not( {working} ) )]"\n\tlayoutpolicy_horizontal = expanding\n\tspacing = 8\n\n'
-        f'\tbutton_standard = {{\n\t\tsize = {{ 140 32 }}\n\t\ttext = "AOV_ADV_START"\n'
-        f'\t\tenabled = "[{sgref(start, "IsValid")}]"\n\t\ttooltip = "[{sgref(start, "BuildTooltip")}]"\n'
-        f'\t\tonclick = "[{sgref(start, "Execute")}]"\n\t}}\n\n'
+        f'\twidget = {{\n\t\tsize = {{ 232 52 }}\n\n'
+        f'\t\ticon = {{\n\t\t\tsize = {{ 232 52 }}\n\t\t\ttexture = "{ART_DIR}/project_button.dds"\n\t\t}}\n\n'
+        f'\t\tbutton_standard = {{\n\t\t\tparentanchor = center\n\t\t\tsize = {{ 140 32 }}\n\t\t\ttext = "AOV_ADV_START"\n'
+        f'\t\t\tenabled = "[{sgref(start, "IsValid")}]"\n\t\t\ttooltip = "[{sgref(start, "BuildTooltip")}]"\n'
+        f'\t\t\tonclick = "[{sgref(start, "Execute")}]"\n\t\t}}\n\t}}\n\n'
         + indent(text(f"aov_adv_{k}_cost"), 1)
         + "\texpand = {}\n}\n"
         + text("AOV_ADV_ENDS_STUDY", f'\tvisible = "[And( {not_done}, GetPlayer.MakeScope.Var( \'aov_studying\' ).IsSet )]"\n'
                '\tdefault_format = "#weak"\n'))
     progress_row = (
         f'hbox = {{\n\tvisible = "[{working}]"\n\tlayoutpolicy_horizontal = expanding\n\tspacing = 8\n\n'
-        f"\tprogressbar_standard = {{\n\t\tsize = {{ 200 14 }}\n\t\tmin = 0\n\t\tmax = 100\n"
-        f"\t\tvalue = \"[FixedPointToFloat( GetPlayer.MakeScope.ScriptValue( 'aov_adv_progress_percent' ) )]\"\n\t}}\n\n"
+        f"\tprogressbar_standard = {{\n\t\tsize = {{ 200 11 }}\n\t\tmin = 0\n\t\tmax = 100\n"
+        f"\t\tvalue = \"[FixedPointToFloat( GetPlayer.MakeScope.ScriptValue( 'aov_adv_progress_percent' ) )]\"\n"
+        f'\t\tprogresstexture = "{ART_DIR}/project_progress_full.dds"\n'
+        f'\t\tnoprogresstexture = "{ART_DIR}/project_progress_empty.dds"\n\t}}\n\n'
         + indent(text("AOV_ADV_PROGRESS"), 1)
         + "\texpand = {}\n\n"
         f'\tbutton_standard = {{\n\t\tsize = {{ 110 32 }}\n\t\ttext = "AOV_ADV_ABANDON"\n'
@@ -302,6 +316,7 @@ def main() -> None:
     try:
         advs = load_advancements()
         validate(advs)
+        check_art(SUBMOD)
         files = render_all(advs)
         write_all(files, SUBMOD)
     except GeneratorError as e:

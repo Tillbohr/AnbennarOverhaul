@@ -7,6 +7,7 @@ import copy
 import importlib.util
 import re
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -235,6 +236,21 @@ class GeneratedTests(unittest.TestCase):
             for key in (f"aov_adv_{k}", f"aov_adv_{k}_desc", *(f"aov_adv_{k}_{n}" for n in (1, 2, 3)),
                         *(f"aov_adv_{k}_{n}_desc" for n in (1, 2, 3))):
                 self.assertIn(key, defined)
+
+
+class ArtTests(unittest.TestCase):
+    def test_committed_art_exists(self):
+        ba.check_art(MOD)
+
+    def test_missing_art_stops_the_build(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaises(GeneratorError):
+                ba.check_art(Path(tmp))
+
+    def test_gui_uses_project_art(self):
+        g = FILES[GUI]
+        self.assertEqual(g.count(f'{ba.ART_DIR}/project_progress_full.dds'), 8)
+        self.assertEqual(g.count(f'{ba.ART_DIR}/project_button.dds'), 8)
 
 
 class FreshnessTests(unittest.TestCase):

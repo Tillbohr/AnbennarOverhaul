@@ -129,12 +129,22 @@ types AovAdvancements
 			layoutpolicy_horizontal = expanding
 			spacing = 8
 
-			button_standard = {
-				size = { 140 32 }
-				text = "AOV_ADV_START"
-				enabled = "[GetScriptedGui('aov_adv_magical_fortress_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_adv_magical_fortress_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_adv_magical_fortress_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			widget = {
+				size = { 232 52 }
+
+				icon = {
+					size = { 232 52 }
+					texture = "gfx/interface/icons/aov_magic/project_button.dds"
+				}
+
+				button_standard = {
+					parentanchor = center
+					size = { 140 32 }
+					text = "AOV_ADV_START"
+					enabled = "[GetScriptedGui('aov_adv_magical_fortress_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					tooltip = "[GetScriptedGui('aov_adv_magical_fortress_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetScriptedGui('aov_adv_magical_fortress_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				}
 			}
 
 			text_single = {
@@ -156,10 +166,12 @@ types AovAdvancements
 			spacing = 8
 
 			progressbar_standard = {
-				size = { 200 14 }
+				size = { 200 11 }
 				min = 0
 				max = 100
 				value = "[FixedPointToFloat( GetPlayer.MakeScope.ScriptValue( 'aov_adv_progress_percent' ) )]"
+				progresstexture = "gfx/interface/icons/aov_magic/project_progress_full.dds"
+				noprogresstexture = "gfx/interface/icons/aov_magic/project_progress_empty.dds"
 			}
 
 			text_single = {
@@ -317,12 +329,22 @@ types AovAdvancements
 			layoutpolicy_horizontal = expanding
 			spacing = 8
 
-			button_standard = {
-				size = { 140 32 }
-				text = "AOV_ADV_START"
-				enabled = "[GetScriptedGui('aov_adv_summon_extraplanars_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_adv_summon_extraplanars_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_adv_summon_extraplanars_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			widget = {
+				size = { 232 52 }
+
+				icon = {
+					size = { 232 52 }
+					texture = "gfx/interface/icons/aov_magic/project_button.dds"
+				}
+
+				button_standard = {
+					parentanchor = center
+					size = { 140 32 }
+					text = "AOV_ADV_START"
+					enabled = "[GetScriptedGui('aov_adv_summon_extraplanars_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					tooltip = "[GetScriptedGui('aov_adv_summon_extraplanars_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetScriptedGui('aov_adv_summon_extraplanars_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				}
 			}
 
 			text_single = {
@@ -344,10 +366,12 @@ types AovAdvancements
 			spacing = 8
 
 			progressbar_standard = {
-				size = { 200 14 }
+				size = { 200 11 }
 				min = 0
 				max = 100
 				value = "[FixedPointToFloat( GetPlayer.MakeScope.ScriptValue( 'aov_adv_progress_percent' ) )]"
+				progresstexture = "gfx/interface/icons/aov_magic/project_progress_full.dds"
+				noprogresstexture = "gfx/interface/icons/aov_magic/project_progress_empty.dds"
 			}
 
 			text_single = {
@@ -505,12 +529,22 @@ types AovAdvancements
 			layoutpolicy_horizontal = expanding
 			spacing = 8
 
-			button_standard = {
-				size = { 140 32 }
-				text = "AOV_ADV_START"
-				enabled = "[GetScriptedGui('aov_adv_orb_of_omniscience_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_adv_orb_of_omniscience_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_adv_orb_of_omniscience_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			widget = {
+				size = { 232 52 }
+
+				icon = {
+					size = { 232 52 }
+					texture = "gfx/interface/icons/aov_magic/project_button.dds"
+				}
+
+				button_standard = {
+					parentanchor = center
+					size = { 140 32 }
+					text = "AOV_ADV_START"
+					enabled = "[GetScriptedGui('aov_adv_orb_of_omniscience_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					tooltip = "[GetScriptedGui('aov_adv_orb_of_omniscience_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetScriptedGui('aov_adv_orb_of_omniscience_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				}
 			}
 
 			text_single = {
@@ -532,10 +566,12 @@ types AovAdvancements
 			spacing = 8
 
 			progressbar_standard = {
-				size = { 200 14 }
+				size = { 200 11 }
 				min = 0
 				max = 100
 				value = "[FixedPointToFloat( GetPlayer.MakeScope.ScriptValue( 'aov_adv_progress_percent' ) )]"
+				progresstexture = "gfx/interface/icons/aov_magic/project_progress_full.dds"
+				noprogresstexture = "gfx/interface/icons/aov_magic/project_progress_empty.dds"
 			}
 
 			text_single = {
@@ -693,12 +729,22 @@ types AovAdvancements
 			layoutpolicy_horizontal = expanding
 			spacing = 8
 
-			button_standard = {
-				size = { 140 32 }
-				text = "AOV_ADV_START"
-				enabled = "[GetScriptedGui('aov_adv_enchanted_artifact_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_adv_enchanted_artifact_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_adv_enchanted_artifact_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			widget = {
+				size = { 232 52 }
+
+				icon = {
+					size = { 232 52 }
+					texture = "gfx/interface/icons/aov_magic/project_button.dds"
+				}
+
+				button_standard = {
+					parentanchor = center
+					size = { 140 32 }
+					text = "AOV_ADV_START"
+					enabled = "[GetScriptedGui('aov_adv_enchanted_artifact_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					tooltip = "[GetScriptedGui('aov_adv_enchanted_artifact_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetScriptedGui('aov_adv_enchanted_artifact_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				}
 			}
 
 			text_single = {
@@ -720,10 +766,12 @@ types AovAdvancements
 			spacing = 8
 
 			progressbar_standard = {
-				size = { 200 14 }
+				size = { 200 11 }
 				min = 0
 				max = 100
 				value = "[FixedPointToFloat( GetPlayer.MakeScope.ScriptValue( 'aov_adv_progress_percent' ) )]"
+				progresstexture = "gfx/interface/icons/aov_magic/project_progress_full.dds"
+				noprogresstexture = "gfx/interface/icons/aov_magic/project_progress_empty.dds"
 			}
 
 			text_single = {
@@ -881,12 +929,22 @@ types AovAdvancements
 			layoutpolicy_horizontal = expanding
 			spacing = 8
 
-			button_standard = {
-				size = { 140 32 }
-				text = "AOV_ADV_START"
-				enabled = "[GetScriptedGui('aov_adv_battlemage_academy_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_adv_battlemage_academy_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_adv_battlemage_academy_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			widget = {
+				size = { 232 52 }
+
+				icon = {
+					size = { 232 52 }
+					texture = "gfx/interface/icons/aov_magic/project_button.dds"
+				}
+
+				button_standard = {
+					parentanchor = center
+					size = { 140 32 }
+					text = "AOV_ADV_START"
+					enabled = "[GetScriptedGui('aov_adv_battlemage_academy_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					tooltip = "[GetScriptedGui('aov_adv_battlemage_academy_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetScriptedGui('aov_adv_battlemage_academy_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				}
 			}
 
 			text_single = {
@@ -908,10 +966,12 @@ types AovAdvancements
 			spacing = 8
 
 			progressbar_standard = {
-				size = { 200 14 }
+				size = { 200 11 }
 				min = 0
 				max = 100
 				value = "[FixedPointToFloat( GetPlayer.MakeScope.ScriptValue( 'aov_adv_progress_percent' ) )]"
+				progresstexture = "gfx/interface/icons/aov_magic/project_progress_full.dds"
+				noprogresstexture = "gfx/interface/icons/aov_magic/project_progress_empty.dds"
 			}
 
 			text_single = {
@@ -1069,12 +1129,22 @@ types AovAdvancements
 			layoutpolicy_horizontal = expanding
 			spacing = 8
 
-			button_standard = {
-				size = { 140 32 }
-				text = "AOV_ADV_START"
-				enabled = "[GetScriptedGui('aov_adv_mirror_image_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_adv_mirror_image_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_adv_mirror_image_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			widget = {
+				size = { 232 52 }
+
+				icon = {
+					size = { 232 52 }
+					texture = "gfx/interface/icons/aov_magic/project_button.dds"
+				}
+
+				button_standard = {
+					parentanchor = center
+					size = { 140 32 }
+					text = "AOV_ADV_START"
+					enabled = "[GetScriptedGui('aov_adv_mirror_image_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					tooltip = "[GetScriptedGui('aov_adv_mirror_image_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetScriptedGui('aov_adv_mirror_image_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				}
 			}
 
 			text_single = {
@@ -1096,10 +1166,12 @@ types AovAdvancements
 			spacing = 8
 
 			progressbar_standard = {
-				size = { 200 14 }
+				size = { 200 11 }
 				min = 0
 				max = 100
 				value = "[FixedPointToFloat( GetPlayer.MakeScope.ScriptValue( 'aov_adv_progress_percent' ) )]"
+				progresstexture = "gfx/interface/icons/aov_magic/project_progress_full.dds"
+				noprogresstexture = "gfx/interface/icons/aov_magic/project_progress_empty.dds"
 			}
 
 			text_single = {
@@ -1257,12 +1329,22 @@ types AovAdvancements
 			layoutpolicy_horizontal = expanding
 			spacing = 8
 
-			button_standard = {
-				size = { 140 32 }
-				text = "AOV_ADV_START"
-				enabled = "[GetScriptedGui('aov_adv_lichdom_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_adv_lichdom_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_adv_lichdom_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			widget = {
+				size = { 232 52 }
+
+				icon = {
+					size = { 232 52 }
+					texture = "gfx/interface/icons/aov_magic/project_button.dds"
+				}
+
+				button_standard = {
+					parentanchor = center
+					size = { 140 32 }
+					text = "AOV_ADV_START"
+					enabled = "[GetScriptedGui('aov_adv_lichdom_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					tooltip = "[GetScriptedGui('aov_adv_lichdom_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetScriptedGui('aov_adv_lichdom_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				}
 			}
 
 			text_single = {
@@ -1284,10 +1366,12 @@ types AovAdvancements
 			spacing = 8
 
 			progressbar_standard = {
-				size = { 200 14 }
+				size = { 200 11 }
 				min = 0
 				max = 100
 				value = "[FixedPointToFloat( GetPlayer.MakeScope.ScriptValue( 'aov_adv_progress_percent' ) )]"
+				progresstexture = "gfx/interface/icons/aov_magic/project_progress_full.dds"
+				noprogresstexture = "gfx/interface/icons/aov_magic/project_progress_empty.dds"
 			}
 
 			text_single = {
@@ -1445,12 +1529,22 @@ types AovAdvancements
 			layoutpolicy_horizontal = expanding
 			spacing = 8
 
-			button_standard = {
-				size = { 140 32 }
-				text = "AOV_ADV_START"
-				enabled = "[GetScriptedGui('aov_adv_homunculus_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_adv_homunculus_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_adv_homunculus_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			widget = {
+				size = { 232 52 }
+
+				icon = {
+					size = { 232 52 }
+					texture = "gfx/interface/icons/aov_magic/project_button.dds"
+				}
+
+				button_standard = {
+					parentanchor = center
+					size = { 140 32 }
+					text = "AOV_ADV_START"
+					enabled = "[GetScriptedGui('aov_adv_homunculus_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					tooltip = "[GetScriptedGui('aov_adv_homunculus_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					onclick = "[GetScriptedGui('aov_adv_homunculus_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				}
 			}
 
 			text_single = {
@@ -1472,10 +1566,12 @@ types AovAdvancements
 			spacing = 8
 
 			progressbar_standard = {
-				size = { 200 14 }
+				size = { 200 11 }
 				min = 0
 				max = 100
 				value = "[FixedPointToFloat( GetPlayer.MakeScope.ScriptValue( 'aov_adv_progress_percent' ) )]"
+				progresstexture = "gfx/interface/icons/aov_magic/project_progress_full.dds"
+				noprogresstexture = "gfx/interface/icons/aov_magic/project_progress_empty.dds"
 			}
 
 			text_single = {

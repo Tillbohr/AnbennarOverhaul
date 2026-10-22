@@ -96,5 +96,37 @@ class InterlockTests(unittest.TestCase):
             self.assertIn(f"aov_advancement.1.desc.{key}", keys)
 
 
+class WindowTests(unittest.TestCase):
+    def window(self):
+        return read("gui/aov_window_magic.gui")
+
+    def test_two_tabs_below_school_row(self):
+        w = self.window()
+        self.assertLess(w.index('name = "aov_magic_school_tabs"'), w.index("AOV_MAGIC_TAB_ADVANCEMENTS"))
+        self.assertIn("GetVariableSystem.Clear( 'aov_magic_tab' )", w)
+        self.assertIn("GetVariableSystem.Set( 'aov_magic_tab', 'spells' )", w)
+
+    def test_each_school_has_both_pages(self):
+        w = self.window()
+        for c in SCHOOLS:
+            self.assertIn(f"aov_advancement_{c} = {{", w)
+            self.assertIn(f"aov_magic_school_{c} = {{", w)
+
+    def test_pages_gated_by_tab(self):
+        w = self.window()
+        for c in SCHOOLS:
+            adv = re.search(rf"aov_advancement_{c} = \{{\n\s*visible = \"(.*?)\"", w).group(1)
+            spells = re.search(rf"aov_magic_school_{c} = \{{\n\s*visible = \"(.*?)\"", w).group(1)
+            self.assertIn("Not( GetVariableSystem.Exists( 'aov_magic_tab' ) )", adv)
+            self.assertIn("GetVariableSystem.HasValue( 'aov_magic_tab', 'spells' )", spells)
+
+    def test_study_not_at_top_level(self):
+        self.assertNotIn("AOV_MAGIC_STUDYING", self.window())
+
+    def test_balanced(self):
+        w = self.window()
+        self.assertEqual(w.count("{"), w.count("}"))
+
+
 if __name__ == "__main__":
     unittest.main()
