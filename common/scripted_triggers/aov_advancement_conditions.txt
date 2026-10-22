@@ -1,0 +1,22 @@
+﻿# Anbennar Overhaul: per-level start conditions named by tools/data/advancements.py (requires).
+# Character scope (the mage).
+
+aov_adv_can_craft_enchanted_artifact = {
+	always = no
+}
+
+aov_adv_owns_enchanted_artifact = {
+	always = no
+}
+
+aov_adv_owns_phylactery = {
+	always = no
+}
+
+aov_adv_has_sacrifice = {
+	always = no
+}
+
+aov_adv_can_become_lich = {
+	always = no
+}

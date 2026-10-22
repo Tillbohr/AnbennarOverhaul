@@ -257,6 +257,10 @@ aov_study_abjuration_sgui = {
 			text = AOV_STUDY_REQ_NOT_MASTERED
 			aov_school_abjuration_level < 3
 		}
+		custom_tooltip = {
+			text = AOV_ADV_REQ_NOT_COMMITTED
+			NOT = { aov_adv_is_committed = yes }
+		}
 	}
 	effect = { aov_study_choose = { SCHOOL = abjuration } }
 }
@@ -269,6 +273,10 @@ aov_study_conjuration_sgui = {
 		custom_tooltip = {
 			text = AOV_STUDY_REQ_NOT_MASTERED
 			aov_school_conjuration_level < 3
+		}
+		custom_tooltip = {
+			text = AOV_ADV_REQ_NOT_COMMITTED
+			NOT = { aov_adv_is_committed = yes }
 		}
 	}
 	effect = { aov_study_choose = { SCHOOL = conjuration } }
@@ -283,6 +291,10 @@ aov_study_divination_sgui = {
 			text = AOV_STUDY_REQ_NOT_MASTERED
 			aov_school_divination_level < 3
 		}
+		custom_tooltip = {
+			text = AOV_ADV_REQ_NOT_COMMITTED
+			NOT = { aov_adv_is_committed = yes }
+		}
 	}
 	effect = { aov_study_choose = { SCHOOL = divination } }
 }
@@ -295,6 +307,10 @@ aov_study_enchantment_sgui = {
 		custom_tooltip = {
 			text = AOV_STUDY_REQ_NOT_MASTERED
 			aov_school_enchantment_level < 3
+		}
+		custom_tooltip = {
+			text = AOV_ADV_REQ_NOT_COMMITTED
+			NOT = { aov_adv_is_committed = yes }
 		}
 	}
 	effect = { aov_study_choose = { SCHOOL = enchantment } }
@@ -309,6 +325,10 @@ aov_study_evocation_sgui = {
 			text = AOV_STUDY_REQ_NOT_MASTERED
 			aov_school_evocation_level < 3
 		}
+		custom_tooltip = {
+			text = AOV_ADV_REQ_NOT_COMMITTED
+			NOT = { aov_adv_is_committed = yes }
+		}
 	}
 	effect = { aov_study_choose = { SCHOOL = evocation } }
 }
@@ -321,6 +341,10 @@ aov_study_illusion_sgui = {
 		custom_tooltip = {
 			text = AOV_STUDY_REQ_NOT_MASTERED
 			aov_school_illusion_level < 3
+		}
+		custom_tooltip = {
+			text = AOV_ADV_REQ_NOT_COMMITTED
+			NOT = { aov_adv_is_committed = yes }
 		}
 	}
 	effect = { aov_study_choose = { SCHOOL = illusion } }
@@ -335,6 +359,10 @@ aov_study_necromancy_sgui = {
 			text = AOV_STUDY_REQ_NOT_MASTERED
 			aov_school_necromancy_level < 3
 		}
+		custom_tooltip = {
+			text = AOV_ADV_REQ_NOT_COMMITTED
+			NOT = { aov_adv_is_committed = yes }
+		}
 	}
 	effect = { aov_study_choose = { SCHOOL = necromancy } }
 }
@@ -347,6 +375,10 @@ aov_study_transmutation_sgui = {
 		custom_tooltip = {
 			text = AOV_STUDY_REQ_NOT_MASTERED
 			aov_school_transmutation_level < 3
+		}
+		custom_tooltip = {
+			text = AOV_ADV_REQ_NOT_COMMITTED
+			NOT = { aov_adv_is_committed = yes }
 		}
 	}
 	effect = { aov_study_choose = { SCHOOL = transmutation } }

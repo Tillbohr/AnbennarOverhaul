@@ -1,0 +1,3 @@
+﻿# Anbennar Overhaul: magic advancement balance numbers (placeholders for the magic balance pass).
+# Costs and durations per level are in tools/data/advancements.py's generator (GOLD, MANA, YEARS).
+

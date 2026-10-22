@@ -1,0 +1,13 @@
+﻿# Anbennar Overhaul: magic advancements on_actions, appended to vanilla on_actions.
+
+quarterly_playable_pulse = {
+	on_actions = { aov_adv_quarterly_pulse }
+}
+
+# Root = character. Three months of progress on the advancement in progress (aov_advancement_effects.txt, generated)
+aov_adv_quarterly_pulse = {
+	trigger = { aov_is_mage = yes }
+	effect = {
+		aov_adv_quarterly = yes
+	}
+}

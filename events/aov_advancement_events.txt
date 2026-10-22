@@ -1,0 +1,50 @@
+﻿namespace = aov_advancement
+
+# A level of an advancement completed (aov_adv_<key>_complete, generated): scope:aov_adv = flag:<key>,
+# scope:aov_adv_level = 1-3
+aov_advancement.1 = {
+	type = character_event
+	title = aov_advancement.1.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:aov_adv = flag:magical_fortress }
+				desc = aov_advancement.1.desc.magical_fortress
+			}
+			triggered_desc = {
+				trigger = { scope:aov_adv = flag:summon_extraplanars }
+				desc = aov_advancement.1.desc.summon_extraplanars
+			}
+			triggered_desc = {
+				trigger = { scope:aov_adv = flag:orb_of_omniscience }
+				desc = aov_advancement.1.desc.orb_of_omniscience
+			}
+			triggered_desc = {
+				trigger = { scope:aov_adv = flag:enchanted_artifact }
+				desc = aov_advancement.1.desc.enchanted_artifact
+			}
+			triggered_desc = {
+				trigger = { scope:aov_adv = flag:battlemage_academy }
+				desc = aov_advancement.1.desc.battlemage_academy
+			}
+			triggered_desc = {
+				trigger = { scope:aov_adv = flag:mirror_image }
+				desc = aov_advancement.1.desc.mirror_image
+			}
+			triggered_desc = {
+				trigger = { scope:aov_adv = flag:lichdom }
+				desc = aov_advancement.1.desc.lichdom
+			}
+			triggered_desc = {
+				trigger = { scope:aov_adv = flag:homunculus }
+				desc = aov_advancement.1.desc.homunculus
+			}
+		}
+	}
+	theme = learning
+	left_portrait = root
+
+	option = {
+		name = aov_advancement.1.a
+	}
+}

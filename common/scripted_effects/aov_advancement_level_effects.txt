@@ -1,0 +1,99 @@
+﻿# Anbennar Overhaul: magic advancement level effects, called by aov_adv_<key>_complete
+# (common/scripted_effects/aov_advancement_effects.txt, generated). Character scope (the mage).
+# Balance numbers: common/script_values/aov_advancement_tuning.txt
+
+aov_adv_magical_fortress_1_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_magical_fortress_2_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_magical_fortress_3_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_summon_extraplanars_1_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_summon_extraplanars_2_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_summon_extraplanars_3_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_orb_of_omniscience_1_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_orb_of_omniscience_2_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_orb_of_omniscience_3_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_enchanted_artifact_1_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_enchanted_artifact_2_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_enchanted_artifact_3_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_battlemage_academy_1_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_battlemage_academy_2_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_battlemage_academy_3_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_mirror_image_1_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_mirror_image_2_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_mirror_image_3_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_lichdom_1_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_lichdom_2_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_lichdom_3_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_homunculus_1_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_homunculus_2_effect = {
+	add_magic_lifestyle_xp = 100
+}
+
+aov_adv_homunculus_3_effect = {
+	add_magic_lifestyle_xp = 100
+}

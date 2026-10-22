@@ -414,9 +414,13 @@ aov_extraplanar_price = {
 aov_magic_ai_quarterly = {
 	if = {
 		limit = { is_ai = yes }
-		# Study the school that fits the best skill; once it is mastered, any unmastered school
+		# Study the school that fits the best skill; once it is mastered, any unmastered school. Not while committed
+		# to a magic advancement (which clears aov_studying)
 		if = {
-			limit = { NOT = { has_variable = aov_studying } }
+			limit = {
+				NOT = { has_variable = aov_studying }
+				NOT = { has_variable = aov_adv_committed }
+			}
 			if = {
 				limit = { diplomacy >= martial diplomacy >= stewardship diplomacy >= intrigue diplomacy >= learning }
 				aov_study_set = { SCHOOL = enchantment }

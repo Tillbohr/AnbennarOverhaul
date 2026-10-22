@@ -287,6 +287,8 @@ class GeneratedTests(unittest.TestCase):
         text = bs.sguis(SPELLS)
         for c in bs.SCHOOLS:
             self.assertIn(f"effect = {{ aov_study_choose = {{ SCHOOL = {c} }} }}", block(text, f"aov_study_{c}_sgui"))
+            # A mage committed to a magic advancement cannot study (build_advancements.py)
+            self.assertIn("text = AOV_ADV_REQ_NOT_COMMITTED", block(text, f"aov_study_{c}_sgui"))
         self.assertNotIn("aov_study_set", text)
 
     def test_gui_school_header_study_button(self):
