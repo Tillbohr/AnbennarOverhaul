@@ -19,7 +19,7 @@
  aov_adv_summon_extraplanars: "Summon Extraplanars"
  aov_adv_summon_extraplanars_desc: "A host from beyond the planes answers our call and marches under our banner."
  aov_adv_summon_extraplanars_1: "Call the Host"
- aov_adv_summon_extraplanars_1_desc: "Choose a host and unlock its men-at-arms: Host of the Shining City (heavy infantry), The Weird Ones (heavy cavalry) or Beings of Fire and Rage (archers)"
+ aov_adv_summon_extraplanars_1_desc: "Choose a host and unlock its men-at-arms, free to recruit, upgrade and maintain: Host of the Shining City (heavy infantry), The Weird Ones (heavy cavalry) or Beings of Fire and Rage (archers)"
  aov_adv_summon_extraplanars_1_tt: "#T $aov_adv_summon_extraplanars$, level 1: $aov_adv_summon_extraplanars_1$#!\n$aov_adv_summon_extraplanars_1_desc$"
  aov_adv_summon_extraplanars_2: "Bind the Host"
  aov_adv_summon_extraplanars_2_desc: "+15% damage for all men-at-arms of the host's troop type"

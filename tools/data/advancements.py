@@ -28,7 +28,7 @@ ADVANCEMENTS = [
          level("Unbreakable Wards", "Wards grow to +2 fort level, +50% garrison, raiders 50% slower and +20% development growth")]),
     adv("summon_extraplanars", "conjuration", "Summon Extraplanars",
         "A host from beyond the planes answers our call and marches under our banner.",
-        [level("Call the Host", "Choose a host and unlock its men-at-arms: Host of the Shining City (heavy infantry), The Weird Ones (heavy cavalry) or Beings of Fire and Rage (archers)"),
+        [level("Call the Host", "Choose a host and unlock its men-at-arms, free to recruit, upgrade and maintain: Host of the Shining City (heavy infantry), The Weird Ones (heavy cavalry) or Beings of Fire and Rage (archers)"),
          level("Bind the Host", "+15% damage for all men-at-arms of the host's troop type"),
          level("Host Eternal", "+15% toughness and +1 regiment size for all men-at-arms of the host's troop type")]),
     adv("orb_of_omniscience", "divination", "Orb of Omniscience",

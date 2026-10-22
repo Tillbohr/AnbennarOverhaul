@@ -15,7 +15,8 @@ aov_adv_ward_days = 400
 ##########
 # Conjuration: Summon Extraplanars
 ##########
-# Hosts (aov_advancement_maa_types.txt): vanilla armored_footmen / armored_horsemen / bowmen +25%
+# Hosts (aov_advancement_maa_types.txt): vanilla armored_footmen / armored_horsemen / bowmen +25%; no recruitment,
+# upgrade or maintenance cost
 # aov_host_<host>_2: +15% damage for the host's base type; aov_host_<host>_3: +15% toughness, +1 regiment size
 
 ##########

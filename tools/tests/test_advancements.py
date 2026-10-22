@@ -170,6 +170,15 @@ class SummonExtraplanarsTests(unittest.TestCase):
             self.assertIn("aov_adv_summon_extraplanars_level >= 1", body)
             self.assertIn(f"var:aov_adv_host = flag:{h}", body)
 
+    def test_hosts_are_free(self):
+        """Summoned hosts cost nothing to recruit, to upgrade (adding regiments uses buy_cost) or to maintain."""
+        maa = read(MAA)
+        for h in HOSTS:
+            body = block(maa, f"aov_host_{h}")
+            for line in ("buy_cost = { gold = 0 }", "low_maintenance_cost = { gold = 0 }",
+                         "high_maintenance_cost = { gold = 0 }", "provision_cost = 0"):
+                self.assertIn(line, body, h)
+
     def test_level_modifiers_use_base_type(self):
         mods = read(MODIFIERS)
         for h, base in HOSTS.items():
