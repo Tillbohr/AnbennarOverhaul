@@ -32,3 +32,12 @@ aov_spell_target_allowed = {
 		NOT = { has_character_modifier = aov_spell_field_of_forbiddance }
 	}
 }
+
+# Has one of the magic lifestyle's focuses (common/focuses/zz_aov_magic_focuses.txt), like vanilla's has_focus_learning
+aov_has_focus_magic = {
+	OR = {
+		has_focus = magic_arcane_study_focus
+		has_focus = magic_duelist_focus
+		has_focus = magic_mindweaving_focus
+	}
+}

@@ -263,3 +263,47 @@ class WiringTests(unittest.TestCase):
         b = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_mana_spend")
         self.assertIn("subtract = $AMOUNT$", b)
         self.assertIn("min = 0", b)
+
+
+GAME = Path("C:/Program Files (x86)/Steam/steamapps/common/Crusader Kings III/game")
+ALERTS = "common/important_actions/aov_magic_lifestyle_actions.txt"
+GENERIC = "common/important_actions/zz_aov_lifestyle_actions.txt"
+ALERT_ICON = "gfx/interface/icons/alerts/aov_action_lifestyle_magic.dds"
+
+
+class PerkAlertTests(unittest.TestCase):
+    """Unspent magic perks get their own HUD alert, like vanilla's per-lifestyle ones, instead of the generic arrows."""
+
+    def test_magic_focus_trigger_lists_every_magic_focus(self):
+        focuses = set(re.findall(r"^(magic_\w+_focus) = \{", read("common/focuses/zz_aov_magic_focuses.txt"), re.M))
+        self.assertEqual(focuses, {"magic_duelist_focus", "magic_arcane_study_focus", "magic_mindweaving_focus"})
+        t = block(read("common/scripted_triggers/aov_magic_triggers.txt"), "aov_has_focus_magic")
+        for f in focuses:
+            self.assertIn(f"has_focus = {f}", t)
+
+    def test_magic_alert(self):
+        a = block(read(ALERTS), "aov_action_lifestyle_magic")
+        for line in ("type = alert", "icon = aov_action_lifestyle_magic", "aov_has_focus_magic = yes", "perk_points > 0",
+                     "is_adult = yes", "important_action_type = aov_action_lifestyle_magic", "view = lifestyle"):
+            self.assertIn(line, a)
+
+    @unittest.skipUnless(GAME.is_dir(), "game install not found")
+    def test_generic_alert_override_is_vanilla_minus_magic(self):
+        """zz_aov_lifestyle_actions.txt is vanilla's action_can_spend_perk_point plus one line excluding magic focuses;
+        re-copy it if a CK3 patch changes vanilla's (docs/systems/updating.md)."""
+        vanilla = block((GAME / "common/important_actions/00_lifestyle.txt").read_text(encoding="utf-8-sig"),
+                        "action_can_spend_perk_point")
+        ours = block(read(GENERIC), "action_can_spend_perk_point")
+        self.assertIn("aov_has_focus_magic = yes # Anbennar Overhaul", ours)
+        self.assertEqual(re.sub(r"\n\t*aov_has_focus_magic = yes # Anbennar Overhaul", "", ours), vanilla)
+
+    def test_alert_icon_is_a_three_frame_strip(self):
+        data = (MOD / ALERT_ICON).read_bytes()
+        self.assertEqual(data[:4], b"DDS ")
+        height, width = int.from_bytes(data[12:16], "little"), int.from_bytes(data[16:20], "little")
+        self.assertEqual((width, height), (432, 144))  # vanilla action_lifestyle_*.dds: 3 frames of 144
+
+    def test_alert_loc(self):
+        loc = read("localization/english/aov_magic_lifestyle_l_english.yml")
+        for suffix in ("", "_label", "_desc", "_click"):
+            self.assertRegex(loc, rf'(?m)^ aov_action_lifestyle_magic{suffix}:0? ?"\$action_can_spend_perk_point{suffix}\$"')

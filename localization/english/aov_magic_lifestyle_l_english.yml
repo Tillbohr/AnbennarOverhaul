@@ -74,3 +74,9 @@
  magic_mindweaving_focus_effect_desc: "Focusing on Mindweaving grants:"
  magic_mindweaving_focus_study_desc: "Study of $AOV_SCHOOL_ENCHANTMENT$, $AOV_SCHOOL_ILLUSION$ and $AOV_SCHOOL_NECROMANCY$ is #P 25%#! faster"
  magic_duelist_focus_study_desc: "Study of $AOV_SCHOOL_EVOCATION$ and $AOV_SCHOOL_CONJURATION$ is #P 25%#! faster"
+
+ # HUD alert for unspent magic perks (common/important_actions/aov_magic_lifestyle_actions.txt)
+ aov_action_lifestyle_magic: "$action_can_spend_perk_point$"
+ aov_action_lifestyle_magic_label: "$action_can_spend_perk_point_label$"
+ aov_action_lifestyle_magic_desc: "$action_can_spend_perk_point_desc$"
+ aov_action_lifestyle_magic_click: "$action_can_spend_perk_point_click$"

@@ -1,0 +1,31 @@
+﻿# Anbennar Overhaul: HUD alert for unspent magic lifestyle perks, like vanilla's action_lifestyle_<lifestyle>
+# (game common/important_actions/00_lifestyle.txt). Icon: gfx/interface/icons/alerts/aov_action_lifestyle_magic.dds.
+# Vanilla's generic action_can_spend_perk_point skips magic focuses (zz_aov_lifestyle_actions.txt).
+
+aov_action_lifestyle_magic = {
+	type = alert
+	icon = aov_action_lifestyle_magic
+	check_create_action = {
+
+		if = {
+			limit = {
+				aov_has_focus_magic = yes
+				perk_points > 0
+				is_adult = yes
+			}
+			try_create_important_action = {
+				important_action_type = aov_action_lifestyle_magic
+				actor = root
+			}
+		}
+
+	}
+
+	effect = {
+		scope:actor = {
+			open_view_data = {
+				view = lifestyle
+			}
+		}
+	}
+}

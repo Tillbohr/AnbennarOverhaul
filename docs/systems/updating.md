@@ -20,6 +20,9 @@
 8. Test in game; check `database_conflicts.log` for overhaul keys now also defined by Anbennar (notably `magic_duelist_focus`, which `zz_aov_magic_focuses.txt` must keep overriding).
 
 After a CK3 patch, rerun `python -I tools/build_hud_override.py`, `python -I tools/build_lifestyle_override.py` and `python -I tools/build_county_view_override.py` too: their sources are the game's `hud.gui`, `window_character_lifestyle.gui` and `window_county_view.gui` (when Anbennar ships no copy).
+After a CK3 patch, if `PerkAlertTests` fails, re-copy the game's `action_can_spend_perk_point`
+(`common/important_actions/00_lifestyle.txt`) into `common/important_actions/zz_aov_lifestyle_actions.txt`, keeping the
+`aov_has_focus_magic = yes # Anbennar Overhaul` line in its `NOR`.
 Rerun `python -I tools/build_map_graphics.py` too once Realms in Exile has updated for the patch (its shaders are the source).
 Rerun `python -I tools/build_holding_models.py` too after a CK3 patch (`city_01..04` are copied from the game) and after a Realms in Exile update (its holding models and shaders are the source).
 Rerun `python -I tools/build_portraits.py` too after a CK3 patch (it skips files and names the game already has) and after a Realms in Exile update (its portrait entries, templates, accessories and models are the source).

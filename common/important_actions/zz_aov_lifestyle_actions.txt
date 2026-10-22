@@ -1,0 +1,39 @@
+﻿# Anbennar Overhaul: vanilla's action_can_spend_perk_point (game common/important_actions/00_lifestyle.txt), copied
+# whole with one line added: magic focuses have their own alert (aov_action_lifestyle_magic). Re-copy after a CK3
+# patch (docs/systems/updating.md); PerkAlertTests fails when the copy drifts from vanilla.
+
+action_can_spend_perk_point = {
+	type = alert
+	check_create_action = {
+		
+		if = {
+			limit = { # Future-proofing
+				has_any_focus = yes
+				NOR = {
+					has_focus_intrigue = yes
+					has_focus_diplomacy = yes
+					has_focus_learning = yes
+					has_focus_martial = yes
+					has_focus_stewardship = yes
+					has_focus_wanderer = yes
+					aov_has_focus_magic = yes # Anbennar Overhaul
+				}
+				perk_points > 0
+				is_adult = yes
+			}
+			try_create_important_action = {
+				important_action_type = action_can_spend_perk_point
+				actor = root
+			}
+		}
+		
+	}
+
+	effect = {
+		scope:actor = {
+			open_view_data = {
+				view = lifestyle
+			}
+		}
+	}
+}

@@ -17,6 +17,12 @@ magic files, `gfx/interface/illustrations/lifestyles_background/magic_lifestyle.
 `gfx/interface/progressbars/aov_progress_magic*.dds`) was composed once from EU4 Anbennar magic art and vanilla files.
 Its generator `tools/build_magic_lifestyle_art.py` was removed; replace the files directly to change them.
 
+The HUD alert for unspent magic perks, `gfx/interface/icons/alerts/aov_action_lifestyle_magic.dds` (3 frames of 144,
+like vanilla's `action_lifestyle_*.dds`), was composed once: the flame of `magic_lifestyle.dds` on the game's
+`_frame_purple.dds`. Its alert `aov_action_lifestyle_magic` is in `common/important_actions/aov_magic_lifestyle_actions.txt`;
+vanilla's generic `action_can_spend_perk_point` is overridden in `zz_aov_lifestyle_actions.txt` to skip magic focuses
+(`aov_has_focus_magic`), so a mage sees the magic alert instead of the generic arrows.
+
 ## System
 
 - **Magic schools:** eight schools (Abjuration, Conjuration, Divination, Enchantment, Evocation, Illusion, Necromancy,
