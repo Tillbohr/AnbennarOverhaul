@@ -285,3 +285,29 @@ aov_advancement.60 = {
 		}
 	}
 }
+
+# Recruit Battlemage Commander (aov_recruit_battlemage): the new commander arrives at court (scope:aov_battlemage)
+aov_advancement.70 = {
+	type = character_event
+	title = aov_advancement.70.t
+	desc = {
+		desc = aov_advancement.70.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:aov_battlemage = { has_character_modifier = aov_battlemage_trained } }
+				desc = aov_advancement.70.desc.trained
+			}
+			desc = aov_advancement.70.desc.untrained
+		}
+	}
+	theme = martial
+	left_portrait = root
+	right_portrait = {
+		character = scope:aov_battlemage
+		animation = personality_bold
+	}
+
+	option = {
+		name = aov_advancement.70.a
+	}
+}

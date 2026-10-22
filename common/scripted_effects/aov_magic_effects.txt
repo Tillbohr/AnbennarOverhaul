@@ -51,6 +51,12 @@ aov_school_add_progress = {
 	if = {
 		limit = { aov_school_$SCHOOL$_level > scope:aov_old_level }
 		save_scope_value_as = { name = aov_school value = flag:$SCHOOL$ }
+		# A completed level ends the study of that school until the mage chooses to study again
+		if = {
+			limit = { aov_is_studying = { SCHOOL = $SCHOOL$ } }
+			remove_variable = aov_studying
+			save_scope_value_as = { name = aov_study_halted value = yes }
+		}
 		trigger_event = aov_magic.1
 	}
 	aov_magic_sync_mastery = yes

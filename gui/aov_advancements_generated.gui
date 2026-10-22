@@ -65,12 +65,16 @@ types AovAdvancements
 			align = left|nobaseline
 		}
 
-		hbox = {
+		vbox = {
+			name = "aov_adv_levels"
 			layoutpolicy_horizontal = expanding
-			spacing = 20
+			margin = { 6 0 }
+			spacing = 10
 
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_magical_fortress_level_1"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_magical_fortress_1_tt"
 
 				icon = {
@@ -80,14 +84,54 @@ types AovAdvancements
 					frame = 1
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)1' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_magical_fortress_1"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_magical_fortress_1"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)1' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)0' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)0' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_magical_fortress_1_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_magical_fortress_level_2"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_magical_fortress_2_tt"
 
 				icon = {
@@ -97,14 +141,54 @@ types AovAdvancements
 					frame = 2
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)2' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_magical_fortress_2"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_magical_fortress_2"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)2' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)1' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)1' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_magical_fortress_2_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_magical_fortress_level_3"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_magical_fortress_3_tt"
 
 				icon = {
@@ -114,14 +198,50 @@ types AovAdvancements
 					frame = 3
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)3' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_magical_fortress_3"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_magical_fortress_3"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)3' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)2' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)2' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_magical_fortress_3_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-
-			expand = {}
 		}
 
 		hbox = {
@@ -129,22 +249,12 @@ types AovAdvancements
 			layoutpolicy_horizontal = expanding
 			spacing = 8
 
-			widget = {
-				size = { 232 52 }
-
-				icon = {
-					size = { 232 52 }
-					texture = "gfx/interface/icons/aov_magic/project_button.dds"
-				}
-
-				button_standard = {
-					parentanchor = center
-					size = { 140 32 }
-					text = "AOV_ADV_START"
-					enabled = "[GetScriptedGui('aov_adv_magical_fortress_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					tooltip = "[GetScriptedGui('aov_adv_magical_fortress_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					onclick = "[GetScriptedGui('aov_adv_magical_fortress_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				}
+			button_standard = {
+				size = { 140 32 }
+				text = "AOV_ADV_START"
+				enabled = "[GetScriptedGui('aov_adv_magical_fortress_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				tooltip = "[GetScriptedGui('aov_adv_magical_fortress_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				onclick = "[GetScriptedGui('aov_adv_magical_fortress_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			}
 
 			text_single = {
@@ -343,12 +453,16 @@ types AovAdvancements
 			align = left|nobaseline
 		}
 
-		hbox = {
+		vbox = {
+			name = "aov_adv_levels"
 			layoutpolicy_horizontal = expanding
-			spacing = 20
+			margin = { 6 0 }
+			spacing = 10
 
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_summon_extraplanars_level_1"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_summon_extraplanars_1_tt"
 
 				icon = {
@@ -358,14 +472,54 @@ types AovAdvancements
 					frame = 1
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)1' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_summon_extraplanars_1"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_summon_extraplanars_1"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)1' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)0' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)0' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_summon_extraplanars_1_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_summon_extraplanars_level_2"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_summon_extraplanars_2_tt"
 
 				icon = {
@@ -375,14 +529,54 @@ types AovAdvancements
 					frame = 2
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)2' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_summon_extraplanars_2"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_summon_extraplanars_2"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)2' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)1' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)1' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_summon_extraplanars_2_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_summon_extraplanars_level_3"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_summon_extraplanars_3_tt"
 
 				icon = {
@@ -392,14 +586,50 @@ types AovAdvancements
 					frame = 3
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)3' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_summon_extraplanars_3"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_summon_extraplanars_3"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)3' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)2' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)2' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_summon_extraplanars_3_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-
-			expand = {}
 		}
 
 		hbox = {
@@ -407,22 +637,12 @@ types AovAdvancements
 			layoutpolicy_horizontal = expanding
 			spacing = 8
 
-			widget = {
-				size = { 232 52 }
-
-				icon = {
-					size = { 232 52 }
-					texture = "gfx/interface/icons/aov_magic/project_button.dds"
-				}
-
-				button_standard = {
-					parentanchor = center
-					size = { 140 32 }
-					text = "AOV_ADV_START"
-					enabled = "[GetScriptedGui('aov_adv_summon_extraplanars_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					tooltip = "[GetScriptedGui('aov_adv_summon_extraplanars_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					onclick = "[GetScriptedGui('aov_adv_summon_extraplanars_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				}
+			button_standard = {
+				size = { 140 32 }
+				text = "AOV_ADV_START"
+				enabled = "[GetScriptedGui('aov_adv_summon_extraplanars_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				tooltip = "[GetScriptedGui('aov_adv_summon_extraplanars_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				onclick = "[GetScriptedGui('aov_adv_summon_extraplanars_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			}
 
 			text_single = {
@@ -621,12 +841,16 @@ types AovAdvancements
 			align = left|nobaseline
 		}
 
-		hbox = {
+		vbox = {
+			name = "aov_adv_levels"
 			layoutpolicy_horizontal = expanding
-			spacing = 20
+			margin = { 6 0 }
+			spacing = 10
 
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_orb_of_omniscience_level_1"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_orb_of_omniscience_1_tt"
 
 				icon = {
@@ -636,14 +860,54 @@ types AovAdvancements
 					frame = 1
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)1' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_orb_of_omniscience_1"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_orb_of_omniscience_1"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)1' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)0' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)0' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_orb_of_omniscience_1_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_orb_of_omniscience_level_2"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_orb_of_omniscience_2_tt"
 
 				icon = {
@@ -653,14 +917,54 @@ types AovAdvancements
 					frame = 2
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)2' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_orb_of_omniscience_2"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_orb_of_omniscience_2"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)2' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)1' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)1' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_orb_of_omniscience_2_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_orb_of_omniscience_level_3"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_orb_of_omniscience_3_tt"
 
 				icon = {
@@ -670,14 +974,50 @@ types AovAdvancements
 					frame = 3
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)3' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_orb_of_omniscience_3"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_orb_of_omniscience_3"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)3' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)2' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)2' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_orb_of_omniscience_3_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-
-			expand = {}
 		}
 
 		hbox = {
@@ -685,22 +1025,12 @@ types AovAdvancements
 			layoutpolicy_horizontal = expanding
 			spacing = 8
 
-			widget = {
-				size = { 232 52 }
-
-				icon = {
-					size = { 232 52 }
-					texture = "gfx/interface/icons/aov_magic/project_button.dds"
-				}
-
-				button_standard = {
-					parentanchor = center
-					size = { 140 32 }
-					text = "AOV_ADV_START"
-					enabled = "[GetScriptedGui('aov_adv_orb_of_omniscience_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					tooltip = "[GetScriptedGui('aov_adv_orb_of_omniscience_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					onclick = "[GetScriptedGui('aov_adv_orb_of_omniscience_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				}
+			button_standard = {
+				size = { 140 32 }
+				text = "AOV_ADV_START"
+				enabled = "[GetScriptedGui('aov_adv_orb_of_omniscience_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				tooltip = "[GetScriptedGui('aov_adv_orb_of_omniscience_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				onclick = "[GetScriptedGui('aov_adv_orb_of_omniscience_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			}
 
 			text_single = {
@@ -899,12 +1229,16 @@ types AovAdvancements
 			align = left|nobaseline
 		}
 
-		hbox = {
+		vbox = {
+			name = "aov_adv_levels"
 			layoutpolicy_horizontal = expanding
-			spacing = 20
+			margin = { 6 0 }
+			spacing = 10
 
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_enchanted_artifact_level_1"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_enchanted_artifact_1_tt"
 
 				icon = {
@@ -914,14 +1248,54 @@ types AovAdvancements
 					frame = 1
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)1' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_enchanted_artifact_1"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_enchanted_artifact_1"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)1' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)0' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)0' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_enchanted_artifact_1_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_enchanted_artifact_level_2"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_enchanted_artifact_2_tt"
 
 				icon = {
@@ -931,14 +1305,54 @@ types AovAdvancements
 					frame = 2
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)2' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_enchanted_artifact_2"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_enchanted_artifact_2"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)2' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)1' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)1' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_enchanted_artifact_2_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_enchanted_artifact_level_3"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_enchanted_artifact_3_tt"
 
 				icon = {
@@ -948,14 +1362,50 @@ types AovAdvancements
 					frame = 3
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)3' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_enchanted_artifact_3"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_enchanted_artifact_3"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)3' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)2' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)2' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_enchanted_artifact_3_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-
-			expand = {}
 		}
 
 		hbox = {
@@ -963,22 +1413,12 @@ types AovAdvancements
 			layoutpolicy_horizontal = expanding
 			spacing = 8
 
-			widget = {
-				size = { 232 52 }
-
-				icon = {
-					size = { 232 52 }
-					texture = "gfx/interface/icons/aov_magic/project_button.dds"
-				}
-
-				button_standard = {
-					parentanchor = center
-					size = { 140 32 }
-					text = "AOV_ADV_START"
-					enabled = "[GetScriptedGui('aov_adv_enchanted_artifact_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					tooltip = "[GetScriptedGui('aov_adv_enchanted_artifact_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					onclick = "[GetScriptedGui('aov_adv_enchanted_artifact_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				}
+			button_standard = {
+				size = { 140 32 }
+				text = "AOV_ADV_START"
+				enabled = "[GetScriptedGui('aov_adv_enchanted_artifact_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				tooltip = "[GetScriptedGui('aov_adv_enchanted_artifact_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				onclick = "[GetScriptedGui('aov_adv_enchanted_artifact_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			}
 
 			text_single = {
@@ -1177,12 +1617,16 @@ types AovAdvancements
 			align = left|nobaseline
 		}
 
-		hbox = {
+		vbox = {
+			name = "aov_adv_levels"
 			layoutpolicy_horizontal = expanding
-			spacing = 20
+			margin = { 6 0 }
+			spacing = 10
 
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_battlemage_academy_level_1"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_battlemage_academy_1_tt"
 
 				icon = {
@@ -1192,14 +1636,54 @@ types AovAdvancements
 					frame = 1
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)1' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_battlemage_academy_1"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_battlemage_academy_1"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)1' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)0' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)0' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_battlemage_academy_1_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_battlemage_academy_level_2"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_battlemage_academy_2_tt"
 
 				icon = {
@@ -1209,14 +1693,54 @@ types AovAdvancements
 					frame = 2
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)2' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_battlemage_academy_2"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_battlemage_academy_2"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)2' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)1' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)1' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_battlemage_academy_2_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_battlemage_academy_level_3"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_battlemage_academy_3_tt"
 
 				icon = {
@@ -1226,14 +1750,50 @@ types AovAdvancements
 					frame = 3
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)3' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_battlemage_academy_3"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_battlemage_academy_3"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)3' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)2' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)2' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_battlemage_academy_3_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-
-			expand = {}
 		}
 
 		hbox = {
@@ -1241,22 +1801,12 @@ types AovAdvancements
 			layoutpolicy_horizontal = expanding
 			spacing = 8
 
-			widget = {
-				size = { 232 52 }
-
-				icon = {
-					size = { 232 52 }
-					texture = "gfx/interface/icons/aov_magic/project_button.dds"
-				}
-
-				button_standard = {
-					parentanchor = center
-					size = { 140 32 }
-					text = "AOV_ADV_START"
-					enabled = "[GetScriptedGui('aov_adv_battlemage_academy_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					tooltip = "[GetScriptedGui('aov_adv_battlemage_academy_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					onclick = "[GetScriptedGui('aov_adv_battlemage_academy_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				}
+			button_standard = {
+				size = { 140 32 }
+				text = "AOV_ADV_START"
+				enabled = "[GetScriptedGui('aov_adv_battlemage_academy_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				tooltip = "[GetScriptedGui('aov_adv_battlemage_academy_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				onclick = "[GetScriptedGui('aov_adv_battlemage_academy_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			}
 
 			text_single = {
@@ -1455,12 +2005,16 @@ types AovAdvancements
 			align = left|nobaseline
 		}
 
-		hbox = {
+		vbox = {
+			name = "aov_adv_levels"
 			layoutpolicy_horizontal = expanding
-			spacing = 20
+			margin = { 6 0 }
+			spacing = 10
 
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_mirror_image_level_1"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_mirror_image_1_tt"
 
 				icon = {
@@ -1470,14 +2024,54 @@ types AovAdvancements
 					frame = 1
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)1' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_mirror_image_1"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_mirror_image_1"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)1' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)0' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)0' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_mirror_image_1_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_mirror_image_level_2"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_mirror_image_2_tt"
 
 				icon = {
@@ -1487,14 +2081,54 @@ types AovAdvancements
 					frame = 2
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)2' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_mirror_image_2"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_mirror_image_2"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)2' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)1' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)1' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_mirror_image_2_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_mirror_image_level_3"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_mirror_image_3_tt"
 
 				icon = {
@@ -1504,14 +2138,50 @@ types AovAdvancements
 					frame = 3
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)3' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_mirror_image_3"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_mirror_image_3"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)3' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)2' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)2' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_mirror_image_3_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-
-			expand = {}
 		}
 
 		hbox = {
@@ -1519,22 +2189,12 @@ types AovAdvancements
 			layoutpolicy_horizontal = expanding
 			spacing = 8
 
-			widget = {
-				size = { 232 52 }
-
-				icon = {
-					size = { 232 52 }
-					texture = "gfx/interface/icons/aov_magic/project_button.dds"
-				}
-
-				button_standard = {
-					parentanchor = center
-					size = { 140 32 }
-					text = "AOV_ADV_START"
-					enabled = "[GetScriptedGui('aov_adv_mirror_image_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					tooltip = "[GetScriptedGui('aov_adv_mirror_image_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					onclick = "[GetScriptedGui('aov_adv_mirror_image_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				}
+			button_standard = {
+				size = { 140 32 }
+				text = "AOV_ADV_START"
+				enabled = "[GetScriptedGui('aov_adv_mirror_image_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				tooltip = "[GetScriptedGui('aov_adv_mirror_image_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				onclick = "[GetScriptedGui('aov_adv_mirror_image_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			}
 
 			text_single = {
@@ -1733,12 +2393,16 @@ types AovAdvancements
 			align = left|nobaseline
 		}
 
-		hbox = {
+		vbox = {
+			name = "aov_adv_levels"
 			layoutpolicy_horizontal = expanding
-			spacing = 20
+			margin = { 6 0 }
+			spacing = 10
 
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_lichdom_level_1"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_lichdom_1_tt"
 
 				icon = {
@@ -1748,14 +2412,54 @@ types AovAdvancements
 					frame = 1
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)1' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_lichdom_1"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_lichdom_1"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)1' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)0' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)0' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_lichdom_1_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_lichdom_level_2"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_lichdom_2_tt"
 
 				icon = {
@@ -1765,14 +2469,54 @@ types AovAdvancements
 					frame = 2
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)2' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_lichdom_2"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_lichdom_2"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)2' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)1' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)1' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_lichdom_2_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_lichdom_level_3"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_lichdom_3_tt"
 
 				icon = {
@@ -1782,14 +2526,50 @@ types AovAdvancements
 					frame = 3
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)3' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_lichdom_3"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_lichdom_3"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)3' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)2' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)2' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_lichdom_3_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-
-			expand = {}
 		}
 
 		hbox = {
@@ -1797,22 +2577,12 @@ types AovAdvancements
 			layoutpolicy_horizontal = expanding
 			spacing = 8
 
-			widget = {
-				size = { 232 52 }
-
-				icon = {
-					size = { 232 52 }
-					texture = "gfx/interface/icons/aov_magic/project_button.dds"
-				}
-
-				button_standard = {
-					parentanchor = center
-					size = { 140 32 }
-					text = "AOV_ADV_START"
-					enabled = "[GetScriptedGui('aov_adv_lichdom_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					tooltip = "[GetScriptedGui('aov_adv_lichdom_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					onclick = "[GetScriptedGui('aov_adv_lichdom_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				}
+			button_standard = {
+				size = { 140 32 }
+				text = "AOV_ADV_START"
+				enabled = "[GetScriptedGui('aov_adv_lichdom_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				tooltip = "[GetScriptedGui('aov_adv_lichdom_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				onclick = "[GetScriptedGui('aov_adv_lichdom_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			}
 
 			text_single = {
@@ -2011,12 +2781,16 @@ types AovAdvancements
 			align = left|nobaseline
 		}
 
-		hbox = {
+		vbox = {
+			name = "aov_adv_levels"
 			layoutpolicy_horizontal = expanding
-			spacing = 20
+			margin = { 6 0 }
+			spacing = 10
 
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_homunculus_level_1"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_homunculus_1_tt"
 
 				icon = {
@@ -2026,14 +2800,54 @@ types AovAdvancements
 					frame = 1
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)1' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_homunculus_1"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_homunculus_1"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)1' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)0' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)0' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_homunculus_1_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_homunculus_level_2"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_homunculus_2_tt"
 
 				icon = {
@@ -2043,14 +2857,54 @@ types AovAdvancements
 					frame = 2
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)2' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_homunculus_2"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_homunculus_2"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)2' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)1' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)1' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_homunculus_2_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-			vbox = {
-				spacing = 2
+			hbox = {
+				name = "aov_adv_homunculus_level_3"
+				layoutpolicy_horizontal = expanding
+				spacing = 10
 				tooltip = "aov_adv_homunculus_3_tt"
 
 				icon = {
@@ -2060,14 +2914,50 @@ types AovAdvancements
 					frame = 3
 					alpha = "[Select_float( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)3' ), '(float)1', '(float)0.35' )]"
 				}
-				text_single = {
-					text = "aov_adv_homunculus_3"
-					max_width = 140
-					align = left|nobaseline
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 2
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 8
+
+						text_single = {
+							text = "aov_adv_homunculus_3"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_DONE"
+							visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)3' )]"
+							default_format = "#P"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_NEXT"
+							visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)2' )]"
+							default_format = "#V"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "AOV_ADV_LEVEL_LOCKED"
+							visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)2' )]"
+							default_format = "#weak"
+							align = left|nobaseline
+						}
+						expand = {}
+					}
+
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						max_width = 400
+						text = "aov_adv_homunculus_3_desc"
+						align = left|nobaseline
+					}
 				}
 			}
-
-			expand = {}
 		}
 
 		hbox = {
@@ -2075,22 +2965,12 @@ types AovAdvancements
 			layoutpolicy_horizontal = expanding
 			spacing = 8
 
-			widget = {
-				size = { 232 52 }
-
-				icon = {
-					size = { 232 52 }
-					texture = "gfx/interface/icons/aov_magic/project_button.dds"
-				}
-
-				button_standard = {
-					parentanchor = center
-					size = { 140 32 }
-					text = "AOV_ADV_START"
-					enabled = "[GetScriptedGui('aov_adv_homunculus_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					tooltip = "[GetScriptedGui('aov_adv_homunculus_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					onclick = "[GetScriptedGui('aov_adv_homunculus_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				}
+			button_standard = {
+				size = { 140 32 }
+				text = "AOV_ADV_START"
+				enabled = "[GetScriptedGui('aov_adv_homunculus_start_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				tooltip = "[GetScriptedGui('aov_adv_homunculus_start_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				onclick = "[GetScriptedGui('aov_adv_homunculus_start_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			}
 
 			text_single = {

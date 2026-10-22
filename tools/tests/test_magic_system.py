@@ -81,6 +81,14 @@ class ManaStudyTests(unittest.TestCase):
         for s in SCHOOLS:
             self.assertIn(f"scope:aov_school = flag:{s}", ev)
 
+    def test_level_up_halts_study_of_that_school(self):
+        """A completed level stops study of that school; the player clicks Study to go on (AI mages re-pick)."""
+        b = block(self.effects(), "aov_school_add_progress")
+        up = b[b.index("limit = { aov_school_$SCHOOL$_level > scope:aov_old_level }"):]
+        self.assertRegex(up, r"if = \{\s*limit = \{ aov_is_studying = \{ SCHOOL = \$SCHOOL\$ \} \}\s*remove_variable = aov_studying")
+        self.assertLess(up.index("remove_variable = aov_studying"), up.index("trigger_event = aov_magic.1"))
+        self.assertIn("aov_magic.1.study_halted", read("localization/english/aov_magic_l_english.yml"))
+
     def test_mastery_synced(self):
         b = block(self.effects(), "aov_magic_sync_mastery")
         self.assertIn("name = magic_mastery", b)

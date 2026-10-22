@@ -201,9 +201,9 @@ def sguis(advs: list) -> str:
 
 ROOT = "GuiScope.SetRoot( GetPlayer.MakeScope ).End"
 ART_DIR = "gfx/interface/icons/aov_magic"
-# Committed art the pages name: EU4 Anbennar's magic-project plate and progress bar (gfx/interface/custom_gui/magic),
-# imported once with tools/eu4_import.py; the level strip and school icons come with the spells (build_spells.py)
-ART = ["project_button.dds", "project_progress_empty.dds", "project_progress_full.dds", "levels_strip.dds"]
+# Committed art the pages name: EU4 Anbennar's magic-project progress bar (gfx/interface/custom_gui/magic), imported
+# once with tools/eu4_import.py; the level strip and school icons come with the spells (build_spells.py)
+ART = ["project_progress_empty.dds", "project_progress_full.dds", "levels_strip.dds"]
 ART += [f"school_{s}.dds" for s in SCHOOLS]
 
 
@@ -247,20 +247,32 @@ def page(a, advs: list) -> str:
               + indent(text(f"aov_adv_{k}", '\tusing = Font_Type_Flavor\n\tusing = Font_Size_Medium\n\tdefault_format = "#T"\n'), 1)
               + indent(text(f"AOV_SCHOOL_{c.upper()}", '\tdefault_format = "#weak"\n'), 1)
               + indent(badge, 1) + "\n\texpand = {}\n}\n")
-    steps = "".join(
-        f'vbox = {{\n\tspacing = 2\n\ttooltip = "aov_adv_{k}_{n}_tt"\n\n'
+    def status(n: int) -> str:
+        # Completed / the next level to begin / locked behind an earlier level
+        return "".join(text(key, f'\tvisible = "[{cond}]"\n\tdefault_format = "{fmt}"\n') for key, cond, fmt in (
+            ("AOV_ADV_LEVEL_DONE", level_is(k, "GreaterThanOrEqualTo", n), "#P"),
+            ("AOV_ADV_LEVEL_NEXT", level_is(k, "EqualTo", n - 1), "#V"),
+            ("AOV_ADV_LEVEL_LOCKED", level_is(k, "LessThan", n - 1), "#weak")))
+    rows = "".join(
+        f'hbox = {{\n\tname = "aov_adv_{k}_level_{n}"\n\tlayoutpolicy_horizontal = expanding\n\tspacing = 10\n'
+        f'\ttooltip = "aov_adv_{k}_{n}_tt"\n\n'
         f'\ticon = {{\n\t\tsize = {{ 42 41 }}\n\t\ttexture = "{ART_DIR}/levels_strip.dds"\n\t\tframesize = {{ 42 41 }}\n\t\tframe = {n}\n'
-        f'\t\talpha = "[Select_float( {level_is(k, "GreaterThanOrEqualTo", n)}, \'(float)1\', \'(float)0.35\' )]"\n\t}}\n'
-        + indent(text(f"aov_adv_{k}_{n}", '\tmax_width = 140\n'), 1) + "}\n" for n in (1, 2, 3))
-    track = f"hbox = {{\n\tlayoutpolicy_horizontal = expanding\n\tspacing = 20\n\n{indent(steps, 1)}\n\texpand = {{}}\n}}\n"
+        f'\t\talpha = "[Select_float( {level_is(k, "GreaterThanOrEqualTo", n)}, \'(float)1\', \'(float)0.35\' )]"\n\t}}\n\n'
+        f"\tvbox = {{\n\t\tlayoutpolicy_horizontal = expanding\n\t\tspacing = 2\n\n"
+        f"\t\thbox = {{\n\t\t\tlayoutpolicy_horizontal = expanding\n\t\t\tspacing = 8\n\n"
+        + indent(text(f"aov_adv_{k}_{n}", '\tdefault_format = "#T"\n'), 3)
+        + indent(status(n), 3)
+        + "\t\t\texpand = {}\n\t\t}\n\n"
+        + indent(text(f"aov_adv_{k}_{n}_desc", "", multi=True).replace("max_width = 460", "max_width = 400"), 2)
+        + "\t}\n}\n" for n in (1, 2, 3))
+    track = (f'vbox = {{\n\tname = "aov_adv_levels"\n\tlayoutpolicy_horizontal = expanding\n\tmargin = {{ 6 0 }}\n'
+             f"\tspacing = 10\n\n{indent(rows, 1)}}}\n")
     not_done = level_is(k, "LessThan", 3)
     start_row = (
         f'hbox = {{\n\tvisible = "[And( {not_done}, Not( {working} ) )]"\n\tlayoutpolicy_horizontal = expanding\n\tspacing = 8\n\n'
-        f'\twidget = {{\n\t\tsize = {{ 232 52 }}\n\n'
-        f'\t\ticon = {{\n\t\t\tsize = {{ 232 52 }}\n\t\t\ttexture = "{ART_DIR}/project_button.dds"\n\t\t}}\n\n'
-        f'\t\tbutton_standard = {{\n\t\t\tparentanchor = center\n\t\t\tsize = {{ 140 32 }}\n\t\t\ttext = "AOV_ADV_START"\n'
-        f'\t\t\tenabled = "[{sgref(start, "IsValid")}]"\n\t\t\ttooltip = "[{sgref(start, "BuildTooltip")}]"\n'
-        f'\t\t\tonclick = "[{sgref(start, "Execute")}]"\n\t\t}}\n\t}}\n\n'
+        f'\tbutton_standard = {{\n\t\tsize = {{ 140 32 }}\n\t\ttext = "AOV_ADV_START"\n'
+        f'\t\tenabled = "[{sgref(start, "IsValid")}]"\n\t\ttooltip = "[{sgref(start, "BuildTooltip")}]"\n'
+        f'\t\tonclick = "[{sgref(start, "Execute")}]"\n\t}}\n\n'
         + indent(text(f"aov_adv_{k}_cost"), 1)
         + "\texpand = {}\n}\n"
         + "".join(text(f"AOV_ADV_ENDS_STUDY_{s.upper()}",

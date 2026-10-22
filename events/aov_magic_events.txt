@@ -45,6 +45,10 @@ aov_magic.1 = {
 
 	option = {
 		name = aov_magic.1.a
+		if = {
+			limit = { exists = scope:aov_study_halted }
+			custom_tooltip = aov_magic.1.study_halted
+		}
 	}
 }
 

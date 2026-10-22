@@ -12,6 +12,7 @@
  # Level up
  aov_magic.1.t: "Deeper Mastery"
  aov_magic.1.a: "The craft rewards the patient."
+ aov_magic.1.study_halted: "Your study ends here. Choose #V Study#! on a school in the Magic window to continue."
  aov_magic.1.desc.abjuration: "Long study has borne fruit. My command of Abjuration has deepened, and I can now work its spells up to level #V [ROOT.Char.MakeScope.ScriptValue('aov_school_abjuration_level')|0]#!."
  aov_magic.1.desc.conjuration: "Long study has borne fruit. My command of Conjuration has deepened, and I can now work its spells up to level #V [ROOT.Char.MakeScope.ScriptValue('aov_school_conjuration_level')|0]#!."
  aov_magic.1.desc.divination: "Long study has borne fruit. My command of Divination has deepened, and I can now work its spells up to level #V [ROOT.Char.MakeScope.ScriptValue('aov_school_divination_level')|0]#!."

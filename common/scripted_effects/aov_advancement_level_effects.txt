@@ -448,6 +448,7 @@ aov_recruit_battlemage = {
 		aov_magic_sync_mastery = yes
 	}
 	add_courtier = scope:aov_battlemage
+	trigger_event = aov_advancement.70
 }
 
 ##########

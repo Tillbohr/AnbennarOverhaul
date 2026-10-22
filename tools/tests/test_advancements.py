@@ -101,7 +101,7 @@ class InterlockTests(unittest.TestCase):
         keys = loc_keys(CONTENT_LOC)
         for k in ("AOV_ADV_REQ_ELIGIBLE", "AOV_ADV_REQ_NOT_COMMITTED", "AOV_ADV_REQ_NOT_DONE",
                   "AOV_ADV_START", "AOV_ADV_ABANDON", "AOV_ADV_ABANDON_TT",
-                  "AOV_ADV_PROGRESS", "AOV_ADV_COMPLETE",
+                  "AOV_ADV_PROGRESS", "AOV_ADV_COMPLETE", "AOV_ADV_LEVEL_DONE", "AOV_ADV_LEVEL_NEXT", "AOV_ADV_LEVEL_LOCKED",
                   "AOV_MAGIC_TAB_ADVANCEMENTS", "AOV_MAGIC_TAB_SPELLS", "aov_advancement.1.t", "aov_advancement.1.a"):
             self.assertIn(k, keys)
         for key in ADV_KEYS:
@@ -320,6 +320,21 @@ class BattlemageAcademyTests(unittest.TestCase):
         self.assertIn("aov_school_evocation_progress", r)
         self.assertIn("add_courtier = scope:aov_battlemage", r)
 
+    def test_recruit_shows_the_commander(self):
+        r = block(read(LEVEL_EFFECTS), "aov_recruit_battlemage")
+        self.assertLess(r.index("add_courtier = scope:aov_battlemage"), r.index("trigger_event = aov_advancement.70"))
+        ev = block(read(EVENTS), "aov_advancement.70")
+        self.assertRegex(ev, r"right_portrait = \{\s*character = scope:aov_battlemage")
+        loc = read(CONTENT_LOC)
+        desc = re.search(r'aov_advancement\.70\.desc: "(.*)"', loc).group(1)
+        self.assertIn("[aov_battlemage.GetFullName]", desc)
+
+    def test_decision_description_explains_the_tiers(self):
+        desc = re.search(r'aov_recruit_battlemage_decision_desc: "(.*)"', read(CONTENT_LOC)).group(1)
+        for words in ("Battlemage Academy", "Battlemage College", "Grand Battlemage Academy", "Magical Affinity",
+                      "Evocation", "advantage"):
+            self.assertIn(words, desc)
+
     def test_tier_3_recruits_get_advantage(self):
         r = block(read(LEVEL_EFFECTS), "aov_recruit_battlemage")
         self.assertIn("modifier = aov_battlemage_trained", r)
@@ -516,6 +531,15 @@ class FailedLevelTests(unittest.TestCase):
     def test_owns_orb_guarded(self):
         own = block(read(CONDITIONS), "aov_adv_owns_orb")
         self.assertLess(own.index("exists = var:aov_adv_orb"), own.index("var:aov_adv_orb = {"))
+
+
+class LocLineTests(unittest.TestCase):
+    def test_every_value_is_on_one_line(self):
+        """A real newline inside a loc value splits it and the game drops the rest; line breaks are written \\n."""
+        for rel in (CONTENT_LOC, "localization/english/aov_advancements_l_english.yml", "localization/english/aov_magic_l_english.yml"):
+            for n, line in enumerate(read(rel).split("\n")[1:], start=2):
+                if line.strip() and not line.lstrip().startswith("#"):
+                    self.assertRegex(line, r'^ [A-Za-z0-9_.\-]+:\d? ?".*"\s*(#.*)?$', f"{rel}:{n}")
 
 
 class WindowTests(unittest.TestCase):

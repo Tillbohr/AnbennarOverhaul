@@ -9,6 +9,9 @@
  AOV_ADV_ABANDON_TT: "Stop working on this advancement. The gold and mana spent are lost."
  AOV_ADV_PROGRESS: "#V [GetPlayer.MakeScope.ScriptValue('aov_adv_months_left')|0]#! months left"
  AOV_ADV_COMPLETE: "#P All three levels completed#!"
+ AOV_ADV_LEVEL_DONE: "Completed"
+ AOV_ADV_LEVEL_NEXT: "Next"
+ AOV_ADV_LEVEL_LOCKED: "Locked"
 
  aov_advancement.1.t: "A Magical Advancement"
  aov_advancement.1.a: "The work goes on."
@@ -118,8 +121,8 @@
  aov_battlemage_trained: "Academy-Trained Battlemage"
  aov_battlemage_trained_desc: "Trained at a Grand Battlemage Academy to lead armies with spell and sword."
  aov_recruit_battlemage_decision: "Recruit Battlemage Commander"
- aov_recruit_battlemage_decision_desc: "Our academy has trained a war-mage fit to lead our armies. Bring them to court."
- aov_recruit_battlemage_decision_tooltip: "A battlemage commander joins your court"
+ aov_recruit_battlemage_decision_desc: "The masters of our academy have trained a war-mage fit to lead our armies in the field. Summon them to court as a commander: a mage with #V Magical Affinity#! and the battle-spells of #V Evocation#!, strong in Martial and Prowess.\n\nThe better our academy, the better the graduate:\n- #V Battlemage Academy#!: Martial and Prowess 10-14, Evocation level 1\n- #V Battlemage College#!: Martial and Prowess 13-17, Evocation level 2\n- #V Grand Battlemage Academy#!: Martial and Prowess 16-20, Evocation level 3, and #V +5 advantage#! as a commander"
+ aov_recruit_battlemage_decision_tooltip: "A battlemage commander graduates from your academy and joins your court"
  aov_recruit_battlemage_decision_confirm: "Recruit"
 
  # Mirror Image
@@ -180,3 +183,8 @@
  aov_advancement.44.desc.orb_of_omniscience: "The Orb of Omniscience is no longer in [ROOT.Char.GetFirstName]'s hands. Without it, the work on the Orb cannot go on, and what was spent on it is gone."
  aov_advancement.44.desc.enchanted_artifact: "The enchanted artifact is no longer in [ROOT.Char.GetFirstName]'s hands. Without it, the enchantment cannot be deepened, and what was spent on it is gone."
  aov_advancement.44.a: "A bitter loss."
+ aov_advancement.70.t: "A Battlemage Graduates"
+ aov_advancement.70.desc: "The masters of the academy present their finest student. [aov_battlemage.GetFullName] kneels before me, the smell of scorched air still clinging to [aov_battlemage.GetHerHis] robes. [aov_battlemage.GetSheHe|U] has learned to lead soldiers as well as to call down fire, and now offers [aov_battlemage.GetHerHis] spells and sword to my service."
+ aov_advancement.70.desc.trained: "\n\nTrained at the Grand Battlemage Academy, [aov_battlemage.GetFirstName] will give any army [aov_battlemage.GetSheHe] commands a sharp advantage."
+ aov_advancement.70.desc.untrained: ""
+ aov_advancement.70.a: "Welcome to my court, Battlemage."

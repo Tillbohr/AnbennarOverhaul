@@ -244,7 +244,8 @@ class GeneratedTests(unittest.TestCase):
             self.assertIn(f"$aov_adv_{k}$", re.search(rf'aov_adv_{k}_in_progress: "(.*)"', FILES[LOC]).group(1))
 
     def test_loc_keys(self):
-        used = set(re.findall(r"\b(aov_adv_[a-z_0-9]+)", FILES[GUI] + FILES[TRIG] + FILES[EFF]))
+        gui = re.sub(r'name = "\w+"', "", FILES[GUI])  # widget names are not loc keys
+        used = set(re.findall(r"\b(aov_adv_[a-z_0-9]+)", gui + FILES[TRIG] + FILES[EFF]))
         used = {u for u in used if not u.endswith(("_sgui", "_level", "_lvl", "_effect", "_start", "_complete",
                                                      "_can_start", "_next_gold", "_next_mana", "_next_years"))}
         defined = set(re.findall(r"^ (aov_adv_[a-z_0-9]+):", FILES[LOC], re.M))
@@ -293,7 +294,46 @@ class ArtTests(unittest.TestCase):
     def test_gui_uses_project_art(self):
         g = FILES[GUI]
         self.assertEqual(g.count(f'{ba.ART_DIR}/project_progress_full.dds'), 8)
-        self.assertEqual(g.count(f'{ba.ART_DIR}/project_button.dds'), 8)
+
+    def test_begin_is_one_button(self):
+        """The EU4 project plate behind the Begin button read as two overlapping buttons: no plate."""
+        g = FILES[GUI]
+        self.assertNotIn("project_button.dds", g)
+        self.assertNotIn("project_button.dds", ba.ART)
+        self.assertEqual(g.count('text = "AOV_ADV_START"'), 8)
+
+
+class LevelListTests(unittest.TestCase):
+    def page(self, c):
+        return re.search(rf"type aov_advancement_{c} = vbox \{{(.*?)\n\t\}}\n", FILES[GUI], re.S).group(1)
+
+    def test_levels_listed_vertically_with_effects(self):
+        for c, k in ba.ADV_OF_SCHOOL.items():
+            page = self.page(c)
+            rows = [page.index(f'name = "aov_adv_{k}_level_{n}"') for n in (1, 2, 3)]
+            self.assertEqual(rows, sorted(rows))
+            track = page[page.index('name = "aov_adv_levels"'):]
+            self.assertTrue(track.lstrip().startswith('name = "aov_adv_levels"'))
+            self.assertIn("vbox = {\n", page[:page.index('name = "aov_adv_levels"')][-40:])
+            for n in (1, 2, 3):
+                self.assertIn(f'text = "aov_adv_{k}_{n}_desc"', page)
+
+    def test_level_status(self):
+        page = self.page("necromancy")
+        for status, cmp in (("AOV_ADV_LEVEL_DONE", "GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)2' )"),
+                            ("AOV_ADV_LEVEL_NEXT", "EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)1' )"),
+                            ("AOV_ADV_LEVEL_LOCKED", "LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)1' )")):
+            m = re.search(rf'text = "{status}"\n\s*visible = "\[(.*?)\]"', page[page.index('name = "aov_adv_lichdom_level_2"'):])
+            self.assertTrue(m, status)
+            self.assertIn(cmp, m.group(1))
+
+    def test_level_texts_say_what_they_give(self):
+        """Every level description names a concrete effect: a number or a named unlock."""
+        for a in ADVS:
+            for lv in a["levels"]:
+                self.assertRegex(lv["desc"], r"[+-]?\d|[A-Z][a-z]+ [A-Z]", f"{a['key']}: {lv['desc']}")
+                self.assertNotIn("grows stronger", lv["desc"])
+                self.assertNotIn("reaches its full power", lv["desc"])
 
 
 class FreshnessTests(unittest.TestCase):

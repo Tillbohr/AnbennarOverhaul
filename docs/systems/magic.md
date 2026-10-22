@@ -22,7 +22,7 @@ Its generator `tools/build_magic_lifestyle_art.py` was removed; replace the file
 - **Magic schools:** eight schools (Abjuration, Conjuration, Divination, Enchantment, Evocation, Illusion, Necromancy,
   Transmutation) for mages (`has_magical_affinity`, Anbennar). Mana (100 + 50 per affinity level, refilled quarterly at
   3x the monthly rate), per-school knowledge levels 0-3 (300/800/2000 progress) from studying one chosen school and
-  from casting (choosing a new school with the Study button opens event `aov_magic.2`, the mage reading in a study;
+  from casting; reaching a level stops the study of that school until the mage presses Study again (AI mages re-pick) (choosing a new school with the Study button opens event `aov_magic.2`, the mage reading in a study;
   AI mages skip it); `magic_mastery` = sum of levels. 48 spells in `tools/data/spells.py` (spec
   `docs/superpowers/specs/2026-10-08-magic-schools-design.md`): self/realm/war spells cast from the Magic window
   (`gui/aov_window_magic.gui`, HUD tab below Artificery, generated pages `gui/aov_magic_generated.gui`), targeted
