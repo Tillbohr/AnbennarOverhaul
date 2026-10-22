@@ -99,16 +99,50 @@ aov_adv_summon_extraplanars_3_effect = {
 	}
 }
 
+##########
+# Divination: Orb of Omniscience
+##########
+
+# The Orb (court artifact, var:aov_adv_orb). Its modifiers stay with the artifact; the spell boosts
+# (aov_scry_reveal, aov_adv_orb_spell_years_mult) need a caster with the level.
 aov_adv_orb_of_omniscience_1_effect = {
 	add_magic_lifestyle_xp = 100
+	save_scope_as = owner
+	set_artifact_rarity_famed = yes
+	create_artifact = {
+		name = aov_orb_of_omniscience_name
+		description = aov_orb_of_omniscience_desc
+		type = scientific_apparatus
+		visuals = fp2_armillary_sphere
+		wealth = scope:wealth
+		quality = scope:quality
+		history = {
+			type = created
+			actor = root
+			recipient = root
+			location = root.capital_province
+		}
+		modifier = aov_orb_1
+		save_scope_as = aov_orb
+		decaying = no
+	}
+	set_variable = { name = aov_adv_orb value = scope:aov_orb }
 }
 
 aov_adv_orb_of_omniscience_2_effect = {
 	add_magic_lifestyle_xp = 100
+	if = {
+		limit = { exists = var:aov_adv_orb }
+		var:aov_adv_orb = { add_artifact_modifier = aov_orb_2 }
+	}
 }
 
 aov_adv_orb_of_omniscience_3_effect = {
 	add_magic_lifestyle_xp = 100
+	if = {
+		limit = { exists = var:aov_adv_orb }
+		var:aov_adv_orb = { add_artifact_modifier = aov_orb_3 }
+	}
 }
 
 aov_adv_enchanted_artifact_1_effect = {

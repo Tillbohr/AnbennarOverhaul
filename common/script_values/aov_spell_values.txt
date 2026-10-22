@@ -255,6 +255,7 @@ aov_spell_manipulated_fortune_cost = {
 aov_spell_manipulated_fortune_years = {
 	value = 3
 	multiply = aov_years_mult_divination
+	multiply = aov_adv_orb_spell_years_mult
 	add = 0.5
 	floor = yes
 }
@@ -270,6 +271,7 @@ aov_spell_foresight_cost = {
 aov_spell_foresight_years = {
 	value = 5
 	multiply = aov_years_mult_divination
+	multiply = aov_adv_orb_spell_years_mult
 	add = 0.5
 	floor = yes
 }

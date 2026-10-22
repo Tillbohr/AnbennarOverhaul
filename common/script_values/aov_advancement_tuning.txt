@@ -17,3 +17,17 @@ aov_adv_ward_days = 400
 ##########
 # Hosts (aov_advancement_maa_types.txt): vanilla armored_footmen / armored_horsemen / bowmen +25%
 # aov_host_<host>_2: +15% damage for the host's base type; aov_host_<host>_3: +15% toughness, +1 regiment size
+
+##########
+# Divination: Orb of Omniscience
+##########
+# aov_orb_1: +2 Learning, +10% lifestyle experience; aov_orb_2: -20 secrecy for schemes against the owner;
+# aov_orb_3: +2 Learning, +1 monthly prestige. Level 2: Scry reveals a second secret (aov_scry_reveal).
+# Level 3: Foresight and Manipulated Fortune last this much longer (tools/data/spells.py, years_mult)
+aov_adv_orb_spell_years_mult = {
+	value = 1
+	if = {
+		limit = { aov_adv_orb_of_omniscience_level >= 3 }
+		value = 1.5
+	}
+}

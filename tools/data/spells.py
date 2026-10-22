@@ -9,15 +9,18 @@ modifier: character modifier body on the caster for the duration ("" for one-off
 effect: one-off script run on cast, in the caster's scope; targeted spells have the target as scope:recipient.
 scales_duration: the duration perks (aov_years_mult_<school>) apply; default = has a lasting modifier.
 interaction: targeted spells only; Anbennar's own interaction for Compel and Dominate.
+years_mult: an extra script value multiplying the duration (a magic advancement's bonus), or "".
 """
 
 
-def spell(key, school, level, slot, type, name, desc, flavour, modifier="", effect="", interaction="", scales_duration=None):
+def spell(key, school, level, slot, type, name, desc, flavour, modifier="", effect="", interaction="", scales_duration=None,
+          years_mult=""):
     if type == "targeted" and not interaction:
         interaction = f"aov_spell_{key}_interaction"
     return dict(key=key, school=school, level=level, slot=slot, type=type, name=name, desc=desc, flavour=flavour,
                 modifier=modifier, effect=effect, interaction=interaction,
-                scales_duration=bool(modifier.strip()) if scales_duration is None else scales_duration)
+                scales_duration=bool(modifier.strip()) if scales_duration is None else scales_duration,
+                years_mult=years_mult)
 
 
 SPELLS = [
@@ -82,11 +85,12 @@ SPELLS = [
     spell("manipulated_fortune", "divination", 2, 5, "self", "Manipulated Fortune",
           "+10% hostile scheme success, +10% prestige gain",
           "Luck is merely probability the diviner has already read.",
-          modifier="owned_hostile_scheme_success_chance_add = 10\nmonthly_prestige_gain_mult = 0.1"),
+          modifier="owned_hostile_scheme_success_chance_add = 10\nmonthly_prestige_gain_mult = 0.1",
+          years_mult="aov_adv_orb_spell_years_mult"),
     spell("foresight", "divination", 3, 6, "self", "Foresight",
           "+8 advantage, schemes against you much easier to discover",
           "No ambush surprises one who has already seen the battle.",
-          modifier="advantage = 8\nenemy_scheme_secrecy_add = -30"),
+          modifier="advantage = 8\nenemy_scheme_secrecy_add = -30", years_mult="aov_adv_orb_spell_years_mult"),
 
     # Enchantment: the mind
     spell("enchanting_envoy", "enchantment", 0, 1, "self", "Enchanting Envoy", "+3 Diplomacy",

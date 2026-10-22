@@ -174,6 +174,40 @@ class SummonExtraplanarsTests(unittest.TestCase):
                 self.assertIn(f"add_character_modifier = {{ modifier = aov_host_{h}_{n} }}", eff)
 
 
+class OrbOfOmniscienceTests(unittest.TestCase):
+    def test_orb_created_non_decaying(self):
+        eff = level_effect("orb_of_omniscience", 1)
+        self.assertIn("create_artifact = {", eff)
+        self.assertIn("type = scientific_apparatus", eff)
+        self.assertIn("decaying = no", eff)
+        self.assertIn("modifier = aov_orb_1", eff)
+        self.assertIn("set_variable = { name = aov_adv_orb value = scope:aov_orb }", eff)
+
+    def test_upgrades_guard_missing_orb(self):
+        for n in (2, 3):
+            eff = level_effect("orb_of_omniscience", n)
+            self.assertLess(eff.index("exists = var:aov_adv_orb"), eff.index(f"add_artifact_modifier = aov_orb_{n}"))
+
+    def test_orb_modifiers(self):
+        mods = read(MODIFIERS)
+        one = block(mods, "aov_orb_1")
+        self.assertIn("learning = ", one)
+        self.assertIn("monthly_lifestyle_xp_gain_mult = ", one)
+        self.assertIn("enemy_scheme_secrecy_add = -", block(mods, "aov_orb_2"))
+        block(mods, "aov_orb_3")
+
+    def test_scry_reveals_more_with_the_orb(self):
+        scry = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_scry_reveal")
+        self.assertIn("aov_adv_orb_of_omniscience_level >= 2", scry)
+
+    def test_foresight_and_fortune_last_longer(self):
+        vals = read("common/script_values/aov_spell_values.txt")
+        for k in ("foresight", "manipulated_fortune"):
+            self.assertIn("multiply = aov_adv_orb_spell_years_mult", block(vals, f"aov_spell_{k}_years"))
+        self.assertNotIn("aov_adv_orb_spell_years_mult", block(vals, "aov_spell_guidance_years"))
+        self.assertIn("aov_adv_orb_of_omniscience_level >= 3", block(read(TUNING), "aov_adv_orb_spell_years_mult"))
+
+
 class WindowTests(unittest.TestCase):
     def window(self):
         return read("gui/aov_window_magic.gui")

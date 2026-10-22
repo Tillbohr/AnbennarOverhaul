@@ -251,6 +251,21 @@ aov_scry_reveal = {
 				reveal_to = root
 			}
 		}
+		# Orb of Omniscience (Divination advancement) level 2: a second secret
+		if = {
+			limit = {
+				aov_adv_orb_of_omniscience_level >= 2
+				scope:recipient = {
+					any_secret = { NOT = { is_known_by = root } }
+				}
+			}
+			scope:recipient = {
+				random_secret = {
+					limit = { NOT = { is_known_by = root } }
+					reveal_to = root
+				}
+			}
+		}
 	}
 	else = {
 		add_intrigue_lifestyle_xp = 500

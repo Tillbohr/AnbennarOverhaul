@@ -64,3 +64,24 @@ aov_host_devils_3 = {
 	archers_toughness_mult = 0.15
 	archers_max_size_add = 1
 }
+
+##########
+# Divination: Orb of Omniscience (artifact modifiers on the Orb)
+##########
+
+aov_orb_1 = {
+	icon = learning_positive
+	learning = 2
+	monthly_lifestyle_xp_gain_mult = 0.1
+}
+
+aov_orb_2 = {
+	icon = intrigue_positive
+	enemy_scheme_secrecy_add = -20
+}
+
+aov_orb_3 = {
+	icon = learning_positive
+	learning = 2
+	monthly_prestige = 1
+}

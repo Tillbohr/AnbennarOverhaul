@@ -106,6 +106,7 @@ def values(spells: list) -> str:
         k, c, lvl = s["key"], s["school"], s["level"]
         extra = f"\tsubtract = aov_cost_cut_{s['type']}\n" if s["type"] in ("war", "targeted") else ""
         mult = f"\tmultiply = aov_years_mult_{c}\n" if s["scales_duration"] else ""
+        mult += f"\tmultiply = {s['years_mult']}\n" if s.get("years_mult") else ""
         out.append(
             f"aov_spell_{k}_cost = {{\n\tvalue = 1\n\tsubtract = aov_cost_cut_{c}\n{extra}"
             f"\tmin = 0.5\n\tmultiply = {COSTS[lvl]}\n\tadd = 0.5\n\tfloor = yes\n}}\n"

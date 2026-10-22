@@ -52,3 +52,10 @@
  aov_host_eldritch_3: "Host Eternal"
  aov_host_devils_2: "Bound Host"
  aov_host_devils_3: "Host Eternal"
+
+ # Orb of Omniscience
+ aov_orb_of_omniscience_name: "Orb of Omniscience"
+ aov_orb_of_omniscience_desc: "An orb of glass and starlight ground by [owner.GetFirstName]. Within it, shapes move: what was, what is, and what may yet come."
+ aov_orb_1: "Orb of Omniscience"
+ aov_orb_2: "Clear Sight"
+ aov_orb_3: "All-Seeing"
