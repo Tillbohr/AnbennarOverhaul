@@ -62,3 +62,252 @@ def validate(advs: list) -> None:
         texts = [a["name"], a["desc"]] + [lv["name"] + lv["desc"] for lv in a["levels"]]
         if any('"' in t for t in texts):
             raise GeneratorError(f"{k}: double quote in a text")
+
+
+def per_level(var: str, values: tuple) -> str:
+    """Script value body: values[0] by default, values[n] once `var` reaches n."""
+    lines = [f"\tvalue = {values[0]}"]
+    for n, v in enumerate(values[1:], start=1):
+        lines.append(f"\tif = {{\n\t\tlimit = {{ {var} >= {n} }}\n\t\tvalue = {v}\n\t}}")
+    return "\n".join(lines)
+
+
+def values(advs: list) -> str:
+    out = [HEADER, "# Character scope (the mage). Levels done are var:aov_adv_<key>_lvl (unset = 0).\n"]
+    for a in advs:
+        k = a["key"]
+        lvl = f"aov_adv_{k}_level"
+        out.append(
+            f"{lvl} = {{\n\tvalue = 0\n\tif = {{\n\t\tlimit = {{ has_variable = aov_adv_{k}_lvl }}\n"
+            f"\t\tvalue = var:aov_adv_{k}_lvl\n\t}}\n}}\n"
+            f"aov_adv_{k}_next_gold = {{\n{per_level(lvl, GOLD)}\n}}\n"
+            f"aov_adv_{k}_next_mana = {{\n{per_level(lvl, MANA)}\n}}\n"
+            f"aov_adv_{k}_next_years = {{\n{per_level(lvl, YEARS)}\n}}\n"
+        )
+    working = "var:aov_adv_working_level"
+    months = tuple(y * 12 for y in YEARS)
+    out.append(
+        "# The level in progress (var:aov_adv_working_level, 1-3)\n"
+        f"aov_adv_months_needed = {{\n\tvalue = {months[0]}\n\tif = {{\n\t\tlimit = {{ has_variable = aov_adv_working_level }}\n"
+        + "".join(f"\t\tif = {{\n\t\t\tlimit = {{ {working} >= {n + 1} }}\n\t\t\tvalue = {m}\n\t\t}}\n"
+                  for n, m in enumerate(months) if n)
+        + "\t}\n}\n"
+        "aov_adv_months_left = {\n\tvalue = aov_adv_months_needed\n\tif = {\n\t\tlimit = { has_variable = aov_adv_progress }\n"
+        "\t\tsubtract = var:aov_adv_progress\n\t}\n\tmin = 0\n}\n"
+        "aov_adv_progress_percent = {\n\tvalue = 0\n\tif = {\n\t\tlimit = { has_variable = aov_adv_progress }\n"
+        "\t\tvalue = var:aov_adv_progress\n\t\tmultiply = 100\n\t\tdivide = aov_adv_months_needed\n\t}\n\tmax = 100\n}\n"
+    )
+    return "\n".join(out)
+
+
+def triggers(advs: list) -> str:
+    out = [HEADER, "# Character scope (the mage).\n",
+           "# Advancements are for ruling mages\naov_adv_eligible = {\n\tis_landed = yes\n\taov_is_mage = yes\n}\n",
+           "aov_adv_is_committed = {\n\thas_variable = aov_adv_committed\n}\n",
+           "# KEY = an advancement key\naov_adv_working_on = {\n\thas_variable = aov_adv_committed\n"
+           "\tvar:aov_adv_committed = flag:$KEY$\n}\n"]
+    for a in advs:
+        k, c = a["key"], a["school"]
+        lvl = f"aov_adv_{k}_level"
+        branches = []
+        for done in (0, 1, 2):
+            reqs = "".join(f"\t\t{t} = yes\n" for t in a["requires"].get(done + 1, []))
+            branches.append(
+                f"\t{'trigger_if' if done == 0 else 'trigger_else_if'} = {{\n\t\tlimit = {{ {lvl} = {done} }}\n"
+                f"\t\tcustom_tooltip = {{\n\t\t\ttext = AOV_SPELL_REQ_{c.upper()}_{done + 1}\n"
+                f"\t\t\taov_school_level_at_least = {{ SCHOOL = {c} LEVEL = {done + 1} }}\n\t\t}}\n{reqs}\t}}\n")
+        out.append(
+            f"aov_adv_{k}_can_start = {{\n"
+            f"\tcustom_tooltip = {{\n\t\ttext = AOV_ADV_REQ_ELIGIBLE\n\t\taov_adv_eligible = yes\n\t}}\n"
+            f"\tcustom_tooltip = {{\n\t\ttext = AOV_ADV_REQ_NOT_COMMITTED\n\t\tNOT = {{ aov_adv_is_committed = yes }}\n\t}}\n"
+            f"\tcustom_tooltip = {{\n\t\ttext = AOV_ADV_REQ_NOT_DONE\n\t\t{lvl} < 3\n\t}}\n"
+            + "".join(branches)
+            + f"\tcustom_tooltip = {{\n\t\ttext = aov_adv_{k}_req_gold\n\t\tgold >= aov_adv_{k}_next_gold\n\t}}\n"
+            f"\tcustom_tooltip = {{\n\t\ttext = aov_adv_{k}_req_mana\n\t\taov_mana >= aov_adv_{k}_next_mana\n\t}}\n}}\n"
+        )
+    return "\n".join(out)
+
+
+def effects(advs: list) -> str:
+    out = [HEADER, "# Character scope (the mage). Level effects: aov_advancement_level_effects.txt (hand-written).\n"]
+    for a in advs:
+        k = a["key"]
+        out.append(
+            f"aov_adv_{k}_start = {{\n\tcustom_tooltip = aov_adv_{k}_cost_tt\n\thidden_effect = {{\n"
+            f"\t\tremove_short_term_gold = aov_adv_{k}_next_gold\n"
+            f"\t\taov_mana_spend = {{ AMOUNT = aov_adv_{k}_next_mana }}\n"
+            f"\t\tif = {{\n\t\t\tlimit = {{ has_variable = aov_studying }}\n\t\t\tremove_variable = aov_studying\n\t\t}}\n"
+            f"\t\tset_variable = {{\n\t\t\tname = aov_adv_working_level\n\t\t\tvalue = {{\n"
+            f"\t\t\t\tvalue = aov_adv_{k}_level\n\t\t\t\tadd = 1\n\t\t\t}}\n\t\t}}\n"
+            f"\t\tset_variable = {{ name = aov_adv_committed value = flag:{k} }}\n"
+            f"\t\tset_variable = {{ name = aov_adv_progress value = 0 }}\n\t}}\n}}\n"
+        )
+        calls = "".join(
+            f"\t{'if' if n == 1 else 'else_if'} = {{\n\t\tlimit = {{ var:aov_adv_working_level = {n} }}\n"
+            f"\t\taov_adv_{k}_{n}_effect = yes\n\t}}\n" for n in (1, 2, 3))
+        out.append(
+            f"aov_adv_{k}_complete = {{\n"
+            f"\tset_variable = {{ name = aov_adv_{k}_lvl value = var:aov_adv_working_level }}\n"
+            f"\tsave_scope_value_as = {{ name = aov_adv value = flag:{k} }}\n"
+            f"\tsave_scope_value_as = {{ name = aov_adv_level value = var:aov_adv_working_level }}\n"
+            + calls
+            + "\taov_adv_abandon = yes\n\ttrigger_event = aov_advancement.1\n}\n"
+        )
+    out.append("# Ends the commitment; nothing is refunded\naov_adv_abandon = {\n"
+               "\tremove_variable = aov_adv_committed\n\tremove_variable = aov_adv_working_level\n"
+               "\tremove_variable = aov_adv_progress\n}\n")
+    dispatch = "".join(
+        f"\t\t\t\t{'if' if i == 0 else 'else_if'} = {{\n\t\t\t\t\tlimit = {{ aov_adv_working_on = {{ KEY = {a['key']} }} }}\n"
+        f"\t\t\t\t\taov_adv_{a['key']}_complete = yes\n\t\t\t\t}}\n" for i, a in enumerate(advs))
+    out.append(
+        "# Quarterly (common/on_action/aov_advancement_on_actions.txt): three months of progress\n"
+        "aov_adv_quarterly = {\n\tif = {\n\t\tlimit = { aov_adv_is_committed = yes }\n"
+        "\t\tif = {\n\t\t\tlimit = { aov_adv_eligible = no }\n\t\t\taov_adv_abandon = yes\n\t\t}\n"
+        "\t\telse = {\n\t\t\tchange_variable = { name = aov_adv_progress add = 3 }\n"
+        "\t\t\tif = {\n\t\t\t\tlimit = { var:aov_adv_progress >= aov_adv_months_needed }\n"
+        + dispatch + "\t\t\t}\n\t\t}\n\t}\n}\n")
+    return "\n".join(out)
+
+
+def sguis(advs: list) -> str:
+    out = [HEADER, "# Magic window, Advancements tab (gui/aov_advancements_generated.gui).\n"]
+    for a in advs:
+        k = a["key"]
+        out.append(
+            f"aov_adv_{k}_start_sgui = {{\n\tscope = character\n\tis_valid = {{ aov_adv_{k}_can_start = yes }}\n"
+            f"\teffect = {{ aov_adv_{k}_start = yes }}\n}}\n"
+            f"aov_adv_{k}_working_sgui = {{\n\tscope = character\n\tis_shown = {{ aov_adv_working_on = {{ KEY = {k} }} }}\n}}\n"
+            f"aov_adv_{k}_elsewhere_sgui = {{\n\tscope = character\n\tis_shown = {{\n\t\taov_adv_is_committed = yes\n"
+            f"\t\tNOT = {{ aov_adv_working_on = {{ KEY = {k} }} }}\n\t}}\n}}\n"
+        )
+    out.append("aov_adv_abandon_sgui = {\n\tscope = character\n\tis_valid = { aov_adv_is_committed = yes }\n"
+               "\teffect = { aov_adv_abandon = yes }\n}\n")
+    return "\n".join(out)
+
+
+ROOT = "GuiScope.SetRoot( GetPlayer.MakeScope ).End"
+ART_DIR = "gfx/interface/icons/aov_magic"
+
+
+def sgref(name: str, call: str) -> str:
+    return f"GetScriptedGui('{name}').{call}( {ROOT} )"
+
+
+def level_is(k: str, cmp: str, n: int) -> str:
+    return f"{cmp}_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_{k}_level' ), '(CFixedPoint){n}' )"
+
+
+def text(t: str, extra: str = "", multi: bool = False) -> str:
+    kind = "text_multi" if multi else "text_single"
+    size = "\tlayoutpolicy_horizontal = expanding\n\tautoresize = yes\n\tmax_width = 460\n" if multi else ""
+    return f'{kind} = {{\n{size}\ttext = "{t}"\n{extra}\talign = left|nobaseline\n}}\n'
+
+
+def indent(t: str, n: int) -> str:
+    return "".join(("\t" * n + line) if line.strip() else line for line in t.splitlines(True))
+
+
+def page(a) -> str:
+    """One school's Advancements tab: title and school level, description, the three-level track, then either the
+    Start row (cost, study warning), the progress row (bar, time left, Abandon), or a line for another commitment."""
+    k, c = a["key"], a["school"]
+    working = sgref(f"aov_adv_{k}_working_sgui", "IsShown")
+    elsewhere = sgref(f"aov_adv_{k}_elsewhere_sgui", "IsShown")
+    start = f"aov_adv_{k}_start_sgui"
+    badge = "".join(
+        f'icon = {{\n\tvisible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( \'aov_school_{c}_level\' ), \'(CFixedPoint){n}\' )]"\n'
+        f'\tsize = {{ 30 29 }}\n\ttexture = "{ART_DIR}/levels_strip.dds"\n\tframesize = {{ 42 41 }}\n\tframe = {n}\n'
+        f'\ttooltip = "AOV_SCHOOL_LEVEL_TT"\n}}\n' for n in (1, 2, 3))
+    header = (f'hbox = {{\n\tlayoutpolicy_horizontal = expanding\n\tmargin = {{ 6 4 }}\n\tspacing = 10\n\n'
+              f'\ticon = {{\n\t\tsize = {{ 48 48 }}\n\t\ttexture = "{ART_DIR}/school_{c}.dds"\n\t}}\n\n'
+              + indent(text(f"aov_adv_{k}", '\tusing = Font_Type_Flavor\n\tusing = Font_Size_Medium\n\tdefault_format = "#T"\n'), 1)
+              + indent(text(f"AOV_SCHOOL_{c.upper()}", '\tdefault_format = "#weak"\n'), 1)
+              + indent(badge, 1) + "\n\texpand = {}\n}\n")
+    steps = "".join(
+        f'vbox = {{\n\tspacing = 2\n\ttooltip = "aov_adv_{k}_{n}_tt"\n\n'
+        f'\ticon = {{\n\t\tsize = {{ 42 41 }}\n\t\ttexture = "{ART_DIR}/levels_strip.dds"\n\t\tframesize = {{ 42 41 }}\n\t\tframe = {n}\n'
+        f'\t\talpha = "[Select_float( {level_is(k, "GreaterThanOrEqualTo", n)}, \'(float)1\', \'(float)0.35\' )]"\n\t}}\n'
+        + indent(text(f"aov_adv_{k}_{n}", '\tmax_width = 140\n'), 1) + "}\n" for n in (1, 2, 3))
+    track = f"hbox = {{\n\tlayoutpolicy_horizontal = expanding\n\tspacing = 20\n\n{indent(steps, 1)}\n\texpand = {{}}\n}}\n"
+    not_done = level_is(k, "LessThan", 3)
+    start_row = (
+        f'hbox = {{\n\tvisible = "[And( {not_done}, Not( {working} ) )]"\n\tlayoutpolicy_horizontal = expanding\n\tspacing = 8\n\n'
+        f'\tbutton_standard = {{\n\t\tsize = {{ 140 32 }}\n\t\ttext = "AOV_ADV_START"\n'
+        f'\t\tenabled = "[{sgref(start, "IsValid")}]"\n\t\ttooltip = "[{sgref(start, "BuildTooltip")}]"\n'
+        f'\t\tonclick = "[{sgref(start, "Execute")}]"\n\t}}\n\n'
+        + indent(text(f"aov_adv_{k}_cost"), 1)
+        + "\texpand = {}\n}\n"
+        + text("AOV_ADV_ENDS_STUDY", f'\tvisible = "[And( {not_done}, GetPlayer.MakeScope.Var( \'aov_studying\' ).IsSet )]"\n'
+               '\tdefault_format = "#weak"\n'))
+    progress_row = (
+        f'hbox = {{\n\tvisible = "[{working}]"\n\tlayoutpolicy_horizontal = expanding\n\tspacing = 8\n\n'
+        f"\tprogressbar_standard = {{\n\t\tsize = {{ 200 14 }}\n\t\tmin = 0\n\t\tmax = 100\n"
+        f"\t\tvalue = \"[FixedPointToFloat( GetPlayer.MakeScope.ScriptValue( 'aov_adv_progress_percent' ) )]\"\n\t}}\n\n"
+        + indent(text("AOV_ADV_PROGRESS"), 1)
+        + "\texpand = {}\n\n"
+        f'\tbutton_standard = {{\n\t\tsize = {{ 110 32 }}\n\t\ttext = "AOV_ADV_ABANDON"\n'
+        f'\t\tenabled = "[{sgref("aov_adv_abandon_sgui", "IsValid")}]"\n\t\ttooltip = "AOV_ADV_ABANDON_TT"\n'
+        f'\t\tonclick = "[{sgref("aov_adv_abandon_sgui", "Execute")}]"\n\t}}\n}}\n')
+    body = (header + "\n"
+            + text(f"aov_adv_{k}_desc", '\tdefault_format = "#weak"\n', multi=True) + "\n"
+            + track + "\n" + start_row + "\n" + progress_row + "\n"
+            + text("AOV_ADV_IN_PROGRESS_ELSEWHERE", f'\tvisible = "[{elsewhere}]"\n\tdefault_format = "#weak"\n')
+            + text("AOV_ADV_COMPLETE", f'\tvisible = "[{level_is(k, "EqualTo", 3)}]"\n'))
+    return (f"\ttype aov_advancement_{c} = vbox {{\n\t\tlayoutpolicy_horizontal = expanding\n\t\tspacing = 10\n\n"
+            + indent(body, 2) + "\t}\n")
+
+
+def gui(advs: list) -> str:
+    return HEADER + "\ntypes AovAdvancements\n{\n" + "\n".join(page(a) for a in advs) + "}\n"
+
+
+def loc(advs: list) -> str:
+    player = "GetPlayer.MakeScope.ScriptValue"
+    out = ["l_english:", " # " + HEADER.strip("# \n")]
+    for a in advs:
+        k = a["key"]
+        gold, mana, years = (f"#V [{player}('aov_adv_{k}_next_{x}')|0]#!" for x in ("gold", "mana", "years"))
+        out.append(f' aov_adv_{k}: "{a["name"]}"')
+        out.append(f' aov_adv_{k}_desc: "{a["desc"]}"')
+        for n, lv in enumerate(a["levels"], start=1):
+            out.append(f' aov_adv_{k}_{n}: "{lv["name"]}"')
+            out.append(f' aov_adv_{k}_{n}_desc: "{lv["desc"]}"')
+            out.append(f' aov_adv_{k}_{n}_tt: "#T $aov_adv_{k}$, level {n}: $aov_adv_{k}_{n}$#!\\n$aov_adv_{k}_{n}_desc$"')
+        out.append(f' aov_adv_{k}_cost: "Next level: {gold} gold · {mana} mana · {years} years"')
+        out.append(f' aov_adv_{k}_cost_tt: "Costs {gold} gold and {mana} mana, takes {years} years, and ends any study"')
+        out.append(f' aov_adv_{k}_req_gold: "Has at least {gold} gold"')
+        out.append(f' aov_adv_{k}_req_mana: "Has at least {mana} mana"')
+    return "\n".join(out) + "\n"
+
+
+def render_all(advs: list) -> dict:
+    return {
+        "common/scripted_triggers/aov_advancement_triggers.txt": triggers(advs),
+        "common/script_values/aov_advancement_values.txt": values(advs),
+        "common/scripted_effects/aov_advancement_effects.txt": effects(advs),
+        "common/scripted_guis/aov_advancement_sgui.txt": sguis(advs),
+        "gui/aov_advancements_generated.gui": gui(advs),
+        "localization/english/aov_advancements_l_english.yml": loc(advs),
+    }
+
+
+def write_all(files: dict, root: Path) -> None:
+    for rel, content in files.items():
+        out = root / rel
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_bytes(b"\xef\xbb\xbf" + content.replace("\r\n", "\n").encode("utf-8"))
+
+
+def main() -> None:
+    try:
+        advs = load_advancements()
+        validate(advs)
+        files = render_all(advs)
+        write_all(files, SUBMOD)
+    except GeneratorError as e:
+        sys.exit(f"error: {e}")
+    print(f"wrote {len(files)} files for {len(advs)} advancements")
+
+
+if __name__ == "__main__":
+    main()
