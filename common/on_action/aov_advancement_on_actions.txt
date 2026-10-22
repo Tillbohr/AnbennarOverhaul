@@ -4,12 +4,19 @@ quarterly_playable_pulse = {
 	on_actions = { aov_adv_quarterly_pulse }
 }
 
-# Root = character. Three months of progress on the advancement in progress (aov_advancement_effects.txt, generated)
+# Root = character. Three months of progress on the advancement in progress (aov_advancement_effects.txt, generated).
+# A committed character who lost their affinity still ticks, so aov_adv_quarterly abandons the commitment
 aov_adv_quarterly_pulse = {
-	trigger = { aov_is_mage = yes }
+	trigger = {
+		OR = {
+			aov_is_mage = yes
+			aov_adv_is_committed = yes
+		}
+	}
 	effect = {
 		aov_adv_quarterly = yes
 		aov_adv_lichdom_check = yes
+		aov_adv_artifact_check = yes
 	}
 }
 
@@ -58,5 +65,20 @@ aov_adv_ai_yearly = {
 			chance = aov_adv_ai_chance
 			aov_adv_ai_pick = yes
 		}
+	}
+}
+
+on_title_lost = {
+	on_actions = { aov_adv_on_title_lost }
+}
+
+# Root = the old holder. A mage who loses their last title no longer gets quarterly_playable_pulse, so the commitment
+# is checked here, a day later once the title has changed hands (event aov_advancement.60)
+aov_adv_on_title_lost = {
+	trigger = {
+		aov_adv_is_committed = yes
+	}
+	effect = {
+		trigger_event = { id = aov_advancement.60 days = 1 }
 	}
 }

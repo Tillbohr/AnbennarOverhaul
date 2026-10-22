@@ -62,8 +62,20 @@ class InterlockTests(unittest.TestCase):
         oa = read(ON_ACTIONS)
         self.assertIn("aov_adv_quarterly_pulse", block(oa, "quarterly_playable_pulse"))
         pulse = block(oa, "aov_adv_quarterly_pulse")
-        self.assertIn("aov_is_mage = yes", pulse)
+        # A committed character who lost their affinity still ticks, so the commitment is abandoned
+        self.assertRegex(pulse, r"OR = \{\s*aov_is_mage = yes\s*aov_adv_is_committed = yes\s*\}")
         self.assertIn("aov_adv_quarterly = yes", pulse)
+
+    def test_losing_all_land_abandons(self):
+        """A mage who loses their last title stops getting quarterly_playable_pulse, so on_title_lost checks."""
+        oa = read(ON_ACTIONS)
+        self.assertIn("aov_adv_on_title_lost", block(oa, "on_title_lost"))
+        lost = block(oa, "aov_adv_on_title_lost")
+        self.assertIn("aov_adv_is_committed = yes", lost)
+        self.assertIn("id = aov_advancement.60", lost)
+        ev = block(read(EVENTS), "aov_advancement.60")
+        self.assertIn("hidden = yes", ev)
+        self.assertLess(ev.index("aov_adv_eligible = no"), ev.index("aov_adv_abandon = yes"))
 
     def test_every_level_effect_defined_once(self):
         eff = read(LEVEL_EFFECTS)
@@ -88,8 +100,8 @@ class InterlockTests(unittest.TestCase):
     def test_ui_loc(self):
         keys = loc_keys(CONTENT_LOC)
         for k in ("AOV_ADV_REQ_ELIGIBLE", "AOV_ADV_REQ_NOT_COMMITTED", "AOV_ADV_REQ_NOT_DONE",
-                  "AOV_ADV_IN_PROGRESS_ELSEWHERE", "AOV_ADV_START", "AOV_ADV_ABANDON", "AOV_ADV_ABANDON_TT",
-                  "AOV_ADV_PROGRESS", "AOV_ADV_COMPLETE", "AOV_ADV_ENDS_STUDY",
+                  "AOV_ADV_START", "AOV_ADV_ABANDON", "AOV_ADV_ABANDON_TT",
+                  "AOV_ADV_PROGRESS", "AOV_ADV_COMPLETE",
                   "AOV_MAGIC_TAB_ADVANCEMENTS", "AOV_MAGIC_TAB_SPELLS", "aov_advancement.1.t", "aov_advancement.1.a"):
             self.assertIn(k, keys)
         for key in ADV_KEYS:
@@ -186,7 +198,7 @@ class OrbOfOmniscienceTests(unittest.TestCase):
     def test_upgrades_guard_missing_orb(self):
         for n in (2, 3):
             eff = level_effect("orb_of_omniscience", n)
-            self.assertLess(eff.index("exists = var:aov_adv_orb"), eff.index(f"add_artifact_modifier = aov_orb_{n}"))
+            self.assertLess(eff.index("aov_adv_owns_orb = yes"), eff.index(f"add_artifact_modifier = aov_orb_{n}"))
 
     def test_orb_modifiers(self):
         mods = read(MODIFIERS)
@@ -453,6 +465,57 @@ class MaaIconTests(unittest.TestCase):
                     "aov_host_devils": "bowmen", "aov_battlemages": "bowmen", "aov_battlemages_3": "bowmen"}
         for key, icon in expected.items():
             self.assertIn(f"\ticon = {icon}\n", block(maa, key) + "\n", key)
+
+
+FAILED = "save_scope_value_as = { name = aov_adv_failed value = yes }"
+
+
+class FailedLevelTests(unittest.TestCase):
+    """A paid level that cannot take effect says so and skips the success event (scope:aov_adv_failed)."""
+
+    def test_ritual_without_prisoner_waits(self):
+        eff = level_effect("lichdom", 3)
+        self.assertIn("aov_adv_lichdom_await_sacrifice = yes", eff)
+        self.assertIn(FAILED, eff)
+        wait = block(read(LEVEL_EFFECTS), "aov_adv_lichdom_await_sacrifice")
+        for line in ("set_variable = { name = aov_adv_lichdom_lvl value = 2 }",
+                     "set_variable = { name = aov_adv_committed value = flag:lichdom }",
+                     "set_variable = { name = aov_adv_working_level value = 3 }",
+                     "name = aov_adv_progress", "trigger_event = aov_advancement.42"):
+            self.assertIn(line, wait)
+        self.assertIn("aov_adv_lichdom_await_sacrifice = yes", block(read(EVENTS), "aov_advancement.40"))
+        block(read(EVENTS), "aov_advancement.42")
+
+    def test_ritual_blocked_by_trait_fails_loudly(self):
+        eff = level_effect("lichdom", 3)
+        self.assertIn("trigger_event = aov_advancement.43", eff)
+        block(read(EVENTS), "aov_advancement.43")
+
+    def test_lost_artifact_fails_the_level(self):
+        for key, owns in (("enchanted_artifact", "aov_adv_owns_enchanted_artifact"), ("orb_of_omniscience", "aov_adv_owns_orb")):
+            for n in (2, 3):
+                eff = level_effect(key, n)
+                self.assertLess(eff.index(f"{owns} = yes"), eff.index("else = {"))
+                self.assertIn(f"aov_adv_artifact_level_failed = {{ KEY = {key} LEVEL = {n - 1} }}", eff)
+        failed = block(read(LEVEL_EFFECTS), "aov_adv_artifact_level_failed")
+        self.assertIn(FAILED, failed)
+        self.assertIn("set_variable = { name = aov_adv_$KEY$_lvl value = $LEVEL$ }", failed)
+        self.assertIn("trigger_event = aov_advancement.44", failed)
+
+    def test_lost_artifact_ends_the_commitment(self):
+        check = block(read(LEVEL_EFFECTS), "aov_adv_artifact_check")
+        for key, owns in (("enchanted_artifact", "aov_adv_owns_enchanted_artifact"), ("orb_of_omniscience", "aov_adv_owns_orb")):
+            self.assertIn(f"aov_adv_working_on = {{ KEY = {key} }}", check)
+            self.assertIn(f"{owns} = no", check)
+        self.assertIn("aov_adv_abandon = yes", check)
+        self.assertIn("aov_adv_artifact_check = yes", block(read(ON_ACTIONS), "aov_adv_quarterly_pulse"))
+        ev = block(read(EVENTS), "aov_advancement.44")
+        for key in ("enchanted_artifact", "orb_of_omniscience"):
+            self.assertIn(f"scope:aov_adv = flag:{key}", ev)
+
+    def test_owns_orb_guarded(self):
+        own = block(read(CONDITIONS), "aov_adv_owns_orb")
+        self.assertLess(own.index("exists = var:aov_adv_orb"), own.index("var:aov_adv_orb = {"))
 
 
 class WindowTests(unittest.TestCase):

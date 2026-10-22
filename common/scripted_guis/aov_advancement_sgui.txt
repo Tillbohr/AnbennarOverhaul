@@ -11,13 +11,6 @@ aov_adv_magical_fortress_working_sgui = {
 	scope = character
 	is_shown = { aov_adv_working_on = { KEY = magical_fortress } }
 }
-aov_adv_magical_fortress_elsewhere_sgui = {
-	scope = character
-	is_shown = {
-		aov_adv_is_committed = yes
-		NOT = { aov_adv_working_on = { KEY = magical_fortress } }
-	}
-}
 
 aov_adv_summon_extraplanars_start_sgui = {
 	scope = character
@@ -27,13 +20,6 @@ aov_adv_summon_extraplanars_start_sgui = {
 aov_adv_summon_extraplanars_working_sgui = {
 	scope = character
 	is_shown = { aov_adv_working_on = { KEY = summon_extraplanars } }
-}
-aov_adv_summon_extraplanars_elsewhere_sgui = {
-	scope = character
-	is_shown = {
-		aov_adv_is_committed = yes
-		NOT = { aov_adv_working_on = { KEY = summon_extraplanars } }
-	}
 }
 
 aov_adv_orb_of_omniscience_start_sgui = {
@@ -45,13 +31,6 @@ aov_adv_orb_of_omniscience_working_sgui = {
 	scope = character
 	is_shown = { aov_adv_working_on = { KEY = orb_of_omniscience } }
 }
-aov_adv_orb_of_omniscience_elsewhere_sgui = {
-	scope = character
-	is_shown = {
-		aov_adv_is_committed = yes
-		NOT = { aov_adv_working_on = { KEY = orb_of_omniscience } }
-	}
-}
 
 aov_adv_enchanted_artifact_start_sgui = {
 	scope = character
@@ -61,13 +40,6 @@ aov_adv_enchanted_artifact_start_sgui = {
 aov_adv_enchanted_artifact_working_sgui = {
 	scope = character
 	is_shown = { aov_adv_working_on = { KEY = enchanted_artifact } }
-}
-aov_adv_enchanted_artifact_elsewhere_sgui = {
-	scope = character
-	is_shown = {
-		aov_adv_is_committed = yes
-		NOT = { aov_adv_working_on = { KEY = enchanted_artifact } }
-	}
 }
 
 aov_adv_battlemage_academy_start_sgui = {
@@ -79,13 +51,6 @@ aov_adv_battlemage_academy_working_sgui = {
 	scope = character
 	is_shown = { aov_adv_working_on = { KEY = battlemage_academy } }
 }
-aov_adv_battlemage_academy_elsewhere_sgui = {
-	scope = character
-	is_shown = {
-		aov_adv_is_committed = yes
-		NOT = { aov_adv_working_on = { KEY = battlemage_academy } }
-	}
-}
 
 aov_adv_mirror_image_start_sgui = {
 	scope = character
@@ -95,13 +60,6 @@ aov_adv_mirror_image_start_sgui = {
 aov_adv_mirror_image_working_sgui = {
 	scope = character
 	is_shown = { aov_adv_working_on = { KEY = mirror_image } }
-}
-aov_adv_mirror_image_elsewhere_sgui = {
-	scope = character
-	is_shown = {
-		aov_adv_is_committed = yes
-		NOT = { aov_adv_working_on = { KEY = mirror_image } }
-	}
 }
 
 aov_adv_lichdom_start_sgui = {
@@ -113,13 +71,6 @@ aov_adv_lichdom_working_sgui = {
 	scope = character
 	is_shown = { aov_adv_working_on = { KEY = lichdom } }
 }
-aov_adv_lichdom_elsewhere_sgui = {
-	scope = character
-	is_shown = {
-		aov_adv_is_committed = yes
-		NOT = { aov_adv_working_on = { KEY = lichdom } }
-	}
-}
 
 aov_adv_homunculus_start_sgui = {
 	scope = character
@@ -129,13 +80,6 @@ aov_adv_homunculus_start_sgui = {
 aov_adv_homunculus_working_sgui = {
 	scope = character
 	is_shown = { aov_adv_working_on = { KEY = homunculus } }
-}
-aov_adv_homunculus_elsewhere_sgui = {
-	scope = character
-	is_shown = {
-		aov_adv_is_committed = yes
-		NOT = { aov_adv_working_on = { KEY = homunculus } }
-	}
 }
 
 aov_adv_abandon_sgui = {

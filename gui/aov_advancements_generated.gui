@@ -154,8 +154,50 @@ types AovAdvancements
 			expand = {}
 		}
 		text_single = {
-			text = "AOV_ADV_ENDS_STUDY"
-			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)3' ), GetPlayer.MakeScope.Var( 'aov_studying' ).IsSet )]"
+			text = "AOV_ADV_ENDS_STUDY_ABJURATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_abjuration_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_CONJURATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_conjuration_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_DIVINATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_divination_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_ENCHANTMENT"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_enchantment_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_EVOCATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_evocation_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_ILLUSION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_illusion_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_NECROMANCY"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_necromancy_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_TRANSMUTATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_magical_fortress_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_transmutation_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
 			default_format = "#weak"
 			align = left|nobaseline
 		}
@@ -190,8 +232,44 @@ types AovAdvancements
 		}
 
 		text_single = {
-			text = "AOV_ADV_IN_PROGRESS_ELSEWHERE"
-			visible = "[GetScriptedGui('aov_adv_magical_fortress_elsewhere_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			text = "aov_adv_summon_extraplanars_in_progress"
+			visible = "[GetScriptedGui('aov_adv_summon_extraplanars_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_orb_of_omniscience_in_progress"
+			visible = "[GetScriptedGui('aov_adv_orb_of_omniscience_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_enchanted_artifact_in_progress"
+			visible = "[GetScriptedGui('aov_adv_enchanted_artifact_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_battlemage_academy_in_progress"
+			visible = "[GetScriptedGui('aov_adv_battlemage_academy_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_mirror_image_in_progress"
+			visible = "[GetScriptedGui('aov_adv_mirror_image_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_lichdom_in_progress"
+			visible = "[GetScriptedGui('aov_adv_lichdom_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_homunculus_in_progress"
+			visible = "[GetScriptedGui('aov_adv_homunculus_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			default_format = "#weak"
 			align = left|nobaseline
 		}
@@ -354,8 +432,50 @@ types AovAdvancements
 			expand = {}
 		}
 		text_single = {
-			text = "AOV_ADV_ENDS_STUDY"
-			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)3' ), GetPlayer.MakeScope.Var( 'aov_studying' ).IsSet )]"
+			text = "AOV_ADV_ENDS_STUDY_ABJURATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_abjuration_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_CONJURATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_conjuration_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_DIVINATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_divination_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_ENCHANTMENT"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_enchantment_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_EVOCATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_evocation_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_ILLUSION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_illusion_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_NECROMANCY"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_necromancy_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_TRANSMUTATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_summon_extraplanars_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_transmutation_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
 			default_format = "#weak"
 			align = left|nobaseline
 		}
@@ -390,8 +510,44 @@ types AovAdvancements
 		}
 
 		text_single = {
-			text = "AOV_ADV_IN_PROGRESS_ELSEWHERE"
-			visible = "[GetScriptedGui('aov_adv_summon_extraplanars_elsewhere_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			text = "aov_adv_magical_fortress_in_progress"
+			visible = "[GetScriptedGui('aov_adv_magical_fortress_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_orb_of_omniscience_in_progress"
+			visible = "[GetScriptedGui('aov_adv_orb_of_omniscience_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_enchanted_artifact_in_progress"
+			visible = "[GetScriptedGui('aov_adv_enchanted_artifact_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_battlemage_academy_in_progress"
+			visible = "[GetScriptedGui('aov_adv_battlemage_academy_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_mirror_image_in_progress"
+			visible = "[GetScriptedGui('aov_adv_mirror_image_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_lichdom_in_progress"
+			visible = "[GetScriptedGui('aov_adv_lichdom_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_homunculus_in_progress"
+			visible = "[GetScriptedGui('aov_adv_homunculus_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			default_format = "#weak"
 			align = left|nobaseline
 		}
@@ -554,8 +710,50 @@ types AovAdvancements
 			expand = {}
 		}
 		text_single = {
-			text = "AOV_ADV_ENDS_STUDY"
-			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)3' ), GetPlayer.MakeScope.Var( 'aov_studying' ).IsSet )]"
+			text = "AOV_ADV_ENDS_STUDY_ABJURATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_abjuration_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_CONJURATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_conjuration_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_DIVINATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_divination_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_ENCHANTMENT"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_enchantment_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_EVOCATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_evocation_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_ILLUSION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_illusion_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_NECROMANCY"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_necromancy_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_TRANSMUTATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_orb_of_omniscience_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_transmutation_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
 			default_format = "#weak"
 			align = left|nobaseline
 		}
@@ -590,8 +788,44 @@ types AovAdvancements
 		}
 
 		text_single = {
-			text = "AOV_ADV_IN_PROGRESS_ELSEWHERE"
-			visible = "[GetScriptedGui('aov_adv_orb_of_omniscience_elsewhere_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			text = "aov_adv_magical_fortress_in_progress"
+			visible = "[GetScriptedGui('aov_adv_magical_fortress_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_summon_extraplanars_in_progress"
+			visible = "[GetScriptedGui('aov_adv_summon_extraplanars_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_enchanted_artifact_in_progress"
+			visible = "[GetScriptedGui('aov_adv_enchanted_artifact_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_battlemage_academy_in_progress"
+			visible = "[GetScriptedGui('aov_adv_battlemage_academy_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_mirror_image_in_progress"
+			visible = "[GetScriptedGui('aov_adv_mirror_image_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_lichdom_in_progress"
+			visible = "[GetScriptedGui('aov_adv_lichdom_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_homunculus_in_progress"
+			visible = "[GetScriptedGui('aov_adv_homunculus_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			default_format = "#weak"
 			align = left|nobaseline
 		}
@@ -754,8 +988,50 @@ types AovAdvancements
 			expand = {}
 		}
 		text_single = {
-			text = "AOV_ADV_ENDS_STUDY"
-			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)3' ), GetPlayer.MakeScope.Var( 'aov_studying' ).IsSet )]"
+			text = "AOV_ADV_ENDS_STUDY_ABJURATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_abjuration_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_CONJURATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_conjuration_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_DIVINATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_divination_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_ENCHANTMENT"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_enchantment_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_EVOCATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_evocation_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_ILLUSION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_illusion_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_NECROMANCY"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_necromancy_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_TRANSMUTATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_enchanted_artifact_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_transmutation_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
 			default_format = "#weak"
 			align = left|nobaseline
 		}
@@ -790,8 +1066,44 @@ types AovAdvancements
 		}
 
 		text_single = {
-			text = "AOV_ADV_IN_PROGRESS_ELSEWHERE"
-			visible = "[GetScriptedGui('aov_adv_enchanted_artifact_elsewhere_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			text = "aov_adv_magical_fortress_in_progress"
+			visible = "[GetScriptedGui('aov_adv_magical_fortress_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_summon_extraplanars_in_progress"
+			visible = "[GetScriptedGui('aov_adv_summon_extraplanars_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_orb_of_omniscience_in_progress"
+			visible = "[GetScriptedGui('aov_adv_orb_of_omniscience_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_battlemage_academy_in_progress"
+			visible = "[GetScriptedGui('aov_adv_battlemage_academy_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_mirror_image_in_progress"
+			visible = "[GetScriptedGui('aov_adv_mirror_image_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_lichdom_in_progress"
+			visible = "[GetScriptedGui('aov_adv_lichdom_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_homunculus_in_progress"
+			visible = "[GetScriptedGui('aov_adv_homunculus_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			default_format = "#weak"
 			align = left|nobaseline
 		}
@@ -954,8 +1266,50 @@ types AovAdvancements
 			expand = {}
 		}
 		text_single = {
-			text = "AOV_ADV_ENDS_STUDY"
-			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)3' ), GetPlayer.MakeScope.Var( 'aov_studying' ).IsSet )]"
+			text = "AOV_ADV_ENDS_STUDY_ABJURATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_abjuration_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_CONJURATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_conjuration_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_DIVINATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_divination_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_ENCHANTMENT"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_enchantment_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_EVOCATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_evocation_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_ILLUSION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_illusion_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_NECROMANCY"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_necromancy_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_TRANSMUTATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_battlemage_academy_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_transmutation_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
 			default_format = "#weak"
 			align = left|nobaseline
 		}
@@ -990,8 +1344,44 @@ types AovAdvancements
 		}
 
 		text_single = {
-			text = "AOV_ADV_IN_PROGRESS_ELSEWHERE"
-			visible = "[GetScriptedGui('aov_adv_battlemage_academy_elsewhere_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			text = "aov_adv_magical_fortress_in_progress"
+			visible = "[GetScriptedGui('aov_adv_magical_fortress_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_summon_extraplanars_in_progress"
+			visible = "[GetScriptedGui('aov_adv_summon_extraplanars_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_orb_of_omniscience_in_progress"
+			visible = "[GetScriptedGui('aov_adv_orb_of_omniscience_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_enchanted_artifact_in_progress"
+			visible = "[GetScriptedGui('aov_adv_enchanted_artifact_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_mirror_image_in_progress"
+			visible = "[GetScriptedGui('aov_adv_mirror_image_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_lichdom_in_progress"
+			visible = "[GetScriptedGui('aov_adv_lichdom_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_homunculus_in_progress"
+			visible = "[GetScriptedGui('aov_adv_homunculus_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			default_format = "#weak"
 			align = left|nobaseline
 		}
@@ -1154,8 +1544,50 @@ types AovAdvancements
 			expand = {}
 		}
 		text_single = {
-			text = "AOV_ADV_ENDS_STUDY"
-			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)3' ), GetPlayer.MakeScope.Var( 'aov_studying' ).IsSet )]"
+			text = "AOV_ADV_ENDS_STUDY_ABJURATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_abjuration_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_CONJURATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_conjuration_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_DIVINATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_divination_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_ENCHANTMENT"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_enchantment_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_EVOCATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_evocation_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_ILLUSION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_illusion_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_NECROMANCY"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_necromancy_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_TRANSMUTATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_mirror_image_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_transmutation_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
 			default_format = "#weak"
 			align = left|nobaseline
 		}
@@ -1190,8 +1622,44 @@ types AovAdvancements
 		}
 
 		text_single = {
-			text = "AOV_ADV_IN_PROGRESS_ELSEWHERE"
-			visible = "[GetScriptedGui('aov_adv_mirror_image_elsewhere_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			text = "aov_adv_magical_fortress_in_progress"
+			visible = "[GetScriptedGui('aov_adv_magical_fortress_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_summon_extraplanars_in_progress"
+			visible = "[GetScriptedGui('aov_adv_summon_extraplanars_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_orb_of_omniscience_in_progress"
+			visible = "[GetScriptedGui('aov_adv_orb_of_omniscience_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_enchanted_artifact_in_progress"
+			visible = "[GetScriptedGui('aov_adv_enchanted_artifact_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_battlemage_academy_in_progress"
+			visible = "[GetScriptedGui('aov_adv_battlemage_academy_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_lichdom_in_progress"
+			visible = "[GetScriptedGui('aov_adv_lichdom_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_homunculus_in_progress"
+			visible = "[GetScriptedGui('aov_adv_homunculus_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			default_format = "#weak"
 			align = left|nobaseline
 		}
@@ -1354,8 +1822,50 @@ types AovAdvancements
 			expand = {}
 		}
 		text_single = {
-			text = "AOV_ADV_ENDS_STUDY"
-			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)3' ), GetPlayer.MakeScope.Var( 'aov_studying' ).IsSet )]"
+			text = "AOV_ADV_ENDS_STUDY_ABJURATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_abjuration_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_CONJURATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_conjuration_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_DIVINATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_divination_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_ENCHANTMENT"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_enchantment_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_EVOCATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_evocation_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_ILLUSION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_illusion_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_NECROMANCY"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_necromancy_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_TRANSMUTATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_lichdom_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_transmutation_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
 			default_format = "#weak"
 			align = left|nobaseline
 		}
@@ -1390,8 +1900,44 @@ types AovAdvancements
 		}
 
 		text_single = {
-			text = "AOV_ADV_IN_PROGRESS_ELSEWHERE"
-			visible = "[GetScriptedGui('aov_adv_lichdom_elsewhere_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			text = "aov_adv_magical_fortress_in_progress"
+			visible = "[GetScriptedGui('aov_adv_magical_fortress_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_summon_extraplanars_in_progress"
+			visible = "[GetScriptedGui('aov_adv_summon_extraplanars_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_orb_of_omniscience_in_progress"
+			visible = "[GetScriptedGui('aov_adv_orb_of_omniscience_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_enchanted_artifact_in_progress"
+			visible = "[GetScriptedGui('aov_adv_enchanted_artifact_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_battlemage_academy_in_progress"
+			visible = "[GetScriptedGui('aov_adv_battlemage_academy_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_mirror_image_in_progress"
+			visible = "[GetScriptedGui('aov_adv_mirror_image_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_homunculus_in_progress"
+			visible = "[GetScriptedGui('aov_adv_homunculus_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			default_format = "#weak"
 			align = left|nobaseline
 		}
@@ -1554,8 +2100,50 @@ types AovAdvancements
 			expand = {}
 		}
 		text_single = {
-			text = "AOV_ADV_ENDS_STUDY"
-			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)3' ), GetPlayer.MakeScope.Var( 'aov_studying' ).IsSet )]"
+			text = "AOV_ADV_ENDS_STUDY_ABJURATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_abjuration_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_CONJURATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_conjuration_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_DIVINATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_divination_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_ENCHANTMENT"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_enchantment_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_EVOCATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_evocation_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_ILLUSION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_illusion_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_NECROMANCY"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_necromancy_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "AOV_ADV_ENDS_STUDY_TRANSMUTATION"
+			visible = "[And( LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue( 'aov_adv_homunculus_level' ), '(CFixedPoint)3' ), GetScriptedGui('aov_study_transmutation_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
 			default_format = "#weak"
 			align = left|nobaseline
 		}
@@ -1590,8 +2178,44 @@ types AovAdvancements
 		}
 
 		text_single = {
-			text = "AOV_ADV_IN_PROGRESS_ELSEWHERE"
-			visible = "[GetScriptedGui('aov_adv_homunculus_elsewhere_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			text = "aov_adv_magical_fortress_in_progress"
+			visible = "[GetScriptedGui('aov_adv_magical_fortress_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_summon_extraplanars_in_progress"
+			visible = "[GetScriptedGui('aov_adv_summon_extraplanars_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_orb_of_omniscience_in_progress"
+			visible = "[GetScriptedGui('aov_adv_orb_of_omniscience_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_enchanted_artifact_in_progress"
+			visible = "[GetScriptedGui('aov_adv_enchanted_artifact_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_battlemage_academy_in_progress"
+			visible = "[GetScriptedGui('aov_adv_battlemage_academy_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_mirror_image_in_progress"
+			visible = "[GetScriptedGui('aov_adv_mirror_image_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			default_format = "#weak"
+			align = left|nobaseline
+		}
+		text_single = {
+			text = "aov_adv_lichdom_in_progress"
+			visible = "[GetScriptedGui('aov_adv_lichdom_working_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			default_format = "#weak"
 			align = left|nobaseline
 		}

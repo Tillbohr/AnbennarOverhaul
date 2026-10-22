@@ -167,11 +167,11 @@ aov_advancement.40 = {
 		aov_adv_lich_ritual = { VICTIM = scope:aov_sacrifice_3 }
 	}
 
-	# The prisoners are gone: the ritual must wait
+	# The prisoners are gone: the ritual waits, ready, for one (nothing is paid again)
 	option = {
 		name = aov_advancement.40.b
 		trigger = { NOT = { exists = scope:aov_sacrifice_1 } }
-		set_variable = { name = aov_adv_lichdom_lvl value = 2 }
+		aov_adv_lichdom_await_sacrifice = yes
 	}
 }
 
@@ -216,5 +216,72 @@ aov_advancement.30 = {
 	option = {
 		name = aov_advancement.30.learning
 		scope:aov_homunculus = { add_learning_skill = aov_adv_homunculus_skill }
+	}
+}
+
+# Lichdom: the ritual is ready but has no prisoner; it completes once there is one (aov_adv_lichdom_await_sacrifice)
+aov_advancement.42 = {
+	type = character_event
+	title = aov_advancement.42.t
+	desc = aov_advancement.42.desc
+	theme = dread
+	left_portrait = root
+
+	option = {
+		name = aov_advancement.42.a
+	}
+}
+
+# Lichdom: the ritual failed because the lich trait cannot be added (aov_adv_can_become_lich)
+aov_advancement.43 = {
+	type = character_event
+	title = aov_advancement.43.t
+	desc = aov_advancement.43.desc
+	theme = dread
+	left_portrait = root
+
+	option = {
+		name = aov_advancement.43.a
+	}
+}
+
+# Orb of Omniscience / Enchanted Artifact: the artifact was lost, so the level could not be completed
+# (aov_adv_artifact_level_failed, aov_adv_artifact_check); scope:aov_adv = the advancement
+aov_advancement.44 = {
+	type = character_event
+	title = aov_advancement.44.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:aov_adv = flag:orb_of_omniscience }
+				desc = aov_advancement.44.desc.orb_of_omniscience
+			}
+			triggered_desc = {
+				trigger = { scope:aov_adv = flag:enchanted_artifact }
+				desc = aov_advancement.44.desc.enchanted_artifact
+			}
+		}
+	}
+	theme = learning
+	left_portrait = root
+
+	option = {
+		name = aov_advancement.44.a
+	}
+}
+
+# A day after losing a title (aov_adv_on_title_lost): a mage who no longer rules gives up the advancement in progress
+aov_advancement.60 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		if = {
+			limit = {
+				aov_adv_is_committed = yes
+				aov_adv_eligible = no
+			}
+			aov_adv_abandon = yes
+		}
 	}
 }

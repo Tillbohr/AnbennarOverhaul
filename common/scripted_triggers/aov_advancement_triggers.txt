@@ -132,6 +132,7 @@ aov_adv_orb_of_omniscience_can_start = {
 			text = AOV_SPELL_REQ_DIVINATION_2
 			aov_school_level_at_least = { SCHOOL = divination LEVEL = 2 }
 		}
+		aov_adv_owns_orb = yes
 	}
 	trigger_else_if = {
 		limit = { aov_adv_orb_of_omniscience_level = 2 }
@@ -139,6 +140,7 @@ aov_adv_orb_of_omniscience_can_start = {
 			text = AOV_SPELL_REQ_DIVINATION_3
 			aov_school_level_at_least = { SCHOOL = divination LEVEL = 3 }
 		}
+		aov_adv_owns_orb = yes
 	}
 	custom_tooltip = {
 		text = aov_adv_orb_of_omniscience_req_gold

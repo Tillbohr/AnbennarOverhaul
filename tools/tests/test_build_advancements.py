@@ -49,6 +49,8 @@ class DataTests(unittest.TestCase):
         self.assertIn("aov_adv_can_craft_enchanted_artifact", req["enchanted_artifact"][1])
         for n in (2, 3):
             self.assertIn("aov_adv_owns_enchanted_artifact", req["enchanted_artifact"][n])
+        for n in (2, 3):
+            self.assertIn("aov_adv_owns_orb", req["orb_of_omniscience"][n])
         self.assertIn("aov_adv_owns_phylactery", req["lichdom"][3])
         self.assertIn("aov_adv_has_sacrifice", req["lichdom"][3])
         self.assertIn("aov_adv_can_become_lich", req["lichdom"][3])
@@ -186,8 +188,10 @@ class GeneratedTests(unittest.TestCase):
             for n in (1, 2, 3):
                 self.assertIn(f"aov_adv_{k}_{n}_effect = yes", c)
             self.assertIn(f"set_variable = {{ name = aov_adv_{k}_lvl value = var:aov_adv_working_level }}", c)
-            self.assertIn("trigger_event = aov_advancement.1", c)
-            self.assertLess(c.index("_effect = yes"), c.index("aov_adv_abandon = yes"))
+            # The commitment ends before the level effect, so a failed level can re-commit (Lichdom awaiting a
+            # sacrifice); the success event is skipped when the effect reports a failure
+            self.assertLess(c.index("aov_adv_abandon = yes"), c.index("_effect = yes"))
+            self.assertIn("limit = { NOT = { exists = scope:aov_adv_failed } }\n\t\ttrigger_event = aov_advancement.1", c)
 
     def test_months_needed(self):
         m = block(FILES[VAL], "aov_adv_months_needed")
@@ -200,6 +204,7 @@ class GeneratedTests(unittest.TestCase):
             self.assertIn(f"aov_adv_{k}_can_start = yes", s)
             self.assertIn(f"aov_adv_{k}_start = yes", s)
             self.assertIn(f"aov_adv_working_on = {{ KEY = {k} }}", block(FILES[SGUI], f"aov_adv_{k}_working_sgui"))
+            self.assertNotIn(f"aov_adv_{k}_elsewhere_sgui", FILES[SGUI])
         self.assertIn("aov_adv_abandon = yes", block(FILES[SGUI], "aov_adv_abandon_sgui"))
 
     def test_gui_page_per_school(self):
@@ -213,14 +218,30 @@ class GeneratedTests(unittest.TestCase):
             self.assertIn(f"ScriptValue( 'aov_adv_{k}_level' )", page)
             self.assertIn("aov_adv_progress_percent", page)
 
-    def test_gui_warns_study_ends(self):
-        self.assertEqual(FILES[GUI].count('text = "AOV_ADV_ENDS_STUDY"'), 8)
-        self.assertIn("GetPlayer.MakeScope.Var( 'aov_studying' ).IsSet", FILES[GUI])
+    def pages(self):
+        return {c: re.search(rf"type aov_advancement_{c} = vbox \{{(.*?)\n\t\}}\n", FILES[GUI], re.S).group(1)
+                for c in ba.SCHOOLS}
 
-    def test_start_disabled_elsewhere_names_progress(self):
+    def test_gui_warns_which_study_ends(self):
+        for c, page in self.pages().items():
+            for s in ba.SCHOOLS:
+                m = re.search(rf'text = "AOV_ADV_ENDS_STUDY_{s.upper()}"\n\s*visible = "\[(.*?)\]"', page)
+                self.assertTrue(m, f"{c}: {s}")
+                self.assertIn(f"aov_study_{s}_sgui').IsShown", m.group(1))
+        for s in ba.SCHOOLS:
+            self.assertIn(f"$AOV_SCHOOL_{s.upper()}$", re.search(rf'AOV_ADV_ENDS_STUDY_{s.upper()}: "(.*)"', FILES[LOC]).group(1))
+
+    def test_elsewhere_line_names_the_advancement(self):
+        for c, page in self.pages().items():
+            own = ba.ADV_OF_SCHOOL[c]
+            self.assertNotIn(f'text = "aov_adv_{own}_in_progress"', page)
+            for k in ba.ADV_OF_SCHOOL.values():
+                if k != own:
+                    m = re.search(rf'text = "aov_adv_{k}_in_progress"\n\s*visible = "\[(.*?)\]"', page)
+                    self.assertTrue(m, f"{c}: {k}")
+                    self.assertIn(f"aov_adv_{k}_working_sgui').IsShown", m.group(1))
         for k in ba.ADV_OF_SCHOOL.values():
-            self.assertIn("aov_adv_is_committed = yes", block(FILES[SGUI], f"aov_adv_{k}_elsewhere_sgui"))
-        self.assertEqual(FILES[GUI].count('text = "AOV_ADV_IN_PROGRESS_ELSEWHERE"'), 8)
+            self.assertIn(f"$aov_adv_{k}$", re.search(rf'aov_adv_{k}_in_progress: "(.*)"', FILES[LOC]).group(1))
 
     def test_loc_keys(self):
         used = set(re.findall(r"\b(aov_adv_[a-z_0-9]+)", FILES[GUI] + FILES[TRIG] + FILES[EFF]))
@@ -230,7 +251,7 @@ class GeneratedTests(unittest.TestCase):
         script_names = {"aov_adv_eligible", "aov_adv_is_committed", "aov_adv_working_on", "aov_adv_abandon",
                         "aov_adv_quarterly", "aov_adv_committed", "aov_adv_working_level", "aov_adv_progress",
                         "aov_adv_progress_percent", "aov_adv_months_needed", "aov_adv_months_left",
-                        "aov_adv_ai_pick", "aov_adv_ai_yearly"}
+                        "aov_adv_ai_pick", "aov_adv_ai_yearly", "aov_adv_failed"}
         requires = {t for a in ADVS for ts in a["requires"].values() for t in ts}
         self.assertEqual(sorted(used - defined - script_names - requires), [])
         for k in ba.ADV_OF_SCHOOL.values():

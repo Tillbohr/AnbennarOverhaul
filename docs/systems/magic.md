@@ -53,7 +53,9 @@ Its generator `tools/build_magic_lifestyle_art.py` was removed; replace the file
   labour). Ruling mages only (`aov_adv_eligible`: landed + Magical Affinity). Level N needs school level N; a level
   costs gold and mana up front and completes on the quarterly tick. A mage either studies or works on one advancement
   (starting clears `aov_studying`; the Study buttons are invalid while `aov_adv_committed` is set); Abandon refunds
-  nothing. State: `aov_adv_committed`, `aov_adv_working_level`, `aov_adv_progress`, `aov_adv_<key>_lvl`, plus
+  nothing. A level that cannot take effect says so instead of the success event (scope:aov_adv_failed): a lost Orb or
+  enchanted artifact ends the work (event 44); the Lichdom ritual without a prisoner waits, ready, until there is one
+  (event 42). A mage who stops being a ruling mage abandons the commitment (quarterly tick; `on_title_lost`). State: `aov_adv_committed`, `aov_adv_working_level`, `aov_adv_progress`, `aov_adv_<key>_lvl`, plus
   `aov_adv_orb`, `aov_adv_enchanted_*`, `aov_adv_phylactery`, `aov_adv_host`, `aov_adv_homunculus`; all die with the
   mage, while artifacts, homunculi, buildings and regiments remain. Hand-written: level effects
   `common/scripted_effects/aov_advancement_level_effects.txt`, start conditions

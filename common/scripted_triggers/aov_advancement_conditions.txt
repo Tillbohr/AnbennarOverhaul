@@ -1,6 +1,17 @@
 ﻿# Anbennar Overhaul: per-level start conditions named by tools/data/advancements.py (requires).
 # Character scope (the mage).
 
+# Orb of Omniscience levels 2-3: the mage still owns the Orb they made
+aov_adv_owns_orb = {
+	custom_tooltip = {
+		text = aov_adv_owns_orb_tt
+		exists = var:aov_adv_orb
+		var:aov_adv_orb = {
+			artifact_owner = { this = root }
+		}
+	}
+}
+
 # Enchanted Artifact: one per mage per lifetime
 aov_adv_can_craft_enchanted_artifact = {
 	custom_tooltip = {

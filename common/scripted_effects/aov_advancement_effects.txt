@@ -27,20 +27,23 @@ aov_adv_magical_fortress_complete = {
 	set_variable = { name = aov_adv_magical_fortress_lvl value = var:aov_adv_working_level }
 	save_scope_value_as = { name = aov_adv value = flag:magical_fortress }
 	save_scope_value_as = { name = aov_adv_level value = var:aov_adv_working_level }
+	aov_adv_abandon = yes
 	if = {
-		limit = { var:aov_adv_working_level = 1 }
+		limit = { scope:aov_adv_level = 1 }
 		aov_adv_magical_fortress_1_effect = yes
 	}
 	else_if = {
-		limit = { var:aov_adv_working_level = 2 }
+		limit = { scope:aov_adv_level = 2 }
 		aov_adv_magical_fortress_2_effect = yes
 	}
 	else_if = {
-		limit = { var:aov_adv_working_level = 3 }
+		limit = { scope:aov_adv_level = 3 }
 		aov_adv_magical_fortress_3_effect = yes
 	}
-	aov_adv_abandon = yes
-	trigger_event = aov_advancement.1
+	if = {
+		limit = { NOT = { exists = scope:aov_adv_failed } }
+		trigger_event = aov_advancement.1
+	}
 }
 
 aov_adv_summon_extraplanars_start = {
@@ -68,20 +71,23 @@ aov_adv_summon_extraplanars_complete = {
 	set_variable = { name = aov_adv_summon_extraplanars_lvl value = var:aov_adv_working_level }
 	save_scope_value_as = { name = aov_adv value = flag:summon_extraplanars }
 	save_scope_value_as = { name = aov_adv_level value = var:aov_adv_working_level }
+	aov_adv_abandon = yes
 	if = {
-		limit = { var:aov_adv_working_level = 1 }
+		limit = { scope:aov_adv_level = 1 }
 		aov_adv_summon_extraplanars_1_effect = yes
 	}
 	else_if = {
-		limit = { var:aov_adv_working_level = 2 }
+		limit = { scope:aov_adv_level = 2 }
 		aov_adv_summon_extraplanars_2_effect = yes
 	}
 	else_if = {
-		limit = { var:aov_adv_working_level = 3 }
+		limit = { scope:aov_adv_level = 3 }
 		aov_adv_summon_extraplanars_3_effect = yes
 	}
-	aov_adv_abandon = yes
-	trigger_event = aov_advancement.1
+	if = {
+		limit = { NOT = { exists = scope:aov_adv_failed } }
+		trigger_event = aov_advancement.1
+	}
 }
 
 aov_adv_orb_of_omniscience_start = {
@@ -109,20 +115,23 @@ aov_adv_orb_of_omniscience_complete = {
 	set_variable = { name = aov_adv_orb_of_omniscience_lvl value = var:aov_adv_working_level }
 	save_scope_value_as = { name = aov_adv value = flag:orb_of_omniscience }
 	save_scope_value_as = { name = aov_adv_level value = var:aov_adv_working_level }
+	aov_adv_abandon = yes
 	if = {
-		limit = { var:aov_adv_working_level = 1 }
+		limit = { scope:aov_adv_level = 1 }
 		aov_adv_orb_of_omniscience_1_effect = yes
 	}
 	else_if = {
-		limit = { var:aov_adv_working_level = 2 }
+		limit = { scope:aov_adv_level = 2 }
 		aov_adv_orb_of_omniscience_2_effect = yes
 	}
 	else_if = {
-		limit = { var:aov_adv_working_level = 3 }
+		limit = { scope:aov_adv_level = 3 }
 		aov_adv_orb_of_omniscience_3_effect = yes
 	}
-	aov_adv_abandon = yes
-	trigger_event = aov_advancement.1
+	if = {
+		limit = { NOT = { exists = scope:aov_adv_failed } }
+		trigger_event = aov_advancement.1
+	}
 }
 
 aov_adv_enchanted_artifact_start = {
@@ -150,20 +159,23 @@ aov_adv_enchanted_artifact_complete = {
 	set_variable = { name = aov_adv_enchanted_artifact_lvl value = var:aov_adv_working_level }
 	save_scope_value_as = { name = aov_adv value = flag:enchanted_artifact }
 	save_scope_value_as = { name = aov_adv_level value = var:aov_adv_working_level }
+	aov_adv_abandon = yes
 	if = {
-		limit = { var:aov_adv_working_level = 1 }
+		limit = { scope:aov_adv_level = 1 }
 		aov_adv_enchanted_artifact_1_effect = yes
 	}
 	else_if = {
-		limit = { var:aov_adv_working_level = 2 }
+		limit = { scope:aov_adv_level = 2 }
 		aov_adv_enchanted_artifact_2_effect = yes
 	}
 	else_if = {
-		limit = { var:aov_adv_working_level = 3 }
+		limit = { scope:aov_adv_level = 3 }
 		aov_adv_enchanted_artifact_3_effect = yes
 	}
-	aov_adv_abandon = yes
-	trigger_event = aov_advancement.1
+	if = {
+		limit = { NOT = { exists = scope:aov_adv_failed } }
+		trigger_event = aov_advancement.1
+	}
 }
 
 aov_adv_battlemage_academy_start = {
@@ -191,20 +203,23 @@ aov_adv_battlemage_academy_complete = {
 	set_variable = { name = aov_adv_battlemage_academy_lvl value = var:aov_adv_working_level }
 	save_scope_value_as = { name = aov_adv value = flag:battlemage_academy }
 	save_scope_value_as = { name = aov_adv_level value = var:aov_adv_working_level }
+	aov_adv_abandon = yes
 	if = {
-		limit = { var:aov_adv_working_level = 1 }
+		limit = { scope:aov_adv_level = 1 }
 		aov_adv_battlemage_academy_1_effect = yes
 	}
 	else_if = {
-		limit = { var:aov_adv_working_level = 2 }
+		limit = { scope:aov_adv_level = 2 }
 		aov_adv_battlemage_academy_2_effect = yes
 	}
 	else_if = {
-		limit = { var:aov_adv_working_level = 3 }
+		limit = { scope:aov_adv_level = 3 }
 		aov_adv_battlemage_academy_3_effect = yes
 	}
-	aov_adv_abandon = yes
-	trigger_event = aov_advancement.1
+	if = {
+		limit = { NOT = { exists = scope:aov_adv_failed } }
+		trigger_event = aov_advancement.1
+	}
 }
 
 aov_adv_mirror_image_start = {
@@ -232,20 +247,23 @@ aov_adv_mirror_image_complete = {
 	set_variable = { name = aov_adv_mirror_image_lvl value = var:aov_adv_working_level }
 	save_scope_value_as = { name = aov_adv value = flag:mirror_image }
 	save_scope_value_as = { name = aov_adv_level value = var:aov_adv_working_level }
+	aov_adv_abandon = yes
 	if = {
-		limit = { var:aov_adv_working_level = 1 }
+		limit = { scope:aov_adv_level = 1 }
 		aov_adv_mirror_image_1_effect = yes
 	}
 	else_if = {
-		limit = { var:aov_adv_working_level = 2 }
+		limit = { scope:aov_adv_level = 2 }
 		aov_adv_mirror_image_2_effect = yes
 	}
 	else_if = {
-		limit = { var:aov_adv_working_level = 3 }
+		limit = { scope:aov_adv_level = 3 }
 		aov_adv_mirror_image_3_effect = yes
 	}
-	aov_adv_abandon = yes
-	trigger_event = aov_advancement.1
+	if = {
+		limit = { NOT = { exists = scope:aov_adv_failed } }
+		trigger_event = aov_advancement.1
+	}
 }
 
 aov_adv_lichdom_start = {
@@ -273,20 +291,23 @@ aov_adv_lichdom_complete = {
 	set_variable = { name = aov_adv_lichdom_lvl value = var:aov_adv_working_level }
 	save_scope_value_as = { name = aov_adv value = flag:lichdom }
 	save_scope_value_as = { name = aov_adv_level value = var:aov_adv_working_level }
+	aov_adv_abandon = yes
 	if = {
-		limit = { var:aov_adv_working_level = 1 }
+		limit = { scope:aov_adv_level = 1 }
 		aov_adv_lichdom_1_effect = yes
 	}
 	else_if = {
-		limit = { var:aov_adv_working_level = 2 }
+		limit = { scope:aov_adv_level = 2 }
 		aov_adv_lichdom_2_effect = yes
 	}
 	else_if = {
-		limit = { var:aov_adv_working_level = 3 }
+		limit = { scope:aov_adv_level = 3 }
 		aov_adv_lichdom_3_effect = yes
 	}
-	aov_adv_abandon = yes
-	trigger_event = aov_advancement.1
+	if = {
+		limit = { NOT = { exists = scope:aov_adv_failed } }
+		trigger_event = aov_advancement.1
+	}
 }
 
 aov_adv_homunculus_start = {
@@ -314,20 +335,23 @@ aov_adv_homunculus_complete = {
 	set_variable = { name = aov_adv_homunculus_lvl value = var:aov_adv_working_level }
 	save_scope_value_as = { name = aov_adv value = flag:homunculus }
 	save_scope_value_as = { name = aov_adv_level value = var:aov_adv_working_level }
+	aov_adv_abandon = yes
 	if = {
-		limit = { var:aov_adv_working_level = 1 }
+		limit = { scope:aov_adv_level = 1 }
 		aov_adv_homunculus_1_effect = yes
 	}
 	else_if = {
-		limit = { var:aov_adv_working_level = 2 }
+		limit = { scope:aov_adv_level = 2 }
 		aov_adv_homunculus_2_effect = yes
 	}
 	else_if = {
-		limit = { var:aov_adv_working_level = 3 }
+		limit = { scope:aov_adv_level = 3 }
 		aov_adv_homunculus_3_effect = yes
 	}
-	aov_adv_abandon = yes
-	trigger_event = aov_advancement.1
+	if = {
+		limit = { NOT = { exists = scope:aov_adv_failed } }
+		trigger_event = aov_advancement.1
+	}
 }
 
 # Ends the commitment; nothing is refunded

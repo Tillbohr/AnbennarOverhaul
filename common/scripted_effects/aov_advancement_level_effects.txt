@@ -132,22 +132,61 @@ aov_adv_orb_of_omniscience_1_effect = {
 aov_adv_orb_of_omniscience_2_effect = {
 	add_magic_lifestyle_xp = 100
 	if = {
-		limit = { exists = var:aov_adv_orb }
+		limit = { aov_adv_owns_orb = yes }
 		var:aov_adv_orb = { add_artifact_modifier = aov_orb_2 }
+	}
+	else = {
+		aov_adv_artifact_level_failed = { KEY = orb_of_omniscience LEVEL = 1 }
 	}
 }
 
 aov_adv_orb_of_omniscience_3_effect = {
 	add_magic_lifestyle_xp = 100
 	if = {
-		limit = { exists = var:aov_adv_orb }
+		limit = { aov_adv_owns_orb = yes }
 		var:aov_adv_orb = { add_artifact_modifier = aov_orb_3 }
+	}
+	else = {
+		aov_adv_artifact_level_failed = { KEY = orb_of_omniscience LEVEL = 2 }
 	}
 }
 
 ##########
 # Enchantment: Enchanted Artifact
 ##########
+
+# Orb of Omniscience and Enchanted Artifact levels 2-3: the artifact was lost before the level completed. KEY = the
+# advancement, LEVEL = the level it falls back to. The gold and mana are lost; the level must be begun again
+aov_adv_artifact_level_failed = {
+	set_variable = { name = aov_adv_$KEY$_lvl value = $LEVEL$ }
+	save_scope_value_as = { name = aov_adv_failed value = yes }
+	trigger_event = aov_advancement.44
+}
+
+# Quarterly (aov_adv_quarterly_pulse): a mage working on a later level of the Orb or the Enchanted Artifact who no
+# longer owns it stops; nothing is refunded (event aov_advancement.44)
+aov_adv_artifact_check = {
+	if = {
+		limit = {
+			aov_adv_working_on = { KEY = enchanted_artifact }
+			aov_adv_enchanted_artifact_level >= 1
+			aov_adv_owns_enchanted_artifact = no
+		}
+		save_scope_value_as = { name = aov_adv value = flag:enchanted_artifact }
+		aov_adv_abandon = yes
+		trigger_event = aov_advancement.44
+	}
+	else_if = {
+		limit = {
+			aov_adv_working_on = { KEY = orb_of_omniscience }
+			aov_adv_orb_of_omniscience_level >= 1
+			aov_adv_owns_orb = no
+		}
+		save_scope_value_as = { name = aov_adv value = flag:orb_of_omniscience }
+		aov_adv_abandon = yes
+		trigger_event = aov_advancement.44
+	}
+}
 
 # Choose the kind (event aov_advancement.20), which crafts it with aov_adv_enchanted_create_<kind>
 aov_adv_enchanted_artifact_1_effect = {
@@ -181,6 +220,9 @@ aov_adv_enchanted_artifact_2_effect = {
 			var:aov_adv_enchanted_artifact = { add_artifact_modifier = aov_enchanted_trinket_2 }
 		}
 	}
+	else = {
+		aov_adv_artifact_level_failed = { KEY = enchanted_artifact LEVEL = 1 }
+	}
 }
 
 aov_adv_enchanted_artifact_3_effect = {
@@ -207,6 +249,9 @@ aov_adv_enchanted_artifact_3_effect = {
 			limit = { var:aov_adv_enchanted_type = flag:trinket }
 			var:aov_adv_enchanted_artifact = { add_artifact_modifier = aov_enchanted_trinket_3 }
 		}
+	}
+	else = {
+		aov_adv_artifact_level_failed = { KEY = enchanted_artifact LEVEL = 2 }
 	}
 }
 
@@ -465,23 +510,47 @@ aov_adv_lichdom_2_effect = {
 	aov_dark_magic_roll = yes
 }
 
-# The Ritual: the player picks the prisoner (event aov_advancement.40). Without the phylactery or a prisoner it
-# fails: back to level 2, or to level 1 if the phylactery is gone
+# The Ritual: the player picks the prisoner (event aov_advancement.40). Without the phylactery it falls back to
+# level 1 (aov_adv_lichdom_check, event 41); if the lich trait cannot be added it fails (event 43); without a prisoner
+# it waits, ready, until there is one (aov_adv_lichdom_await_sacrifice, event 42)
 aov_adv_lichdom_3_effect = {
 	add_magic_lifestyle_xp = 100
 	if = {
-		limit = {
-			aov_adv_owns_phylactery = yes
-			aov_adv_has_sacrifice = yes
-			aov_adv_can_become_lich = yes
-		}
-		trigger_event = aov_advancement.40
-	}
-	else = {
+		limit = { aov_adv_owns_phylactery = no }
+		save_scope_value_as = { name = aov_adv_failed value = yes }
 		set_variable = { name = aov_adv_lichdom_lvl value = 2 }
-		custom_tooltip = aov_adv_lichdom_ritual_failed_tt
 		aov_adv_lichdom_check = yes
 	}
+	else_if = {
+		limit = { aov_adv_can_become_lich = no }
+		save_scope_value_as = { name = aov_adv_failed value = yes }
+		set_variable = { name = aov_adv_lichdom_lvl value = 2 }
+		trigger_event = aov_advancement.43
+	}
+	else_if = {
+		limit = { aov_adv_has_sacrifice = no }
+		save_scope_value_as = { name = aov_adv_failed value = yes }
+		aov_adv_lichdom_await_sacrifice = yes
+	}
+	else = {
+		trigger_event = aov_advancement.40
+	}
+}
+
+# The ritual is ready but there is no prisoner: keep the commitment one quarter short of done, so it completes on the
+# next quarterly tick that finds a prisoner. Nothing is paid again
+aov_adv_lichdom_await_sacrifice = {
+	set_variable = { name = aov_adv_lichdom_lvl value = 2 }
+	set_variable = { name = aov_adv_committed value = flag:lichdom }
+	set_variable = { name = aov_adv_working_level value = 3 }
+	set_variable = {
+		name = aov_adv_progress
+		value = {
+			value = aov_adv_months_needed
+			subtract = 3
+		}
+	}
+	trigger_event = aov_advancement.42
 }
 
 # VICTIM = the prisoner sacrificed

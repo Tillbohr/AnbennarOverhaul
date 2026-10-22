@@ -143,15 +143,18 @@ def effects(advs: list) -> str:
             f"\t\tset_variable = {{ name = aov_adv_progress value = 0 }}\n\t}}\n}}\n"
         )
         calls = "".join(
-            f"\t{'if' if n == 1 else 'else_if'} = {{\n\t\tlimit = {{ var:aov_adv_working_level = {n} }}\n"
+            f"\t{'if' if n == 1 else 'else_if'} = {{\n\t\tlimit = {{ scope:aov_adv_level = {n} }}\n"
             f"\t\taov_adv_{k}_{n}_effect = yes\n\t}}\n" for n in (1, 2, 3))
+        # The commitment ends before the level effect, so a level that cannot take effect may re-commit (Lichdom
+        # awaiting a sacrifice); such a level saves scope:aov_adv_failed and fires its own event instead of the success one
         out.append(
             f"aov_adv_{k}_complete = {{\n"
             f"\tset_variable = {{ name = aov_adv_{k}_lvl value = var:aov_adv_working_level }}\n"
             f"\tsave_scope_value_as = {{ name = aov_adv value = flag:{k} }}\n"
             f"\tsave_scope_value_as = {{ name = aov_adv_level value = var:aov_adv_working_level }}\n"
+            "\taov_adv_abandon = yes\n"
             + calls
-            + "\taov_adv_abandon = yes\n\ttrigger_event = aov_advancement.1\n}\n"
+            + "\tif = {\n\t\tlimit = { NOT = { exists = scope:aov_adv_failed } }\n\t\ttrigger_event = aov_advancement.1\n\t}\n}\n"
         )
     out.append("# Ends the commitment; nothing is refunded\naov_adv_abandon = {\n"
                "\tremove_variable = aov_adv_committed\n\tremove_variable = aov_adv_working_level\n"
@@ -190,8 +193,6 @@ def sguis(advs: list) -> str:
             f"aov_adv_{k}_start_sgui = {{\n\tscope = character\n\tis_valid = {{ aov_adv_{k}_can_start = yes }}\n"
             f"\teffect = {{ aov_adv_{k}_start = yes }}\n}}\n"
             f"aov_adv_{k}_working_sgui = {{\n\tscope = character\n\tis_shown = {{ aov_adv_working_on = {{ KEY = {k} }} }}\n}}\n"
-            f"aov_adv_{k}_elsewhere_sgui = {{\n\tscope = character\n\tis_shown = {{\n\t\taov_adv_is_committed = yes\n"
-            f"\t\tNOT = {{ aov_adv_working_on = {{ KEY = {k} }} }}\n\t}}\n}}\n"
         )
     out.append("aov_adv_abandon_sgui = {\n\tscope = character\n\tis_valid = { aov_adv_is_committed = yes }\n"
                "\teffect = { aov_adv_abandon = yes }\n}\n")
@@ -230,12 +231,12 @@ def indent(t: str, n: int) -> str:
     return "".join(("\t" * n + line) if line.strip() else line for line in t.splitlines(True))
 
 
-def page(a) -> str:
+def page(a, advs: list) -> str:
     """One school's Advancements tab: title and school level, description, the three-level track, then either the
-    Start row (cost, study warning), the progress row (bar, time left, Abandon), or a line for another commitment."""
+    Start row (cost, the school whose study it would end), the progress row (bar, time left, Abandon), or a line
+    naming the advancement in progress elsewhere."""
     k, c = a["key"], a["school"]
     working = sgref(f"aov_adv_{k}_working_sgui", "IsShown")
-    elsewhere = sgref(f"aov_adv_{k}_elsewhere_sgui", "IsShown")
     start = f"aov_adv_{k}_start_sgui"
     badge = "".join(
         f'icon = {{\n\tvisible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue( \'aov_school_{c}_level\' ), \'(CFixedPoint){n}\' )]"\n'
@@ -262,8 +263,9 @@ def page(a) -> str:
         f'\t\t\tonclick = "[{sgref(start, "Execute")}]"\n\t\t}}\n\t}}\n\n'
         + indent(text(f"aov_adv_{k}_cost"), 1)
         + "\texpand = {}\n}\n"
-        + text("AOV_ADV_ENDS_STUDY", f'\tvisible = "[And( {not_done}, GetPlayer.MakeScope.Var( \'aov_studying\' ).IsSet )]"\n'
-               '\tdefault_format = "#weak"\n'))
+        + "".join(text(f"AOV_ADV_ENDS_STUDY_{s.upper()}",
+                       f'\tvisible = "[And( {not_done}, {sgref(f"aov_study_{s}_sgui", "IsShown")} )]"\n'
+                       '\tdefault_format = "#weak"\n') for s in SCHOOLS))
     progress_row = (
         f'hbox = {{\n\tvisible = "[{working}]"\n\tlayoutpolicy_horizontal = expanding\n\tspacing = 8\n\n'
         f"\tprogressbar_standard = {{\n\t\tsize = {{ 200 11 }}\n\t\tmin = 0\n\t\tmax = 100\n"
@@ -278,14 +280,16 @@ def page(a) -> str:
     body = (header + "\n"
             + text(f"aov_adv_{k}_desc", '\tdefault_format = "#weak"\n', multi=True) + "\n"
             + track + "\n" + start_row + "\n" + progress_row + "\n"
-            + text("AOV_ADV_IN_PROGRESS_ELSEWHERE", f'\tvisible = "[{elsewhere}]"\n\tdefault_format = "#weak"\n')
+            + "".join(text(f"aov_adv_{o['key']}_in_progress",
+                           f'\tvisible = "[{sgref(f"aov_adv_{o["key"]}_working_sgui", "IsShown")}]"\n\tdefault_format = "#weak"\n')
+                      for o in advs if o["key"] != k)
             + text("AOV_ADV_COMPLETE", f'\tvisible = "[{level_is(k, "EqualTo", 3)}]"\n'))
     return (f"\ttype aov_advancement_{c} = vbox {{\n\t\tlayoutpolicy_horizontal = expanding\n\t\tspacing = 10\n\n"
             + indent(body, 2) + "\t}\n")
 
 
 def gui(advs: list) -> str:
-    return HEADER + "\ntypes AovAdvancements\n{\n" + "\n".join(page(a) for a in advs) + "}\n"
+    return HEADER + "\ntypes AovAdvancements\n{\n" + "\n".join(page(a, advs) for a in advs) + "}\n"
 
 
 def loc(advs: list) -> str:
@@ -304,6 +308,10 @@ def loc(advs: list) -> str:
         out.append(f' aov_adv_{k}_cost_tt: "Costs {gold} gold and {mana} mana, takes {years} years, and ends any study"')
         out.append(f' aov_adv_{k}_req_gold: "Has at least {gold} gold"')
         out.append(f' aov_adv_{k}_req_mana: "Has at least {mana} mana"')
+        out.append(f' aov_adv_{k}_in_progress: "You are already working on #V $aov_adv_{k}$#!."')
+    out.append("")
+    for s in SCHOOLS:
+        out.append(f' AOV_ADV_ENDS_STUDY_{s.upper()}: "Beginning a level ends your study of $AOV_SCHOOL_{s.upper()}$."')
     return "\n".join(out) + "\n"
 
 
