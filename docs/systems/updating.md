@@ -5,7 +5,9 @@
 3. Run tiger and the tool tests (below) and fix anything that references renamed Anbennar content. The tests fail if
    Anbennar renames `anb_enhance_ability_interaction` or adds another way to start its Enhance Ability scheme (removed
    from the game; see `EnhanceAbilityRemovedTests`). If Anbennar changes the `lich` trait's `opposites`, copy them into
-   `aov_adv_can_become_lich` (`common/scripted_triggers/aov_advancement_conditions.txt`; Lichdom level 3).
+   `aov_adv_can_become_lich` (`common/scripted_triggers/aov_advancement_conditions.txt`; Lichdom level 3). The lich
+   portrait (`gfx/portraits/portrait_modifiers/aov_lich.txt`) replaces the `hairstyles` and `beards` genes with
+   `no_hairstyles` and `no_beard`; check those templates still exist after an Anbennar update.
 4. Re-copy Anbennar's `title_revocation_standard_can_pick_title_trigger` (`common/scripted_triggers/00_interaction_triggers.txt`)
    into `common/scripted_triggers/zz_aov_interaction_triggers.txt`, keeping the `# Anbennar Overhaul` faction-title exclusion.
 5. Re-copy Anbennar's `building_requirement_castle_city_church` and

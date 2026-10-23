@@ -120,9 +120,43 @@ aov_adv_mirror_image_cost_cut = {
 ##########
 # Necromancy: Lichdom
 ##########
-# aov_lichdom_crime: +2 Learning, +5 dread. Phylactery (aov_phylactery): +1 Learning. Level 3 grants Anbennar's lich
-# trait (immortal, +5 all skills, +10 prowess, +50 dread, -20 general opinion). Each level rolls for Forbidden Magic
-# Practitioner where magic is illegal or shunned (aov_dark_magic_roll).
+# Phylactery (aov_phylactery): +1 Learning. aov_lichdom_potion: +2 Learning, +5 dread until drunk. Level 3 grants
+# Anbennar's lich trait (immortal, +5 all skills, +10 prowess, +50 dread, -20 general opinion) and Forbidden Magic
+# Practitioner; level 2 rolls for it where magic is illegal or shunned (aov_dark_magic_roll).
+# Step choices (events/aov_lichdom_events.txt) cost gold, mana, prestige (vanilla *_prestige_loss), stress or dread:
+aov_lichdom_gold_low = 25
+aov_lichdom_gold_mid = 50
+aov_lichdom_gold_high = 100
+aov_lichdom_mana = 40
+aov_lichdom_dread_low = 5
+aov_lichdom_dread_high = 15
+# Months of progress a faster choice gains (aov_adv_lichdom_hasten)
+aov_lichdom_months_fast = 3
+aov_lichdom_months_faster = 6
+# Backing out of a step: prestige lost per level of the work in progress
+aov_lichdom_back_out_prestige = {
+	value = -50
+	if = {
+		limit = { has_variable = aov_adv_working_level }
+		multiply = var:aov_adv_working_level
+	}
+}
+# Turning Back (aov_lichdom.20): prestige for stopping at the last moment
+aov_lichdom_turn_back_prestige = 50
+
+# The progress (months) at which the next step fires: a third of the level per step already fired
+aov_lichdom_next_step_at = {
+	value = aov_adv_months_needed
+	multiply = var:aov_lichdom_step
+	divide = 3
+}
+# The most progress a faster choice can reach: one quarter for each step left, plus the quarter that completes the level
+aov_lichdom_progress_cap = {
+	value = 4
+	subtract = var:aov_lichdom_step
+	multiply = -3
+	add = aov_adv_months_needed
+}
 
 ##########
 # Transmutation: Homunculus

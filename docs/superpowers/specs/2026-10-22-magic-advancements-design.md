@@ -102,16 +102,24 @@ Themes (placeholder totals at level 3; meant to be extremely strong):
 
 ### Necromancy: Lichdom
 
-| Level | Effect |
-|---|---|
-| 1 | Begin the Crime: +Learning; risks Forbidden Magic Practitioner like necromancy spells |
-| 2 | Craft the Phylactery: a non-decaying artifact, stored on the mage as `aov_adv_phylactery` |
-| 3 | The Ritual: needs the phylactery and a prisoner to start; on completion the prisoner is sacrificed and the mage gains Anbennar's `lich` trait |
+Revised 2026-10-22: the levels follow EU4 Anbennar's Pursue Lichdom decision, no prisoner is sacrificed (the mage
+dies by their own potion), the new lich is at once a known Evil Mage, and a lich's portrait is a skeleton.
 
-- Starting and finishing level 3 need the phylactery in the mage's possession.
-- If the phylactery is lost, stolen or destroyed before the ritual completes, Lichdom drops back to level 1 and a
-  level-3 commitment is abandoned. Redoing level 2 crafts a new phylactery.
+| Level | Steps (EU4 `magic_project_lichdom` event) | On completion |
+|---|---|---|
+| 1 The Phylactery | the container: amulet or jewelled box (2); engraving: scrolls, damestear runes or beast blood (3); enchanting (4) | the phylactery, an amulet or a box (non-decaying, `aov_adv_phylactery`) |
+| 2 The Transformation Potion | first reagent (5); deadly catalyst (6); the vessel: an innocent's heart, a unicorn horn or, optionally, the heir's life (7) | `aov_lichdom_potion` (+Learning, +dread); risks Forbidden Magic Practitioner like necromancy spells |
+| 3 The Dark Ritual | preparing the chamber, faster with Abjuration 2 (8); cleansing, faster with Transmutation 2 (9); Turning Back, the last chance to stop (20) | Consumption (10): the mage drinks, dies and rises; Anbennar's `lich` trait and Forbidden Magic Practitioner whatever the faith; Ascension (11) |
+
+- Each step is a choice event: the first when the level starts, the others at a third and two thirds of its months.
+  Choices trade gold, mana, prestige, stress, a skill point or dread; some add months of progress (capped so every
+  step still fires before the level ends). Every step can back out (EU4's "put an end to this madness"), abandoning
+  the level for prestige that grows with the level.
+- Levels 2 and 3 need the phylactery in the mage's possession. If it is lost before the mage becomes a lich,
+  Lichdom returns to level 0 and the potion is lost with it.
 - Once a lich, losing the phylactery has no effect (a phylactery-hunting feature is left for later).
+- Portrait: Godherja's skeleton skull (plain, runed or glowing runes, some jawless), bony body and gem eyes replace the
+  living head and body; clothes and headgear stay.
 
 ### Transmutation: Homunculus
 
@@ -193,10 +201,10 @@ Changed: `gui/aov_window_magic.gui` (tabs), `tools/build_spells.py` (study block
 - Every loc key the generated files use exists.
 - Every `aov_adv_<key>_<n>_effect` the generator calls is defined in the hand-written effects file.
 - Start triggers require a landed mage; the study scripted GUIs and the study tick check the commitment.
-- Lichdom level 3 and Enchanted Artifact levels 2-3 check possession of the stored artifact.
+- Lichdom levels 2-3 and Enchanted Artifact levels 2-3 check possession of the stored artifact.
 
 Then `python -I tools/validate.py` (tiger) for new reports. Needs in-game testing: tab switching, artifact creation
-and modifier upgrades, the imprisonment release, the Lichdom phylactery reset, the battlemage decision, and AI picks.
+and modifier upgrades, the imprisonment release, the Lichdom steps, phylactery reset and skeleton portrait, the battlemage decision, and AI picks.
 
 ## Out of scope
 

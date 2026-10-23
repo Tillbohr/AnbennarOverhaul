@@ -1,0 +1,75 @@
+﻿# Anbennar Overhaul: a Lich (Anbennar's lich trait, from the Lichdom advancement) is a skeleton in their usual clothes:
+# Godherja's skull and bones (common/genes/aov_lich_genes.txt, art in gfx/models/portraits/aov_lich/) replace the living
+# head and body, and the face's eyes, lashes, teeth, hair and beard go with them. Headgear and clothes stay.
+
+aov_lich = {
+	usage = game
+	priority = 100
+
+	aov_lich = {
+		dna_modifiers = {
+			morph = {
+				mode = replace
+				gene = aov_lich_flesh
+				template = aov_lich_flesh_hidden
+				value = 1.0
+			}
+			accessory = {
+				mode = replace
+				gene = aov_lich_head
+				template = aov_lich_skull
+				range = { 0 1 } # a skull of its own for each Lich
+			}
+			accessory = {
+				mode = replace
+				gene = aov_lich_body
+				template = aov_lich_bones
+				value = 0.5
+			}
+			accessory = {
+				mode = replace
+				gene = aov_lich_eyes
+				template = aov_lich_gem_eyes
+				range = { 0 1 }
+			}
+			accessory = {
+				mode = replace
+				gene = eye_accessory
+				template = no_eyes
+				value = 0.5
+			}
+			accessory = {
+				mode = replace
+				gene = eyelashes_accessory
+				template = no_eyelashes
+				value = 0.5
+			}
+			accessory = {
+				mode = replace
+				gene = teeth_accessory
+				template = no_teeth
+				value = 0.5
+			}
+			accessory = {
+				mode = replace
+				gene = hairstyles
+				template = no_hairstyles
+				value = 0
+			}
+			accessory = {
+				mode = replace
+				gene = beards
+				template = no_beard
+				value = 0
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 100
+				exists = this
+				has_trait = lich
+			}
+		}
+	}
+}

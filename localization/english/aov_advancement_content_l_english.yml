@@ -137,23 +137,19 @@
  aov_advancement.50.desc: "The guards were very pleased with themselves, right up until their prisoner smiled, flickered, and was gone. By then the real [ROOT.Char.GetFirstName] was miles away."
  aov_advancement.50.a: "They never had me at all."
 
- # Lichdom
+ # Lichdom (the steps' events are in aov_lichdom_l_english.yml)
  aov_adv_owns_phylactery_tt: "Holds the phylactery they crafted"
- aov_adv_has_sacrifice_tt: "Has a prisoner to sacrifice"
  aov_adv_can_become_lich_tt: "Is not already undead, immortal or incapable"
- aov_lichdom_crime: "The Crime Begun"
- aov_lichdom_crime_desc: "This character has taken the first step on the dark road to undeath."
+ aov_lich_flesh: "Lich"
+ aov_lichdom_potion: "The Transformation Potion"
+ aov_lichdom_potion_desc: "This character keeps a potion of black damestear and poison, made to be drunk on the night they die and rise again."
  aov_phylactery: "Phylactery"
  aov_phylactery_name: "Phylactery of [owner.GetFirstName]"
  aov_phylactery_desc: "A cold amulet engraved with words that should not be read aloud. It waits to hold a soul."
- aov_advancement.40.t: "The Ritual"
- aov_advancement.40.desc: "The phylactery lies on the altar, and the circle is drawn. All that remains is a life to pay for the one that will never end."
- aov_advancement.40.a: "[aov_sacrifice_1.GetFullName] will pay the price."
- aov_advancement.40.a2: "[aov_sacrifice_2.GetFullName] will pay the price."
- aov_advancement.40.a3: "[aov_sacrifice_3.GetFullName] will pay the price."
- aov_advancement.40.b: "There is no one left to give. The ritual will wait for one."
+ aov_phylactery_box_name: "Phylactery of [owner.GetFirstName]"
+ aov_phylactery_box_desc: "An ornate box crusted with jewels, its insides carved with words that should not be read aloud. It waits to hold a soul."
  aov_advancement.41.t: "The Phylactery Is Lost"
- aov_advancement.41.desc: "The phylactery is no longer in [ROOT.Char.GetFirstName]'s hands. Without it, the ritual cannot be finished, and a new vessel must be made."
+ aov_advancement.41.desc: "The phylactery is no longer in [ROOT.Char.GetFirstName]'s hands. Without it there is no vessel for the soul, and the potion bound to it is spoiled. The dark road must be walked again from its start."
  aov_advancement.41.a: "I will make another."
 
  # Homunculus
@@ -173,11 +169,8 @@
 
  # Failed levels
  aov_adv_owns_orb_tt: "Owns the Orb of Omniscience they made"
- aov_advancement.42.t: "The Ritual Waits"
- aov_advancement.42.desc: "All is ready: the phylactery, the circle, the words. All but the life the ritual demands. When a prisoner sits in [ROOT.Char.GetFirstName]'s dungeon, the work will be finished."
- aov_advancement.42.a: "Find me someone."
  aov_advancement.43.t: "The Ritual Fails"
- aov_advancement.43.desc: "The words are spoken and the circle flares, but death will not take hold of [ROOT.Char.GetFirstName]. Something in their nature refuses the change. The ritual is spent, and must be begun again."
+ aov_advancement.43.desc: "The chamber is warded and the potion poured, but death will not take hold of [ROOT.Char.GetFirstName]. Something in their nature refuses the change. The ritual is spent, and must be begun again."
  aov_advancement.43.a: "Then I will find another way."
  aov_advancement.44.t: "The Work Is Lost"
  aov_advancement.44.desc.orb_of_omniscience: "The Orb of Omniscience is no longer in [ROOT.Char.GetFirstName]'s hands. Without it, the work on the Orb cannot go on, and what was spent on it is gone."

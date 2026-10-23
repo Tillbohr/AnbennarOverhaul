@@ -401,55 +401,182 @@ class MirrorImageTests(unittest.TestCase):
         self.assertIn("aov_adv_mirror_image_level >= 3", block(read(TUNING), "aov_adv_mirror_image_cost_cut"))
 
 
+LICH_EVENTS = "events/aov_lichdom_events.txt"
+LICH_LOC = "localization/english/aov_lichdom_l_english.yml"
+# (working level, step) -> the step's event, after EU4's magic_project_lichdom ids
+LICH_STEPS = {(1, 1): 2, (1, 2): 3, (1, 3): 4, (2, 1): 5, (2, 2): 6, (2, 3): 7, (3, 1): 8, (3, 2): 9, (3, 3): 20}
+
+
+def event_ids(text):
+    return re.findall(r"^aov_lichdom\.(\d+) = \{", text, re.M)
+
+
 class LichdomTests(unittest.TestCase):
     def test_level_3_conditions(self):
         cond = read(CONDITIONS)
         lich = block(cond, "aov_adv_can_become_lich")
         for t in ("lich", "incapable", "vampire", "immortal", "lycanthrope"):
             self.assertIn(f"has_trait = {t}", lich)
-        self.assertIn("any_prisoner = {", block(cond, "aov_adv_has_sacrifice"))
+        # The lich dies by their own potion: no prisoner is sacrificed
+        self.assertNotRegex(cond, r"(?m)^aov_adv_has_sacrifice = \{")
+        eff = read(LEVEL_EFFECTS)
+        self.assertNotIn("prisoner", eff[eff.index("# Necromancy: Lichdom"):eff.index("# Transmutation: Homunculus")])
 
     def test_phylactery_guarded(self):
         own = block(read(CONDITIONS), "aov_adv_owns_phylactery")
         self.assertLess(own.index("exists = var:aov_adv_phylactery"), own.index("var:aov_adv_phylactery = {"))
         self.assertIn("artifact_owner = { this = root }", own)
 
-    def test_crime_rolls_dark_magic(self):
+    def test_level_1_crafts_the_chosen_phylactery(self):
         eff = level_effect("lichdom", 1)
-        self.assertIn("aov_dark_magic_roll = yes", eff)
-        self.assertIn("modifier = aov_lichdom_crime", eff)
-
-    def test_level_2_crafts_phylactery(self):
-        eff = level_effect("lichdom", 2)
-        self.assertIn("create_artifact = {", eff)
-        self.assertIn("decaying = no", eff)
+        self.assertEqual(eff.count("create_artifact = {"), 2)
+        self.assertEqual(eff.count("decaying = no"), 2)
+        self.assertIn("var:aov_lichdom_vessel = flag:box", eff)
+        self.assertIn("visuals = small_box", eff)
+        self.assertIn("visuals = necklace", eff)
         self.assertIn("set_variable = { name = aov_adv_phylactery value = scope:aov_phylactery }", eff)
+        ev = block(read(LICH_EVENTS), "aov_lichdom.2")
+        for vessel in ("amulet", "box"):
+            self.assertIn(f"set_variable = {{ name = aov_lichdom_vessel value = flag:{vessel} }}", ev)
 
-    def test_ritual_grants_lich(self):
+    def test_level_2_brews_the_potion(self):
+        eff = level_effect("lichdom", 2)
+        self.assertLess(eff.index("aov_adv_owns_phylactery = no"), eff.index("modifier = aov_lichdom_potion"))
+        self.assertIn("aov_dark_magic_roll = yes", eff)
+        block(read(MODIFIERS), "aov_lichdom_potion")
+
+    def test_ritual_ends_in_the_drink(self):
         eff = level_effect("lichdom", 3)
-        self.assertIn("trigger_event = aov_advancement.40", eff)
-        ritual = block(read(LEVEL_EFFECTS), "aov_adv_lich_ritual")
-        self.assertIn("add_trait = lich", ritual)
-        self.assertIn("death = {", ritual)
-        ev = block(read(EVENTS), "aov_advancement.40")
-        self.assertIn("ordered_prisoner = {", ev)
-        self.assertIn("aov_adv_lich_ritual = { VICTIM = scope:aov_sacrifice_1 }", ev)
+        self.assertIn(FAILED, eff)
+        self.assertIn("trigger_event = aov_lichdom.10", eff)
+        drink = block(read(LICH_EVENTS), "aov_lichdom.10")
+        self.assertIn("aov_adv_lich_ascend = yes", drink)
+        self.assertIn("trigger_event = aov_lichdom.11", drink)
 
-    def test_sacrifice_choices_are_distinct_prisoners(self):
-        """ordered_prisoner with a position past the list caps at the last prisoner (error.log), so the same prisoner
-        filled several options: positions 1 and 2 are only taken when there are that many prisoners."""
-        ev = block(read(EVENTS), "aov_advancement.40")
-        for pos, count in ((1, 2), (2, 3)):
-            m = re.search(rf"limit = \{{ any_prisoner = \{{ count >= {count} \}} \}}\s*ordered_prisoner = \{{\s*order_by = age\s*position = {pos}", ev)
-            self.assertTrue(m, pos)
+    def test_ascension_outs_an_evil_mage_whatever_the_faith(self):
+        asc = block(read(LEVEL_EFFECTS), "aov_adv_lich_ascend")
+        self.assertIn("add_trait = lich", asc)
+        self.assertIn("gain_forbidden_magic_trait_effect = yes", asc)
+        self.assertNotIn("witchcraft", asc)
+        self.assertNotIn("random", asc)
+        self.assertIn("remove_character_modifier = aov_lichdom_potion", asc)
+        self.assertNotIn("death", asc)
 
-    def test_lost_phylactery_resets_to_level_1(self):
+    def test_three_steps_per_level(self):
+        nxt = block(read(LEVEL_EFFECTS), "aov_adv_lichdom_next_step")
+        self.assertEqual(sorted(int(n) for n in re.findall(r"trigger_event = aov_lichdom\.(\d+)", nxt)),
+                         sorted(LICH_STEPS.values()))
+        ids = event_ids(read(LICH_EVENTS))
+        for n in list(LICH_STEPS.values()) + [10, 11]:
+            self.assertIn(str(n), ids)
+        start = block(read(LEVEL_EFFECTS), "aov_adv_lichdom_on_start")
+        self.assertLess(start.index("set_variable = { name = aov_lichdom_step value = 0 }"),
+                        start.index("aov_adv_lichdom_next_step = yes"))
+        pulse = block(read(ON_ACTIONS), "aov_adv_quarterly_pulse")
+        self.assertLess(pulse.index("aov_adv_quarterly = yes"), pulse.index("aov_adv_lichdom_steps = yes"))
+        steps = block(read(LEVEL_EFFECTS), "aov_adv_lichdom_steps")
+        for line in ("aov_adv_working_on = { KEY = lichdom }", "var:aov_lichdom_step < 3",
+                     "var:aov_adv_progress >= aov_lichdom_next_step_at"):
+            self.assertIn(line, steps)
+        self.assertIn("divide = 3", block(read(TUNING), "aov_lichdom_next_step_at"))
+
+    def test_faster_choices_leave_a_quarter_per_step(self):
+        hasten = block(read(LEVEL_EFFECTS), "aov_adv_lichdom_hasten")
+        self.assertIn("clamp_variable = { name = aov_adv_progress max = aov_lichdom_progress_cap }", hasten)
+        self.assertIn("aov_adv_working_on = { KEY = lichdom }", hasten)
+        cap = block(read(TUNING), "aov_lichdom_progress_cap")
+        for line in ("value = 4", "subtract = var:aov_lichdom_step", "multiply = -3", "add = aov_adv_months_needed"):
+            self.assertIn(line, cap)
+        for speed in ("fast", "faster"):
+            self.assertRegex(read(TUNING), rf"(?m)^aov_lichdom_months_{speed} = \d+")
+            self.assertIn(f"aov_lichdom_hasten_{speed}_tt", loc_keys(LICH_LOC))
+
+    def test_every_step_can_back_out(self):
+        ev = read(LICH_EVENTS)
+        for n in (2, 3, 4, 5, 6, 7, 8, 9):
+            self.assertIn("aov_adv_lichdom_back_out = yes", block(ev, f"aov_lichdom.{n}"), n)
+        self.assertIn("aov_adv_abandon = yes", block(ev, "aov_lichdom.20"))
+        back = block(read(LEVEL_EFFECTS), "aov_adv_lichdom_back_out")
+        self.assertLess(back.index("add_prestige = aov_lichdom_back_out_prestige"), back.index("aov_adv_abandon = yes"))
+
+    def test_each_step_keeps_an_ungated_choice(self):
+        """Mana and school-level choices are gated; every step keeps a choice anyone can take."""
+        ev = read(LICH_EVENTS)
+        for n in LICH_STEPS.values():
+            options = block(ev, f"aov_lichdom.{n}").split("\toption = {")[1:]
+            self.assertTrue(any("trigger = " not in o for o in options), n)
+            for o in options:
+                if "aov_mana_spend" in o:
+                    self.assertIn("aov_mana >= aov_lichdom_mana", o, n)
+
+    def test_heir_choice_is_optional(self):
+        ev = block(read(LICH_EVENTS), "aov_lichdom.7")
+        self.assertIn("primary_heir = { save_scope_as = aov_lichdom_heir }", ev)
+        heir = next(o for o in ev.split("\toption = {")[1:] if "scope:aov_lichdom_heir = {" in o)
+        self.assertIn("trigger = { exists = scope:aov_lichdom_heir }", heir)
+
+    def test_step_loc(self):
+        keys = loc_keys(LICH_LOC)
+        used = set(re.findall(r"(?m)^\t+(?:title|desc|name|custom_tooltip) = (aov_lichdom[\w.]+)", read(LICH_EVENTS)))
+        used |= set(re.findall(r"custom_tooltip = (aov_lichdom[\w.$]+)", read(LEVEL_EFFECTS)))
+        used = {u.replace("_$SPEED$", "_fast") for u in used}
+        self.assertEqual(sorted(used - keys), [])
+
+    def test_lost_phylactery_starts_over(self):
         check = block(read(LEVEL_EFFECTS), "aov_adv_lichdom_check")
         self.assertIn("aov_adv_owns_phylactery = no", check)
-        self.assertIn("set_variable = { name = aov_adv_lichdom_lvl value = 1 }", check)
+        self.assertIn("aov_adv_lichdom_level >= 1", check)
+        self.assertIn("set_variable = { name = aov_adv_lichdom_lvl value = 0 }", check)
+        self.assertIn("remove_character_modifier = aov_lichdom_potion", check)
         self.assertIn("aov_adv_abandon = yes", check)
         self.assertIn("NOT = { has_trait = lich }", check)
         self.assertIn("aov_adv_lichdom_check = yes", block(read(ON_ACTIONS), "aov_adv_quarterly_pulse"))
+
+
+LICH_GENES = "common/genes/aov_lich_genes.txt"
+LICH_PORTRAIT = "gfx/portraits/portrait_modifiers/aov_lich.txt"
+LICH_ACCESSORIES = "gfx/portraits/accessories/aov_lich.txt"
+LICH_ASSET = "gfx/models/portraits/aov_lich/aov_lich.asset"
+LICH_VARIATIONS = "gfx/portraits/accessory_variations/aov_lich.txt"
+
+
+class LichPortraitTests(unittest.TestCase):
+    """A Lich is Godherja's skeleton under their usual clothes (imported once, names prefixed aov_)."""
+
+    def test_modifier_follows_the_lich_trait(self):
+        mod = read(LICH_PORTRAIT)
+        self.assertRegex(mod, r"exists = this\s*has_trait = lich")
+        for gene, template in (("aov_lich_flesh", "aov_lich_flesh_hidden"), ("aov_lich_head", "aov_lich_skull"),
+                               ("aov_lich_body", "aov_lich_bones"), ("aov_lich_eyes", "aov_lich_gem_eyes"),
+                               ("eye_accessory", "no_eyes"), ("teeth_accessory", "no_teeth")):
+            self.assertRegex(mod, rf"gene = {gene}\s*template = {template}")
+        # The clothes stay: nothing touches the clothing genes
+        for gene in ("clothes", "legwear", "cloaks"):
+            self.assertNotIn(f"gene = {gene}", mod)
+
+    def test_new_genes_default_to_nothing(self):
+        genes = read(LICH_GENES)
+        for gene in ("aov_lich_flesh", "aov_lich_head", "aov_lich_body", "aov_lich_eyes"):
+            body = genes[genes.index(f"\t{gene} = {{"):]
+            first = re.search(r"index = 0\s*(?:visible = no\s*)?male = \{(.*?)\}", body, re.S).group(1)
+            self.assertIn(first.strip(), ("", "1 = empty"), gene)
+        self.assertIn('attribute = "bs_no_portrait"', genes)
+        self.assertIn("female = male", genes[genes.index("aov_lich_flesh_hidden"):])
+
+    def test_accessories_entities_and_files_exist(self):
+        genes, acc, asset = read(LICH_GENES), read(LICH_ACCESSORIES), read(LICH_ASSET)
+        for name in set(re.findall(r"= (aov_(?:male|female)_\w+)", genes)):
+            self.assertRegex(acc, rf"(?m)^{name} = \{{", name)
+        for entity in set(re.findall(r"entity = (aov_\w+_entity)", acc)):
+            self.assertIn(f'name = "{entity}"', asset, entity)
+        for f in set(re.findall(r'"(\w+\.(?:mesh|dds))"', asset)):
+            self.assertTrue((MOD / "gfx/models/portraits/aov_lich" / f).exists(), f)
+        variations = read(LICH_VARIATIONS)
+        for v in set(re.findall(r'variation = "(\w+)"', asset)):
+            self.assertIn(f'name = "{v}"', variations, v)
+        for path in set(re.findall(r'"(gfx/[^"]+\.dds)"', asset + variations)):
+            self.assertTrue((MOD / path).exists(), path)
+        self.assertNotIn("1MOD", asset + variations)
 
 
 class HomunculusTests(unittest.TestCase):
@@ -507,24 +634,11 @@ class MaaIconTests(unittest.TestCase):
             self.assertNotIn("illustration", block(maa, key), key)
 
 
-FAILED = "save_scope_value_as = { name = aov_adv_failed value = yes }"
+FAILED = "save_scope_value_as = { name = aov_adv_own_event value = yes }"
 
 
 class FailedLevelTests(unittest.TestCase):
-    """A paid level that cannot take effect says so and skips the success event (scope:aov_adv_failed)."""
-
-    def test_ritual_without_prisoner_waits(self):
-        eff = level_effect("lichdom", 3)
-        self.assertIn("aov_adv_lichdom_await_sacrifice = yes", eff)
-        self.assertIn(FAILED, eff)
-        wait = block(read(LEVEL_EFFECTS), "aov_adv_lichdom_await_sacrifice")
-        for line in ("set_variable = { name = aov_adv_lichdom_lvl value = 2 }",
-                     "set_variable = { name = aov_adv_committed value = flag:lichdom }",
-                     "set_variable = { name = aov_adv_working_level value = 3 }",
-                     "name = aov_adv_progress", "trigger_event = aov_advancement.42"):
-            self.assertIn(line, wait)
-        self.assertIn("aov_adv_lichdom_await_sacrifice = yes", block(read(EVENTS), "aov_advancement.40"))
-        block(read(EVENTS), "aov_advancement.42")
+    """A paid level that cannot take effect says so and skips the success event (scope:aov_adv_own_event)."""
 
     def test_ritual_blocked_by_trait_fails_loudly(self):
         eff = level_effect("lichdom", 3)
@@ -561,7 +675,8 @@ class FailedLevelTests(unittest.TestCase):
 class LocLineTests(unittest.TestCase):
     def test_every_value_is_on_one_line(self):
         """A real newline inside a loc value splits it and the game drops the rest; line breaks are written \\n."""
-        for rel in (CONTENT_LOC, "localization/english/aov_advancements_l_english.yml", "localization/english/aov_magic_l_english.yml"):
+        for rel in (CONTENT_LOC, "localization/english/aov_advancements_l_english.yml", "localization/english/aov_magic_l_english.yml",
+                    LICH_LOC):
             for n, line in enumerate(read(rel).split("\n")[1:], start=2):
                 if line.strip() and not line.lstrip().startswith("#"):
                     self.assertRegex(line, r'^ [A-Za-z0-9_.\-]+:\d? ?".*"\s*(#.*)?$', f"{rel}:{n}")

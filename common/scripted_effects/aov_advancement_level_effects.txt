@@ -159,7 +159,7 @@ aov_adv_orb_of_omniscience_3_effect = {
 # advancement, LEVEL = the level it falls back to. The gold and mana are lost; the level must be begun again
 aov_adv_artifact_level_failed = {
 	set_variable = { name = aov_adv_$KEY$_lvl value = $LEVEL$ }
-	save_scope_value_as = { name = aov_adv_failed value = yes }
+	save_scope_value_as = { name = aov_adv_own_event value = yes }
 	trigger_event = aov_advancement.44
 }
 
@@ -476,109 +476,225 @@ aov_adv_mirror_image_3_effect = {
 ##########
 # Necromancy: Lichdom
 ##########
+# EU4 Anbennar's Pursue Lichdom: each level is three steps, each a choice event (events/aov_lichdom_events.txt, ids
+# after EU4's magic_project_lichdom events). The first fires when the level starts (aov_adv_lichdom_on_start), the
+# second and third once a third and two thirds of the level's months have passed (aov_adv_lichdom_steps, quarterly).
+# var:aov_lichdom_step = steps fired in the level in progress
 
-# Begin the Crime
+# The Phylactery (var:aov_adv_phylactery): an amulet or a box (var:aov_lichdom_vessel, step aov_lichdom.2). Losing it
+# before the mage becomes a Lich starts Lichdom over (aov_adv_lichdom_check)
 aov_adv_lichdom_1_effect = {
 	add_magic_lifestyle_xp = 100
-	add_character_modifier = { modifier = aov_lichdom_crime }
-	aov_dark_magic_roll = yes
-}
-
-# Craft the Phylactery (var:aov_adv_phylactery); losing it before the ritual drops Lichdom back to level 1
-# (aov_adv_lichdom_check)
-aov_adv_lichdom_2_effect = {
-	add_magic_lifestyle_xp = 100
+	remove_variable = aov_lichdom_step
 	save_scope_as = owner
 	set_artifact_rarity_famed = yes
-	create_artifact = {
-		name = aov_phylactery_name
-		description = aov_phylactery_desc
-		type = miscellaneous
-		visuals = necklace
-		wealth = scope:wealth
-		quality = scope:quality
-		history = {
-			type = created
-			actor = root
-			recipient = root
-			location = root.capital_province
+	if = {
+		limit = {
+			has_variable = aov_lichdom_vessel
+			var:aov_lichdom_vessel = flag:box
 		}
-		modifier = aov_phylactery
-		save_scope_as = aov_phylactery
-		decaying = no
+		create_artifact = {
+			name = aov_phylactery_box_name
+			description = aov_phylactery_box_desc
+			type = pedestal
+			visuals = small_box
+			wealth = scope:wealth
+			quality = scope:quality
+			history = {
+				type = created
+				actor = root
+				recipient = root
+				location = root.capital_province
+			}
+			modifier = aov_phylactery
+			save_scope_as = aov_phylactery
+			decaying = no
+		}
+	}
+	else = {
+		create_artifact = {
+			name = aov_phylactery_name
+			description = aov_phylactery_desc
+			type = miscellaneous
+			visuals = necklace
+			wealth = scope:wealth
+			quality = scope:quality
+			history = {
+				type = created
+				actor = root
+				recipient = root
+				location = root.capital_province
+			}
+			modifier = aov_phylactery
+			save_scope_as = aov_phylactery
+			decaying = no
+		}
 	}
 	set_variable = { name = aov_adv_phylactery value = scope:aov_phylactery }
-	aov_dark_magic_roll = yes
 }
 
-# The Ritual: the player picks the prisoner (event aov_advancement.40). Without the phylactery it falls back to
-# level 1 (aov_adv_lichdom_check, event 41); if the lich trait cannot be added it fails (event 43); without a prisoner
-# it waits, ready, until there is one (aov_adv_lichdom_await_sacrifice, event 42)
-aov_adv_lichdom_3_effect = {
+# The Transformation Potion: kept until it is drunk in the Dark Ritual
+aov_adv_lichdom_2_effect = {
 	add_magic_lifestyle_xp = 100
+	remove_variable = aov_lichdom_step
 	if = {
 		limit = { aov_adv_owns_phylactery = no }
-		save_scope_value_as = { name = aov_adv_failed value = yes }
-		set_variable = { name = aov_adv_lichdom_lvl value = 2 }
+		save_scope_value_as = { name = aov_adv_own_event value = yes }
+		aov_adv_lichdom_check = yes
+	}
+	else = {
+		add_character_modifier = { modifier = aov_lichdom_potion }
+		aov_dark_magic_roll = yes
+	}
+}
+
+# The Dark Ritual: the mage drinks the potion, dies and rises a Lich (event aov_lichdom.10). Without the phylactery
+# Lichdom starts over (aov_adv_lichdom_check, event aov_advancement.41); if the lich trait cannot be added the ritual
+# fails (event aov_advancement.43)
+aov_adv_lichdom_3_effect = {
+	add_magic_lifestyle_xp = 100
+	remove_variable = aov_lichdom_step
+	save_scope_value_as = { name = aov_adv_own_event value = yes }
+	if = {
+		limit = { aov_adv_owns_phylactery = no }
 		aov_adv_lichdom_check = yes
 	}
 	else_if = {
 		limit = { aov_adv_can_become_lich = no }
-		save_scope_value_as = { name = aov_adv_failed value = yes }
 		set_variable = { name = aov_adv_lichdom_lvl value = 2 }
 		trigger_event = aov_advancement.43
 	}
+	else = {
+		trigger_event = aov_lichdom.10
+	}
+}
+
+# Drinking the potion (event aov_lichdom.10): the mage becomes a Lich and is known at once as an Evil Mage, whatever
+# their faith thinks of magic. The skeleton portrait follows the trait (gfx/portraits/portrait_modifiers/aov_lich.txt)
+aov_adv_lich_ascend = {
+	add_trait = lich
+	if = {
+		limit = { has_character_modifier = aov_lichdom_potion }
+		remove_character_modifier = aov_lichdom_potion
+	}
+	if = {
+		limit = { NOT = { has_trait = forbidden_magic_practitioner } }
+		gain_forbidden_magic_trait_effect = yes
+	}
+}
+
+# Level start (aov_adv_lichdom_start, generated): the level's first step
+aov_adv_lichdom_on_start = {
+	set_variable = { name = aov_lichdom_step value = 0 }
+	aov_adv_lichdom_next_step = yes
+}
+
+# Quarterly (aov_adv_quarterly_pulse), after the progress tick: the level's next step once its share of months is done
+aov_adv_lichdom_steps = {
+	if = {
+		limit = {
+			aov_adv_working_on = { KEY = lichdom }
+			has_variable = aov_lichdom_step
+			var:aov_lichdom_step < 3
+			var:aov_adv_progress >= aov_lichdom_next_step_at
+		}
+		aov_adv_lichdom_next_step = yes
+	}
+}
+
+# Fires the step event: level 1 is EU4's steps 2-4 (the phylactery), level 2 steps 5-7 (the potion), level 3 steps 8,
+# 9 and 20 (the ritual's preparation, cleansing and the last chance to turn back)
+aov_adv_lichdom_next_step = {
+	change_variable = { name = aov_lichdom_step add = 1 }
+	if = {
+		limit = { var:aov_adv_working_level = 1 }
+		if = {
+			limit = { var:aov_lichdom_step = 1 }
+			trigger_event = aov_lichdom.2
+		}
+		else_if = {
+			limit = { var:aov_lichdom_step = 2 }
+			trigger_event = aov_lichdom.3
+		}
+		else = {
+			trigger_event = aov_lichdom.4
+		}
+	}
 	else_if = {
-		limit = { aov_adv_has_sacrifice = no }
-		save_scope_value_as = { name = aov_adv_failed value = yes }
-		aov_adv_lichdom_await_sacrifice = yes
+		limit = { var:aov_adv_working_level = 2 }
+		if = {
+			limit = { var:aov_lichdom_step = 1 }
+			trigger_event = aov_lichdom.5
+		}
+		else_if = {
+			limit = { var:aov_lichdom_step = 2 }
+			trigger_event = aov_lichdom.6
+		}
+		else = {
+			trigger_event = aov_lichdom.7
+		}
 	}
 	else = {
-		trigger_event = aov_advancement.40
-	}
-}
-
-# The ritual is ready but there is no prisoner: keep the commitment one quarter short of done, so it completes on the
-# next quarterly tick that finds a prisoner. Nothing is paid again
-aov_adv_lichdom_await_sacrifice = {
-	set_variable = { name = aov_adv_lichdom_lvl value = 2 }
-	set_variable = { name = aov_adv_committed value = flag:lichdom }
-	set_variable = { name = aov_adv_working_level value = 3 }
-	set_variable = {
-		name = aov_adv_progress
-		value = {
-			value = aov_adv_months_needed
-			subtract = 3
+		if = {
+			limit = { var:aov_lichdom_step = 1 }
+			trigger_event = aov_lichdom.8
+		}
+		else_if = {
+			limit = { var:aov_lichdom_step = 2 }
+			trigger_event = aov_lichdom.9
+		}
+		else = {
+			trigger_event = aov_lichdom.20
 		}
 	}
-	trigger_event = aov_advancement.42
 }
 
-# VICTIM = the prisoner sacrificed
-aov_adv_lich_ritual = {
-	$VICTIM$ = {
-		death = {
-			death_reason = death_sacrificed_to_gods
-			killer = root
+# A faster choice in a step: SPEED = fast or faster (aov_lichdom_months_<SPEED>). Progress is capped so each step left
+# still gets its own quarter before the level completes (aov_lichdom_progress_cap)
+aov_adv_lichdom_hasten = {
+	custom_tooltip = aov_lichdom_hasten_$SPEED$_tt
+	hidden_effect = {
+		if = {
+			limit = {
+				aov_adv_working_on = { KEY = lichdom }
+				has_variable = aov_adv_progress
+				has_variable = aov_lichdom_step
+			}
+			change_variable = { name = aov_adv_progress add = aov_lichdom_months_$SPEED$ }
+			clamp_variable = { name = aov_adv_progress max = aov_lichdom_progress_cap }
 		}
 	}
-	add_trait = lich
-	aov_dark_magic_roll = yes
 }
 
-# Quarterly (aov_adv_quarterly_pulse): a mage between the phylactery and the ritual who no longer holds the phylactery
-# falls back to level 1 and abandons the ritual
+# "Let us put an end to this madness!": the level in progress is abandoned; it costs more prestige the deeper the mage
+# has gone (EU4's back-out option)
+aov_adv_lichdom_back_out = {
+	custom_tooltip = aov_lichdom_back_out_tt
+	if = {
+		limit = { aov_adv_working_on = { KEY = lichdom } }
+		add_prestige = aov_lichdom_back_out_prestige
+		aov_adv_abandon = yes
+	}
+	remove_variable = aov_lichdom_step
+}
+
+# Quarterly (aov_adv_quarterly_pulse) and at levels 2-3: a mage who has crafted the phylactery but lost it before
+# becoming a Lich starts Lichdom over; the potion, bound to the phylactery, is lost with it
 aov_adv_lichdom_check = {
 	if = {
 		limit = {
 			NOT = { has_trait = lich }
-			aov_adv_lichdom_level = 2
+			aov_adv_lichdom_level >= 1
 			aov_adv_owns_phylactery = no
 		}
-		set_variable = { name = aov_adv_lichdom_lvl value = 1 }
+		set_variable = { name = aov_adv_lichdom_lvl value = 0 }
 		if = {
 			limit = { has_variable = aov_adv_phylactery }
 			remove_variable = aov_adv_phylactery
+		}
+		if = {
+			limit = { has_character_modifier = aov_lichdom_potion }
+			remove_character_modifier = aov_lichdom_potion
 		}
 		if = {
 			limit = { aov_adv_working_on = { KEY = lichdom } }

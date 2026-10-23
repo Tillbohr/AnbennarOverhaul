@@ -41,7 +41,7 @@ aov_adv_magical_fortress_complete = {
 		aov_adv_magical_fortress_3_effect = yes
 	}
 	if = {
-		limit = { NOT = { exists = scope:aov_adv_failed } }
+		limit = { NOT = { exists = scope:aov_adv_own_event } }
 		trigger_event = aov_advancement.1
 	}
 }
@@ -85,7 +85,7 @@ aov_adv_summon_extraplanars_complete = {
 		aov_adv_summon_extraplanars_3_effect = yes
 	}
 	if = {
-		limit = { NOT = { exists = scope:aov_adv_failed } }
+		limit = { NOT = { exists = scope:aov_adv_own_event } }
 		trigger_event = aov_advancement.1
 	}
 }
@@ -129,7 +129,7 @@ aov_adv_orb_of_omniscience_complete = {
 		aov_adv_orb_of_omniscience_3_effect = yes
 	}
 	if = {
-		limit = { NOT = { exists = scope:aov_adv_failed } }
+		limit = { NOT = { exists = scope:aov_adv_own_event } }
 		trigger_event = aov_advancement.1
 	}
 }
@@ -173,7 +173,7 @@ aov_adv_enchanted_artifact_complete = {
 		aov_adv_enchanted_artifact_3_effect = yes
 	}
 	if = {
-		limit = { NOT = { exists = scope:aov_adv_failed } }
+		limit = { NOT = { exists = scope:aov_adv_own_event } }
 		trigger_event = aov_advancement.1
 	}
 }
@@ -217,7 +217,7 @@ aov_adv_battlemage_academy_complete = {
 		aov_adv_battlemage_academy_3_effect = yes
 	}
 	if = {
-		limit = { NOT = { exists = scope:aov_adv_failed } }
+		limit = { NOT = { exists = scope:aov_adv_own_event } }
 		trigger_event = aov_advancement.1
 	}
 }
@@ -261,7 +261,7 @@ aov_adv_mirror_image_complete = {
 		aov_adv_mirror_image_3_effect = yes
 	}
 	if = {
-		limit = { NOT = { exists = scope:aov_adv_failed } }
+		limit = { NOT = { exists = scope:aov_adv_own_event } }
 		trigger_event = aov_advancement.1
 	}
 }
@@ -284,6 +284,7 @@ aov_adv_lichdom_start = {
 		}
 		set_variable = { name = aov_adv_committed value = flag:lichdom }
 		set_variable = { name = aov_adv_progress value = 0 }
+		aov_adv_lichdom_on_start = yes
 	}
 }
 
@@ -305,7 +306,7 @@ aov_adv_lichdom_complete = {
 		aov_adv_lichdom_3_effect = yes
 	}
 	if = {
-		limit = { NOT = { exists = scope:aov_adv_failed } }
+		limit = { NOT = { exists = scope:aov_adv_own_event } }
 		trigger_event = aov_advancement.1
 	}
 }
@@ -349,7 +350,7 @@ aov_adv_homunculus_complete = {
 		aov_adv_homunculus_3_effect = yes
 	}
 	if = {
-		limit = { NOT = { exists = scope:aov_adv_failed } }
+		limit = { NOT = { exists = scope:aov_adv_own_event } }
 		trigger_event = aov_advancement.1
 	}
 }

@@ -15,6 +15,7 @@ aov_adv_quarterly_pulse = {
 	}
 	effect = {
 		aov_adv_quarterly = yes
+		aov_adv_lichdom_steps = yes
 		aov_adv_lichdom_check = yes
 		aov_adv_artifact_check = yes
 	}

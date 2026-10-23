@@ -59,6 +59,8 @@ def validate(advs: list) -> None:
         for n, names in a["requires"].items():
             if n not in (1, 2, 3) or not all(re.fullmatch(r"[a-z_]+", t) for t in names):
                 raise GeneratorError(f"{k}: bad requires {n}: {names}")
+        if a.get("on_start") is not None and not re.fullmatch(r"[a-z_]+", a["on_start"]):
+            raise GeneratorError(f"{k}: bad on_start {a['on_start']}")
         texts = [a["name"], a["desc"]] + [lv["name"] + lv["desc"] for lv in a["levels"]]
         if any('"' in t for t in texts):
             raise GeneratorError(f"{k}: double quote in a text")
@@ -145,13 +147,15 @@ def effects(advs: list) -> str:
             f"\t\tset_variable = {{\n\t\t\tname = aov_adv_working_level\n\t\t\tvalue = {{\n"
             f"\t\t\t\tvalue = aov_adv_{k}_level\n\t\t\t\tadd = 1\n\t\t\t}}\n\t\t}}\n"
             f"\t\tset_variable = {{ name = aov_adv_committed value = flag:{k} }}\n"
-            f"\t\tset_variable = {{ name = aov_adv_progress value = 0 }}\n\t}}\n}}\n"
+            f"\t\tset_variable = {{ name = aov_adv_progress value = 0 }}\n"
+            + (f"\t\t{a['on_start']} = yes\n" if a.get("on_start") else "")
+            + "\t}\n}\n"
         )
         calls = "".join(
             f"\t{'if' if n == 1 else 'else_if'} = {{\n\t\tlimit = {{ scope:aov_adv_level = {n} }}\n"
             f"\t\taov_adv_{k}_{n}_effect = yes\n\t}}\n" for n in (1, 2, 3))
-        # The commitment ends before the level effect, so a level that cannot take effect may re-commit (Lichdom
-        # awaiting a sacrifice); such a level saves scope:aov_adv_failed and fires its own event instead of the success one
+        # The commitment ends before the level effect. A level that cannot take effect (a lost artifact), or that ends in
+        # its own event (Lichdom's ascension), saves scope:aov_adv_own_event and fires that event instead of the success one
         out.append(
             f"aov_adv_{k}_complete = {{\n"
             f"\tset_variable = {{ name = aov_adv_{k}_lvl value = var:aov_adv_working_level }}\n"
@@ -159,7 +163,7 @@ def effects(advs: list) -> str:
             f"\tsave_scope_value_as = {{ name = aov_adv_level value = var:aov_adv_working_level }}\n"
             "\taov_adv_abandon = yes\n"
             + calls
-            + "\tif = {\n\t\tlimit = { NOT = { exists = scope:aov_adv_failed } }\n\t\ttrigger_event = aov_advancement.1\n\t}\n}\n"
+            + "\tif = {\n\t\tlimit = { NOT = { exists = scope:aov_adv_own_event } }\n\t\ttrigger_event = aov_advancement.1\n\t}\n}\n"
         )
     out.append("# Ends the commitment; nothing is refunded\naov_adv_abandon = {\n"
                "\tremove_variable = aov_adv_committed\n\tremove_variable = aov_adv_working_level\n"

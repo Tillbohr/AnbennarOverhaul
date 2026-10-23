@@ -124,65 +124,7 @@ aov_advancement.50 = {
 	}
 }
 
-# Lichdom level 3: choose the prisoner to sacrifice (the three oldest)
-aov_advancement.40 = {
-	type = character_event
-	title = aov_advancement.40.t
-	desc = aov_advancement.40.desc
-	theme = dread
-	left_portrait = root
-	right_portrait = scope:aov_sacrifice_1
-
-	# A position past the end of the list caps at the last prisoner, so later positions need that many prisoners
-	immediate = {
-		ordered_prisoner = {
-			order_by = age
-			position = 0
-			save_scope_as = aov_sacrifice_1
-		}
-		if = {
-			limit = { any_prisoner = { count >= 2 } }
-			ordered_prisoner = {
-				order_by = age
-				position = 1
-				save_scope_as = aov_sacrifice_2
-			}
-		}
-		if = {
-			limit = { any_prisoner = { count >= 3 } }
-			ordered_prisoner = {
-				order_by = age
-				position = 2
-				save_scope_as = aov_sacrifice_3
-			}
-		}
-	}
-
-	option = {
-		name = aov_advancement.40.a
-		trigger = { exists = scope:aov_sacrifice_1 }
-		aov_adv_lich_ritual = { VICTIM = scope:aov_sacrifice_1 }
-	}
-	option = {
-		name = aov_advancement.40.a2
-		trigger = { exists = scope:aov_sacrifice_2 }
-		aov_adv_lich_ritual = { VICTIM = scope:aov_sacrifice_2 }
-	}
-	option = {
-		name = aov_advancement.40.a3
-		trigger = { exists = scope:aov_sacrifice_3 }
-		aov_adv_lich_ritual = { VICTIM = scope:aov_sacrifice_3 }
-	}
-
-	# The prisoners are gone: the ritual waits, ready, for one (nothing is paid again)
-	option = {
-		name = aov_advancement.40.b
-		trigger = { NOT = { exists = scope:aov_sacrifice_1 } }
-		aov_adv_lichdom_await_sacrifice = yes
-	}
-}
-
-# Lichdom: the phylactery was lost before the ritual
+# Lichdom: the phylactery was lost before the mage became a Lich, so Lichdom starts over (aov_adv_lichdom_check)
 aov_advancement.41 = {
 	type = character_event
 	title = aov_advancement.41.t
@@ -226,20 +168,7 @@ aov_advancement.30 = {
 	}
 }
 
-# Lichdom: the ritual is ready but has no prisoner; it completes once there is one (aov_adv_lichdom_await_sacrifice)
-aov_advancement.42 = {
-	type = character_event
-	title = aov_advancement.42.t
-	desc = aov_advancement.42.desc
-	theme = dread
-	left_portrait = root
-
-	option = {
-		name = aov_advancement.42.a
-	}
-}
-
-# Lichdom: the ritual failed because the lich trait cannot be added (aov_adv_can_become_lich)
+# Lichdom: the Dark Ritual failed because the lich trait cannot be added (aov_adv_can_become_lich)
 aov_advancement.43 = {
 	type = character_event
 	title = aov_advancement.43.t

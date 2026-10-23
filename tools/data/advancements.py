@@ -9,6 +9,7 @@ levels: three (name, desc) pairs; desc is the effect summary shown under the lev
 numbers mirror the modifiers and common/script_values/aov_advancement_tuning.txt: update both together.
 requires: {level: [trigger, ...]} hand-written triggers (common/scripted_triggers/aov_advancement_conditions.txt)
 that must hold to start that level.
+on_start: a hand-written effect run when a level starts, after it is paid for and committed.
 """
 
 
@@ -16,8 +17,9 @@ def level(name, desc):
     return dict(name=name, desc=desc)
 
 
-def adv(key, school, name, desc, levels, requires=None):
-    return dict(key=key, school=school, name=name, desc=desc, levels=levels, requires=requires or {})
+def adv(key, school, name, desc, levels, requires=None, on_start=None):
+    return dict(key=key, school=school, name=name, desc=desc, levels=levels, requires=requires or {},
+                on_start=on_start)
 
 
 ADVANCEMENTS = [
@@ -56,11 +58,13 @@ ADVANCEMENTS = [
          level("Body Double", "+1 to all skills; when imprisoned, a 50% chance a body double takes our place"),
          level("Grand Simulacrum", "+1 to all skills, +10 general opinion, +10% personal scheme success, Illusion spells 20% cheaper")]),
     adv("lichdom", "necromancy", "Lichdom",
-        "The dark road to undeath: a soul bound in a phylactery and a body that never dies.",
-        [level("Begin the Crime", "+2 Learning, +5 dread; where magic is frowned upon, we may be revealed as a Forbidden Magic Practitioner"),
-         level("Craft the Phylactery", "Craft the Phylactery that will hold our soul (+1 Learning). If it is lost before the ritual, Lichdom falls back to level 1"),
-         level("The Ritual", "Sacrifice a prisoner and become a Lich: immortal, +5 to all skills, +10 prowess, +50 dread, -20 general opinion")],
-        requires={3: ["aov_adv_owns_phylactery", "aov_adv_has_sacrifice", "aov_adv_can_become_lich"]}),
+        "The dark road to undeath: a soul bound in a phylactery and a body that never dies. Each level is three steps, and each step a choice of how to pay for it.",
+        [level("The Phylactery", "Craft, engrave and enchant the Phylactery that will hold our soul (+1 Learning). If it is lost before we become a Lich, Lichdom starts over"),
+         level("The Transformation Potion", "Gather the reagents and the vessel for the potion: +2 Learning, +5 dread. Where magic is frowned upon, we may be revealed as an Evil Mage"),
+         level("The Dark Ritual", "Prepare, cleanse, drink: we die and rise a Lich (immortal, +5 to all skills, +10 prowess, +50 dread, -20 general opinion), known to all as an Evil Mage")],
+        requires={2: ["aov_adv_owns_phylactery"],
+                  3: ["aov_adv_owns_phylactery", "aov_adv_can_become_lich"]},
+        on_start="aov_adv_lichdom_on_start"),
     adv("homunculus", "transmutation", "Homunculus",
         "Flesh shaped in the alembic: a servant that owes its maker everything.",
         [level("Vat-Born Servant", "Create a Homunculus courtier: +2 Stewardship, sterile, cannot inherit, +75 opinion of us"),

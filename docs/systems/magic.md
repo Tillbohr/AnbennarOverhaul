@@ -23,6 +23,15 @@ like vanilla's `action_lifestyle_*.dds`), was composed once: the flame of `magic
 vanilla's generic `action_can_spend_perk_point` is overridden in `zz_aov_lifestyle_actions.txt` to skip magic focuses
 (`aov_has_focus_magic`), so a mage sees the magic alert instead of the generic arrows.
 
+The Lich portrait (Godherja's skeleton, art from Elder Kings) was imported once with a scratch script and is edited by
+hand: meshes and textures in `gfx/models/portraits/aov_lich/` (`aov_lich.asset`), accessories
+`gfx/portraits/accessories/aov_lich.txt`, rune and gem-eye variations `gfx/portraits/accessory_variations/aov_lich.txt`
+(textures in `textures/aov_lich/`); every name is prefixed `aov_`. The genes `common/genes/aov_lich_genes.txt`
+(`aov_lich_flesh` hides the living head and body with vanilla's `bs_no_portrait` blend shapes; `aov_lich_head`,
+`aov_lich_body`, `aov_lich_eyes`; index 0 of each is nothing) are applied by
+`gfx/portraits/portrait_modifiers/aov_lich.txt` to anyone with the `lich` trait, which also removes eyes, lashes,
+teeth, hair and beard. Clothes and headgear are untouched. The RiE portrait generator's orphan check skips this folder.
+
 ## System
 
 - **Magic schools:** eight schools (Abjuration, Conjuration, Divination, Enchantment, Evocation, Illusion, Necromancy,
@@ -54,15 +63,18 @@ vanilla's generic `action_can_spend_perk_point` is overridden in `zz_aov_lifesty
   boosts Scry, Foresight, Manipulated Fortune), Enchanted Artifact (one weapon/armor/crown/regalia/trinket per mage,
   strengthened each level; the trinket feeds mana and spell cost), Battlemage Academy (building tiers
   `battlemage_academy_01-03`, Recruit Battlemage Commander decision, Battlemages men-at-arms), Mirror Image (+1 all
-  skills per level, body double on imprisonment), Lichdom (phylactery artifact, prisoner sacrifice, Anbennar's `lich`
-  trait; losing the phylactery before the ritual drops it to level 1), Homunculus (`aov_homunculus` courtier, domain
-  labour). Ruling mages only (`aov_adv_eligible`: landed + Magical Affinity). Level N needs school level N; a level
+  skills per level, body double on imprisonment), Lichdom (EU4's Pursue Lichdom: The Phylactery, The Transformation
+  Potion, The Dark Ritual, three choice-event steps each in `events/aov_lichdom_events.txt`; the mage drinks the potion,
+  dies and rises with Anbennar's `lich` trait and Forbidden Magic Practitioner whatever the faith, no prisoner needed;
+  losing the phylactery before then starts Lichdom over), Homunculus (`aov_homunculus` courtier, domain labour). Ruling mages only (`aov_adv_eligible`: landed + Magical Affinity). Level N needs school level N; a level
   costs gold and mana up front and completes on the quarterly tick. A mage either studies or works on one advancement
   (starting clears `aov_studying`; the Study buttons are invalid while `aov_adv_committed` is set); Abandon refunds
-  nothing. A level that cannot take effect says so instead of the success event (scope:aov_adv_failed): a lost Orb or
-  enchanted artifact ends the work (event 44); the Lichdom ritual without a prisoner waits, ready, until there is one
-  (event 42). A mage who stops being a ruling mage abandons the commitment (quarterly tick; `on_title_lost`). State: `aov_adv_committed`, `aov_adv_working_level`, `aov_adv_progress`, `aov_adv_<key>_lvl`, plus
-  `aov_adv_orb`, `aov_adv_enchanted_*`, `aov_adv_phylactery`, `aov_adv_host`, `aov_adv_homunculus`; all die with the
+  nothing. A level that fires its own event instead of the success one saves scope:aov_adv_own_event: a lost Orb or
+  enchanted artifact ends the work (event 44); the Dark Ritual ends in Consumption (`aov_lichdom.10`). Lichdom's steps:
+  the generated start effect calls the data's `on_start` hook (`aov_adv_lichdom_on_start`, the first step); the
+  quarterly pulse fires the next one at a third and two thirds of the level's months (`aov_adv_lichdom_steps`,
+  `var:aov_lichdom_step`); faster choices add progress capped by `aov_lichdom_progress_cap` so every step still fires. A mage who stops being a ruling mage abandons the commitment (quarterly tick; `on_title_lost`). State: `aov_adv_committed`, `aov_adv_working_level`, `aov_adv_progress`, `aov_adv_<key>_lvl`, plus
+  `aov_adv_orb`, `aov_adv_enchanted_*`, `aov_adv_phylactery`, `aov_lichdom_vessel`, `aov_lichdom_step`, `aov_adv_host`, `aov_adv_homunculus`; all die with the
   mage, while artifacts, homunculi, buildings and regiments remain. Hand-written: level effects
   `common/scripted_effects/aov_advancement_level_effects.txt`, start conditions
   `common/scripted_triggers/aov_advancement_conditions.txt`, events `events/aov_advancement_events.txt`, modifiers,

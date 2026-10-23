@@ -1,0 +1,330 @@
+﻿namespace = aov_lichdom
+
+# Lichdom's steps, after EU4 Anbennar's Pursue Lichdom (magic_project_lichdom.<id>; ids kept). Each fires from
+# aov_adv_lichdom_next_step (common/scripted_effects/aov_advancement_level_effects.txt): the first when a level starts,
+# the others at a third and two thirds of its months. Faster choices add progress (aov_adv_lichdom_hasten); every cost
+# is in common/script_values/aov_advancement_tuning.txt
+
+# The Phylactery, step 1: the container (var:aov_lichdom_vessel, used when the phylactery is made)
+aov_lichdom.2 = {
+	type = character_event
+	title = aov_lichdom.2.t
+	desc = aov_lichdom.2.desc
+	theme = dread
+	left_portrait = root
+
+	option = { # An amulet
+		name = aov_lichdom.2.a
+		remove_short_term_gold = aov_lichdom_gold_low
+		set_variable = { name = aov_lichdom_vessel value = flag:amulet }
+		custom_tooltip = aov_lichdom.2.a.tt
+		ai_chance = { base = 50 }
+	}
+	option = { # A jewelled box
+		name = aov_lichdom.2.b
+		remove_short_term_gold = aov_lichdom_gold_mid
+		set_variable = { name = aov_lichdom_vessel value = flag:box }
+		custom_tooltip = aov_lichdom.2.b.tt
+		aov_adv_lichdom_hasten = { SPEED = fast }
+		ai_chance = { base = 50 }
+	}
+	option = { # EU4's back-out option
+		name = aov_lichdom_back_out
+		aov_adv_lichdom_back_out = yes
+		ai_chance = { base = 0 }
+	}
+}
+
+# The Phylactery, step 2: engraving it
+aov_lichdom.3 = {
+	type = character_event
+	title = aov_lichdom.3.t
+	desc = aov_lichdom.3.desc
+	theme = dread
+	left_portrait = root
+
+	option = { # Scrolls of dark spells
+		name = aov_lichdom.3.a
+		trigger = { aov_mana >= aov_lichdom_mana }
+		aov_mana_spend = { AMOUNT = aov_lichdom_mana }
+		custom_tooltip = aov_lichdom_mana_tt
+		ai_chance = { base = 50 }
+	}
+	option = { # Runes of liquid damestear
+		name = aov_lichdom.3.b
+		remove_short_term_gold = aov_lichdom_gold_mid
+		ai_chance = { base = 50 }
+	}
+	option = { # The blood of a magical beast
+		name = aov_lichdom.3.c
+		add_prestige = medium_prestige_loss
+		ai_chance = { base = 50 }
+	}
+	option = { # EU4's back-out option
+		name = aov_lichdom_back_out
+		aov_adv_lichdom_back_out = yes
+		ai_chance = { base = 0 }
+	}
+}
+
+# The Phylactery, step 3: enchanting it
+aov_lichdom.4 = {
+	type = character_event
+	title = aov_lichdom.4.t
+	desc = aov_lichdom.4.desc
+	theme = dread
+	left_portrait = root
+
+	option = { # Dark enchantments
+		name = aov_lichdom.4.a
+		add_prestige = medium_prestige_loss
+		add_dread = aov_lichdom_dread_high
+		ai_chance = { base = 50 }
+	}
+	option = { # Pour yourself into your work
+		name = aov_lichdom.4.b
+		add_stewardship_skill = -1
+		add_dread = aov_lichdom_dread_high
+		aov_adv_lichdom_hasten = { SPEED = faster }
+		ai_chance = { base = 50 }
+	}
+	option = { # EU4's back-out option
+		name = aov_lichdom_back_out
+		aov_adv_lichdom_back_out = yes
+		ai_chance = { base = 0 }
+	}
+}
+
+# The Transformation Potion, step 1: the first reagent
+aov_lichdom.5 = {
+	type = character_event
+	title = aov_lichdom.5.t
+	desc = aov_lichdom.5.desc
+	theme = dread
+	left_portrait = root
+
+	option = { # Queen's Belladonna
+		name = aov_lichdom.5.a
+		remove_short_term_gold = aov_lichdom_gold_low
+		ai_chance = { base = 50 }
+	}
+	option = { # Halanna's Tears
+		name = aov_lichdom.5.b
+		remove_short_term_gold = aov_lichdom_gold_mid
+		aov_adv_lichdom_hasten = { SPEED = fast }
+		ai_chance = { base = 50 }
+	}
+	option = { # Fey-touched Hemlock
+		name = aov_lichdom.5.c
+		remove_short_term_gold = aov_lichdom_gold_high
+		aov_adv_lichdom_hasten = { SPEED = faster }
+		ai_chance = { base = 50 }
+	}
+	option = { # EU4's back-out option
+		name = aov_lichdom_back_out
+		aov_adv_lichdom_back_out = yes
+		ai_chance = { base = 0 }
+	}
+}
+
+# The Transformation Potion, step 2: the deadly catalyst
+aov_lichdom.6 = {
+	type = character_event
+	title = aov_lichdom.6.t
+	desc = aov_lichdom.6.desc
+	theme = dread
+	left_portrait = root
+
+	option = { # Black Damestear
+		name = aov_lichdom.6.a
+		remove_short_term_gold = aov_lichdom_gold_low
+		ai_chance = { base = 50 }
+	}
+	option = { # Neratic Asp Venom
+		name = aov_lichdom.6.b
+		remove_short_term_gold = aov_lichdom_gold_mid
+		aov_adv_lichdom_hasten = { SPEED = fast }
+		ai_chance = { base = 50 }
+	}
+	option = { # Wyvern Blood
+		name = aov_lichdom.6.c
+		remove_short_term_gold = aov_lichdom_gold_high
+		aov_adv_lichdom_hasten = { SPEED = faster }
+		ai_chance = { base = 50 }
+	}
+	option = { # EU4's back-out option
+		name = aov_lichdom_back_out
+		aov_adv_lichdom_back_out = yes
+		ai_chance = { base = 0 }
+	}
+}
+
+# The Transformation Potion, step 3: the vessel. The heir option kills the mage's primary heir (scope:aov_lichdom_heir)
+aov_lichdom.7 = {
+	type = character_event
+	title = aov_lichdom.7.t
+	desc = aov_lichdom.7.desc
+	theme = dread
+	left_portrait = root
+	right_portrait = scope:aov_lichdom_heir
+
+	immediate = {
+		if = {
+			limit = { exists = primary_heir }
+			primary_heir = { save_scope_as = aov_lichdom_heir }
+		}
+	}
+
+	option = { # The heart of an innocent
+		name = aov_lichdom.7.a
+		add_prestige = medium_prestige_loss
+		add_dread = aov_lichdom_dread_low
+		ai_chance = { base = 50 }
+	}
+	option = { # A unicorn's horn
+		name = aov_lichdom.7.b
+		remove_short_term_gold = aov_lichdom_gold_mid
+		ai_chance = { base = 50 }
+	}
+	option = { # The heir
+		name = aov_lichdom.7.c
+		trigger = { exists = scope:aov_lichdom_heir }
+		scope:aov_lichdom_heir = {
+			death = {
+				death_reason = death_sacrificed_to_gods
+				killer = root
+			}
+		}
+		add_dread = aov_lichdom_dread_high
+		aov_adv_lichdom_hasten = { SPEED = faster }
+		ai_chance = {
+			base = 5
+			ai_value_modifier = { ai_compassion = -0.1 }
+			min = 0
+		}
+	}
+	option = { # EU4's back-out option
+		name = aov_lichdom_back_out
+		aov_adv_lichdom_back_out = yes
+		ai_chance = { base = 0 }
+	}
+}
+
+# The Dark Ritual, step 1: preparing the ritual chamber
+aov_lichdom.8 = {
+	type = character_event
+	title = aov_lichdom.8.t
+	desc = aov_lichdom.8.desc
+	theme = dread
+	left_portrait = root
+
+	option = { # Make the preparations
+		name = aov_lichdom.8.a
+		add_prestige = medium_prestige_loss
+		remove_short_term_gold = aov_lichdom_gold_low
+		ai_chance = { base = 50 }
+	}
+	option = { # A Circle of Power (Abjuration 2)
+		name = aov_lichdom.8.b
+		trigger = { aov_school_level_at_least = { SCHOOL = abjuration LEVEL = 2 } }
+		remove_short_term_gold = aov_lichdom_gold_low
+		aov_adv_lichdom_hasten = { SPEED = fast }
+		ai_chance = { base = 1000 }
+	}
+	option = { # EU4's back-out option
+		name = aov_lichdom_back_out
+		aov_adv_lichdom_back_out = yes
+		ai_chance = { base = 0 }
+	}
+}
+
+# The Dark Ritual, step 2: cleansing body and soul
+aov_lichdom.9 = {
+	type = character_event
+	title = aov_lichdom.9.t
+	desc = aov_lichdom.9.desc
+	theme = dread
+	left_portrait = root
+
+	option = { # Begin the cleanse
+		name = aov_lichdom.9.a
+		add_stress = medium_stress_gain
+		ai_chance = { base = 50 }
+	}
+	option = { # Transmutation spells (Transmutation 2)
+		name = aov_lichdom.9.b
+		trigger = {
+			aov_school_level_at_least = { SCHOOL = transmutation LEVEL = 2 }
+			aov_mana >= aov_lichdom_mana
+		}
+		aov_mana_spend = { AMOUNT = aov_lichdom_mana }
+		custom_tooltip = aov_lichdom_mana_tt
+		aov_adv_lichdom_hasten = { SPEED = fast }
+		ai_chance = { base = 1000 }
+	}
+	option = { # EU4's back-out option
+		name = aov_lichdom_back_out
+		aov_adv_lichdom_back_out = yes
+		ai_chance = { base = 0 }
+	}
+}
+
+# The Dark Ritual, step 3: the last chance to turn back (EU4's magic_project_lichdom.20)
+aov_lichdom.20 = {
+	type = character_event
+	title = aov_lichdom.20.t
+	desc = aov_lichdom.20.desc
+	theme = dread
+	left_portrait = root
+
+	option = { # I will stop
+		name = aov_lichdom.20.a
+		if = {
+			limit = { aov_adv_working_on = { KEY = lichdom } }
+			add_prestige = aov_lichdom_turn_back_prestige
+			aov_adv_abandon = yes
+		}
+		custom_tooltip = aov_lichdom.20.a.tt
+		remove_variable = aov_lichdom_step
+		ai_chance = {
+			base = 10
+			ai_value_modifier = { ai_compassion = 0.2 }
+			min = 0
+		}
+	}
+	option = { # I will not
+		name = aov_lichdom.20.b
+		add_dread = aov_lichdom_dread_low
+		ai_chance = { base = 90 }
+	}
+}
+
+# The Dark Ritual completed (aov_adv_lichdom_3_effect): the mage drinks the potion and dies, and rises a Lich
+aov_lichdom.10 = {
+	type = character_event
+	title = aov_lichdom.10.t
+	desc = aov_lichdom.10.desc
+	theme = dread
+	left_portrait = root
+
+	option = { # Drink
+		name = aov_lichdom.10.a
+		aov_adv_lich_ascend = yes
+		trigger_event = aov_lichdom.11
+		ai_chance = { base = 1 }
+	}
+}
+
+# Ascension to Lichdom
+aov_lichdom.11 = {
+	type = character_event
+	title = aov_lichdom.11.t
+	desc = aov_lichdom.11.desc
+	theme = dread
+	left_portrait = root
+
+	option = {
+		name = aov_lichdom.11.a
+		ai_chance = { base = 1 }
+	}
+}

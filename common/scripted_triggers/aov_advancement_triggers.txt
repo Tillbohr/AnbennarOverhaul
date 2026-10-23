@@ -307,6 +307,7 @@ aov_adv_lichdom_can_start = {
 			text = AOV_SPELL_REQ_NECROMANCY_2
 			aov_school_level_at_least = { SCHOOL = necromancy LEVEL = 2 }
 		}
+		aov_adv_owns_phylactery = yes
 	}
 	trigger_else = {
 		custom_tooltip = {
@@ -314,7 +315,6 @@ aov_adv_lichdom_can_start = {
 			aov_school_level_at_least = { SCHOOL = necromancy LEVEL = 3 }
 		}
 		aov_adv_owns_phylactery = yes
-		aov_adv_has_sacrifice = yes
 		aov_adv_can_become_lich = yes
 	}
 	custom_tooltip = {

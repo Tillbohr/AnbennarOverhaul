@@ -42,14 +42,6 @@ aov_adv_owns_phylactery = {
 	}
 }
 
-# Lichdom level 3: a prisoner to sacrifice
-aov_adv_has_sacrifice = {
-	custom_tooltip = {
-		text = aov_adv_has_sacrifice_tt
-		any_prisoner = { count >= 1 }
-	}
-}
-
 # Lichdom level 3: nothing stops the lich trait being added (Anbennar's lich: opposites incapable vampire immortal
 # lycanthrope)
 aov_adv_can_become_lich = {

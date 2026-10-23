@@ -1,0 +1,141 @@
+﻿# Anbennar Overhaul: Lichdom's skeleton portrait (gfx/portraits/portrait_modifiers/aov_lich.txt), after Godherja's
+# head_replacement, body_replacement and lich_eyes. Index 0 of each gene is nothing, so only a Lich looks different.
+
+morph_genes = {
+	# Hides the living head and body under the skull and bones (the blend shapes of vanilla's gene_bs_body_type
+	# no_portrait, which has no female template)
+	aov_lich_flesh = {
+		group = body
+		aov_lich_flesh_shown = {
+			index = 0
+			visible = no
+			male = {}
+			female = male
+			boy = male
+			girl = male
+		}
+		aov_lich_flesh_hidden = {
+			index = 1
+			visible = no
+			male = {
+				setting = { attribute = "bs_no_portrait" value = { min = 1.0 max = 1.0 } }
+				setting = { attribute = "bs_body_no_portrait" value = { min = 1.0 max = 1.0 } }
+			}
+			female = male
+			boy = male
+			girl = male
+		}
+	}
+}
+
+accessory_genes = {
+	aov_lich_head = {
+		inheritable = no
+		group = head_neck
+		aov_lich_no_skull = {
+			index = 0
+			male = {
+				1 = empty
+			}
+			female = male
+			boy = male
+			girl = female
+		}
+		# Plain, runed and glowing-runed skulls, some jawless (Godherja's skeleton_head_lich weights)
+		aov_lich_skull = {
+			index = 1
+			male = {
+				36 = aov_male_skeleton_head
+				9 = aov_male_skeleton_head_runes_01
+				9 = aov_male_skeleton_head_runes_02
+				9 = aov_male_skeleton_head_runes_03
+				18 = aov_male_skeleton_head_runes_01_glowing
+				18 = aov_male_skeleton_head_runes_02_glowing
+				18 = aov_male_skeleton_head_runes_03_glowing
+				6 = aov_male_skeleton_head_jawless
+				1 = aov_male_skeleton_head_runes_jawless_01
+				1 = aov_male_skeleton_head_runes_jawless_02
+				1 = aov_male_skeleton_head_runes_jawless_03
+				4 = aov_male_skeleton_head_runes_jawless_01_glowing
+				4 = aov_male_skeleton_head_runes_jawless_02_glowing
+				4 = aov_male_skeleton_head_runes_jawless_03_glowing
+			}
+			female = {
+				36 = aov_female_skeleton_head
+				9 = aov_female_skeleton_head_runes_01
+				9 = aov_female_skeleton_head_runes_02
+				9 = aov_female_skeleton_head_runes_03
+				18 = aov_female_skeleton_head_runes_01_glowing
+				18 = aov_female_skeleton_head_runes_02_glowing
+				18 = aov_female_skeleton_head_runes_03_glowing
+				6 = aov_female_skeleton_head_jawless
+				1 = aov_female_skeleton_head_runes_jawless_01
+				1 = aov_female_skeleton_head_runes_jawless_02
+				1 = aov_female_skeleton_head_runes_jawless_03
+				4 = aov_female_skeleton_head_runes_jawless_01_glowing
+				4 = aov_female_skeleton_head_runes_jawless_02_glowing
+				4 = aov_female_skeleton_head_runes_jawless_03_glowing
+			}
+			boy = male
+			girl = female
+		}
+	}
+
+	# Bony neck, arms and hands under the clothes
+	aov_lich_body = {
+		inheritable = no
+		group = body
+		aov_lich_no_bones = {
+			index = 0
+			male = {
+				1 = empty
+			}
+			female = male
+			boy = male
+			girl = female
+		}
+		aov_lich_bones = {
+			index = 1
+			male = {
+				1 = aov_male_skeleton_body
+			}
+			female = {
+				1 = aov_female_skeleton_body
+			}
+			boy = male
+			girl = female
+		}
+	}
+
+	# Gems in the eye sockets: both, one or none
+	aov_lich_eyes = {
+		inheritable = no
+		group = eyes
+		aov_lich_no_gems = {
+			index = 0
+			male = {
+				1 = empty
+			}
+			female = male
+			boy = male
+			girl = female
+		}
+		aov_lich_gem_eyes = {
+			index = 1
+			male = {
+				1 = aov_male_lich_gem_eye_left
+				1 = aov_male_lich_gem_eye_right
+				1 = aov_male_lich_gem_eyes
+				2 = empty
+			}
+			female = {
+				1 = aov_female_lich_gem_eye_left
+				1 = aov_female_lich_gem_eye_right
+				1 = aov_female_lich_gem_eyes
+				2 = empty
+			}
+			boy = male
+			girl = female
+		}
+	}
+}

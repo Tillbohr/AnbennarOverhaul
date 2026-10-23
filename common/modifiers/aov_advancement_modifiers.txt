@@ -242,7 +242,8 @@ aov_mirror_image_3 = {
 # Necromancy: Lichdom
 ##########
 
-aov_lichdom_crime = {
+# Level 2: the Transformation Potion, until it is drunk in the Dark Ritual
+aov_lichdom_potion = {
 	icon = learning_positive
 	learning = 2
 	dread_baseline_add = 5

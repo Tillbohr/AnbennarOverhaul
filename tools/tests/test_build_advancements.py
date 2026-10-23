@@ -51,9 +51,15 @@ class DataTests(unittest.TestCase):
             self.assertIn("aov_adv_owns_enchanted_artifact", req["enchanted_artifact"][n])
         for n in (2, 3):
             self.assertIn("aov_adv_owns_orb", req["orb_of_omniscience"][n])
-        self.assertIn("aov_adv_owns_phylactery", req["lichdom"][3])
-        self.assertIn("aov_adv_has_sacrifice", req["lichdom"][3])
+        for n in (2, 3):
+            self.assertIn("aov_adv_owns_phylactery", req["lichdom"][n])
         self.assertIn("aov_adv_can_become_lich", req["lichdom"][3])
+        # The lich dies by their own potion: no prisoner is needed
+        self.assertNotIn("aov_adv_has_sacrifice", str(req["lichdom"]))
+
+    def test_only_lichdom_has_a_start_hook(self):
+        hooks = {a["key"]: a["on_start"] for a in ADVS if a["on_start"]}
+        self.assertEqual(hooks, {"lichdom": "aov_adv_lichdom_on_start"})
 
 
 class ValidateTests(unittest.TestCase):
@@ -77,6 +83,9 @@ class ValidateTests(unittest.TestCase):
 
     def test_rejects_bad_requires_level(self):
         self.broken(lambda a: a.update(requires={4: ["aov_adv_x"]}))
+
+    def test_rejects_bad_on_start(self):
+        self.broken(lambda a: a.update(on_start="aov adv x"))
 
     def test_rejects_duplicate(self):
         advs = copy.deepcopy(ADVS)
@@ -160,8 +169,9 @@ class GeneratedTests(unittest.TestCase):
 
     def test_requires_triggers_in_their_level(self):
         t = block(FILES[TRIG], "aov_adv_lichdom_can_start")
-        self.assertIn("aov_adv_owns_phylactery = yes", branch(t, 2))
-        self.assertNotIn("aov_adv_owns_phylactery", branch(t, 0) + branch(t, 1))
+        for done in (1, 2):
+            self.assertIn("aov_adv_owns_phylactery = yes", branch(t, done))
+        self.assertNotIn("aov_adv_owns_phylactery", branch(t, 0))
         e = block(FILES[TRIG], "aov_adv_enchanted_artifact_can_start")
         self.assertIn("aov_adv_can_craft_enchanted_artifact = yes", branch(e, 0))
         self.assertIn("aov_adv_owns_enchanted_artifact = yes", branch(e, 1))
@@ -178,6 +188,12 @@ class GeneratedTests(unittest.TestCase):
         self.assertIn("remove_variable = aov_studying", s)
         self.assertIn("set_variable = { name = aov_adv_committed value = flag:mirror_image }", s)
         self.assertIn("set_variable = { name = aov_adv_progress value = 0 }", s)
+
+    def test_start_hook_runs_after_commitment(self):
+        s = block(FILES[EFF], "aov_adv_lichdom_start")
+        self.assertLess(s.index("set_variable = { name = aov_adv_progress value = 0 }"),
+                        s.index("aov_adv_lichdom_on_start = yes"))
+        self.assertNotIn("on_start", block(FILES[EFF], "aov_adv_mirror_image_start"))
 
     def test_abandon_clears_state(self):
         a = block(FILES[EFF], "aov_adv_abandon")
@@ -199,10 +215,10 @@ class GeneratedTests(unittest.TestCase):
             for n in (1, 2, 3):
                 self.assertIn(f"aov_adv_{k}_{n}_effect = yes", c)
             self.assertIn(f"set_variable = {{ name = aov_adv_{k}_lvl value = var:aov_adv_working_level }}", c)
-            # The commitment ends before the level effect, so a failed level can re-commit (Lichdom awaiting a
-            # sacrifice); the success event is skipped when the effect reports a failure
+            # The commitment ends before the level effect; the success event is skipped when the level fires its own
+            # (a lost artifact, Lichdom's ascension)
             self.assertLess(c.index("aov_adv_abandon = yes"), c.index("_effect = yes"))
-            self.assertIn("limit = { NOT = { exists = scope:aov_adv_failed } }\n\t\ttrigger_event = aov_advancement.1", c)
+            self.assertIn("limit = { NOT = { exists = scope:aov_adv_own_event } }\n\t\ttrigger_event = aov_advancement.1", c)
 
     def test_months_needed(self):
         m = block(FILES[VAL], "aov_adv_months_needed")
@@ -263,7 +279,8 @@ class GeneratedTests(unittest.TestCase):
         script_names = {"aov_adv_eligible", "aov_adv_is_committed", "aov_adv_working_on", "aov_adv_abandon",
                         "aov_adv_quarterly", "aov_adv_committed", "aov_adv_working_level", "aov_adv_progress",
                         "aov_adv_progress_percent", "aov_adv_months_needed", "aov_adv_months_left",
-                        "aov_adv_ai_pick", "aov_adv_ai_yearly", "aov_adv_failed"}
+                        "aov_adv_ai_pick", "aov_adv_ai_yearly", "aov_adv_own_event",
+                        "aov_adv_lichdom_on_start"}
         requires = {t for a in ADVS for ts in a["requires"].values() for t in ts}
         self.assertEqual(sorted(used - defined - script_names - requires), [])
         for k in ba.ADV_OF_SCHOOL.values():

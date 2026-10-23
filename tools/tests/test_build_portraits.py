@@ -390,9 +390,12 @@ class FreshnessTests(unittest.TestCase):
             orphans += [p.relative_to(bp.SUBMOD).as_posix() for p in (bp.SUBMOD / folder).rglob("aov_rie_*")
                         if p.relative_to(bp.SUBMOD).as_posix() not in produced]
         models = bp.SUBMOD / "gfx/models/portraits"
+        # Lichdom's skeleton portrait is imported once from Godherja, not built here (docs/systems/magic.md)
+        imported = "gfx/models/portraits/aov_lich/"
         if models.is_dir():
             orphans += [p.relative_to(bp.SUBMOD).as_posix() for p in models.rglob("*")
-                        if p.is_file() and p.relative_to(bp.SUBMOD).as_posix() not in produced]
+                        if p.is_file() and p.relative_to(bp.SUBMOD).as_posix() not in produced
+                        and not p.relative_to(bp.SUBMOD).as_posix().startswith(imported)]
         self.assertEqual(sorted(orphans), [], "leftover files: delete them")
 
 
