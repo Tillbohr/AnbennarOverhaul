@@ -62,7 +62,7 @@ teeth, hair and beard. Clothes and headgear are untouched. The RiE portrait gene
   re-laid yearly), Summon Extraplanars (a host's men-at-arms and base-type boosts), Orb of Omniscience (court artifact;
   boosts Scry, Foresight, Manipulated Fortune), Enchanted Artifact (one weapon/armor/crown/regalia/trinket per mage,
   strengthened each level; the trinket feeds mana and spell cost), Battlemage Academy (building tiers
-  `battlemage_academy_01-03`, Recruit Battlemage Commander decision, Battlemages men-at-arms), Mirror Image (+1 all
+  `battlemage_academy_01-03`, Recruit Battlemage Commander decision (the recruit is a gender your faith and culture let lead armies, vanilla's `root_soldier_female_chance`), Battlemages men-at-arms), Mirror Image (+1 all
   skills per level, body double on imprisonment), Lichdom (EU4's Pursue Lichdom: The Phylactery, The Transformation
   Potion, The Dark Ritual, three choice-event steps each in `events/aov_lichdom_events.txt`; the mage drinks the potion,
   dies and rises with Anbennar's `lich` trait and Forbidden Magic Practitioner whatever the faith, no prisoner needed;

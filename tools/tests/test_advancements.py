@@ -335,6 +335,13 @@ class BattlemageAcademyTests(unittest.TestCase):
         self.assertIn("aov_school_evocation_progress", r)
         self.assertIn("add_courtier = scope:aov_battlemage", r)
 
+    def test_recruits_can_lead_armies(self):
+        # The game's soldier gender chance: a gender the recruiter's faith and culture allow as knights and commanders.
+        temps = read(TEMPLATES)
+        for n in (1, 2, 3):
+            self.assertRegex(block(temps, f"aov_battlemage_template_{n}"),
+                             r"gender_female_chance = root_soldier_female_chance\b")
+
     def test_recruit_shows_the_commander(self):
         r = block(read(LEVEL_EFFECTS), "aov_recruit_battlemage")
         self.assertLess(r.index("add_courtier = scope:aov_battlemage"), r.index("trigger_event = aov_advancement.70"))
