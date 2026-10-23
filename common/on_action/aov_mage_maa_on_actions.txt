@@ -1,0 +1,16 @@
+﻿# Anbennar Overhaul: mage men-at-arms on_actions. Appended to vanilla on_actions, no base file is edited.
+# See docs/systems/magic.md (Mage men-at-arms).
+
+on_game_start = {
+	on_actions = { aov_mage_maa_game_start }
+}
+
+# Removes the Storm Sorcerers tradition zz_aov_mage_traditions.txt retires (it can no longer be picked either).
+aov_mage_maa_game_start = {
+	effect = {
+		every_culture_global = {
+			limit = { has_cultural_tradition = tradition_test_maa_anb_storm_sorcerers }
+			remove_culture_tradition = tradition_test_maa_anb_storm_sorcerers
+		}
+	}
+}

@@ -82,3 +82,14 @@ teeth, hair and beard. Clothes and headgear are untouched. The RiE portrait gene
   `common/script_values/aov_advancement_tuning.txt`. The Magic window (`gui/aov_window_magic.gui`) has Advancements and
   Spells tabs under the school buttons (GUI variable `aov_magic_tab`, unset = Advancements); study progress shows on
   the Spells tab's school header.
+- **Mage men-at-arms:** Anbennar's Battlemages (`battlemages`, shown as War Mages so they differ from the academy's
+  own Battlemages) are recruited from a Battlemage Academy of tier 2 or more instead of the Magic Schools innovation;
+  the academy also recruits `aov_battlemages` (tier 2) and `aov_battlemages_3` (tier 3). Storm Sorcerers are disabled
+  (`can_recruit = { always = no }`; gnomes field artificers instead), their tradition
+  `tradition_test_maa_anb_storm_sorcerers` hidden, unpickable and removed from every culture at game start
+  (`common/on_action/aov_mage_maa_on_actions.txt`). Both units are Anbennar's blocks with only `can_recruit` changed
+  (`common/men_at_arms_types/zz_aov_mage_maa_overrides.txt`, tradition in
+  `common/culture/traditions/zz_aov_mage_traditions.txt`); `common/culture/innovations/zz_aov_mage_innovations.txt`
+  drops the unit line from Magic Schools, which keeps its +10% magic lifestyle experience. Druids, Wren Hedge Witches,
+  Bladedancers and Skalds are unchanged. `tools/tests/test_cultural_maa.py` fails when Anbennar changes a copied block
+  or adds a cultural mage unit.

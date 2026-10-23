@@ -1,0 +1,34 @@
+﻿# Anbennar Overhaul: the Storm Sorcerers tradition, retired (hidden, unpickable, removed from every culture by
+# aov_mage_maa_game_start). Its unit is disabled in common/men_at_arms_types/zz_aov_mage_maa_overrides.txt.
+# Anbennar's block otherwise unchanged.
+
+tradition_test_maa_anb_storm_sorcerers = {
+	category = combat
+	layers = {
+		0 = martial
+		1 = western
+		4 = bow.dds
+	}
+	
+	is_shown = { always = no }
+	can_pick = { always = no }
+	
+	parameters = {
+		unlock_maa_anb_storm_sorcerers = yes
+		allows_mageknight_accolade = yes
+	}
+	
+	cost = {
+		prestige = {
+			add = {
+				value = 1000
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+		}
+	}
+	
+	ai_will_do = {
+		value = 0
+	}
+}

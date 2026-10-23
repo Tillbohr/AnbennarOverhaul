@@ -1,0 +1,47 @@
+﻿l_english:
+ # Anbennar Overhaul: flavor text for Anbennar's cultural men-at-arms that only had "LOC TO-DO".
+ # Where EU4 Anbennar has a matching text (unit descriptions, missions, events) it is trimmed and set in the CK3
+ # period; the rest are written for the overhaul.
+ # Exact EU4 units
+ damerian_longbowmen_flavor:0 "#F Despite the elven reputation as master archers, it was their long-time allies, the Damerians, who taught them the bow. The longbow is the Damerian weapon of choice, and the bane of many a Lorentish knight.#!"
+ knights_of_the_serpent_flavor:0 "#F For centuries the Serpentshead has been contested between Gerudians and Reachmen. From their fortress of Serpentgard, the Knights of the Serpent proclaim themselves protectors of the Reach against Gerudian invasion. Descended from warriors who stalked the swamps for intruders, they are used to difficult terrain and know that not every battle is won by a glorious charge.#!"
+ drake_riders_flavor:0 "#F Kobolds tamed drakes long before their recorded history, but the sacred nature of the dragonlike beasts made risking them in war taboo for centuries. Human and gnomish incursions forced desperate handlers to ride them into battle, and their sheer effectiveness on the field has begun to shake the taboo.#!"
+ salamander_riders_flavor:0 "#F Serpentspine salamanders dwell in damp caverns throughout the Serpentspine. Large and carnivorous, they are surprisingly docile when well fed. The Darkscales ride them to war, using their barbed tails and wall-climbing to launch brutal ambushes, and the salamanders feed on the flesh of the fallen.#!"
+ # Adapted from EU4 missions and events
+ alenic_outriders_flavor:0 "#F Light horsemen raised from the herders and pastoralists of the Alenic frontier. Armed with spear and shield, they ride ahead of the host across the open grasslands, disrupting the enemy's advance and baiting its ranks into disarray. Even in peace, the herders of the frontier keep one eye on the horizon.#!"
+ ebonsteel_infantry_flavor:0 "#F From the earth an unremarkable black rock, from the fire a metal dark as night, and with the spoken word of Skaldic song its true identity revealed. Olavish warriors clad in Ebonsteel shrug off blows that would fell other men, for the metal itself resists being touched.#!"
+ wren_hedge_witches_flavor:0 "#F Said to descend from a coven of Bigwheater witches, the Order of the Wren is a rare thing: a halfling mage order in a land wary of magic. Its hedge witches send enchanted wrens to spy out hidden foes, and a bird's trill near an interloper's hiding place has foiled more than one ambush.#!"
+ glass_pirates_flavor:0 "#F Corsairs from the pirate havens hidden in the rocky crags of Drolas, ruled by matriarchs who answer to no king. They raid the Sea of Glass for plunder and fight as nimbly ashore as they do on deck.#!"
+ # Written for the overhaul (EU4 has no matching text)
+ adventurers_maa_flavor:0 "#F Sellswords, monster-slayers and fortune-seekers drawn by the promise of glory and gold. They serve whoever pays and rarely die where expected.#!"
+ agderbedderen_flavor:0 "#F Cliff gnome skirmishers of the Storm Coast who climb where no one else can and shoot from ledges an enemy cannot reach.#!"
+ alononan_flavor:0 "#F Treocid skirmishers who know every path through the old forests of the Blademarches.#!"
+ arannese_bardiches_flavor:0 "#F Arannese foot armed with long-bladed bardiches that can hook a rider from the saddle or split a shield.#!"
+ arbalesters_flavor:0 "#F Heavy crossbowmen of Vertesk and the Damescrown. Slow to reload, but their bolts punch through mail at any range a bow can reach.#!"
+ arbarani_heavy_riders_flavor:0 "#F Heavy horsemen of Arbaran, schooled in the saddle by the elven riders of the old Elfrealm.#!"
+ balakuran_flavor:0 "#F Korbarid hillmen in heavy mail, raised to hold the mountain passes of Corvuria.#!"
+ black_knights_flavor:0 "#F Corvurian knights in blackened plate, whose charge has broken stouter hearts than any lance.#!"
+ burning_guard_flavor:0 "#F Ourdi pikemen whose spear-heads are heated in fire before battle, so every wound burns.#!"
+ businori_raiders_flavor:0 "#F Businori horsemen who raid deep into enemy lands and return before the beacons are lit.#!"
+ castellyrian_heavy_knights_flavor:0 "#F The armoured chivalry of Castellyr, heirs to the knights of Castan's empire.#!"
+ dercinges_flavor:0 "#F Carnetori warriors sworn to the druids, heavy footmen who hold the forest paths of Carneter against all comers.#!"
+ druids_flavor:0 "#F The druids of Carneter, keepers of the old groves. In the forest the very wood and wild turn against their foes.#!"
+ gawedi_talonmen_flavor:0 "#F Gawedi pikemen whose hooked polearms grip like the talons of Gawed's eagle.#!"
+ havoric_clansmen_flavor:0 "#F Mountain clansmen of the Havoral peaks who fight beside their kin. On their own slopes they cannot be moved.#!"
+ isargaesos_flavor:0 "#F Sornçósti pikemen of the hill country, unshakeable on high ground.#!"
+ mireknights_flavor:0 "#F Despite the name they fight on foot: Balmirish pikemen who hold the mires where no horse can follow.#!"
+ mistfighters_flavor:0 "#F Milcori skirmishers who fight best when fog rolls over the Borders, appearing and vanishing in the mist.#!"
+ moormen_clan_raiders_flavor:0 "#F Raiders of the feuding Westmoor clans, some of the fiercest warriors in Cannor. They strike from fen and frost and are gone before pursuit can form.#!"
+ patrician_guards_flavor:0 "#F Heavy infantry of the old Castanorian patrician houses, drilled in the manner of the imperial legions their ancestors led.#!"
+ ribbonspears_flavor:0 "#F Esmari spearmen who tie coloured ribbons beneath their spear-heads, so each company can be told apart across the field.#!"
+ saerines_flavor:0 "#F Skirmishers of Pearlsedge who wade marsh and floodplain as easily as a road.#!"
+ skalds_flavor:0 "#F Gerudian skalds whose sung tales of past heroes stir the warband and set enemies' hearts aflame with dread.#!"
+ spadiores_flavor:0 "#F Lencori swordsmen who fight with blade and buckler, quick enough to slip inside a spear's reach.#!"
+ taldoud_guard_flavor:0 "#F The guard of Iochand, where gnome and human hold the line side by side.#!"
+ thorn_squares_flavor:0 "#F Roilsardi pike squares that bristle on every side like a thornbush. From whichever side the enemy comes, they meet a wall of points.#!"
+ vrorengards_flavor:0 "#F The warriors of Bal Vroren, who hold Castan's old northern march against the cold and whatever comes out of it.#!"
+ war_mammoths_flavor:0 "#F Great woolly beasts from the frozen north, driven by Olavish handlers. A mammoth charge breaks lines and walls alike.#!"
+ wexonard_greatswords_flavor:0 "#F Wexonard swordsmen whose two-handed blades clear a path through pike and shield alike. Their companies sell that skill across Cannor.#!"
+ woodsmen_flavor:0 "#F Woodsmen of the Greatwoods, who hunt wolves, bears and werewolves in peacetime and fear nothing that walks the forest roads.#!"
+ # Anbennar's Battlemages, now recruited from a Battlemage Academy beside its own Battlemages (docs/systems/magic.md)
+ battlemages:0 "War Mages"

@@ -1942,7 +1942,7 @@
       "fullpath": ".\\common\\holdings\\00_holdings.txt",
       "length": 22,
       "line": "temple_citadel_holding = {",
-      "linenr": 297,
+      "linenr": 299,
       "path": "common\\holdings\\00_holdings.txt",
       "stage": null,
       "tag": null
@@ -1963,7 +1963,7 @@
       "fullpath": ".\\common\\holdings\\00_holdings.txt",
       "length": 22,
       "line": "temple_citadel_holding = {",
-      "linenr": 297,
+      "linenr": 299,
       "path": "common\\holdings\\00_holdings.txt",
       "stage": null,
       "tag": null
@@ -1984,7 +1984,7 @@
       "fullpath": ".\\common\\holdings\\00_holdings.txt",
       "length": 22,
       "line": "temple_citadel_holding = {",
-      "linenr": 297,
+      "linenr": 299,
       "path": "common\\holdings\\00_holdings.txt",
       "stage": null,
       "tag": null
@@ -2005,7 +2005,7 @@
       "fullpath": ".\\common\\holdings\\00_holdings.txt",
       "length": 22,
       "line": "temple_citadel_holding = {",
-      "linenr": 297,
+      "linenr": 299,
       "path": "common\\holdings\\00_holdings.txt",
       "stage": null,
       "tag": null
@@ -2553,6 +2553,27 @@
     }
   ],
   "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\culture\\traditions\\zz_aov_mage_traditions.txt",
+      "length": 26,
+      "line": "\t\tallows_mageknight_accolade = yes",
+      "linenr": 18,
+      "path": "common\\culture\\traditions\\zz_aov_mage_traditions.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key culture_parameter_allows_mageknight_accolade",
   "severity": "warning",
   "wiki": null
 },
