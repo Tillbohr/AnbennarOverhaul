@@ -1,0 +1,125 @@
+﻿# Anbennar Overhaul: the four men-at-arms traditions whose units are now recruited by faith
+# (common/men_at_arms_types/zz_aov_faith_maa_overrides.txt), retired: hidden, unpickable and removed from every
+# culture by aov_faith_maa_game_start. Anbennar's blocks otherwise unchanged.
+
+tradition_test_maa_anb_dercinges = {
+	category = combat
+	layers = {
+		0 = martial
+		1 = western
+		4 = bow.dds
+	}
+	
+	is_shown = { always = no }
+	can_pick = { always = no }
+	
+	parameters = {
+		unlock_maa_anb_dercinges = yes
+	}
+	
+	cost = {
+		prestige = {
+			add = {
+				value = 1000
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+		}
+	}
+	
+	ai_will_do = {
+		value = 0
+	}
+}
+
+tradition_test_maa_anb_druids = {
+	category = combat
+	layers = {
+		0 = martial
+		1 = western
+		4 = bow.dds
+	}
+	
+	is_shown = { always = no }
+	can_pick = { always = no }
+	
+	parameters = {
+		unlock_maa_anb_druids = yes
+		allows_mageknight_accolade = yes
+	}
+	
+	cost = {
+		prestige = {
+			add = {
+				value = 1000
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+		}
+	}
+	
+	ai_will_do = {
+		value = 0
+	}
+}
+
+tradition_test_maa_anb_skalds = {
+	category = combat
+	layers = {
+		0 = martial
+		1 = western
+		4 = bow.dds
+	}
+	
+	is_shown = { always = no }
+	can_pick = { always = no }
+	
+	parameters = {
+		unlock_maa_anb_skalds = yes
+		allows_mageknight_accolade = yes
+	}
+	
+	cost = {
+		prestige = {
+			add = {
+				value = 1000
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+		}
+	}
+	
+	ai_will_do = {
+		value = 0
+	}
+}
+
+tradition_test_maa_anb_knights_of_the_spear = {
+	category = combat
+	layers = {
+		0 = martial
+		1 = western
+		4 = bow.dds
+	}
+	
+	is_shown = { always = no }
+	can_pick = { always = no }
+	
+	parameters = {
+		unlock_maa_anb_knights_of_the_spear = yes
+	}
+	
+	cost = {
+		prestige = {
+			add = {
+				value = 1000
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+		}
+	}
+	
+	ai_will_do = {
+		value = 0
+	}
+}

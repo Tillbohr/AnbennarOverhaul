@@ -2564,6 +2564,48 @@
     {
       "column": 3,
       "from": "MOD",
+      "fullpath": ".\\common\\culture\\traditions\\zz_aov_faith_traditions.txt",
+      "length": 26,
+      "line": "\t\tallows_mageknight_accolade = yes",
+      "linenr": 48,
+      "path": "common\\culture\\traditions\\zz_aov_faith_traditions.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key culture_parameter_allows_mageknight_accolade",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\culture\\traditions\\zz_aov_faith_traditions.txt",
+      "length": 26,
+      "line": "\t\tallows_mageknight_accolade = yes",
+      "linenr": 79,
+      "path": "common\\culture\\traditions\\zz_aov_faith_traditions.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key culture_parameter_allows_mageknight_accolade",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
       "fullpath": ".\\common\\culture\\traditions\\zz_aov_mage_traditions.txt",
       "length": 26,
       "line": "\t\tallows_mageknight_accolade = yes",

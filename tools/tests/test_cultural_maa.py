@@ -27,7 +27,7 @@ BASE_LOC_FILE = "localization/english/culture/anb_cultural_maa_innovations_l_eng
 
 ACADEMY_GATE = "aov_battlemage_academy_tier_at_least = { TIER = 2 }"
 GATES = {"battlemages": ACADEMY_GATE, "storm_sorcerers": "always = no"}
-# Cultural mage units every realm keeps as Anbennar has them.
+# Cultural mage units not gated by the academy (Skalds and Druids are recruited by faith: test_faith_maa.py).
 KEPT_MAGES = {"skalds", "druids", "wren_hedge_witches", "bladedancers"}
 RETIRED = ("tradition_test_maa_anb_storm_sorcerers",)
 # Anbennar flavor keys left as "LOC TO-DO": units nobody can recruit, and keys no unit uses.

@@ -90,6 +90,6 @@ teeth, hair and beard. Clothes and headgear are untouched. The RiE portrait gene
   (`common/on_action/aov_mage_maa_on_actions.txt`). Both units are Anbennar's blocks with only `can_recruit` changed
   (`common/men_at_arms_types/zz_aov_mage_maa_overrides.txt`, tradition in
   `common/culture/traditions/zz_aov_mage_traditions.txt`); `common/culture/innovations/zz_aov_mage_innovations.txt`
-  drops the unit line from Magic Schools, which keeps its +10% magic lifestyle experience. Druids, Wren Hedge Witches,
-  Bladedancers and Skalds are unchanged. `tools/tests/test_cultural_maa.py` fails when Anbennar changes a copied block
+  drops the unit line from Magic Schools, which keeps its +10% magic lifestyle experience. Druids and Skalds are
+  recruited by faith (`faith-maa.md`); Wren Hedge Witches and Bladedancers are unchanged. `tools/tests/test_cultural_maa.py` fails when Anbennar changes a copied block
   or adds a cultural mage unit.

@@ -2,7 +2,8 @@
 # recruited from a Battlemage Academy of tier 2 or more (Evocation advancement) instead of the Magic Schools
 # innovation, beside the academy's own aov_battlemages and aov_battlemages_3. Storm Sorcerers are disabled
 # (can_recruit = { always = no }; the key stays for saves): gnomes field artificers instead. Each block is
-# otherwise Anbennar's. Druids, Wren Hedge Witches, Bladedancers and Skalds are unchanged.
+# otherwise Anbennar's. Druids and Skalds are recruited by faith (zz_aov_faith_maa_overrides.txt); Wren Hedge
+# Witches and Bladedancers are unchanged.
 # See docs/systems/magic.md (Mage men-at-arms).
 
 @cultural_maa_extra_ai_score = 80

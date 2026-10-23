@@ -1,0 +1,29 @@
+﻿# Anbennar Overhaul: faith men-at-arms on_actions. Appended to vanilla on_actions, no base file is edited.
+# See docs/systems/faith-maa.md.
+
+on_game_start = {
+	on_actions = { aov_faith_maa_game_start }
+}
+
+# Removes the four traditions zz_aov_faith_traditions.txt retires (they can no longer be picked either): their units
+# are recruited by faith now.
+aov_faith_maa_game_start = {
+	effect = {
+		every_culture_global = {
+			limit = { has_cultural_tradition = tradition_test_maa_anb_dercinges }
+			remove_culture_tradition = tradition_test_maa_anb_dercinges
+		}
+		every_culture_global = {
+			limit = { has_cultural_tradition = tradition_test_maa_anb_druids }
+			remove_culture_tradition = tradition_test_maa_anb_druids
+		}
+		every_culture_global = {
+			limit = { has_cultural_tradition = tradition_test_maa_anb_skalds }
+			remove_culture_tradition = tradition_test_maa_anb_skalds
+		}
+		every_culture_global = {
+			limit = { has_cultural_tradition = tradition_test_maa_anb_knights_of_the_spear }
+			remove_culture_tradition = tradition_test_maa_anb_knights_of_the_spear
+		}
+	}
+}
