@@ -118,7 +118,8 @@ class LineageTriggerTests(unittest.TestCase):
 TRADITION_FILE = "common/culture/traditions/zz_aov_racial_traditions.txt"
 BASE_TRADITION_FILE = "common/culture/traditions/anb_maa_traditions.txt"
 ON_ACTION_FILE = "common/on_action/aov_racial_armies_on_actions.txt"
-REMOVED = ("tradition_sundancer_legions", "tradition_test_maa_anb_dwarven_handgunners")
+REMOVED = ("tradition_sundancer_legions", "tradition_test_maa_anb_dwarven_handgunners",
+           "tradition_test_maa_anb_dwarven_bombard")
 
 
 def without_blocks(body, names):

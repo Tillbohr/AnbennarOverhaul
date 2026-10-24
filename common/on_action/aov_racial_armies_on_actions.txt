@@ -5,7 +5,7 @@ on_game_start = {
 	on_actions = { aov_racial_armies_game_start }
 }
 
-# Removes the two traditions zz_aov_racial_traditions.txt retires (they can no longer be picked either).
+# Removes the three traditions zz_aov_racial_traditions.txt retires (they can no longer be picked either).
 aov_racial_armies_game_start = {
 	effect = {
 		every_culture_global = {
@@ -15,6 +15,10 @@ aov_racial_armies_game_start = {
 		every_culture_global = {
 			limit = { has_cultural_tradition = tradition_test_maa_anb_dwarven_handgunners }
 			remove_culture_tradition = tradition_test_maa_anb_dwarven_handgunners
+		}
+		every_culture_global = {
+			limit = { has_cultural_tradition = tradition_test_maa_anb_dwarven_bombard }
+			remove_culture_tradition = tradition_test_maa_anb_dwarven_bombard
 		}
 		# First levy correction for every racial holding (common/scripted_effects/aov_racial_levy_effects.txt).
 		every_ruler = {

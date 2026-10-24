@@ -1,4 +1,4 @@
-﻿# Anbennar Overhaul: racial armies. Overrides two Anbennar traditions (common/culture/traditions/anb_maa_traditions.txt)
+﻿# Anbennar Overhaul: racial armies. Overrides three Anbennar traditions (common/culture/traditions/anb_maa_traditions.txt)
 # so they can never be shown or picked; aov_racial_armies_game_start removes them from every culture. Everything
 # but is_shown and can_pick is copied unchanged. See docs/systems/racial-armies.md.
 
@@ -74,7 +74,7 @@ tradition_test_maa_anb_dwarven_handgunners = {
 	parameters = {
 		unlock_maa_anb_dwarven_handgunners = yes
 	}
-	
+
 	cost = {
 		prestige = {
 			add = {
@@ -84,7 +84,39 @@ tradition_test_maa_anb_dwarven_handgunners = {
 			}
 		}
 	}
-	
+
+	ai_will_do = {
+		value = 0
+	}
+}
+
+# Dwarves: Anbennar comments out the dwarven_bombard unit it unlocks, so it unlocked nothing; every late-medieval
+# dwarven culture already has the generic dwarven_bombards (anb_cultural_maa_generics.txt).
+tradition_test_maa_anb_dwarven_bombard = {
+	category = combat
+	layers = {
+		0 = martial
+		1 = western
+		4 = bow.dds
+	}
+
+	is_shown = { always = no }
+	can_pick = { always = no }
+
+	parameters = {
+		unlock_maa_anb_dwarven_bombard = yes
+	}
+
+	cost = {
+		prestige = {
+			add = {
+				value = 1000
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+		}
+	}
+
 	ai_will_do = {
 		value = 0
 	}

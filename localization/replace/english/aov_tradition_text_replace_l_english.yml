@@ -1,0 +1,103 @@
+﻿l_english:
+ # Anbennar Overhaul: names and descriptions for Anbennar's cultural traditions that only had placeholders
+ # ("<Unit> Test MAA", "<Unit> Test MAA Desc", "TODO"). Written for the overhaul; they agree with the unit flavor text in
+ # aov_maa_flavor_replace_l_english.yml. Retired traditions (hidden and unpickable) keep Anbennar's text.
+
+ # Archers
+ tradition_test_maa_anb_longbowmen_name:0 "Damerian Longbows"
+ tradition_test_maa_anb_longbowmen_desc:0 "Every Damerian village keeps its archery butts, and every able man is expected to draw a bow of yew as tall as himself. The elves may be famed as archers, but it was the Damerians who taught them the longbow, and many a Lorentish knight has learned to dread its song."
+ tradition_test_maa_anb_arbalesters_name:0 "Crossbow Guilds"
+ tradition_test_maa_anb_arbalesters_desc:0 "In the towns of Vertesk and the Damescrown, crossbowmen are not levied but enrolled. Their guilds hold contests, keep armouries and maintain the heavy arbalests whose windlasses need a strong arm and a patient one. A city that pays its guild well never lacks for men on its walls."
+
+ # Skirmishers
+ tradition_test_maa_anb_woodsmen_name:0 "Rangers of the Greatwoods"
+ tradition_test_maa_anb_woodsmen_desc:0 "Deep in the Greatwoods live the Woodsmen, hunters who keep apart from village and keep and track down whatever preys on the forest roads, from wolves and bears to werewolves. In wartime their lords call them out of the trees, and few enemies who follow them into the woods come out again."
+ tradition_test_maa_anb_agderbedderen_name:0 "Masters of the Cliffs"
+ tradition_test_maa_anb_agderbedderen_desc:0 "Cliff gnomes grow up on the sheer rock of their sea cliffs, where every path is a climb and a slip is fatal. Their Agderbedderen put that skill to war, scaling slopes no larger foe would attempt and shooting down from ledges that cannot be reached."
+ tradition_test_maa_anb_moormen_clan_raiders_name:0 "Feuds of the Moors"
+ tradition_test_maa_anb_moormen_clan_raiders_desc:0 "The Westmoors are ruled by countless clans whose feuds and old grudges never quite end. Every Moorman learns to raid before learning to farm, striking a rival steading out of the fen and vanishing before pursuit can form. Outsiders who would rule the moors soon learn that the clans stop fighting each other only to fight them."
+ tradition_test_maa_anb_alononan_name:0 "Paths of the Old Forest"
+ tradition_test_maa_anb_alononan_desc:0 "The Treocids have lived in the old forests of the Blademarches for longer than anyone remembers, and they know every deer track and hidden ford beneath the trees. Their Alononan skirmishers use that knowledge to harry invaders from cover, never standing to fight where the enemy would like them to."
+ tradition_test_maa_anb_saerines_name:0 "Waders of the Pearlsedge"
+ tradition_test_maa_anb_saerines_desc:0 "The marshes and floodplains of the Pearlsedge drown armies that try to cross them in good order. Its people grow up wading reed beds and tidal channels, and their Saerines fight there as easily as others fight on a road, striking from the reeds and slipping away across ground no heavy soldier can follow."
+ tradition_test_maa_anb_mistfighters_name:0 "Children of the Mist"
+ tradition_test_maa_anb_mistfighters_desc:0 "Fog rolls thick over the Milcori borderlands, and their warriors have long since learned to love it. Mistfighters are trained to move and strike half-blind, coming out of the murk to cut down a straggling column and fading back before it can turn to face them."
+
+ # Heavy infantry
+ tradition_test_maa_anb_wexonard_greatswords_name:0 "Wexonard School of Fencing"
+ tradition_test_maa_anb_wexonard_greatswords_desc:0 "The peoples of the Alen are renowned for their infantry, and the Wexonards for the boldest of it. Their fencing masters teach the two-handed greatsword as both art and trade, and a Wexonard who has mastered it can cut a path through pike and shield alike. Many sell that skill as mercenaries across Cannor."
+ tradition_test_maa_anb_patrician_guards_name:0 "Legacy of the Legions"
+ tradition_test_maa_anb_patrician_guards_desc:0 "The old patrician houses of Castanor have never forgotten the legions their ancestors led in the days of the empire. Their household guards still drill by the ancient manuals, in close ranks of heavy infantry that move as one: a reminder of what Castanor once was, and might be again."
+ tradition_test_maa_anb_ebonsteel_infantry_name:0 "Ebonsteel Smithing"
+ tradition_test_maa_anb_ebonsteel_infantry_desc:0 "Only Olavish smiths know how to work Ebonsteel, the black metal that must be sung over as it is forged. Arms and armour made from it turn aside blows that would fell other men, and the warriors who wear it are among the most feared in the north."
+ tradition_test_maa_anb_havoric_clansmen_name:0 "Havoric Clan Muster"
+ tradition_test_maa_anb_havoric_clansmen_desc:0 "The Havoric clans followed the rivers down from the peaks of the Divide and have held the mountains ever since. When war comes, every clan musters its kin under its own banner, and they fight beside cousins and brothers on slopes they have climbed since childhood. On their own mountains, they cannot be moved."
+ tradition_test_maa_anb_vrorengards_name:0 "Wardens of Bal Vroren"
+ tradition_test_maa_anb_vrorengards_desc:0 "Bal Vroren has guarded the northern march of Castanor for centuries, and its warriors kept the watch long after the empire they served had fallen. Hardened by endless winters and endless raids, the Vrorengards hold a line in snow and frost as stubbornly as they hold their walls."
+ tradition_test_maa_anb_balakuran_name:0 "Keepers of the Passes"
+ tradition_test_maa_anb_balakuran_desc:0 "The mountain passes of Corvuria are the only roads into the Korbarid hills, and the Korbarids have always guarded them themselves. Their Balakuran are hillmen in heavy mail, raised from the clans to stand in the narrow places where a few determined warriors can stop an army."
+ tradition_test_maa_anb_spadiores_name:0 "Blade and Buckler"
+ tradition_test_maa_anb_spadiores_desc:0 "Lencori swordplay is quick, close and elegant: a short blade in one hand and a small buckler in the other. The Spadiores who master it slip inside the reach of spear and pike, where their longer-armed enemies can no longer defend themselves."
+ tradition_test_maa_anb_taldoud_guard_name:0 "Shoulder to Shoulder"
+ tradition_test_maa_anb_taldoud_guard_desc:0 "In Iochand, gnome and human have long lived as neighbours, and they defend their land the same way. The Taldoud Guard draws from both peoples, the gnomes' cunning and the humans' reach in a single line, and its companies boast that neither has ever left the other to fall."
+ tradition_test_maa_anb_arannese_bardiches_name:0 "Bardiche Drill"
+ tradition_test_maa_anb_arannese_bardiches_desc:0 "Arannese footmen favour the bardiche, a long-bladed axe on a stout haft. Drilled in its use from their youth, they can hook a rider from the saddle, split a shield in two, or hold a line against horsemen as well as any pikeman."
+
+ # Pikemen
+ tradition_test_maa_anb_mireknights_name:0 "Knights of the Mire"
+ tradition_test_maa_anb_mireknights_desc:0 "Horses founder in the bogs of Balmire, so its knights learned long ago to fight on foot. Despite their proud name the Mireknights are pikemen, not riders, and they hold the mires against any lord foolish enough to lead his cavalry into them."
+ tradition_test_maa_anb_isargaesos_name:0 "Pikes of the Hills"
+ tradition_test_maa_anb_isargaesos_desc:0 "In the hill country of Sorncost the people fight as they farm: on the slopes, and together. The Isargaesos are pikemen who form up on high ground and wait there, and few enemies are willing to climb into their points."
+ tradition_test_maa_anb_gawedi_talonmen_name:0 "Talons of the Eagle"
+ tradition_test_maa_anb_gawedi_talonmen_desc:0 "The eagle is the symbol of Gawed, and its pikemen bear the eagle's talons. Their polearms end in cruel hooks that catch shield rims and drag horsemen down, and a company of Talonmen advancing in good order seizes everything it touches."
+ tradition_test_maa_anb_thorn_squares_name:0 "The Thornbush Formation"
+ tradition_test_maa_anb_thorn_squares_desc:0 "Roilsardi captains form their pikemen into squares that bristle with points on every side, like a thornbush. Cavalry that tries to ride around them finds no flank to strike, and the squares cross the field as a single, unbreakable hedge."
+ tradition_test_maa_anb_burning_guard_name:0 "Fire-Tempered Spears"
+ tradition_test_maa_anb_burning_guard_desc:0 "Before every battle the Ourdi heat their spear-heads in the fire, so that every wound they deal burns. Their enemies call the practice cruel; to the Ourdi it is a rite of war, and the Burning Guard that keeps it is the pride of their warriors."
+ tradition_test_maa_anb_ribbonspears_name:0 "Ribboned Companies"
+ tradition_test_maa_anb_ribbonspears_desc:0 "Esmari spearmen tie bright ribbons beneath their spear-heads, each company in its own colours, so that their captains can tell them apart across a crowded field. The Ribbonspears take fierce pride in their colours, and losing them is a disgrace no company forgets."
+
+ # Mages
+ tradition_test_maa_anb_wren_hedge_witches_name:0 "Order of the Wren"
+ tradition_test_maa_anb_wren_hedge_witches_desc:0 "Said to descend from a coven of Bigwheater witches, the hedge witches of the Order of the Wren have long served halfling lords as advisors and protectors, though their countrymen remain wary of magic. In war they send enchanted wrens ahead of the army to find hidden foes, and many an ambush has been foiled by a bird's trill."
+
+ # Light cavalry
+ tradition_test_maa_anb_alenic_outriders_name:0 "Riders of the Frontier"
+ tradition_test_maa_anb_alenic_outriders_desc:0 "On the open grasslands of the Alenic frontier, herders spend their lives in the saddle with one eye on the horizon. In war they ride ahead of the host as outriders with spear and shield, scouting the enemy's march and harrying its flanks until its ranks fall into disarray."
+ tradition_test_maa_anb_businori_raiders_name:0 "Before the Beacons Burn"
+ tradition_test_maa_anb_businori_raiders_desc:0 "The Businori have never had the wealth for great hosts of knights, so they make war as their ancestors did: on fast horses, deep in enemy land. The Ekinerak burn crops, drive off herds and plunder villages, and are home again before the beacons are lit."
+ tradition_test_maa_anb_knights_of_the_serpent_name:0 "The Serpentgard Oath"
+ tradition_test_maa_anb_knights_of_the_serpent_desc:0 "At Serpentgard, the Knights of the Serpent swear to defend the Reach against Gerudian invasion. The order takes sons from every Reachman household, and its knights learn to fight in swamp and forest as readily as on open ground, for the Serpentshead offers little of the latter."
+
+ # Heavy cavalry
+ tradition_test_maa_anb_rose_knights_name:0 "The Order of the Rose"
+ tradition_test_maa_anb_rose_knights_desc:0 "The Rose Knights are the pride of Lorent: heavy horsemen in shining plate, sworn to serve the fairest rose with the sharpest thorns. A place in the order is the highest honour a noble house can win, and its charge has broken the host of many a rebellious lord."
+ tradition_test_maa_anb_black_knights_name:0 "Black Knights of Corvuria"
+ tradition_test_maa_anb_black_knights_desc:0 "Corvurian knights go to war in blackened plate, and they have made dread their sharpest weapon. Their charge has broken stouter hearts than any lance, and the mere sight of their dark banners on the horizon is often enough to scatter a levy."
+ tradition_test_maa_anb_castellyrian_heavy_knights_name:0 "Imperial Chivalry"
+ tradition_test_maa_anb_castellyrian_heavy_knights_desc:0 "The knights of Castellyr count themselves the true heirs of the armoured chivalry that won Castan his empire. Their houses still breed heavy warhorses and forge plate after the old fashion, and they ride to war certain that the glory of the empire lives on in their charge."
+ tradition_test_maa_anb_arbarani_heavy_riders_name:0 "Arbarani Coursers"
+ tradition_test_maa_anb_arbarani_heavy_riders_desc:0 "The Arbarani Courser is held to be the strongest horse in all Cannor, and the riders of Arbaran are bred to it as surely as the horses themselves. Schooled in the saddle by the elves of old, they ride the heaviest destriers in the heaviest armour, and few lines can hold against them."
+
+ # Beasts
+ tradition_test_maa_anb_war_mammoths_name:0 "Mammoth Tamers"
+ tradition_test_maa_anb_war_mammoths_desc:0 "In the frozen north, Olavish herders have tamed the great woolly mammoth. Driven into battle by their handlers, the beasts trample shield walls and palisades alike, and the ground shakes beneath their charge."
+ tradition_test_maa_anb_drake_riders_name:0 "Riders of the Drake"
+ tradition_test_maa_anb_drake_riders_desc:0 "For centuries the drakes, kin to the dragons the kobolds revere, were too sacred to risk in battle. As enemies pressed in on the warrens, desperate handlers broke the old taboo, and their drake riders proved so deadly that few now dare speak against them."
+ tradition_test_maa_anb_salamander_riders_name:0 "Salamander Tamers"
+ tradition_test_maa_anb_salamander_riders_desc:0 "The Darkscales of the Serpentspine have tamed the great cavern salamanders, carnivorous beasts that stay docile only while well fed. Their riders climb walls and cavern roofs to fall on their enemies from above, and after the battle, the salamanders feed well."
+
+ # Bilingualism ("(WIP)" names, "TODO" descriptions)
+ tradition_language_gnomish_lencori_name:0 "Gnomish-Lencori Bilingualism"
+ tradition_language_gnomish_lencori_desc:0 "In Iochand and the river valleys of Lencenor, gnomes and humans have lived as neighbours for centuries. Children of this culture grow up speaking both tongues, and its merchants and envoys pass between the two peoples with ease."
+ tradition_language_castanorian_dwarven_name:0 "Dwarven-Castanorian Bilingualism"
+ tradition_language_castanorian_dwarven_desc:0 "Dwarves have traded with the peoples of Castanor since the days of the first empire, and where holds and human towns stand close together the two tongues have long mixed. This culture speaks both Dwarven and Castanorian from childhood, at the forge and the market alike."
+ tradition_language_copper_dwarven_bahari_name:0 "Dwarven-Bahari Bilingualism"
+ tradition_language_copper_dwarven_bahari_desc:0 "The copper dwarves and the Bahari have traded along the same mountain roads for generations, bartering ore and metalwork for grain and cloth. This culture speaks both the Dwarven of the copper holds and the Bahari of the lowlands, and is at home in either."
+
+ # Other traditions with a "TODO" description
+ tradition_little_lords_desc:0 "The halflings of this culture may be half the size of their neighbours, but their nobles refuse to be half the lords. They raise sturdy ponies on rich pastures, ride to war as Smallknights in armour cut to their measure, and expect every courtesy owed to a knight of any height."
+ tradition_glass_piracy_desc:0 "Hidden in the rocky crags of Drolas are pirate havens that answer to no king, ruled by matriarchs grown rich on the Sea of Glass. Their corsairs prey on shipping and coasts alike, come ashore wherever plunder waits, and are back aboard before any army can arrive."
+ tradition_laws_of_castan_ebonfrost_desc:0 "When the Gerudian Ebonfrosts took the throne of Castanor, they seized the Trials of Castan for their own bloodline, and the Black Castanorians still keep their laws. Only one whole in body may rule, so rivals are blinded to put them out of the succession, and a vassal who fears his liege is a vassal who pays his dues."
+ tradition_children_of_akasik_desc:0 "The Akasi call the great mountain Mother Akasik and count themselves her children. They build their homes and shrines on her slopes, and every terrace dug and every stone raised in the mountains is an act of devotion to her."
+ tradition_order_reverence_desc:0 "Among the peaks of Akasik, the monastic orders are older and more revered than any throne. Their monks train the body as hard as the soul, and in times of war the cloisters send out brothers and sisters as fearsome in battle as they are devout at prayer."

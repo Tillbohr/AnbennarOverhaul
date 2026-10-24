@@ -18,12 +18,15 @@
    `common/character_interactions/zz_aov_spell_overrides.txt`, keeping the `# Anbennar Overhaul` lines. Its
    `anb_enhance_ability_interaction` is a never-shown stub and needs no re-copy.
 7. If `tools/tests/test_racial_armies.py` fails, re-copy the changed Anbennar fields into the racial armies overrides
-   (four heritages, two traditions, 15 men-at-arms types; see `racial-armies.md`).
+   (four heritages, three traditions, 15 men-at-arms types; see `racial-armies.md`).
    Likewise for `tools/tests/test_cultural_maa.py`: re-copy the two mage men-at-arms, the tradition and the
    innovation it names (see `magic.md`, Mage men-at-arms), and give any new "LOC TO-DO" cultural unit a line in
    `localization/replace/english/aov_maa_flavor_replace_l_english.yml`.
    And for `tools/tests/test_faith_maa.py`: re-copy the four faith men-at-arms and their four traditions (see
    `faith-maa.md`).
+   If `tools/tests/test_tradition_texts.py` fails, give each new placeholder tradition ("Test MAA", "TODO") a name
+   and description in `localization/replace/english/aov_tradition_text_replace_l_english.yml`, and drop lines for
+   traditions Anbennar has since named or removed.
 8. Test in game; check `database_conflicts.log` for overhaul keys now also defined by Anbennar (notably `magic_duelist_focus`, which `zz_aov_magic_focuses.txt` must keep overriding).
 
 After a CK3 patch, rerun `python -I tools/build_hud_override.py`, `python -I tools/build_lifestyle_override.py` and `python -I tools/build_county_view_override.py` too: their sources are the game's `hud.gui`, `window_character_lifestyle.gui` and `window_county_view.gui` (when Anbennar ships no copy).

@@ -50,8 +50,10 @@ Spec: `docs/superpowers/specs/2026-10-21-racial-armies-design.md` (every stat an
     holding there (this reaches vassal barons' temples and cities).
 - **Removed traditions** (`common/culture/traditions/zz_aov_racial_traditions.txt`, hidden and unpickable; removed
   from every culture by `aov_racial_armies_game_start`): `tradition_sundancer_legions` (its units belong to every sun
-  elf culture) and `tradition_test_maa_anb_dwarven_handgunners` (`dwarven_handgunners` is overridden with
-  `can_recruit = { always = no }`; the key stays for saves and Anbennar's debug `tradition_test_maa`).
+  elf culture), `tradition_test_maa_anb_dwarven_handgunners` (`dwarven_handgunners` is overridden with
+  `can_recruit = { always = no }`; the key stays for saves and Anbennar's debug `tradition_test_maa`) and
+  `tradition_test_maa_anb_dwarven_bombard` (it unlocked nothing: Anbennar comments out its `dwarven_bombard` unit, and
+  every late-medieval dwarven culture already has the generic `dwarven_bombards`).
 - **Men-at-arms.** Elves: few men per regiment with very high stats; dwarves: 80-man tough regiments strong in holds,
   mountains, caverns and on dwarven roads. Every unit costs its role's vanilla buy cost and upkeep times
   √(regiment damage ratio × regiment toughness ratio), so the same gold buys the same power
@@ -77,7 +79,7 @@ Spec: `docs/superpowers/specs/2026-10-21-racial-armies-design.md` (every stat an
 ## Hand-maintained overrides to re-check after an Anbennar update
 
 `tools/tests/test_racial_armies.py` fails when Anbennar changes any field the overhaul copies:
-the four heritages (`HeritageTests`), the two traditions (`TraditionRemovalTests`) and the 15 men-at-arms types
+the four heritages (`HeritageTests`), the three traditions (`TraditionRemovalTests`) and the 15 men-at-arms types
 (`MaaTests.test_retuned_units_keep_unchanged_fields`, `test_handgunners_disabled`). Re-copy the changed fields by hand.
 
 ## In-game checks
