@@ -32,6 +32,7 @@ FIXTURE = (
     "}\n"
 )
 REAL = bhm.Roots.default()
+CULTURES_MARKER = "# Anbennar Overhaul: cultures missing in the source"
 
 
 class CultureTests(unittest.TestCase):
@@ -337,6 +338,21 @@ class BuildingTests(unittest.TestCase):
         with self.assertRaises(bhm.GeneratorError):
             bhm.insert_assets("castle_09 = {\n\tassets = { }\n}\n", [bhm.asset_block("n", "k")], {})
 
+    def test_add_asset_cultures_before_the_regions(self):
+        block = ("castle_02 = {\n\tassets = {\n\t\tasset = {\n\t\t\tname = \"a_mesh\"\n\t\t\tgraphical_regions = { r }\n"
+                 "\t\t}\n\t\tasset = {\n\t\t\tname = \"b_mesh\"\n\t\t\tgraphical_regions = { r }\n\t\t}\n\t}\n}\n")
+        out = bhm.add_asset_cultures(block, {"b_mesh": ("k1", "k2")})
+        self.assertEqual(out, block.replace(
+            "\"b_mesh\"\n", "\"b_mesh\"\n\t\t\tgraphical_cultures = { k1 k2 } %s\n" % CULTURES_MARKER))
+        self.assertEqual(bhm.add_asset_cultures(block, {}), block)
+
+    def test_add_asset_cultures_stops(self):
+        block = ("castle_02 = {\n\tassets = {\n\t\tasset = {\n\t\t\tname = \"a_mesh\"\n\t\t\tgraphical_cultures = { k }\n"
+                 "\t\t\tgraphical_regions = { r }\n\t\t}\n\t\tasset = {\n\t\t\tname = \"b_mesh\"\n\t\t}\n\t}\n}\n")
+        for mesh in ("a_mesh", "b_mesh", "c_mesh"):  # already has cultures, no regions, missing
+            with self.assertRaises(bhm.GeneratorError, msg=mesh):
+                bhm.add_asset_cultures(block, {mesh: ("k",)})
+
     def test_asset_files_missing_texture_stops(self):
         with tempfile.TemporaryDirectory() as tmp:
             models = Path(tmp) / "gfx" / "models"
@@ -427,7 +443,8 @@ class RealBuildingTests(unittest.TestCase):
             # file-local @variables get the building kind as a prefix (the sources reuse names with different values)
             source = re.sub(r"@(\w+)", lambda m: f"@{kind}_{m.group(1)}", bhm.source_building(REAL, key))
             start, end = bhm.building_block(self.buildings, key)
-            block = self.buildings[start:end]
+            # the cultures added to original assets (data.ASSET_CULTURES) have their own test
+            block = re.sub(r"[^\n]*" + re.escape(CULTURES_MARKER) + r"\r?\n", "", self.buildings[start:end])
             marker = "\t\t# Anbennar Overhaul: RiE holding model" + ("\r\n" if "\r\n" in source else "\n")
             self.assertEqual(block.count(marker), 1, key)
             i = block.index(marker)
@@ -528,6 +545,51 @@ class RealBuildingTests(unittest.TestCase):
                     self.assertIn(line, asset, (key, group))
                 else:
                     self.assertNotIn("graphical_faiths", asset, (key, group))
+
+    def test_missing_asset_cultures_are_added(self):
+        self.assertLessEqual(set(data.ASSET_CULTURES), set(data.MODELS))
+        for key, fixes in data.ASSET_CULTURES.items():
+            start, end = bhm.building_block(self.buildings, key)
+            for mesh, cultures in fixes.items():
+                asset = self._asset(self.buildings[start:end], mesh)
+                self.assertIn("graphical_cultures = { %s } %s" % (" ".join(cultures), CULTURES_MARKER), asset)
+
+    def test_rie_assets_win_only_for_their_cultures(self):
+        # CK3 scores each asset: graphical region +4, culture +2, faith +1; ties go to the first. Our assets come first,
+        # so an RiE asset must never be the best for a culture without its key (castle_02: western cultures in the
+        # Mediterranean region got the high elf castle). Province assets (dwarven terrain) are left out.
+        ours = {mesh for groups in data.MODELS.values() for meshes in groups.values() for mesh in meshes}
+        lists = set()
+        for text in bhm.culture_texts(REAL).values():
+            code = "\n".join(bhm.strip_comment(line) for line in text.splitlines())
+            lists.update(tuple(match.group(1).split()) for match in bhm.GFX_LIST.finditer(code))
+        regions = bhm.graphical_regions(REAL.anbennar)
+        faiths = [None] + bhm.graphical_faiths(REAL.anbennar)
+
+        def words(code, field):
+            match = re.search(r"\b%s\s*=\s*\{([^}]*)\}" % field, code)
+            return {word.strip('"') for word in match.group(1).split()} if match else set()
+
+        for key in data.MODELS:
+            start, end = bhm.building_block(self.buildings, key)
+            assets = []
+            for asset in bhm.original_assets(self.buildings[start:end].splitlines()):
+                code = "\n".join(bhm.strip_comment(line) for line in asset)
+                if words(code, "provinces"):
+                    continue
+                names = set(re.findall(r'"([^"]+)"', code))
+                assets.append((names, words(code, "graphical_cultures"), words(code, "graphical_regions"),
+                               words(code, "graphical_faiths"), "requires_dlc_flag" in code))
+            for dlc in (True, False):
+                usable = [asset for asset in assets if dlc or not asset[4]]
+                for region in regions:
+                    for culture in lists:
+                        for faith in faiths if key.startswith("temple_") else [None]:
+                            _, best = max(enumerate(usable), key=lambda ia: (
+                                4 * (region in ia[1][2]) + 2 * bool(ia[1][1] & set(culture)) + (faith in ia[1][3]),
+                                -ia[0]))
+                            if best[0] & ours:
+                                self.assertTrue(best[1] & set(culture), (key, region, culture, faith, dlc, best[0]))
 
     def test_no_output_uses_the_removed_region(self):
         self.assertNotIn("graphical_aov_dwarven_mountains", self.buildings)

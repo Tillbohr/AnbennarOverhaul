@@ -60,6 +60,16 @@ MODELS.update(_levels("temple", _HIGH_ELF, _WOOD_ELF,
 MODELS["tribe_01"] = {"wood_elf": ["sindarin_sanctuary_01_mesh"]}
 MODELS["tribe_02"] = {"wood_elf": ["sindarin_sanctuary_02_mesh"]}
 
+# Original assets that lack the graphical_cultures of their siblings: building -> pdxmesh -> the culture keys to add.
+# A region-only asset scores 4 for every culture, the same as our RiE assets for a culture without their key, and ours
+# come first, so the tie showed the high elf castle to western cultures. Vanilla's castle_02 Mediterranean western
+# castle lists no cultures (its castle_01/03/04 versions list these); the build stops if one already has them.
+ASSET_CULTURES = {
+    "castle_02": {
+        "building_western_castle_02_mediterranean_mesh": ("western_building_gfx", "norse_building_gfx", "east_slavic_building_gfx"),
+    },
+}
+
 # Background wall buildings (aov_elven_walls): group -> pdxmesh.
 WALL_MODELS = {"high_elf": "highelves_fort_wall_mesh", "wood_elf": "sindarin_hedge_wall_01_mesh"}
 

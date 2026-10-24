@@ -458,6 +458,36 @@ def insert_assets(block: str, assets: list, variables=None, fallbacks=None, last
     return "".join(lines[:point]) + inserted + "".join(lines[point:])
 
 
+def add_asset_cultures(block: str, fixes: dict) -> str:
+    """block with a graphical_cultures line (marked) inserted before the graphical_regions line of each original
+    asset named in fixes (pdxmesh -> culture keys). Stops when the mesh is not in exactly one asset or the asset
+    already lists cultures (fixed upstream: remove its data.ASSET_CULTURES entry)."""
+    eol = "\r\n" if "\r\n" in block else "\n"
+    lines = block.splitlines(keepends=True)
+    for mesh, cultures in fixes.items():
+        spans, index = [], 0
+        while index < len(lines):
+            if ASSET_START.match(strip_comment(lines[index])):
+                end = block_end(lines, index)
+                if any(f'"{mesh}"' in strip_comment(line) for line in lines[index:end]):
+                    spans.append((index, end))
+                index = end
+            else:
+                index += 1
+        if len(spans) != 1:
+            raise GeneratorError(f"{mesh} is in {len(spans)} assets, expected 1")
+        start, end = spans[0]
+        code = [strip_comment(line) for line in lines[start:end]]
+        if any(re.match(r"^\s*graphical_cultures\s*=", line) for line in code):
+            raise GeneratorError(f"{mesh} already lists graphical_cultures; remove it from data.ASSET_CULTURES")
+        at = next((start + i for i, line in enumerate(code) if re.match(r"^\s*graphical_regions\s*=", line)), None)
+        if at is None:
+            raise GeneratorError(f"{mesh} has no graphical_regions line")
+        indent = re.match(r"^\s*", lines[at]).group(0)
+        lines.insert(at, f"{indent}graphical_cultures = {{ {_words(cultures)} }} {MARKER}: cultures missing in the source{eol}")
+    return "".join(lines)
+
+
 BUILDINGS_FILE = "common/buildings/zz_aov_holding_models.txt"
 LOCALIZATION_FILE = "localization/english/aov_holding_models_l_english.yml"
 ASSET_DIR = "gfx/models/buildings/aov_rie_holdings"
@@ -502,6 +532,7 @@ def build_buildings(roots: Roots) -> dict:
         defined = source_variables(text)
         kind = key.rsplit("_", 1)[0]
         block = insert_assets(text[start:end], assets, defined, assets_fallback, last=not regional)
+        block = add_asset_cultures(block, data.ASSET_CULTURES.get(key, {}))
         # The source files reuse variable names with different values, so each kind gets its own prefix.
         block = re.sub(r"@(\w+)", lambda m: f"@{kind}_{m.group(1)}", block)
         variables.update({f"{kind}_{name}": value for name, value in defined.items()})
