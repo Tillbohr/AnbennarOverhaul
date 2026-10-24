@@ -1,6 +1,6 @@
 ﻿# Anbennar Overhaul: four of Anbennar's cultural men-at-arms recruited by faith instead of culture. Dercinges and
 # Druids need a faith with the Druids of the Deruwren tenet (Ollodousges), Skalds the Skaldic Tales tenet
-# (Skaldhyrric Faith, Reverian Cult, West Damish) and a Skaldhyrric faith or a Gerudian culture, Knights of the Spear Adean as patron god (alone, with the Dame or
+# (Skaldhyrric Faith, Reverian Cult, West Damish), Knights of the Spear Adean as patron god (alone, with the Dame or
 # with Minara). Their culture traditions are retired in common/culture/traditions/zz_aov_faith_traditions.txt.
 # Each block is otherwise Anbennar's. See docs/systems/faith-maa.md.
 
@@ -104,11 +104,6 @@ skalds = {
 
 	can_recruit = { # Anbennar Overhaul: was the Gerudian tradition
 		faith = { has_doctrine = tenet_skaldic_tales }
-		# Anbennar gives the tenet to the Silversea Temple, whose Lencori followers have no skalds.
-		OR = {
-			faith = { religion_tag = skaldhyrric_religion }
-			culture = { has_cultural_pillar = heritage_gerudian }
-		}
 	}
 	
 	buy_cost = { gold = skalds_recruitment_cost }

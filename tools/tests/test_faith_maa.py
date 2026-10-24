@@ -26,8 +26,7 @@ ADEAN = ("faith = { OR = { has_doctrine = doctrine_patron_deity_adean "
 GATES = {
     "dercinges": DRUIDIC,
     "druids": DRUIDIC,
-    "skalds": ("faith = { has_doctrine = tenet_skaldic_tales } OR = { faith = { religion_tag = skaldhyrric_religion } "
-               "culture = { has_cultural_pillar = heritage_gerudian } }"),
+    "skalds": "faith = { has_doctrine = tenet_skaldic_tales }",
     "knights_of_the_spear": ADEAN,
 }
 RETIRED = tuple(f"tradition_test_maa_anb_{key}" for key in GATES)

@@ -7,13 +7,10 @@ recruiter's faith. Anbennar marked Druids and Skalds `# Change to religion` itse
 |---|---|---|---|
 | Dercinges | `tenet_druids_of_the_deruwren` | Ollodousges | Carnetori tradition |
 | Druids | `tenet_druids_of_the_deruwren` | Ollodousges | Carnetori tradition |
-| Skalds | `tenet_skaldic_tales`, and a Skaldhyrric faith or a Gerudian culture | Skaldhyrric Faith (any culture); Reverian Cult and West Damish (Gerudian cultures only) | Gerudian tradition |
+| Skalds | `tenet_skaldic_tales` | Skaldhyrric Faith, Reverian Cult, West Damish | Gerudian tradition |
 | Knights of the Spear | `doctrine_patron_deity_adean`, `_the_dame_adean` or `_adean_minara` | Court of Adean, Cult of Adean, Vernid Adean, Whiterose Court, Luna Damish | Adenner tradition |
 
-- Both tenets can only be picked by their own religion (Lencori, Skaldhyrric), but Anbennar gives Skaldic Tales to
-  two Cannorian faiths too: the Reverian Cult (Gerudian Reverians) and the Silversea Temple (`west_damish`, followed
-  by Tretunic, Pearlsedger, Carnetori and Roilsardi rulers). Skalds therefore also need a Skaldhyrric faith or a
-  Gerudian-heritage culture, so the Silversea Temple's Lencori followers get none. The patron god can be changed on
+- Both tenets can only be picked by their own religion (Lencori, Skaldhyrric). The patron god can be changed on
   reformation, so any Cannorian faith that takes Adean gains Knights of the Spear.
 - Each unit is Anbennar's block with only `can_recruit` changed
   (`common/men_at_arms_types/zz_aov_faith_maa_overrides.txt`).
@@ -30,7 +27,6 @@ recruiter's faith. Anbennar marked Druids and Skalds `# Change to religion` itse
 
 1. A Carnetori Ollodousges ruler can recruit Druids and Dercinges; the same ruler after converting to another faith
    cannot (check whether existing regiments stay).
-2. A Gerudian Skaldhyrric ruler, a Reachman Skaldhyrric ruler and a Reverian Cult ruler can recruit Skalds; a
-   Carnetori Silversea Temple ruler (King Crege of Carneter) cannot.
+2. A Gerudian Skaldhyrric ruler and a Reverian Cult ruler can recruit Skalds.
 3. An Adenner Court of Adean ruler can recruit Knights of the Spear; the recruit tooltip names the doctrines.
 4. Carnetori and Gerudian cultures no longer show the "Test MAA" traditions.
