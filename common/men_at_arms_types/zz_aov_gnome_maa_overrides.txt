@@ -1,0 +1,58 @@
+﻿# Anbennar Overhaul: Anbennar's generic gnomish Artificers and Armored Artificers, disabled (can_recruit = { always = no };
+# the keys stay for saves and for the culture eras that upgrade them). Gnomes field artificer_handgunners from an
+# Artificer Academy instead (aov_artificer_maa_types.txt). Each block is otherwise Anbennar's.
+# See docs/systems/artificery.md.
+
+@cultural_maa_extra_ai_score = 80
+
+artificers = {
+	type = archers
+
+	damage = 14
+	toughness = 10
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		archers = 1
+	}
+
+	winter_bonus = {
+
+	}
+	can_recruit = { always = no }
+	
+	buy_cost = { gold = artificers_recruitment_cost }
+	low_maintenance_cost = { gold = artificers_low_maint_cost }
+	high_maintenance_cost = { gold = artificers_high_maint_cost }
+	
+	stack = 75
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = bowmen
+}
+
+armored_artificers = {
+	type = heavy_infantry
+
+	damage = 12
+	toughness = 15
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		pikemen = 1
+	}
+
+	winter_bonus = {
+
+	}
+	can_recruit = { always = no }
+	
+	buy_cost = { gold = armored_artificers_recruitment_cost }
+	low_maintenance_cost = { gold = armored_artificers_low_maint_cost }
+	high_maintenance_cost = { gold = armored_artificers_high_maint_cost }
+	
+	stack = 75
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = heavy_infantry
+}

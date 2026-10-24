@@ -1,0 +1,16 @@
+﻿l_english:
+ # Anbennar Overhaul: serious flavor text for Anbennar's cultural men-at-arms whose text was a joke or an in-character quip.
+ # Artificers and Armored Artificers are disabled (zz_aov_gnome_maa_overrides.txt), so they get none.
+ oakfoot_rangers_flavor:0 "#F Halfling hunters of the Oakfoot who have stalked game through the hedgerows since childhood. Small, quiet and patient, they let larger foes walk into bowshot.#!"
+ smallknights_flavor:0 "#F Halfling knights who ride stout ponies in plate cut to their size. Quick on their feet and fearless in the charge, they strike low and fast, and few knights relish a lance at the level of their horse's knees.#!"
+ small_militia_flavor:0 "#F Farmers and shopkeepers called up from the villages. Quick, hard to catch and defending their own hearths, they are more stubborn than their size suggests.#!"
+ slingers_flavor:0 "#F Halfling slingers who have thrown stones at crows since they could walk. A volley of them is cheap to raise and unpleasant to stand under.#!"
+ pony_riders_flavor:0 "#F Halfling riders on sure-footed hill ponies, quick over broken ground and well suited to scouting, raiding and running down stragglers.#!"
+ borderwatch_flavor:0 "#F Halfling pikemen who watch the borders of their lands. They hold their ranks behind a hedge of spears that few horsemen will charge twice.#!"
+ cyclebowmen_flavor:0 "#F Gnomish crossbowmen whose repeating mechanisms of cranks and gears loose bolts faster than any ordinary crossbow can be spanned. They are cheaper and steadier than powder, if less spectacular.#!"
+ trapbusters_flavor:0 "#F Gnomish sappers who find, disarm and detonate the traps and obstacles in an army's path, clearing the way for those behind them.#!"
+ dwarven_bombards_flavor:0 "#F Bombards cast in the forges of the holds. Their roar carries for miles, and walls that stood for centuries seldom survive a second volley.#!"
+ lair_lookouts_flavor:0 "#F Kobold archers posted on the ledges and chimneys above a warren. They give warning of intruders, and loose arrows at those who ignore it.#!"
+ trappers_flavor:0 "#F Kobold skirmishers who fill the approaches to their lairs with snares, pits and falling stones, then drive the intruders toward them.#!"
+ hoard_guardians_flavor:0 "#F Kobolds sworn to guard a hoard. They fight with the desperation of those who defend everything they have.#!"
+ scions_flavor:0 "#F Kobolds in whom the blood of dragons runs strongest, scaled and heavily armored. Their warrens hold them in awe, and they fight as the dragons they claim as kin: with fury, and with little thought of retreat.#!"

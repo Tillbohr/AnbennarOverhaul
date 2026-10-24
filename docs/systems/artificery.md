@@ -14,7 +14,7 @@ The HUD override also carries the Magic tab (see magic.md).
 - **Gnomish artificery:** `tradition_gnomish_ingenuity` (gnomish heritage only; added to all gnomish cultures on
   game start; stripped from non-gnomes on culture creation/tradition add) → `artificer_academy_01` (regular
   castle/city building, university icon and modifiers, one per ruler's domain, all of a ruler's academies disabled
-  if they hold 2+) → `artificer_handgunners` MaA (handgunner stats, needs the tradition and an enabled academy in
+  if they hold 2+) → `artificer_handgunners` MaA (shown as Artificers; Anbennar's generic `artificers` and `armored_artificers` are disabled in `zz_aov_gnome_maa_overrides.txt`; handgunner stats, needs the tradition and an enabled academy in
   the recruiter's domain).
 - **Artificery tab:** HUD main tab below Situations (`gui/hud.gui`, generated) shown when the player passes
   `can_use_artificery_trigger` (gnome race, Gnomish Ingenuity culture, exactly one academy) via scripted GUI

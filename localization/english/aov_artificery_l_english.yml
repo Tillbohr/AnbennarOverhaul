@@ -17,7 +17,7 @@
  has_enabled_artificer_academy_tt: "Has an active [GetBuilding('artificer_academy_01').GetName] in their [domain|E] (only one may exist per [domain|E])"
 
  # Men-at-Arms
- artificer_handgunners: "Artificer Handgunners"
+ artificer_handgunners: "Artificers"
  artificer_handgunners_flavor: "#F Trained in the halls of the Artificer Academy, these gnomish gunners wield firearms of their own meticulous design.#!\n#help Enabled by the [GetBuilding('artificer_academy_01').GetName].#!"
 
  # Artificery tab

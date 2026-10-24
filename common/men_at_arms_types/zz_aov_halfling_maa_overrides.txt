@@ -1,0 +1,40 @@
+﻿# Anbennar Overhaul: Anbennar's Small Knights, recruitable by any culture with the Little Lords tradition. Anbennar also
+# requires the high medieval culture era, which halfling cultures do not reach (their history stops in the early
+# medieval era). Otherwise Anbennar's block.
+
+@cultural_maa_extra_ai_score = 80
+
+smallknights = {
+	type = heavy_cavalry
+
+	damage = 95
+	toughness = 25
+	pursuit = 10
+	screen = 40
+
+	terrain_bonus = {
+		hills = { damage = 10 toughness = 8 }
+		farmlands = { damage = 10 toughness = 8 }
+	}
+
+	counters = {
+		archers = 1
+		mages = 1
+		siege_weapon = 1
+	}
+
+	winter_bonus = {
+	}
+
+	can_recruit = {
+		culture = { has_cultural_parameter = unlock_maa_anb_smallknights } # Anbennar Overhaul: no culture_era_high_medieval gate
+	}
+	
+	buy_cost = { gold = smallknights_recruitment_cost }
+	low_maintenance_cost = { gold = smallknights_low_maint_cost }
+	high_maintenance_cost = { gold = smallknights_high_maint_cost }
+	
+	stack = 50
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = heavy_cavalry
+}
