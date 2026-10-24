@@ -432,8 +432,12 @@ class RealBuildingTests(unittest.TestCase):
             self.assertEqual(block.count(marker), 1, key)
             i = block.index(marker)
             self.assertEqual(block[:i], source[:i], key)
-            self.assertNotIn("asset = {", block[:i], key)  # the new assets come before every original one
             self.assertTrue(block.endswith(source[i:]), key)
+            # the new assets come before every original one, except in the region-free tribes (after every one)
+            if key.startswith("tribe_"):
+                self.assertNotIn("asset = {", source[i:], key)
+            else:
+                self.assertNotIn("asset = {", block[:i], key)
             self.assertEqual(block.count("asset = {"), source.count("asset = {") + len(groups) + extra, key)
 
     @staticmethod
@@ -449,22 +453,24 @@ class RealBuildingTests(unittest.TestCase):
             start, end = bhm.building_block(self.buildings, key)
             block = self.buildings[start:end]
             for group, meshes in groups.items():
-                if group == "dwarven":
-                    continue  # see the dwarf tests
+                if group == "dwarven" or key.startswith("tribe_"):
+                    continue  # see the dwarf and tribe tests
                 asset = self._asset(block, meshes[0])
                 self.assertIn("graphical_cultures = { %s }" % " ".join(group_keys[group]), asset)
                 self.assertIn("graphical_regions = { %s }" % " ".join(regions), asset, (key, group))
 
-    def test_tribes_get_wood_elf_models_first(self):
+    def test_tribes_get_wood_elf_models_last_without_regions(self):
+        # no vanilla tribal asset lists graphical_regions: a region-matched asset (+4) would beat every culture's
+        # tribal model, so the wood elf asset has none and wins on its culture (+2) alone; listed last, the
+        # zero-score ties of other cultures still go to vanilla's assets
         _targets, group_keys = bhm.assign_gfx(bhm.culture_texts(REAL))
-        regions = bhm.graphical_regions(REAL.anbennar)
         for key, mesh in (("tribe_01", "sindarin_sanctuary_01_mesh"), ("tribe_02", "sindarin_sanctuary_02_mesh")):
             start, end = bhm.building_block(self.buildings, key)
             block = self.buildings[start:end]
-            self.assertLess(block.index(f'"{mesh}"'), block.index("building_western_tribal_0"), key)
+            self.assertNotIn("graphical_regions", block, key)
+            self.assertGreater(block.index(f'"{mesh}"'), block.index("tgp_building_se_asia_tribal_0"), key)
             asset = self._asset(block, mesh)
             self.assertIn("graphical_cultures = { %s }" % " ".join(group_keys["wood_elf"]), asset)
-            self.assertIn("graphical_regions = { %s }" % " ".join(regions), asset)
             self.assertIn("illustration = ", asset)
             self.assertNotRegex(asset, r"fp\d_|norse")
 
@@ -563,6 +569,7 @@ class RealWallTests(unittest.TestCase):
         cls.elven = cls.files[bhm.WALLS_FILE].decode("utf-8")
         cls.overrides = cls.files[bhm.WALL_OVERRIDES_FILE].decode("utf-8")
         cls.keys = bhm.assign_gfx(bhm.culture_texts(REAL))[1]
+        cls.elf_cultures = data.GROUPS["high_elf"]["cultures"] + data.GROUPS["wood_elf"]["cultures"]
 
     def test_elven_walls_building(self):
         self.assertTrue(self.elven.startswith("﻿# Anbennar Overhaul: generated"))
@@ -576,9 +583,10 @@ class RealWallTests(unittest.TestCase):
             self.assertIn("graphical_cultures = { %s }" % " ".join(self.keys[group]), asset)
             self.assertIn("graphical_regions = { %s }" % " ".join(regions), asset)
         enabled = block[block.index("is_enabled"):]
-        for key in self.keys["high_elf"] + self.keys["wood_elf"]:
-            self.assertIn(f"has_building_gfx = {key}", enabled)
-        self.assertIn("scope:holder ?= { culture = {", enabled)
+        self.assertNotIn("has_building_gfx", enabled)
+        for culture in self.elf_cultures:
+            self.assertIn(f"culture = culture:{culture}", enabled)
+        self.assertIn("scope:holder ?= { OR = {", enabled)
         self.assertIn("is_county_capital = yes", enabled)
         self.assertIn("NOT = { aov_dwarven_model_province_trigger = yes }", enabled)
         self.assertIn("fort_level > 0", enabled)
@@ -619,10 +627,10 @@ class RealWallTests(unittest.TestCase):
         self.assertEqual(new[:at], old[:at], key)
         inserted = new[at]
         self.assertEqual(new[at + 1], DWARF_LINE, key)
-        self.assertTrue(inserted.startswith("\t\tNOT = { scope:holder ?= { culture = { OR = { has_building_gfx = "), key)
-        self.assertTrue(inserted.endswith(" } } } } # Anbennar Overhaul: elven walls\n"), key)
-        for gfx in self.keys["high_elf"] + self.keys["wood_elf"]:
-            self.assertIn(f"has_building_gfx = {gfx}", inserted)
+        self.assertTrue(inserted.startswith("\t\tNOT = { scope:holder ?= { OR = { culture = culture:"), key)
+        self.assertTrue(inserted.endswith(" } } } # Anbennar Overhaul: elven walls\n"), key)
+        for culture in self.elf_cultures:
+            self.assertIn(f"culture = culture:{culture}", inserted)
         return old[at:], new[at + 2:]
 
     def test_early_walls_never_show(self):
@@ -671,7 +679,8 @@ class RealWallTests(unittest.TestCase):
     def test_walls_00_leaves_elves_with_elven_walls_alone(self):
         text = "".join(self._block_lines(self.overrides, "walls_00"))
         child = text[text.index("walls by holding level"):]
-        self.assertIn("has_building_gfx = ", child)
+        self.assertIn("culture = culture:", child)
+        self.assertNotIn("has_building_gfx", child)
         self.assertIn("is_county_capital = yes", child)
         self.assertIn("fort_level > 0", child)
         self.assertIn("government_is_tribal", child)

@@ -8313,15 +8313,6 @@ tribe_01 = {
 	construction_time = slow_construction_time
 
 	assets = {
-		# Anbennar Overhaul: RiE holding model
-		asset = {
-			type = pdxmesh
-			name = "sindarin_sanctuary_01_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/tribe_grass.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/tribal_city" soundparameter = { "Tier" = 0 } }
-			graphical_cultures = { aov_wood_elf_building_gfx }
-			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
-		}
 		# Emishi/Amuric - Falls back to Japanese or Steppe
 		asset = {
 			type = pdxmesh
@@ -8397,6 +8388,14 @@ tribe_01 = {
 			graphical_cultures = { southeast_asian_building_gfx }
 			illustration = @tribe_holding_illustration_seasia
 			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/tribal_city" soundparameter = { "Tier" = 0 } }
+		}
+		# Anbennar Overhaul: RiE holding model
+		asset = {
+			type = pdxmesh
+			name = "sindarin_sanctuary_01_mesh"
+			illustration = "gfx/interface/illustrations/holding_types/tribe_grass.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/tribal_city" soundparameter = { "Tier" = 0 } }
+			graphical_cultures = { aov_wood_elf_building_gfx }
 		}
 	}
 
@@ -8474,15 +8473,6 @@ tribe_02 = {
 	construction_time = slow_construction_time
 
 	assets = {
-		# Anbennar Overhaul: RiE holding model
-		asset = {
-			type = pdxmesh
-			name = "sindarin_sanctuary_02_mesh"
-			illustration = "gfx/interface/illustrations/holding_types/tribe_grass.dds"
-			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/tribal_city" soundparameter = { "Tier" = 0 } }
-			graphical_cultures = { aov_wood_elf_building_gfx }
-			graphical_regions = { graphical_western graphical_mena graphical_india graphical_mediterranean graphical_steppe graphical_siberia graphical_east_asia }
-		}
 		# Emishi/Amuric - Falls back to Japanese or Steppe
 		asset = {
 			type = pdxmesh
@@ -8558,6 +8548,14 @@ tribe_02 = {
 			graphical_cultures = { southeast_asian_building_gfx }
 			illustration = @tribe_holding_illustration_seasia
 			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/tribal_city" soundparameter = { "Tier" = 0 } }
+		}
+		# Anbennar Overhaul: RiE holding model
+		asset = {
+			type = pdxmesh
+			name = "sindarin_sanctuary_02_mesh"
+			illustration = "gfx/interface/illustrations/holding_types/tribe_grass.dds"
+			soundeffect = { soundeffect = "event:/SFX/Ambience/3DMapEmitters/Holdings/City/tribal_city" soundparameter = { "Tier" = 0 } }
+			graphical_cultures = { aov_wood_elf_building_gfx }
 		}
 	}
 

@@ -19,7 +19,7 @@ walls_00 = {
 				}
 				NOT = {
 					AND = {
-						scope:holder ?= { culture = { OR = { has_building_gfx = aov_high_elf_building_gfx has_building_gfx = aov_wood_elf_building_gfx } } }
+						scope:holder ?= { OR = { culture = culture:moon_elvish culture = culture:sun_elvish culture = culture:wood_elvish } }
 						OR = {
 							is_county_capital = yes
 							fort_level > 0
@@ -69,7 +69,7 @@ walls_01_tribal = {
 	}
 	is_enabled = {
 		always = no # Anbennar Overhaul: walls by holding level
-		NOT = { scope:holder ?= { culture = { OR = { has_building_gfx = aov_high_elf_building_gfx has_building_gfx = aov_wood_elf_building_gfx } } } } # Anbennar Overhaul: elven walls
+		NOT = { scope:holder ?= { OR = { culture = culture:moon_elvish culture = culture:sun_elvish culture = culture:wood_elvish } } } # Anbennar Overhaul: elven walls
 		NOT = { aov_dwarven_model_province_trigger = yes } # Anbennar Overhaul: dwarven holds
 		OR = {
 			is_county_capital = yes
@@ -223,7 +223,7 @@ walls_01 = {
 
 	is_enabled = {
 		always = no # Anbennar Overhaul: walls by holding level
-		NOT = { scope:holder ?= { culture = { OR = { has_building_gfx = aov_high_elf_building_gfx has_building_gfx = aov_wood_elf_building_gfx } } } } # Anbennar Overhaul: elven walls
+		NOT = { scope:holder ?= { OR = { culture = culture:moon_elvish culture = culture:sun_elvish culture = culture:wood_elvish } } } # Anbennar Overhaul: elven walls
 		NOT = { aov_dwarven_model_province_trigger = yes } # Anbennar Overhaul: dwarven holds
 		OR = {
 			# These buildings will trigger the visual "upgrade" to this wall asset
@@ -395,7 +395,7 @@ walls_02 = {
 
 	is_enabled = {
 		always = no # Anbennar Overhaul: walls by holding level
-		NOT = { scope:holder ?= { culture = { OR = { has_building_gfx = aov_high_elf_building_gfx has_building_gfx = aov_wood_elf_building_gfx } } } } # Anbennar Overhaul: elven walls
+		NOT = { scope:holder ?= { OR = { culture = culture:moon_elvish culture = culture:sun_elvish culture = culture:wood_elvish } } } # Anbennar Overhaul: elven walls
 		NOT = { aov_dwarven_model_province_trigger = yes } # Anbennar Overhaul: dwarven holds
 		OR = {
 			# These buildings will trigger the visual "upgrade" to this wall asset
@@ -568,7 +568,7 @@ walls_03 = {
 
 
 	is_enabled = {
-		NOT = { scope:holder ?= { culture = { OR = { has_building_gfx = aov_high_elf_building_gfx has_building_gfx = aov_wood_elf_building_gfx } } } } # Anbennar Overhaul: elven walls
+		NOT = { scope:holder ?= { OR = { culture = culture:moon_elvish culture = culture:sun_elvish culture = culture:wood_elvish } } } # Anbennar Overhaul: elven walls
 		NOT = { aov_dwarven_model_province_trigger = yes } # Anbennar Overhaul: dwarven holds
 		scope:holder = {
 			NOT = { government_has_flag = government_is_tribal }
@@ -716,7 +716,7 @@ walls_04 = {
 
 
 	is_enabled = {
-		NOT = { scope:holder ?= { culture = { OR = { has_building_gfx = aov_high_elf_building_gfx has_building_gfx = aov_wood_elf_building_gfx } } } } # Anbennar Overhaul: elven walls
+		NOT = { scope:holder ?= { OR = { culture = culture:moon_elvish culture = culture:sun_elvish culture = culture:wood_elvish } } } # Anbennar Overhaul: elven walls
 		NOT = { aov_dwarven_model_province_trigger = yes } # Anbennar Overhaul: dwarven holds
 		scope:holder = {
 			NOT = { government_has_flag = government_is_tribal }

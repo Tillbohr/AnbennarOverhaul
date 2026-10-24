@@ -412,11 +412,11 @@ def template_asset(assets: list, fallback=None) -> list:
     return plain[0][0]
 
 
-def insert_assets(block: str, assets: list, variables=None, fallbacks=None) -> str:
-    """block with the new assets inserted before its first asset (and the comment lines directly above it),
-    after a marker line. Each new asset takes the illustration and soundeffect lines of its template asset
-    (template_asset: the original serving that asset's fallback gfx key in fallbacks, without a DLC flag;
-    file-local @variables resolved through variables)."""
+def insert_assets(block: str, assets: list, variables=None, fallbacks=None, last=False) -> str:
+    """block with the new assets inserted before its first asset (and the comment lines directly above it), or
+    after its last asset when last, after a marker line. Each new asset takes the illustration and soundeffect lines
+    of its template asset (template_asset: the original serving that asset's fallback gfx key in fallbacks, without
+    a DLC flag; file-local @variables resolved through variables)."""
     variables = variables or {}
     fallbacks = list(fallbacks) if fallbacks is not None else [None] * len(assets)
     if len(fallbacks) != len(assets):
@@ -429,9 +429,13 @@ def insert_assets(block: str, assets: list, variables=None, fallbacks=None) -> s
     if not lines[first].startswith("\t\tasset"):
         raise GeneratorError("first asset is not indented by two tabs")
     originals = original_assets(lines)
-    point = first
-    while point > 0 and lines[point - 1].lstrip().startswith("#"):
-        point -= 1
+    if last:
+        point = max(i for i, line in enumerate(lines) if ASSET_START.match(strip_comment(line)))
+        point = block_end(lines, point)
+    else:
+        point = first
+        while point > 0 and lines[point - 1].lstrip().startswith("#"):
+            point -= 1
     out = [f"\t\t{MARKER}: RiE holding model"]
     for asset, fallback in zip(assets, fallbacks):
         resolved = []
@@ -475,6 +479,12 @@ def build_buildings(roots: Roots) -> dict:
     for key, groups in data.MODELS.items():
         path, text = source_file(roots, key)
         start, end = building_block(text, key)
+        # A building whose assets list no graphical region (tribe_01/02) gets region-free assets, last: there a
+        # region-matched asset (+4) would beat every culture's own asset (+2), and listed last the zero-score ties
+        # of the other cultures still go to the original assets.
+        regional = re.search(r"\bgraphical_regions\b",
+                             "\n".join(strip_comment(line) for line in text[start:end].splitlines()))
+        asset_regions = regions if regional else None
         assets, assets_fallback = [], []
         for group, meshes in groups.items():
             # Every asset serves every graphical region (the region outranks the culture when CK3 picks an asset,
@@ -486,12 +496,12 @@ def build_buildings(roots: Roots) -> dict:
                 assets.insert(0, asset_block(meshes, None, regions, dwarf_terrain))
                 assets_fallback.insert(0, fallbacks[data.GROUPS[group]["gfx"]])
                 continue
-            assets.append(asset_block(meshes, group_keys[group], regions,
+            assets.append(asset_block(meshes, group_keys[group], asset_regions,
                                       faiths=faiths if key.startswith("temple_") else None))
             assets_fallback.append(fallbacks[data.GROUPS[group]["gfx"]])
         defined = source_variables(text)
         kind = key.rsplit("_", 1)[0]
-        block = insert_assets(text[start:end], assets, defined, assets_fallback)
+        block = insert_assets(text[start:end], assets, defined, assets_fallback, last=not regional)
         # The source files reuse variable names with different values, so each kind gets its own prefix.
         block = re.sub(r"@(\w+)", lambda m: f"@{kind}_{m.group(1)}", block)
         variables.update({f"{kind}_{name}": value for name, value in defined.items()})
@@ -516,13 +526,16 @@ WALL_LEVEL_TRIGGER = "aov_holding_walls_level_%d_trigger"
 LEVEL_MARKER = f"{MARKER}: walls by holding level"
 
 
-def uses_elf_gfx(keys: list) -> str:
-    """A culture trigger that holds when the holder's culture uses one of the gfx keys."""
-    return "scope:holder ?= { culture = { OR = { %s } } }" % " ".join(f"has_building_gfx = {key}" for key in keys)
+def uses_elf_gfx(cultures: list) -> str:
+    """A trigger that holds when the holder's culture is one of the cultures. Not has_building_gfx on the elf keys:
+    in game that held for every culture (all castles drew the elven walls), presumably through the keys' fallback
+    western_building_gfx."""
+    return "scope:holder ?= { OR = { %s } }" % " ".join(f"culture = culture:{culture}" for culture in cultures)
 
 
-def elf_keys(group_keys: dict) -> list:
-    return [key for group in ("high_elf", "wood_elf") for key in group_keys[group]]
+def elf_cultures(roots: Roots) -> list:
+    resolved = resolve_cultures(culture_texts(roots))
+    return [culture for group in ("high_elf", "wood_elf") for culture in resolved[group]]
 
 
 def build_triggers(roots: Roots) -> dict:
@@ -550,12 +563,13 @@ def build_walls(roots: Roots) -> dict:
     _targets, group_keys = assign_gfx(culture_texts(roots))
     regions = graphical_regions(roots.anbennar)
     assets = "".join(asset_block(data.WALL_MODELS[group], group_keys[group], regions) for group in ("high_elf", "wood_elf"))
+    elf = uses_elf_gfx(elf_cultures(roots))
     elven = (f"aov_elven_walls = {{\n\tis_graphical_background = yes\n\n{assets}\n"
-             f"{IS_ENABLED_LINE}\n\t\t{uses_elf_gfx(elf_keys(group_keys))}\n"
+             f"{IS_ENABLED_LINE}\n\t\t{elf}\n"
              f"\t\tNOT = {{ {DWARF_TRIGGER} = yes }}\n"
              "\t\t# the walls a vanilla holding shows (see walls_00 in Anbennar's background buildings)\n"
              "\t\tOR = {\n\t\t\tis_county_capital = yes\n\t\t\tfort_level > 0\n\t\t}\n\t}\n}\n")
-    exclusion = f"\t\tNOT = {{ {uses_elf_gfx(elf_keys(group_keys))} }} {MARKER}: elven walls\n"
+    exclusion = f"\t\tNOT = {{ {elf} }} {MARKER}: elven walls\n"
     # a province that shows the dwarf model gets no wall background at all (the fence and field are walls_00..04)
     dwarven = f"\t\tNOT = {{ {DWARF_TRIGGER} = yes }} {MARKER}: dwarven holds\n"
     # walls_00 ("no walls") is the one background a dwarf-model province keeps: a holding needs an active background
@@ -571,7 +585,7 @@ def build_walls(roots: Roots) -> dict:
                 "\t\t\t\t}\n"
                 "\t\t\t\tNOT = {\n"
                 "\t\t\t\t\tAND = {\n"
-                f"\t\t\t\t\t\t{uses_elf_gfx(elf_keys(group_keys))}\n"
+                f"\t\t\t\t\t\t{elf}\n"
                 "\t\t\t\t\t\tOR = {\n\t\t\t\t\t\t\tis_county_capital = yes\n\t\t\t\t\t\t\tfort_level > 0\n\t\t\t\t\t\t}\n"
                 "\t\t\t\t\t}\n"
                 "\t\t\t\t}\n"

@@ -229,3 +229,16 @@ culture) won the tie everywhere. The Dunedain asset is now inserted after the la
 pick it (culture 2 + region 4 = 6), everyone else keeps vanilla's walls by order. The holding assets stay first: every
 Anbennar `building_gfx` list matches a vanilla culture asset in `castle_01`, `city_01` and `temple_01`, so no culture
 falls to a region-only tie there.
+
+### Round 7
+
+1. Every culture's tribal holdings showed the Silvan sanctuary. No vanilla `tribe_01/02` asset lists
+   `graphical_regions`, so the all-regions wood elf asset scored 4 against at most 2 for any culture's own tribal
+   model. A building whose source assets list no region now gets its new assets without regions and after its last
+   asset: wood elves win on the culture (2), every other culture keeps vanilla's earlier assets on the 0-ties.
+2. Every castle drew the elven walls. `aov_elven_walls` was on for every holder (and the elven exclusion switched
+   `walls_03/04` off), so `scope:holder ?= { culture = { has_building_gfx = aov_high_elf_building_gfx ... } }` held for
+   non-elves too, presumably through the elf keys' `western_building_gfx` fallback. The elf trigger (aov_elven_walls,
+   the exclusion line of `walls_01_tribal`, `walls_01..04` and the elf guard of `walls_00`) now checks the holder's
+   culture directly: `scope:holder ?= { OR = { culture = culture:moon_elvish culture = culture:sun_elvish
+   culture = culture:wood_elvish } }` (the cultures of the high and wood elf groups).
