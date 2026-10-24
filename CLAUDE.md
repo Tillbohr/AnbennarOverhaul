@@ -15,6 +15,22 @@ new Anbennar version. Targets CK3 **1.19.0.6**. Base-mod conventions, paths and 
   `.gitattributes` keeps `.txt`/`.yml`/`.mod` bytes exact (UTF-8 BOM + LF) and sends `.tga`/`.psd` to Git LFS.
 - Base mod is read-only in practice: read it for reference, never write to it.
 
+## Model choice
+
+The default model is **Sonnet 5.5 on medium effort**, for speed and lower token use. Routine work stays on it:
+rerunning generators, data edits, loc, small script fixes, tests, validation, commits, docs.
+
+When a task needs deeper thought, **stop before the hard part and ask the user to switch to the most capable
+model in the model menu, on high effort**. Say in one line why, then wait. A session cannot change its own model;
+the user switches it from the model menu. Deeper thought means any of:
+
+- designing a new system or a new generator, or changing how an existing generator works;
+- debugging engine behavior the files do not explain (asset scoring, scopes, GUI layout, why a trigger fails in game);
+- a change across several systems or generators, or one that touches generator order (`docs/systems/updating.md`);
+- a fix that already failed once on this model.
+
+After the hard part is done, say so, so the user can switch back to Sonnet 5.5 medium for the rest.
+
 | Task | Command |
 |---|---|
 | Validate (new reports only) | `python -I tools/validate.py` |
