@@ -75,12 +75,36 @@ Spec: `docs/superpowers/specs/2026-10-21-racial-armies-design.md` (every stat an
   `aov_elven_maa_types.txt` and `aov_dwarven_maa_types.txt`. Names and flavor: new units in
   `localization/english/aov_racial_armies_l_english.yml`, retuned units in
   `localization/replace/english/aov_racial_armies_replace_l_english.yml`.
+- **Art.** Icons and pictures come from Realms in Exile's men-at-arms, copied once (not generated; edit by hand) under
+  an `aov_rie_` prefix into `gfx/interface/icons/regimenttypes/`, `gfx/interface/illustrations/men_at_arms_big/` and
+  `men_at_arms_small/`; each unit's `icon` names the file. Sun elves use RiE's Calaquendi (`high_elven_*`) set and
+  `noldor_heavy_infantry`, moon elves its Lomiquendi (`grey_elven_*`) set, wood elves its Moriquendi (`green_elven_*`,
+  Avarin) set, and every dwarf unit the Longbeard set, chosen by unit role:
+
+  | RiE picture | Units |
+  |---|---|
+  | `noldor_heavy_infantry`, `high_elven_heavy_cavalry`, `_pikemen`, `_archers`, `_light_cavalry`, `_skirmishers` | Sundancer Legionaries, Jaherkadezim, Sunspear Phalanx, Phoenix Bowmen, Sandwind Outriders, Duneblades |
+  | `grey_elven_archers`, `_pikemen`, `_heavy_infantry`, `_light_cavalry`, `_heavy_cavalry`, `_skirmishers` | Aithchri, Sheáhrna, Stáochri, Marcairna, Elven Knights, Gladeguards |
+  | `green_elven_archers`, `_skirmishers`, `_pikemen`, `_heavy_infantry` | Ayethi, Felwyr, Glaifes, Greatoak Wardens |
+  | `royal_elk_riders` (Lasgalen's stag riders) | Hyodeth |
+  | `longbeard_heavy_infantry` | Guardians, Golden Gate Guard, Dauvek Veker, Brightbeard Hammers |
+  | `longbeard_pikemen` | Shieldwall, Grudgebearers, Tortoise Formation |
+  | `longbeard_crossbowmen` | Armor Breakers, Giantbane Crossbows, Massed Clockwork Bows |
+  | `longbeard_cavalry` (ram riders) | Ramriders |
+  | `longbeard_horse_archers` (ram chariots) | Copper Road Wardens |
+  | `longbeard_skirmishers` | Uthojdihr Marines, Seg Band Gnollhunters |
+
+  The two light cavalry icons were 130×130 DXT5 in RiE and are resized to 120×120 (`eu4_import.py convert --resize`).
+  Siege units (Silverforge Engineer Corps, Dwarven Bombards) keep the vanilla bombard art. The military window's levy
+  and knight pictures for elf and dwarf rulers (RiE's `levies_elven`, `levies_longbeard`, `knights_elven`,
+  `knights_falathrim`, `knights_silvan`, `knights_longbeard`, copied the same way) are wired up by
+  `build_knight_icons.py`; see `knight-icons.md`.
 
 ## Hand-maintained overrides to re-check after an Anbennar update
 
 `tools/tests/test_racial_armies.py` fails when Anbennar changes any field the overhaul copies:
 the four heritages (`HeritageTests`), the three traditions (`TraditionRemovalTests`) and the 15 men-at-arms types
-(`MaaTests.test_retuned_units_keep_unchanged_fields`, `test_handgunners_disabled`). Re-copy the changed fields by hand.
+(`MaaTests.test_retuned_units_keep_unchanged_fields`, `test_handgunners_disabled`; `icon` is one of the overhaul's changed fields). Re-copy the changed fields by hand.
 
 ## In-game checks
 
@@ -91,7 +115,7 @@ A clean tiger pass does not prove the engine accepts this. Still to confirm:
    `levy_size` add into one total, and that county modifiers from several building instances stack).
 2. Whether an elven ruler's +30/+30 levy damage and toughness also applies to a human vassal's levies in their army.
 3. The correction updates when a levy building finishes and when a holding changes hands.
-4. Each culture's recruit list shows exactly its roster; no culture has the Sundancer Legions or Dwarven Handgunners
+4. Each culture's recruit list shows exactly its roster, with the RiE icon and picture on every elf and dwarf unit; no culture has the Sundancer Legions or Dwarven Handgunners
    traditions, and no one can recruit Dwarven Handgunners.
 5. Debug battles (console, playing a human-culture ruler): `event aov_racial_armies_debug.0001` (vs a random elven
    ruler) and `event aov_racial_armies_debug.0002` (vs a random dwarven ruler) declare war and spawn equal-cost

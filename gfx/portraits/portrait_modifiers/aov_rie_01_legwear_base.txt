@@ -7,24 +7,6 @@ aov_rie_legwear = {
 	usage = game
 	selection_behavior = max
 
-	hobbit_legwear = {
-		dna_modifiers = {
-			accessory = {
-				mode = add
-				gene = legwear
-				template = hobbit_common_legwear
-				range = { 0 1 } # For the randomness to work correctly
-			}
-		}	
-		weight = {
-			base = 0
-			modifier = {
-				add = 100
-				portrait_aov_hobbit_clothing_trigger = yes
-			}
-		}
-	}
-
 	elven_war_vanyar_legwear = {
 
 		dna_modifiers = {

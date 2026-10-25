@@ -12,7 +12,7 @@ aithchri = {
 	counters = {
 		skirmishers = 1
 	}
-	icon = bowmen
+	icon = aov_rie_grey_elven_archers
 
 	damage = 120
 	toughness = 35
@@ -42,7 +42,7 @@ sheahrna = {
 		camel_cavalry = 1
 		elephant_cavalry = 1
 	}
-	icon = pikemen
+	icon = aov_rie_grey_elven_pikemen
 
 	damage = 90
 	toughness = 110
@@ -64,7 +64,7 @@ staochri = {
 	counters = {
 		pikemen = 1
 	}
-	icon = heavy_infantry
+	icon = aov_rie_grey_elven_heavy_infantry
 
 	damage = 300
 	toughness = 200
@@ -86,7 +86,7 @@ marcairna = {
 	counters = {
 		archers = 1
 	}
-	icon = light_cavalry
+	icon = aov_rie_grey_elven_light_cavalry
 
 	damage = 90
 	toughness = 60
@@ -111,7 +111,7 @@ sundancer_legions = {
 		pikemen = 1
 		heavy_cavalry = 1
 	}
-	icon = heavy_infantry
+	icon = aov_rie_noldor_heavy_infantry
 
 	damage = 280
 	toughness = 240
@@ -145,7 +145,7 @@ jaherkadezim = {
 	counters = {
 	archers = 1
 	}
-	icon = heavy_cavalry
+	icon = aov_rie_high_elven_heavy_cavalry
 
 	damage = 480
 	toughness = 150
@@ -181,7 +181,7 @@ ayethi = {
 	counters = {
 		skirmishers = 1
 	}
-	icon = bowmen
+	icon = aov_rie_green_elven_archers
 
 	damage = 110
 	toughness = 35
@@ -211,7 +211,7 @@ felwyr = {
 	type = skirmishers
 	counters = {
 	}
-	icon = skirmishers
+	icon = aov_rie_green_elven_skirmishers
 
 	damage = 50
 	toughness = 70
@@ -242,7 +242,7 @@ glaifes = {
 	counters = {
 		light_cavalry = 1
 	}
-	icon = pikemen
+	icon = aov_rie_green_elven_pikemen
 
 	damage = 80
 	toughness = 110
@@ -273,7 +273,7 @@ hyodeth = {
 	counters = {
 		archers = 1
 	}
-	icon = light_cavalry
+	icon = aov_rie_royal_elk_riders
 
 	damage = 90
 	toughness = 60
@@ -307,7 +307,7 @@ dwarven_guardians = {
 		archers = 1
 		pikemen = 1
 	}
-	icon = heavy_infantry
+	icon = aov_rie_longbeard_heavy_infantry
 
 	damage = 48
 	toughness = 60
@@ -340,7 +340,7 @@ shieldwall = {
 		light_cavalry = 1
 		heavy_cavalry = 1
 	}
-	icon = pikemen
+	icon = aov_rie_longbeard_pikemen
 
 	damage = 30
 	toughness = 70
@@ -374,7 +374,7 @@ armor_breakers = {
 		heavy_infantry = 1
 		heavy_cavalry = 1
 	}
-	icon = bowmen
+	icon = aov_rie_longbeard_crossbowmen
 
 	damage = 55
 	toughness = 35
@@ -406,7 +406,7 @@ ramriders = {
 	counters = {
 		archers = 1
 	}
-	icon = light_cavalry
+	icon = aov_rie_longbeard_cavalry
 
 	damage = 50
 	toughness = 45

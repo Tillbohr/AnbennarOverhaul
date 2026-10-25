@@ -8,6 +8,12 @@
  aov_knight_badge_gnomish:0 "aov_knight_icon_gnomish"
  aov_knight_badge_kobold:0 "aov_knight_icon_kobold"
  aov_knight_badge_default:0 "aov_knight_icon_default"
+ # Custom loc values: the race of the military window's RiE levy and knight pictures.
+ aov_military_art_moon_elven:0 "moon_elven"
+ aov_military_art_sun_elven:0 "sun_elven"
+ aov_military_art_wood_elven:0 "wood_elven"
+ aov_military_art_dwarven:0 "dwarven"
+ aov_military_art_none:0 "none"
  # The hidden innovations' own names (never shown).
  aov_knight_icon_moon_elven:0 "Knight Badge"
  aov_knight_icon_moon_elven_desc:0 ""

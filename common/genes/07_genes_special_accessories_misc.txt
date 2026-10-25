@@ -425,19 +425,8 @@ accessory_genes = {
 			girl = female
 		}
 		# Anbennar Overhaul: Realms in Exile templates (tools/build_portraits.py)
-			hobbit_common_legwear = {
-				index = 28
-				male = {
-					1 = male_legwear_hobbit_common_01
-				}
-				female = {
-					1 = empty
-				}
-				boy = male
-				girl = female
-			}
 			elven_war_noldor_legwear = {
-				index = 29
+				index = 28
 				male = {
 					1 = male_legwear_elven_war_noldor_01
 				}
@@ -448,7 +437,7 @@ accessory_genes = {
 				girl = female
 			}
 			elven_war_legwear = {
-				index = 30
+				index = 29
 				male = {
 					1 = male_legwear_elven_war_01
 				}
@@ -459,7 +448,7 @@ accessory_genes = {
 				girl = female
 			}
 			silvan_legwear = {#lasgalendrim
-				index = 31
+				index = 30
 				male = {
 					30 = male_elf_peasant_legwear_01
 					30 = male_lasgalendrim_pants_02
@@ -474,7 +463,7 @@ accessory_genes = {
 				girl = female
 			}
 			elven_war_silvan_legwear = {
-				index = 32
+				index = 31
 				male = {
 					1 = male_legwear_elven_war_silvan_01
 				}
@@ -485,7 +474,7 @@ accessory_genes = {
 				girl = female
 			}
 			elven_war_silvan_king_legwear = {
-				index = 33
+				index = 32
 				male = {
 					1 = male_legwear_elven_war_silvan_king_01
 				}
@@ -496,7 +485,7 @@ accessory_genes = {
 				girl = female
 			}
 			generic_boots_legwear = {
-				index = 34
+				index = 33
 				male = {
 					1 = male_legwear_generic
 					1 = male_legwear_dragon_prince01
@@ -513,7 +502,7 @@ accessory_genes = {
 				girl = female
 			}
 			dwarf_war_longbeard_legwear = {
-				index = 35
+				index = 34
 				male = {
 					1 = m_legwear_dwarf_war_02
 					1 = m_legwear_dwarf_war_03

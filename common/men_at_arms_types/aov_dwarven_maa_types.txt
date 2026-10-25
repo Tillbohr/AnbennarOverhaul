@@ -39,7 +39,7 @@ aov_grudgebearers = {
 	high_maintenance_cost = { gold = aov_grudgebearers_high_maint_cost }
 	stack = 80
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = pikemen
+	icon = aov_rie_longbeard_pikemen
 	allowed_in_hired_troops = no
 }
 
@@ -75,7 +75,7 @@ aov_tortoise_formation = {
 	high_maintenance_cost = { gold = aov_tortoise_formation_high_maint_cost }
 	stack = 80
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = pikemen
+	icon = aov_rie_longbeard_pikemen
 	allowed_in_hired_troops = no
 }
 
@@ -111,7 +111,7 @@ aov_giantbane_crossbows = {
 	high_maintenance_cost = { gold = aov_giantbane_crossbows_high_maint_cost }
 	stack = 80
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = crossbowmen
+	icon = aov_rie_longbeard_crossbowmen
 	allowed_in_hired_troops = no
 }
 
@@ -147,7 +147,7 @@ aov_uthojdihr_marines = {
 	high_maintenance_cost = { gold = aov_uthojdihr_marines_high_maint_cost }
 	stack = 80
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = skirmishers
+	icon = aov_rie_longbeard_skirmishers
 	allowed_in_hired_troops = no
 }
 
@@ -182,7 +182,7 @@ aov_seg_band_gnollhunters = {
 	high_maintenance_cost = { gold = aov_seg_band_gnollhunters_high_maint_cost }
 	stack = 80
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = skirmishers
+	icon = aov_rie_longbeard_skirmishers
 	allowed_in_hired_troops = no
 }
 
@@ -216,7 +216,7 @@ aov_golden_gate_guard = {
 	high_maintenance_cost = { gold = aov_golden_gate_guard_high_maint_cost }
 	stack = 50
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = heavy_infantry
+	icon = aov_rie_longbeard_heavy_infantry
 	allowed_in_hired_troops = no
 }
 
@@ -251,7 +251,7 @@ aov_clockwork_bows = {
 	high_maintenance_cost = { gold = aov_clockwork_bows_high_maint_cost }
 	stack = 80
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = crossbowmen
+	icon = aov_rie_longbeard_crossbowmen
 	allowed_in_hired_troops = no
 }
 
@@ -287,7 +287,7 @@ aov_dauvek_veker = {
 	high_maintenance_cost = { gold = aov_dauvek_veker_high_maint_cost }
 	stack = 50
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = heavy_infantry
+	icon = aov_rie_longbeard_heavy_infantry
 	allowed_in_hired_troops = no
 }
 
@@ -321,7 +321,7 @@ aov_copper_road_wardens = {
 	high_maintenance_cost = { gold = aov_copper_road_wardens_high_maint_cost }
 	stack = 50
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = light_cavalry
+	icon = aov_rie_longbeard_horse_archers
 	allowed_in_hired_troops = no
 }
 
@@ -356,7 +356,7 @@ aov_brightbeard_hammers = {
 	high_maintenance_cost = { gold = aov_brightbeard_hammers_high_maint_cost }
 	stack = 50
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = heavy_infantry
+	icon = aov_rie_longbeard_heavy_infantry
 	allowed_in_hired_troops = no
 }
 # Silver dwarves: the best siege unit (spec). Shaped like Anbennar's dwarven_bombards.

@@ -25,7 +25,7 @@ aov_elven_knights = {
 	high_maintenance_cost = { gold = aov_elven_knights_high_maint_cost }
 	stack = 25
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = heavy_cavalry
+	icon = aov_rie_grey_elven_heavy_cavalry
 	allowed_in_hired_troops = no
 }
 
@@ -53,7 +53,7 @@ aov_gladeguards = {
 	high_maintenance_cost = { gold = aov_gladeguards_high_maint_cost }
 	stack = 50
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = skirmishers
+	icon = aov_rie_grey_elven_skirmishers
 	allowed_in_hired_troops = no
 }
 
@@ -93,7 +93,7 @@ aov_sunspear_phalanx = {
 	high_maintenance_cost = { gold = aov_sunspear_phalanx_high_maint_cost }
 	stack = 50
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = pikemen
+	icon = aov_rie_high_elven_pikemen
 	allowed_in_hired_troops = no
 }
 
@@ -128,7 +128,7 @@ aov_phoenix_bowmen = {
 	high_maintenance_cost = { gold = aov_phoenix_bowmen_high_maint_cost }
 	stack = 50
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = bowmen
+	icon = aov_rie_high_elven_archers
 	allowed_in_hired_troops = no
 }
 
@@ -164,7 +164,7 @@ aov_sandwind_outriders = {
 	high_maintenance_cost = { gold = aov_sandwind_outriders_high_maint_cost }
 	stack = 50
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = light_cavalry
+	icon = aov_rie_high_elven_light_cavalry
 	allowed_in_hired_troops = no
 }
 
@@ -199,7 +199,7 @@ aov_duneblades = {
 	high_maintenance_cost = { gold = aov_duneblades_high_maint_cost }
 	stack = 50
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = skirmishers
+	icon = aov_rie_high_elven_skirmishers
 	allowed_in_hired_troops = no
 }
 
@@ -234,6 +234,6 @@ aov_greatoak_wardens = {
 	high_maintenance_cost = { gold = aov_greatoak_wardens_high_maint_cost }
 	stack = 25
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = heavy_infantry
+	icon = aov_rie_green_elven_heavy_infantry
 	allowed_in_hired_troops = no
 }

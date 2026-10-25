@@ -3999,25 +3999,8 @@ special_genes = {
 				girl = female
 			}
 		# Anbennar Overhaul: Realms in Exile templates (tools/build_portraits.py)
-			hobbit_low_headgear = {
-				index = 119
-				male = {
-					70 = empty
-					10 = m_headgear_sec_fp4_western_era3_com_01
-					10 = m_headgear_sec_fp4_western_era3_com_02
-					10 = male_headgear_secular_fp1_common_01
-				}
-				female = {
-					65 = empty
-					10 = f_headgear_sec_fp4_western_era3_com_01
-					10 = f_headgear_sec_fp4_western_era3_com_02
-					15 = female_headgear_secular_fp1_common_01
-				}
-				boy = male
-				girl = female
-			}
 			elven_low_headgear = {
-				index = 126
+				index = 119
 				male = {
 					20 = empty
 					10 = male_elf_peasant_hood_down					
@@ -4044,7 +4027,7 @@ special_genes = {
 				girl = female
 			}
 			elven_high_headgear = {
-				index = 227
+				index = 126
 				male = {
 					##dukes
 					20 = empty
@@ -4072,7 +4055,7 @@ special_genes = {
 				girl = female				
 			}
 			western_dwarf_low_headgear = {
-				index = 228
+				index = 227
 				male = {
 					#commoners
 					30 = empty
@@ -4096,7 +4079,7 @@ special_genes = {
 				girl = female
 			}
 			western_dwarf_high_headgear = {
-				index = 229
+				index = 228
 				male = {
 					#high nobles
 					60 = empty
@@ -4113,7 +4096,7 @@ special_genes = {
 				girl = female
 			}
 			dwarf_royalty_headgear = {
-				index = 247
+				index = 229
 				male = {
 					#western royalty
 					15 = male_headgear_dwarven_crown_01 #standard
@@ -4150,36 +4133,8 @@ special_genes = {
 				boy = male
 				girl = female
 			}
-			eriador_war_headgear = {
-				index = 248
-				male = {
-					##hobbits
-					10 = empty
-					20 = male_headgear_secular_fp2_iberian_christian_common_01
-					10 = m_headgear_ccp5_french_war_nob_01_com_coif
-					10 = m_headgear_ccp5_french_war_nob_04_com_coif
-					##bree
-					15 = m_headgear_ccp5_french_war_nob_02_com_coif
-					15 = m_headgear_ccp5_french_war_nob_03_com_coif
-					10 = m_headgear_ccp5_french_war_nob_02_com					
-					10 = m_headgear_ccp5_french_war_nob_03_com					
-				}
-				female = {
-					##hobbits				
-					10 = empty				
-					20 = f_headgear_ccp5_french_war_nob_01_com_coif
-					20 = f_headgear_ccp5_french_war_nob_04_com_coif
-					##bree
-					15 = f_headgear_ccp5_french_war_nob_02_com_coif
-					15 = f_headgear_ccp5_french_war_nob_03_com_coif
-					10 = f_headgear_ccp5_french_war_nob_03_com
-					10 = f_headgear_ccp5_french_war_nob_02_com					
-				}
-				boy = male
-				girl = female
-			}						
 			elven_war_headgear = {#elven#
-				index = 249
+				index = 247
 				male = {
 					5 = male_headgear_elven_war_01
 					5 = male_headgear_elven_war_silvan_01
@@ -4210,7 +4165,7 @@ special_genes = {
 				girl = female
 			}
 			dwarf_war_headgear = {
-				index = 250
+				index = 248
 				male = {
 					# default
 					5 = male_headgear_dwarf_war_01_steel #generic

@@ -13,7 +13,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import build_knight_icons as bki  # noqa: E402
 from build_hud_override import GeneratorError  # noqa: E402
-from data.knight_icons import GUI_TARGETS, ICON_DIR, ICON_SIZE, RACES, SOURCE_SIZE, VANILLA_ICON  # noqa: E402
+from data.knight_icons import (GUI_TARGETS, ICON_DIR, ICON_SIZE, ILLUSTRATION_DIR, MILITARY_ART,  # noqa: E402
+                               MILITARY_ICONS, RACES, SOURCE_SIZE, VANILLA_ICON)
 
 REAL = bki.Roots.default()
 HAVE_REAL = REAL.anbennar.is_dir() and REAL.game.is_dir()
@@ -87,7 +88,7 @@ class ScriptTests(unittest.TestCase):
         found = re.findall(r"aov_knight_icon_ruler_trigger = \{ TRIGGER = (\w+) VALUE = (\w+) \} \} "
                            r"localization_key = aov_knight_badge_(\w+) \}", text)
         self.assertEqual(found, [(cond[0], cond[1], key) for key, _n, _f, _g, cond, _m in RACES])
-        self.assertRegex(text, r"text = \{ localization_key = aov_knight_badge_default \}\n\}\n$")
+        self.assertIn("\ttext = { localization_key = aov_knight_badge_default }\n}\n", text)
 
     def test_ruler_trigger_uses_self_for_rulers_else_court_owner(self):
         text = " ".join(bki.triggers_file().split())
@@ -112,6 +113,43 @@ class ScriptTests(unittest.TestCase):
             self.assertIn("potential = { always = no }", blocks[key])
 
 
+class MilitaryArtTests(unittest.TestCase):
+    def test_races_are_known_and_pictures_committed(self):
+        keys = {row[0] for row in RACES}
+        for race, pictures in MILITARY_ART.items():
+            self.assertIn(race, keys)
+            for picture in pictures:
+                self.assertTrue((bki.SUBMOD / ILLUSTRATION_DIR / picture).is_file(), picture)
+
+    def test_custom_loc_names_the_race_or_none(self):
+        text = bki.custom_loc_file()
+        found = re.findall(r"localization_key = aov_military_art_(\w+) \}", text)
+        self.assertEqual(found, [row[0] for row in RACES if row[0] in MILITARY_ART] + ["none"])
+        loc = bki.loc_file().decode("utf-8-sig")
+        for key in found:
+            self.assertIn(f' aov_military_art_{key}:0 "{key}"', loc)
+
+    def test_illustrations_pick_each_race_picture(self):
+        text = bki.illustrations_file()
+        for icon, index in MILITARY_ICONS.items():
+            body = re.search(rf"^aov_race_{icon.removeprefix('icon_')}_big_illustration = \{{(.*?)^\}}", text,
+                             re.M | re.S).group(1)
+            refs = re.findall(r'reference = "men_at_arms_big/(\S+)"\s+trigger = \{ aov_knight_icon_ruler_trigger = '
+                              r'\{ TRIGGER = (\w+) VALUE = (\w+)', body)
+            expected = [(MILITARY_ART[key][index], *cond) for key, _n, _f, _g, cond, _m in RACES if key in MILITARY_ART]
+            self.assertEqual(refs, expected, icon)
+
+
+def undo_military_override(text: str) -> str:
+    """text without what military_override adds: the race picture copies and the vanilla pictures' visible lines."""
+    while (at := text.find('_race" # Anbennar Overhaul: race levy')) != -1:
+        start = text.rindex("icon = {", 0, at)
+        line = text.rindex("\n", 0, start)
+        line -= text[line - 1] == "\r"
+        text = text[:line] + text[bki._block_end(text, start):]
+    return re.sub(r"\n\t*visible = \"\[EqualTo_string[^\n]*# Anbennar Overhaul: race levy[^\n]*", "", text)
+
+
 class GuiTests(unittest.TestCase):
     def test_badges_replaced_with_the_race_badge(self):
         text = f"a\n\t\t{BADGE}\n\tb\n\t\t{BADGE}\n"
@@ -124,12 +162,34 @@ class GuiTests(unittest.TestCase):
         with self.assertRaises(GeneratorError):
             bki.gui_override(f"{BADGE}\n", "Character", 2)
 
+    def test_military_pictures_get_a_race_copy(self):
+        text = ('\t\t\ticon = {\n\t\t\t\tname = "icon_levies"\n\t\t\t\ttexture = "[X.GetLeviesBigIllustration]"\n'
+                '\t\t\t\tmodify_texture = { alpha = 0.1 }\n\t\t\t}\n'
+                '\t\t\ticon = {\n\t\t\t\tname = "icon_knights"\n\t\t\t\ttexture = "[X.GetKnightsBigIllustration]"\n'
+                '\t\t\t}\n')
+        out = bki.military_override(text)
+        none = "EqualTo_string( Character.Custom('aov_military_art_race'), 'none' )"
+        self.assertIn(f'\t\t\t\tname = "icon_levies"\n\t\t\t\tvisible = "[{none}]" # Anbennar Overhaul', out)
+        self.assertIn('\t\t\t}\n\t\t\ticon = {\n\t\t\t\tname = "aov_icon_levies_race" # Anbennar Overhaul: race levy and '
+                      f'knight pictures (tools/build_knight_icons.py)\n\t\t\t\tvisible = "[Not( {none} )]"\n'
+                      "\t\t\t\ttexture = \"[GetIllustration( 'aov_race_levies_big_illustration' ).GetTexture( "
+                      'Character.MakeScope )]"\n\t\t\t\tmodify_texture = { alpha = 0.1 }\n\t\t\t}\n', out)
+        self.assertIn("'aov_race_knights_big_illustration'", out)
+        self.assertEqual(out.count("icon = {"), 4)
+        self.assertEqual(out.count("GetLeviesBigIllustration]"), 1)
+
+    def test_missing_military_picture_stops(self):
+        with self.assertRaises(GeneratorError):
+            bki.military_override('icon = {\n\tname = "icon_levies"\n\ttexture = "x"\n}\n')
+
     @unittest.skipUnless(HAVE_REAL, "needs Anbennar and the CK3 install")
     def test_overrides_are_base_files_plus_the_badge_only(self):
         files = bki.build_all(REAL)
         for rel, (scope, count) in GUI_TARGETS.items():
             base = bki.base_gui(REAL, rel)
             ours = files[rel].decode("utf-8-sig")
+            if rel == bki.MILITARY_GUI:
+                ours = undo_military_override(ours)
             self.assertEqual(ours.count(f"[GetCultureInnovationType({scope}.Custom('aov_knight_icon')).GetIcon]"),
                              count, rel)
             self.assertEqual(re.sub(r"texture = \"\[GetCultureInnovationType\([\w.]+\.Custom\('aov_knight_icon'\)\)"

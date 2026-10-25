@@ -1662,7 +1662,20 @@ types ArmiesView
 				layoutpolicy_horizontal = expanding
 				icon = {
 					name = "icon_levies"
+					visible = "[EqualTo_string( Character.Custom('aov_military_art_race'), 'none' )]" # Anbennar Overhaul: race levy and knight pictures (tools/build_knight_icons.py)
 					texture = "[Character.GetCulture.GetGraphicalUnitType.GetLeviesBigIllustration]"
+					size = { 246 136 }
+					modify_texture = {
+						texture = "gfx/interface/component_masks/mask_rough_edges.dds"
+						visible = "[MilitaryView.AreLeviesShown]"
+						alpha = 0.1
+						blend_mode = colordodge
+					}
+				}
+				icon = {
+					name = "aov_icon_levies_race" # Anbennar Overhaul: race levy and knight pictures (tools/build_knight_icons.py)
+					visible = "[Not( EqualTo_string( Character.Custom('aov_military_art_race'), 'none' ) )]"
+					texture = "[GetIllustration( 'aov_race_levies_big_illustration' ).GetTexture( Character.MakeScope )]"
 					size = { 246 136 }
 					modify_texture = {
 						texture = "gfx/interface/component_masks/mask_rough_edges.dds"
@@ -1850,7 +1863,20 @@ types ArmiesView
 				layoutpolicy_horizontal = expanding
 				icon = {
 					name = "icon_knights"
+					visible = "[EqualTo_string( Character.Custom('aov_military_art_race'), 'none' )]" # Anbennar Overhaul: race levy and knight pictures (tools/build_knight_icons.py)
 					texture = "[Character.GetCulture.GetGraphicalUnitType.GetKnightsBigIllustration]"
+					size = { 246 136 }
+					modify_texture = {
+						texture = "gfx/interface/component_masks/mask_rough_edges.dds"
+						visible = "[MilitaryView.AreKnightsShown]"
+						alpha = 0.1
+						blend_mode = colordodge
+					}
+				}
+				icon = {
+					name = "aov_icon_knights_race" # Anbennar Overhaul: race levy and knight pictures (tools/build_knight_icons.py)
+					visible = "[Not( EqualTo_string( Character.Custom('aov_military_art_race'), 'none' ) )]"
+					texture = "[GetIllustration( 'aov_race_knights_big_illustration' ).GetTexture( Character.MakeScope )]"
 					size = { 246 136 }
 					modify_texture = {
 						texture = "gfx/interface/component_masks/mask_rough_edges.dds"

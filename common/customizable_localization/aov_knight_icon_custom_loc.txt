@@ -12,3 +12,13 @@ aov_knight_icon = {
 	text = { trigger = { aov_knight_icon_ruler_trigger = { TRIGGER = has_cultural_pillar VALUE = heritage_kobold } } localization_key = aov_knight_badge_kobold }
 	text = { localization_key = aov_knight_badge_default }
 }
+
+# Character scope: the race whose RiE levy and knight pictures the military window shows, or none.
+aov_military_art_race = {
+	type = character
+	text = { trigger = { aov_knight_icon_ruler_trigger = { TRIGGER = aov_moon_elven_lineage_trigger VALUE = yes } } localization_key = aov_military_art_moon_elven }
+	text = { trigger = { aov_knight_icon_ruler_trigger = { TRIGGER = aov_sun_elven_lineage_trigger VALUE = yes } } localization_key = aov_military_art_sun_elven }
+	text = { trigger = { aov_knight_icon_ruler_trigger = { TRIGGER = aov_wood_elven_lineage_trigger VALUE = yes } } localization_key = aov_military_art_wood_elven }
+	text = { trigger = { aov_knight_icon_ruler_trigger = { TRIGGER = has_cultural_pillar VALUE = heritage_dwarven } } localization_key = aov_military_art_dwarven }
+	text = { localization_key = aov_military_art_none }
+}

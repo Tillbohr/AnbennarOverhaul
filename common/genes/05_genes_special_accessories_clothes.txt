@@ -3994,29 +3994,8 @@ special_genes = {
 				girl = female
 			}
 		# Anbennar Overhaul: Realms in Exile templates (tools/build_portraits.py)
-			hobbit_low_clothes = {
-				index = 57
-
-				male = {
-					80 = male_clothes_hobbit_common_01
-					##war					
-					20 = m_clothes_sec_ccp5_french_war_nob_01					
-				}
-
-				female = {
-					20 = female_clothes_secular_western_nobility_01_common
-					20 = female_clothes_secular_western_nobility_02_common
-					20 = female_clothes_secular_western_nobility_03_common
-					20 = female_clothes_secular_dde_hre_nobility_01_common
-					##war
-					20 = f_clothes_sec_ccp5_french_war_nob_01					
-				}
-
-				boy = male
-				girl = female				
-			}
 			vanyar_low_clothes = {
-				index = 68
+				index = 57
 
 				male = {
 					1 = male_clothes_vanyar_nobility_01_low
@@ -4032,7 +4011,7 @@ special_genes = {
 				girl = female
 			}
 			vanyar_high_clothes = {
-				index = 83
+				index = 68
 
 				male = {
 					1 = male_clothes_vanyar_nobility_01_high
@@ -4048,7 +4027,7 @@ special_genes = {
 				girl = female
 			}
 			noldor_low_clothes = {#noldor
-				index = 100
+				index = 83
 
 				male = {
 					1 = male_clothes_noldor_nobility_01_low
@@ -4066,7 +4045,7 @@ special_genes = {
 				girl = female
 			}
 			noldor_high_clothes = {#noldor
-				index = 213
+				index = 100
 
 				male = {
 					50 = male_clothes_noldor_nobility_01_high
@@ -4087,7 +4066,7 @@ special_genes = {
 				girl = female
 			}
 			silvan_low_clothes = {#lasgalendrim
-				index = 214
+				index = 213
 
 				male = {
 					20 = male_clothes_silvan_nobility_01_common
@@ -4115,7 +4094,7 @@ special_genes = {
 				girl = female
 			}
 			silvan_high_clothes = {#lasgalendrim
-				index = 215
+				index = 214
 
 				male = {
 					40 = male_clothes_silvan_nobility_01_high
@@ -4137,7 +4116,7 @@ special_genes = {
 				girl = female
 			}
 			elven_war_high_clothes = {
-				index = 216
+				index = 215
 
 				male = {
 					10 = m_clothes_noldor_war_golden #Elrond variant
@@ -4183,7 +4162,7 @@ special_genes = {
 				girl = female
 			}
 			elven_war_clothes = {#elven
-				index = 217
+				index = 216
 
 				male = {
 					1 = male_clothes_elven_war_01
@@ -4201,7 +4180,7 @@ special_genes = {
 				girl = female
 			}
 			elven_war_silvan_clothes = {#lasgalendrim
-				index = 218
+				index = 217
 
 				male = {
 					1 = male_clothes_elven_war_silvan_01
@@ -4217,7 +4196,7 @@ special_genes = {
 				girl = female
 			}
 			dwarf_war_steel = {#dwarf
-				index = 219
+				index = 218
 
 				male = {
 					1 = male_clothes_dwarf_war_01_steel
@@ -4233,7 +4212,7 @@ special_genes = {
 				girl = female				
 			}	
 			dwarf_war_longbeard = {#dwarf
-				index = 220
+				index = 219
 
 				male = {
 					1 = m_clothes_dwarf_war_02

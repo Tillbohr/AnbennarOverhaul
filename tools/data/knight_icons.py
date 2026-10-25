@@ -43,6 +43,21 @@ RACES = [
       20: 11, 21: 10, 22: 10, 23: 9, 24: 9, 25: 9}),
 ]
 
+# Realms in Exile's levy and knight pictures for the military window, by race key (RACES order, first match wins):
+# race -> (levies picture, knights picture), file names in ILLUSTRATION_DIR, copied once from RiE's men_at_arms_big
+# (docs/systems/racial-armies.md). Races not listed keep the engine's culture pictures. RiE gives every elf its elven
+# levies; sun elves (its Calaquendi) its elven knights, moon elves (Lomiquendi) its Falathrim knights, wood elves
+# (Moriquendi) its Silvan knights; dwarves its Longbeard levies and knights.
+ILLUSTRATION_DIR = "gfx/interface/illustrations/men_at_arms_big"
+MILITARY_ART = {
+    "moon_elven": ("aov_rie_levies_elven.dds", "aov_rie_knights_falathrim.dds"),
+    "sun_elven": ("aov_rie_levies_elven.dds", "aov_rie_knights_elven.dds"),
+    "wood_elven": ("aov_rie_levies_elven.dds", "aov_rie_knights_silvan.dds"),
+    "dwarven": ("aov_rie_levies_longbeard.dds", "aov_rie_knights_longbeard.dds"),
+}
+# Military window pictures: the icon's name in gui/window_military.gui -> index into a MILITARY_ART pair.
+MILITARY_ICONS = {"icon_levies": 0, "icon_knights": 1}
+
 # Interface files whose knight badge becomes the race badge: path -> (whose race: the character or army scope the
 # badge can reach, number of badges). Anbennar's copy of a file is used when it has one, else the game's.
 GUI_TARGETS = {

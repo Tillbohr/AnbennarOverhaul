@@ -3,12 +3,6 @@
 # Realms in Exile accessories the RiE gene templates use.
 
 # from RiE gfx/portraits/accessories/lotr_clothes.txt
-male_clothes_hobbit_common_01 = {
-	set_tags = "shrink_arms,shrink_chest,shrink_belly"
-	entity = { required_tags = ""			shared_pose_entity = torso		entity = male_clothes_hobbit_common_01_entity 	 }
-}
-
-# from RiE gfx/portraits/accessories/lotr_clothes.txt
 male_clothes_vanyar_nobility_01_low = {
 	set_tags = "shrink_arms,shrink_chest,shrink_belly"
 	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_clothes_vanyar_nobility_01_low_entity }
@@ -531,12 +525,6 @@ f_headgear_longbeard_crown_01 = { # Commission Asset by AJ
 female_headgear_erebor_crown_01 = {	
 	set_tags = "crown"
 	entity = { required_tags = ""			shared_pose_entity = head		entity = female_headgear_erebor_crown_01_entity 	 }		
-}
-
-# from RiE gfx/portraits/accessories/lotr_legwear.txt
-male_legwear_hobbit_common_01 = {
-	set_tags = ""
-	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_legwear_hobbit_common_01_entity }
 }
 
 # from RiE gfx/portraits/accessories/lotr_legwear.txt

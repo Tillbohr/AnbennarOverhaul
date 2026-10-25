@@ -87,14 +87,14 @@ Read only the doc for the system you are working on. Each holds the generated-fi
 | Dwarven holds: `dwarven_hold_holding`, 10 levels, Delve Deeper digs, ruin and clear | `docs/systems/dwarven-holds.md` | `build_holds.py`, `build_holdings_override.py`, `build_governments_override.py` |
 | RiE dwarf buildings, ore deposits, mines and the Dwarven Expedition activity | `docs/systems/rie-dwarves.md` | `build_rie_dwarves.py` (run before `build_holds.py` and `build_holdings_override.py`) |
 | RiE holding models, walls and army models (elves, dwarves, Castanorians) | `docs/systems/holding-models.md` | `build_holding_models.py` |
-| RiE portraits (halflings, elves, dwarves) | `docs/systems/rie-portraits.md` | `build_portraits.py` |
+| RiE portraits (halfling hair, elves, dwarves) | `docs/systems/rie-portraits.md` | `build_portraits.py` |
 | RiE character backgrounds and royal courts | `docs/systems/rie-courts.md` | `build_rie_courts.py` |
 | Deepwoods grove arms and EU4 names | `docs/systems/deepwoods-groves.md` | none (imported once; edit by hand) |
 | Map graphics: RiE shaders and terrain, raised dwarven mountains, dwarven gates | `docs/systems/map-graphics.md` | `build_map_graphics.py` |
-| Racial armies: levies, domain limit, elf and dwarf MAA (moon, sun, wood elves; dwarf clans), per-holding levy correction | `docs/systems/racial-armies.md` | `build_racial_levies.py` |
+| Racial armies: levies, domain limit, elf and dwarf MAA (moon, sun, wood elves; dwarf clans) with RiE icons and art, per-holding levy correction | `docs/systems/racial-armies.md` | `build_racial_levies.py` |
 | Faith men-at-arms: Dercinges, Druids, Skalds and Knights of the Spear recruited by faith tenet or patron god instead of a culture tradition | `docs/systems/faith-maa.md` | none (hand-written overrides) |
 | Holy sites for Devouring Path and Silk Turban (Anbennar ships them with none) | `docs/systems/holy-sites.md` | `build_holy_sites.py` |
-| Race knight badges: EU4 tech group icons (gear removed) as the knight badge for elf, dwarf, gnome and kobold rulers | `docs/systems/knight-icons.md` | `build_knight_icons.py` |
+| Race knight badges: EU4 tech group icons (gear removed) as the knight badge for elf, dwarf, gnome and kobold rulers; RiE levy and knight pictures in the military window for elf and dwarf rulers | `docs/systems/knight-icons.md` | `build_knight_icons.py` |
 
 ## Updating and validation
 

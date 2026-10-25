@@ -8,49 +8,6 @@ aov_rie_clothes_base = {
 	priority = 1
 	selection_behavior = weighted_random
 
-	hobbit_clothes_low = {
-		dna_modifiers = {
-			accessory = {
-				mode = add
-				gene = clothes
-				template = hobbit_low_clothes
-				range = { 0.01 0.79 } # For the randomness to work correctly
-			}
-		}	
-		weight = {
-			base = 0
-			modifier = {
-				add = 100
-				OR = {
-					portrait_commoner_clothing_trigger = {
-						CULTURE_INPUT = aov_hobbit
-					}
-					portrait_low_nobles_clothing_trigger = {
-						CULTURE_INPUT = aov_hobbit
-					}
-				}	
-			}
-		}
-	}
-
-	hobbit_clothes_high = {
-		dna_modifiers = {
-			accessory = {
-				mode = add
-				gene = clothes
-				template = hobbit_low_clothes
-				range = { 0.01 0.79 } # For the randomness to work correctly
-			}
-		}	
-		weight = {
-			base = 0
-			modifier = {
-				add = 101
-				OR = { portrait_high_nobles_clothing_trigger = { CULTURE_INPUT = aov_hobbit } portrait_royalty_clothing_trigger = { CULTURE_INPUT = aov_hobbit } portrait_imperial_clothing_trigger = { CULTURE_INPUT = aov_hobbit } }
-			}
-		}
-	}
-
 	vanyar_clothes_low = {
 		dna_modifiers = {
 			accessory = {

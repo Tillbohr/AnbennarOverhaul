@@ -280,7 +280,7 @@ DWARF_EXTRA = {"aov_grudgebearers": {"plains": 0.2, "farmlands": 0.2},
                "aov_golden_gate_guard": {"dwarven_hold": 1.0}, "aov_copper_road_wardens": {"dwarven_road": 1.0}}
 TERRAIN_SETS.update({key: dict(DWARF_TERRAIN, **DWARF_EXTRA.get(key, {}))
                      for key, row in EXPECTED.items() if row[6] == DWARF or "dwarven_lineage" in row[6]})
-CHANGED_FIELDS = ("stack", "damage", "toughness", "pursuit", "screen")
+CHANGED_FIELDS = ("stack", "damage", "toughness", "pursuit", "screen", "icon")
 CHANGED_BLOCKS = ("terrain_bonus", "winter_bonus", "can_recruit", "buy_cost", "low_maintenance_cost",
                   "high_maintenance_cost", "ai_quality")
 

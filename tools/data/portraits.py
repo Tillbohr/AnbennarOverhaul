@@ -4,8 +4,10 @@ modifiers are copied (spec docs/superpowers/specs/2026-10-15-rie-portraits-desig
 # Clothing groups: the clothing_gfx key prepended to the cultures' clothing_gfx lists (in data order, so a culture in
 # two groups lists both keys, the earlier group's first), and either explicit culture keys or heritages. User choice:
 # moon elves wear RiE's Noldor look, sun elves its Vanyar look (RiE's generic elves wear vanilla clothes); gnomes keep
-# Anbennar's look (user choice after the first in-game test); every dwarf wears vanilla northern European clothes under
-# RiE's dwarf hats, crowns, boots, armour, hair and beards, with no RiE southern dwarf style (user choice, round 4).
+# Anbennar's look (user choice after the first in-game test); halflings keep RiE's hobbit hair and beardlessness but
+# wear Anbennar's clothes, headgear, legwear and armour (user choice: RiE's hobbit clothing reverted); every dwarf wears
+# vanilla northern European clothes under RiE's dwarf hats, crowns, boots, armour, hair and beards, with no RiE southern
+# dwarf style (user choice, round 4).
 CLOTHING_GROUPS = {
     "hobbit": {"label": "Hobbit", "clothing_gfx": "aov_hobbit_clothing_gfx", "heritages": ("heritage_halfling",)},
     "vanyar": {"label": "Vanyarin Elven", "clothing_gfx": "aov_vanyar_clothing_gfx", "cultures": ("sun_elvish",)},
@@ -75,7 +77,6 @@ _UP_TO_EMPEROR = {"up_to_emperor": True}
 # 100 or more wins, so a specific entry comes before the generic one it should beat.
 ENTRIES = {
     "01_clothes_base.txt": {"clothes_base": [
-        "hobbit_clothes_low", ("hobbit_clothes_high", _UP_TO_EMPEROR),
         "vanyar_clothes_low", ("vanyar_clothes_high", _UP_TO_EMPEROR),
         "noldor_clothes_common", "noldor_clothes_low", ("noldor_clothes_high", _UP_TO_EMPEROR),
         "lasgalendrim_clothes_common", "lasgalendrim_clothes_low", "lasgalendrim_clothes_high",
@@ -84,14 +85,12 @@ ENTRIES = {
         ("northern_high_nobles", dict(_NORTHERN, **_UP_TO_EMPEROR)),
     ]},
     "01_headgear_base.txt": {"headgear": [
-        "hobbit_commoners",
         "elven_commoners", "elven_counts", "elven_dukes", "elven_royalty_noldor", "elven_royalty_base",
         "silvan_commoner", "silvan_low", "silvan_high", "silvan_royalty",
         "dwarf_western_commoner", "dwarf_western_low", "dwarf_western_low_female", "dwarf_western_high",
         "dwarf_royalty",
     ]},
     "01_legwear_base.txt": {"legwear": [
-        "hobbit_legwear",
         "elven_war_vanyar_legwear", "elven_war_legwear",
         "silvan_legwear_common", "silvan_nobility_legwear", "silvan_high_nobility_legwear",
         "elven_war_silvan_legwear", "elven_war_silvan_king_legwear",
@@ -106,23 +105,22 @@ ENTRIES = {
         "dwarven_males_vanilla", "dwarven_males_fp1", "dwarven_males_fp2",
     ]},
     "04_clothes_armor.txt": {"clothes_armor": [
-        "hobbit_war",
         "elven_war_valinor", "elven_war", "elven_war_noldor_high", "elven_war_noldor",
         "elven_war_silvan", "elven_war_silvan_king",
         "dwarf_mercenary", "dwarf_war_steel", "dwarf_war_longbeard", "dwarf_war_longbeard_royalty",
     ]},
     "04_headgear_armor.txt": {"headgear_armor": [
-        "hobbit_war",
         "elven_war_valinor", "elven_war_noldor", "elven_war", "elven_war_silvan", "elven_war_silvan_king",
         "steel_dwarf_war_commoner", "steel_dwarf_war_noble", "dwarf_war_longbeard", "dwarf_war_longbead_royalty",
     ]},
 }
-# Not copied: RiE's generic elven_clothes_* and elven_legwear (vanilla accessories; the sun elves wear the Vanyar
-# entries), the female dwarf beards (user choice), RiE's western dwarf everyday clothes (vanilla HRE ones; dwarves wear
-# Anbennar's northern ones) and its southern and eastern dwarf entries (user choice), and RiE-only content: elven_war_oropher (RiE's dynasty_oropher),
-# the Noldor second-age, Gil-galad, Glorfindel, Feanorian, golden and high king armour (RiE dates, titles, houses,
-# characters), elven_war_noldor_legwear (needs the generic elven key and culture:noldor at once, never true),
-# hobbit_travel_cloak (a flag RiE's duel events set), dwarven_mining_no_cloak and dwarf_mining_headgear (RiE's
+# Not copied: RiE's hobbit clothes, headgear, legwear and war armour (user choice: reverted), RiE's generic
+# elven_clothes_* and elven_legwear (vanilla accessories; the sun elves wear the Vanyar entries), the female dwarf
+# beards (user choice), RiE's western dwarf everyday clothes (vanilla HRE ones; dwarves wear Anbennar's northern ones)
+# and its southern and eastern dwarf entries (user choice), and RiE-only content: elven_war_oropher (RiE's
+# dynasty_oropher), the Noldor second-age, Gil-galad, Glorfindel, Feanorian, golden and high king armour (RiE dates,
+# titles, houses, characters), elven_war_noldor_legwear (needs the generic elven key and culture:noldor at once, never
+# true), hobbit_travel_cloak (a flag RiE's duel events set), dwarven_mining_no_cloak and dwarf_mining_headgear (RiE's
 # activity_mining).
 
 
@@ -142,10 +140,8 @@ EXTRA_ENTRIES = {
                "beards", "no_beard", ["portrait_aov_hobbit_clothing_trigger = yes"]),
     ],
     "cloaks": [
-        # Vanilla cloaks clip through RiE's hobbit outfit (seen on a gnome), and RiE gives its elves no vanilla cloaks
-        # (they are not in its proxy lists); war cloaks come from the armour group, which applies later.
-        _entry("aov_hobbit_no_cloak", "vanilla cloaks clip through RiE's hobbit outfit", "cloaks", "no_cloak",
-               ["is_male = yes", "portrait_aov_hobbit_clothing_trigger = yes"]),
+        # RiE gives its elves no vanilla cloaks (they are not in its proxy lists); war cloaks come from the armour
+        # group, which applies later.
         _entry("aov_elf_no_cloak", "RiE's elves wear no vanilla cloaks", "cloaks", "no_cloak",
                ["OR = { portrait_aov_vanyar_clothing_trigger = yes portrait_aov_noldor_clothing_trigger = yes "
                 "portrait_aov_lasgalendrim_clothing_trigger = yes }"]),

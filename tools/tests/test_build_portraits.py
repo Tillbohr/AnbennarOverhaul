@@ -249,10 +249,18 @@ class RealTests(unittest.TestCase):
         self.assertNotIn("dwarven_females", text)
         self.assertIn("dwarven_males_vanilla", text)
 
-    def test_elves_and_hobbit_men_wear_no_vanilla_cloak(self):
+    def test_elves_wear_no_vanilla_cloak(self):
         text = self.files[f"{bp.MODIFIERS_DIR}/aov_rie_01_cloaks_base.txt"].decode("utf-8-sig")
         self.assertIn("aov_elf_no_cloak", text)
-        self.assertIn("aov_hobbit_no_cloak", text)
+        self.assertNotIn("aov_hobbit_no_cloak", text)
+
+    def test_halflings_keep_rie_hair_but_not_its_clothing(self):
+        text = "".join(body.decode("utf-8-sig") for path, body in self.files.items()
+                       if path.startswith(bp.MODIFIERS_DIR))
+        self.assertIn("hobbit_hairstyles", text)
+        self.assertIn("aov_hobbit_no_beard", text)
+        for name in ("hobbit_clothes_low", "hobbit_clothes_high", "hobbit_low_headgear", "hobbit_legwear", "hobbit_war"):
+            self.assertNotIn(name, text)
 
     def test_high_elves_wear_their_rie_culture(self):
         text = self.files[f"{bp.MODIFIERS_DIR}/aov_rie_01_clothes_base.txt"].decode("utf-8-sig")
