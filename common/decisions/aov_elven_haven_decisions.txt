@@ -8,7 +8,8 @@ aov_raise_elven_haven_decision = {
 	decision_group_type = major
 	sort_order = 92
 	ai_check_interval = 24
-	cooldown = { years = 5 }
+	# No cooldown here: it would start even when the player cancels the picker. Converting a barony sets
+	# aov_raised_elven_haven for 5 years instead (aov_raise_elven_haven_effect).
 
 	is_shown = {
 		is_elvish_culture = yes
@@ -22,6 +23,10 @@ aov_raise_elven_haven_decision = {
 	is_valid_showing_failures_only = {
 		is_available_adult = yes
 		prestige >= 100
+		custom_tooltip = {
+			text = aov_raise_elven_haven_decision_recent_tt
+			NOT = { has_character_flag = aov_raised_elven_haven }
+		}
 	}
 
 	effect = {

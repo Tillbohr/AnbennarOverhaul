@@ -41,9 +41,11 @@ and the Haven branch of `common/scripted_triggers/zz_aov_building_requirement_tr
 - **Game start:** every elf-held castle or tribe in a county of elven culture converts (`aov_elven_haven_game_start`,
   on `on_game_start`). An elf ruling a county of another culture (Eborthíl, Tefori) converts it by decision. Cities
   and temples do not convert.
-- **Decision:** *Raise an Elven Haven* (`aov_raise_elven_haven_decision`, elf ruler of at least a county, 5-year
-  cooldown) opens `aov_elven_haven.1`, which offers up to three eligible domain baronies (capital first, then by
-  Haven level); the chosen one costs 100 gold per Haven level and 100 prestige. The AI takes it with twice the cost.
+- **Decision:** *Raise an Elven Haven* (`aov_raise_elven_haven_decision`, elf ruler of at least a county) opens
+  `aov_elven_haven.1`, which offers up to three eligible domain baronies (capital first, then by Haven level); the
+  chosen one costs 100 gold per Haven level and 100 prestige. Only a conversion closes the decision for 5 years
+  (character flag `aov_raised_elven_haven`, set by `aov_raise_elven_haven_effect`); choosing "Not yet." leaves it open,
+  which the decision's own `cooldown` would not. The AI takes it with twice the cost.
 - **To confirm in game:** the start conversion (levels, swapped buildings, nothing vanilla left in a slot);
   `set_holding_type` and `add_building` order; the county view and holding tab for a Haven; Deepwoods tribes with a
   Haven capital (tribal mechanics); the picker names and costs.

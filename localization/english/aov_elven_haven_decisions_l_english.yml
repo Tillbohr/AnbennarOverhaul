@@ -4,6 +4,7 @@
  aov_raise_elven_haven_decision_tooltip: "Make one of your castles or tribes an Elven Haven"
  aov_raise_elven_haven_decision_confirm: "Raise the Haven"
  aov_raise_elven_haven_decision_effect_tt: "Choose one of your castles or tribes held by an elf. It becomes an Elven Haven of a matching level, and its buildings are replaced by their elven equivalents where they have one. Costs @gold_icon! #V 100#! per Haven level and @prestige_icon! #V 100#!"
+ aov_raise_elven_haven_decision_recent_tt: "You have raised an Elven Haven in the last 5 years"
  aov_elven_haven.1.t: "Raising a Haven"
  aov_elven_haven.1.desc: "Which of our holdings shall be remade as an Elven Haven? Its old buildings will be torn down or rebuilt in elven style, and our gardeners, masons and singers will make it a home worthy of our people."
  aov_elven_haven.1.a: "Remake [SCOPE.sTitle('aov_haven_choice_1').GetNameNoTier]"

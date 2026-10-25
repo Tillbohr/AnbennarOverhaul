@@ -157,7 +157,7 @@ decision). Cities and temples are untouched.
 - Opens picker event `aov_elven_haven.1` (namespace `aov_elven_haven`) offering up to three of the domain's eligible
   baronies, the capital first, then by Haven level; the chosen one runs the effect.
 - Cost: `aov_elven_haven_conversion_cost` gold (100 x the Haven level it gets) and 100 prestige, paid in the picker
-  option. Instant. Cooldown 5 years.
+  option. Instant. A conversion closes the decision for 5 years (a character flag; cancelling the picker does not).
 - AI: takes it when it has 2x the cost and an eligible barony, preferring its capital.
 
 Nothing converts automatically after the start, and nothing reverts: a non-elf who takes a Haven keeps it as it is.

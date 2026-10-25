@@ -1,8 +1,9 @@
 ﻿# Anbennar Overhaul: the Raise an Elven Haven decision's option effect (docs/systems/rie-elves.md).
 
 # Character scope (the ruler); scope:$CHOICE$ is the chosen barony title. Pays 100 gold per Haven level and 100
-# prestige, then converts the barony.
+# prestige, converts the barony and closes the decision for 5 years (cancelling the picker does not).
 aov_raise_elven_haven_effect = {
+	add_character_flag = { flag = aov_raised_elven_haven years = 5 }
 	scope:$CHOICE$.title_province = {
 		save_scope_value_as = { name = aov_haven_cost value = aov_elven_haven_conversion_cost }
 	}

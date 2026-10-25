@@ -72,8 +72,12 @@ class DecisionTests(unittest.TestCase):
     def test_decision_needs_an_elf(self):
         self.assertIn("is_elvish_culture = yes", self.decision)
 
-    def test_decision_has_a_five_year_cooldown(self):
-        self.assertIn("cooldown = { years = 5 }", self.decision)
+    def test_cancelling_the_picker_starts_no_cooldown(self):
+        # The decision's own cooldown would start even when the player picks "Not yet."; only a conversion counts.
+        self.assertNotIn("cooldown", bp.code(self.decision))
+        effect = blocks(read(EFFECTS))["aov_raise_elven_haven_effect"]
+        self.assertIn("add_character_flag = { flag = aov_raised_elven_haven years = 5 }", effect)
+        self.assertIn("NOT = { has_character_flag = aov_raised_elven_haven }", self.decision)
 
     def test_decision_opens_the_picker(self):
         self.assertIn("trigger_event = aov_elven_haven.1", self.decision)
