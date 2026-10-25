@@ -517,6 +517,7 @@ elven_port_03 = {
 	construction_time = standard_construction_time
 	can_construct_potential = {
 		building_common_tradeport_requirement_terrain = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 	can_construct = {
 		scope:holder = { is_elvish_culture = yes }
@@ -582,6 +583,7 @@ elven_port_04 = {
 	construction_time = standard_construction_time
 	can_construct_potential = {
 		building_common_tradeport_requirement_terrain = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 	can_construct = {
 		scope:holder = { is_elvish_culture = yes }
@@ -647,6 +649,7 @@ elven_port_05 = {
 	construction_time = standard_construction_time
 	can_construct_potential = {
 		building_common_tradeport_requirement_terrain = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 	can_construct = {
 		scope:holder = { is_elvish_culture = yes }
@@ -713,6 +716,7 @@ elven_port_06 = {
 	construction_time = standard_construction_time
 	can_construct_potential = {
 		building_common_tradeport_requirement_terrain = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 	can_construct = {
 		scope:holder = { is_elvish_culture = yes }
@@ -779,6 +783,7 @@ elven_port_07 = {
 	construction_time = standard_construction_time
 	can_construct_potential = {
 		building_common_tradeport_requirement_terrain = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 	can_construct = {
 		scope:holder = { is_elvish_culture = yes }
@@ -844,6 +849,7 @@ elven_mine_01 = {
 
 	can_construct_potential = {
 		building_quarries_requirement_terrain = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -891,6 +897,7 @@ elven_mine_02 = {
 
 	can_construct_potential = {
 		building_quarries_requirement_terrain = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -935,6 +942,7 @@ elven_mine_03 = {
 
 	can_construct_potential = {
 		building_quarries_requirement_terrain = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -977,6 +985,7 @@ elven_mine_04 = {
 
 	can_construct_potential = {
 		building_quarries_requirement_terrain = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -1019,6 +1028,7 @@ elven_mine_05 = {
 
 	can_construct_potential = {
 		building_quarries_requirement_terrain = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -1061,6 +1071,7 @@ elven_mine_06 = {
 
 	can_construct_potential = {
 		building_quarries_requirement_terrain = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -1104,6 +1115,7 @@ elven_mine_07 = {
 
 	can_construct_potential = {
 		building_quarries_requirement_terrain = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -1145,6 +1157,7 @@ elven_forestry_01 = {
 
 	can_construct_potential = {
 		building_logging_camps_requirement_terrain = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -1202,6 +1215,7 @@ elven_forestry_02 = {
 
 	can_construct_potential = {
 		building_logging_camps_requirement_terrain = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -1250,6 +1264,7 @@ elven_forestry_03 = {
 
 	can_construct_potential = {
 		building_logging_camps_requirement_terrain = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -1294,6 +1309,7 @@ elven_forestry_04 = {
 
 	can_construct_potential = {
 		building_logging_camps_requirement_terrain = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -1338,6 +1354,7 @@ elven_forestry_05 = {
 
 	can_construct_potential = {
 		building_logging_camps_requirement_terrain = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -1382,6 +1399,7 @@ elven_forestry_06 = {
 
 	can_construct_potential = {
 		building_logging_camps_requirement_terrain = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -1426,6 +1444,7 @@ elven_forestry_07 = {
 
 	can_construct_potential = {
 		building_logging_camps_requirement_terrain = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -1468,6 +1487,7 @@ elven_hunting_grounds_01 = {
 
 	can_construct_potential = {
 		aov_rie_elven_hunting_grounds_terrain_trigger = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -1521,6 +1541,7 @@ elven_hunting_grounds_02 = {
 
 	can_construct_potential = {
 		aov_rie_elven_hunting_grounds_terrain_trigger = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -1559,6 +1580,7 @@ elven_hunting_grounds_03 = {
 
 	can_construct_potential = {
 		aov_rie_elven_hunting_grounds_terrain_trigger = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -1593,6 +1615,7 @@ elven_hunting_grounds_04 = {
 
 	can_construct_potential = {
 		aov_rie_elven_hunting_grounds_terrain_trigger = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -1627,6 +1650,7 @@ elven_hunting_grounds_05 = {
 
 	can_construct_potential = {
 		aov_rie_elven_hunting_grounds_terrain_trigger = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -1661,6 +1685,7 @@ elven_hunting_grounds_06 = {
 
 	can_construct_potential = {
 		aov_rie_elven_hunting_grounds_terrain_trigger = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -1699,6 +1724,7 @@ elven_hunting_grounds_07 = {
 
 	can_construct_potential = {
 		aov_rie_elven_hunting_grounds_terrain_trigger = yes
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
 	}
 
 	can_construct = {
@@ -1731,6 +1757,9 @@ elven_hunting_grounds_07 = {
 }
 
 elven_markets_01 = {
+	can_construct_potential = {
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
+	}
 	construction_time = standard_construction_time
 
 	can_construct = {
@@ -1763,6 +1792,9 @@ elven_markets_01 = {
 }
 
 elven_markets_02 = {
+	can_construct_potential = {
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
+	}
 	construction_time = standard_construction_time
 
 	can_construct = {
@@ -1795,6 +1827,9 @@ elven_markets_02 = {
 }
 
 elven_markets_03 = {
+	can_construct_potential = {
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
+	}
 	construction_time = standard_construction_time
 
 	can_construct = {
@@ -1823,6 +1858,9 @@ elven_markets_03 = {
 }
 
 elven_markets_04 = {
+	can_construct_potential = {
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
+	}
 	construction_time = standard_construction_time
 
 	can_construct = {
@@ -1851,6 +1889,9 @@ elven_markets_04 = {
 }
 
 elven_markets_05 = {
+	can_construct_potential = {
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
+	}
 	construction_time = standard_construction_time
 
 	can_construct = {
@@ -1879,6 +1920,9 @@ elven_markets_05 = {
 }
 
 elven_markets_06 = {
+	can_construct_potential = {
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
+	}
 	construction_time = standard_construction_time
 
 	can_construct = {
@@ -1907,6 +1951,9 @@ elven_markets_06 = {
 }
 
 elven_markets_07 = {
+	can_construct_potential = {
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
+	}
 	construction_time = standard_construction_time
 
 	can_construct = {
@@ -1933,6 +1980,9 @@ elven_markets_07 = {
 }
 
 elven_forges_01 = {
+	can_construct_potential = {
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
+	}
 	construction_time = slow_construction_time
 
 	can_construct = {
@@ -1964,6 +2014,9 @@ elven_forges_01 = {
 }
 
 elven_forges_02 = {
+	can_construct_potential = {
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
+	}
 	construction_time = slow_construction_time
 
 	can_construct = {
@@ -1996,6 +2049,9 @@ elven_forges_02 = {
 }
 
 elven_forges_03 = {
+	can_construct_potential = {
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
+	}
 	construction_time = slow_construction_time
 
 	can_construct = {
@@ -2025,6 +2081,9 @@ elven_forges_03 = {
 }
 
 elven_forges_04 = {
+	can_construct_potential = {
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
+	}
 	construction_time = slow_construction_time
 
 	can_construct = {
@@ -2054,6 +2113,9 @@ elven_forges_04 = {
 }
 
 elven_forges_05 = {
+	can_construct_potential = {
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
+	}
 	construction_time = slow_construction_time
 
 	can_construct = {
@@ -2083,6 +2145,9 @@ elven_forges_05 = {
 }
 
 elven_forges_06 = {
+	can_construct_potential = {
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
+	}
 	construction_time = slow_construction_time
 
 	can_construct = {
@@ -2111,6 +2176,9 @@ elven_forges_06 = {
 }
 
 elven_forges_07 = {
+	can_construct_potential = {
+		scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only
+	}
 	construction_time = slow_construction_time
 
 	can_construct = {

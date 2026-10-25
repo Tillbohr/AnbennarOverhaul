@@ -108,7 +108,10 @@ class RealBuildTests(unittest.TestCase):
     def test_every_block_checks_an_elven_holder(self):
         keys = []
         for names, start, end in bp.blocks(self.buildings, 1, strict=False):
-            if "is_elvish_culture = yes" not in re_.build_gates(self.buildings[start:end]):
+            body = self.buildings[start:end]
+            potential = "".join(body[s:e] for sub, s, e in bp.blocks(body, 2, strict=False)
+                                if sub[-1] == "can_construct_potential")
+            if "is_elvish_culture = yes" not in potential:
                 keys.append(names[0])
         self.assertEqual(keys, [])
 
@@ -245,6 +248,10 @@ class ConversionTests(unittest.TestCase):
         self.assertGreater(set_type, self.text.rindex("remove_building"))
         self.assertLess(set_type, self.text.index("add_building"))
         self.assertGreater(set_type, self.text.rindex("set_variable = { name = aov_haven_elven"))
+
+    def test_conversion_adds_every_haven_level(self):
+        for n in range(1, data.SETTLEMENT_LEVELS + 1):
+            self.assertIn(f"add_building = elven_settlement_{n:02d}", self.text)
 
     def test_variables_removed_at_the_end(self):
         for name in ["aov_haven_level"] + [f"aov_haven_{line}" for line in set(data.BUILDING_MAP.values())]:

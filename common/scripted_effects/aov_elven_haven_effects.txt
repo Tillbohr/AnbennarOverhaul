@@ -723,6 +723,10 @@ aov_convert_to_elven_haven_effect = {
 		limit = { var:aov_haven_level = 2 }
 		add_building = elven_settlement_02
 	}
+	else_if = {
+		limit = { var:aov_haven_level = 1 }
+		add_building = elven_settlement_01
+	}
 	if = {
 		limit = { var:aov_haven_elven_agriculture ?= 7 }
 		add_building = elven_agriculture_07

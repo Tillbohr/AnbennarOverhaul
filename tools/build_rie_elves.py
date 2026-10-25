@@ -101,6 +101,27 @@ def build_gates(text: str) -> str:
                    if names[-1] in ("can_construct_potential", "can_construct"))
 
 
+POTENTIAL_GATE = "scope:holder = { is_elvish_culture = yes } # Anbennar Overhaul: elves only"
+
+
+def ensure_potential_check(text: str) -> str:
+    """text with an elven holder check in can_construct_potential (added when RiE checks only in can_construct), so a
+    non-elf holding a Haven is never offered an elven building."""
+    masked = rw.mask(text)
+    outer, inner = rw._top_blocks(masked)
+    potential = inner.get("can_construct_potential")
+    if potential and ELF_CHECK.search(masked[potential[1]:potential[2]]):
+        return text
+    if potential is None:
+        at = text.find("\n", outer[2]) + 1
+        return text[:at] + f"\tcan_construct_potential = {{\n\t\t{POTENTIAL_GATE}\n\t}}\n" + text[at:]
+    close = potential[2]
+    line_start = text.rfind("\n", 0, close) + 1
+    if text[line_start:close].strip():
+        return text[:close] + f"\n\t\t{POTENTIAL_GATE}\n" + text[close:]
+    return text[:line_start] + f"\t\t{POTENTIAL_GATE}\n" + text[line_start:]
+
+
 def render_buildings(build: rd.Build) -> None:
     roots = build.roots
     blocks = included_blocks(roots)
@@ -117,6 +138,7 @@ def render_buildings(build: rd.Build) -> None:
         if not ELF_CHECK.search(bp.code(build_gates(text))):
             raise GeneratorError(f"{key}: no elven holder check in can_construct_potential or can_construct after "
                                  "the rewrite")
+        text = ensure_potential_check(text)
         rd.check_block(build, key, text, buildings, data)
         text = rd.place_icons(build, key, text)
         for ref in rd.LOC_REF.findall(bp.code(text)):
@@ -319,8 +341,9 @@ def render_conversion(build: rd.Build) -> None:
     body += [f"\tif = {{ limit = {{ has_building = {key} }} remove_building = {key} }}"
              for key in removed_on_conversion(roots)]
     body += ["\tset_holding_type = elven_holding"]
+    # Level 1 too: whether set_holding_type adds the primary building is not documented.
     body += _chain([(f"var:aov_haven_level = {n}", f"add_building = elven_settlement_{n:02d}")
-                    for n in range(data.SETTLEMENT_LEVELS, 1, -1)])
+                    for n in range(data.SETTLEMENT_LEVELS, 0, -1)])
     for line in targets:
         body += _chain([(f"var:aov_haven_{line} ?= {n}", f"add_building = {line}_{n:02d}")
                         for n in range(data.LINES[line], 0, -1)])
