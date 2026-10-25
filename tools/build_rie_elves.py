@@ -226,6 +226,104 @@ def render_settlement(build: rd.Build) -> None:
     build.notes.append(rd.removal_note("removed from RiE's Haven levels", removed))
 
 
+# --------------------------------------------------------------------------------------------------- conversion
+
+HOLDINGS_FILE = "common/holdings/00_holdings.txt"
+SOURCE_HOLDINGS = ("castle_holding", "tribal_holding")
+
+
+def holding_list(text: str, holding: str) -> list:
+    """The level-01 keys of a holding's build list in a holdings file."""
+    body = dict(rd.top_level_items(bp.lf(text))).get(holding)
+    if body is None:
+        raise GeneratorError(f"{HOLDINGS_FILE} has no {holding}")
+    for names, start, end in bp.blocks(body, 2, strict=False):
+        if names[-1] == "buildings":
+            return re.findall(r"\b(\w+_01)\b", bp.code(body[start:end]))
+    raise GeneratorError(f"{holding} has no buildings list")
+
+
+def overhaul_buildings() -> frozenset:
+    """Building keys the overhaul's own files define (the dwarf generator's surface buildings among them)."""
+    return rd._names(bp._texts(str(SUBMOD / "common/buildings"), "*.txt"))
+
+
+def removed_on_conversion(roots: Roots) -> list:
+    """Every level key of every building a castle or tribe lists (Anbennar's lists plus the overhaul's additions)
+    that a Haven does not list: a conversion removes them, so no vanilla building is left in a Haven slot."""
+    import build_holdings_override as bho  # imports this module's haven_buildings
+    text = bp.read(roots.anbennar / HOLDINGS_FILE)
+    lines = []
+    for holding in SOURCE_HOLDINGS:
+        lines += [line_of(key) for key in holding_list(text, holding) + bho.ADDITIONS.get(holding, [])]
+    kept = {line_of(key) for key in haven_buildings()}
+    known = rd.external_buildings(roots) | overhaul_buildings()
+    removed = []
+    for line in dict.fromkeys(lines):
+        if line in kept:
+            continue
+        levels = sorted(key for key in known if re.fullmatch(rf"{re.escape(line)}_\d\d", key))
+        if not levels:
+            raise GeneratorError(f"{line}: listed in a castle or tribe, but no level of it is defined")
+        removed += levels
+    return removed
+
+
+def _chain(cases, indent="\t") -> list:
+    """if / else_if lines for [(limit, effect)]."""
+    out = []
+    for i, (limit, effect) in enumerate(cases):
+        out += [f"{indent}{'if' if i == 0 else 'else_if'} = {{", f"{indent}\tlimit = {{ {limit} }}",
+                f"{indent}\t{effect}", f"{indent}}}"]
+    return out
+
+
+def render_conversion(build: rd.Build) -> None:
+    """aov_convert_to_elven_haven_effect (barony province scope): the Haven level from the holding's level
+    (LEVEL_MAP), each elven line's level from its vanilla sources (BUILDING_MAP, capped at the line's top and the Haven
+    level), then the castle and tribe buildings removed, the holding type set and the Haven buildings added."""
+    roots = build.roots
+    known = rd.external_buildings(roots)
+    for source, line in data.BUILDING_MAP.items():
+        if f"{source}_01" not in known:
+            raise GeneratorError(f"BUILDING_MAP: {source} is defined neither by Anbennar nor the game")
+        if line not in data.LINES:
+            raise GeneratorError(f"BUILDING_MAP: {line} is not an included line")
+    for holding_level in data.LEVEL_MAP:
+        if holding_level not in known:
+            raise GeneratorError(f"LEVEL_MAP: {holding_level} is defined neither by Anbennar nor the game")
+    body = ["# Haven level"]
+    levels = sorted(data.LEVEL_MAP.items(), key=lambda item: (-item[1], item[0]))
+    body += _chain([(f"has_building_or_higher = {key}", f"set_variable = {{ name = aov_haven_level value = {n} }}")
+                    for key, n in levels])
+    body += ["\telse = { set_variable = { name = aov_haven_level value = 1 } }"]
+    targets = list(dict.fromkeys(data.BUILDING_MAP.values()))
+    for line in targets:
+        sources = [source for source, target in data.BUILDING_MAP.items() if target == line]
+        cases = []
+        for n in range(data.LINES[line], 0, -1):
+            have = [f"has_building_or_higher = {source}_{n:02d}" for source in sources if f"{source}_{n:02d}" in known]
+            if have:
+                cases.append((f"OR = {{ {' '.join(have)} }} var:aov_haven_level >= {n}",
+                              f"set_variable = {{ name = aov_haven_{line} value = {n} }}"))
+        body += [f"# {line} from {', '.join(sources)}"] + _chain(cases)
+    body += ["# castle and tribe buildings a Haven does not list"]
+    body += [f"\tif = {{ limit = {{ has_building = {key} }} remove_building = {key} }}"
+             for key in removed_on_conversion(roots)]
+    body += ["\tset_holding_type = elven_holding"]
+    body += _chain([(f"var:aov_haven_level = {n}", f"add_building = elven_settlement_{n:02d}")
+                    for n in range(data.SETTLEMENT_LEVELS, 1, -1)])
+    for line in targets:
+        body += _chain([(f"var:aov_haven_{line} ?= {n}", f"add_building = {line}_{n:02d}")
+                        for n in range(data.LINES[line], 0, -1)])
+    body += ["\tremove_variable = aov_haven_level"] + [f"\tremove_variable = aov_haven_{line}" for line in targets]
+    pieces = ["# Barony province scope: makes the holding an Elven Haven (spec Section 4). Called by the game-start "
+              "conversion and the Raise an Elven Haven decision.",
+              "aov_convert_to_elven_haven_effect = {\n" + "\n".join(line if line.startswith("\t") else f"\t{line}"
+                                                               for line in body) + "\n}\n"]
+    build.files[EFFECTS_FILE] = txt_file(pieces)
+
+
 # -------------------------------------------------------------------------------------------------------- triggers
 
 def known_terrains(roots: Roots) -> frozenset:
@@ -291,6 +389,7 @@ def build_all(roots: Roots, notes=None) -> dict:
     build = rd.Build(roots, notes)
     render_buildings(build)
     render_settlement(build)
+    render_conversion(build)
     render_triggers(build)
     rd.render_values(build, VALUES_FILE, txt_file)
     render_loc(build)

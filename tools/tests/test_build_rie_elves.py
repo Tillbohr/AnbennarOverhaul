@@ -201,6 +201,47 @@ class SettlementTests(unittest.TestCase):
 
 
 @unittest.skipUnless(HAVE_REAL, "needs RiE, Anbennar and the game")
+class ConversionTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.text = re_.build_all(REAL)[re_.EFFECTS_FILE].decode("utf-8-sig")
+        cls.known = rd.external_buildings(REAL)
+
+    def test_conversion_removes_every_level(self):
+        for line in ("cereal_fields", "curtain_walls", "barracks"):
+            levels = sorted(key for key in self.known if re.fullmatch(rf"{line}_\d\d", key))
+            self.assertTrue(levels, line)
+            for key in levels:
+                self.assertIn(f"if = {{ limit = {{ has_building = {key} }} remove_building = {key} }}", self.text)
+
+    def test_conversion_keeps_mines_and_academies(self):
+        for key in ("iron_mines_01", "mithril_mines_05", "artificer_academy_01", "battlemage_academy_01"):
+            self.assertNotIn(f"remove_building = {key}", self.text)
+        self.assertNotIn("remove_building = elven_", self.text)
+
+    def test_conversion_level_map(self):
+        self.assertRegex(self.text, r"has_building_or_higher = castle_04 \}\s*set_variable = \{ name = aov_haven_level "
+                                    r"value = 7 \}")
+        self.assertRegex(self.text, r"has_building_or_higher = tribe_02 \}\s*set_variable = \{ name = aov_haven_level "
+                                    r"value = 2 \}")
+
+    def test_conversion_swaps_mapped_buildings(self):
+        self.assertIn("has_building_or_higher = cereal_fields_07", self.text)
+        self.assertIn("add_building = elven_agriculture_07", self.text)
+        self.assertIn("add_building = elven_stables_01", self.text)
+
+    def test_conversion_sets_type_after_removal(self):
+        set_type = self.text.index("set_holding_type = elven_holding")
+        self.assertGreater(set_type, self.text.rindex("remove_building"))
+        self.assertLess(set_type, self.text.index("add_building"))
+        self.assertGreater(set_type, self.text.rindex("set_variable = { name = aov_haven_elven"))
+
+    def test_variables_removed_at_the_end(self):
+        for name in ["aov_haven_level"] + [f"aov_haven_{line}" for line in set(data.BUILDING_MAP.values())]:
+            self.assertIn(f"remove_variable = {name}", self.text)
+
+
+@unittest.skipUnless(HAVE_REAL, "needs RiE, Anbennar and the game")
 class FreshnessTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
