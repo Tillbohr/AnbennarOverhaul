@@ -86,6 +86,7 @@ Read only the doc for the system you are working on. Each holds the generated-fi
 | Great projects: EU4 monuments in Cannor, Middle Dwarovar, Bulwar, Salahad, Deepwoods; county view paintings | `docs/systems/great-projects.md` | `build_monuments.py`, `build_county_view_override.py` |
 | Dwarven holds: `dwarven_hold_holding`, 10 levels, Delve Deeper digs, ruin and clear | `docs/systems/dwarven-holds.md` | `build_holds.py`, `build_holdings_override.py`, `build_governments_override.py` |
 | RiE dwarf buildings, ore deposits, mines and the Dwarven Expedition activity | `docs/systems/rie-dwarves.md` | `build_rie_dwarves.py` (run before `build_holds.py` and `build_holdings_override.py`) |
+| Elven Haven: RiE's elven holding (7 levels) and 24 elf building lines, renamed for Anbennar, elves only; conversion at game start and by decision | `docs/systems/rie-elves.md` | `build_rie_elves.py` (after `build_rie_dwarves.py`, before `build_holdings_override.py`) |
 | RiE holding models, walls and army models (elves, dwarves, Castanorians) | `docs/systems/holding-models.md` | `build_holding_models.py` |
 | RiE portraits (halfling hair, elves, dwarves) | `docs/systems/rie-portraits.md` | `build_portraits.py` |
 | RiE character backgrounds and royal courts | `docs/systems/rie-courts.md` | `build_rie_courts.py` |

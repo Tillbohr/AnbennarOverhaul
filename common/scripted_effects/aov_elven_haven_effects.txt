@@ -60,118 +60,118 @@ aov_convert_to_elven_haven_effect = {
 	}
 	# elven_hunting_grounds from hunting_grounds
 	if = {
-		limit = { OR = { has_building_or_higher = hunting_grounds_07 } var:aov_haven_level >= 7 }
+		limit = { has_building_or_higher = hunting_grounds_07 var:aov_haven_level >= 7 }
 		set_variable = { name = aov_haven_elven_hunting_grounds value = 7 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = hunting_grounds_06 } var:aov_haven_level >= 6 }
+		limit = { has_building_or_higher = hunting_grounds_06 var:aov_haven_level >= 6 }
 		set_variable = { name = aov_haven_elven_hunting_grounds value = 6 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = hunting_grounds_05 } var:aov_haven_level >= 5 }
+		limit = { has_building_or_higher = hunting_grounds_05 var:aov_haven_level >= 5 }
 		set_variable = { name = aov_haven_elven_hunting_grounds value = 5 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = hunting_grounds_04 } var:aov_haven_level >= 4 }
+		limit = { has_building_or_higher = hunting_grounds_04 var:aov_haven_level >= 4 }
 		set_variable = { name = aov_haven_elven_hunting_grounds value = 4 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = hunting_grounds_03 } var:aov_haven_level >= 3 }
+		limit = { has_building_or_higher = hunting_grounds_03 var:aov_haven_level >= 3 }
 		set_variable = { name = aov_haven_elven_hunting_grounds value = 3 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = hunting_grounds_02 } var:aov_haven_level >= 2 }
+		limit = { has_building_or_higher = hunting_grounds_02 var:aov_haven_level >= 2 }
 		set_variable = { name = aov_haven_elven_hunting_grounds value = 2 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = hunting_grounds_01 } var:aov_haven_level >= 1 }
+		limit = { has_building_or_higher = hunting_grounds_01 var:aov_haven_level >= 1 }
 		set_variable = { name = aov_haven_elven_hunting_grounds value = 1 }
 	}
 	# elven_forestry from logging_camps
 	if = {
-		limit = { OR = { has_building_or_higher = logging_camps_07 } var:aov_haven_level >= 7 }
+		limit = { has_building_or_higher = logging_camps_07 var:aov_haven_level >= 7 }
 		set_variable = { name = aov_haven_elven_forestry value = 7 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = logging_camps_06 } var:aov_haven_level >= 6 }
+		limit = { has_building_or_higher = logging_camps_06 var:aov_haven_level >= 6 }
 		set_variable = { name = aov_haven_elven_forestry value = 6 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = logging_camps_05 } var:aov_haven_level >= 5 }
+		limit = { has_building_or_higher = logging_camps_05 var:aov_haven_level >= 5 }
 		set_variable = { name = aov_haven_elven_forestry value = 5 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = logging_camps_04 } var:aov_haven_level >= 4 }
+		limit = { has_building_or_higher = logging_camps_04 var:aov_haven_level >= 4 }
 		set_variable = { name = aov_haven_elven_forestry value = 4 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = logging_camps_03 } var:aov_haven_level >= 3 }
+		limit = { has_building_or_higher = logging_camps_03 var:aov_haven_level >= 3 }
 		set_variable = { name = aov_haven_elven_forestry value = 3 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = logging_camps_02 } var:aov_haven_level >= 2 }
+		limit = { has_building_or_higher = logging_camps_02 var:aov_haven_level >= 2 }
 		set_variable = { name = aov_haven_elven_forestry value = 2 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = logging_camps_01 } var:aov_haven_level >= 1 }
+		limit = { has_building_or_higher = logging_camps_01 var:aov_haven_level >= 1 }
 		set_variable = { name = aov_haven_elven_forestry value = 1 }
 	}
 	# elven_mine from quarries
 	if = {
-		limit = { OR = { has_building_or_higher = quarries_07 } var:aov_haven_level >= 7 }
+		limit = { has_building_or_higher = quarries_07 var:aov_haven_level >= 7 }
 		set_variable = { name = aov_haven_elven_mine value = 7 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = quarries_06 } var:aov_haven_level >= 6 }
+		limit = { has_building_or_higher = quarries_06 var:aov_haven_level >= 6 }
 		set_variable = { name = aov_haven_elven_mine value = 6 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = quarries_05 } var:aov_haven_level >= 5 }
+		limit = { has_building_or_higher = quarries_05 var:aov_haven_level >= 5 }
 		set_variable = { name = aov_haven_elven_mine value = 5 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = quarries_04 } var:aov_haven_level >= 4 }
+		limit = { has_building_or_higher = quarries_04 var:aov_haven_level >= 4 }
 		set_variable = { name = aov_haven_elven_mine value = 4 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = quarries_03 } var:aov_haven_level >= 3 }
+		limit = { has_building_or_higher = quarries_03 var:aov_haven_level >= 3 }
 		set_variable = { name = aov_haven_elven_mine value = 3 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = quarries_02 } var:aov_haven_level >= 2 }
+		limit = { has_building_or_higher = quarries_02 var:aov_haven_level >= 2 }
 		set_variable = { name = aov_haven_elven_mine value = 2 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = quarries_01 } var:aov_haven_level >= 1 }
+		limit = { has_building_or_higher = quarries_01 var:aov_haven_level >= 1 }
 		set_variable = { name = aov_haven_elven_mine value = 1 }
 	}
 	# elven_port from common_tradeport
 	if = {
-		limit = { OR = { has_building_or_higher = common_tradeport_07 } var:aov_haven_level >= 7 }
+		limit = { has_building_or_higher = common_tradeport_07 var:aov_haven_level >= 7 }
 		set_variable = { name = aov_haven_elven_port value = 7 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = common_tradeport_06 } var:aov_haven_level >= 6 }
+		limit = { has_building_or_higher = common_tradeport_06 var:aov_haven_level >= 6 }
 		set_variable = { name = aov_haven_elven_port value = 6 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = common_tradeport_05 } var:aov_haven_level >= 5 }
+		limit = { has_building_or_higher = common_tradeport_05 var:aov_haven_level >= 5 }
 		set_variable = { name = aov_haven_elven_port value = 5 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = common_tradeport_04 } var:aov_haven_level >= 4 }
+		limit = { has_building_or_higher = common_tradeport_04 var:aov_haven_level >= 4 }
 		set_variable = { name = aov_haven_elven_port value = 4 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = common_tradeport_03 } var:aov_haven_level >= 3 }
+		limit = { has_building_or_higher = common_tradeport_03 var:aov_haven_level >= 3 }
 		set_variable = { name = aov_haven_elven_port value = 3 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = common_tradeport_02 } var:aov_haven_level >= 2 }
+		limit = { has_building_or_higher = common_tradeport_02 var:aov_haven_level >= 2 }
 		set_variable = { name = aov_haven_elven_port value = 2 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = common_tradeport_01 } var:aov_haven_level >= 1 }
+		limit = { has_building_or_higher = common_tradeport_01 var:aov_haven_level >= 1 }
 		set_variable = { name = aov_haven_elven_port value = 1 }
 	}
 	# elven_barracks from barracks, military_camps
@@ -205,31 +205,31 @@ aov_convert_to_elven_haven_effect = {
 	}
 	# elven_stables from regimental_grounds
 	if = {
-		limit = { OR = { has_building_or_higher = regimental_grounds_07 } var:aov_haven_level >= 7 }
+		limit = { has_building_or_higher = regimental_grounds_07 var:aov_haven_level >= 7 }
 		set_variable = { name = aov_haven_elven_stables value = 7 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = regimental_grounds_06 } var:aov_haven_level >= 6 }
+		limit = { has_building_or_higher = regimental_grounds_06 var:aov_haven_level >= 6 }
 		set_variable = { name = aov_haven_elven_stables value = 6 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = regimental_grounds_05 } var:aov_haven_level >= 5 }
+		limit = { has_building_or_higher = regimental_grounds_05 var:aov_haven_level >= 5 }
 		set_variable = { name = aov_haven_elven_stables value = 5 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = regimental_grounds_04 } var:aov_haven_level >= 4 }
+		limit = { has_building_or_higher = regimental_grounds_04 var:aov_haven_level >= 4 }
 		set_variable = { name = aov_haven_elven_stables value = 4 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = regimental_grounds_03 } var:aov_haven_level >= 3 }
+		limit = { has_building_or_higher = regimental_grounds_03 var:aov_haven_level >= 3 }
 		set_variable = { name = aov_haven_elven_stables value = 3 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = regimental_grounds_02 } var:aov_haven_level >= 2 }
+		limit = { has_building_or_higher = regimental_grounds_02 var:aov_haven_level >= 2 }
 		set_variable = { name = aov_haven_elven_stables value = 2 }
 	}
 	else_if = {
-		limit = { OR = { has_building_or_higher = regimental_grounds_01 } var:aov_haven_level >= 1 }
+		limit = { has_building_or_higher = regimental_grounds_01 var:aov_haven_level >= 1 }
 		set_variable = { name = aov_haven_elven_stables value = 1 }
 	}
 	# castle and tribe buildings a Haven does not list

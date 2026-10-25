@@ -1,0 +1,57 @@
+﻿# Anbennar Overhaul: modifier formats of the Elven Haven holding (as aov_hold_formats.txt for the dwarven hold).
+
+elven_holding_build_gold_cost = {
+	decimals = 0
+	color = bad
+	prefix = MOD_GOLD_PREFIX
+	percent = yes
+}
+
+elven_holding_build_piety_cost = {
+	decimals = 0
+	color = bad
+	prefix = MOD_PIETY_PREFIX
+	percent = yes
+}
+
+elven_holding_build_prestige_cost = {
+	decimals = 0
+	color = bad
+	prefix = MOD_PRESTIGE_PREFIX
+	percent = yes
+}
+
+elven_holding_build_speed = {
+	decimals = 0
+	color = bad
+	prefix = MOD_TIME_PREFIX
+	percent = yes
+}
+
+elven_holding_holding_build_gold_cost = {
+	decimals = 0
+	color = bad
+	prefix = MOD_GOLD_PREFIX
+	percent = yes
+}
+
+elven_holding_holding_build_piety_cost = {
+	decimals = 0
+	color = bad
+	prefix = MOD_PIETY_PREFIX
+	percent = yes
+}
+
+elven_holding_holding_build_prestige_cost = {
+	decimals = 0
+	color = bad
+	prefix = MOD_PRESTIGE_PREFIX
+	percent = yes
+}
+
+elven_holding_holding_build_speed = {
+	decimals = 0
+	color = bad
+	prefix = MOD_TIME_PREFIX
+	percent = yes
+}

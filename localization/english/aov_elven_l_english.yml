@@ -328,3 +328,6 @@
  elven_holding_holding_build_piety_cost: "Elven Haven [holding|E] Piety Cost"
  elven_holding_holding_build_prestige_cost: "Elven Haven [holding|E] Prestige Cost"
  aov_rie_elf_holder_tt: "Held by an elf"
+ aov_rie_elven_agriculture_terrain_tt: "On farmlands, plains, oases, floodplains or drylands, or on hills or wetlands for a culture of hill dwellers or wetlanders"
+ aov_rie_elven_hunting_grounds_terrain_tt: "On farmlands, plains, hills, forest, jungle, taiga, wetlands, steppe, floodplains or drylands"
+ aov_rie_elven_tree_flet_terrain_tt: "In forest or jungle"

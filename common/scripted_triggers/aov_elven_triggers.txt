@@ -11,22 +11,25 @@ aov_rie_elf_holder_trigger = {
 
 # Province scope: RiE's building_elven_agriculture_requirement_terrain.
 aov_rie_elven_agriculture_terrain_trigger = {
-	OR = {
-		terrain = farmlands
-		terrain = plains
-		terrain = oasis
-		terrain = floodplains
-		terrain = drylands
-		AND = {
-			terrain = hills
-			culture = {
-				has_cultural_tradition = tradition_hill_dwellers
+	custom_tooltip = {
+		text = aov_rie_elven_agriculture_terrain_tt
+		OR = {
+			terrain = farmlands
+			terrain = plains
+			terrain = oasis
+			terrain = floodplains
+			terrain = drylands
+			AND = {
+				terrain = hills
+				culture = {
+					has_cultural_tradition = tradition_hill_dwellers
+				}
 			}
-		}
-		AND = {
-			terrain = wetlands
-			culture = {
-				has_cultural_tradition = tradition_wetlanders
+			AND = {
+				terrain = wetlands
+				culture = {
+					has_cultural_tradition = tradition_wetlanders
+				}
 			}
 		}
 	}
@@ -34,24 +37,30 @@ aov_rie_elven_agriculture_terrain_trigger = {
 
 # Province scope: RiE's building_elven_hunting_grounds_requirement_terrain.
 aov_rie_elven_hunting_grounds_terrain_trigger = {
-	OR = {
-		terrain = farmlands
-		terrain = plains
-		terrain = hills
-		terrain = jungle
-		terrain = forest
-		terrain = taiga
-		terrain = wetlands
-		terrain = steppe
-		terrain = floodplains
-		terrain = drylands
+	custom_tooltip = {
+		text = aov_rie_elven_hunting_grounds_terrain_tt
+		OR = {
+			terrain = farmlands
+			terrain = plains
+			terrain = hills
+			terrain = jungle
+			terrain = forest
+			terrain = taiga
+			terrain = wetlands
+			terrain = steppe
+			terrain = floodplains
+			terrain = drylands
+		}
 	}
 }
 
 # Province scope: RiE's building_elven_tree_flats_requirement_terrain.
 aov_rie_elven_tree_flet_terrain_trigger = {
-	OR = {
-		terrain = forest
-		terrain = jungle
+	custom_tooltip = {
+		text = aov_rie_elven_tree_flet_terrain_tt
+		OR = {
+			terrain = forest
+			terrain = jungle
+		}
 	}
 }

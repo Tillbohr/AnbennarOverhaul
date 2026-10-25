@@ -73,6 +73,8 @@ DROP_STATEMENTS = (
 )
 # (regex of a whole statement or block, its replacement; backreferences allowed), matched over code.
 BLOCK_REPLACEMENTS = (
+    # "an elf or a Maia": Anbennar has no Maiar, and an OR of one item is a tiger warning.
+    (r"OR\s*=\s*\{\s*is_elf\s*=\s*yes\s*is_valinor_maiar_character\s*=\s*yes\s*\}", "is_elf = yes"),
     # RiE's hope gate (its elven hope mechanic): removed whole, or it would become "only when the top liege is not an elf".
     (r"OR\s*=\s*\{\s*scope:holder(?:\.top_liege)?\s*=\s*\{\s*has_\w+_hope_or_higher\s*=\s*yes\s*\}"
      r"(?:\s*scope:holder\.top_liege\s*=\s*\{\s*(?:has_\w+_hope_or_higher\s*=\s*yes|is_elf\s*=\s*no)\s*\})*\s*\}", ""),

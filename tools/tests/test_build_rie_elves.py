@@ -130,6 +130,16 @@ class RealBuildTests(unittest.TestCase):
                 self.assertIsNone(re.search(r"\blotr_|\bis_elf\b|maiar|hope_or_higher", text), rel)
         self.assertIsNone(re.search(data.FORBIDDEN_LORE, self.loc))
 
+    def test_no_single_item_or(self):
+        single = re.compile(r"\bOR = \{\s*[\w:.]+ (?:=|>=|<=) [\w:.]+\s*\}")
+        for rel in (re_.BUILDINGS_FILE, re_.SETTLEMENT_FILE, re_.EFFECTS_FILE):
+            text = self.files[rel].decode("utf-8-sig")
+            self.assertIsNone(single.search(text), rel)
+
+    def test_loc_uses_scope_data_functions(self):
+        loc = (re_.SUBMOD / "localization/english/aov_elven_haven_decisions_l_english.yml").read_text(encoding="utf-8-sig")
+        self.assertNotIn("[scope:", loc)
+
     def test_triggers_use_known_terrains_only(self):
         triggers = self.files[re_.TRIGGERS_FILE].decode("utf-8-sig")
         for name in data.COPIED_TRIGGERS.values():

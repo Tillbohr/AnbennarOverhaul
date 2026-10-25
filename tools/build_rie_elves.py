@@ -44,7 +44,14 @@ OWNED_FOLDERS = {"common/buildings": ("aov_elven_buildings.txt", "aov_elven_have
                  "gfx/interface/illustrations/holding_types": ("refuge_*.dds",),
                  "gfx/interface/icons/holding_types_tab": ("elven_holding.dds",)}
 # Localization of keys the generator itself defines.
-OWN_LOC = {"aov_rie_elf_holder_tt": "Held by an elf"}
+OWN_LOC = {
+    "aov_rie_elf_holder_tt": "Held by an elf",
+    "aov_rie_elven_agriculture_terrain_tt": "On farmlands, plains, oases, floodplains or drylands, or on hills or "
+                                            "wetlands for a culture of hill dwellers or wetlanders",
+    "aov_rie_elven_hunting_grounds_terrain_tt": "On farmlands, plains, hills, forest, jungle, taiga, wetlands, steppe, "
+                                                "floodplains or drylands",
+    "aov_rie_elven_tree_flet_terrain_tt": "In forest or jungle",
+}
 SETTLEMENTS = tuple(f"elven_settlement_{n:02d}" for n in range(1, data.SETTLEMENT_LEVELS + 1))
 ELF_CHECK = re.compile(r"\bis_elvish_culture\s*=\s*yes\b|\baov_rie_elf_holder_trigger\s*=\s*yes\b")
 TERRAIN_LINE = re.compile(r"(?<![\w.])terrain\s*=\s*(\w+)")
@@ -304,7 +311,8 @@ def render_conversion(build: rd.Build) -> None:
         for n in range(data.LINES[line], 0, -1):
             have = [f"has_building_or_higher = {source}_{n:02d}" for source in sources if f"{source}_{n:02d}" in known]
             if have:
-                cases.append((f"OR = {{ {' '.join(have)} }} var:aov_haven_level >= {n}",
+                sources_met = have[0] if len(have) == 1 else f"OR = {{ {' '.join(have)} }}"
+                cases.append((f"{sources_met} var:aov_haven_level >= {n}",
                               f"set_variable = {{ name = aov_haven_{line} value = {n} }}"))
         body += [f"# {line} from {', '.join(sources)}"] + _chain(cases)
     body += ["# castle and tribe buildings a Haven does not list"]
@@ -341,7 +349,10 @@ def copied_trigger(roots: Roots, rie_name: str, ours: str, rie_triggers: dict, n
             notes.append(f"{ours}: terrain {match.group(1)}")
             text = rw.cut(text, match.start(), match.end())
     text = rw.prune_empty(text)
-    text = re.sub(rf"^{re.escape(rie_name)}\b", ours, text)
+    # Inside a custom_tooltip, as the dwarf terrain triggers: an untooltipped OR is too complex for failure-only tooltips.
+    brace, close = text.index("{") + 1, text.rindex("}")
+    text = (f"{ours} = {{\n\tcustom_tooltip = {{\n\t\ttext = {ours[:-len('_trigger')]}_tt\n"
+            + text[brace:close].strip("\n") + "\n\t}\n}\n")
     rd.check_trigger_names(roots, ours, bp.code(text), data)
     return rd.reindent(text).rstrip("\n") + "\n"
 

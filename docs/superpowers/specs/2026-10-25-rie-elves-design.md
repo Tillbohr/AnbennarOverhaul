@@ -1,6 +1,7 @@
 # RiE elven holding and elf buildings (design)
 
-Date: 2026-10-25. Status: design approved, spec under review, not implemented.
+Date: 2026-10-25. Status: implemented (branch rie-elves); system notes in `docs/systems/rie-elves.md`. Output files are named
+`aov_elven_*` (not `aov_rie_elven_*`), since the dwarf generator owns `aov_rie_*`.
 
 ## Goal
 
@@ -60,7 +61,7 @@ Rewrites:
 | `has_cultural_parameter = next_level_*` lines | kept when defined, else removed |
 | `province_dynasty_modifier` blocks with `lotr_*` perks | removed |
 | Valinor assets (`middleearth_valinor`, `elven_tirion_mesh`) and Maiar branches | removed |
-| `effect_desc` keys RiE defines | kept when the game or Anbennar defines them, else replaced by our own key from the data |
+| `effect_desc` lines and blocks | removed (they describe activity and travel benefits wired to RiE activities or vanilla building keys) |
 
 Every removed item goes in a build note. The build stops on any other identifier Anbennar and the game lack
 (scripted trigger, building, modifier, men-at-arms type, cultural parameter, terrain), a missing icon, a key
@@ -74,8 +75,7 @@ collision, or a picture whose path Anbennar or the game already has with other c
   in the list, as in RiE.
 - **Levels:** `elven_settlement_01..07` copied from RiE with the Section 1 rewrites: `levy`, `max_garrison`,
   `garrison_reinforcement_factor`, province and county modifiers, `building_slot_add`, construction time and costs.
-  RiE's caps stay: at most one stronghold (levels 3-5) per duchy and one city (levels 6-7) per kingdom, and the
-  realm limits.
+  RiE's stronghold and city caps are commented out in RiE's own blocks, so there are none.
 - **Who can raise it:** `can_construct` needs an elven holder (`aov_rie_elf_holder_trigger`). `is_enabled` is
   dropped from the level blocks: a non-elf who takes a Haven keeps its level effects, but cannot raise it and gets
   nothing from the elven buildings inside.
@@ -126,8 +126,8 @@ Included (every level RiE defines; RiE's own level counts):
 Left out: RiE's oath buildings, Valinor content, the blocks RiE has commented out. The 15 ore mines are listed in the
 Haven but not redefined (they come from `build_rie_dwarves.py`).
 
-**Elves only:** every included block's `can_construct_potential` and `is_enabled` ask for an elven holder after the
-rewrites; the build stops if a block has neither. Requirements on Haven level (`has_building_or_higher =
+**Elves only:** every included block asks for an elven holder in `can_construct_potential` or `can_construct` after
+the rewrites (RiE's upper levels check in `can_construct`); the build stops if a block has neither. Requirements on Haven level (`has_building_or_higher =
 elven_settlement_N`) stay as RiE has them.
 
 ## 4. Conversion
@@ -153,10 +153,10 @@ are untouched.
 
 - Shown to an elven ruler (`is_elvish_culture = yes`, at least count) who holds a castle or tribal barony in their
   domain.
-- Opens picker event `aov_elven_haven.1` (namespace `aov_elven_haven`, the Delve Deeper picker's pattern) listing the
-  domain's eligible baronies; the chosen one runs the effect.
-- Cost: `aov_elven_haven_conversion_cost` gold (100 x the Haven level it gets) and 100 prestige. Instant. Cooldown 5
-  years.
+- Opens picker event `aov_elven_haven.1` (namespace `aov_elven_haven`) offering up to three of the domain's eligible
+  baronies, the capital first, then by Haven level; the chosen one runs the effect.
+- Cost: `aov_elven_haven_conversion_cost` gold (100 x the Haven level it gets) and 100 prestige, paid in the picker
+  option. Instant. Cooldown 5 years.
 - AI: takes it when it has 2x the cost and an eligible barony, preferring its capital.
 
 Nothing converts automatically after the start, and nothing reverts: a non-elf who takes a Haven keeps it as it is.

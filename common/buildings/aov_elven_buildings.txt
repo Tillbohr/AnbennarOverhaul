@@ -6,9 +6,7 @@ elven_agriculture_01 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -62,9 +60,7 @@ elven_agriculture_02 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -120,9 +116,7 @@ elven_agriculture_03 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -180,9 +174,7 @@ elven_agriculture_04 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -240,9 +232,7 @@ elven_agriculture_05 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -300,9 +290,7 @@ elven_agriculture_06 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -354,9 +342,7 @@ elven_agriculture_07 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2156,17 +2142,13 @@ elven_library_01 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2208,9 +2190,7 @@ elven_library_02 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2246,9 +2226,7 @@ elven_library_03 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2284,9 +2262,7 @@ elven_library_04 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2323,9 +2299,7 @@ elven_library_05 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2360,17 +2334,13 @@ elven_guild_01 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2400,17 +2370,13 @@ elven_guild_02 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2444,17 +2410,13 @@ elven_guild_03 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2488,17 +2450,13 @@ elven_guild_04 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2536,17 +2494,13 @@ elven_guild_05 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2582,17 +2536,13 @@ elven_embassy_01 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2624,9 +2574,7 @@ elven_embassy_02 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2659,9 +2607,7 @@ elven_embassy_03 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2694,9 +2640,7 @@ elven_embassy_04 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2731,9 +2675,7 @@ elven_embassy_05 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2766,17 +2708,13 @@ elven_mustering_grounds_01 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2810,9 +2748,7 @@ elven_mustering_grounds_02 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2847,9 +2783,7 @@ elven_mustering_grounds_03 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2884,9 +2818,7 @@ elven_mustering_grounds_04 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2922,9 +2854,7 @@ elven_mustering_grounds_05 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -2958,17 +2888,13 @@ elven_sanctuary_01 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -3009,9 +2935,7 @@ elven_sanctuary_02 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -3053,9 +2977,7 @@ elven_sanctuary_03 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -3097,9 +3019,7 @@ elven_sanctuary_04 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -3141,9 +3061,7 @@ elven_sanctuary_05 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -3183,17 +3101,13 @@ elven_citadel_01 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -3227,9 +3141,7 @@ elven_citadel_02 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -3264,9 +3176,7 @@ elven_citadel_03 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -3301,9 +3211,7 @@ elven_citadel_04 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -3340,9 +3248,7 @@ elven_citadel_05 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -3377,17 +3283,13 @@ hall_of_lords_01 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -3419,9 +3321,7 @@ hall_of_lords_02 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -3454,17 +3354,13 @@ elven_armament_01 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -3499,9 +3395,7 @@ elven_armament_02 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -3535,9 +3429,7 @@ elven_barracks_01 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -3583,17 +3475,13 @@ elven_barracks_02 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -3654,17 +3542,13 @@ elven_barracks_03 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -3730,17 +3614,13 @@ elven_barracks_04 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -3806,17 +3686,13 @@ elven_barracks_05 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -3882,17 +3758,13 @@ elven_barracks_06 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -3958,17 +3830,13 @@ elven_barracks_07 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -4032,9 +3900,7 @@ elven_fletchers_01 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -4077,9 +3943,7 @@ elven_fletchers_02 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -4122,9 +3986,7 @@ elven_fletchers_03 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -4170,9 +4032,7 @@ elven_fletchers_04 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -4218,9 +4078,7 @@ elven_fletchers_05 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -4266,9 +4124,7 @@ elven_fletchers_06 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -4314,9 +4170,7 @@ elven_fletchers_07 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -4360,9 +4214,7 @@ elven_stables_01 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -4402,17 +4254,13 @@ elven_stables_02 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -4464,17 +4312,13 @@ elven_stables_03 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -4530,17 +4374,13 @@ elven_stables_04 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -4596,17 +4436,13 @@ elven_stables_05 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -4662,17 +4498,13 @@ elven_stables_06 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -4728,17 +4560,13 @@ elven_stables_07 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -5133,9 +4961,7 @@ hall_of_music_and_tales_01 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 		county.holder = { has_title = prev.duchy }
 	}
@@ -5143,9 +4969,7 @@ hall_of_music_and_tales_01 = {
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -5183,9 +5007,7 @@ hall_of_music_and_tales_02 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 		county.holder = { has_title = prev.duchy }
 	}
@@ -5193,9 +5015,7 @@ hall_of_music_and_tales_02 = {
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -5233,9 +5053,7 @@ hall_of_music_and_tales_03 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 		county.holder = { has_title = prev.duchy }
 	}
@@ -5243,9 +5061,7 @@ hall_of_music_and_tales_03 = {
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -5281,9 +5097,7 @@ crafting_enclaves_01 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 		county.holder = { has_title = prev.duchy }
 	}
@@ -5291,9 +5105,7 @@ crafting_enclaves_01 = {
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -5332,9 +5144,7 @@ crafting_enclaves_02 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 		county.holder = { has_title = prev.duchy }
 	}
@@ -5342,9 +5152,7 @@ crafting_enclaves_02 = {
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -5383,9 +5191,7 @@ crafting_enclaves_03 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 		county.holder = { has_title = prev.duchy }
 	}
@@ -5393,9 +5199,7 @@ crafting_enclaves_03 = {
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -5432,9 +5236,7 @@ sentinel_keeps_01 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 		county.holder = { has_title = prev.duchy }
 	}
@@ -5442,9 +5244,7 @@ sentinel_keeps_01 = {
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -5481,9 +5281,7 @@ sentinel_keeps_02 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 		county.holder = { has_title = prev.duchy }
 	}
@@ -5491,9 +5289,7 @@ sentinel_keeps_02 = {
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -5530,9 +5326,7 @@ sentinel_keeps_03 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 		county.holder = { has_title = prev.duchy }
 	}
@@ -5540,9 +5334,7 @@ sentinel_keeps_03 = {
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -5577,9 +5369,7 @@ warriors_enclave_01 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 		county.holder = { has_title = prev.duchy }
 	}
@@ -5587,9 +5377,7 @@ warriors_enclave_01 = {
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -5630,9 +5418,7 @@ warriors_enclave_02 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 		county.holder = { has_title = prev.duchy }
 	}
@@ -5640,9 +5426,7 @@ warriors_enclave_02 = {
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -5683,9 +5467,7 @@ warriors_enclave_03 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 		county.holder = { has_title = prev.duchy }
 	}
@@ -5693,9 +5475,7 @@ warriors_enclave_03 = {
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -5734,9 +5514,7 @@ sanctuary_groves_01 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 		county.holder = { has_title = prev.duchy }
 	}
@@ -5744,9 +5522,7 @@ sanctuary_groves_01 = {
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -5783,9 +5559,7 @@ sanctuary_groves_02 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 		county.holder = { has_title = prev.duchy }
 	}
@@ -5793,9 +5567,7 @@ sanctuary_groves_02 = {
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 
@@ -5832,9 +5604,7 @@ sanctuary_groves_03 = {
 
 	is_enabled = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 		county.holder = { has_title = prev.duchy }
 	}
@@ -5842,9 +5612,7 @@ sanctuary_groves_03 = {
 
 	can_construct_potential = {
 		scope:holder = {
-			OR = {
-				is_elvish_culture = yes
-			}
+			is_elvish_culture = yes
 		}
 	}
 

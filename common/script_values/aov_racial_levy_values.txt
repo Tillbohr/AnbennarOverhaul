@@ -157,6 +157,37 @@ aov_holding_levy_size_bonus = {
 	county = { every_county_province = { limit = { has_building = khenahap_mines_02 } add = 0.2 } } # buildings khenahap_mines_02
 	county = { every_county_province = { limit = { has_building = khenahap_mines_03 } add = 0.3 } } # buildings khenahap_mines_03
 	county = { every_county_province = { limit = { has_building = khenahap_mines_04 } add = 0.4 } } # buildings khenahap_mines_04
+	if = { limit = { has_building = elven_agriculture_01 province_owner = { is_elvish_culture = yes } county.culture = { has_cultural_parameter = pastures_building_bonuses } } add = 0.05 } # buildings elven_agriculture_01
+	if = { limit = { has_building = elven_agriculture_02 province_owner = { is_elvish_culture = yes } county.culture = { has_cultural_parameter = pastures_building_bonuses } } add = 0.1 } # buildings elven_agriculture_02
+	if = { limit = { has_building = elven_agriculture_03 province_owner = { is_elvish_culture = yes } county.culture = { has_cultural_parameter = pastures_building_bonuses } } add = 0.15 } # buildings elven_agriculture_03
+	if = { limit = { has_building = elven_agriculture_04 province_owner = { is_elvish_culture = yes } county.culture = { has_cultural_parameter = pastures_building_bonuses } } add = 0.2 } # buildings elven_agriculture_04
+	if = { limit = { has_building = elven_agriculture_05 province_owner = { is_elvish_culture = yes } county.culture = { has_cultural_parameter = pastures_building_bonuses } } add = 0.25 } # buildings elven_agriculture_05
+	if = { limit = { has_building = elven_agriculture_06 province_owner = { is_elvish_culture = yes } county.culture = { has_cultural_parameter = pastures_building_bonuses } } add = 0.3 } # buildings elven_agriculture_06
+	if = { limit = { has_building = elven_agriculture_07 province_owner = { is_elvish_culture = yes } county.culture = { has_cultural_parameter = pastures_building_bonuses } } add = 0.35 } # buildings elven_agriculture_07
+	if = { limit = { has_building = elven_port_01 county.culture = { has_cultural_parameter = trade_ports_give_levies } } add = 0.02 } # buildings elven_port_01
+	if = { limit = { has_building = elven_port_02 county.culture = { has_cultural_parameter = trade_ports_give_levies } } add = 0.04 } # buildings elven_port_02
+	if = { limit = { has_building = elven_port_03 county.culture = { has_cultural_parameter = trade_ports_give_levies } } add = 0.06 } # buildings elven_port_03
+	if = { limit = { has_building = elven_port_04 county.culture = { has_cultural_parameter = trade_ports_give_levies } } add = 0.08 } # buildings elven_port_04
+	if = { limit = { has_building = elven_port_05 county.culture = { has_cultural_parameter = trade_ports_give_levies } } add = 0.1 } # buildings elven_port_05
+	if = { limit = { has_building = elven_port_06 county.culture = { has_cultural_parameter = trade_ports_give_levies } } add = 0.12 } # buildings elven_port_06
+	if = { limit = { has_building = elven_port_07 county.culture = { has_cultural_parameter = trade_ports_give_levies } } add = 0.14 } # buildings elven_port_07
+	county = { every_county_province = { limit = { has_building = elven_mine_01 county.culture = { has_cultural_parameter = quarries_building_bonuses } } add = 0.01 } } # buildings elven_mine_01
+	county = { every_county_province = { limit = { has_building = elven_mine_02 county.culture = { has_cultural_parameter = quarries_building_bonuses } } add = 0.02 } } # buildings elven_mine_02
+	county = { every_county_province = { limit = { has_building = elven_mine_03 county.culture = { has_cultural_parameter = quarries_building_bonuses } } add = 0.03 } } # buildings elven_mine_03
+	county = { every_county_province = { limit = { has_building = elven_mine_04 county.culture = { has_cultural_parameter = quarries_building_bonuses } } add = 0.04 } } # buildings elven_mine_04
+	county = { every_county_province = { limit = { has_building = elven_mine_05 county.culture = { has_cultural_parameter = quarries_building_bonuses } } add = 0.05 } } # buildings elven_mine_05
+	county = { every_county_province = { limit = { has_building = elven_mine_06 county.culture = { has_cultural_parameter = quarries_building_bonuses } } add = 0.06 } } # buildings elven_mine_06
+	county = { every_county_province = { limit = { has_building = elven_mine_07 county.culture = { has_cultural_parameter = quarries_building_bonuses } } add = 0.07 } } # buildings elven_mine_07
+	if = { limit = { has_building = tree_flet_01 county.culture = { has_cultural_parameter = outposts_building_bonuses } } add = 0.01 } # buildings tree_flet_01
+	if = { limit = { has_building = tree_flet_02 county.culture = { has_cultural_parameter = outposts_building_bonuses } } add = 0.02 } # buildings tree_flet_02
+	if = { limit = { has_building = tree_flet_03 county.culture = { has_cultural_parameter = outposts_building_bonuses } } add = 0.03 } # buildings tree_flet_03
+	if = { limit = { has_building = tree_flet_04 county.culture = { has_cultural_parameter = outposts_building_bonuses } } add = 0.04 } # buildings tree_flet_04
+	if = { limit = { has_building = tree_flet_05 county.culture = { has_cultural_parameter = outposts_building_bonuses } } add = 0.05 } # buildings tree_flet_05
+	if = { limit = { has_building = tree_flet_06 county.culture = { has_cultural_parameter = outposts_building_bonuses } } add = 0.06 } # buildings tree_flet_06
+	if = { limit = { has_building = tree_flet_07 county.culture = { has_cultural_parameter = outposts_building_bonuses } } add = 0.07 } # buildings tree_flet_07
+	if = { limit = { exists = county.duchy county.duchy.title_capital_county.title_province = { has_building = warriors_enclave_01 province_owner = { is_elvish_culture = yes } county.holder = { has_title = prev.duchy } } } add = 0.2 } # buildings warriors_enclave_01
+	if = { limit = { exists = county.duchy county.duchy.title_capital_county.title_province = { has_building = warriors_enclave_02 province_owner = { is_elvish_culture = yes } county.holder = { has_title = prev.duchy } } } add = 0.3 } # buildings warriors_enclave_02
+	if = { limit = { exists = county.duchy county.duchy.title_capital_county.title_province = { has_building = warriors_enclave_03 province_owner = { is_elvish_culture = yes } county.holder = { has_title = prev.duchy } } } add = 0.4 } # buildings warriors_enclave_03
 	county = { every_county_province = { limit = { has_building = aov_monument_dasmati_halls_of_reverence_02 province_owner = { custom_tooltip = { text = aov_monument_dasmati_halls_of_reverence_gate OR = { culture = { has_cultural_pillar = heritage_bulwari } faith.religion = religion:bulwari_sun_cults_religion } } } } add = 0.062 } } # buildings aov_monument_dasmati_halls_of_reverence_02
 	county = { every_county_province = { limit = { has_building = aov_monument_dasmati_halls_of_reverence_03 province_owner = { custom_tooltip = { text = aov_monument_dasmati_halls_of_reverence_gate OR = { culture = { has_cultural_pillar = heritage_bulwari } faith.religion = religion:bulwari_sun_cults_religion } } } } add = 0.25 } } # buildings aov_monument_dasmati_halls_of_reverence_03
 	county = { every_county_province = { limit = { has_building = aov_monument_ovdal_tungr_port_hold_01 province_owner = { custom_tooltip = { text = aov_monument_ovdal_tungr_port_hold_gate OR = { culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } } } } } add = 0.062 } } # buildings aov_monument_ovdal_tungr_port_hold_01
