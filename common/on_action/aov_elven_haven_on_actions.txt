@@ -1,0 +1,17 @@
+﻿# Anbennar Overhaul: Elven Haven on_actions, appended to vanilla on_actions (docs/systems/rie-elves.md).
+
+on_game_start = {
+	on_actions = { aov_elven_haven_game_start }
+}
+
+# Every elf-held castle and tribe becomes an Elven Haven (moon and sun elf castles, the Deepwoods tribes).
+aov_elven_haven_game_start = {
+	effect = {
+		every_county = {
+			every_county_province = {
+				limit = { aov_can_become_elven_haven_trigger = yes }
+				aov_convert_to_elven_haven_effect = yes
+			}
+		}
+	}
+}

@@ -1,0 +1,29 @@
+﻿# Anbennar Overhaul: Elven Haven conversion values (docs/systems/rie-elves.md).
+
+# Province scope: the Haven level a conversion gives (tools/data/rie_elves.py LEVEL_MAP, which
+# aov_convert_to_elven_haven_effect also follows).
+aov_elven_haven_target_level = {
+	value = 1
+	if = {
+		limit = { has_building_or_higher = tribe_02 }
+		value = 2
+	}
+	if = {
+		limit = { has_building_or_higher = castle_02 }
+		value = 3
+	}
+	if = {
+		limit = { has_building_or_higher = castle_03 }
+		value = 5
+	}
+	if = {
+		limit = { has_building_or_higher = castle_04 }
+		value = 7
+	}
+}
+
+# Province scope: the gold the Raise an Elven Haven decision costs, 100 per Haven level.
+aov_elven_haven_conversion_cost = {
+	value = aov_elven_haven_target_level
+	multiply = 100
+}

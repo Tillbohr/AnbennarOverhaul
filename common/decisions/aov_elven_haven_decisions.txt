@@ -1,0 +1,51 @@
+﻿# Anbennar Overhaul: Elven Haven decisions (docs/systems/rie-elves.md).
+
+# An elven ruler makes one of their castles or tribes an Elven Haven (picker event aov_elven_haven.1).
+aov_raise_elven_haven_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_realm.dds"
+	}
+	decision_group_type = major
+	sort_order = 92
+	ai_check_interval = 24
+	cooldown = { years = 5 }
+
+	is_shown = {
+		is_elvish_culture = yes
+		highest_held_title_tier >= tier_county
+		any_held_title = {
+			tier = tier_barony
+			title_province = { aov_can_become_elven_haven_trigger = yes }
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		is_available_adult = yes
+		prestige >= 100
+	}
+
+	effect = {
+		custom_tooltip = aov_raise_elven_haven_decision_effect_tt
+		trigger_event = aov_elven_haven.1
+	}
+
+	# The AI converts when it can pay for a barony and keep as much gold again in reserve.
+	ai_will_do = {
+		base = 100
+		modifier = {
+			factor = 0
+			NOT = {
+				any_held_title = {
+					tier = tier_barony
+					title_province = {
+						aov_can_become_elven_haven_trigger = yes
+						root.gold >= {
+							value = aov_elven_haven_conversion_cost
+							multiply = 2
+						}
+					}
+				}
+			}
+		}
+	}
+}

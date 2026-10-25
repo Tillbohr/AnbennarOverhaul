@@ -1,0 +1,10 @@
+﻿# Anbennar Overhaul: Elven Haven triggers (docs/systems/rie-elves.md).
+
+# Province scope: an elf-held castle or tribe, which can become an Elven Haven.
+aov_can_become_elven_haven_trigger = {
+	OR = {
+		has_holding_type = castle_holding
+		has_holding_type = tribal_holding
+	}
+	barony.holder ?= { is_elvish_culture = yes }
+}

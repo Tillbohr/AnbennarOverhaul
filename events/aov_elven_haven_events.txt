@@ -1,0 +1,88 @@
+﻿namespace = aov_elven_haven
+
+# The Raise an Elven Haven decision: pick one of up to three elf-held castles or tribes of the domain (the capital
+# first, then the highest holding level) to become an Elven Haven.
+aov_elven_haven.1 = {
+	type = character_event
+	title = aov_elven_haven.1.t
+	desc = aov_elven_haven.1.desc
+	theme = realm
+	left_portrait = root
+
+	immediate = {
+		every_held_title = {
+			limit = {
+				tier = tier_barony
+				title_province = { aov_can_become_elven_haven_trigger = yes }
+			}
+			title_province = {
+				save_scope_value_as = { name = aov_haven_order value = aov_elven_haven_target_level }
+			}
+			set_variable = { name = aov_haven_order value = scope:aov_haven_order }
+			if = {
+				limit = { is_capital_barony = yes }
+				change_variable = { name = aov_haven_order add = 10 }
+			}
+		}
+		ordered_held_title = {
+			limit = { has_variable = aov_haven_order }
+			order_by = var:aov_haven_order
+			position = 0
+			save_scope_as = aov_haven_choice_1
+		}
+		ordered_held_title = {
+			limit = { has_variable = aov_haven_order }
+			order_by = var:aov_haven_order
+			position = 1
+			save_scope_as = aov_haven_choice_2
+		}
+		ordered_held_title = {
+			limit = { has_variable = aov_haven_order }
+			order_by = var:aov_haven_order
+			position = 2
+			save_scope_as = aov_haven_choice_3
+		}
+		every_held_title = {
+			limit = { has_variable = aov_haven_order }
+			remove_variable = aov_haven_order
+		}
+	}
+
+	option = {
+		name = aov_elven_haven.1.a
+		trigger = {
+			exists = scope:aov_haven_choice_1
+			scope:aov_haven_choice_1.title_province = { root.gold >= aov_elven_haven_conversion_cost }
+		}
+		show_as_unavailable = { exists = scope:aov_haven_choice_1 }
+		aov_raise_elven_haven_effect = { CHOICE = aov_haven_choice_1 }
+		ai_chance = { base = 100 }
+	}
+
+	option = {
+		name = aov_elven_haven.1.b
+		trigger = {
+			exists = scope:aov_haven_choice_2
+			scope:aov_haven_choice_2.title_province = { root.gold >= aov_elven_haven_conversion_cost }
+		}
+		show_as_unavailable = { exists = scope:aov_haven_choice_2 }
+		aov_raise_elven_haven_effect = { CHOICE = aov_haven_choice_2 }
+		ai_chance = { base = 10 }
+	}
+
+	option = {
+		name = aov_elven_haven.1.c
+		trigger = {
+			exists = scope:aov_haven_choice_3
+			scope:aov_haven_choice_3.title_province = { root.gold >= aov_elven_haven_conversion_cost }
+		}
+		show_as_unavailable = { exists = scope:aov_haven_choice_3 }
+		aov_raise_elven_haven_effect = { CHOICE = aov_haven_choice_3 }
+		ai_chance = { base = 5 }
+	}
+
+	option = {
+		name = aov_elven_haven.1.cancel
+		ai_chance = { base = 0 }
+	}
+}
