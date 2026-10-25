@@ -4,10 +4,12 @@ on_game_start = {
 	on_actions = { aov_elven_haven_game_start }
 }
 
-# Every elf-held castle and tribe becomes an Elven Haven (moon and sun elf castles, the Deepwoods tribes).
+# Every elf-held castle and tribe in a county of elven culture becomes an Elven Haven (moon and sun elf castles, the
+# Deepwoods tribes). An elf ruling a county of another culture converts it with the Raise an Elven Haven decision.
 aov_elven_haven_game_start = {
 	effect = {
 		every_county = {
+			limit = { culture = { has_elvish_heritage = yes } }
 			every_county_province = {
 				limit = { aov_can_become_elven_haven_trigger = yes }
 				aov_convert_to_elven_haven_effect = yes

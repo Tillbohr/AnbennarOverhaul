@@ -146,8 +146,9 @@ swaps the buildings:
   and duchy buildings stay. The build stops on a map key that Anbennar, the game or Section 3 lacks.
 
 **At game start** (`aov_elven_haven_game_start`, appended to `on_game_start`): every barony whose holding is
-`castle_holding` or `tribal_holding` and whose holder `is_elvish_culture = yes` runs the effect. Cities and temples
-are untouched.
+`castle_holding` or `tribal_holding`, whose holder `is_elvish_culture = yes` and whose county's culture is elven runs
+the effect (user choice after the first in-game test: an elf ruling a county of another culture converts it by
+decision). Cities and temples are untouched.
 
 **Later, by decision:** `aov_raise_elven_haven_decision` (`common/decisions/aov_elven_haven_decisions.txt`):
 

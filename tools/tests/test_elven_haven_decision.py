@@ -51,6 +51,11 @@ class GameStartTests(unittest.TestCase):
         self.assertIn("aov_can_become_elven_haven_trigger = yes", body)
         self.assertIn("aov_convert_to_elven_haven_effect = yes", body)
 
+    def test_game_start_needs_an_elven_county_culture(self):
+        # An elf ruling a human county (Eborthíl, Tefori culture) converts it by decision, not at game start.
+        body = blocks(read(ON_ACTIONS))["aov_elven_haven_game_start"]
+        self.assertRegex(body, r"culture = \{ has_elvish_heritage = yes \}")
+
     def test_eligible_means_elf_held_castle_or_tribe(self):
         body = blocks(read(TRIGGERS))["aov_can_become_elven_haven_trigger"]
         self.assertIn("has_holding_type = castle_holding", body)

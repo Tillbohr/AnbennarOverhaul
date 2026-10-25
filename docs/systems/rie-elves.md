@@ -38,8 +38,9 @@ and the Haven branch of `common/scripted_triggers/zz_aov_building_requirement_tr
   1/2/3/4 to 1/3/5/7, tribe 1/2 to 1/2); vanilla buildings in `BUILDING_MAP` become their elven line at the same level
   (capped at the line's top and the Haven level); every other building a castle or tribe lists is removed (mines and
   academies stay); then `set_holding_type = elven_holding` and the Haven buildings are added.
-- **Game start:** every elf-held castle or tribe converts (`aov_elven_haven_game_start`, on `on_game_start`). Cities
-  and temples do not.
+- **Game start:** every elf-held castle or tribe in a county of elven culture converts (`aov_elven_haven_game_start`,
+  on `on_game_start`). An elf ruling a county of another culture (Eborthíl, Tefori) converts it by decision. Cities
+  and temples do not convert.
 - **Decision:** *Raise an Elven Haven* (`aov_raise_elven_haven_decision`, elf ruler of at least a county, 5-year
   cooldown) opens `aov_elven_haven.1`, which offers up to three eligible domain baronies (capital first, then by
   Haven level); the chosen one costs 100 gold per Haven level and 100 prestige. The AI takes it with twice the cost.
