@@ -262,6 +262,13 @@ class OtherRulesTests(unittest.TestCase):
         self.assertNotIn("maiar", out)
         self.assertIn("dwarven_depths_04", out)  # no DEPTHS_RENAME in these rules
 
+    def test_block_replacement_takes_backreferences(self):
+        class Rules(self.Rules):
+            BLOCK_REPLACEMENTS = ((r"pick\s*=\s*\{\s*(level\s*=\s*\d+)\s*other\s*=\s*\d+\s*\}", r"\1"),)
+        out, _ = rw.rewrite_block(enabled("\t\tpick = { level = 4 other = 3 }\n"), set(), Rules)
+        self.assertIn("\t\tlevel = 4\n", out)
+        self.assertNotIn("pick", out)
+
     def test_dwarf_rules_are_the_default(self):
         out, _ = rw.rewrite_block(enabled("\t\tscope:holder = { is_elf = yes }\n"), set())
         self.assertIn("is_elf = yes", out)

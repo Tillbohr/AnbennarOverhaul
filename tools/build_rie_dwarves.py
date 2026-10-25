@@ -777,9 +777,11 @@ def _variable_refs(code: str) -> list:
         word for expr in re.findall(r"@\[([^\]]*)\]", code) for word in re.findall(r"[A-Za-z_]\w*", expr)]
 
 
-def render_values(build: Build) -> None:
+def render_values(build: Build, values_file: str = VALUES_FILE, txt=None) -> None:
     """RiE's script values the copies use, with every RiE script value and file-local @variable they need (the
-    @variables first, in their RiE file order)."""
+    @variables first, in their RiE file order), into values_file (txt: the file writer with its header; ours by
+    default)."""
+    txt = txt or txt_file
     roots = build.roots
     index = rie_values(roots)
     position = {key: i for i, key in enumerate(index)}
@@ -811,7 +813,7 @@ def render_values(build: Build) -> None:
     pieces += [text.rstrip("\n") for _pos, text in sorted(variables.values())]
     pieces += ["", "# RiE script values the copied buildings use (Anbennar and the game lack them)."]
     pieces += [values[name].rstrip("\n") for name in values]
-    build.files[VALUES_FILE] = txt_file(["\n".join(pieces) + "\n"])
+    build.files[values_file] = txt(["\n".join(pieces) + "\n"])
     build.notes.append(f"RiE script values copied: {', '.join(values) or 'none'}")
 
 

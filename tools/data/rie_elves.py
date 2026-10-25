@@ -68,6 +68,8 @@ DROP_STATEMENTS = (
     r"is_wastelands\s*=\s*no",
     r"add_elven_hope_effect\s*=\s*\{[^{}]*\}",
     r"has_dynasty_perk\s*=\s*lotr_\w+",
+    # RiE's monster men-at-arms type, which Anbennar lacks (its modifiers exist nowhere else).
+    r"\w*_monster_\w*\s*=\s*-?[\d.]+",
 )
 # (regex of a whole statement or block, its replacement; backreferences allowed), matched over code.
 BLOCK_REPLACEMENTS = (
@@ -82,8 +84,11 @@ BLOCK_REPLACEMENTS = (
     # RiE's high elves (Calaquendi) are Anbennar's moon and sun elves.
     (r"has_cultural_pillar\s*=\s*heritage_calaquendi", "OR = { this = culture:moon_elvish this = culture:sun_elvish }"),
 )
-DROP_BLOCKS = ("province_dynasty_modifier",)
-DROP_EFFECT_DESC = r"_artifact_crafting_buff$"
+DROP_BLOCKS = ("province_dynasty_modifier", "effect_desc")  # effect_desc blocks: see DROP_EFFECT_DESC
+# Every effect_desc goes: RiE's describe discounts its own activities (sailing, explore history) and scripts give for
+# these keys, and the vanilla ones (hunts, feasts, tournaments, travel) are wired to vanilla building keys, so none
+# would be true of the copies. The engine still lists the modifiers.
+DROP_EFFECT_DESC = r"."
 
 # --- localization ---
 CONCEPT_REPLACEMENTS = dict(_dwarves.CONCEPT_REPLACEMENTS, elves="elves", elven="elven", elvish="elvish",

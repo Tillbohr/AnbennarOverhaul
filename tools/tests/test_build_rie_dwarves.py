@@ -761,7 +761,8 @@ class FreshnessTests(unittest.TestCase):
         self.assertEqual(stale, [], "stale: rerun python -I tools/build_rie_dwarves.py")
 
     def test_no_orphan_files(self):
-        produced = set(self.files)
+        import build_rie_elves  # shares the building type icon folder
+        produced = set(self.files) | set(build_rie_elves.build_all(REAL))
         orphans = []
         root = rd.SUBMOD / rd.ICON_DIR
         if root.is_dir():

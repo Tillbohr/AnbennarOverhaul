@@ -123,8 +123,9 @@ def rewrite_block(body, known_parameters, rules=data):
             m = re.search(r'(?<![\w.])' + pattern + r'(?!\w)', mask(text))
             if not m:
                 break
-            notes.append(f"replaced {' '.join(m.group(0).split())} with {replacement}")
-            text = text[:m.start()] + replacement + text[m.end():]
+            new = m.expand(replacement)  # backreferences allowed
+            notes.append(f"replaced {' '.join(m.group(0).split())} with {new}")
+            text = text[:m.start()] + new + text[m.end():]
 
     for pattern in rules.DROP_STATEMENTS:  # statement drops
         while True:
