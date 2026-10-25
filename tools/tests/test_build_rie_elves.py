@@ -138,6 +138,68 @@ class RealBuildTests(unittest.TestCase):
         self.assertNotIn("deep_forest", triggers)
 
 
+def level_blocks(text: str) -> dict:
+    return {names[0]: text[start:end] for names, start, end in bp.blocks(text, 1, strict=False)}
+
+
+def sub_blocks(body: str, name: str) -> list:
+    return [body[start:end] for names, start, end in bp.blocks(body, 2, strict=False) if names[-1] == name]
+
+
+@unittest.skipUnless(HAVE_REAL, "needs RiE, Anbennar and the game")
+class SettlementTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.files = re_.build_all(REAL)
+        cls.text = cls.files[re_.SETTLEMENT_FILE].decode("utf-8-sig")
+        cls.levels = level_blocks(cls.text)
+        models = bp.lf(re_.bhm.build_buildings(REAL)[re_.bhm.BUILDINGS_FILE].decode("utf-8-sig"))
+        cls.castles = level_blocks(models)
+
+    def test_seven_levels(self):
+        self.assertEqual(sorted(self.levels), [f"elven_settlement_{n:02d}" for n in range(1, 8)])
+
+    def test_settlement_levels_use_castle_band_assets(self):
+        for n, castle in data.HAVEN_ASSET_BAND.items():
+            ours = sub_blocks(self.levels[f"elven_settlement_{n:02d}"], "assets")
+            theirs = sub_blocks(self.castles[castle], "assets")
+            self.assertEqual(len(ours), 1, n)
+            def strip(text):
+                return [line.strip() for line in re.sub(r"illustration = [^\n]*", "", text).split("\n")]
+            self.assertEqual(strip(ours[0]), strip(theirs[0]), n)
+
+    def test_elf_assets_show_the_refuge_pictures(self):
+        body = self.levels["elven_settlement_07"]
+        self.assertIn('illustration = "gfx/interface/illustrations/holding_types/refuge_calaquendi2.dds"', body)
+        self.assertIn('illustration = "gfx/interface/illustrations/holding_types/refuge_sindarin.dds"', body)
+        self.assertIn("gfx/interface/illustrations/holding_types/refuge_calaquendi2.dds", self.files)
+
+    def test_variables_are_defined(self):
+        used = set(re.findall(r"@(\w+)", re.sub(r"(?m)^@\w+ = .*$", "", self.text)))
+        defined = set(re.findall(r"(?m)^@(\w+) = ", self.text))
+        self.assertEqual(used - defined, set())
+
+    def test_settlement_has_no_top_liege_or(self):
+        self.assertNotIn("top_liege", self.text)
+        self.assertNotIn("hope", self.text)
+
+    def test_settlement_can_construct_needs_an_elf(self):
+        for key, body in self.levels.items():
+            gate = "".join(sub_blocks(body, "can_construct"))
+            self.assertRegex(gate, re_.ELF_CHECK, key)
+
+    def test_settlement_has_no_is_enabled(self):
+        for key, body in self.levels.items():
+            self.assertEqual(sub_blocks(body, "is_enabled"), [], key)
+            self.assertEqual(sub_blocks(body, "asset"), [], key)
+
+    def test_tribal_gate_removed(self):
+        self.assertNotIn("building_requirement_tribal", self.text)
+
+    def test_holding_tab_icon_copied(self):
+        self.assertIn("gfx/interface/icons/holding_types_tab/elven_holding.dds", self.files)
+
+
 @unittest.skipUnless(HAVE_REAL, "needs RiE, Anbennar and the game")
 class FreshnessTests(unittest.TestCase):
     @classmethod

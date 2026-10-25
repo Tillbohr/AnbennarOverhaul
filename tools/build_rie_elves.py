@@ -17,6 +17,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import build_holding_models as bhm  # noqa: E402
 import build_portraits as bp  # noqa: E402
 import build_rie_dwarves as rd  # noqa: E402
 import rie_dwarf_rewrite as rw  # noqa: E402
@@ -120,6 +121,111 @@ def render_buildings(build: rd.Build) -> None:
     build.notes.append(f"RiE elf lines left out: {', '.join(excluded) or 'none'}")
 
 
+# ------------------------------------------------------------------------------------------------- Haven levels
+
+VARIABLE_DEF = re.compile(r"(?m)^@(\w+)\s*=\s*(.+?)\s*$")
+ILLUSTRATION = re.compile(r'(\billustration\s*=\s*)("[^"]*"|@\w+)')
+GFX_LIST = re.compile(r"\bgraphical_cultures\s*=\s*\{([^}]*)\}")
+
+
+def cut_top_blocks(text: str, names) -> str:
+    """text without the blocks called one of names directly inside the building block."""
+    while True:
+        _outer, inner = rw._top_blocks(rw.mask(text))
+        found = [(start, close) for name, (start, _op, close) in inner.items() if name in names]
+        if not found:
+            return text
+        start, close = max(found)
+        text = rw.cut(text, start, min(close + 1, len(text)))
+
+
+def castle_models(roots: Roots) -> tuple:
+    """({castle key: its `assets = { ... }` block}, {variable: value}) of tools/build_holding_models.py's castles (the
+    elf meshes for elf holders), computed, not read from the mod, so the generators run in any order."""
+    text = bp.lf(bhm.build_buildings(roots)[bhm.BUILDINGS_FILE].decode("utf-8-sig"))
+    variables = dict(VARIABLE_DEF.findall(text))
+    assets = {}
+    for names, start, end in bp.blocks(text, 1, strict=False):
+        body = text[start:end]
+        for sub, s, e in bp.blocks(body, 2, strict=False):
+            if sub[-1] == "assets":
+                assets[names[0]] = body[s:e]
+    return assets, variables
+
+
+def haven_assets(assets_block: str, level: int) -> str:
+    """The castle assets with the elf-gfx assets' illustration swapped for RiE's refuge picture of the level."""
+    def swap(asset: str) -> str:
+        gfx = GFX_LIST.search(asset)
+        for key in (gfx.group(1).split() if gfx else ()):
+            if key in data.ILLUSTRATIONS:
+                picture = data.ILLUSTRATIONS[key][0 if level <= 5 else 1]
+                return ILLUSTRATION.sub(lambda m: f'{m.group(1)}"{picture}"', asset)
+        return asset
+    out, last = [], 0
+    for names, start, end in bp.blocks(assets_block, 2, strict=False):
+        if names[-1] == "asset":
+            out += [assets_block[last:start], swap(assets_block[start:end])]
+            last = end
+    return "".join(out) + assets_block[last:]
+
+
+def place_pictures(build: rd.Build) -> None:
+    """RiE's refuge pictures and the holding tab icon, at RiE's paths (never over Anbennar's or the game's file)."""
+    pictures = {picture for pair in data.ILLUSTRATIONS.values() for picture in pair}
+    pictures |= {f"gfx/interface/icons/{target}" for target in data.UI_ICONS.values()}
+    sources = {f"gfx/interface/icons/{target}": f"gfx/interface/icons/{source}"
+               for source, target in data.UI_ICONS.items()}
+    for picture in sorted(pictures):
+        source = sources.get(picture, picture)
+        if not (build.roots.rie / source).is_file():
+            raise GeneratorError(f"picture {source} is not in RiE")
+        if bp._exists_outside(build.roots, picture) is not None:
+            raise GeneratorError(f"picture {picture} already exists in Anbennar or the game")
+        build.files[picture] = (build.roots.rie / source).read_bytes()
+
+
+def render_settlement(build: rd.Build) -> None:
+    """elven_settlement_01..07: RiE's levels with the elf rules, without RiE's assets and is_enabled (a non-elf
+    holder keeps the level's effects), with the castle band's models and an elven holder check in can_construct."""
+    roots = build.roots
+    blocks = dict(rd.rie_blocks(roots, data.RIE_SETTLEMENT_FILE))
+    if sorted(blocks) != list(SETTLEMENTS):
+        raise GeneratorError(f"{data.RIE_SETTLEMENT_FILE}: expected {', '.join(SETTLEMENTS)}, found "
+                             f"{', '.join(sorted(blocks))}")
+    clash = sorted(set(SETTLEMENTS) & rd.external_buildings(roots))
+    if clash:
+        raise GeneratorError(f"Haven level keys Anbennar or the game already define: {', '.join(clash)}")
+    castles, variables = castle_models(roots)
+    buildings = set(SETTLEMENTS) | rd.external_buildings(roots)
+    parameters = rd.known_parameters(roots)
+    removed, pieces, used = [], [], set()
+    for n, key in enumerate(SETTLEMENTS, 1):
+        text, notes = rw.rewrite_block(blocks[key], parameters, data)
+        removed += notes
+        text = cut_top_blocks(text, ("asset", "is_enabled"))
+        text = re.sub(r"(?m)^[ \t]*### CASTLE PLACEHOLDER MODEL ###[ \t]*\n", "", text)
+        if not ELF_CHECK.search(bp.code(build_gates(text))):
+            raise GeneratorError(f"{key}: no elven holder check in can_construct after the rewrite")
+        rd.check_block(build, key, text, buildings, data)
+        text = rd.place_icons(build, key, text)
+        band = data.HAVEN_ASSET_BAND[n]
+        if band not in castles:
+            raise GeneratorError(f"{band} has no assets in tools/build_holding_models.py's output")
+        assets = haven_assets(castles[band], n)
+        used |= set(re.findall(r"@(\w+)", assets))
+        at = text.index("\n") + 1
+        text = text[:at] + assets.rstrip("\n") + "\n" + text[at:]
+        pieces.append(re.sub(r"\n{3,}", "\n\n", rd.reindent(text)))
+    missing = sorted(name for name in used if name not in variables)
+    if missing:
+        raise GeneratorError(f"castle model variables without a definition: {', '.join(missing)}")
+    top = "".join(f"@{name} = {variables[name]}\n" for name in sorted(used))
+    build.files[SETTLEMENT_FILE] = txt_file([top] + pieces)
+    place_pictures(build)
+    build.notes.append(rd.removal_note("removed from RiE's Haven levels", removed))
+
+
 # -------------------------------------------------------------------------------------------------------- triggers
 
 def known_terrains(roots: Roots) -> frozenset:
@@ -184,6 +290,7 @@ def build_all(roots: Roots, notes=None) -> dict:
     bp.RENAMED.clear()
     build = rd.Build(roots, notes)
     render_buildings(build)
+    render_settlement(build)
     render_triggers(build)
     rd.render_values(build, VALUES_FILE, txt_file)
     render_loc(build)

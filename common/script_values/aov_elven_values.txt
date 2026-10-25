@@ -2,5 +2,55 @@
 # Anbennar Overhaul: do not edit by hand; rerun the generator after an RiE, Anbennar or CK3 update.
 
 # RiE's file-local variables used by the values below.
+@normal_levy_base = 100
+@normal_levy_scale_addition_per_tier = 75
+@good_max_garrison_base = 250
+@good_max_garrison_scale_addition_per_tier = 250
+@extremely_expensive_cost_base = 400 #LotR
+@extremely_expensive_cost_scale_addition_per_tier = 200 #LotR
+@extremely_slow_construction_time_base = 4380 #LotR
+@elven_slow_construction_time_base = 8760 #LotR
+@normal_levy_tier_1 = @[normal_levy_base]
+@normal_levy_tier_2 = @[normal_levy_tier_1 + normal_levy_scale_addition_per_tier]
+@normal_levy_tier_3 = @[normal_levy_tier_2 + normal_levy_scale_addition_per_tier]
+@normal_levy_tier_4 = @[normal_levy_tier_3 + normal_levy_scale_addition_per_tier]
+@normal_levy_tier_5 = @[normal_levy_tier_4 + normal_levy_scale_addition_per_tier]
+@normal_levy_tier_6 = @[normal_levy_tier_5 + normal_levy_scale_addition_per_tier]
+@normal_levy_tier_7 = @[normal_levy_tier_6 + normal_levy_scale_addition_per_tier]
+@normal_levy_tier_8 = @[normal_levy_tier_7 + normal_levy_scale_addition_per_tier]
+@good_max_garrison_tier_1 = @[good_max_garrison_base]
+@good_max_garrison_tier_2 = @[good_max_garrison_tier_1 + good_max_garrison_scale_addition_per_tier]
+@good_max_garrison_tier_3 = @[good_max_garrison_tier_2 + good_max_garrison_scale_addition_per_tier]
+@good_max_garrison_tier_4 = @[good_max_garrison_tier_3 + good_max_garrison_scale_addition_per_tier]
+@good_max_garrison_tier_5 = @[good_max_garrison_tier_4 + good_max_garrison_scale_addition_per_tier]
+@good_max_garrison_tier_6 = @[good_max_garrison_tier_5 + good_max_garrison_scale_addition_per_tier]
+@good_max_garrison_tier_7 = @[good_max_garrison_tier_6 + good_max_garrison_scale_addition_per_tier]
+@good_max_garrison_tier_8 = @[good_max_garrison_tier_7 + good_max_garrison_scale_addition_per_tier]
+@extremely_expensive_cost_tier_1 = @[extremely_expensive_cost_base]
+@extremely_expensive_cost_tier_2 = @[extremely_expensive_cost_tier_1 + extremely_expensive_cost_scale_addition_per_tier]
+@extremely_expensive_cost_tier_3 = @[extremely_expensive_cost_tier_2 + extremely_expensive_cost_scale_addition_per_tier]
+@extremely_expensive_cost_tier_4 = @[extremely_expensive_cost_tier_3 + extremely_expensive_cost_scale_addition_per_tier]
+@extremely_expensive_cost_tier_5 = @[extremely_expensive_cost_tier_4 + extremely_expensive_cost_scale_addition_per_tier]
+@extremely_expensive_cost_tier_6 = @[extremely_expensive_cost_tier_5 + extremely_expensive_cost_scale_addition_per_tier]
+@extremely_expensive_cost_tier_7 = @[extremely_expensive_cost_tier_6 + extremely_expensive_cost_scale_addition_per_tier]
 
 # RiE script values the copied buildings use (Anbennar and the game lack them).
+extremely_slow_construction_time = @[extremely_slow_construction_time_base] #LotR
+extremely_expensive_building_tier_3_cost = @[extremely_expensive_cost_tier_3]
+elven_building_levy_tier_1 = @[normal_levy_tier_2]
+elven_building_max_garrison_tier_1 = @[good_max_garrison_tier_2]
+elven_building_levy_tier_2 = @[normal_levy_tier_3]
+elven_building_max_garrison_tier_2 = @[good_max_garrison_tier_3]
+extremely_expensive_building_tier_5_cost = @[extremely_expensive_cost_tier_5]
+elven_building_levy_tier_3 = @[normal_levy_tier_4]
+elven_building_max_garrison_tier_3 = @[good_max_garrison_tier_4]
+elven_building_levy_tier_4 = @[normal_levy_tier_5]
+elven_building_max_garrison_tier_4 = @[good_max_garrison_tier_5]
+elven_building_levy_tier_5 = @[normal_levy_tier_6]
+elven_building_max_garrison_tier_5 = @[good_max_garrison_tier_6]
+elven_slow_construction_time = @[elven_slow_construction_time_base] #LotR, used for highest tier Elven Holdings
+extremely_expensive_building_tier_7_cost = @[extremely_expensive_cost_tier_7]
+elven_building_levy_tier_6 = @[normal_levy_tier_7]
+elven_building_max_garrison_tier_6 = @[good_max_garrison_tier_7]
+elven_building_levy_tier_7 = @[normal_levy_tier_8]
+elven_building_max_garrison_tier_7 = @[good_max_garrison_tier_8]
