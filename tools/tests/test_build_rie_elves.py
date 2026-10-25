@@ -241,6 +241,21 @@ class ConversionTests(unittest.TestCase):
             self.assertIn(f"remove_variable = {name}", self.text)
 
 
+class RequirementTriggerTests(unittest.TestCase):
+    """The hand re-copied holding-level triggers (zz_aov_building_requirement_triggers.txt) count Haven levels."""
+
+    def test_requirement_triggers_accept_haven_levels(self):
+        text = (re_.SUBMOD / "common/scripted_triggers/zz_aov_building_requirement_triggers.txt").read_text(
+            encoding="utf-8-sig")
+        triggers = {names[0]: text[start:end] for names, start, end in bp.blocks(text, 1, strict=False)}
+        self.assertEqual(len(triggers), 2)
+        for name, body in triggers.items():
+            branch = body[body.index("has_holding_type = elven_holding"):]
+            branch = branch[:branch.index("trigger_else = {\n\t\tcustom_description")]
+            for castle, haven in data.CASTLE_EQUIVALENT.items():
+                self.assertIn(f"has_building_or_higher = elven_settlement_{haven:02d}", branch, name)
+
+
 @unittest.skipUnless(HAVE_REAL, "needs RiE, Anbennar and the game")
 class FreshnessTests(unittest.TestCase):
     @classmethod

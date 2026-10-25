@@ -140,6 +140,9 @@ REQUIREMENT_FILE = "common/scripted_triggers/00_building_requirement_triggers.tx
 OVERRIDE_FILE = "common/scripted_triggers/zz_aov_building_requirement_triggers.txt"
 DWARVEN_BRANCH = re.compile(r"\t# Anbennar Overhaul[^\n]*\n\ttrigger_else_if = \{\n"
                             r"\t\tlimit = \{ has_holding_type = dwarven_hold_holding \}\n.*?\n\t\}\n", re.S)
+# The Elven Haven branch (its levels are checked in test_build_rie_elves.py).
+ELVEN_BRANCH = re.compile(r"\t# Anbennar Overhaul[^\n]*\n\ttrigger_else_if = \{\n"
+                          r"\t\tlimit = \{ has_holding_type = elven_holding \}\n.*?\n\t\}\n", re.S)
 
 
 @unittest.skipUnless(LIVE, "Anbennar CK3 not present")
@@ -156,11 +159,12 @@ class BuildingRequirementOverrideTests(unittest.TestCase):
         self.assertEqual(castle_level, set(REQUIREMENT_TRIGGERS))
         self.assertEqual(set(self.ours), set(REQUIREMENT_TRIGGERS))
 
-    def test_override_is_anbennar_plus_dwarven_branch(self):
+    def test_override_is_anbennar_plus_overhaul_branches(self):
         for name in REQUIREMENT_TRIGGERS:
             body = self.ours.get(name, "")
             self.assertEqual(len(DWARVEN_BRANCH.findall(body)), 1, name)
-            self.assertEqual(DWARVEN_BRANCH.sub("", body), self.base[name], name)
+            self.assertEqual(len(ELVEN_BRANCH.findall(body)), 1, name)
+            self.assertEqual(ELVEN_BRANCH.sub("", DWARVEN_BRANCH.sub("", body)), self.base[name], name)
 
     def test_dwarven_branch_maps_castle_levels(self):
         bands = {n for n, band in holds.ASSET_BAND.items() if band != holds.ASSET_BAND.get(n - 1)}

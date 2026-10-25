@@ -1,7 +1,8 @@
 ﻿# Anbennar Overhaul: single-object overrides of Anbennar's holding-level building requirement triggers
 # (common/scripted_triggers/00_building_requirement_triggers.txt). Copied verbatim plus a dwarven hold branch
 # (castle levels 01/02/03/04 = hold levels 1/3/5/8, the castle art bands of tools/data/holds.py ASSET_BAND), so
-# castle buildings can be built in a dwarven hold; re-copy after every Anbennar update.
+# castle buildings can be built in a dwarven hold, and an Elven Haven branch (castle levels 01/02/03/04 = Haven levels
+# 1/3/5/7, tools/data/rie_elves.py CASTLE_EQUIVALENT); re-copy after every Anbennar update.
 
 building_requirement_castle_city_church = {
 	trigger_if = {
@@ -37,6 +38,25 @@ building_requirement_castle_city_church = {
 		}
 		trigger_else = {
 			has_building_or_higher = dwarven_hold_01
+		}
+	}
+	# Anbennar Overhaul: Elven Havens; castle levels 01/02/03/04 are Haven levels 1/3/5/7
+	trigger_else_if = {
+		limit = { has_holding_type = elven_holding }
+		trigger_if = {
+			limit = { $LEVEL$ >= 4 }
+			has_building_or_higher = elven_settlement_07
+		}
+		trigger_else_if = {
+			limit = { $LEVEL$ >= 3 }
+			has_building_or_higher = elven_settlement_05
+		}
+		trigger_else_if = {
+			limit = { $LEVEL$ >= 2 }
+			has_building_or_higher = elven_settlement_03
+		}
+		trigger_else = {
+			has_building_or_higher = elven_settlement_01
 		}
 	}
 	trigger_else = {
@@ -91,6 +111,25 @@ building_requirement_castle_city_church_temple_citadel_tribe = {
 		}
 		trigger_else = {
 			has_building_or_higher = dwarven_hold_01
+		}
+	}
+	# Anbennar Overhaul: Elven Havens; castle levels 01/02/03/04 are Haven levels 1/3/5/7
+	trigger_else_if = {
+		limit = { has_holding_type = elven_holding }
+		trigger_if = {
+			limit = { $LEVEL$ >= 4 }
+			has_building_or_higher = elven_settlement_07
+		}
+		trigger_else_if = {
+			limit = { $LEVEL$ >= 3 }
+			has_building_or_higher = elven_settlement_05
+		}
+		trigger_else_if = {
+			limit = { $LEVEL$ >= 2 }
+			has_building_or_higher = elven_settlement_03
+		}
+		trigger_else = {
+			has_building_or_higher = elven_settlement_01
 		}
 	}
 	trigger_else = {

@@ -14,6 +14,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # python -I does not add the tools folder
 
+import build_rie_elves  # noqa: E402
 from data import rie_dwarves as rie  # noqa: E402
 
 # holding type -> buildings the overhaul adds to its build list
@@ -23,12 +24,18 @@ ADDITIONS = {
 }
 # new holding type -> the holding whose build list it starts from (after ADDITIONS; None starts empty), its primary
 # building and the buildings added on top. A dwarven hold lists only RiE's dwarven_holding buildings, as RiE does: no
-# castle (vanilla) building can be built in a hold.
+# castle (vanilla) building can be built in a hold. An Elven Haven lists RiE's elf lines, the overhaul's academies and
+# the 15 mines (tools/build_rie_elves.py haven_buildings), no vanilla building either.
 NEW_HOLDINGS = {
     "dwarven_hold_holding": {
         "copy_buildings_from": None,
         "primary_building": "dwarven_hold_01",
         "extra": rie.HOLD_BUILDINGS,
+    },
+    "elven_holding": {
+        "copy_buildings_from": None,
+        "primary_building": "elven_settlement_01",
+        "extra": build_rie_elves.haven_buildings(),
     },
 }
 MARKER = "# Anbennar Overhaul"

@@ -73,7 +73,15 @@ class GeneratedFileTests(unittest.TestCase):
         self.assertIn("primary_building = dwarven_hold_01", hold)
         self.assertEqual(listed(hold), rie.HOLD_BUILDINGS)
         base = parse_blocks((hov.DEFAULT_ANBENNAR / hov.REL_PATH).read_bytes().decode("utf-8-sig"))
-        self.assertEqual(set(out) - set(base), {"dwarven_hold_holding"})
+        self.assertEqual(set(out) - set(base), {"dwarven_hold_holding", "elven_holding"})
+
+    @unittest.skipUnless((hov.SUBMOD / hov.REL_PATH).is_file(), "needs the generated file")
+    def test_haven_lists_the_elf_buildings(self):
+        import build_rie_elves
+        haven = parse_blocks((hov.SUBMOD / hov.REL_PATH).read_bytes().decode("utf-8-sig"))["elven_holding"]
+        self.assertIn("primary_building = elven_settlement_01", haven)
+        self.assertEqual(listed(haven), build_rie_elves.haven_buildings())
+        self.assertNotIn("cereal_fields_01", listed(haven))
 
     @unittest.skipUnless((hov.SUBMOD / hov.REL_PATH).is_file(), "needs the generated file")
     def test_hold_gets_rie_buildings_once(self):

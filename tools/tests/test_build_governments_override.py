@@ -43,10 +43,16 @@ class AddValidHoldingTests(unittest.TestCase):
         self.assertIn("dwarven_hold_holding", b["clan_government"])
         self.assertNotIn("dwarven_hold_holding", b["republic_government"])
 
+    def test_governments_gain_haven(self):
+        b = parse_blocks(gov.add_valid_holding(GOV_FIXTURE))
+        for name in ("feudal_government", "clan_government", "tribal_government"):
+            self.assertIn("elven_holding", b[name], name)
+        self.assertNotIn("elven_holding", b["republic_government"])
+
     def test_valid_holdings_line_created_after_primary(self):
         out = gov.add_valid_holding(GOV_FIXTURE)
         lines = out.split("\n")
-        i = next(i for i, l in enumerate(lines) if "valid_holdings = { dwarven_hold_holding }" in l)
+        i = next(i for i, l in enumerate(lines) if "valid_holdings = { dwarven_hold_holding elven_holding }" in l)
         self.assertTrue(lines[i - 1].strip().startswith("primary_holding = castle_holding"))
         self.assertTrue(lines[i].endswith(gov.MARKER))
 
@@ -76,9 +82,10 @@ class GeneratedFileTests(unittest.TestCase):
             for l in lines[2:]:
                 if l.endswith(" " + gov.MARKER):
                     l = l[:-len(gov.MARKER) - 1]
-                    if l.strip() == f"valid_holdings = {{ {gov.HOLDING} }}":
+                    if l.strip() == "valid_holdings = { " + " ".join(gov.HOLDINGS) + " }":
                         continue  # a created line
-                    l = l.replace(f" {gov.HOLDING}", "")
+                    for holding in gov.HOLDINGS:
+                        l = l.replace(f" {holding}", "")
                 rest.append(l)
             self.assertEqual("\n".join(rest), src, out_path.name)
 
@@ -92,7 +99,8 @@ class GeneratedFileTests(unittest.TestCase):
                 if prim or (valid and "castle_holding" in valid.group(1).split()):
                     seen += 1
                     self.assertIsNotNone(valid, name)
-                    self.assertIn(gov.HOLDING, valid.group(1).split(), name)
+                    for holding in gov.HOLDINGS:
+                        self.assertIn(holding, valid.group(1).split(), name)
         self.assertGreater(seen, 10)
 
 

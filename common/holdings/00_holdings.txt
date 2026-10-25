@@ -399,3 +399,50 @@ dwarven_hold_holding = { # Anbennar Overhaul
 		dwarven_grand_library_01
 	}
 }
+
+elven_holding = { # Anbennar Overhaul
+	primary_building = elven_settlement_01
+	buildings = {
+		elven_agriculture_01
+		elven_port_01
+		elven_mine_01
+		elven_forestry_01
+		elven_hunting_grounds_01
+		elven_markets_01
+		elven_forges_01
+		elven_barracks_01
+		elven_fletchers_01
+		elven_stables_01
+		tree_flet_01
+		elven_library_01
+		elven_guild_01
+		elven_embassy_01
+		elven_mustering_grounds_01
+		elven_sanctuary_01
+		elven_citadel_01
+		hall_of_lords_01
+		elven_armament_01
+		hall_of_music_and_tales_01
+		crafting_enclaves_01
+		sentinel_keeps_01
+		warriors_enclave_01
+		sanctuary_groves_01
+		artificer_academy_01
+		battlemage_academy_01
+		mithril_mines_01
+		gold_mines_01
+		silver_mines_01
+		iron_mines_01
+		copper_mines_01
+		tin_mines_01
+		lead_mines_01
+		diamond_mines_01
+		ruby_mines_01
+		sapphire_mines_01
+		emerald_mines_01
+		amethyst_mines_01
+		onyx_mines_01
+		peridot_mines_01
+		quartz_mines_01
+	}
+}
