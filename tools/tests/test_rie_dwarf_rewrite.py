@@ -245,5 +245,27 @@ class DataTests(unittest.TestCase):
         self.assertFalse(any(b.startswith(("oath_", "breweries")) for b in data.HOLD_BUILDINGS))
 
 
+class OtherRulesTests(unittest.TestCase):
+    """rewrite_block with a rules module other than the dwarf data (the elf generator's)."""
+
+    class Rules:
+        TOKEN_RENAMES = {"is_elf": "is_elvish_culture"}
+        DROP_STATEMENTS = (r"is_valinor_maiar_character\s*=\s*yes",)
+        BLOCK_REPLACEMENTS = ()
+        DROP_BLOCKS = ()
+        DROP_EFFECT_DESC = r"^$"
+
+    def test_rewrite_block_uses_given_rules(self):
+        out, _ = rw.rewrite_block(enabled("\t\tscope:holder = { is_elf = yes }\n\t\tis_valinor_maiar_character = yes\n"
+                                          "\t\thas_building_or_higher = dwarven_depths_04\n"), set(), self.Rules)
+        self.assertIn("scope:holder = { is_elvish_culture = yes }", out)
+        self.assertNotIn("maiar", out)
+        self.assertIn("dwarven_depths_04", out)  # no DEPTHS_RENAME in these rules
+
+    def test_dwarf_rules_are_the_default(self):
+        out, _ = rw.rewrite_block(enabled("\t\tscope:holder = { is_elf = yes }\n"), set())
+        self.assertIn("is_elf = yes", out)
+
+
 if __name__ == "__main__":
     unittest.main()

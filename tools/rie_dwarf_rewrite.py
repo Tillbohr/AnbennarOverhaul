@@ -81,14 +81,15 @@ def innermost(blocks, pos):
     return best
 
 
-def rewrite_block(body, known_parameters):
-    """(rewritten block text, notes of what was removed)."""
+def rewrite_block(body, known_parameters, rules=data):
+    """(rewritten block text, notes of what was removed). rules: the module holding the rewrite rules (the dwarf data by
+    default; tools/data/rie_elves.py for the elves); UNGATED_PARAMETERS and DEPTHS_RENAME are optional."""
     text = body.replace("\r\n", "\n")
     notes = []
 
     while True:  # dropped blocks (province_dynasty_modifier)
         masked = mask(text)
-        found = [b for b in scan(masked) if b[1] in data.DROP_BLOCKS]
+        found = [b for b in scan(masked) if b[1] in rules.DROP_BLOCKS]
         if not found:
             break
         start, name, op, cl = found[-1]
@@ -105,7 +106,7 @@ def rewrite_block(body, known_parameters):
         m = matches[-1]
         param = m.group(1)
         block = innermost(blocks, m.start())
-        if param in data.UNGATED_PARAMETERS:
+        if param in getattr(rules, "UNGATED_PARAMETERS", ()):
             text = cut(text, m.start(), m.end())
             if block and block[1] == "county_culture_modifier":
                 text = text[:block[0]] + text[block[0]:].replace("county_culture_modifier", "county_modifier", 1)
@@ -117,7 +118,7 @@ def rewrite_block(body, known_parameters):
             text = cut(text, block[0], min(block[3] + 1, len(text)))
     text = text.replace(KEPT, "parameter")
 
-    for pattern, replacement in data.BLOCK_REPLACEMENTS:  # whole statements or blocks replaced
+    for pattern, replacement in rules.BLOCK_REPLACEMENTS:  # whole statements or blocks replaced
         while True:
             m = re.search(r'(?<![\w.])' + pattern + r'(?!\w)', mask(text))
             if not m:
@@ -125,7 +126,7 @@ def rewrite_block(body, known_parameters):
             notes.append(f"replaced {' '.join(m.group(0).split())} with {replacement}")
             text = text[:m.start()] + replacement + text[m.end():]
 
-    for pattern in data.DROP_STATEMENTS:  # statement drops
+    for pattern in rules.DROP_STATEMENTS:  # statement drops
         while True:
             m = re.search(r'(?<![\w.])' + pattern + r'(?!\w)', mask(text))
             if not m:
@@ -134,16 +135,17 @@ def rewrite_block(body, known_parameters):
             text = cut(text, m.start(), m.end())
 
     for m in reversed(list(re.finditer(r'(?<![\w.])effect_desc[ \t]*=[ \t]*(\w+)', mask(text)))):
-        if re.search(data.DROP_EFFECT_DESC, m.group(1)):
+        if re.search(rules.DROP_EFFECT_DESC, m.group(1)):
             notes.append(f"removed effect_desc {m.group(1)}")
             text = cut(text, m.start(), m.end())
 
-    renames = data.TOKEN_RENAMES
+    renames = rules.TOKEN_RENAMES
     word = re.compile(r'"[^"\n]*"|#[^\n]*|(?<![\w])(' + "|".join(map(re.escape, renames)) + r')(?![\w])')
     text = word.sub(lambda m: renames[m.group(1)] if m.group(1) else m.group(0), text)
-    pattern, repl = data.DEPTHS_RENAME
-    text = re.sub(r'"[^"\n]*"|#[^\n]*|' + pattern,
-                  lambda m: m.expand(repl) if m.lastindex else m.group(0), text)
+    if getattr(rules, "DEPTHS_RENAME", None):
+        pattern, repl = rules.DEPTHS_RENAME
+        text = re.sub(r'"[^"\n]*"|#[^\n]*|' + pattern,
+                      lambda m: m.expand(repl) if m.lastindex else m.group(0), text)
 
     return prune_empty(text), notes
 

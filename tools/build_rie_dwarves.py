@@ -282,10 +282,10 @@ class Build:
         self.loc[key] = self.loc.get(key, False) or required
 
 
-def check_trigger_names(roots: Roots, key: str, code: str) -> None:
+def check_trigger_names(roots: Roots, key: str, code: str, rules=data) -> None:
     """Rule (b): every `name = yes|no` is a renamed RiE trigger or known to Anbennar or the game, and no RiE-only
     scripted trigger is left (as `name = yes|no` or `name = { ... }`)."""
-    renamed = set(data.TOKEN_RENAMES.values())
+    renamed = set(rules.TOKEN_RENAMES.values())
     scripted = external_scripted(roots)
     _keys, yes_no = external_tokens(roots)
     rie = rie_scripted_triggers(roots)
@@ -327,13 +327,13 @@ def check_values_and_modifiers(build: Build, key: str, text: str) -> None:
         build.values.setdefault(name, key)
 
 
-def check_block(build: Build, key: str, text: str, buildings: set) -> None:
+def check_block(build: Build, key: str, text: str, buildings: set, rules=data) -> None:
     roots = build.roots
     code = bp.code(text)
     for field, name in BUILDING_REF.findall(code):
         if name not in buildings:
             raise GeneratorError(f"{key}: {field} {name} is neither copied nor defined by Anbennar or the game")
-    check_trigger_names(roots, key, code)
+    check_trigger_names(roots, key, code, rules)
     for name in PARAMETER_REF.findall(code):
         if name not in known_parameters(roots):
             raise GeneratorError(f"{key}: cultural parameter {name} is not defined by Anbennar or the game")
@@ -819,6 +819,16 @@ def render_values(build: Build) -> None:
 
 def render_loc(build: Build) -> None:
     """RiE's lines for the wanted keys Anbennar and the game lack, with the keys they name as $key$."""
+    copied = copy_loc(build)
+    lines = [BOM + "l_english:"] + [f" {line}" for line in HEADER()] + [f" {line}" for line in copied.values()]
+    lines += [f' {key}: "{text}"' for key, text in OWN_LOC.items()]
+    build.files[LOC_FILE] = ("\n".join(lines) + "\n").encode("utf-8")
+
+
+def copy_loc(build: Build, rules=data) -> dict:
+    """key -> line of RiE's lines for the wanted keys Anbennar and the game lack (and the keys they name as $key$),
+    with rules.LOC_OVERRIDES applied, concepts replaced (rules.CONCEPT_REPLACEMENTS); a line matching
+    rules.FORBIDDEN_LORE stops the build."""
     roots = build.roots
     rie, external = rie_loc(roots), external_loc_keys(roots)
     copied, missing, unresolved = {}, [], set()
@@ -838,45 +848,43 @@ def render_loc(build: Build) -> None:
         queue += [(ref, None) for ref in DOLLAR_REF.findall(line)]
     if missing:
         raise GeneratorError(f"no localization in RiE, Anbennar or the game for: {', '.join(sorted(set(missing)))}")
-    stale = sorted(set(data.LOC_OVERRIDES) - set(copied))
+    stale = sorted(set(rules.LOC_OVERRIDES) - set(copied))
     if stale:
         raise GeneratorError(f"LOC_OVERRIDES keys that are no longer copied: {', '.join(stale)}")
     known = external_concepts(roots)
     replaced = Counter()
     for key, line in copied.items():
-        if key in data.LOC_OVERRIDES:
-            line = f'{key}: "{data.LOC_OVERRIDES[key]}"'
-        copied[key] = replace_concepts(key, line, known, replaced)
-    lore = sorted(key for key, line in copied.items() if re.search(data.FORBIDDEN_LORE, line))
+        if key in rules.LOC_OVERRIDES:
+            line = f'{key}: "{rules.LOC_OVERRIDES[key]}"'
+        copied[key] = replace_concepts(key, line, known, replaced, rules)
+    lore = sorted(key for key, line in copied.items() if re.search(rules.FORBIDDEN_LORE, line))
     if lore:
         raise GeneratorError(f"copied loc names Middle-earth lore; add LOC_OVERRIDES for: {', '.join(lore)}")
-    lines = [BOM + "l_english:"] + [f" {line}" for line in HEADER()] + [f" {line}" for line in copied.values()]
-    lines += [f' {key}: "{text}"' for key, text in OWN_LOC.items()]
-    build.files[LOC_FILE] = ("\n".join(lines) + "\n").encode("utf-8")
-    build.notes.append(f"{len(copied)} localization lines copied from RiE, {len(data.LOC_OVERRIDES)} of them with "
+    build.notes.append(f"{len(copied)} localization lines copied from RiE, {len(rules.LOC_OVERRIDES)} of them with "
                        "our wording (LOC_OVERRIDES)")
     if unresolved:
         build.notes.append(f"$...$ references found nowhere (left as RiE has them): {', '.join(sorted(unresolved))}")
     if replaced:
         build.notes.append("RiE game concepts replaced by words (CONCEPT_REPLACEMENTS): "
                            + ", ".join(f"{name} x{n}" for name, n in sorted(replaced.items())))
+    return copied
 
 
 SENTENCE_START = re.compile(r'(?::\d*\s*"|[.!?]\s+|\\[nN]\s*)$')
 
 
-def replace_concepts(key: str, line: str, known: frozenset, replaced: Counter) -> str:
+def replace_concepts(key: str, line: str, known: frozenset, replaced: Counter, rules=data) -> str:
     """line with every `[concept|E]` Anbennar and the game lack replaced by its CONCEPT_REPLACEMENTS words
     (capitalised at the start of a sentence); an undefined concept missing there stops the build."""
     def sub(match):
         name = match.group(1)
         if name in known:
             return match.group(0)
-        if name not in data.CONCEPT_REPLACEMENTS:
+        if name not in rules.CONCEPT_REPLACEMENTS:
             raise GeneratorError(f"{key}: game concept {name} is defined neither by Anbennar, the game nor "
                                  "CONCEPT_REPLACEMENTS")
         replaced[name] += 1
-        words = data.CONCEPT_REPLACEMENTS[name]
+        words = rules.CONCEPT_REPLACEMENTS[name]
         if SENTENCE_START.search(line[:match.start()]) and words[:1].isalpha():
             words = words[0].upper() + words[1:]
         return words

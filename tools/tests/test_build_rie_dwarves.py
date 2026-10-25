@@ -182,6 +182,37 @@ class StopTests(unittest.TestCase):
                     rd.render_loc(build)
 
 
+class OtherRulesTests(unittest.TestCase):
+    """The checks and the loc copy with a rules module other than the dwarf data (the elf generator's)."""
+
+    class Rules:
+        TOKEN_RENAMES = {"rie_elf_trigger": "aov_rie_elven_test_trigger"}
+        LOC_OVERRIDES = {}
+        CONCEPT_REPLACEMENTS = {"elves": "elves"}
+        FORBIDDEN_LORE = r"Lorien"
+
+    def test_trigger_renamed_by_given_rules_is_known(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            roots = fake_roots(Path(tmp), "")
+            code = "aov_rie_elven_test_trigger = yes"
+            with self.assertRaisesRegex(rd.GeneratorError, "unknown trigger aov_rie_elven_test_trigger"):
+                rd.check_trigger_names(roots, "x_01", code)
+            rd.check_trigger_names(roots, "x_01", code, self.Rules)
+
+    def test_copy_loc_uses_given_rules(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            roots = fake_roots(Path(tmp), "")
+            (roots.rie / "localization/english").mkdir(parents=True)
+            (roots.rie / "localization/english/x_l_english.yml").write_text(
+                '﻿l_english:\n a_desc: "[elves|E] sing"\n b_desc: "In Lorien"\n', encoding="utf-8")
+            build = rd.Build(roots, [])
+            build.want_loc("a_desc")
+            self.assertEqual(rd.copy_loc(build, self.Rules), {"a_desc": 'a_desc: "Elves sing"'})
+            build.want_loc("b_desc")
+            with self.assertRaisesRegex(rd.GeneratorError, "Middle-earth lore.*b_desc"):
+                rd.copy_loc(build, self.Rules)
+
+
 class DepositTests(unittest.TestCase):
     def _effects(self, tmp: str) -> str:
         build = rd.Build(fake_roots(Path(tmp), ""), [])
