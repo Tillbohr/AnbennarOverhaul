@@ -178,6 +178,13 @@ class GeneratedTests(unittest.TestCase):
         self.assertIn("is_at_war = yes", block(bs.triggers(SPELLS), "aov_spell_meteor_swarm_castable"))
         self.assertNotIn("is_at_war", block(bs.triggers(SPELLS), "aov_spell_guidance_castable"))
 
+    def test_land_spells_need_land(self):
+        # Landless adventurer mages cast only what works without a domain
+        self.assertIn("is_landed = yes", block(bs.triggers(SPELLS), "aov_spell_plant_growth_castable"))
+        self.assertIn("text = AOV_SPELL_REQ_LANDED", block(bs.triggers(SPELLS), "aov_spell_lead_the_crowds_castable"))
+        self.assertNotIn("is_landed", block(bs.triggers(SPELLS), "aov_spell_protected_journey_castable"))
+        self.assertNotIn("is_landed", block(bs.triggers(SPELLS), "aov_spell_summon_elementals_castable"))
+
     def test_sgui_only_for_window_spells(self):
         names = set(top_level_blocks(bs.sguis(SPELLS)))
         self.assertIn("aov_spell_guidance_sgui", names)

@@ -42,8 +42,11 @@ teeth, hair and beard. Clothes and headgear are untouched. The RiE portrait gene
   `docs/superpowers/specs/2026-10-08-magic-schools-design.md`): self/realm/war spells cast from the Magic window
   (`gui/aov_window_magic.gui`, HUD tab below Artificery, generated pages `gui/aov_magic_generated.gui`), targeted
   spells as interactions in Anbennar's Spells category (Compel, Dominate overridden to need mana and knowledge;
-  Anbennar's Enhance Ability is removed from the game by a hidden stub override). Necromancy risks Forbidden Magic Practitioner under witchcraft-illegal/shunned faiths. Hand-written
-  logic in `aov_magic_*` files; Summon Elementals spawns an army removed after the spell's duration (`aov_spell_summon_elementals_years`, extended by Bound Elementals).
+  Anbennar's Enhance Ability is removed from the game by a hidden stub override). Necromancy risks Forbidden Magic Practitioner under witchcraft-illegal/shunned faiths. Spells that only touch a domain, capital, levies or vassals (`needs_land` in `tools/data/spells.py`) need `is_landed`.
+  **AI and landless adventurers:** `quarterly_playable_pulse` and `yearly_playable_pulse` fire for landless adventurers too, so AI
+  adventurer mages study, cast window spells and start advancements like AI rulers; `needs_land` spells and `aov_adv_has_domain`
+  levels keep them off what does nothing without land. Hand-written
+  logic in `aov_magic_*` files; Summon Elementals spawns an army (at the capital, or where a landless caster is) removed after the spell's duration (`aov_spell_summon_elementals_years`, extended by Bound Elementals).
 - **Magic lifestyle:** fills the "Known gaps" magic-lifestyle skeleton listed in the base mod's CLAUDE.md (which cannot be edited). Anbennar's stub `magic_lifestyle` made full: three trees of 9 perks (Arcane Scholar, Battle Mage,
   Mindweaver; `common/lifestyle_perks/aov_magic_*_perks.txt`), each ending in a trait
   (`common/traits/aov_magic_lifestyle_traits.txt`), and three focuses (`common/focuses/zz_aov_magic_focuses.txt`;
@@ -66,14 +69,14 @@ teeth, hair and beard. Clothes and headgear are untouched. The RiE portrait gene
   skills per level, body double on imprisonment), Lichdom (EU4's Pursue Lichdom: The Phylactery, The Transformation
   Potion, The Dark Ritual, three choice-event steps each in `events/aov_lichdom_events.txt`; the mage drinks the potion,
   dies and rises with Anbennar's `lich` trait and Forbidden Magic Practitioner whatever the faith, no prisoner needed;
-  losing the phylactery before then starts Lichdom over), Homunculus (`aov_homunculus` courtier, domain labour). Ruling mages only (`aov_adv_eligible`: landed + Magical Affinity). Level N needs school level N; a level
+  losing the phylactery before then starts Lichdom over), Homunculus (`aov_homunculus` courtier, domain labour). Any mage, landed or not (`aov_adv_eligible`: Magical Affinity; effects that need a capital skip it or use the mage's location); Magical Fortress, Battlemage Academy and Homunculus Labour (level 3) need land (`aov_adv_has_domain`). Level N needs school level N; a level
   costs gold and mana up front and completes on the quarterly tick. A mage either studies or works on one advancement
   (starting clears `aov_studying`; the Study buttons are invalid while `aov_adv_committed` is set); Abandon refunds
   nothing. A level that fires its own event instead of the success one saves scope:aov_adv_own_event: a lost Orb or
   enchanted artifact ends the work (event 44); the Dark Ritual ends in Consumption (`aov_lichdom.10`). Lichdom's steps:
   the generated start effect calls the data's `on_start` hook (`aov_adv_lichdom_on_start`, the first step); the
   quarterly pulse fires the next one at a third and two thirds of the level's months (`aov_adv_lichdom_steps`,
-  `var:aov_lichdom_step`); faster choices add progress capped by `aov_lichdom_progress_cap` so every step still fires. A mage who stops being a ruling mage abandons the commitment (quarterly tick; `on_title_lost`). State: `aov_adv_committed`, `aov_adv_working_level`, `aov_adv_progress`, `aov_adv_<key>_lvl`, plus
+  `var:aov_lichdom_step`); faster choices add progress capped by `aov_lichdom_progress_cap` so every step still fires. A character who loses Magical Affinity abandons the commitment (quarterly tick; `on_title_lost`); a mage who drops to courtier keeps it, frozen, since progress runs on `quarterly_playable_pulse`. State: `aov_adv_committed`, `aov_adv_working_level`, `aov_adv_progress`, `aov_adv_<key>_lvl`, plus
   `aov_adv_orb`, `aov_adv_enchanted_*`, `aov_adv_phylactery`, `aov_lichdom_vessel`, `aov_lichdom_step`, `aov_adv_host`, `aov_adv_homunculus`; all die with the
   mage, while artifacts, homunculi, buildings and regiments remain. Hand-written: level effects
   `common/scripted_effects/aov_advancement_level_effects.txt`, start conditions

@@ -88,6 +88,10 @@ aov_spell_mass_ward_castable = {
 		text = aov_spell_mass_ward_req_mana
 		aov_mana >= aov_spell_mass_ward_cost
 	}
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_LANDED
+		is_landed = yes
+	}
 }
 
 aov_spell_mage_armor_known = {
@@ -184,6 +188,10 @@ aov_spell_summon_animals_castable = {
 		text = AOV_SPELL_REQ_WAR
 		is_at_war = yes
 	}
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_LANDED
+		is_landed = yes
+	}
 }
 
 aov_spell_conjure_supplies_known = {
@@ -257,6 +265,10 @@ aov_spell_aid_construction_castable = {
 	custom_tooltip = {
 		text = aov_spell_aid_construction_req_mana
 		aov_mana >= aov_spell_aid_construction_cost
+	}
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_LANDED
+		is_landed = yes
 	}
 }
 
@@ -345,6 +357,10 @@ aov_spell_deposit_divination_castable = {
 	custom_tooltip = {
 		text = aov_spell_deposit_divination_req_mana
 		aov_mana >= aov_spell_deposit_divination_cost
+	}
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_LANDED
+		is_landed = yes
 	}
 }
 
@@ -525,6 +541,10 @@ aov_spell_enchanting_embassy_castable = {
 	custom_tooltip = {
 		text = aov_spell_enchanting_embassy_req_mana
 		aov_mana >= aov_spell_enchanting_embassy_cost
+	}
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_LANDED
+		is_landed = yes
 	}
 }
 
@@ -766,6 +786,10 @@ aov_spell_bread_and_circuses_castable = {
 		text = aov_spell_bread_and_circuses_req_mana
 		aov_mana >= aov_spell_bread_and_circuses_cost
 	}
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_LANDED
+		is_landed = yes
+	}
 }
 
 aov_spell_assimilation_program_known = {
@@ -787,6 +811,10 @@ aov_spell_assimilation_program_castable = {
 	custom_tooltip = {
 		text = aov_spell_assimilation_program_req_mana
 		aov_mana >= aov_spell_assimilation_program_cost
+	}
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_LANDED
+		is_landed = yes
 	}
 }
 
@@ -831,6 +859,10 @@ aov_spell_lead_the_crowds_castable = {
 	custom_tooltip = {
 		text = aov_spell_lead_the_crowds_req_mana
 		aov_mana >= aov_spell_lead_the_crowds_cost
+	}
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_LANDED
+		is_landed = yes
 	}
 }
 
@@ -1007,6 +1039,10 @@ aov_spell_plant_growth_castable = {
 	custom_tooltip = {
 		text = aov_spell_plant_growth_req_mana
 		aov_mana >= aov_spell_plant_growth_cost
+	}
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_LANDED
+		is_landed = yes
 	}
 }
 

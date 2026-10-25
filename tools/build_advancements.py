@@ -104,7 +104,7 @@ def values(advs: list) -> str:
 
 def triggers(advs: list) -> str:
     out = [HEADER, "# Character scope (the mage).\n",
-           "# Advancements are for ruling mages\naov_adv_eligible = {\n\tis_landed = yes\n\taov_is_mage = yes\n}\n",
+           "# Advancements are for mages, landed or not\naov_adv_eligible = {\n\taov_is_mage = yes\n}\n",
            "aov_adv_is_committed = {\n\thas_variable = aov_adv_committed\n}\n",
            "# KEY = an advancement key\naov_adv_working_on = {\n\thas_variable = aov_adv_committed\n"
            "\tvar:aov_adv_committed = flag:$KEY$\n}\n"]

@@ -101,3 +101,11 @@ battlemage_academy_domain_limit_trigger = {
 		}
 	}
 }
+
+# Magical Fortress, Battlemage Academy, Homunculus Labour: they work on a domain, which a landless adventurer lacks
+aov_adv_has_domain = {
+	custom_tooltip = {
+		text = aov_adv_has_domain_tt
+		is_landed = yes
+	}
+}

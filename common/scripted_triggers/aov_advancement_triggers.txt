@@ -2,9 +2,8 @@
 
 # Character scope (the mage).
 
-# Advancements are for ruling mages
+# Advancements are for mages, landed or not
 aov_adv_eligible = {
-	is_landed = yes
 	aov_is_mage = yes
 }
 
@@ -37,6 +36,7 @@ aov_adv_magical_fortress_can_start = {
 			text = AOV_SPELL_REQ_ABJURATION_1
 			aov_school_level_at_least = { SCHOOL = abjuration LEVEL = 1 }
 		}
+		aov_adv_has_domain = yes
 	}
 	trigger_else_if = {
 		limit = { aov_adv_magical_fortress_level = 1 }
@@ -44,12 +44,14 @@ aov_adv_magical_fortress_can_start = {
 			text = AOV_SPELL_REQ_ABJURATION_2
 			aov_school_level_at_least = { SCHOOL = abjuration LEVEL = 2 }
 		}
+		aov_adv_has_domain = yes
 	}
 	trigger_else = {
 		custom_tooltip = {
 			text = AOV_SPELL_REQ_ABJURATION_3
 			aov_school_level_at_least = { SCHOOL = abjuration LEVEL = 3 }
 		}
+		aov_adv_has_domain = yes
 	}
 	custom_tooltip = {
 		text = aov_adv_magical_fortress_req_gold
@@ -214,6 +216,7 @@ aov_adv_battlemage_academy_can_start = {
 			text = AOV_SPELL_REQ_EVOCATION_1
 			aov_school_level_at_least = { SCHOOL = evocation LEVEL = 1 }
 		}
+		aov_adv_has_domain = yes
 	}
 	trigger_else_if = {
 		limit = { aov_adv_battlemage_academy_level = 1 }
@@ -221,12 +224,14 @@ aov_adv_battlemage_academy_can_start = {
 			text = AOV_SPELL_REQ_EVOCATION_2
 			aov_school_level_at_least = { SCHOOL = evocation LEVEL = 2 }
 		}
+		aov_adv_has_domain = yes
 	}
 	trigger_else = {
 		custom_tooltip = {
 			text = AOV_SPELL_REQ_EVOCATION_3
 			aov_school_level_at_least = { SCHOOL = evocation LEVEL = 3 }
 		}
+		aov_adv_has_domain = yes
 	}
 	custom_tooltip = {
 		text = aov_adv_battlemage_academy_req_gold
@@ -359,6 +364,7 @@ aov_adv_homunculus_can_start = {
 			text = AOV_SPELL_REQ_TRANSMUTATION_3
 			aov_school_level_at_least = { SCHOOL = transmutation LEVEL = 3 }
 		}
+		aov_adv_has_domain = yes
 	}
 	custom_tooltip = {
 		text = aov_adv_homunculus_req_gold

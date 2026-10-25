@@ -54,7 +54,7 @@ aov_adv_body_double = {
 	}
 }
 
-# Root = character. An AI ruling mage who is not working on an advancement may start one (aov_adv_ai_pick, generated)
+# Root = character. An AI playable mage (landed or adventurer) who is not working on an advancement may start one (aov_adv_ai_pick, generated)
 aov_adv_ai_yearly = {
 	trigger = {
 		is_ai = yes

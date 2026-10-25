@@ -120,6 +120,9 @@ def triggers(spells: list) -> str:
     for s in spells:
         k, c, lvl = s["key"], s["school"], s["level"]
         war = (f"\tcustom_tooltip = {{\n\t\ttext = AOV_SPELL_REQ_WAR\n\t\tis_at_war = yes\n\t}}\n" if s["type"] == "war" else "")
+        # Spells that only touch a domain, capital, levies or vassals: not for landless adventurers
+        war += (f"\tcustom_tooltip = {{\n\t\ttext = AOV_SPELL_REQ_LANDED\n\t\tis_landed = yes\n\t}}\n"
+                if s.get("needs_land") else "")
         out.append(
             f"aov_spell_{k}_known = {{\n\taov_school_level_at_least = {{ SCHOOL = {c} LEVEL = {lvl} }}\n}}\n"
             f"aov_spell_{k}_ready = {{\n\tNOT = {{ has_variable = aov_spell_{k}_cd }}\n}}\n"

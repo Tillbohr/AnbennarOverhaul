@@ -206,7 +206,8 @@ aov_advancement.44 = {
 	}
 }
 
-# A day after losing a title (aov_adv_on_title_lost): a mage who no longer rules gives up the advancement in progress
+# A day after losing a title (aov_adv_on_title_lost): a character who is no longer a mage gives up the advancement in
+# progress. A mage who drops to courtier keeps it, frozen until they are playable again (no quarterly_playable_pulse)
 aov_advancement.60 = {
 	type = character_event
 	hidden = yes

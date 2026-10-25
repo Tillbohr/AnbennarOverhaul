@@ -330,21 +330,32 @@ aov_assimilation_program = {
 
 ### Special spells (Task 4). Caster scope.
 
-# Summon Elementals: a free army at the capital, bound to the caster's war, removed when the spell's duration ends (aov_magic.10)
+# Summon Elementals: a free army at the capital (where the caster is, for a landless adventurer), bound to the caster's
+# war, removed when the spell's duration ends (aov_magic.10)
 aov_summon_elementals = {
 	if = {
 		limit = {
-			exists = capital_province
+			OR = {
+				exists = capital_province
+				exists = location
+			}
 			any_character_war = { always = yes }
 		}
 		random_character_war = { save_scope_as = aov_elemental_war }
+		if = {
+			limit = { exists = capital_province }
+			capital_province = { save_scope_as = aov_elemental_site }
+		}
+		else = {
+			location = { save_scope_as = aov_elemental_site }
+		}
 		spawn_army = {
 			name = aov_elemental_army_name
 			men_at_arms = {
 				type = aov_conjured_elementals
 				stacks = 4
 			}
-			location = capital_province
+			location = scope:aov_elemental_site
 			war = scope:aov_elemental_war
 			inheritable = no
 			uses_supply = no
@@ -354,7 +365,7 @@ aov_summon_elementals = {
 		trigger_event = { id = aov_magic.10 years = aov_spell_summon_elementals_years }
 	}
 	else = {
-		# No capital to summon at: the spell fizzles and costs nothing
+		# Nowhere to summon or no war: the spell fizzles and costs nothing
 		aov_mana_change = { AMOUNT = aov_spell_summon_elementals_cost }
 		remove_variable = aov_spell_summon_elementals_cd
 	}

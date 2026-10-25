@@ -66,7 +66,7 @@
  aov_spell_conjure_supplies_req_mana: "Has at least #V [GetPlayer.MakeScope.ScriptValue('aov_spell_conjure_supplies_cost')|0]#! mana"
  aov_spell_conjure_supplies_cost_tt: "Costs #V [GetPlayer.MakeScope.ScriptValue('aov_spell_conjure_supplies_cost')|0]#! mana"
  aov_spell_summon_elementals: "Summon Elementals"
- aov_spell_summon_elementals_desc: "A free army of conjured elementals appears at your capital for the spell's duration"
+ aov_spell_summon_elementals_desc: "A free army of conjured elementals appears at your capital (or where you are, if landless) for the spell's duration"
  aov_spell_summon_elementals_flavour: "#F Stone and flame take shape and march at their summoner's word.#!"
  aov_spell_summon_elementals_tt: "#T $aov_spell_summon_elementals$#!\n#weak $AOV_SCHOOL_CONJURATION$, $aov_spell_summon_elementals_facts$#!\n\n$aov_spell_summon_elementals_desc$\n\n$aov_spell_summon_elementals_flavour$"
  aov_spell_summon_elementals_facts: "Level 2 · #V [GetPlayer.MakeScope.ScriptValue('aov_spell_summon_elementals_cost')|0]#! mana · War · #V [GetPlayer.MakeScope.ScriptValue('aov_spell_summon_elementals_years')|0]#! yr"

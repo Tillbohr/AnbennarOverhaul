@@ -146,14 +146,21 @@ class GeneratedTests(unittest.TestCase):
             if rel != LOC:
                 self.assertTrue(text.startswith(ba.HEADER), rel)
 
-    def test_can_start_requires_landed_mage_and_not_committed(self):
+    def test_can_start_requires_mage_and_not_committed(self):
         t = block(FILES[TRIG], "aov_adv_lichdom_can_start")
         self.assertIn("aov_adv_eligible = yes", t)
         self.assertIn("NOT = { aov_adv_is_committed = yes }", t)
         self.assertIn("text = AOV_ADV_REQ_NOT_COMMITTED", t)
         e = block(FILES[TRIG], "aov_adv_eligible")
-        self.assertIn("is_landed = yes", e)
+        self.assertNotIn("is_landed", e)
         self.assertIn("aov_is_mage = yes", e)
+
+    def test_domain_advancements_need_land(self):
+        # Landless adventurer mages (and the AI among them) skip what works only on a domain
+        self.assertIn("aov_adv_has_domain = yes", block(FILES[TRIG], "aov_adv_magical_fortress_can_start"))
+        self.assertIn("aov_adv_has_domain = yes", block(FILES[TRIG], "aov_adv_battlemage_academy_can_start"))
+        self.assertIn("aov_adv_has_domain = yes", block(FILES[TRIG], "aov_adv_homunculus_can_start"))
+        self.assertNotIn("aov_adv_has_domain", block(FILES[TRIG], "aov_adv_mirror_image_can_start"))
 
     def test_level_gate_uses_school_level(self):
         t = block(FILES[TRIG], "aov_adv_lichdom_can_start")

@@ -1,7 +1,7 @@
 ﻿l_english:
  AOV_MAGIC_TAB_ADVANCEMENTS: "Advancements"
  AOV_MAGIC_TAB_SPELLS: "Spells"
- AOV_ADV_REQ_ELIGIBLE: "Is a landed ruler with Magical Affinity"
+ AOV_ADV_REQ_ELIGIBLE: "Has Magical Affinity"
  AOV_ADV_REQ_NOT_COMMITTED: "Is not working on a magic advancement"
  AOV_ADV_REQ_NOT_DONE: "Has not completed all three levels"
  AOV_ADV_START: "Begin"
@@ -169,6 +169,7 @@
 
  # Failed levels
  aov_adv_owns_orb_tt: "Owns the Orb of Omniscience they made"
+ aov_adv_has_domain_tt: "Is a landed ruler (not a landless adventurer)"
  aov_advancement.43.t: "The Ritual Fails"
  aov_advancement.43.desc: "The chamber is warded and the potion poured, but death will not take hold of [ROOT.Char.GetFirstName]. Something in their nature refuses the change. The ritual is spent, and must be begun again."
  aov_advancement.43.a: "Then I will find another way."

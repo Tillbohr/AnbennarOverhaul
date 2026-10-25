@@ -36,6 +36,7 @@
  # Casting
  AOV_SPELL_REQ_READY: "The spell is not on cooldown"
  AOV_SPELL_REQ_WAR: "Is at war"
+ AOV_SPELL_REQ_LANDED: "Is a landed ruler (not a landless adventurer)"
  AOV_STUDY_REQ_NOT_MASTERED: "This school is not yet mastered (level 3)"
  aov_spell_ward_target: "Warded"
  aov_spell_ward_target_desc: "Protective wards fray every plot aimed at this character."

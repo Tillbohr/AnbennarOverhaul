@@ -23,7 +23,7 @@ aov_adv_magical_fortress_3_effect = {
 
 # Wards (common/modifiers/aov_advancement_modifiers.txt) on the counties the mage holds: the capital at level 1, the
 # whole domain from level 2. Re-laid yearly (aov_adv_wards_yearly); they lapse after aov_adv_ward_days when the mage
-# dies, loses the county or stops being a ruling mage.
+# dies, loses the county or loses Magical Affinity.
 aov_adv_wards_refresh = {
 	every_held_county = {
 		remove_county_modifier = aov_ward_1
@@ -32,8 +32,11 @@ aov_adv_wards_refresh = {
 	}
 	if = {
 		limit = { aov_adv_magical_fortress_level = 1 }
-		capital_county = {
-			add_county_modifier = { modifier = aov_ward_1 days = aov_adv_ward_days }
+		if = {
+			limit = { exists = capital_county }
+			capital_county = {
+				add_county_modifier = { modifier = aov_ward_1 days = aov_adv_ward_days }
+			}
 		}
 	}
 	else_if = {
@@ -41,8 +44,11 @@ aov_adv_wards_refresh = {
 		every_held_county = {
 			add_county_modifier = { modifier = aov_ward_1 days = aov_adv_ward_days }
 		}
-		capital_county = {
-			add_county_modifier = { modifier = aov_ward_capital days = aov_adv_ward_days }
+		if = {
+			limit = { exists = capital_county }
+			capital_county = {
+				add_county_modifier = { modifier = aov_ward_capital days = aov_adv_ward_days }
+			}
 		}
 	}
 	else_if = {
@@ -50,8 +56,11 @@ aov_adv_wards_refresh = {
 		every_held_county = {
 			add_county_modifier = { modifier = aov_ward_3 days = aov_adv_ward_days }
 		}
-		capital_county = {
-			add_county_modifier = { modifier = aov_ward_capital days = aov_adv_ward_days }
+		if = {
+			limit = { exists = capital_county }
+			capital_county = {
+				add_county_modifier = { modifier = aov_ward_capital days = aov_adv_ward_days }
+			}
 		}
 	}
 }
@@ -120,7 +129,7 @@ aov_adv_orb_of_omniscience_1_effect = {
 			type = created
 			actor = root
 			recipient = root
-			location = root.capital_province
+			location = root.location
 		}
 		modifier = aov_orb_1
 		save_scope_as = aov_orb
@@ -276,7 +285,7 @@ aov_adv_enchanted_create_weapon = {
 			type = created
 			actor = root
 			recipient = root
-			location = root.capital_province
+			location = root.location
 		}
 		modifier = aov_enchanted_weapon_1
 		save_scope_as = newly_created_artifact
@@ -299,7 +308,7 @@ aov_adv_enchanted_create_armor = {
 			type = created
 			actor = root
 			recipient = root
-			location = root.capital_province
+			location = root.location
 		}
 		modifier = aov_enchanted_armor_1
 		save_scope_as = newly_created_artifact
@@ -323,7 +332,7 @@ aov_adv_enchanted_create_crown = {
 			type = created
 			actor = root
 			recipient = root
-			location = root.capital_province
+			location = root.location
 		}
 		modifier = aov_enchanted_crown_1
 		save_scope_as = newly_created_artifact
@@ -347,7 +356,7 @@ aov_adv_enchanted_create_regalia = {
 			type = created
 			actor = root
 			recipient = root
-			location = root.capital_province
+			location = root.location
 		}
 		modifier = aov_enchanted_regalia_1
 		save_scope_as = newly_created_artifact
@@ -370,7 +379,7 @@ aov_adv_enchanted_create_trinket = {
 			type = created
 			actor = root
 			recipient = root
-			location = root.capital_province
+			location = root.location
 		}
 		modifier = aov_enchanted_trinket_1
 		save_scope_as = newly_created_artifact
@@ -504,7 +513,7 @@ aov_adv_lichdom_1_effect = {
 				type = created
 				actor = root
 				recipient = root
-				location = root.capital_province
+				location = root.location
 			}
 			modifier = aov_phylactery
 			save_scope_as = aov_phylactery
@@ -523,7 +532,7 @@ aov_adv_lichdom_1_effect = {
 				type = created
 				actor = root
 				recipient = root
-				location = root.capital_province
+				location = root.location
 			}
 			modifier = aov_phylactery
 			save_scope_as = aov_phylactery
@@ -734,11 +743,11 @@ aov_adv_homunculus_3_effect = {
 	add_character_modifier = { modifier = aov_homunculus_labour }
 }
 
-# A homunculus courtier at the capital (var:aov_adv_homunculus): sterile, cannot inherit, devoted to its maker
+# A homunculus courtier at the mage's location (var:aov_adv_homunculus): sterile, cannot inherit, devoted to its maker
 aov_adv_homunculus_create = {
 	create_character = {
 		template = aov_homunculus_template
-		location = root.capital_province
+		location = root.location
 		culture = root.culture
 		faith = root.faith
 		save_scope_as = aov_homunculus

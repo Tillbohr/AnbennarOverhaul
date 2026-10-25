@@ -10,17 +10,19 @@ effect: one-off script run on cast, in the caster's scope; targeted spells have 
 scales_duration: the duration perks (aov_years_mult_<school>) apply; default = has a lasting modifier.
 interaction: targeted spells only; Anbennar's own interaction for Compel and Dominate.
 years_mult: an extra script value multiplying the duration (a magic advancement's bonus), or "".
+needs_land: castable only by a landed ruler, because it works only on a domain, capital, levies or vassals (landless
+adventurer mages, AI included, cannot cast it).
 """
 
 
 def spell(key, school, level, slot, type, name, desc, flavour, modifier="", effect="", interaction="", scales_duration=None,
-          years_mult=""):
+          years_mult="", needs_land=False):
     if type == "targeted" and not interaction:
         interaction = f"aov_spell_{key}_interaction"
     return dict(key=key, school=school, level=level, slot=slot, type=type, name=name, desc=desc, flavour=flavour,
                 modifier=modifier, effect=effect, interaction=interaction,
                 scales_duration=bool(modifier.strip()) if scales_duration is None else scales_duration,
-                years_mult=years_mult)
+                years_mult=years_mult, needs_land=needs_land)
 
 
 SPELLS = [
@@ -36,7 +38,7 @@ SPELLS = [
           modifier="character_travel_safety = 10\ncharacter_travel_speed_mult = 0.1"),
     spell("mass_ward", "abjuration", 2, 4, "realm", "Mass Ward", "+25% garrisons, +3 defensive advantage",
           "Walls hum with layered wards that blunt rams and arrows alike.",
-          modifier="garrison_size = 0.25\ndefender_advantage = 3"),
+          modifier="garrison_size = 0.25\ndefender_advantage = 3", needs_land=True),
     spell("mage_armor", "abjuration", 2, 5, "war", "Mage Armor", "+15% men-at-arms toughness",
           "Every soldier marches beneath an unseen breastplate.",
           modifier="maa_toughness_mult = 0.15"),
@@ -51,17 +53,17 @@ SPELLS = [
           modifier="intrigue = 2\nlearning = 2"),
     spell("summon_animals", "conjuration", 1, 2, "war", "Summon Animals", "+10% levy size",
           "Wolves and boars swell the ranks of the host.",
-          modifier="levy_size = 0.1"),
+          modifier="levy_size = 0.1", needs_land=True),
     spell("conjure_supplies", "conjuration", 1, 3, "war", "Conjure Supplies", "+25% supply limit, -10% army maintenance",
           "Bread and arrows appear where the quartermasters swore there were none.",
           modifier="supply_limit_mult = 0.25\narmy_maintenance_mult = -0.1"),
     spell("summon_elementals", "conjuration", 2, 4, "war", "Summon Elementals",
-          "A free army of conjured elementals appears at your capital for the spell's duration",
+          "A free army of conjured elementals appears at your capital (or where you are, if landless) for the spell's duration",
           "Stone and flame take shape and march at their summoner's word.",
           effect="aov_summon_elementals = yes", scales_duration=True),
     spell("aid_construction", "conjuration", 2, 5, "realm", "Aid Construction", "Buildings 30% faster and 20% cheaper",
           "Unseen servants haul stone through the night.",
-          modifier="build_speed = -0.3\nbuild_gold_cost = -0.2"),
+          modifier="build_speed = -0.3\nbuild_gold_cost = -0.2", needs_land=True),
     spell("extraplanar_contact", "conjuration", 3, 6, "self", "Extraplanar Contact",
           "Bargain with an outsider for learning, an artifact or gold, at a risk",
           "Beyond the veil wait beings who know much and give nothing freely.",
@@ -78,7 +80,7 @@ SPELLS = [
           "Gold from a newly found deposit, faster development in your capital",
           "Beneath the fields lies wealth no prospector suspected.",
           modifier="character_capital_county_monthly_development_growth_add = 0.2",
-          effect="aov_deposit_divination = yes"),
+          effect="aov_deposit_divination = yes", needs_land=True),
     spell("scry", "divination", 2, 4, "targeted", "Scry", "Reveals one of the target's secrets",
           "In flame and water the diviner sees what was meant to stay hidden.",
           effect="aov_scry_reveal = yes"),
@@ -107,7 +109,7 @@ SPELLS = [
           interaction="start_compel_interaction"),
     spell("enchanting_embassy", "enchantment", 2, 5, "realm", "Enchanting Embassy", "+15 vassal opinion, +5 general opinion",
           "A court perfumed with charm is a court at peace.",
-          modifier="vassal_opinion = 15\ngeneral_opinion = 5"),
+          modifier="vassal_opinion = 15\ngeneral_opinion = 5", needs_land=True),
     spell("dominate_to_surrender", "enchantment", 3, 6, "targeted", "Dominate to Surrender",
           "Bend the target's will to yours",
           "The strongest enchantments leave the victim certain the choice was their own.",
@@ -143,18 +145,18 @@ SPELLS = [
           modifier="dread_baseline_add = 30"),
     spell("bread_and_circuses", "illusion", 1, 3, "realm", "Bread and Circuses", "+15 county opinion",
           "Grand spectacles, conjured from nothing, keep the people content.",
-          modifier="county_opinion_add = 15"),
+          modifier="county_opinion_add = 15", needs_land=True),
     spell("assimilation_program", "illusion", 2, 4, "realm", "Assimilation Program",
           "Your most developed county of another culture adopts yours; +15 opinion from other cultures",
           "Familiar faces and familiar songs, until the foreign feels like home.",
-          modifier="different_culture_opinion = 15", effect="aov_assimilation_program = yes"),
+          modifier="different_culture_opinion = 15", effect="aov_assimilation_program = yes", needs_land=True),
     spell("shadows_in_the_night", "illusion", 2, 5, "self", "Shadows in the Night",
           "+20% hostile scheme success, your schemes much harder to discover",
           "The illusionist cultivates an environment rather than a person.",
           modifier="owned_hostile_scheme_success_chance_add = 20\nowned_scheme_secrecy_add = 30"),
     spell("lead_the_crowds", "illusion", 3, 6, "realm", "Lead the Crowds", "+25 county opinion, +15% levies",
           "The crowd sees a hero, and follows.",
-          modifier="county_opinion_add = 25\nlevy_size = 0.15"),
+          modifier="county_opinion_add = 25\nlevy_size = 0.15", needs_land=True),
 
     # Necromancy: dark magic
     spell("false_life", "necromancy", 0, 1, "self", "False Life", "+1 health, +10% stress gain",
@@ -184,7 +186,7 @@ SPELLS = [
           modifier="movement_speed = 0.2\ncharacter_travel_speed_mult = 0.25"),
     spell("plant_growth", "transmutation", 1, 2, "realm", "Plant Growth", "Faster capital development, +20% supply limit",
           "Fields ripen twice in a season.",
-          modifier="character_capital_county_monthly_development_growth_add = 0.3\nsupply_limit_mult = 0.2"),
+          modifier="character_capital_county_monthly_development_growth_add = 0.3\nsupply_limit_mult = 0.2", needs_land=True),
     spell("mass_enlarge", "transmutation", 1, 3, "war", "Mass Enlarge", "+15% men-at-arms toughness and damage",
           "Soldiers grown a head taller and twice as broad.",
           modifier="maa_toughness_mult = 0.15\nmaa_damage_mult = 0.15"),
