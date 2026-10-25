@@ -1,0 +1,203 @@
+﻿l_english:
+ # Anbennar Overhaul: religion text that Anbennar left blank or as a placeholder ("TODO", "GILLY TODO", "LOREM IPSUM"):
+ # the Halessi and High Philosophy terminology, tenet, doctrine and syncretic-opinion descriptions, and the patron
+ # god descriptions. Written for the overhaul. tools/tests/test_religion_text.py fails if a key here is left empty.
+
+ ##########################
+ # Halessi (Devouring Path)
+ ##########################
+ halessi_religion_adherent:0 "Pathwalker"
+ halessi_religion_adherent_plural:0 "Pathwalkers"
+ halessi_religion_desc:0 "The Halessi faiths are the Paths: schools of discipline that teach how the #italic chi#! of the living world may be gathered, refined or spent. The Accretive and Transmutative Paths hold that enlightenment is earned through patience and restraint; the Devouring Path holds that it is taken. All three honour the spirits of the ancestors and the great sages who first walked the Paths."
+ halessi_high_god_name:0 "Heaven"
+ halessi_high_god_name_possessive:0 "Heaven's"
+ halessi_high_god_name_alternate:0 "the Eternal Sage"
+ halessi_high_god_name_alternate_possessive:0 "the Eternal Sage's"
+ halessi_high_god_shehe:0 "it"
+ halessi_high_god_herselfhimself:0 "itself"
+ halessi_high_god_herhis:0 "its"
+
+ halessi_devil_name:0 "the Hungry Ghost"
+ halessi_devil_name_possessive:0 "the Hungry Ghost's"
+ halessi_devil_shehe:0 "it"
+ halessi_devil_herselfhimself:0 "itself"
+
+ halessi_house_of_worship:0 "Shrine"
+ halessi_house_of_worship_plural:0 "Shrines"
+
+ halessi_religious_symbol:0 "the Three Paths"
+ halessi_religious_text:0 "the Scrolls of the Paths"
+
+ halessi_religious_head_title:1 "Grand Sage"
+ halessi_religious_head_title_name:0 "Grand Sage"
+
+ halessi_devotee_male:0 "Disciple"
+ halessi_devotee_male_plural:0 "Disciples"
+ halessi_devotee_female:0 "Disciple"
+ halessi_devotee_female_plural:0 "Disciples"
+ halessi_devotee_neuter:0 "Disciple"
+ halessi_devotee_neuter_plural:0 "Disciples"
+
+ halessi_priest:0 "Sage"
+ halessi_priest_plural:0 "Sages"
+ halessi_priest_term_plural:0 "Sages"
+ halessi_bishop:0 "Elder Sage"
+ halessi_bishop_plural:0 "Elder Sages"
+ halessi_positive_afterlife:0 "the Spirit Realm"
+ halessi_negative_afterlife:0 "the Scattering of the Chi"
+ halessi_death_name_possessive:0 "Death's"
+
+ halessi_creator_god_name:0 "the First Sage"
+ halessi_creator_god_name_possessive:0 "the First Sage's"
+ halessi_health_god_name:0 "the Jade Physician"
+ halessi_health_god_name_possessive:0 "the Jade Physician's"
+ halessi_fertility_god_name:0 "the Spring Mother"
+ halessi_fertility_god_name_possessive:0 "the Spring Mother's"
+ halessi_wealth_god_name:0 "the Golden Ledger"
+ halessi_wealth_god_name_possessive:0 "the Golden Ledger's"
+ halessi_household_god_name:0 "the Hearth Spirit"
+ halessi_household_god_name_possessive:0 "the Hearth Spirit's"
+ halessi_fate_god_name:0 "the Red Thread"
+ halessi_fate_god_name_possessive:0 "the Red Thread's"
+ halessi_knowledge_god_name:0 "the Silent Scholar"
+ halessi_knowledge_god_name_possessive:0 "the Silent Scholar's"
+ halessi_war_god_name:0 "the Iron Sage"
+ halessi_war_god_name_possessive:0 "the Iron Sage's"
+ halessi_trickster_god_name:0 "the Laughing Fox"
+ halessi_trickster_god_name_possessive:0 "the Laughing Fox's"
+ halessi_night_god_name:0 "the Moon Hermit"
+ halessi_night_god_name_possessive:0 "the Moon Hermit's"
+ halessi_water_god_name:0 "the River Dragon"
+ halessi_water_god_name_possessive:0 "the River Dragon's"
+
+ ##########################
+ # High Philosophy (Raheni)
+ ##########################
+ raheni_high_god_name_alternate:0 "the Lamp of Purtara"
+ raheni_high_god_name_alternate_possessive:0 "the Lamp of Purtara's"
+ raheni_high_god_shehe:0 "he"
+ raheni_high_god_herselfhimself:0 "himself"
+ raheni_high_god_herhis:0 "his"
+
+ raheni_devil_name:0 "the Unmaker"
+ raheni_devil_name_possessive:0 "the Unmaker's"
+ raheni_devil_shehe:0 "it"
+ raheni_devil_herselfhimself:0 "itself"
+
+ raheni_house_of_worship:0 "Relief Temple"
+ raheni_house_of_worship_plural:0 "Relief Temples"
+
+ raheni_religious_symbol:0 "the Wheel of Purtara"
+ raheni_religious_text:0 "the Temple Reliefs"
+
+ raheni_religious_head_title:1 "High Philosopher"
+ raheni_religious_head_title_name:0 "High Philosopher"
+
+ raheni_devotee_male:0 "Student"
+ raheni_devotee_male_plural:0 "Students"
+ raheni_devotee_female:0 "Student"
+ raheni_devotee_female_plural:0 "Students"
+ raheni_devotee_neuter:0 "Student"
+ raheni_devotee_neuter_plural:0 "Students"
+
+ raheni_priest:0 "Relief Reader"
+ raheni_priest_plural:0 "Relief Readers"
+ raheni_priest_term_plural:0 "Relief Readers"
+ raheni_bishop:0 "Master Reader"
+ raheni_bishop_plural:0 "Master Readers"
+ raheni_positive_afterlife:0 "Purtara"
+ raheni_negative_afterlife:0 "a Lower Rebirth"
+ raheni_death_name_possessive:0 "Death's"
+
+ raheni_household_god_name:0 "the Hearth-Keeper"
+ raheni_household_god_name_possessive:0 "the Hearth-Keeper's"
+ raheni_trickster_god_name:0 "the Jester of Reliefs"
+ raheni_trickster_god_name_possessive:0 "the Jester of Reliefs'"
+ raheni_night_god_name:0 "the Veiled One"
+ raheni_night_god_name_possessive:0 "the Veiled One's"
+
+ ##########################
+ # Tenets
+ ##########################
+ tenet_corset_burials_desc:0 "The dead of the Milcori are laced into rigid funeral corsets of bone and silk and laid in the cold vaults of their ancestors, so that Nerat's gift of orderly death may not be undone by restless spirits. Piety is earned by seeing one's kin sealed in the old way."
+ tenet_hearth_and_humility_desc:0 "Esmaryal is honoured at the family hearth, not in grand halls. The faithful are taught that a full table, a mended roof and a quiet life are worth more than any conquest, and that pride is the first thing a household should be rid of."
+ tenet_life_of_adventure_desc:0 "Adean walked the world before he ruled any part of it. His followers are encouraged to leave their halls, take up the road and return with tales, scars and wisdom no scholar could teach them."
+ tenet_druids_of_the_deruwren_desc:0 "In the oak groves of the Deruwren, druids keep the old rites of the Lencori. They speak for the forest, settle disputes under its boughs and are held to know the will of the Elders of the Wood better than any priest of the cities."
+ tenet_waking_the_dragon_desc:0 "The dragons are not dead but sleeping, and the faithful hold it their duty to rouse them: through sacrifice, through hoards laid at the cave mouth, and through the blood of those brave or foolish enough to call themselves their servants."
+ tenet_aspect_of_resilience_desc:0 "Akasik endures: the mountains outlast every conqueror. Her people are taught to hold fast, to take no part in wars of faith and to be patient when the world is cruel."
+ tenet_aspect_of_compassion_desc:0 "Akasik feeds all who come to her slopes. Her followers share their harvests and their feasts, and the most devout take vows of service to the weak and the hungry."
+ tenet_aspect_of_reciprocity_desc:0 "What the mountain gives, the mountain is owed. The Akasi keep careful accounts of every gift and favour between neighbours and swear vows to see each of them repaid."
+ tenet_aspect_of_justice_desc:0 "Akasik is a just goddess, and her justice is not always gentle. Her followers may call a war righteous with less cost than other peoples, and take vows to see wrongs answered."
+ tenet_law_of_elikhet_desc:0 "Elikhet gave the Khetarchy its laws, and the faithful hold that a kingdom is only as strong as its codes. Rulers who change the law do so with solemn ritual, and rebellious factions are pressed hard by the weight of tradition."
+ tenet_aakhets_will_desc:0 "Aakhet's will is made manifest in the strength of her chosen. Her priests bear arms alongside the army and treat every dragon cult as a deliberate blasphemy to be answered with force."
+ tenet_sun_cult_syncretism_desc:0 "The faith holds that Surakel's light also shines through its own gods, and that the Sun Cults of Bulwar worship the same truth under another name. Followers of the Sun Cults are met as kin rather than as enemies."
+ tenet_harpy_hunt_desc:0 "The Hunt is not a ritual but a way of living: the sky is a hunting ground, the strong take what they need, and those who fall from the wind are given no shame. Piety is found in the chase itself, and the faithful are not judged for what is done in its heat."
+
+ ##########################
+ # Doctrines
+ ##########################
+ doctrine_patron_deity_castellos_the_dame_nerat_desc:0 "The Busilari Triad holds Castellos, the Dame and Nerat to be the three gods worthy of worship: the founder, the mother of all things and the keeper of the dead."
+ doctrine_skaldic_tales_desc:0 "The Skaldhyrric faith keeps its truths in verse. Its chosen rulers may recite the ancient tales of the skalds, or have a skald perform them, and the telling binds the listeners to the old ways."
+ doctrine_infernalist_desc:0 "Some faiths have traded with devils. This doctrine sets whether the bargain is hidden from the world, with the faith's own rulers bearing the shame of it, or proclaimed openly and answered with the fear of those who see it."
+ infernal_courts_hostility_doctrine_desc:0 "The Infernal Courts regard everyone outside their own number, even those of their own religion, as rivals or prey. Other faiths return the courtesy."
+ special_doctrine_is_sun_cult_faith_desc:0 "The Sun Cults of Bulwar are bound by their common reverence for Surakel's light. They are considered less wicked by syncretic faiths, and warmly regarded by those who follow the same sun."
+ special_doctrine_is_dwarven_faith_desc:0 "The dwarves keep the knowledge of their ancestors in stone, and the faiths of the Dwarovar share that heritage. Syncretic faiths treat them less harshly, and the dwarves return the regard."
+ special_doctrine_is_regent_court_faith_desc:0 "The Regent Court is the faith of Cannor's old pantheon, shared across the continent's kingdoms. Its followers look kindly on each other, though they scorn those who bargain with devils in secret and hate those who do so openly."
+ doctrine_parameter_opinion_of_bulwari_syncretic_recipient_opinion_active:0 "Followers of [faiths|E] syncretic with the Sun Cults gain an [opinion|E] bonus with the followers of Sun Cult [faiths|E]"
+ doctrine_parameter_opinion_of_bulwari_syncretic_actor_opinion_active:0 "Followers of Sun Cult [faiths|E] gain an [opinion|E] bonus with the followers of syncretic [faiths|E]"
+ doctrine_parameter_opinion_of_dwarven_syncretic_recipient_opinion_active:0 "Followers of [faiths|E] syncretic with Dwarven [faiths|E] gain an [opinion|E] bonus with the followers of Dwarven [faiths|E]"
+ doctrine_parameter_opinion_of_dwarven_syncretic_actor_opinion_active:0 "Followers of Dwarven [faiths|E] gain an [opinion|E] bonus with the followers of syncretic [faiths|E]"
+ doctrine_parameter_opinion_of_cannorian_syncretic_recipient_opinion_active:0 "Followers of [faiths|E] syncretic with Pantheonic [faiths|E] gain an [opinion|E] bonus with the followers of Pantheonic [faiths|E]"
+ doctrine_parameter_opinion_of_cannorian_syncretic_actor_opinion_active:0 "Followers of Pantheonic [faiths|E] gain an [opinion|E] bonus with the followers of syncretic [faiths|E]"
+
+ ##########################
+ # Patron gods
+ ##########################
+ patron_patron_placeholder_desc:0 "This faith has no patron god."
+ patron_wip_modifier_desc:0 "A patron whose favour wins friends and frustrates those who scheme against the faithful."
+ # Pantheonic / Regent Court
+ patron_castellos_modifier_desc:0 "Castellos founded the first kingdoms of men. His favour steadies the throne and keeps the great vassals loyal."
+ patron_the_dame_modifier_desc:0 "The Dame is the mother of the Regent Court. Her favour brings the rulers of a culture closer to its people, and blunts the contempt of strangers."
+ patron_esmaryal_modifier_desc:0 "Esmaryal watches the hearth and the cradle. Her favour makes families fruitful and keeps the kin close."
+ patron_falah_modifier_desc:0 "Falah rides with the hunt. Her favour sharpens the arm and rewards the hunter."
+ patron_nerat_modifier_desc:0 "Nerat keeps the records of the dead and the living. His favour rewards the learned and makes new titles easy to create."
+ patron_adean_modifier_desc:0 "Adean taught men to be knights. His favour strengthens the sword arm and the knights who follow it."
+ patron_ryala_modifier_desc:0 "Ryala was loved by all who met her. Her favour opens doors to the courtly and the charming."
+ patron_balgar_modifier_desc:0 "Balgar is the god of the builders. His favour turns careful ledgers into cheaper stone."
+ patron_ara_modifier_desc:0 "Ara protects the traveller and the harvest. Her favour fills the treasury and keeps the roads safe."
+ patron_minara_modifier_desc:0 "Minara weaves plots as others weave cloth. Her favour makes schemes easier, and more of them possible."
+ patron_munas_modifier_desc:0 "Munas rules the seas around Cannor. His favour speeds the sailor and the traveller alike."
+ patron_nathalyne_modifier_desc:0 "Nathalyne is the keeper of secrets. Her favour sharpens the dagger and loosens the tongue."
+ patron_begga_modifier_desc:0 "Begga is the small folk's patroness. Her favour makes the people fond of their lord and the capital prosper."
+ patron_uelos_modifier_desc:0 "Uelos is the god of the shore and the crossing. His favour speeds the ships of his followers, at a price in coin to launch them."
+ # Alenic / Ansuwir
+ patron_ariadas_modifier_desc:0 "Ariadas leads the warband. His favour brings glory to the warlord and loyalty from those who follow him."
+ patron_histra_modifier_desc:0 "Histra is the mother of the clans. Her favour brings many children and a careful hand with the household's wealth."
+ patron_wulkas_modifier_desc:0 "Wulkas is the god of the strong arm. His favour makes warriors fierce."
+ patron_ragna_modifier_desc:0 "Ragna is the god of the shield-wall. His favour wins battles for the army that holds the line."
+ patron_treyana_modifier_desc:0 "Treyana walks the old forests. Her favour makes armies strong beneath the trees."
+ patron_hyntran_modifier_desc:0 "Hyntran is the hunter's patron. His favour feeds devotion and rewards those who track the greatest game."
+ patron_welas_modifier_desc:0 "Welas is the god of the wise and the thrifty. His favour brings learning and good stewardship."
+ patron_rendan_modifier_desc:0 "Rendan teaches the secret arts, and makes enemies of the faith's other followers. His favour sharpens cunning at the cost of unity."
+ patron_ruladag_modifier_desc:0 "Ruladag is the god of the house and its war band. His favour strengthens the swordsman and the house he leads."
+ patron_kenareg_modifier_desc:0 "Kenareg is the god of the counsel and the pen. His favour rewards the learned ruler, and the diplomat too."
+ patron_dunberan_modifier_desc:0 "Dunberan walks the hills and the marsh. His favour speeds the march across both, and makes them strongholds."
+ patron_tarundul_modifier_desc:0 "Tarundul is the god of the mountain pass. His favour rewards the wise diplomat and the army that fights above the clouds."
+ patron_uumara_modifier_desc:0 "Uumara watches the road. Her favour keeps the traveller safe and rewards the careful steward."
+ # Lencori
+ patron_artanos_modifier_desc:0 "Atranos is the warrior of the Lencori gods. His favour makes the hand strong and the champion bold."
+ patron_merisse_modifier_desc:0 "Merisse is the goddess of the river and the road. Her favour speeds the traveller and the sailor and helps the land grow."
+ patron_trovecos_modifier_desc:0 "Trovecos is the god of healing and of the learned craft. His favour rewards the scholar and the sound of body."
+ patron_careslobos_modifier_desc:0 "Careslobos is the god of good company. His favour makes his followers well-liked."
+ patron_asmirethin_modifier_desc:0 "Asmirethin is the god of the smith and the mason. His favour makes building cheaper, though slower."
+ patron_damarta_modifier_desc:0 "Damarta is the goddess of the arcane. Her favour brings prestige to the learned, until her magic is fully woven into the realm."
+ patron_belouina_modifier_desc:0 "Belouina is the goddess of ease and harmony. Her favour quiets the troubled mind and brings prestige and piety in small measures."
+ patron_dercanos_modifier_desc:0 "Dercanos is the lord of the hearth and the quiet plot. His favour brings children and wins schemes."
+ patron_turanos_modifier_desc:0 "Turanos is the god of the proud and the hard. His followers excel at everything they do, but few of their neighbours love them for it."
+ patron_sorbodua_modifier_desc:0 "Sorbodua is the god of the spy and the shadow. His favour helps the hostile scheme and exposes those who plot against his followers."
+ # Generic ascended patrons
+ anb_martial_patron_apot_modifier_desc:0 "An ascended ruler of great martial skill whose spirit now guides the faith's warriors."
+ anb_diplomacy_patron_apot_modifier_desc:0 "An ascended ruler of great charm whose spirit now guides the faith's diplomats."
+ anb_stewardship_patron_apot_modifier_desc:0 "An ascended ruler of great financial skill whose spirit now guides the faith's stewards."
+ anb_intrigue_patron_apot_modifier_desc:0 "An ascended ruler of great cunning whose spirit now guides the faith's schemers."
+ anb_learning_patron_apot_modifier_desc:0 "An ascended ruler of great learning whose spirit now guides the faith's scholars."
