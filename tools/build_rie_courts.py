@@ -54,6 +54,14 @@ def view_trigger(group: str, tier: str) -> str:
     return f"aov_rie_court_view_{group}_{tier}_trigger"
 
 
+def lich_trigger(name: str) -> str:
+    return f"aov_lich_court_{name}_trigger"
+
+
+def lich_view_trigger(name: str) -> str:
+    return f"aov_lich_court_view_{name}_trigger"
+
+
 def scene_trigger(group: str) -> str:
     return f"aov_rie_court_scene_{group}_trigger"
 
@@ -87,6 +95,17 @@ def triggers_file() -> dict:
                       f"\t\thost ?= {{ {tier_trigger(group, tier)} = yes }}", "\t}", "}"]
         lines += [f"{scene_trigger(group)} = {{", "\tNOT = { government_has_flag = government_is_nomadic }",
                   "\texists = capital_county", f"\t{holder(group)} = yes", "}"]
+    lines += ["", "# Liches (data.LICH_BACKGROUNDS)"]
+    for name, condition, fallbacks, _texture, _environment in data.LICH_BACKGROUNDS:
+        inner = lich_trigger(name)
+        lines += [f"{inner} = {{"] + [f"\t{c}" for c in condition] + ["}", f"{lich_view_trigger(name)} = {{"]
+        if fallbacks:
+            lines += ["\tOR = {", f"\t\t{inner} = yes", "\t\tAND = {", "\t\t\texists = primary_spouse",
+                      f"\t\t\tprimary_spouse = {{ is_ruler = no {inner} = yes }}", "\t\t}",
+                      f"\t\tbetrothed ?= {{ {inner} = yes }}", f"\t\thost ?= {{ {inner} = yes }}", "\t}"]
+        else:
+            lines += [f"\t{inner} = yes"]
+        lines += ["}"]
     lines += ["", f"{ALL_SCENES_TRIGGER} = {{", "\tOR = {"]
     lines += [f"\t\t{scene_trigger(group)} = yes" for group in data.COURTS] + ["\t}", "}"]
     return {TRIGGERS_FILE: ("\n".join(lines) + "\n").encode("utf-8")}
@@ -95,19 +114,25 @@ def triggers_file() -> dict:
 # -------------------------------------------------------------------------------------------------- illustrations
 
 def _illustration_file(roots: Roots, ref: str, files: dict) -> str:
-    """Copy the RiE picture ref (relative to gfx/interface/illustrations) unless Anbennar or the game has it; the
-    reference to use."""
+    """Copy the RiE picture ref (relative to gfx/interface/illustrations) unless Anbennar or the game has it (or it
+    was imported into this mod once, like Godherja's lichdom hall); the reference to use."""
     rel = f"{ILLUSTRATION_DIR}/{ref}"
     if (roots.rie / rel).is_file():
         new = bp.place_file(roots, rel, rel, files, rel.rsplit("/", 1)[0])
         return new[len(ILLUSTRATION_DIR) + 1:] if new else ref
-    if bp._exists_outside(roots, rel) is None:
-        raise GeneratorError(f"picture {rel} is in neither RiE, Anbennar nor the game")
+    if bp._exists_outside(roots, rel) is None and not (SUBMOD / rel).is_file():
+        raise GeneratorError(f"picture {rel} is in neither RiE, Anbennar, the game nor this mod")
     return ref
 
 
 def background_entries(roots: Roots, files: dict) -> str:
-    pieces = [f"\t{MARKER}: Realms in Exile backgrounds (tools/build_rie_courts.py, tools/data/rie_courts.py)\n"]
+    pieces = [f"\t{MARKER}: Realms in Exile backgrounds (tools/build_rie_courts.py, tools/data/rie_courts.py)\n",
+              "\t# Liches: Godherja's lichdom hall when landed, RiE's Nazgul crypt otherwise\n"]
+    for name, _condition, _fallbacks, texture, environment in data.LICH_BACKGROUNDS:
+        reference = _illustration_file(roots, texture, files)
+        trigger = f"trigger = {{ {lich_view_trigger(name)} = yes }}"
+        pieces.append(f'\ttexture = {{\n\t\treference = "{reference}"\n\t\t{trigger}\n\t}}\n'
+                      f'\tenvironment = {{\n\t\treference = "{environment}"\n\t\t{trigger}\n\t}}\n')
     for group, court in data.COURTS.items():
         pieces.append(f"\t# {court['label']}\n")
         for tier, texture, environment in court["backgrounds"]:
@@ -155,21 +180,22 @@ def build_environments(roots: Roots, files: dict) -> int:
     rie = _environment_index(bp._texts(str(roots.rie / ENVIRONMENTS_DIR), "*.txt"))
     lines = [BOM + HEADER()[0], HEADER()[1], "# Realms in Exile portrait environments of the copied backgrounds."]
     count = 0
-    for court in data.COURTS.values():
-        for _tier, _texture, environment in court["backgrounds"]:
-            if environment in ours or f"# {environment}\n" in "\n".join(lines):
-                continue
-            if environment not in rie:
-                raise GeneratorError(f"environment {environment} is in neither Anbennar, the game nor RiE")
-            path, body = rie[environment]
-            for ref in sorted(set(bp.FILE_REF.findall(bp.code(body)))):
-                rel = bp.resolve_file(roots, ref, ENVIRONMENTS_DIR)
-                if rel:
-                    new = bp.place_file(roots, ref, rel, files, rel.rsplit("/", 1)[0])
-                    if new:
-                        body = body.replace(f'"{ref}"', f'"{new}"')
-            lines += ["", f"# {environment}", f"# from RiE {ENVIRONMENTS_DIR}/{path}", bp.lf(body).rstrip("\n")]
-            count += 1
+    environments = [e for court in data.COURTS.values() for _tier, _texture, e in court["backgrounds"]]
+    environments += [e for _name, _condition, _fallbacks, _texture, e in data.LICH_BACKGROUNDS]
+    for environment in environments:
+        if environment in ours or f"# {environment}\n" in "\n".join(lines):
+            continue
+        if environment not in rie:
+            raise GeneratorError(f"environment {environment} is in neither Anbennar, the game nor RiE")
+        path, body = rie[environment]
+        for ref in sorted(set(bp.FILE_REF.findall(bp.code(body)))):
+            rel = bp.resolve_file(roots, ref, ENVIRONMENTS_DIR)
+            if rel:
+                new = bp.place_file(roots, ref, rel, files, rel.rsplit("/", 1)[0])
+                if new:
+                    body = body.replace(f'"{ref}"', f'"{new}"')
+        lines += ["", f"# {environment}", f"# from RiE {ENVIRONMENTS_DIR}/{path}", bp.lf(body).rstrip("\n")]
+        count += 1
     files[ENVIRONMENTS_FILE] = ("\n".join(lines) + "\n").encode("utf-8")
     return count
 

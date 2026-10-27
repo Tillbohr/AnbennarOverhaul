@@ -1,0 +1,49 @@
+﻿@cultural_maa_extra_ai_score = 80 # Equivalent to having 8 extra regiments beyond what the code scoring would indicate (see NEGATIVE_SCORE_PER_EXISTING_REGIMENT)
+
+# Anbennar Overhaul: a Lich's raised dead, after Godherja's skeleton and skeleton_archers (stats and art). They cost
+# mana instead of gold: no buy cost, no upkeep, no provisions. The recruit screen shows the mana (gui/window_menatarms*.gui,
+# tools/build_lich_maa.py) and aov_lich_maa_pay takes it (common/scripted_effects/aov_lich_maa_effects.txt).
+
+aov_lich_skeletons = {
+	type = skirmishers
+	icon = aov_raised_undead
+
+	damage = 10
+	toughness = 24
+	pursuit = 0
+	screen = 40
+
+	counters = {
+		heavy_infantry = 1
+	}
+
+	can_recruit = {
+		aov_lich_maa_can_recruit = yes
+	}
+
+	provision_cost = 0
+	stack = 250
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+}
+
+aov_lich_skeleton_archers = {
+	type = archers
+	icon = aov_raised_undead
+
+	damage = 30
+	toughness = 17
+	pursuit = 7
+	screen = 0
+
+	counters = {
+		skirmishers = 1
+	}
+
+	can_recruit = {
+		aov_lich_maa_can_recruit = yes
+	}
+
+	provision_cost = 0
+	stack = 250
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+}

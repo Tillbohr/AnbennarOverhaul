@@ -544,11 +544,16 @@ LICH_GENES = "common/genes/aov_lich_genes.txt"
 LICH_PORTRAIT = "gfx/portraits/portrait_modifiers/aov_lich.txt"
 LICH_ACCESSORIES = "gfx/portraits/accessories/aov_lich.txt"
 LICH_ASSET = "gfx/models/portraits/aov_lich/aov_lich.asset"
+GAME = Path("C:/Program Files (x86)/Steam/steamapps/common/Crusader Kings III/game")
+VANILLA_PATTERNS = "gfx/portraits/accessory_variations/textures/patterns/"
+LICH_CLOTHES_ASSET = "gfx/models/portraits/aov_lich/clothes/aov_lich_clothes.asset"
+LICH_EYES_ASSET = "gfx/models/portraits/aov_lich/eyes/aov_lich_eyes.asset"
+LICH_EYE_COLOURS = ("blue", "gold", "green", "grey", "pink", "purple", "red", "teal", "white")
 LICH_VARIATIONS = "gfx/portraits/accessory_variations/aov_lich.txt"
 
 
 class LichPortraitTests(unittest.TestCase):
-    """A Lich is Godherja's skeleton under their usual clothes (imported once, names prefixed aov_)."""
+    """A Lich is Godherja's skeleton in Godherja's lich clothes (imported once, names prefixed aov_)."""
 
     def test_modifier_follows_the_lich_trait(self):
         mod = read(LICH_PORTRAIT)
@@ -557,13 +562,97 @@ class LichPortraitTests(unittest.TestCase):
                                ("aov_lich_body", "aov_lich_bones"), ("aov_lich_eyes", "aov_lich_gem_eyes"),
                                ("eye_accessory", "no_eyes"), ("teeth_accessory", "no_teeth")):
             self.assertRegex(mod, rf"gene = {gene}\s*template = {template}")
-        # The clothes stay: nothing touches the clothing genes
-        for gene in ("clothes", "legwear", "cloaks"):
-            self.assertNotIn(f"gene = {gene}", mod)
+        self.assertNotIn("gene = legwear", mod)
+
+    def test_lich_clothes(self):
+        mod = read(LICH_PORTRAIT)
+        outfit = block(mod, "aov_lich_outfit")
+        self.assertRegex(outfit, r"usage = game\s*priority = 100")
+
+        def item(text, name):
+            return re.search(rf"^\t{name} = \{{\n(.*?)\n^\t\}}", text, re.M | re.S).group(1)
+
+        for k in range(1, 7):
+            robed, armoured = item(outfit, f"aov_lich_outfit_{k}"), item(outfit, f"aov_lich_outfit_{k}_armoured")
+            # Vanilla's clothes and cloaks are extra genes added by modifiers: only mode = add hides them
+            for gene, template in (("clothes", "no_clothes"), ("cloaks", "no_cloak")):
+                self.assertRegex(robed, rf"mode = add\s*gene = {gene}\s*template = {template}")
+                self.assertNotIn(f"gene = {gene}", armoured)
+            # Robe and hood of one look go together
+            self.assertRegex(robed, rf"gene = aov_lich_clothes\s*template = aov_lich_robes_{k}\b")
+            for body in (robed, armoured):
+                self.assertRegex(body, rf"gene = aov_lich_hood\s*template = aov_lich_hood_{k}\b")
+                self.assertIn("has_trait = lich", body)
+                # Below 100, or the first valid look would always win
+                self.assertIn("add = 10 ", body)
+            self.assertIn("portrait_wear_armor_trigger = no", robed)
+            self.assertIn("portrait_wear_armor_trigger = yes", armoured)
+        self.assertNotIn("mode = replace\n\t\t\t\tgene = clothes", mod)
+        self.assertRegex(block(mod, "aov_lich_mask"), r"gene = aov_lich_mask\s*template = aov_lich_mask")
+        crowns = block(mod, "aov_lich_crown")
+        for template, tier in (("aov_lich_king_crown", "highest_held_title_tier = tier_kingdom"),
+                               ("aov_archlich_crown", "highest_held_title_tier >= tier_empire")):
+            crown = item(crowns, template)
+            self.assertRegex(crown, r"mode = add\s*gene = headgear\s*template = no_headgear")
+            self.assertIn(tier, crown)
+        for group in ("aov_lich_mask", "aov_lich_crown"):
+            self.assertRegex(block(mod, group), r"usage = game\s*priority = 100")
+            self.assertIn("has_trait = lich", block(mod, group))
+
+    def test_lich_eyes_random_and_in_barbershop(self):
+        mod = read(LICH_PORTRAIT)
+        group = block(mod, "aov_lich_eyes")
+
+        def item(name):
+            return re.search(rf"^\t{name} = \{{\n(.*?)\n^\t\}}", group, re.M | re.S).group(1)
+
+        # usage both: picked at random in game, chosen in the barbershop
+        self.assertRegex(group, r"usage = both\s*interface_position = \d+\s*priority = 100")
+        self.assertNotIn("gene = aov_lich_eyes", block(mod, "aov_lich"))
+        loc = read("localization/english/aov_lichdom_l_english.yml")
+        self.assertIn(" PORTRAIT_MODIFIER_aov_lich_eyes:", loc)
+        for colour in LICH_EYE_COLOURS:
+            body = item(f"aov_lich_eyes_{colour}")
+            self.assertRegex(body, rf"gene = aov_lich_eyes\s*template = aov_lich_glowing_eyes_{colour}\b")
+            self.assertIn("is_valid_custom = { has_trait = lich }", body)
+            self.assertIn("add = 10", body)
+            self.assertIn(f" PORTRAIT_MODIFIER_aov_lich_eyes_aov_lich_eyes_{colour}:", loc)
+        # Gems and empty sockets are barbershop choices only
+        for name in ("gems", "empty"):
+            body = item(f"aov_lich_eyes_{name}")
+            self.assertIn("add = 0", body)
+            self.assertIn(f" PORTRAIT_MODIFIER_aov_lich_eyes_aov_lich_eyes_{name}:", loc)
+
+    def test_lich_eyes_glow_under_anbennars_shader(self):
+        """Anbennar's portrait_eye glows from the properties texture's red channel (EMISSIVE_PROPERTIES_RED)."""
+        eyes = read(LICH_EYES_ASSET)
+        self.assertEqual(eyes.count('shader = "portrait_eye"'), 2 * 2 * len(LICH_EYE_COLOURS))
+        for level in (1, 2):
+            self.assertIn(f'texture_specular = "aov_lich_eyes_glowing_{level}_properties.dds"', eyes)
+        shader = MOD.parent / "anbennar-ck3-dev-master/gfx/FX/jomini/portrait.shader"
+        if shader.is_file():
+            text = shader.read_text(encoding="utf-8", errors="replace")
+            effect = text[text.index("Effect portrait_eye\n"):]
+            self.assertIn("EMISSIVE_PROPERTIES_RED", effect[:effect.index("}")])
+
+    def test_lich_looks_match(self):
+        """Each look's robe and hood use that look's single-row palette."""
+        variations, clothes = read(LICH_VARIATIONS), read(LICH_CLOTHES_ASSET)
+        for k in range(1, 7):
+            palette = f"color_palette_lich_look_{k}.dds"
+            for garment in ("robes", "hood"):
+                var = re.search(rf'name = "aov_lich_{garment}_look_{k}"(.*?)\n\}}', variations, re.S).group(1)
+                self.assertIn(palette, var)
+                self.assertEqual(var.count("pattern = {"), 1)
+            for entity in re.findall(rf'name = "(\w+_look_{k}_entity)"', clothes):
+                body = clothes[clothes.index(f'name = "{entity}"'):]
+                body = body[:body.index("\n}")]
+                self.assertRegex(body, rf'variation = "aov_lich_(robes|hood)_look_{k}"')
 
     def test_new_genes_default_to_nothing(self):
         genes = read(LICH_GENES)
-        for gene in ("aov_lich_flesh", "aov_lich_head", "aov_lich_body", "aov_lich_eyes"):
+        for gene in ("aov_lich_flesh", "aov_lich_head", "aov_lich_body", "aov_lich_eyes", "aov_lich_clothes",
+                     "aov_lich_hood", "aov_lich_mask", "aov_lich_crown"):
             body = genes[genes.index(f"\t{gene} = {{"):]
             first = re.search(r"index = 0\s*(?:visible = no\s*)?male = \{(.*?)\}", body, re.S).group(1)
             self.assertIn(first.strip(), ("", "1 = empty"), gene)
@@ -571,18 +660,25 @@ class LichPortraitTests(unittest.TestCase):
         self.assertIn("female = male", genes[genes.index("aov_lich_flesh_hidden"):])
 
     def test_accessories_entities_and_files_exist(self):
-        genes, acc, asset = read(LICH_GENES), read(LICH_ACCESSORIES), read(LICH_ASSET)
+        genes, acc = read(LICH_GENES), read(LICH_ACCESSORIES)
+        skeleton, clothes, eyes = read(LICH_ASSET), read(LICH_CLOTHES_ASSET), read(LICH_EYES_ASSET)
+        asset = skeleton + clothes + eyes
         for name in set(re.findall(r"= (aov_(?:male|female)_\w+)", genes)):
             self.assertRegex(acc, rf"(?m)^{name} = \{{", name)
         for entity in set(re.findall(r"entity = (aov_\w+_entity)", acc)):
             self.assertIn(f'name = "{entity}"', asset, entity)
-        for f in set(re.findall(r'"(\w+\.(?:mesh|dds))"', asset)):
-            self.assertTrue((MOD / "gfx/models/portraits/aov_lich" / f).exists(), f)
+        # Meshes and textures are found next to their .asset
+        for text, folder in ((skeleton, "gfx/models/portraits/aov_lich"), (clothes, "gfx/models/portraits/aov_lich/clothes"),
+                             (eyes, "gfx/models/portraits/aov_lich/eyes")):
+            for f in set(re.findall(r'"(\w+\.(?:mesh|dds))"', text)):
+                self.assertTrue((MOD / folder / f).exists(), f)
         variations = read(LICH_VARIATIONS)
         for v in set(re.findall(r'variation = "(\w+)"', asset)):
             self.assertIn(f'name = "{v}"', variations, v)
         for path in set(re.findall(r'"(gfx/[^"]+\.dds)"', asset + variations)):
-            self.assertTrue((MOD / path).exists(), path)
+            # The robes' fabrics are vanilla's
+            root = GAME if path.startswith(VANILLA_PATTERNS) else MOD
+            self.assertTrue((root / path).exists(), path)
         self.assertNotIn("1MOD", asset + variations)
 
 

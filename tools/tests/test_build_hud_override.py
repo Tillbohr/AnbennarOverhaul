@@ -31,6 +31,18 @@ HUD = (
     "\t\t\tname = \"royal_court_button_tutorial_uses_this\"\n"
     "\t\t}\n"
     "\t}\n"
+    "\thbox = {\n"
+    "\t\tname = \"tutorial_highlight_resources_bar\"\n"
+    "\n"
+    "\t\twidget = {\n"
+    "\t\t\tname = \"gold\"\n"
+    "\t\t\tsize = { 144 70 }\n"
+    "\n"
+    "\t\t\tbackground = {\n"
+    "\t\t\t\ttexture = \"gfx/interface/skinned/resource_panel_start.dds\"\n"
+    "\t\t\t}\n"
+    "\t\t}\n"
+    "\t}\n"
     "}\n"
 )
 
@@ -127,6 +139,52 @@ class InsertTabTests(unittest.TestCase):
             bho.insert_tab(broken)
 
 
+class InsertManaTests(unittest.TestCase):
+    """A mage's mana sits left of gold in the resource bar, as in Godherja; gold then loses the bar's end cap."""
+
+    def test_mana_widget_before_gold(self):
+        out = bho.insert_mana(HUD)
+        self.assertLess(out.index('name = "aov_mana"'), out.index('name = "gold"'))
+        # Indented like its sibling
+        self.assertIn('\t\twidget = {\n\t\t\tname = "aov_mana"', out)
+
+    def test_mana_shows_for_mages(self):
+        out = bho.insert_mana(HUD)
+        mana = out[out.index(bho.MANA_BEGIN):out.index(bho.MANA_END)]
+        self.assertIn(f'visible = "{bho.MAGE}"', mana)
+        self.assertIn("GetScriptedGui('aov_magic_available')", bho.MAGE)
+        self.assertIn("ScriptValue( 'aov_mana' )", mana)
+        self.assertIn("ScriptValue( 'aov_mana_refill_month' )", mana)
+        self.assertIn('tooltip = "AOV_HUD_MANA_TT"', mana)
+        self.assertIn("gfx/interface/skinned/resource_panel_start.dds", mana)
+        self.assertIn(bho.MANA_ICON, mana)
+        self.assertTrue((bho.SUBMOD / bho.MANA_ICON).is_file())
+
+    def test_gold_keeps_end_cap_only_without_mana(self):
+        out = bho.insert_mana(HUD)
+        gold = out[out.index('name = "gold"'):]
+        start = gold.index("resource_panel_start.dds")
+        self.assertIn(f'visible = "[Not( {bho.MAGE[1:-1]} )]"', gold[start:start + 300])
+        piece = gold.index("resource_panel_piece.dds")
+        self.assertIn(f'visible = "{bho.MAGE}"', gold[piece:piece + 300])
+
+    def test_braces_balance(self):
+        self.assertEqual(sum(bho.brace_delta(l) for l in bho.insert_mana(HUD).split("\n")), 0)
+
+    def test_missing_gold(self):
+        with self.assertRaises(bho.GeneratorError):
+            bho.insert_mana(HUD.replace('name = "gold"', 'name = "renamed"'))
+
+    def test_refuses_when_already_present(self):
+        with self.assertRaises(bho.GeneratorError):
+            bho.insert_mana(bho.insert_mana(HUD))
+
+    def test_build_adds_tabs_and_mana(self):
+        out = bho.build(HUD.encode("utf-8")).decode("utf-8")
+        self.assertIn('name = "tab_aov_magic"', out)
+        self.assertIn('name = "aov_mana"', out)
+
+
 class BuildTests(unittest.TestCase):
     def test_build_preserves_bom_and_crlf(self):
         raw = b"\xef\xbb\xbf" + HUD.replace("\n", "\r\n").encode("utf-8")
@@ -139,7 +197,7 @@ class BuildTests(unittest.TestCase):
         out = bho.build(HUD.encode("utf-8"))
         self.assertFalse(out.startswith(b"\xef\xbb\xbf"))
         self.assertNotIn(b"\r\n", out)
-        self.assertTrue(out.decode("utf-8").endswith(HUD[-20:]))
+        self.assertTrue(out.decode("utf-8").endswith("\t\t}\n\t}\n}\n"))
 
 
 class FindSourceTests(unittest.TestCase):

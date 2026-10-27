@@ -6,7 +6,7 @@ The HUD override also carries the Magic tab (see magic.md).
 
 | File | Generator | Why |
 |---|---|---|
-| `gui/hud.gui` | `python -I tools/build_hud_override.py` | The main tab bar is whole-file only. The script copies Anbennar's `gui/hud.gui` if it has one, else the game's, and inserts the Artificery tab after `tab_situation` (marked `# Anbennar Overhaul`). Never edit the output by hand. |
+| `gui/hud.gui` | `python -I tools/build_hud_override.py` | The main tab bar is whole-file only. The script copies Anbennar's `gui/hud.gui` if it has one, else the game's, and inserts the Artificery and Magic tabs after `tab_situation` and a mage's mana before the resource bar's `gold` widget (all marked `# Anbennar Overhaul`; see magic.md). Never edit the output by hand. |
 | `common/modifiers/aov_invention_modifiers.txt`, `common/scripted_triggers/aov_invention_triggers.txt`, `common/script_values/aov_invention_values.txt`, `common/scripted_effects/aov_invention_effects.txt`, `common/scripted_guis/aov_invention_sgui.txt`, `common/customizable_localization/aov_invention_custom_loc.txt`, `gui/aov_inventions_generated.gui`, `localization/english/aov_inventions_l_english.yml`, `gfx/interface/icons/aov_inventions/` | `python -I tools/build_inventions.py` | One block per invention, generated from `tools/data/inventions.py` (edit the data, then rerun). The icons in `gfx/interface/icons/aov_inventions/` were imported once from EU4 Anbennar and are committed (not rebuilt); a new invention needs its icon there first, or the build stops. |
 
 ## System

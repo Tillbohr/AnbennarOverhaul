@@ -51,6 +51,40 @@ class TriggerTests(unittest.TestCase):
         tiers = [tier for tier, _t, _e in data.COURTS["dwarf"]["backgrounds"]]
         self.assertEqual(tiers, ["above_kingdom", "kingdom", "duchy", "below_duchy"])
 
+    def test_lich_triggers(self):
+        text = rc.triggers_file()[rc.TRIGGERS_FILE].decode("utf-8-sig")
+        landed = re.search(r"^aov_lich_court_landed_trigger = \{.*?^\}", text, re.S | re.M).group(0)
+        self.assertIn("has_trait = lich", landed)
+        self.assertIn("is_landed = yes", landed)
+        # The landed hall is shown like a court: also to a non-ruling spouse, the betrothed and the host
+        view = re.search(r"^aov_lich_court_view_landed_trigger = \{.*?^\}", text, re.S | re.M).group(0)
+        for part in ("\t\taov_lich_court_landed_trigger = yes",
+                     "primary_spouse = { is_ruler = no aov_lich_court_landed_trigger = yes }",
+                     "betrothed ?= { aov_lich_court_landed_trigger = yes }",
+                     "host ?= { aov_lich_court_landed_trigger = yes }"):
+            self.assertIn(part, view)
+        # The crypt is the unlanded Lich's own
+        crypt = re.search(r"^aov_lich_court_view_unlanded_trigger = \{.*?^\}", text, re.S | re.M).group(0)
+        self.assertIn("aov_lich_court_unlanded_trigger = yes", crypt)
+        self.assertNotIn("host", crypt)
+        unlanded = re.search(r"^aov_lich_court_unlanded_trigger = \{.*?^\}", text, re.S | re.M).group(0)
+        self.assertIn("is_landed = no", unlanded)
+
+    def test_lich_backgrounds_first(self):
+        files = {}
+        with mock.patch.object(rc, "_illustration_file", lambda roots, ref, files: ref):
+            entries = rc.background_entries(None, files)
+        crypt = entries.index('reference = "event_scenes/lotr_throneroom_evil.dds"')
+        hall = entries.index('reference = "aov_lich/lichdom_court.dds"')
+        self.assertLess(crypt, hall)
+        self.assertLess(hall, entries.index("# RiE dwarven court"))
+        self.assertIn("aov_lich_court_view_unlanded_trigger = yes", entries[crypt:hall])
+        self.assertIn('reference = "environment_evil_throneroom"', entries[crypt:hall])
+        self.assertIn('reference = "environment_cw_india_main"', entries[hall:])
+
+    def test_lich_hall_is_imported(self):
+        self.assertTrue((rc.SUBMOD / rc.ILLUSTRATION_DIR / "aov_lich/lichdom_court.dds").is_file())
+
 
 @unittest.skipUnless(HAVE_REAL, "RiE, Anbennar and game needed")
 class RealTests(unittest.TestCase):
@@ -72,14 +106,17 @@ class RealTests(unittest.TestCase):
 
     def test_pictures_and_environments_exist(self):
         environments = self.files[rc.ENVIRONMENTS_FILE].decode("utf-8-sig")
-        for court in data.COURTS.values():
-            for _tier, texture, environment in court["backgrounds"]:
-                rel = f"{rc.ILLUSTRATION_DIR}/{texture}"
-                self.assertTrue(rel in self.files or bp._exists_outside(REAL, rel) is not None, rel)
-                defined = environment in environments or any(
-                    re.search(rf"^{environment}\s*=", text, re.M)
-                    for _p, text in bp.effective_texts(REAL, rc.ENVIRONMENTS_DIR))
-                self.assertTrue(defined, environment)
+        backgrounds = [b for court in data.COURTS.values() for b in court["backgrounds"]]
+        backgrounds += [(name, texture, environment) for name, _c, _v, texture, environment in data.LICH_BACKGROUNDS]
+        for _tier, texture, environment in backgrounds:
+            rel = f"{rc.ILLUSTRATION_DIR}/{texture}"
+            # Godherja's lichdom hall is imported once, not generated
+            self.assertTrue(rel in self.files or bp._exists_outside(REAL, rel) is not None
+                            or (rc.SUBMOD / rel).is_file(), rel)
+            defined = environment in environments or any(
+                re.search(rf"^{environment}\s*=", text, re.M)
+                for _p, text in bp.effective_texts(REAL, rc.ENVIRONMENTS_DIR))
+            self.assertTrue(defined, environment)
 
     def test_scene_cultures_ours_first_and_excluded_elsewhere(self):
         text = self.files[rc.CULTURES_FILE].decode("utf-8-sig")

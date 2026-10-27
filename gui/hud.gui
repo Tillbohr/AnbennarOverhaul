@@ -6143,6 +6143,73 @@ types HUD
 					layoutpolicy_horizontal = expanding
 					layoutpolicy_vertical = expanding
 
+					# Anbennar Overhaul: begin mana
+					widget = {
+						name = "aov_mana"
+						visible = "[GetScriptedGui('aov_magic_available').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						size = { 144 70 }
+
+						widget = {
+							size = { 144 45 }
+							tooltip = "AOV_HUD_MANA_TT"
+							using = tooltip_ne
+						}
+
+						background = {
+							texture = "gfx/interface/skinned/resource_panel_start.dds"
+						}
+
+						vbox = {
+							margin_top = -2
+
+							hbox = {
+								layoutpolicy_horizontal = expanding
+								expand = {}
+
+								hbox = {
+									spacing = 7
+
+									icon = {
+										name = "aov_mana_icon"
+										size = { 30 30 }
+										texture = "gfx/interface/icons/aov_magic/mana.dds"
+									}
+
+									flowcontainer = {
+										margin_bottom = 7
+										spacing = -6
+										direction = vertical
+										ignoreinvisible = yes
+
+										text_single = {
+											name = "aov_mana_value"
+											text = "[GetPlayer.MakeScope.ScriptValue( 'aov_mana' )|0]"
+											max_width = 50
+											default_format = "#high"
+											using = Font_Size_Medium
+										}
+
+										text_single = {
+											name = "aov_mana_refill"
+											text = "[GetPlayer.MakeScope.ScriptValue( 'aov_mana_refill_month' )|=1]"
+											max_width = 50
+											default_format = "#low"
+										}
+									}
+								}
+								spacer = {
+									size = { 10 1 }
+								}
+								divider_light = {
+									layoutpolicy_vertical = expanding
+									alpha = 0.8
+								}
+							}
+							expand = {}
+						}
+					}
+					# Anbennar Overhaul: end mana
+
 					widget = {
 						name = "gold"
 						size = { 144 70 }
@@ -6173,7 +6240,14 @@ types HUD
 
 						background = {
 							texture = "gfx/interface/skinned/resource_panel_start.dds"
+							visible = "[Not( GetScriptedGui('aov_magic_available').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]" # Anbennar Overhaul: mana takes the end cap
 						}
+						# Anbennar Overhaul: begin gold under mana
+						background = {
+							texture = "gfx/interface/skinned/resource_panel_piece.dds"
+							visible = "[GetScriptedGui('aov_magic_available').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						}
+						# Anbennar Overhaul: end gold under mana
 
 						vbox = {
 							margin_top = -2

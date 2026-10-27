@@ -171,6 +171,30 @@ aov_rie_court_scene_moon_elf_trigger = {
 	aov_rie_court_moon_elf_trigger = yes
 }
 
+# Liches (data.LICH_BACKGROUNDS)
+aov_lich_court_unlanded_trigger = {
+	has_trait = lich
+	is_landed = no
+}
+aov_lich_court_view_unlanded_trigger = {
+	aov_lich_court_unlanded_trigger = yes
+}
+aov_lich_court_landed_trigger = {
+	has_trait = lich
+	is_landed = yes
+}
+aov_lich_court_view_landed_trigger = {
+	OR = {
+		aov_lich_court_landed_trigger = yes
+		AND = {
+			exists = primary_spouse
+			primary_spouse = { is_ruler = no aov_lich_court_landed_trigger = yes }
+		}
+		betrothed ?= { aov_lich_court_landed_trigger = yes }
+		host ?= { aov_lich_court_landed_trigger = yes }
+	}
+}
+
 aov_rie_court_scene_trigger = {
 	OR = {
 		aov_rie_court_scene_dwarf_trigger = yes

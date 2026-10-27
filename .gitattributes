@@ -10,6 +10,7 @@ gfx/models/**/*.dds filter=lfs diff=lfs merge=lfs -text
 gfx/portraits/**/*.dds filter=lfs diff=lfs merge=lfs -text
 gfx/interface/illustrations/character_view/*.dds filter=lfs diff=lfs merge=lfs -text
 gfx/interface/illustrations/event_scenes/*.dds filter=lfs diff=lfs merge=lfs -text
+gfx/interface/illustrations/aov_lich/*.dds filter=lfs diff=lfs merge=lfs -text
 *.dds binary
 # Keep mod script/localization/GUI bytes exactly as written (UTF-8 BOM + LF; generated hud.gui keeps vanilla CRLF)
 *.txt -text

@@ -1,0 +1,8 @@
+﻿l_english:
+ aov_lich_skeletons: "Raised Skeletons"
+ aov_lich_skeletons_flavor: "Bones of the fallen, bound to a Lich's will. They need no pay, no bread and no rest."
+ aov_lich_skeleton_archers: "Skeleton Archers"
+ aov_lich_skeleton_archers_flavor: "Dead bowmen who still remember how to draw a string, if nothing else."
+ aov_lich_maa_needs_mana: "Has at least #V $VALUE|0$#! mana to raise the dead"
+ AOV_LICH_MAA_COST: "#V [GetPlayer.MakeScope.ScriptValue('aov_lich_maa_chunk_cost')|0]#! Mana"
+ AOV_LICH_MAA_COST_TT: "Raising [GetPlayer.MakeScope.ScriptValue('aov_lich_maa_stack')|0] dead costs #V [GetPlayer.MakeScope.ScriptValue('aov_lich_maa_chunk_cost')|0]#! mana. Raised dead need no upkeep and no provisions."

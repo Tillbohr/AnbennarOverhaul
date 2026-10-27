@@ -1,0 +1,43 @@
+﻿# Anbennar Overhaul: a Lich's raised dead cost mana. Character scope (the Lich).
+#
+# The men-at-arms have no gold cost; the mana is taken here, right after the recruit screen's Create or Increase Size
+# button (scripted GUI aov_lich_maa_pay) and on the quarterly tick (AI recruits, or what the Lich could not pay).
+# var:aov_lich_maa_paid = how many raised soldiers (regiment full size) are paid for.
+
+aov_lich_maa_pay = {
+	# Disbanded or shrunk regiments: nothing to refund, just stop counting them
+	if = {
+		limit = {
+			has_variable = aov_lich_maa_paid
+			var:aov_lich_maa_paid > aov_lich_maa_capacity
+		}
+		set_variable = { name = aov_lich_maa_paid value = aov_lich_maa_capacity }
+	}
+	if = {
+		limit = { aov_lich_maa_unpaid > 0 }
+		if = {
+			limit = { NOT = { has_variable = aov_lich_maa_paid } }
+			set_variable = { name = aov_lich_maa_paid value = 0 }
+		}
+		if = {
+			limit = { aov_mana >= aov_lich_maa_owed }
+			aov_mana_spend = { AMOUNT = aov_lich_maa_owed }
+			set_variable = { name = aov_lich_maa_paid value = aov_lich_maa_capacity }
+		}
+		else = {
+			# Pay what the mana covers; the rest stays owed and blocks further raising
+			change_variable = { name = aov_lich_maa_paid add = aov_lich_maa_affordable }
+			aov_mana_spend = { AMOUNT = aov_mana }
+		}
+	}
+}
+
+# A new Lich gives up the living soldiers they can no longer recruit (siege engines and cultural troops stay), and
+# any raised dead they already lead count as paid
+aov_lich_maa_on_becoming_lich = {
+	every_maa_regiment = {
+		limit = { aov_lich_maa_forbidden_regiment = yes }
+		destroy_maa_regiment = yes
+	}
+	set_variable = { name = aov_lich_maa_paid value = aov_lich_maa_capacity }
+}

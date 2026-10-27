@@ -1,0 +1,50 @@
+﻿# Anbennar Overhaul: a Lich's raised dead (common/men_at_arms_types/aov_lich_maa_types.txt) cost mana. Character scope.
+
+# Mana per skeleton raised: a subregiment of 250 costs 50
+aov_lich_maa_mana_per_soldier = 0.2
+
+# Size of the regiment the next recruit or size increase adds (both types stack 250)
+aov_lich_maa_stack = 250
+
+# Mana for one more subregiment (the recruit screen's price)
+aov_lich_maa_chunk_cost = {
+	value = aov_lich_maa_stack
+	multiply = aov_lich_maa_mana_per_soldier
+}
+
+# Full size of all the Lich's raised regiments
+aov_lich_maa_capacity = {
+	value = 0
+	every_maa_regiment = {
+		limit = { aov_lich_maa_regiment = yes }
+		add = maa_max_troops_count
+	}
+}
+
+# Raised but not yet paid for (the quarterly tick collects it if a recruit could not)
+aov_lich_maa_unpaid = {
+	value = aov_lich_maa_capacity
+	if = {
+		limit = { has_variable = aov_lich_maa_paid }
+		subtract = var:aov_lich_maa_paid
+	}
+	min = 0
+}
+
+aov_lich_maa_owed = {
+	value = aov_lich_maa_unpaid
+	multiply = aov_lich_maa_mana_per_soldier
+}
+
+# What the Lich must hold to raise one more subregiment: the debt plus its price
+aov_lich_maa_next_cost = {
+	value = aov_lich_maa_owed
+	add = aov_lich_maa_chunk_cost
+}
+
+# Skeletons the Lich's mana can pay for now
+aov_lich_maa_affordable = {
+	value = aov_mana
+	divide = aov_lich_maa_mana_per_soldier
+	floor = yes
+}

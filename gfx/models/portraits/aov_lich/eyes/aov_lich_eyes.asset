@@ -1,0 +1,831 @@
+﻿# Anbennar Overhaul: a Lich's glowing eyes, imported once from Godherja: The Dying World (Workshop 2326030123,
+# gh_male_eyes_glowing / gh_female_eyes_glowing) onto the game's eye meshes. The glow is Anbennar's portrait_eye
+# shader's emission from the properties texture's red channel (Godherja's mask). Names prefixed aov_; edit by hand.
+
+entity = {
+	name = "aov_male_lich_eyes_glowing_1_blue_entity"
+	pdxmesh = "male_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "male_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_1_blue_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_1_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_1_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_lich_eyes_glowing_1_gold_entity"
+	pdxmesh = "male_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "male_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_1_gold_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_1_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_1_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_lich_eyes_glowing_1_green_entity"
+	pdxmesh = "male_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "male_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_1_green_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_1_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_1_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_lich_eyes_glowing_1_grey_entity"
+	pdxmesh = "male_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "male_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_1_grey_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_1_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_1_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_lich_eyes_glowing_1_pink_entity"
+	pdxmesh = "male_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "male_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_1_pink_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_1_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_1_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_lich_eyes_glowing_1_purple_entity"
+	pdxmesh = "male_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "male_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_1_purple_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_1_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_1_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_lich_eyes_glowing_1_red_entity"
+	pdxmesh = "male_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "male_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_1_red_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_1_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_1_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_lich_eyes_glowing_1_teal_entity"
+	pdxmesh = "male_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "male_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_1_teal_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_1_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_1_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_lich_eyes_glowing_1_white_entity"
+	pdxmesh = "male_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "male_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_1_white_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_1_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_1_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_lich_eyes_glowing_2_blue_entity"
+	pdxmesh = "male_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "male_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_2_blue_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_2_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_2_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_lich_eyes_glowing_2_gold_entity"
+	pdxmesh = "male_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "male_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_2_gold_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_2_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_2_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_lich_eyes_glowing_2_green_entity"
+	pdxmesh = "male_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "male_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_2_green_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_2_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_2_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_lich_eyes_glowing_2_grey_entity"
+	pdxmesh = "male_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "male_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_2_grey_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_2_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_2_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_lich_eyes_glowing_2_pink_entity"
+	pdxmesh = "male_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "male_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_2_pink_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_2_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_2_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_lich_eyes_glowing_2_purple_entity"
+	pdxmesh = "male_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "male_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_2_purple_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_2_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_2_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_lich_eyes_glowing_2_red_entity"
+	pdxmesh = "male_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "male_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_2_red_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_2_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_2_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_lich_eyes_glowing_2_teal_entity"
+	pdxmesh = "male_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "male_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_2_teal_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_2_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_2_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_lich_eyes_glowing_2_white_entity"
+	pdxmesh = "male_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "male_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_2_white_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_2_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_2_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_lich_eyes_glowing_1_blue_entity"
+	pdxmesh = "female_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "female_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_1_blue_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_1_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_1_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_lich_eyes_glowing_1_gold_entity"
+	pdxmesh = "female_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "female_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_1_gold_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_1_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_1_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_lich_eyes_glowing_1_green_entity"
+	pdxmesh = "female_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "female_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_1_green_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_1_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_1_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_lich_eyes_glowing_1_grey_entity"
+	pdxmesh = "female_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "female_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_1_grey_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_1_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_1_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_lich_eyes_glowing_1_pink_entity"
+	pdxmesh = "female_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "female_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_1_pink_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_1_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_1_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_lich_eyes_glowing_1_purple_entity"
+	pdxmesh = "female_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "female_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_1_purple_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_1_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_1_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_lich_eyes_glowing_1_red_entity"
+	pdxmesh = "female_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "female_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_1_red_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_1_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_1_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_lich_eyes_glowing_1_teal_entity"
+	pdxmesh = "female_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "female_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_1_teal_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_1_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_1_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_lich_eyes_glowing_1_white_entity"
+	pdxmesh = "female_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "female_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_1_white_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_1_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_1_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_lich_eyes_glowing_2_blue_entity"
+	pdxmesh = "female_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "female_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_2_blue_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_2_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_2_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_lich_eyes_glowing_2_gold_entity"
+	pdxmesh = "female_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "female_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_2_gold_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_2_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_2_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_lich_eyes_glowing_2_green_entity"
+	pdxmesh = "female_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "female_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_2_green_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_2_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_2_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_lich_eyes_glowing_2_grey_entity"
+	pdxmesh = "female_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "female_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_2_grey_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_2_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_2_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_lich_eyes_glowing_2_pink_entity"
+	pdxmesh = "female_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "female_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_2_pink_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_2_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_2_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_lich_eyes_glowing_2_purple_entity"
+	pdxmesh = "female_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "female_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_2_purple_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_2_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_2_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_lich_eyes_glowing_2_red_entity"
+	pdxmesh = "female_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "female_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_2_red_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_2_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_2_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_lich_eyes_glowing_2_teal_entity"
+	pdxmesh = "female_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "female_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_2_teal_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_2_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_2_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_lich_eyes_glowing_2_white_entity"
+	pdxmesh = "female_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 0.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "female_eyesShape"
+		index = 0
+		texture_diffuse = "aov_lich_eyes_glowing_2_white_diffuse.dds"
+		texture_normal = "aov_lich_eyes_glowing_2_normal.dds"
+		texture_specular = "aov_lich_eyes_glowing_2_properties.dds"
+		shader = "portrait_eye"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}

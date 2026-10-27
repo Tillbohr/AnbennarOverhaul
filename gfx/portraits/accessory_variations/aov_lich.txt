@@ -118,3 +118,224 @@ variation = {
 	# If more than one color palette texture is provided one will be chosen at random (uniformly, no weights)
 	color_palette = { weight = 1		texture = "gfx/portraits/accessory_variations/textures/aov_lich/color_palette_liches_gem_eyes.dds" }	
 }
+
+# Lich robes and hoods (gfx/models/portraits/aov_lich/clothes/): six looks, each one of Godherja's
+# color_palette_robes_generic.dds rows and one of its pattern_generic / pattern_hood_generic patterns
+# (vanilla fabrics), shared by the robe and the hood so they match
+
+pattern_textures = {
+	name = "aov_lich_wool"
+	colormask	= "gfx/portraits/accessory_variations/textures/patterns/northern/northern_wool_03_masks.dds"
+	normal		= "gfx/portraits/accessory_variations/textures/patterns/northern/northern_wool_03_normal.dds"
+	properties	= "gfx/portraits/accessory_variations/textures/patterns/northern/northern_wool_03_properties.dds"
+}
+
+pattern_textures = {
+	name = "aov_lich_burlap"
+	colormask	= "gfx/portraits/accessory_variations/textures/patterns/western/western_burlap_plain_01_masks.dds"
+	normal		= "gfx/portraits/accessory_variations/textures/patterns/western/western_burlap_plain_01_normal.dds"
+	properties	= "gfx/portraits/accessory_variations/textures/patterns/western/western_burlap_plain_01_properties.dds"
+}
+
+pattern_textures = {
+	name = "aov_lich_silk"
+	colormask	= "gfx/portraits/accessory_variations/textures/patterns/western/western_silk_plain_01_masks.dds"
+	normal		= "gfx/portraits/accessory_variations/textures/patterns/western/western_silk_plain_01_normal.dds"
+	properties	= "gfx/portraits/accessory_variations/textures/patterns/western/western_silk_plain_01_properties.dds"
+}
+
+pattern_textures = {
+	name = "aov_lich_thick_wool"
+	colormask	= "gfx/portraits/accessory_variations/textures/patterns/western/western_wool_plain_01_masks.dds"
+	normal		= "gfx/portraits/accessory_variations/textures/patterns/western/western_wool_plain_01_normal.dds"
+	properties	= "gfx/portraits/accessory_variations/textures/patterns/western/western_wool_plain_01_properties.dds"
+}
+
+pattern_layout = {
+	name = "aov_lich_regular_layout"
+	scale 		= { min = 1	max = 1 }
+	rotation 	= { min = 0	max = 0 }
+	offset 		= { x = { min = 0	max = 0 }    y = { min = 0	max = 0 } }
+}
+
+pattern_layout = {
+	name = "aov_lich_plain_fabric_layout"
+	scale 		= { min = 0.25	max = 0.25 }
+	rotation 	= { min = 0	max = 0 }
+	offset 		= { x = { min = 0	max = 0 }    y = { min = 0	max = 0 } }
+}
+
+pattern_layout = {
+	name = "aov_lich_plain_fabric_layout_large"
+	scale 		= { min = 0.5	max = 0.5 }
+	rotation 	= { min = 0	max = 0 }
+	offset 		= { x = { min = 0	max = 0 }    y = { min = 0	max = 0 } }
+}
+
+variation = {
+	name = "aov_lich_robes_look_1"
+
+	pattern = {
+		weight = 1
+		r = { textures = "aov_lich_wool"		layout = "aov_lich_plain_fabric_layout_large" }
+		g = { textures = "aov_lich_burlap"		layout = "aov_lich_regular_layout" }
+		b = { textures = "aov_lich_silk"		layout = "aov_lich_regular_layout" }
+		a = { textures = "aov_lich_burlap"		layout = "aov_lich_plain_fabric_layout" }
+	}
+
+	color_palette = { weight = 1		texture = "gfx/portraits/accessory_variations/textures/aov_lich/color_palette_lich_look_1.dds" }
+}
+
+variation = {
+	name = "aov_lich_hood_look_1"
+
+	pattern = {
+		weight = 1
+		r = { textures = "aov_lich_wool"		layout = "aov_lich_plain_fabric_layout" }
+		g = { textures = "aov_lich_burlap"		layout = "aov_lich_plain_fabric_layout" }
+		b = { textures = "aov_lich_silk"		layout = "aov_lich_plain_fabric_layout" }
+		a = { textures = "aov_lich_burlap"		layout = "aov_lich_plain_fabric_layout" }
+	}
+
+	color_palette = { weight = 1		texture = "gfx/portraits/accessory_variations/textures/aov_lich/color_palette_lich_look_1.dds" }
+}
+
+variation = {
+	name = "aov_lich_robes_look_2"
+
+	pattern = {
+		weight = 1
+		r = { textures = "aov_lich_burlap"		layout = "aov_lich_regular_layout" }
+		g = { textures = "aov_lich_thick_wool"		layout = "aov_lich_regular_layout" }
+		b = { textures = "aov_lich_silk"		layout = "aov_lich_plain_fabric_layout" }
+		a = { textures = "aov_lich_thick_wool"		layout = "aov_lich_plain_fabric_layout" }
+	}
+
+	color_palette = { weight = 1		texture = "gfx/portraits/accessory_variations/textures/aov_lich/color_palette_lich_look_2.dds" }
+}
+
+variation = {
+	name = "aov_lich_hood_look_2"
+
+	pattern = {
+		weight = 1
+		r = { textures = "aov_lich_burlap"		layout = "aov_lich_plain_fabric_layout" }
+		g = { textures = "aov_lich_thick_wool"		layout = "aov_lich_plain_fabric_layout" }
+		b = { textures = "aov_lich_silk"		layout = "aov_lich_plain_fabric_layout" }
+		a = { textures = "aov_lich_thick_wool"		layout = "aov_lich_plain_fabric_layout" }
+	}
+
+	color_palette = { weight = 1		texture = "gfx/portraits/accessory_variations/textures/aov_lich/color_palette_lich_look_2.dds" }
+}
+
+variation = {
+	name = "aov_lich_robes_look_3"
+
+	pattern = {
+		weight = 1
+		r = { textures = "aov_lich_silk"		layout = "aov_lich_regular_layout" }
+		g = { textures = "aov_lich_burlap"		layout = "aov_lich_regular_layout" }
+		b = { textures = "aov_lich_silk"		layout = "aov_lich_plain_fabric_layout" }
+		a = { textures = "aov_lich_thick_wool"		layout = "aov_lich_plain_fabric_layout" }
+	}
+
+	color_palette = { weight = 1		texture = "gfx/portraits/accessory_variations/textures/aov_lich/color_palette_lich_look_3.dds" }
+}
+
+variation = {
+	name = "aov_lich_hood_look_3"
+
+	pattern = {
+		weight = 1
+		r = { textures = "aov_lich_silk"		layout = "aov_lich_plain_fabric_layout" }
+		g = { textures = "aov_lich_silk"		layout = "aov_lich_plain_fabric_layout" }
+		b = { textures = "aov_lich_silk"		layout = "aov_lich_plain_fabric_layout" }
+		a = { textures = "aov_lich_thick_wool"		layout = "aov_lich_plain_fabric_layout" }
+	}
+
+	color_palette = { weight = 1		texture = "gfx/portraits/accessory_variations/textures/aov_lich/color_palette_lich_look_3.dds" }
+}
+
+variation = {
+	name = "aov_lich_robes_look_4"
+
+	pattern = {
+		weight = 1
+		r = { textures = "aov_lich_wool"		layout = "aov_lich_plain_fabric_layout_large" }
+		g = { textures = "aov_lich_burlap"		layout = "aov_lich_regular_layout" }
+		b = { textures = "aov_lich_silk"		layout = "aov_lich_regular_layout" }
+		a = { textures = "aov_lich_burlap"		layout = "aov_lich_plain_fabric_layout" }
+	}
+
+	color_palette = { weight = 1		texture = "gfx/portraits/accessory_variations/textures/aov_lich/color_palette_lich_look_4.dds" }
+}
+
+variation = {
+	name = "aov_lich_hood_look_4"
+
+	pattern = {
+		weight = 1
+		r = { textures = "aov_lich_wool"		layout = "aov_lich_plain_fabric_layout" }
+		g = { textures = "aov_lich_burlap"		layout = "aov_lich_plain_fabric_layout" }
+		b = { textures = "aov_lich_silk"		layout = "aov_lich_plain_fabric_layout" }
+		a = { textures = "aov_lich_burlap"		layout = "aov_lich_plain_fabric_layout" }
+	}
+
+	color_palette = { weight = 1		texture = "gfx/portraits/accessory_variations/textures/aov_lich/color_palette_lich_look_4.dds" }
+}
+
+variation = {
+	name = "aov_lich_robes_look_5"
+
+	pattern = {
+		weight = 1
+		r = { textures = "aov_lich_burlap"		layout = "aov_lich_regular_layout" }
+		g = { textures = "aov_lich_thick_wool"		layout = "aov_lich_regular_layout" }
+		b = { textures = "aov_lich_silk"		layout = "aov_lich_plain_fabric_layout" }
+		a = { textures = "aov_lich_thick_wool"		layout = "aov_lich_plain_fabric_layout" }
+	}
+
+	color_palette = { weight = 1		texture = "gfx/portraits/accessory_variations/textures/aov_lich/color_palette_lich_look_5.dds" }
+}
+
+variation = {
+	name = "aov_lich_hood_look_5"
+
+	pattern = {
+		weight = 1
+		r = { textures = "aov_lich_burlap"		layout = "aov_lich_plain_fabric_layout" }
+		g = { textures = "aov_lich_thick_wool"		layout = "aov_lich_plain_fabric_layout" }
+		b = { textures = "aov_lich_silk"		layout = "aov_lich_plain_fabric_layout" }
+		a = { textures = "aov_lich_thick_wool"		layout = "aov_lich_plain_fabric_layout" }
+	}
+
+	color_palette = { weight = 1		texture = "gfx/portraits/accessory_variations/textures/aov_lich/color_palette_lich_look_5.dds" }
+}
+
+variation = {
+	name = "aov_lich_robes_look_6"
+
+	pattern = {
+		weight = 1
+		r = { textures = "aov_lich_silk"		layout = "aov_lich_regular_layout" }
+		g = { textures = "aov_lich_burlap"		layout = "aov_lich_regular_layout" }
+		b = { textures = "aov_lich_silk"		layout = "aov_lich_plain_fabric_layout" }
+		a = { textures = "aov_lich_thick_wool"		layout = "aov_lich_plain_fabric_layout" }
+	}
+
+	color_palette = { weight = 1		texture = "gfx/portraits/accessory_variations/textures/aov_lich/color_palette_lich_look_6.dds" }
+}
+
+variation = {
+	name = "aov_lich_hood_look_6"
+
+	pattern = {
+		weight = 1
+		r = { textures = "aov_lich_silk"		layout = "aov_lich_plain_fabric_layout" }
+		g = { textures = "aov_lich_silk"		layout = "aov_lich_plain_fabric_layout" }
+		b = { textures = "aov_lich_silk"		layout = "aov_lich_plain_fabric_layout" }
+		a = { textures = "aov_lich_thick_wool"		layout = "aov_lich_plain_fabric_layout" }
+	}
+
+	color_palette = { weight = 1		texture = "gfx/portraits/accessory_variations/textures/aov_lich/color_palette_lich_look_6.dds" }
+}

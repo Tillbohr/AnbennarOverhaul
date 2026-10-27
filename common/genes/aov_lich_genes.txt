@@ -107,7 +107,8 @@ accessory_genes = {
 		}
 	}
 
-	# Gems in the eye sockets: both, one or none
+	# What fills the eye sockets: gems (both, one or none) or Godherja's glowing eyes, one template per colour (a ring
+	# or a full pupil of light by value). Set by the aov_lich_eyes portrait modifier group, which the barbershop shows.
 	aov_lich_eyes = {
 		inheritable = no
 		group = eyes
@@ -133,6 +134,376 @@ accessory_genes = {
 				1 = aov_female_lich_gem_eye_right
 				1 = aov_female_lich_gem_eyes
 				2 = empty
+			}
+			boy = male
+			girl = female
+		}
+		aov_lich_glowing_eyes_blue = {
+			index = 2
+			male = {
+				1 = aov_male_lich_eyes_glowing_1_blue
+				1 = aov_male_lich_eyes_glowing_2_blue
+			}
+			female = {
+				1 = aov_female_lich_eyes_glowing_1_blue
+				1 = aov_female_lich_eyes_glowing_2_blue
+			}
+			boy = male
+			girl = female
+		}
+		aov_lich_glowing_eyes_gold = {
+			index = 3
+			male = {
+				1 = aov_male_lich_eyes_glowing_1_gold
+				1 = aov_male_lich_eyes_glowing_2_gold
+			}
+			female = {
+				1 = aov_female_lich_eyes_glowing_1_gold
+				1 = aov_female_lich_eyes_glowing_2_gold
+			}
+			boy = male
+			girl = female
+		}
+		aov_lich_glowing_eyes_green = {
+			index = 4
+			male = {
+				1 = aov_male_lich_eyes_glowing_1_green
+				1 = aov_male_lich_eyes_glowing_2_green
+			}
+			female = {
+				1 = aov_female_lich_eyes_glowing_1_green
+				1 = aov_female_lich_eyes_glowing_2_green
+			}
+			boy = male
+			girl = female
+		}
+		aov_lich_glowing_eyes_grey = {
+			index = 5
+			male = {
+				1 = aov_male_lich_eyes_glowing_1_grey
+				1 = aov_male_lich_eyes_glowing_2_grey
+			}
+			female = {
+				1 = aov_female_lich_eyes_glowing_1_grey
+				1 = aov_female_lich_eyes_glowing_2_grey
+			}
+			boy = male
+			girl = female
+		}
+		aov_lich_glowing_eyes_pink = {
+			index = 6
+			male = {
+				1 = aov_male_lich_eyes_glowing_1_pink
+				1 = aov_male_lich_eyes_glowing_2_pink
+			}
+			female = {
+				1 = aov_female_lich_eyes_glowing_1_pink
+				1 = aov_female_lich_eyes_glowing_2_pink
+			}
+			boy = male
+			girl = female
+		}
+		aov_lich_glowing_eyes_purple = {
+			index = 7
+			male = {
+				1 = aov_male_lich_eyes_glowing_1_purple
+				1 = aov_male_lich_eyes_glowing_2_purple
+			}
+			female = {
+				1 = aov_female_lich_eyes_glowing_1_purple
+				1 = aov_female_lich_eyes_glowing_2_purple
+			}
+			boy = male
+			girl = female
+		}
+		aov_lich_glowing_eyes_red = {
+			index = 8
+			male = {
+				1 = aov_male_lich_eyes_glowing_1_red
+				1 = aov_male_lich_eyes_glowing_2_red
+			}
+			female = {
+				1 = aov_female_lich_eyes_glowing_1_red
+				1 = aov_female_lich_eyes_glowing_2_red
+			}
+			boy = male
+			girl = female
+		}
+		aov_lich_glowing_eyes_teal = {
+			index = 9
+			male = {
+				1 = aov_male_lich_eyes_glowing_1_teal
+				1 = aov_male_lich_eyes_glowing_2_teal
+			}
+			female = {
+				1 = aov_female_lich_eyes_glowing_1_teal
+				1 = aov_female_lich_eyes_glowing_2_teal
+			}
+			boy = male
+			girl = female
+		}
+		aov_lich_glowing_eyes_white = {
+			index = 10
+			male = {
+				1 = aov_male_lich_eyes_glowing_1_white
+				1 = aov_male_lich_eyes_glowing_2_white
+			}
+			female = {
+				1 = aov_female_lich_eyes_glowing_1_white
+				1 = aov_female_lich_eyes_glowing_2_white
+			}
+			boy = male
+			girl = female
+		}
+	}
+
+	# Lich clothes (Godherja's generic_magi_robes_lich, generic_magi_hood_lich, magi_half_mask_liches, lich_king_crown
+	# and archlich_crown, lich colours only), worn over the skeleton by gfx/portraits/portrait_modifiers/aov_lich.txt.
+	# Ungrouped, like vanilla's clothes and headgear genes.
+
+	# Black robes, in place of the usual clothes and cloak
+	aov_lich_clothes = {
+		inheritable = no
+		aov_lich_no_robes = {
+			index = 0
+			male = {
+				1 = empty
+			}
+			female = male
+			boy = male
+			girl = female
+		}
+		aov_lich_robes_1 = {
+			index = 1
+			male = {
+				1 = aov_male_lich_robes_1
+			}
+			female = {
+				1 = aov_female_lich_robes_1
+			}
+			boy = male
+			girl = female
+		}
+		aov_lich_robes_2 = {
+			index = 2
+			male = {
+				1 = aov_male_lich_robes_2
+			}
+			female = {
+				1 = aov_female_lich_robes_2
+			}
+			boy = male
+			girl = female
+		}
+		aov_lich_robes_3 = {
+			index = 3
+			male = {
+				1 = aov_male_lich_robes_3
+			}
+			female = {
+				1 = aov_female_lich_robes_3
+			}
+			boy = male
+			girl = female
+		}
+		aov_lich_robes_4 = {
+			index = 4
+			male = {
+				1 = aov_male_lich_robes_4
+			}
+			female = {
+				1 = aov_female_lich_robes_4
+			}
+			boy = male
+			girl = female
+		}
+		aov_lich_robes_5 = {
+			index = 5
+			male = {
+				1 = aov_male_lich_robes_5
+			}
+			female = {
+				1 = aov_female_lich_robes_5
+			}
+			boy = male
+			girl = female
+		}
+		aov_lich_robes_6 = {
+			index = 6
+			male = {
+				1 = aov_male_lich_robes_6
+			}
+			female = {
+				1 = aov_female_lich_robes_6
+			}
+			boy = male
+			girl = female
+		}
+	}
+
+	# A hood, up or down, or none; it fits under crowns, hats and helmets
+	aov_lich_hood = {
+		inheritable = no
+		aov_lich_no_hood = {
+			index = 0
+			male = {
+				1 = empty
+			}
+			female = male
+			boy = male
+			girl = female
+		}
+		aov_lich_hood_1 = {
+			index = 1
+			male = {
+				5 = empty
+				3 = aov_male_lich_hood_1
+				1 = aov_male_lich_hood_down_1
+			}
+			female = {
+				5 = empty
+				3 = aov_female_lich_hood_1
+				1 = aov_female_lich_hood_down_1
+			}
+			boy = male
+			girl = female
+		}
+		aov_lich_hood_2 = {
+			index = 2
+			male = {
+				5 = empty
+				3 = aov_male_lich_hood_2
+				1 = aov_male_lich_hood_down_2
+			}
+			female = {
+				5 = empty
+				3 = aov_female_lich_hood_2
+				1 = aov_female_lich_hood_down_2
+			}
+			boy = male
+			girl = female
+		}
+		aov_lich_hood_3 = {
+			index = 3
+			male = {
+				5 = empty
+				3 = aov_male_lich_hood_3
+				1 = aov_male_lich_hood_down_3
+			}
+			female = {
+				5 = empty
+				3 = aov_female_lich_hood_3
+				1 = aov_female_lich_hood_down_3
+			}
+			boy = male
+			girl = female
+		}
+		aov_lich_hood_4 = {
+			index = 4
+			male = {
+				5 = empty
+				3 = aov_male_lich_hood_4
+				1 = aov_male_lich_hood_down_4
+			}
+			female = {
+				5 = empty
+				3 = aov_female_lich_hood_4
+				1 = aov_female_lich_hood_down_4
+			}
+			boy = male
+			girl = female
+		}
+		aov_lich_hood_5 = {
+			index = 5
+			male = {
+				5 = empty
+				3 = aov_male_lich_hood_5
+				1 = aov_male_lich_hood_down_5
+			}
+			female = {
+				5 = empty
+				3 = aov_female_lich_hood_5
+				1 = aov_female_lich_hood_down_5
+			}
+			boy = male
+			girl = female
+		}
+		aov_lich_hood_6 = {
+			index = 6
+			male = {
+				5 = empty
+				3 = aov_male_lich_hood_6
+				1 = aov_male_lich_hood_down_6
+			}
+			female = {
+				5 = empty
+				3 = aov_female_lich_hood_6
+				1 = aov_female_lich_hood_down_6
+			}
+			boy = male
+			girl = female
+		}
+	}
+
+	# A half-mask over the jaw for one Lich in three
+	aov_lich_mask = {
+		inheritable = no
+		aov_lich_no_mask = {
+			index = 0
+			male = {
+				1 = empty
+			}
+			female = male
+			boy = male
+			girl = female
+		}
+		aov_lich_mask = {
+			index = 1
+			male = {
+				4 = empty
+				1 = aov_male_lich_mask_01
+				1 = aov_male_lich_mask_02
+			}
+			female = {
+				4 = empty
+				1 = aov_female_lich_mask_01
+				1 = aov_female_lich_mask_02
+			}
+			boy = male
+			girl = female
+		}
+	}
+
+	# A Lich King's crown (kingdom) or an Archlich's (empire), in place of the usual headgear
+	aov_lich_crown = {
+		inheritable = no
+		aov_lich_no_crown = {
+			index = 0
+			male = {
+				1 = empty
+			}
+			female = male
+			boy = male
+			girl = female
+		}
+		aov_lich_king_crown = {
+			index = 1
+			male = {
+				1 = aov_male_lich_crown
+			}
+			female = {
+				1 = aov_female_lich_crown
+			}
+			boy = male
+			girl = female
+		}
+		aov_archlich_crown = {
+			index = 2
+			male = {
+				1 = aov_male_archlich_crown
+			}
+			female = {
+				1 = aov_female_archlich_crown
 			}
 			boy = male
 			girl = female

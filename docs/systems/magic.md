@@ -1,6 +1,6 @@
 # Magic schools and magic lifestyle
 
-The Magic HUD tab sits in the generated `gui/hud.gui` (see artificery.md).
+The Magic HUD tab and the mana in the resource bar sit in the generated `gui/hud.gui` (see artificery.md).
 
 ## Generated files
 
@@ -9,6 +9,7 @@ The Magic HUD tab sits in the generated `gui/hud.gui` (see artificery.md).
 | `gui/window_character_lifestyle.gui` | `python -I tools/build_lifestyle_override.py` | The lifestyle window is whole-file only. The script copies Anbennar's `gui/window_character_lifestyle.gui` if it has one, else the game's, and adds a `magic_lifestyle` copy after each of the three `wanderer_lifestyle` blocks (XP bar background, progress bar, unspent-points icon) using the magic art (marked `# Anbennar Overhaul: magic lifestyle`). Never edit the output by hand. |
 | `common/modifiers/aov_spell_modifiers.txt`, `common/scripted_triggers/aov_spell_triggers.txt`, `common/scripted_effects/aov_spell_effects.txt`, `common/scripted_guis/aov_spell_sgui.txt`, `common/character_interactions/aov_spell_interactions.txt`, `gui/aov_magic_generated.gui`, `localization/english/aov_spells_l_english.yml`, `gfx/interface/icons/aov_magic/`, `gfx/interface/skinned/hud_maintab/aov_maintab_magic.dds` | `python -I tools/build_spells.py` | One block per spell, generated from `tools/data/spells.py` (edit the data, then rerun). The magic art (`gfx/interface/icons/aov_magic/`, the Magic tab icon) was imported once from EU4 Anbennar and is committed (not rebuilt); the build stops when a file the GUI names is missing. |
 | `common/scripted_triggers/aov_advancement_triggers.txt`, `common/script_values/aov_advancement_values.txt`, `common/scripted_effects/aov_advancement_effects.txt`, `common/scripted_guis/aov_advancement_sgui.txt`, `gui/aov_advancements_generated.gui`, `localization/english/aov_advancements_l_english.yml` | `python -I tools/build_advancements.py` | One block per advancement (start, can-start, costs, completion dispatch, AI pick, Advancements page), generated from `tools/data/advancements.py`. Costs and durations are the generator's `GOLD`/`MANA`/`YEARS`. EU4's project plate and progress bar (`gfx/interface/icons/aov_magic/project_*.dds`) were imported once and are committed. |
+| `common/men_at_arms_types/zz_aov_lich_maa_overrides.txt`, `common/scripted_triggers/aov_lich_maa_forbidden_triggers.txt`, `gui/window_menatarms_type_view.gui`, `gui/window_menatarms.gui` | `python -I tools/build_lich_maa.py` | A Lich's men-at-arms (see Lich men-at-arms below): Anbennar's generic men-at-arms (its `00_maa_types.txt`, else the game's) except siege engines, copied with `NOT = { has_trait = lich }` first in `can_recruit`, and the same list as `aov_lich_maa_forbidden_regiment`; the two recruit screens (whole-file only, from Anbennar else the game) with mana prices and the pay hook (marked `# Anbennar Overhaul`). It errors if another of our files already overrides one of those types. Never edit the output by hand. |
 
 ## Imported files (no generator)
 
@@ -30,7 +31,57 @@ hand: meshes and textures in `gfx/models/portraits/aov_lich/` (`aov_lich.asset`)
 (`aov_lich_flesh` hides the living head and body with vanilla's `bs_no_portrait` blend shapes; `aov_lich_head`,
 `aov_lich_body`, `aov_lich_eyes`; index 0 of each is nothing) are applied by
 `gfx/portraits/portrait_modifiers/aov_lich.txt` to anyone with the `lich` trait, which also removes eyes, lashes,
-teeth, hair and beard. Clothes and headgear are untouched. The RiE portrait generator's orphan check skips this folder.
+teeth, hair and beard. **Eyes:** the `aov_lich_eyes` gene holds the gems (template `aov_lich_gem_eyes`) and
+Godherja's glowing eyes (`aov_lich_glowing_eyes_<colour>`: blue, gold, green, grey, pink, purple, red, teal, white; a
+glowing ring or a full glowing pupil by value), imported once to `gfx/models/portraits/aov_lich/eyes/`
+(`aov_lich_eyes.asset`) on the game's eye meshes. Godherja's glow is its own shader's emission from the normal map's blue
+channel; Anbennar's `portrait_eye` shader glows from the properties texture's red channel instead
+(`EMISSIVE_PROPERTIES_RED`), so each strength has a properties texture whose red is Godherja's mask and the rest
+Anbennar's eye properties. The group `aov_lich_eyes` (`usage = both`, so the barbershop shows it as "Lich Eyes") gives
+each Lich a random colour (equal weights below 100); in the barbershop a Lich can pick any colour, the gemstones or
+empty sockets (weight 0, so never at random). **To confirm in game:** the eyes glow and sit in the skull's sockets, and
+the barbershop shows the group for a Lich only. Godherja's lich clothes were imported the same way (scratch script, edited by hand since):
+meshes and textures in `gfx/models/portraits/aov_lich/clothes/` (`aov_lich_clothes.asset`; lich colours only), the
+accessories and variations in the same `aov_lich` files, and four genes. **Six looks:** each Lich gets one of six
+robe-and-hood looks at random (group `aov_lich_outfit`, equal weights below 100, which CK3 picks by weighted random; a
+weight of 100 or more is taken outright). A look's robe and hood share one variation pair
+(`aov_lich_robes_look_<k>`/`aov_lich_hood_look_<k>`: one row of Godherja's `color_palette_robes_generic.dds` cut into
+`color_palette_lich_look_<k>.dds`, and one of its fabric patterns), so they always match; genes `aov_lich_clothes`
+(`aov_lich_robes_<k>`) and `aov_lich_hood` (`aov_lich_hood_<k>`: up 3, down 1, none 5; fits under vanilla's `crown`,
+`hat`, `cap` and `helmet` tags). The robes hide `clothes` (`no_clothes`) and `cloaks` (`no_cloak`) unless
+`portrait_wear_armor_trigger`, when only the hood is added. Vanilla's clothes, cloaks and headgear are extra genes from
+`mode = add` modifiers, so they are hidden with `mode = add`; `mode = replace` only rewrites the DNA's gene and left
+them showing. `aov_lich_mask` (half-mask for one in three) and `aov_lich_crown` (Godherja's Lich King crown at kingdom
+tier, Archlich crown at empire tier, hiding `headgear` with `no_headgear`; the skull-fitted mesh when bare, the wider
+one over a hood) have their own groups, so mask and crown vary on their own. Godherja's own cloak and hood-down tags were dropped. The RiE portrait
+generator's orphan check skips this folder. The `lich` trait's icon is Godherja's `necromancy_undead_lich.dds` at
+`gfx/interface/icons/traits/lich.dds` (120x120; the trait names no icon, so the game uses `<key>.dds`).
+**To confirm in game:** vanilla's `no_clothes` (a nudity outfit) stays hidden under the robes; the hood and crown
+meshes sit right on the skull.
+
+**Mana in the resource bar:** a mage's mana (`aov_mana`, with `aov_mana_refill_month` as the monthly change) is shown
+left of gold in the HUD top bar, as Godherja shows its magic: `tools/build_hud_override.py` inserts the widget before
+the gold widget and moves the bar's end cap onto it while it shows (gold gets a plain piece then). Shown when
+`aov_magic_available` (the Magic tab's test); icon EU4 Anbennar's own mana icon `icon_mage_mana.dds`, upscaled 2x, at `gfx/interface/icons/aov_magic/mana.dds`;
+tooltip `AOV_HUD_MANA_TT`. Landed and unlanded Liches get their own character-window backgrounds (see `rie-courts.md`).
+
+**Lich men-at-arms:** a Lich raises the dead instead of recruiting living soldiers. `aov_lich_skeletons` (skirmishers)
+and `aov_lich_skeleton_archers` (archers), `common/men_at_arms_types/aov_lich_maa_types.txt`, are Godherja's `skeleton`
+and `skeleton_archers` (stats; its `raised_undead` art as `aov_raised_undead`, the regiment icon cut from the small
+picture): stack 250, no buy cost, no upkeep, no provisions. They cost mana instead, 0.2 per skeleton (50 a subregiment;
+`common/script_values/aov_lich_maa_values.txt`). CK3 costs can only be gold, prestige or piety, and no on_action fires
+on a recruit, so: the recruit screens show `AOV_LICH_MAA_COST` instead of the gold price for types whose icon key is
+`aov_raised_undead` (the GUI has no type key), their Create and Increase Size buttons run scripted GUI
+`aov_lich_maa_pay` right after, and `quarterly_playable_pulse` runs it too (AI recruits, or a Lich short of mana).
+`aov_lich_maa_pay` charges for the raised dead's full size (`maa_max_troops_count`) beyond `var:aov_lich_maa_paid`;
+what the mana cannot cover stays owed, and `can_recruit` (`aov_lich_maa_can_recruit`: the `lich` trait and mana for the
+debt plus one subregiment) blocks more until it is paid. A Lich cannot recruit Anbennar's ten generic men-at-arms
+(siege engines stay; cultural and racial troops are untouched, user choice), and on becoming one
+(`aov_adv_lich_ascend`, and history Liches on `on_game_start_after_lobby`) loses regiments of those types
+(`aov_lich_maa_on_becoming_lich`, `destroy_maa_regiment`). **To confirm in game:** `MenAtArmsType.GetIconKey` works in
+the recruit list, the pay runs after Create (else the quarterly tick collects it), whether Increase Size honours
+`can_recruit`, AI Liches raise skeletons, and the map models (vanilla soldiers by culture; Godherja's undead models
+were not ported).
 
 ## System
 

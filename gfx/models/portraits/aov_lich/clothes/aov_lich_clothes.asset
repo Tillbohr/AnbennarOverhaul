@@ -1,0 +1,1591 @@
+﻿# Anbennar Overhaul: lich robes, hoods, half-masks and crowns, imported once from Godherja: The Dying World
+# (Workshop 2326030123). Names prefixed aov_; edit by hand.
+
+############ robes_aversarian.asset ########################
+
+pdxmesh = {
+	name = "aov_robes_aversarian_liches_mesh"
+	file = "robes_aversarian.mesh"
+	
+	blend_shape = { id = "robes_aversarian_old"					type = "robes_aversarian_old.mesh" }
+	blend_shape = { id = "robes_aversarian_infant"				type = "robes_aversarian_infant.mesh" }
+	blend_shape = { id = "robes_aversarian_fat"					type = "robes_aversarian_fat.mesh" }
+	blend_shape = { id = "robes_aversarian_dwarf"				type = "robes_aversarian_dwarf.mesh" }
+	blend_shape = { id = "robes_aversarian_gaunt"				type = "robes_aversarian_gaunt.mesh" }
+	blend_shape = { id = "robes_aversarian_muscular"			type = "robes_aversarian_muscular.mesh" }
+
+	meshsettings = {
+		name = "robes_aversarian"
+		index = 0
+		texture_diffuse = "robes_aversarian_liches_color.dds"
+		texture_normal = "robes_aversarian_normal.dds"
+		texture_specular = "robes_aversarian_rough.dds"
+		shader = "portrait_attachment_pattern_alpha_to_coverage"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_robes_generic_liches_look_1_entity"
+	pdxmesh = "aov_robes_aversarian_liches_mesh"
+		
+	attribute = { name = "bs_body_old_1"					blend_shape = "robes_aversarian_old" }
+	attribute = { name = "bs_body_infant_1"					blend_shape = "robes_aversarian_infant" }
+	attribute = { name = "bs_body_fat_1"					blend_shape = "robes_aversarian_fat" }
+	attribute = { name = "bs_body_dwarf_1"					blend_shape = "robes_aversarian_dwarf" }
+	attribute = { name = "bs_body_gaunt_1"					blend_shape = "robes_aversarian_gaunt" }
+	attribute = { name = "bs_body_muscular_1"				blend_shape = "robes_aversarian_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/robes_aversarian_mask.dds"
+				variation = "aov_lich_robes_look_1"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_robes_generic_liches_look_2_entity"
+	pdxmesh = "aov_robes_aversarian_liches_mesh"
+		
+	attribute = { name = "bs_body_old_1"					blend_shape = "robes_aversarian_old" }
+	attribute = { name = "bs_body_infant_1"					blend_shape = "robes_aversarian_infant" }
+	attribute = { name = "bs_body_fat_1"					blend_shape = "robes_aversarian_fat" }
+	attribute = { name = "bs_body_dwarf_1"					blend_shape = "robes_aversarian_dwarf" }
+	attribute = { name = "bs_body_gaunt_1"					blend_shape = "robes_aversarian_gaunt" }
+	attribute = { name = "bs_body_muscular_1"				blend_shape = "robes_aversarian_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/robes_aversarian_mask.dds"
+				variation = "aov_lich_robes_look_2"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_robes_generic_liches_look_3_entity"
+	pdxmesh = "aov_robes_aversarian_liches_mesh"
+		
+	attribute = { name = "bs_body_old_1"					blend_shape = "robes_aversarian_old" }
+	attribute = { name = "bs_body_infant_1"					blend_shape = "robes_aversarian_infant" }
+	attribute = { name = "bs_body_fat_1"					blend_shape = "robes_aversarian_fat" }
+	attribute = { name = "bs_body_dwarf_1"					blend_shape = "robes_aversarian_dwarf" }
+	attribute = { name = "bs_body_gaunt_1"					blend_shape = "robes_aversarian_gaunt" }
+	attribute = { name = "bs_body_muscular_1"				blend_shape = "robes_aversarian_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/robes_aversarian_mask.dds"
+				variation = "aov_lich_robes_look_3"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_robes_generic_liches_look_4_entity"
+	pdxmesh = "aov_robes_aversarian_liches_mesh"
+		
+	attribute = { name = "bs_body_old_1"					blend_shape = "robes_aversarian_old" }
+	attribute = { name = "bs_body_infant_1"					blend_shape = "robes_aversarian_infant" }
+	attribute = { name = "bs_body_fat_1"					blend_shape = "robes_aversarian_fat" }
+	attribute = { name = "bs_body_dwarf_1"					blend_shape = "robes_aversarian_dwarf" }
+	attribute = { name = "bs_body_gaunt_1"					blend_shape = "robes_aversarian_gaunt" }
+	attribute = { name = "bs_body_muscular_1"				blend_shape = "robes_aversarian_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/robes_aversarian_mask.dds"
+				variation = "aov_lich_robes_look_4"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_robes_generic_liches_look_5_entity"
+	pdxmesh = "aov_robes_aversarian_liches_mesh"
+		
+	attribute = { name = "bs_body_old_1"					blend_shape = "robes_aversarian_old" }
+	attribute = { name = "bs_body_infant_1"					blend_shape = "robes_aversarian_infant" }
+	attribute = { name = "bs_body_fat_1"					blend_shape = "robes_aversarian_fat" }
+	attribute = { name = "bs_body_dwarf_1"					blend_shape = "robes_aversarian_dwarf" }
+	attribute = { name = "bs_body_gaunt_1"					blend_shape = "robes_aversarian_gaunt" }
+	attribute = { name = "bs_body_muscular_1"				blend_shape = "robes_aversarian_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/robes_aversarian_mask.dds"
+				variation = "aov_lich_robes_look_5"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_robes_generic_liches_look_6_entity"
+	pdxmesh = "aov_robes_aversarian_liches_mesh"
+		
+	attribute = { name = "bs_body_old_1"					blend_shape = "robes_aversarian_old" }
+	attribute = { name = "bs_body_infant_1"					blend_shape = "robes_aversarian_infant" }
+	attribute = { name = "bs_body_fat_1"					blend_shape = "robes_aversarian_fat" }
+	attribute = { name = "bs_body_dwarf_1"					blend_shape = "robes_aversarian_dwarf" }
+	attribute = { name = "bs_body_gaunt_1"					blend_shape = "robes_aversarian_gaunt" }
+	attribute = { name = "bs_body_muscular_1"				blend_shape = "robes_aversarian_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/robes_aversarian_mask.dds"
+				variation = "aov_lich_robes_look_6"
+			}
+		}
+	}
+}
+
+############ f_robes_aversarian.asset ########################
+
+pdxmesh = {
+	name = "aov_f_robes_aversarian_liches_mesh"
+	file = "f_robes_aversarian.mesh"
+
+	blend_shape = { id = "f_robes_aversarian_infant"		type = "f_robes_aversarian_infant.mesh" }
+	blend_shape = { id = "f_robes_aversarian_fat"			type = "f_robes_aversarian_fat.mesh" }
+	blend_shape = { id = "f_robes_aversarian_gaunt"			type = "f_robes_aversarian_gaunt.mesh" }
+	blend_shape = { id = "f_robes_aversarian_muscular"		type = "f_robes_aversarian_muscular.mesh" }
+	blend_shape = { id = "f_robes_aversarian_old"			type = "f_robes_aversarian_old.mesh" }
+	blend_shape = { id = "f_robes_aversarian_breast_min"	type = "f_robes_aversarian_breast_min.mesh" }
+	blend_shape = { id = "f_robes_aversarian_breast_max"	type = "f_robes_aversarian_breast_max.mesh" }
+	blend_shape = { id = "f_robes_aversarian_dwarf"			type = "f_robes_aversarian_dwarf.mesh" }
+	blend_shape = { id = "f_robes_aversarian_pregnant"			type = "f_robes_aversarian_pregnant.mesh" }
+
+	meshsettings = {
+		name = "f_robes_aversarian"
+		index = 0
+		texture_diffuse = "f_robes_aversarian_liches_color.dds"
+		texture_normal = "f_robes_aversarian_normal.dds"
+		texture_specular = "f_robes_aversarian_properties.dds"
+		shader = "portrait_attachment_pattern_alpha_to_coverage"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_f_robes_generic_liches_look_1_entity"
+	pdxmesh = "aov_f_robes_aversarian_liches_mesh"
+
+	attribute = { name = "bs_body_infant_1"						blend_shape = "f_robes_aversarian_infant" }
+	attribute = { name = "bs_body_fat_1"						blend_shape = "f_robes_aversarian_fat" }
+	attribute = { name = "bs_body_gaunt_1"						blend_shape = "f_robes_aversarian_gaunt" }
+	attribute = { name = "bs_body_muscular_1"					blend_shape = "f_robes_aversarian_muscular" }
+	attribute = { name = "bs_body_old_1"						blend_shape = "f_robes_aversarian_old" }
+	attribute = { name = "bs_body_breast_size_min"				blend_shape = "f_robes_aversarian_breast_min" }
+	attribute = { name = "bs_body_breast_size_max"				blend_shape = "f_robes_aversarian_breast_max" }
+	attribute = { name = "bs_body_dwarf_1"						blend_shape = "f_robes_aversarian_dwarf" }
+	attribute = { name = "bs_body_pregnant_1"					blend_shape = "f_robes_aversarian_pregnant" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_robes_aversarian_mask.dds"
+				variation = "aov_lich_robes_look_1"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_robes_generic_liches_look_2_entity"
+	pdxmesh = "aov_f_robes_aversarian_liches_mesh"
+
+	attribute = { name = "bs_body_infant_1"						blend_shape = "f_robes_aversarian_infant" }
+	attribute = { name = "bs_body_fat_1"						blend_shape = "f_robes_aversarian_fat" }
+	attribute = { name = "bs_body_gaunt_1"						blend_shape = "f_robes_aversarian_gaunt" }
+	attribute = { name = "bs_body_muscular_1"					blend_shape = "f_robes_aversarian_muscular" }
+	attribute = { name = "bs_body_old_1"						blend_shape = "f_robes_aversarian_old" }
+	attribute = { name = "bs_body_breast_size_min"				blend_shape = "f_robes_aversarian_breast_min" }
+	attribute = { name = "bs_body_breast_size_max"				blend_shape = "f_robes_aversarian_breast_max" }
+	attribute = { name = "bs_body_dwarf_1"						blend_shape = "f_robes_aversarian_dwarf" }
+	attribute = { name = "bs_body_pregnant_1"					blend_shape = "f_robes_aversarian_pregnant" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_robes_aversarian_mask.dds"
+				variation = "aov_lich_robes_look_2"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_robes_generic_liches_look_3_entity"
+	pdxmesh = "aov_f_robes_aversarian_liches_mesh"
+
+	attribute = { name = "bs_body_infant_1"						blend_shape = "f_robes_aversarian_infant" }
+	attribute = { name = "bs_body_fat_1"						blend_shape = "f_robes_aversarian_fat" }
+	attribute = { name = "bs_body_gaunt_1"						blend_shape = "f_robes_aversarian_gaunt" }
+	attribute = { name = "bs_body_muscular_1"					blend_shape = "f_robes_aversarian_muscular" }
+	attribute = { name = "bs_body_old_1"						blend_shape = "f_robes_aversarian_old" }
+	attribute = { name = "bs_body_breast_size_min"				blend_shape = "f_robes_aversarian_breast_min" }
+	attribute = { name = "bs_body_breast_size_max"				blend_shape = "f_robes_aversarian_breast_max" }
+	attribute = { name = "bs_body_dwarf_1"						blend_shape = "f_robes_aversarian_dwarf" }
+	attribute = { name = "bs_body_pregnant_1"					blend_shape = "f_robes_aversarian_pregnant" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_robes_aversarian_mask.dds"
+				variation = "aov_lich_robes_look_3"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_robes_generic_liches_look_4_entity"
+	pdxmesh = "aov_f_robes_aversarian_liches_mesh"
+
+	attribute = { name = "bs_body_infant_1"						blend_shape = "f_robes_aversarian_infant" }
+	attribute = { name = "bs_body_fat_1"						blend_shape = "f_robes_aversarian_fat" }
+	attribute = { name = "bs_body_gaunt_1"						blend_shape = "f_robes_aversarian_gaunt" }
+	attribute = { name = "bs_body_muscular_1"					blend_shape = "f_robes_aversarian_muscular" }
+	attribute = { name = "bs_body_old_1"						blend_shape = "f_robes_aversarian_old" }
+	attribute = { name = "bs_body_breast_size_min"				blend_shape = "f_robes_aversarian_breast_min" }
+	attribute = { name = "bs_body_breast_size_max"				blend_shape = "f_robes_aversarian_breast_max" }
+	attribute = { name = "bs_body_dwarf_1"						blend_shape = "f_robes_aversarian_dwarf" }
+	attribute = { name = "bs_body_pregnant_1"					blend_shape = "f_robes_aversarian_pregnant" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_robes_aversarian_mask.dds"
+				variation = "aov_lich_robes_look_4"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_robes_generic_liches_look_5_entity"
+	pdxmesh = "aov_f_robes_aversarian_liches_mesh"
+
+	attribute = { name = "bs_body_infant_1"						blend_shape = "f_robes_aversarian_infant" }
+	attribute = { name = "bs_body_fat_1"						blend_shape = "f_robes_aversarian_fat" }
+	attribute = { name = "bs_body_gaunt_1"						blend_shape = "f_robes_aversarian_gaunt" }
+	attribute = { name = "bs_body_muscular_1"					blend_shape = "f_robes_aversarian_muscular" }
+	attribute = { name = "bs_body_old_1"						blend_shape = "f_robes_aversarian_old" }
+	attribute = { name = "bs_body_breast_size_min"				blend_shape = "f_robes_aversarian_breast_min" }
+	attribute = { name = "bs_body_breast_size_max"				blend_shape = "f_robes_aversarian_breast_max" }
+	attribute = { name = "bs_body_dwarf_1"						blend_shape = "f_robes_aversarian_dwarf" }
+	attribute = { name = "bs_body_pregnant_1"					blend_shape = "f_robes_aversarian_pregnant" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_robes_aversarian_mask.dds"
+				variation = "aov_lich_robes_look_5"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_robes_generic_liches_look_6_entity"
+	pdxmesh = "aov_f_robes_aversarian_liches_mesh"
+
+	attribute = { name = "bs_body_infant_1"						blend_shape = "f_robes_aversarian_infant" }
+	attribute = { name = "bs_body_fat_1"						blend_shape = "f_robes_aversarian_fat" }
+	attribute = { name = "bs_body_gaunt_1"						blend_shape = "f_robes_aversarian_gaunt" }
+	attribute = { name = "bs_body_muscular_1"					blend_shape = "f_robes_aversarian_muscular" }
+	attribute = { name = "bs_body_old_1"						blend_shape = "f_robes_aversarian_old" }
+	attribute = { name = "bs_body_breast_size_min"				blend_shape = "f_robes_aversarian_breast_min" }
+	attribute = { name = "bs_body_breast_size_max"				blend_shape = "f_robes_aversarian_breast_max" }
+	attribute = { name = "bs_body_dwarf_1"						blend_shape = "f_robes_aversarian_dwarf" }
+	attribute = { name = "bs_body_pregnant_1"					blend_shape = "f_robes_aversarian_pregnant" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_robes_aversarian_mask.dds"
+				variation = "aov_lich_robes_look_6"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+############ hood_aversarian.asset ########################
+
+pdxmesh = {
+	name = "aov_hood_aversarian_liches_mesh"
+	file = "hood_aversarian.mesh"
+
+	blend_shape = { id = "hood_aversarian_fat"			type = "hood_aversarian_fat.mesh" }
+	blend_shape = { id = "hood_aversarian_old"			type = "hood_aversarian_old.mesh" }
+	blend_shape = { id = "hood_aversarian_muscular"		type = "hood_aversarian_muscular.mesh" }
+
+	meshsettings = {
+		name = "hood_aversarian"
+		index = 0
+		texture_diffuse = "hood_aversarian_liches_color.dds"
+		texture_normal = "hood_aversarian_normal.dds"
+		texture_specular = "hood_aversarian_properties.dds"
+		shader = "portrait_attachment_pattern_alpha_to_coverage"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_look_1_entity"
+	pdxmesh = "aov_hood_aversarian_liches_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_1"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_look_2_entity"
+	pdxmesh = "aov_hood_aversarian_liches_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_2"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_look_3_entity"
+	pdxmesh = "aov_hood_aversarian_liches_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_3"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_look_4_entity"
+	pdxmesh = "aov_hood_aversarian_liches_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_4"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_look_5_entity"
+	pdxmesh = "aov_hood_aversarian_liches_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_5"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_look_6_entity"
+	pdxmesh = "aov_hood_aversarian_liches_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_6"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+pdxmesh = {
+	name = "aov_hood_aversarian_liches_crown_mesh"
+	file = "hood_aversarian_crown.mesh"
+
+	blend_shape = { id = "hood_aversarian_crown_fat"			type = "hood_aversarian_crown_fat.mesh" }
+	blend_shape = { id = "hood_aversarian_crown_old"			type = "hood_aversarian_crown_old.mesh" }
+	blend_shape = { id = "hood_aversarian_crown_muscular"		type = "hood_aversarian_crown_muscular.mesh" }
+
+	meshsettings = {
+		name = "hood_aversarian_crown"
+		index = 0
+		texture_diffuse = "hood_aversarian_liches_color.dds"
+		texture_normal = "hood_aversarian_normal.dds"
+		texture_specular = "hood_aversarian_properties.dds"
+		shader = "portrait_attachment_pattern_alpha_to_coverage"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_crown_look_1_entity"
+	pdxmesh = "aov_hood_aversarian_liches_crown_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_crown_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_crown_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_crown_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_1"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_crown_look_2_entity"
+	pdxmesh = "aov_hood_aversarian_liches_crown_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_crown_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_crown_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_crown_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_2"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_crown_look_3_entity"
+	pdxmesh = "aov_hood_aversarian_liches_crown_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_crown_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_crown_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_crown_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_3"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_crown_look_4_entity"
+	pdxmesh = "aov_hood_aversarian_liches_crown_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_crown_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_crown_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_crown_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_4"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_crown_look_5_entity"
+	pdxmesh = "aov_hood_aversarian_liches_crown_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_crown_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_crown_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_crown_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_5"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_crown_look_6_entity"
+	pdxmesh = "aov_hood_aversarian_liches_crown_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_crown_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_crown_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_crown_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_6"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+pdxmesh = {
+	name = "aov_hood_aversarian_liches_down_mesh"
+	file = "hood_aversarian_down.mesh"
+
+	blend_shape = { id = "hood_aversarian_down_fat"			type = "hood_aversarian_down_fat.mesh" }
+	blend_shape = { id = "hood_aversarian_down_old"			type = "hood_aversarian_down_old.mesh" }
+	blend_shape = { id = "hood_aversarian_down_muscular"		type = "hood_aversarian_down_muscular.mesh" }
+
+	meshsettings = {
+		name = "hood_aversarian_down"
+		index = 0
+		texture_diffuse = "hood_aversarian_liches_color.dds"
+		texture_normal = "hood_aversarian_normal.dds"
+		texture_specular = "hood_aversarian_properties.dds"
+		shader = "portrait_attachment_pattern_alpha_to_coverage"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_down_look_1_entity"
+	pdxmesh = "aov_hood_aversarian_liches_down_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_down_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_down_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_down_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_1"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_down_look_2_entity"
+	pdxmesh = "aov_hood_aversarian_liches_down_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_down_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_down_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_down_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_2"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_down_look_3_entity"
+	pdxmesh = "aov_hood_aversarian_liches_down_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_down_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_down_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_down_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_3"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_down_look_4_entity"
+	pdxmesh = "aov_hood_aversarian_liches_down_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_down_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_down_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_down_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_4"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_down_look_5_entity"
+	pdxmesh = "aov_hood_aversarian_liches_down_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_down_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_down_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_down_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_5"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_down_look_6_entity"
+	pdxmesh = "aov_hood_aversarian_liches_down_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_down_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_down_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_down_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_6"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+pdxmesh = {
+	name = "aov_hood_aversarian_liches_helmet_mesh"
+	file = "hood_aversarian_helmet.mesh"
+
+	blend_shape = { id = "hood_aversarian_helmet_fat"			type = "hood_aversarian_helmet_fat.mesh" }
+	blend_shape = { id = "hood_aversarian_helmet_old"			type = "hood_aversarian_helmet_old.mesh" }
+	blend_shape = { id = "hood_aversarian_helmet_muscular"		type = "hood_aversarian_helmet_muscular.mesh" }
+
+	meshsettings = {
+		name = "hood_aversarian_helmet"
+		index = 0
+		texture_diffuse = "hood_aversarian_liches_color.dds"
+		texture_normal = "hood_aversarian_normal.dds"
+		texture_specular = "hood_aversarian_properties.dds"
+		shader = "portrait_attachment_pattern_alpha_to_coverage"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_helmet_look_1_entity"
+	pdxmesh = "aov_hood_aversarian_liches_helmet_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_helmet_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_helmet_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_helmet_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_1"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_helmet_look_2_entity"
+	pdxmesh = "aov_hood_aversarian_liches_helmet_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_helmet_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_helmet_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_helmet_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_2"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_helmet_look_3_entity"
+	pdxmesh = "aov_hood_aversarian_liches_helmet_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_helmet_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_helmet_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_helmet_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_3"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_helmet_look_4_entity"
+	pdxmesh = "aov_hood_aversarian_liches_helmet_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_helmet_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_helmet_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_helmet_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_4"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_helmet_look_5_entity"
+	pdxmesh = "aov_hood_aversarian_liches_helmet_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_helmet_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_helmet_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_helmet_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_5"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_hood_generic_liches_helmet_look_6_entity"
+	pdxmesh = "aov_hood_aversarian_liches_helmet_mesh"
+
+	attribute = { name = "bs_fat_1"								blend_shape = "hood_aversarian_helmet_fat" }
+	attribute = { name = "bs_old_1"								blend_shape = "hood_aversarian_helmet_old" }
+	attribute = { name = "bs_muscular_1"						blend_shape = "hood_aversarian_helmet_muscular" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/hood_aversarian_mask.dds"	#Any 4-channel texture. Each channel will be used to mask a pattern from the variation object
+				variation = "aov_lich_hood_look_6"	#A "variation" object in gfx/portraits/accessory_variations/
+			}
+		}
+	}
+}
+
+############ f_hood_aversarian.asset ########################
+
+pdxmesh = {
+	name = "aov_f_hood_aversarian_liches_mesh"
+	file = "f_hood_aversarian.mesh"
+
+	blend_shape = { id = "f_hood_aversarian_fat"		type = "f_hood_aversarian_fat.mesh" }
+	blend_shape = { id = "f_hood_aversarian_old"		type = "f_hood_aversarian_old.mesh" }
+
+	meshsettings = {
+		name = "f_hood_aversarian"
+		index = 0
+		texture_diffuse = "f_hood_aversarian_liches_color.dds"
+		texture_normal = "f_hood_aversarian_normal.dds"
+		texture_specular = "f_hood_aversarian_properties.dds"
+		shader = "portrait_attachment_pattern_alpha_to_coverage"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_look_1_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_1"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_look_2_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_2"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_look_3_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_3"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_look_4_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_4"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_look_5_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_5"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_look_6_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_6"
+			}
+		}
+	}
+}
+
+pdxmesh = {
+	name = "aov_f_hood_aversarian_liches_crown_mesh"
+	file = "f_hood_aversarian_crown.mesh"
+
+	blend_shape = { id = "f_hood_aversarian_crown_fat"		type = "f_hood_aversarian_crown_fat.mesh" }
+	blend_shape = { id = "f_hood_aversarian_crown_old"		type = "f_hood_aversarian_crown_old.mesh" }
+
+	meshsettings = {
+		name = "f_hood_aversarian_crown"
+		index = 0
+		texture_diffuse = "f_hood_aversarian_liches_color.dds"
+		texture_normal = "f_hood_aversarian_normal.dds"
+		texture_specular = "f_hood_aversarian_properties.dds"
+		shader = "portrait_attachment_pattern_alpha_to_coverage"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_crown_look_1_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_crown_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_crown_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_crown_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_1"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_crown_look_2_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_crown_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_crown_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_crown_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_2"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_crown_look_3_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_crown_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_crown_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_crown_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_3"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_crown_look_4_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_crown_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_crown_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_crown_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_4"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_crown_look_5_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_crown_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_crown_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_crown_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_5"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_crown_look_6_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_crown_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_crown_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_crown_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_6"
+			}
+		}
+	}
+}
+
+pdxmesh = {
+	name = "aov_f_hood_aversarian_liches_down_mesh"
+	file = "f_hood_aversarian_down.mesh"
+
+	blend_shape = { id = "f_hood_aversarian_down_fat"		type = "f_hood_aversarian_down_fat.mesh" }
+	blend_shape = { id = "f_hood_aversarian_down_old"		type = "f_hood_aversarian_down_old.mesh" }
+
+	meshsettings = {
+		name = "f_hood_aversarian_down"
+		index = 0
+		texture_diffuse = "f_hood_aversarian_liches_color.dds"
+		texture_normal = "f_hood_aversarian_normal.dds"
+		texture_specular = "f_hood_aversarian_properties.dds"
+		shader = "portrait_attachment_pattern_alpha_to_coverage"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_down_look_1_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_down_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_down_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_down_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_1"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_down_look_2_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_down_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_down_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_down_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_2"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_down_look_3_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_down_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_down_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_down_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_3"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_down_look_4_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_down_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_down_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_down_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_4"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_down_look_5_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_down_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_down_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_down_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_5"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_down_look_6_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_down_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_down_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_down_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_6"
+			}
+		}
+	}
+}
+
+pdxmesh = {
+	name = "aov_f_hood_aversarian_liches_helmet_mesh"
+	file = "f_hood_aversarian_helmet.mesh"
+
+	blend_shape = { id = "f_hood_aversarian_helmet_fat"			type = "f_hood_aversarian_helmet_fat.mesh" }
+	blend_shape = { id = "f_hood_aversarian_helmet_old"			type = "f_hood_aversarian_helmet_old.mesh" }
+
+	meshsettings = {
+		name = "f_hood_aversarian_helmet"
+		index = 0
+		texture_diffuse = "f_hood_aversarian_liches_color.dds"
+		texture_normal = "f_hood_aversarian_normal.dds"
+		texture_specular = "f_hood_aversarian_properties.dds"
+		shader = "portrait_attachment_pattern_alpha_to_coverage"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_helmet_look_1_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_helmet_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_helmet_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_helmet_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_1"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_helmet_look_2_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_helmet_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_helmet_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_helmet_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_2"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_helmet_look_3_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_helmet_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_helmet_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_helmet_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_3"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_helmet_look_4_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_helmet_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_helmet_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_helmet_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_4"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_helmet_look_5_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_helmet_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_helmet_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_helmet_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_5"
+			}
+		}
+	}
+}
+
+entity = {
+	name = "aov_f_hood_generic_liches_helmet_look_6_entity"
+	pdxmesh = "aov_f_hood_aversarian_liches_helmet_mesh"
+
+	attribute = { name = "bs_fat_1"					blend_shape = "f_hood_aversarian_helmet_fat" }
+	attribute = { name = "bs_old_1"					blend_shape = "f_hood_aversarian_helmet_old" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			portrait_accessory = {
+				pattern_mask = "gfx/models/portraits/aov_lich/clothes/f_hood_aversarian_mask.dds"
+				variation = "aov_lich_hood_look_6"
+			}
+		}
+	}
+}
+
+############ magi_half_mask.asset ########################
+
+pdxmesh = {
+	name = "aov_magi_half_mask_liches_01_mesh"
+	file = "magi_half_mask.mesh"
+	
+	blend_shape = { id = "magi_half_mask_fat"		type = "magi_half_mask_fat.mesh" }
+	blend_shape = { id = "magi_half_mask_muscular"		type = "magi_half_mask_muscular.mesh" }
+
+	meshsettings = {
+		name = "magi_half_mask"
+		index = 0
+		texture_diffuse = "magi_half_mask_liches_01_diffuse.dds"
+		texture_normal = "magi_half_mask_liches_01_normal.dds"
+		texture_specular = "magi_half_mask_liches_01_properties.dds"
+		shader = "portrait_attachment_alpha_to_coverage"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_magi_half_mask_liches_01_entity"
+	pdxmesh = "aov_magi_half_mask_liches_01_mesh"
+	
+	attribute = { name = "bs_fat_1"					blend_shape = "magi_half_mask_fat" }
+	attribute = { name = "bs_muscular_1"			blend_shape = "magi_half_mask_muscular" }
+}
+
+pdxmesh = {
+	name = "aov_magi_half_mask_liches_02_mesh"
+	file = "magi_half_mask.mesh"
+	
+	blend_shape = { id = "magi_half_mask_fat"		type = "magi_half_mask_fat.mesh" }
+	blend_shape = { id = "magi_half_mask_muscular"		type = "magi_half_mask_muscular.mesh" }
+
+	meshsettings = {
+		name = "magi_half_mask"
+		index = 0
+		texture_diffuse = "magi_half_mask_liches_02_diffuse.dds"
+		texture_normal = "magi_half_mask_liches_02_normal.dds"
+		texture_specular = "magi_half_mask_liches_02_properties.dds"
+		shader = "portrait_attachment"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_magi_half_mask_liches_02_entity"
+	pdxmesh = "aov_magi_half_mask_liches_02_mesh"
+	
+	attribute = { name = "bs_fat_1"					blend_shape = "magi_half_mask_fat" }
+	attribute = { name = "bs_muscular_1"			blend_shape = "magi_half_mask_muscular" }
+}
+
+############ magi_half_mask_female.asset ########################
+
+pdxmesh = {
+	name = "aov_magi_half_mask_female_liches_01_mesh"
+	file = "magi_half_mask_female.mesh"
+	
+	blend_shape = { id = "magi_half_mask_female_fat"		type = "magi_half_mask_female_fat.mesh" }
+	blend_shape = { id = "magi_half_mask_female_muscular"		type = "magi_half_mask_female_muscular.mesh" }
+
+	meshsettings = {
+		name = "magi_half_mask_female"
+		index = 0
+		texture_diffuse = "magi_half_mask_liches_01_diffuse.dds"
+		texture_normal = "magi_half_mask_liches_01_normal.dds"
+		texture_specular = "magi_half_mask_liches_01_properties.dds"
+		shader = "portrait_attachment_alpha_to_coverage"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_magi_half_mask_female_liches_01_entity"
+	pdxmesh = "aov_magi_half_mask_female_liches_01_mesh"
+	
+	attribute = { name = "bs_fat_1"					blend_shape = "magi_half_mask_female_fat" }
+	attribute = { name = "bs_muscular_1"			blend_shape = "magi_half_mask_female_muscular" }
+}
+
+pdxmesh = {
+	name = "aov_magi_half_mask_female_liches_02_mesh"
+	file = "magi_half_mask_female.mesh"
+	
+	blend_shape = { id = "magi_half_mask_female_fat"		type = "magi_half_mask_female_fat.mesh" }
+	blend_shape = { id = "magi_half_mask_female_muscular"		type = "magi_half_mask_female_muscular.mesh" }
+
+	meshsettings = {
+		name = "magi_half_mask_female"
+		index = 0
+		texture_diffuse = "magi_half_mask_liches_02_diffuse.dds"
+		texture_normal = "magi_half_mask_liches_02_normal.dds"
+		texture_specular = "magi_half_mask_liches_02_properties.dds"
+		shader = "portrait_attachment"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_magi_half_mask_female_liches_02_entity"
+	pdxmesh = "aov_magi_half_mask_female_liches_02_mesh"
+	
+	attribute = { name = "bs_fat_1"					blend_shape = "magi_half_mask_female_fat" }
+	attribute = { name = "bs_muscular_1"			blend_shape = "magi_half_mask_female_muscular" }
+}
+
+############ male_lich_crown.asset ########################
+
+pdxmesh = {
+	name = "aov_male_lich_crown_mesh"
+	file = "male_lich_crown.mesh"
+
+	meshsettings = {
+		name = "male_lich_crown"
+		index = 0
+		texture_diffuse = "lich_crown_diffuse.dds"		
+		texture_normal = "lich_crown_normal.dds"
+		texture_specular = "lich_crown_properties.dds"
+		shader = "portrait_attachment"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_lich_crown_entity"
+	pdxmesh = "aov_male_lich_crown_mesh"
+}
+
+pdxmesh = {
+	name = "aov_male_lich_crown_human_mesh"
+	file = "male_lich_crown_human.mesh"
+
+	meshsettings = {
+		name = "male_lich_crown_human"
+		index = 0
+		texture_diffuse = "lich_crown_diffuse.dds"		
+		texture_normal = "lich_crown_normal.dds"
+		texture_specular = "lich_crown_properties.dds"
+		shader = "portrait_attachment"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_lich_crown_human_entity"
+	pdxmesh = "aov_male_lich_crown_human_mesh"
+}
+
+############ male_archlich_crown.asset ########################
+
+pdxmesh = {
+	name = "aov_male_archlich_crown_mesh"
+	file = "male_archlich_crown.mesh"
+
+	meshsettings = {
+		name = "male_archlich_crown"
+		index = 0
+		texture_diffuse = "archlich_crown_diffuse.dds"		
+		texture_normal = "archlich_crown_normal.dds"
+		texture_specular = "archlich_crown_properties.dds"
+		shader = "portrait_attachment"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_archlich_crown_entity"
+	pdxmesh = "aov_male_archlich_crown_mesh"
+}
+
+pdxmesh = {
+	name = "aov_male_archlich_crown_human_mesh"
+	file = "male_archlich_crown_human.mesh"
+
+	meshsettings = {
+		name = "male_archlich_crown_human"
+		index = 0
+		texture_diffuse = "archlich_crown_diffuse.dds"		
+		texture_normal = "archlich_crown_normal.dds"
+		texture_specular = "archlich_crown_properties.dds"
+		shader = "portrait_attachment"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_male_archlich_crown_human_entity"
+	pdxmesh = "aov_male_archlich_crown_human_mesh"
+}
+
+############ female_lich_crown.asset ########################
+
+pdxmesh = {
+	name = "aov_female_lich_crown_mesh"
+	file = "female_lich_crown.mesh"
+
+	meshsettings = {
+		name = "female_lich_crown"
+		index = 0
+		texture_diffuse = "lich_crown_diffuse.dds"		
+		texture_normal = "lich_crown_normal.dds"
+		texture_specular = "lich_crown_properties.dds"
+		shader = "portrait_attachment"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_lich_crown_entity"
+	pdxmesh = "aov_female_lich_crown_mesh"
+}
+
+pdxmesh = {
+	name = "aov_female_lich_crown_human_mesh"
+	file = "female_lich_crown_human.mesh"
+
+	meshsettings = {
+		name = "female_lich_crown_human"
+		index = 0
+		texture_diffuse = "lich_crown_diffuse.dds"		
+		texture_normal = "lich_crown_normal.dds"
+		texture_specular = "lich_crown_properties.dds"
+		shader = "portrait_attachment"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_lich_crown_human_entity"
+	pdxmesh = "aov_female_lich_crown_human_mesh"
+}
+
+############ female_archlich_crown.asset ########################
+
+pdxmesh = {
+	name = "aov_female_archlich_crown_mesh"
+	file = "female_archlich_crown.mesh"
+
+	meshsettings = {
+		name = "female_archlich_crown"
+		index = 0
+		texture_diffuse = "archlich_crown_diffuse.dds"		
+		texture_normal = "archlich_crown_normal.dds"
+		texture_specular = "archlich_crown_properties.dds"
+		shader = "portrait_attachment"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_archlich_crown_entity"
+	pdxmesh = "aov_female_archlich_crown_mesh"
+}
+
+pdxmesh = {
+	name = "aov_female_archlich_crown_human_mesh"
+	file = "female_archlich_crown_human.mesh"
+
+	meshsettings = {
+		name = "female_archlich_crown_human"
+		index = 0
+		texture_diffuse = "archlich_crown_diffuse.dds"		
+		texture_normal = "archlich_crown_normal.dds"
+		texture_specular = "archlich_crown_properties.dds"
+		shader = "portrait_attachment"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "aov_female_archlich_crown_human_entity"
+	pdxmesh = "aov_female_archlich_crown_human_mesh"
+}

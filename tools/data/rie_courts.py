@@ -57,6 +57,18 @@ COURTS = {
     },
 }
 
+# Liches (Anbennar's lich trait) come before the race courts (user choice): a landed Lich holds court in Godherja's
+# lichdom hall (imported once to gfx/interface/illustrations/aov_lich/, not copied by the generator; the lighting
+# Godherja pairs it with), shown like the courts above also for a non-ruling spouse, the betrothed or the host; an
+# unlanded Lich (courtier, prisoner's guest, adventurer) stands in RiE's Nazgul crypt. First match wins.
+# (name, character-scope condition, view fallbacks, texture, environment)
+LICH_BACKGROUNDS = [
+    ("unlanded", ["has_trait = lich", "is_landed = no"], False,
+     "event_scenes/lotr_throneroom_evil.dds", "environment_evil_throneroom"),
+    ("landed", ["has_trait = lich", "is_landed = yes"], True,
+     "aov_lich/lichdom_court.dds", "environment_cw_india_main"),
+]
+
 # Anbennar's character_view_bg entry our backgrounds go in front of (its first throneroom; everything above it covers
 # death, prison, activities, travel and camps, which should keep winning).
 BACKGROUND_ANCHOR = "character_view/fp1_throneroom_nontribal.dds"

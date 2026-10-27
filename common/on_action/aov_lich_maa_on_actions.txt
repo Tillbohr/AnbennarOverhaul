@@ -1,0 +1,26 @@
+﻿# Anbennar Overhaul: a Lich's raised dead (common/scripted_effects/aov_lich_maa_effects.txt), appended to vanilla on_actions.
+
+# Collects mana for raised dead the recruit screen did not pay for (AI recruits, or a Lich short of mana)
+quarterly_playable_pulse = {
+	on_actions = { aov_lich_maa_quarterly }
+}
+
+# Root = character
+aov_lich_maa_quarterly = {
+	trigger = { has_trait = lich }
+	effect = { aov_lich_maa_pay = yes }
+}
+
+# Liches of the history files give up the living soldiers they were handed at game start
+on_game_start_after_lobby = {
+	on_actions = { aov_lich_maa_game_start }
+}
+
+aov_lich_maa_game_start = {
+	effect = {
+		every_living_character = {
+			limit = { has_trait = lich }
+			aov_lich_maa_on_becoming_lich = yes
+		}
+	}
+}

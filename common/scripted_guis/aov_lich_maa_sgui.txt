@@ -1,0 +1,13 @@
+﻿# Anbennar Overhaul: run after the recruit screen's Create and Increase Size buttons (gui/window_menatarms*.gui,
+# tools/build_lich_maa.py): pays mana for the raised dead just added. Does nothing for anyone else.
+aov_lich_maa_pay = {
+	scope = character
+	is_valid = { has_trait = lich }
+	effect = { aov_lich_maa_pay = yes }
+}
+
+# The recruit screen shows mana, not gold, to a Lich
+aov_is_lich = {
+	scope = character
+	is_shown = { has_trait = lich }
+}

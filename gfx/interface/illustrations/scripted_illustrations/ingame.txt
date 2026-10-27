@@ -9684,6 +9684,23 @@ character_view_bg = {
 
 	# 'Feudal'/High-tier Norse, or non-Tribals in Scandinavia
 	# Anbennar Overhaul: Realms in Exile backgrounds (tools/build_rie_courts.py, tools/data/rie_courts.py)
+	# Liches: Godherja's lichdom hall when landed, RiE's Nazgul crypt otherwise
+	texture = {
+		reference = "event_scenes/lotr_throneroom_evil.dds"
+		trigger = { aov_lich_court_view_unlanded_trigger = yes }
+	}
+	environment = {
+		reference = "environment_evil_throneroom"
+		trigger = { aov_lich_court_view_unlanded_trigger = yes }
+	}
+	texture = {
+		reference = "aov_lich/lichdom_court.dds"
+		trigger = { aov_lich_court_view_landed_trigger = yes }
+	}
+	environment = {
+		reference = "environment_cw_india_main"
+		trigger = { aov_lich_court_view_landed_trigger = yes }
+	}
 	# RiE dwarven court (Durin's Folk)
 	texture = {
 		reference = "character_view/throneroom_dwarf_highest.dds"

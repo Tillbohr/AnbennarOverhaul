@@ -1,6 +1,6 @@
-﻿# Anbennar Overhaul: a Lich (Anbennar's lich trait, from the Lichdom advancement) is a skeleton in their usual clothes:
+﻿# Anbennar Overhaul: a Lich (Anbennar's lich trait, from the Lichdom advancement) is a skeleton in Godherja's lich clothes:
 # Godherja's skull and bones (common/genes/aov_lich_genes.txt, art in gfx/models/portraits/aov_lich/) replace the living
-# head and body, and the face's eyes, lashes, teeth, hair and beard go with them. Headgear and clothes stay.
+# head and body, and the face's eyes, lashes, teeth, hair and beard go with them. Clothes: the groups below.
 
 aov_lich = {
 	usage = game
@@ -25,12 +25,6 @@ aov_lich = {
 				gene = aov_lich_body
 				template = aov_lich_bones
 				value = 0.5
-			}
-			accessory = {
-				mode = replace
-				gene = aov_lich_eyes
-				template = aov_lich_gem_eyes
-				range = { 0 1 }
 			}
 			accessory = {
 				mode = replace
@@ -69,6 +63,675 @@ aov_lich = {
 				add = 100
 				exists = this
 				has_trait = lich
+			}
+		}
+	}
+}
+
+# A Lich's eyes, Godherja's glowing eyes in a random colour (equal weights below 100, so a weighted random pick). The
+# barbershop shows this group (usage both): a Lich can pick another colour, gems or empty sockets instead, which never
+# come up at random.
+aov_lich_eyes = {
+	usage = both
+	interface_position = 20
+	priority = 100
+
+	aov_lich_eyes_blue = {
+		dna_modifiers = {
+			accessory = {
+				mode = replace
+				gene = aov_lich_eyes
+				template = aov_lich_glowing_eyes_blue
+				range = { 0 1 }
+			}
+		}
+		is_valid_custom = { has_trait = lich }
+		weight = {
+			base = 0
+			modifier = {
+				add = 10 # below 100, so the colours are a weighted random pick
+				exists = this
+				has_trait = lich
+			}
+		}
+	}
+
+	aov_lich_eyes_gold = {
+		dna_modifiers = {
+			accessory = {
+				mode = replace
+				gene = aov_lich_eyes
+				template = aov_lich_glowing_eyes_gold
+				range = { 0 1 }
+			}
+		}
+		is_valid_custom = { has_trait = lich }
+		weight = {
+			base = 0
+			modifier = {
+				add = 10
+				exists = this
+				has_trait = lich
+			}
+		}
+	}
+
+	aov_lich_eyes_green = {
+		dna_modifiers = {
+			accessory = {
+				mode = replace
+				gene = aov_lich_eyes
+				template = aov_lich_glowing_eyes_green
+				range = { 0 1 }
+			}
+		}
+		is_valid_custom = { has_trait = lich }
+		weight = {
+			base = 0
+			modifier = {
+				add = 10
+				exists = this
+				has_trait = lich
+			}
+		}
+	}
+
+	aov_lich_eyes_grey = {
+		dna_modifiers = {
+			accessory = {
+				mode = replace
+				gene = aov_lich_eyes
+				template = aov_lich_glowing_eyes_grey
+				range = { 0 1 }
+			}
+		}
+		is_valid_custom = { has_trait = lich }
+		weight = {
+			base = 0
+			modifier = {
+				add = 10
+				exists = this
+				has_trait = lich
+			}
+		}
+	}
+
+	aov_lich_eyes_pink = {
+		dna_modifiers = {
+			accessory = {
+				mode = replace
+				gene = aov_lich_eyes
+				template = aov_lich_glowing_eyes_pink
+				range = { 0 1 }
+			}
+		}
+		is_valid_custom = { has_trait = lich }
+		weight = {
+			base = 0
+			modifier = {
+				add = 10
+				exists = this
+				has_trait = lich
+			}
+		}
+	}
+
+	aov_lich_eyes_purple = {
+		dna_modifiers = {
+			accessory = {
+				mode = replace
+				gene = aov_lich_eyes
+				template = aov_lich_glowing_eyes_purple
+				range = { 0 1 }
+			}
+		}
+		is_valid_custom = { has_trait = lich }
+		weight = {
+			base = 0
+			modifier = {
+				add = 10
+				exists = this
+				has_trait = lich
+			}
+		}
+	}
+
+	aov_lich_eyes_red = {
+		dna_modifiers = {
+			accessory = {
+				mode = replace
+				gene = aov_lich_eyes
+				template = aov_lich_glowing_eyes_red
+				range = { 0 1 }
+			}
+		}
+		is_valid_custom = { has_trait = lich }
+		weight = {
+			base = 0
+			modifier = {
+				add = 10
+				exists = this
+				has_trait = lich
+			}
+		}
+	}
+
+	aov_lich_eyes_teal = {
+		dna_modifiers = {
+			accessory = {
+				mode = replace
+				gene = aov_lich_eyes
+				template = aov_lich_glowing_eyes_teal
+				range = { 0 1 }
+			}
+		}
+		is_valid_custom = { has_trait = lich }
+		weight = {
+			base = 0
+			modifier = {
+				add = 10
+				exists = this
+				has_trait = lich
+			}
+		}
+	}
+
+	aov_lich_eyes_white = {
+		dna_modifiers = {
+			accessory = {
+				mode = replace
+				gene = aov_lich_eyes
+				template = aov_lich_glowing_eyes_white
+				range = { 0 1 }
+			}
+		}
+		is_valid_custom = { has_trait = lich }
+		weight = {
+			base = 0
+			modifier = {
+				add = 10
+				exists = this
+				has_trait = lich
+			}
+		}
+	}
+
+	aov_lich_eyes_gems = {
+		dna_modifiers = {
+			accessory = {
+				mode = replace
+				gene = aov_lich_eyes
+				template = aov_lich_gem_eyes
+				range = { 0 1 }
+			}
+		}
+		is_valid_custom = { has_trait = lich }
+		weight = {
+			base = 0
+			modifier = {
+				add = 0 # barbershop only
+				exists = this
+				has_trait = lich
+			}
+		}
+	}
+
+	aov_lich_eyes_empty = {
+		dna_modifiers = {
+			accessory = {
+				mode = replace
+				gene = aov_lich_eyes
+				template = aov_lich_no_gems
+				range = { 0 1 }
+			}
+		}
+		is_valid_custom = { has_trait = lich }
+		weight = {
+			base = 0
+			modifier = {
+				add = 0 # barbershop only
+				exists = this
+				has_trait = lich
+			}
+		}
+	}
+}
+
+# Lich clothes after Godherja's lich look (genes in common/genes/aov_lich_genes.txt). Vanilla's clothes, cloaks and
+# headgear come from mode = add modifiers (extra genes on top of the DNA), so they are hidden with mode = add too;
+# replace only rewrites the DNA's own gene and leaves them showing.
+
+# One of six looks per Lich, picked at random (all weights equal and below 100): black robes and a hood in the
+# same colours and fabric, instead of the usual clothes and cloak. Dressed for war, the armour stays and only the
+# look's hood is added.
+aov_lich_outfit = {
+	usage = game
+	priority = 100
+
+	aov_lich_outfit_1 = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = clothes
+				template = no_clothes
+				range = { 0 1 }
+			}
+			accessory = {
+				mode = add
+				gene = cloaks
+				template = no_cloak
+				range = { 0 1 }
+			}
+			accessory = {
+				mode = replace
+				gene = aov_lich_clothes
+				template = aov_lich_robes_1
+				value = 0.5
+			}
+			accessory = {
+				mode = replace
+				gene = aov_lich_hood
+				template = aov_lich_hood_1
+				range = { 0 1 } # hood up, down or none
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 10 # below 100, so the six looks are a weighted random pick
+				exists = this
+				has_trait = lich
+				portrait_wear_armor_trigger = no
+			}
+		}
+	}
+
+	aov_lich_outfit_2 = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = clothes
+				template = no_clothes
+				range = { 0 1 }
+			}
+			accessory = {
+				mode = add
+				gene = cloaks
+				template = no_cloak
+				range = { 0 1 }
+			}
+			accessory = {
+				mode = replace
+				gene = aov_lich_clothes
+				template = aov_lich_robes_2
+				value = 0.5
+			}
+			accessory = {
+				mode = replace
+				gene = aov_lich_hood
+				template = aov_lich_hood_2
+				range = { 0 1 } # hood up, down or none
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 10 # below 100, so the six looks are a weighted random pick
+				exists = this
+				has_trait = lich
+				portrait_wear_armor_trigger = no
+			}
+		}
+	}
+
+	aov_lich_outfit_3 = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = clothes
+				template = no_clothes
+				range = { 0 1 }
+			}
+			accessory = {
+				mode = add
+				gene = cloaks
+				template = no_cloak
+				range = { 0 1 }
+			}
+			accessory = {
+				mode = replace
+				gene = aov_lich_clothes
+				template = aov_lich_robes_3
+				value = 0.5
+			}
+			accessory = {
+				mode = replace
+				gene = aov_lich_hood
+				template = aov_lich_hood_3
+				range = { 0 1 } # hood up, down or none
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 10 # below 100, so the six looks are a weighted random pick
+				exists = this
+				has_trait = lich
+				portrait_wear_armor_trigger = no
+			}
+		}
+	}
+
+	aov_lich_outfit_4 = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = clothes
+				template = no_clothes
+				range = { 0 1 }
+			}
+			accessory = {
+				mode = add
+				gene = cloaks
+				template = no_cloak
+				range = { 0 1 }
+			}
+			accessory = {
+				mode = replace
+				gene = aov_lich_clothes
+				template = aov_lich_robes_4
+				value = 0.5
+			}
+			accessory = {
+				mode = replace
+				gene = aov_lich_hood
+				template = aov_lich_hood_4
+				range = { 0 1 } # hood up, down or none
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 10 # below 100, so the six looks are a weighted random pick
+				exists = this
+				has_trait = lich
+				portrait_wear_armor_trigger = no
+			}
+		}
+	}
+
+	aov_lich_outfit_5 = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = clothes
+				template = no_clothes
+				range = { 0 1 }
+			}
+			accessory = {
+				mode = add
+				gene = cloaks
+				template = no_cloak
+				range = { 0 1 }
+			}
+			accessory = {
+				mode = replace
+				gene = aov_lich_clothes
+				template = aov_lich_robes_5
+				value = 0.5
+			}
+			accessory = {
+				mode = replace
+				gene = aov_lich_hood
+				template = aov_lich_hood_5
+				range = { 0 1 } # hood up, down or none
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 10 # below 100, so the six looks are a weighted random pick
+				exists = this
+				has_trait = lich
+				portrait_wear_armor_trigger = no
+			}
+		}
+	}
+
+	aov_lich_outfit_6 = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = clothes
+				template = no_clothes
+				range = { 0 1 }
+			}
+			accessory = {
+				mode = add
+				gene = cloaks
+				template = no_cloak
+				range = { 0 1 }
+			}
+			accessory = {
+				mode = replace
+				gene = aov_lich_clothes
+				template = aov_lich_robes_6
+				value = 0.5
+			}
+			accessory = {
+				mode = replace
+				gene = aov_lich_hood
+				template = aov_lich_hood_6
+				range = { 0 1 } # hood up, down or none
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 10 # below 100, so the six looks are a weighted random pick
+				exists = this
+				has_trait = lich
+				portrait_wear_armor_trigger = no
+			}
+		}
+	}
+
+	aov_lich_outfit_1_armoured = {
+		dna_modifiers = {
+			accessory = {
+				mode = replace
+				gene = aov_lich_hood
+				template = aov_lich_hood_1
+				range = { 0 1 } # hood up, down or none
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 10 # below 100, so the six looks are a weighted random pick
+				exists = this
+				has_trait = lich
+				portrait_wear_armor_trigger = yes
+			}
+		}
+	}
+
+	aov_lich_outfit_2_armoured = {
+		dna_modifiers = {
+			accessory = {
+				mode = replace
+				gene = aov_lich_hood
+				template = aov_lich_hood_2
+				range = { 0 1 } # hood up, down or none
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 10 # below 100, so the six looks are a weighted random pick
+				exists = this
+				has_trait = lich
+				portrait_wear_armor_trigger = yes
+			}
+		}
+	}
+
+	aov_lich_outfit_3_armoured = {
+		dna_modifiers = {
+			accessory = {
+				mode = replace
+				gene = aov_lich_hood
+				template = aov_lich_hood_3
+				range = { 0 1 } # hood up, down or none
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 10 # below 100, so the six looks are a weighted random pick
+				exists = this
+				has_trait = lich
+				portrait_wear_armor_trigger = yes
+			}
+		}
+	}
+
+	aov_lich_outfit_4_armoured = {
+		dna_modifiers = {
+			accessory = {
+				mode = replace
+				gene = aov_lich_hood
+				template = aov_lich_hood_4
+				range = { 0 1 } # hood up, down or none
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 10 # below 100, so the six looks are a weighted random pick
+				exists = this
+				has_trait = lich
+				portrait_wear_armor_trigger = yes
+			}
+		}
+	}
+
+	aov_lich_outfit_5_armoured = {
+		dna_modifiers = {
+			accessory = {
+				mode = replace
+				gene = aov_lich_hood
+				template = aov_lich_hood_5
+				range = { 0 1 } # hood up, down or none
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 10 # below 100, so the six looks are a weighted random pick
+				exists = this
+				has_trait = lich
+				portrait_wear_armor_trigger = yes
+			}
+		}
+	}
+
+	aov_lich_outfit_6_armoured = {
+		dna_modifiers = {
+			accessory = {
+				mode = replace
+				gene = aov_lich_hood
+				template = aov_lich_hood_6
+				range = { 0 1 } # hood up, down or none
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 10 # below 100, so the six looks are a weighted random pick
+				exists = this
+				has_trait = lich
+				portrait_wear_armor_trigger = yes
+			}
+		}
+	}
+}
+aov_lich_mask = {
+	usage = game
+	priority = 100
+
+	aov_lich_mask = {
+		dna_modifiers = {
+			accessory = {
+				mode = replace
+				gene = aov_lich_mask
+				template = aov_lich_mask
+				range = { 0 1 }
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 100
+				exists = this
+				has_trait = lich
+			}
+		}
+	}
+}
+
+aov_lich_crown = {
+	usage = game
+	priority = 100
+
+	aov_lich_king_crown = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = headgear
+				template = no_headgear
+				range = { 0 1 }
+			}
+			accessory = {
+				mode = replace
+				gene = aov_lich_crown
+				template = aov_lich_king_crown
+				value = 0.5
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 100
+				exists = this
+				has_trait = lich
+				highest_held_title_tier = tier_kingdom
+			}
+		}
+	}
+
+	aov_archlich_crown = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = headgear
+				template = no_headgear
+				range = { 0 1 }
+			}
+			accessory = {
+				mode = replace
+				gene = aov_lich_crown
+				template = aov_archlich_crown
+				value = 0.5
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 100
+				exists = this
+				has_trait = lich
+				highest_held_title_tier >= tier_empire
 			}
 		}
 	}

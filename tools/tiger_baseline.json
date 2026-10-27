@@ -2021,6 +2021,510 @@
   "key": "missing-item",
   "locations": [
     {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format peasant_militia_damage_add not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format peasant_militia_damage_mult not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format peasant_militia_maintenance_mult not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format peasant_militia_max_size_add not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format peasant_militia_max_size_mult not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format peasant_militia_pursuit_add not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format peasant_militia_pursuit_mult not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format peasant_militia_recruitment_cost_mult not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format peasant_militia_screen_add not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format peasant_militia_screen_mult not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format peasant_militia_siege_value_add not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format peasant_militia_siege_value_mult not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format peasant_militia_toughness_add not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format peasant_militia_toughness_mult not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format stationed_peasant_militia_damage_add not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format stationed_peasant_militia_damage_mult not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format stationed_peasant_militia_pursuit_add not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format stationed_peasant_militia_pursuit_mult not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format stationed_peasant_militia_screen_add not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format stationed_peasant_militia_screen_mult not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format stationed_peasant_militia_siege_value_add not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format stationed_peasant_militia_siege_value_mult not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format stationed_peasant_militia_toughness_add not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 9,
+      "from": "MOD",
+      "fullpath": ".\\common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "length": 15,
+      "line": "\ttype = peasant_militia",
+      "linenr": 618,
+      "path": "common\\men_at_arms_types\\zz_aov_lich_maa_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "modifier format stationed_peasant_militia_toughness_mult not defined in common/modifier_definition_formats/",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
       "column": 16,
       "from": "MOD",
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
@@ -2068,7 +2572,7 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 19,
       "line": "\t\treference = \"character_view_main\"",
-      "linenr": 11727,
+      "linenr": 11744,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": null
@@ -2089,7 +2593,7 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 21,
       "line": "\t\treference = \"character_view_spouse\"",
-      "linenr": 11735,
+      "linenr": 11752,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": null
@@ -2110,7 +2614,7 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 19,
       "line": "\t\treference = \"character_view_main\"",
-      "linenr": 11834,
+      "linenr": 11851,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": null
@@ -2131,7 +2635,7 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 21,
       "line": "\t\treference = \"character_view_spouse\"",
-      "linenr": 11842,
+      "linenr": 11859,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": null
@@ -4227,6 +4731,48 @@
 {
   "confidence": "reasonable",
   "info": null,
+  "key": "colors",
+  "locations": [
+    {
+      "column": 15,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 1,
+      "line": "\t\t\tcolor = rgb{ 0 200 75 }\t# Hue, saturation, value. Increase value for more intense lights",
+      "linenr": 546,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "camera colors should be in hsv",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "colors",
+  "locations": [
+    {
+      "column": 15,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 1,
+      "line": "\t\t\tcolor = rgb{ 0 125 225 }\t# Hue, saturation, value. Increase value for more intense lights",
+      "linenr": 572,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "camera colors should be in hsv",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
   "key": "missing-localization",
   "locations": [
     {
@@ -4715,7 +5261,7 @@
       "fullpath": ".\\common\\genes\\07_genes_special_accessories_misc.txt",
       "length": 1,
       "line": "}",
-      "linenr": 1937,
+      "linenr": 1926,
       "path": "common\\genes\\07_genes_special_accessories_misc.txt",
       "stage": null,
       "tag": null
@@ -5135,7 +5681,7 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 1,
       "line": "\t\t\t\t\t\t\t\tOR = {",
-      "linenr": 9782,
+      "linenr": 9799,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": null
@@ -5156,27 +5702,6 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 1,
       "line": "\t\t\t\t\t\t\t\tOR = {",
-      "linenr": 9798,
-      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
-      "stage": null,
-      "tag": null
-    }
-  ],
-  "message": "OR with only one item inside is probably not what you intended",
-  "severity": "warning",
-  "wiki": null
-},
-{
-  "confidence": "weak",
-  "info": null,
-  "key": "logic",
-  "locations": [
-    {
-      "column": 11,
-      "from": "MOD",
-      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
-      "length": 1,
-      "line": "\t\t\t\t\tOR = {",
       "linenr": 9815,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
@@ -5193,12 +5718,12 @@
   "key": "logic",
   "locations": [
     {
-      "column": 14,
+      "column": 11,
       "from": "MOD",
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 1,
-      "line": "\t\t\t\t\t\t\t\tOR = {",
-      "linenr": 9843,
+      "line": "\t\t\t\t\tOR = {",
+      "linenr": 9832,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": null
@@ -5219,7 +5744,28 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 1,
       "line": "\t\t\t\t\t\t\t\tOR = {",
-      "linenr": 9859,
+      "linenr": 9860,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
+      "column": 14,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\t\t\tOR = {",
+      "linenr": 9876,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": null
@@ -5240,28 +5786,7 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 1,
       "line": "\t\t\t\t\tOR = {",
-      "linenr": 9876,
-      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
-      "stage": null,
-      "tag": null
-    }
-  ],
-  "message": "OR with only one item inside is probably not what you intended",
-  "severity": "warning",
-  "wiki": null
-},
-{
-  "confidence": "weak",
-  "info": null,
-  "key": "logic",
-  "locations": [
-    {
-      "column": 12,
-      "from": "MOD",
-      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
-      "length": 1,
-      "line": "\t\t\t\t\t\tOR = {",
-      "linenr": 9902,
+      "linenr": 9893,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": null
@@ -5319,12 +5844,33 @@
   "key": "logic",
   "locations": [
     {
+      "column": 12,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\tOR = {",
+      "linenr": 9953,
+      "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR with only one item inside is probably not what you intended",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "weak",
+  "info": null,
+  "key": "logic",
+  "locations": [
+    {
       "column": 9,
       "from": "MOD",
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 1,
       "line": "\t\t\tOR = {",
-      "linenr": 10130,
+      "linenr": 10147,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": null
@@ -5345,7 +5891,7 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 1,
       "line": "\t\t\t\t\t\t\t\tOR = {",
-      "linenr": 10138,
+      "linenr": 10155,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": null
@@ -5366,7 +5912,7 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 1,
       "line": "\t\t\t\t\t\t\t\tOR = {",
-      "linenr": 10149,
+      "linenr": 10166,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": null
@@ -5387,7 +5933,7 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 1,
       "line": "\t\t\tOR = {",
-      "linenr": 10175,
+      "linenr": 10192,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": null
@@ -5408,7 +5954,7 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 1,
       "line": "\t\t\t\t\t\t\t\tOR = {",
-      "linenr": 10183,
+      "linenr": 10200,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": null
@@ -5429,7 +5975,7 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 1,
       "line": "\t\t\t\t\t\t\t\tOR = {",
-      "linenr": 10194,
+      "linenr": 10211,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": null
@@ -5450,7 +5996,7 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 1,
       "line": "\t\t\tOR = {",
-      "linenr": 11459,
+      "linenr": 11476,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": null
@@ -5471,7 +6017,7 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 1,
       "line": "\t\t\tOR = {",
-      "linenr": 12446,
+      "linenr": 12463,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": null
@@ -5492,7 +6038,7 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 1,
       "line": "\t\t\tOR = {",
-      "linenr": 12459,
+      "linenr": 12476,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": null
@@ -5513,7 +6059,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "length": 1,
       "line": "\t\t\t\tOR = {",
-      "linenr": 112,
+      "linenr": 69,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "stage": null,
       "tag": null
@@ -5534,7 +6080,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "length": 1,
       "line": "\t\t\t\tOR = {",
-      "linenr": 134,
+      "linenr": 91,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "stage": null,
       "tag": null
@@ -5555,7 +6101,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "length": 1,
       "line": "\t\t\t\tOR = {",
-      "linenr": 156,
+      "linenr": 113,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "stage": null,
       "tag": null
@@ -5576,7 +6122,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "length": 1,
       "line": "\t\t\t\tOR = {",
-      "linenr": 176,
+      "linenr": 133,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "stage": null,
       "tag": null
@@ -5597,7 +6143,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "length": 1,
       "line": "\t\t\t\tOR = {",
-      "linenr": 198,
+      "linenr": 155,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "stage": null,
       "tag": null
@@ -5618,7 +6164,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "length": 1,
       "line": "\t\t\t\tOR = {",
-      "linenr": 220,
+      "linenr": 177,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_clothes_base.txt",
       "stage": null,
       "tag": null
@@ -5660,7 +6206,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_headgear_base.txt",
       "length": 1,
       "line": "\t\t\t\tOR = {",
-      "linenr": 270,
+      "linenr": 233,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_headgear_base.txt",
       "stage": null,
       "tag": null
@@ -5681,7 +6227,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\tOR = {",
-      "linenr": 98,
+      "linenr": 80,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -5702,7 +6248,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\t\t\t\tOR = {",
-      "linenr": 133,
+      "linenr": 115,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -5723,7 +6269,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\t\t\t\t\tOR = {",
-      "linenr": 153,
+      "linenr": 135,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -5744,7 +6290,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\t\tOR = {",
-      "linenr": 163,
+      "linenr": 145,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -5765,7 +6311,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\t\t\t\tOR = {",
-      "linenr": 199,
+      "linenr": 181,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -5786,7 +6332,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\t\t\t\t\tOR = {",
-      "linenr": 219,
+      "linenr": 201,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -5807,7 +6353,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\t\tOR = {",
-      "linenr": 229,
+      "linenr": 211,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -5828,7 +6374,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_headgear_armor.txt",
       "length": 1,
       "line": "\t\t\t\tOR = {",
-      "linenr": 134,
+      "linenr": 112,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_headgear_armor.txt",
       "stage": null,
       "tag": null
@@ -6470,6 +7016,90 @@
 },
 {
   "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\touter_cone_angle = 30",
+      "linenr": 560,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "outer_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\tinner_cone_angle = 5",
+      "linenr": 561,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "inner_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\touter_cone_angle = 55",
+      "linenr": 586,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "outer_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "unneeded",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "length": 16,
+      "line": "\t\t\tinner_cone_angle = 0",
+      "linenr": 587,
+      "path": "gfx\\portraits\\environments\\aov_rie_environments.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "inner_cone_angle is only for point_light",
+  "severity": "untidy",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
   "info": "you can remove the AND and just have the item there",
   "key": "performance",
   "locations": [
@@ -6490,7 +7120,7 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 1,
       "line": "\t\t\thigh_tier_throne_room_spouse_trigger = { REGION = iberia }",
-      "linenr": 10549,
+      "linenr": 10566,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": "from here"
@@ -6522,7 +7152,7 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 1,
       "line": "\t\t\thigh_tier_throne_room_spouse_trigger = { REGION = mediterranean }",
-      "linenr": 10640,
+      "linenr": 10657,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": "from here"
@@ -6554,7 +7184,7 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 1,
       "line": "\t\t\thigh_tier_throne_room_spouse_trigger = { REGION = mena }",
-      "linenr": 10938,
+      "linenr": 10955,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": "from here"
@@ -6586,7 +7216,7 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 1,
       "line": "\t\t\thigh_tier_throne_room_spouse_trigger = { REGION = india }",
-      "linenr": 11029,
+      "linenr": 11046,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": "from here"
@@ -6618,7 +7248,7 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 1,
       "line": "\t\t\thigh_tier_throne_room_spouse_trigger = { REGION = western }",
-      "linenr": 11120,
+      "linenr": 11137,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": "from here"
@@ -6660,7 +7290,7 @@
       "fullpath": ".\\gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "length": 1,
       "line": "\t\t\t\tAND = {",
-      "linenr": 10898,
+      "linenr": 10915,
       "path": "gfx\\interface\\illustrations\\scripted_illustrations\\ingame.txt",
       "stage": null,
       "tag": null
@@ -6681,7 +7311,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\tAND = {",
-      "linenr": 316,
+      "linenr": 298,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -6702,7 +7332,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\t\tAND = {",
-      "linenr": 350,
+      "linenr": 332,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -6723,7 +7353,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\t\tAND = {",
-      "linenr": 369,
+      "linenr": 351,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -6744,7 +7374,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\t\tAND = {",
-      "linenr": 397,
+      "linenr": 379,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -6765,7 +7395,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "length": 1,
       "line": "\t\t\t\t\tAND = {",
-      "linenr": 409,
+      "linenr": 391,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_01_legwear_base.txt",
       "stage": null,
       "tag": null
@@ -6786,7 +7416,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
       "length": 1,
       "line": "\t\t\t\t\tAND = {",
-      "linenr": 438,
+      "linenr": 394,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
       "stage": null,
       "tag": null
@@ -6807,7 +7437,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
       "length": 1,
       "line": "\t\t\t\t\tAND = {",
-      "linenr": 461,
+      "linenr": 417,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
       "stage": null,
       "tag": null
@@ -6828,7 +7458,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
       "length": 1,
       "line": "\t\t\t\t\tAND = {",
-      "linenr": 495,
+      "linenr": 451,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
       "stage": null,
       "tag": null
@@ -6849,7 +7479,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
       "length": 1,
       "line": "\t\t\t\t\tAND = {",
-      "linenr": 507,
+      "linenr": 463,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_clothes_armor.txt",
       "stage": null,
       "tag": null
@@ -6870,7 +7500,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_headgear_armor.txt",
       "length": 1,
       "line": "\t\t\t\t\tAND = {",
-      "linenr": 222,
+      "linenr": 200,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_headgear_armor.txt",
       "stage": null,
       "tag": null
@@ -6891,7 +7521,7 @@
       "fullpath": ".\\gfx\\portraits\\portrait_modifiers\\aov_rie_04_headgear_armor.txt",
       "length": 1,
       "line": "\t\t\t\t\tAND = {",
-      "linenr": 248,
+      "linenr": 226,
       "path": "gfx\\portraits\\portrait_modifiers\\aov_rie_04_headgear_armor.txt",
       "stage": null,
       "tag": null
