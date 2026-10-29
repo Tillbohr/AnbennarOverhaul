@@ -1,0 +1,78 @@
+﻿# Anbennar Overhaul: single-decision overrides, copied verbatim from Anbennar except lines marked "# Anbennar Overhaul".
+# Re-copy after an Anbennar update when tools/tests/test_decision_texts.py reports drift.
+
+## Form Reaver Kingdom of Divenhal
+# Founded by Halfdal the Hoarder in 910, it fractured in 930 when he died
+restore_reaver_kingdom_of_divenhal = {
+	decision_group_type = major
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_realm.dds"
+	}
+	desc = restore_reaver_kingdom_of_divenhal_desc # Anbennar Overhaul: was the name key, so the panel showed the name
+
+	cost = {
+		gold = 300
+		prestige = 1000
+	}
+
+	is_shown = {
+		is_landed = yes
+		culture = {
+			OR = {
+				has_cultural_pillar = heritage_gerudian # gerudian...
+				any_parent_culture_or_above = { has_cultural_pillar = heritage_gerudian } # or gerudian successor, ie pearlsedgers
+			}
+		}
+		highest_held_title_tier <= tier_kingdom
+		# OR = { # this could be a possibility
+			# highest_held_title_tier <= tier_duchy
+			# has_title = title:k_eborthil
+			# has_title = title:k_pearlsedge
+		# }
+		# could be a possibility to have a check for being interested in this, so gerudian in gerudia doesnt have it ?
+		NOT = {
+			is_target_in_global_variable_list = {
+				name = unavailable_unique_decisions
+				target = flag:restore_reaver_kingdom_of_divenhal
+			}
+		}
+	}
+
+	is_valid = {
+		prestige_level >= very_high_prestige_level # Exalted among Men or higher
+		has_trait = viking
+		completely_controls_region = custom_tef
+		completely_controls_region = custom_drolas
+		completely_controls = title:d_annail
+		completely_controls = title:d_ibtatu
+		completely_controls = title:d_nathalaire
+	}
+
+	is_valid_showing_failures_only = {
+		is_capable_adult = yes
+		is_imprisoned = no
+		is_independent_ruler = yes
+	}
+
+	effect = {
+		save_scope_as = hoarder_heir
+		
+		show_as_tooltip = { restore_reaver_kingdom_of_divenhal_effect = yes }
+		
+		trigger_event = anb_decision_major_events.0029
+		
+		#Can only be done once
+		add_to_global_variable_list = {
+			name = unavailable_unique_decisions
+			target = flag:restore_reaver_kingdom_of_divenhal
+		}
+	}
+
+	ai_check_interval = 60
+	ai_potential = {
+		always = yes
+	}
+	ai_will_do = {
+		base = 100
+	}
+}

@@ -1,0 +1,71 @@
+﻿l_english:
+ # Anbennar Overhaul: descriptions, tooltips and confirm buttons for Anbennar decisions whose scripts work but whose text
+ # was a placeholder ("TODO", "(WIP)", blank, or the decision's own name). Each tooltip states what the decision's
+ # script does. Text Anbennar already wrote (for example the Roots of our Dominion description) is kept.
+
+ # Lencenor and Dameria
+ incorporate_carneter_decision:0 "Incorporate Carneter"
+ incorporate_carneter_decision_desc:0 "For twenty years the crown of Carneter has rested beside our own, and no Carnetori lord remembers when it did not. A separate kingdom means a separate court, a separate claim and a separate excuse for rebellion.\n\nLet Carneter's duchies answer to Dameria in law, as they already do in fact."
+ incorporate_carneter_decision_tooltip:0 "The duchies of [GetTitleByKey('k_carneter').GetNameNoTier] become [de_jure|E] part of [GetTitleByKey('k_dameria').GetNameNoTier]"
+ incorporate_carneter_decision_confirm:0 "One crown, one realm"
+
+ reclaim_what_dameria_stole_decision:0 "Reclaim what Dameria Stole"
+ reclaim_what_dameria_stole_decision_desc:0 "During the War of the One Rose, Canrec Dameris joined Lorevarn Lorentis against the Rubentis of Carneter. When the war ended, Dameria had taken Exwes and Wesdam into its own realm.\n\nA crown of Carneter without them is half a crown."
+ reclaim_what_dameria_stole_decision_tooltip:0 "[GetTitleByKey('d_exwes').GetName] and [GetTitleByKey('d_wesdam').GetName] become [de_jure|E] part of [GetTitleByKey('k_carneter').GetName]"
+ reclaim_what_dameria_stole_decision_confirm:0 "Carneter is whole again"
+
+ old_damerian_resurgence_decision_desc:0 "Since the Silmuna took the throne, the court of Dameria has dressed like elves, prayed like elves and named its children like elves. They call themselves Damerian and call us 'Old', as if our ways were a relic.\n\nEvery county of Dameria is in human hands again. Let the realm remember who the Damerians were before the moon elves came."
+ old_damerian_resurgence_decision_tooltip:0 "[GetCultureByKey('old_damerian').GetName] becomes known as Damerian, and the elf-touched Damerians as Elvenized Damerians"
+ old_damerian_resurgence_decision_confirm:0 "We are the true Damerians"
+
+ restore_western_marches_decision_desc:0 "Deranne was never a kingdom. It was a march of Enteben, given to Gerudian settlers in return for holding the coast in our name. Derhilde broke that oath and called herself a queen.\n\nHer heirs have worn a stolen crown long enough."
+ restore_western_marches_decision_tooltip:0 "Destroy the [GetTitleByKey('k_deranne').GetName] and make its duchies [de_jure|E] part of [GetTitleByKey('k_enteben').GetNameNoTier]"
+ restore_western_marches_decision_confirm:0 "The marches come home"
+
+ resurrect_the_high_kingdom_decision:0 "Resurrect the High Kingdom of Lencenor"
+ resurrect_the_high_kingdom_decision_desc:0 "In 525 Lorenan the Great bound the Lencori kingdoms under one High King. There was no Lorent then, no Enteben and no Carneter, only Lencenor.\n\nLorent has claimed his legacy ever since, but we hold its heartland. Let the High Kingdom rise again."
+ resurrect_the_high_kingdom_decision_tooltip:0 "Found the [GetTitleByKey('e_lencenor').GetName], with Redfort, Redwood, Enteben, Carneter and Tretun as its [de_jure|E] kingdoms"
+ resurrect_the_high_kingdom_decision_confirm:0 "Long live the High King"
+
+ # The Bounds and the Vale
+ encourage_arbarani_decision_desc:0 "Arbaran is a land of borders: Damerian knights, Crownsman townsfolk and Boundsman farmers, with moon elves in the old manors. Generations of marriage, trade and shared wars have blurred the lines between them.\n\nLet our court give that people a name of its own."
+ encourage_arbarani_decision_tooltip:0 "Found the [GetCultureByKey('arbarani').GetName] [culture|E], drawn from the Crownsman, Boundsman, Damerian and Moon Elvish peoples of Arbaran"
+
+ consolidate_farranean_decision_desc:0 "Martin Farran built his kingdom between Esmari river-lords and Adeanic hill-knights who agreed on little but their hatred of Ibevar. That alliance has outlived its founder.\n\nWith Cursewood, Whistlevale and Valefort under one banner, let two peoples who share a king become one."
+ consolidate_farranean_decision_tooltip:0 "Become [GetCultureByKey('faranni').GetName], convert the [GetCultureByKey('esmari').GetName] and [GetCultureByKey('adeanic').GetName] counties of Farraneán, and make Whistlevale, Valefort and Cursewood [de_jure|E] part of [GetTitleByKey('k_farranean').GetNameNoTier]"
+ consolidate_farranean_decision_confirm:0 "One vale, one people"
+
+ restore_havoric_kingdom_decision_desc:0 "Before the Dragonwake the Havoric lords answered to one Mountain-King. When the dragons woke, that kingdom burned with the rest, and its lords have quarrelled over the ashes ever since.\n\nWith Bennon, Silverforge and Asheniande in our hands, the mountains can have a king again."
+ restore_havoric_kingdom_decision_tooltip:0 "Found the [GetTitleByKey('k_havoric').GetName] and gain the $havoric_restoration_modifier$ modifier"
+
+ # Gawed and the Westmoors
+ show_eaglecrest_its_place_decision:0 "Show Eaglecrest its Place"
+ show_eaglecrest_its_place_decision_desc:0 "Eaglecrest was a duchy of Gawed for most of its history, ruled by a cadet branch of our own blood. Twice it has called itself a kingdom: once before the reavers came and showed it could not stand alone, and again in the War of the Sorcerer-King.\n\nIt is time the eagles came home to roost."
+ show_eaglecrest_its_place_decision_tooltip:0 "Destroy the [GetTitleByKey('k_eaglecrest').GetName] and make its duchies [de_jure|E] part of [GetTitleByKey('k_gawed').GetNameNoTier]"
+ show_eaglecrest_its_place_decision_confirm:0 "Eaglecrest is a duchy"
+
+ the_moormen_kneel_decision_desc:0 "The moors were never conquered, only visited. Every Gawedi king who marched into Westmoor found the clans gone into the fog.\n\nFifteen years of our rule have changed that. The Moormen pay our taxes and fight in our armies; now let them swear it, and their sons after them."
+ the_moormen_kneel_decision_tooltip:0 "The [GetCultureByKey('moorman').GetName] [culture|E] gives up its old ways and gains the Loyal Soldiers [tradition|E]"
+ the_moormen_kneel_decision_confirm:0 "Let them swear"
+
+ # Gerudia, the Reach and Castanor
+ bring_the_reach_into_the_fold_decision_desc:0 "The Reachmen of Adshaw and Vrorenmarch are Gerudian by blood, but the Reach has always answered to whichever southern crown was strongest.\n\nThat crown is ours. A Reach kingdom held by the Emperor of Gerudia should be Gerudian in law, not only in arms."
+ bring_the_reach_into_the_fold_decision_tooltip:0 "Each of [GetTitleByKey('k_adshaw').GetNameNoTier] and [GetTitleByKey('k_vrorenmarch').GetNameNoTier] that you hold [completely_controlled|E] becomes [de_jure|E] part of [GetTitleByKey('e_gerudia').GetNameNoTier]"
+ bring_the_reach_into_the_fold_decision_confirm:0 "The Reach is Gerudian"
+
+ restore_reaver_kingdom_of_divenhal_desc:0 "In 910 Halfdal the Hoarder carved a kingdom from the Divenhal coasts with longships and fire, and every harbour from Tef to Nathalaire paid him tribute. When he died his heirs fought over the hoard instead of guarding it.\n\nTheir descendants still sail these waters. It is time the Hoarder had a worthy heir."
+ restore_reaver_kingdom_of_divenhal_tooltip:0 "Found the [GetTitleByKey('k_reaver_divenhal').GetName] over Tef, Drolas and Nathalaire, and gain the $heirs_of_the_hoarder_modifier$"
+ restore_reaver_kingdom_of_divenhal_confirm:0 "The Hoard is ours again"
+
+ the_roots_of_our_dominion_decision_tooltip:0 "Destroy the [GetTitleByKey('k_vrorenmarch').GetName] and make its duchies [de_jure|E] part of [GetTitleByKey('k_ebonmarck').GetNameNoTier]"
+ the_roots_of_our_dominion_decision_confirm:0 "Remember your oaths"
+
+ into_the_silence_of_castans_fall_decision_tooltip:0 "Lead your knights into Bal Mire to search for the body of Castan LIII"
+
+ # Faith
+ found_stonescepter_court_decision_desc:0 "Busilar's temples answer to distant hierarchs of the Regent Court who know little of our realm. A Businori kingdom deserves a Businori church.\n\nLet the king of Busilar bear the stone sceptre as head of the faith, and let Castellos be honoured first among the gods."
+ found_stonescepter_court_decision_tooltip:0 "Convert to the Stonescepter Court, a new [faith|E] headed by the ruler of Busilar"
+
+ recite_skaldic_tale_decision_desc:0 "The skalds keep the tales of the faith: the deeds of heroes and gods, sung from memory as they were sung in the first halls.\n\nA tale recited before the court binds its listeners to the old ways and earns the favour of those it names."
+ recite_skaldic_tale_decision_tooltip:0 "Hold a recitation of a Skaldic tale. Your [vassals|E] of the same [faith|E] approve"
+ anb_religious_decision.0501.desc.beginning:0 "The hall is full and the fires are banked high. My court has gathered to hear one of the old tales, and every eye turns to the high seat.\n\nA skald has spent a lifetime learning the words, but a tale carries more weight from the mouth of the one who rules. Whose voice will carry it tonight?"

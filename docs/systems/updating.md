@@ -28,6 +28,12 @@
    If `tools/tests/test_tradition_texts.py` fails, give each new placeholder tradition ("Test MAA", "TODO") a name
    and description in `localization/replace/english/aov_tradition_text_replace_l_english.yml`, and drop lines for
    traditions Anbennar has since named or removed.
+   If `tools/tests/test_decision_texts.py` fails, write the missing decision text (or drop lines Anbennar has since
+   written) in `localization/replace/english/aov_decision_text_replace_l_english.yml`; its tooltips describe each
+   decision's script, so reread the script if Anbennar changed what a decision does. If its `DecisionOverrideTests`
+   fail, re-copy the decision from Anbennar into `common/decisions/zz_aov_decision_overrides.txt`, keeping the line
+   marked `# Anbennar Overhaul` (Restore the Reaver Kingdom of Divenhal points its `desc` at the `_desc` key), or
+   drop the override if Anbennar fixed it.
 8. Test in game; check `database_conflicts.log` for overhaul keys now also defined by Anbennar (notably `magic_duelist_focus`, which `zz_aov_magic_focuses.txt` must keep overriding).
 
 After a CK3 patch, rerun `python -I tools/build_hud_override.py`, `python -I tools/build_lifestyle_override.py` and `python -I tools/build_county_view_override.py` too: their sources are the game's `hud.gui`, `window_character_lifestyle.gui` and `window_county_view.gui` (when Anbennar ships no copy).

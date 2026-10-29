@@ -1,0 +1,5 @@
+﻿l_english:
+ # Anbennar Overhaul: repairs broken #F ... #! formatting tags in three Anbennar men-at-arms flavor texts (plus two typos in Bladedancers).
+ battlemages_flavor:0 "#F Highly specialized in the schools of magic most useful on the battlefield, these battlemages will tirelessly fling devastating magics at their enemy, while shielding their fellow soldiers from harm.#!"
+ bladedancers_flavor:0 "#F Equipped with tearite-forged spellblades, these exceptional warrior-mages practice the ancient, long forgotten, recently rediscovered art of Diranbe - also called Bladedancing. Interweaving powerful magics with virtuous swordplay, their dance is as beautiful as it is deadly.#!"
+ griffon_riders_flavor:0 "#F These knights think it chivalrous to announce themselves with mighty cries, for a Griffon can silently swoop down and kill his prey in the blink of an eye. Even so, those encroaching on the mountaintops shall find nothing but death.#!"
