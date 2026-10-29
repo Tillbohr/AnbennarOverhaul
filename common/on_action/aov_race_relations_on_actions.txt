@@ -1,0 +1,33 @@
+﻿# Anbennar Overhaul: race relations (common/scripted_effects/aov_race_relations_effects.txt), appended to vanilla
+# on_actions.
+
+on_game_start_after_lobby = {
+	on_actions = { aov_race_relations_sweep }
+}
+
+yearly_global_pulse = {
+	on_actions = { aov_race_relations_sweep }
+}
+
+aov_race_relations_sweep = {
+	effect = { aov_race_relations_sweep_effect = yes }
+}
+
+on_birth_child = {
+	on_actions = { aov_race_relations_on_birth }
+}
+
+# Root = the newborn
+aov_race_relations_on_birth = {
+	effect = { aov_race_relations_update_effect = yes }
+}
+
+on_title_gain = {
+	on_actions = { aov_race_relations_on_title_gain }
+}
+
+# Root = the new holder
+aov_race_relations_on_title_gain = {
+	trigger = { aov_race_relations_stale_trigger = yes }
+	effect = { aov_race_relations_update_effect = yes }
+}

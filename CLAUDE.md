@@ -95,6 +95,7 @@ Read only the doc for the system you are working on. Each holds the generated-fi
 | Racial armies: levies, domain limit, elf and dwarf MAA (moon, sun, wood elves; dwarf clans) with RiE icons and art, per-holding levy correction | `docs/systems/racial-armies.md` | `build_racial_levies.py` |
 | Faith men-at-arms: Dercinges, Druids, Skalds and Knights of the Spear recruited by faith tenet or patron god instead of a culture tradition | `docs/systems/faith-maa.md` | none (hand-written overrides) |
 | Holy sites for Devouring Path and Silk Turban (Anbennar ships them with none) | `docs/systems/holy-sites.md` | `build_holy_sites.py` |
+| Race relations: monstrous races, Liches and exposed Vampires/Werewolves hostile to everyone else (EU4 monstrous opinions as marker traits, two conquest CBs, vampire/werewolf secrets, no marriage or alliance across the line; future racial marriage rules go in `aov_race_marriage_allowed_trigger`) | `docs/systems/race-relations.md` | `build_race_relations.py` |
 | Race knight badges: EU4 tech group icons (gear removed) as the knight badge for elf, dwarf, gnome and kobold rulers; RiE levy and knight pictures in the military window for elf and dwarf rulers | `docs/systems/knight-icons.md` | `build_knight_icons.py` |
 
 ## Updating and validation

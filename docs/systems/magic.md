@@ -62,7 +62,7 @@ meshes sit right on the skull.
 **Mana in the resource bar:** a mage's mana (`aov_mana`, with `aov_mana_refill_month` as the monthly change) is shown
 left of gold in the HUD top bar, as Godherja shows its magic: `tools/build_hud_override.py` inserts the widget before
 the gold widget and moves the bar's end cap onto it while it shows (gold gets a plain piece then). Shown when
-`aov_magic_available` (the Magic tab's test); icon EU4 Anbennar's own mana icon `icon_mage_mana.dds`, upscaled 2x, at `gfx/interface/icons/aov_magic/mana.dds`;
+`aov_magic_available` (the Magic tab's test); icon Godherja's blue magic currency flame `gfx/interface/icons/currencies/icon_mixed_magic_00.dds`, resized to 60x60 with mips (CK3's gold icon size), at `gfx/interface/icons/aov_magic/mana.dds`;
 tooltip `AOV_HUD_MANA_TT`. Landed and unlanded Liches get their own character-window backgrounds (see `rie-courts.md`).
 
 **Lich men-at-arms:** a Lich raises the dead instead of recruiting living soldiers. `aov_lich_skeletons` (skirmishers)

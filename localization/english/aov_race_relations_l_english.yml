@@ -1,0 +1,28 @@
+﻿l_english:
+ trait_aov_monstrous: "Monstrous"
+ trait_aov_monstrous_desc: "This character belongs to the monstrous peoples, or has become a monster. The other monstrous peoples see a kindred spirit; everyone else sees an enemy. They can neither marry nor ally with the non-monstrous peoples."
+ trait_aov_civilized: "Civilized"
+ trait_aov_civilized_desc: "This character belongs to the civilized peoples of Halann, who loathe the monstrous peoples and are loathed by them in turn. They can neither marry nor ally with monsters."
+
+ secret_aov_vampire: "Vampire"
+ secret_aov_vampire_desc: "Is a Vampire"
+ secret_aov_vampire_tooltip_desc: "This character is a Vampire, a drinker of blood. Once exposed, they will be treated as a monster by all civilized peoples."
+ secret_aov_vampire_type_desc: "This character is a Vampire, a drinker of blood. Once exposed, they will be treated as a monster by all civilized peoples."
+ secret_aov_werewolf: "Werewolf"
+ secret_aov_werewolf_desc: "Is a Werewolf"
+ secret_aov_werewolf_tooltip_desc: "This character is a Werewolf, cursed to take the shape of a beast. Once exposed, they will be treated as a monster by all civilized peoples."
+ secret_aov_werewolf_type_desc: "This character is a Werewolf, cursed to take the shape of a beast. Once exposed, they will be treated as a monster by all civilized peoples."
+
+ AOV_RACE_HOSTILE_MARRIAGE: "Monstrous and civilized peoples cannot marry"
+ NOT_AOV_RACE_HOSTILE_MARRIAGE: "Monstrous and civilized peoples cannot marry"
+ AOV_RACE_HOSTILE_ALLIANCE: "Monstrous and civilized peoples cannot ally"
+ NOT_AOV_RACE_HOSTILE_ALLIANCE: "Monstrous and civilized peoples cannot ally"
+
+ aov_monster_conquest_cb: "Monstrous Conquest"
+ AOV_MONSTER_CONQUEST_CB_NAME: "Ravage [county|E]"
+ AOV_MONSTER_CONQUEST_WAR_NAME: "[ConcatIfNeitherEmpty('$ORDER|q$', ' ')][ATTACKER.GetPrimaryTitle.GetAdjective] Ravaging of the [TITLE.GetBaseName]"
+ AOV_MONSTER_CONQUEST_WAR_NAME_BASE: "[ATTACKER.GetPrimaryTitle.GetAdjective] Ravaging of [DEFENDER.GetPrimaryTitle.GetName]"
+ aov_purge_monsters_cb: "Purge the Monsters"
+ AOV_PURGE_MONSTERS_CB_NAME: "Purge [county|E] of Monsters"
+ AOV_PURGE_MONSTERS_WAR_NAME: "[ConcatIfNeitherEmpty('$ORDER|q$', ' ')][ATTACKER.GetPrimaryTitle.GetAdjective] Purge of the [TITLE.GetBaseName]"
+ AOV_PURGE_MONSTERS_WAR_NAME_BASE: "[ATTACKER.GetPrimaryTitle.GetAdjective] Purge of [DEFENDER.GetPrimaryTitle.GetName]"

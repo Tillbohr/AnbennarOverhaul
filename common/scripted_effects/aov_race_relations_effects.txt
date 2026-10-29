@@ -1,0 +1,84 @@
+﻿# Anbennar Overhaul: race relations (docs/systems/race-relations.md).
+
+# Character scope: the marker trait follows aov_is_monstrous_trigger (it carries the opinion, aov_race_relations_traits.txt),
+# a hidden Vampire or Werewolf gets its secret, and a ruler's alliances across the line break.
+aov_race_relations_update_effect = {
+	if = {
+		limit = { aov_is_monstrous_trigger = yes }
+		if = {
+			limit = { has_trait = aov_civilized }
+			remove_trait = aov_civilized
+		}
+		if = {
+			limit = { NOT = { has_trait = aov_monstrous } }
+			add_trait = aov_monstrous
+		}
+	}
+	else = {
+		if = {
+			limit = { has_trait = aov_monstrous }
+			remove_trait = aov_monstrous
+		}
+		if = {
+			limit = { NOT = { has_trait = aov_civilized } }
+			add_trait = aov_civilized
+		}
+	}
+	if = {
+		limit = {
+			has_trait = vampire
+			NOT = { has_character_flag = aov_exposed_monster }
+			NOT = { any_secret = { type = secret_aov_vampire } }
+		}
+		add_secret = { type = secret_aov_vampire }
+	}
+	if = {
+		limit = {
+			has_trait = lycanthrope
+			NOT = { has_character_flag = aov_exposed_monster }
+			NOT = { any_secret = { type = secret_aov_werewolf } }
+		}
+		add_secret = { type = secret_aov_werewolf }
+	}
+	aov_race_relations_break_alliances_effect = yes
+}
+
+# Character scope: alliances with rulers across the line break
+aov_race_relations_break_alliances_effect = {
+	save_temporary_scope_as = aov_race_ally_check
+	every_ally = {
+		limit = {
+			aov_race_hostile_trigger = {
+				ACTOR = scope:aov_race_ally_check
+				RECIPIENT = this
+			}
+		}
+		break_alliance = scope:aov_race_ally_check
+	}
+}
+
+# No scope: brings every character up to date. Game start and once a year: race traits are set by character templates
+# after creation, and a few events change races, so a sweep catches what the targeted hooks miss.
+aov_race_relations_sweep_effect = {
+	every_living_character = {
+		limit = { aov_race_relations_stale_trigger = yes }
+		aov_race_relations_update_effect = yes
+	}
+	every_ruler = {
+		limit = {
+			any_ally = {
+				aov_race_hostile_trigger = {
+					ACTOR = prev
+					RECIPIENT = this
+				}
+			}
+		}
+		aov_race_relations_break_alliances_effect = yes
+	}
+}
+
+# Character scope (the secret's owner): a Vampire or Werewolf is exposed and turns monstrous for good
+aov_race_relations_expose_effect = {
+	add_character_flag = aov_exposed_monster
+	aov_race_relations_update_effect = yes
+}

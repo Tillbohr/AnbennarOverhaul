@@ -1,0 +1,20 @@
+﻿# Anbennar Overhaul: race relations (docs/systems/race-relations.md). Every character carries one of these two markers,
+# kept in step with aov_is_monstrous_trigger by aov_race_relations_update_effect. CK3 only gives race-wide opinion
+# through traits the other character holds, so the markers carry EU4 Anbennar's monstrous opinions:
+# root_monstrous between a monster and a non-monster (EU4 -100; doubled to -200 here so no other opinion can outweigh
+# it) and both_monstrous (+20 between two monsters).
+
+aov_monstrous = {
+	opposites = { aov_civilized }
+	same_opinion = 20
+	opposite_opinion = -200
+	icon = reaver.dds
+	shown_in_ruler_designer = no
+}
+
+aov_civilized = {
+	opposites = { aov_monstrous }
+	opposite_opinion = -200
+	icon = august.dds
+	shown_in_ruler_designer = no
+}

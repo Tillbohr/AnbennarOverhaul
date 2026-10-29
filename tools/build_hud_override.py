@@ -27,7 +27,7 @@ REL_PATH = Path("gui/hud.gui")
 MANA_BEGIN = f"{MARKER}: begin mana"
 MANA_END = f"{MARKER}: end mana"
 MANA_NAME = "aov_mana"
-MANA_ICON = "gfx/interface/icons/aov_magic/mana.dds"  # EU4 Anbennar's icon_mage_mana.dds, upscaled 2x
+MANA_ICON = "gfx/interface/icons/aov_magic/mana.dds"  # Godherja's icon_mixed_magic_00.dds, resized to 60x60
 GOLD_ANCHOR = 'name = "gold"'
 END_CAP = 'texture = "gfx/interface/skinned/resource_panel_start.dds"'
 PIECE = 'texture = "gfx/interface/skinned/resource_panel_piece.dds"'

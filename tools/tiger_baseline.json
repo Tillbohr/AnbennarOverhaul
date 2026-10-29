@@ -3062,6 +3062,69 @@
 },
 {
   "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\common\\character_interactions\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\tOR = {",
+      "linenr": 83,
+      "path": "common\\character_interactions\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "deprecated",
+  "locations": [
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\common\\character_interactions\\zz_aov_race_relations_overrides.txt",
+      "length": 12,
+      "line": "\tai_potential = {",
+      "linenr": 1202,
+      "path": "common\\character_interactions\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "should use `is_available` instead of `ai_potential`",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "deprecated",
+  "locations": [
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\common\\character_interactions\\zz_aov_race_relations_overrides.txt",
+      "length": 12,
+      "line": "\tai_potential = {",
+      "linenr": 2082,
+      "path": "common\\character_interactions\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "should use `is_available` instead of `ai_potential`",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
   "info": null,
   "key": "missing-localization",
   "locations": [
@@ -3583,6 +3646,2029 @@
     }
   ],
   "message": "faith or religion missing localization for WitchGodSheHe",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 39,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\tcompatible_race_non_mule_trigger = {",
+      "linenr": 7,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 141,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tcould_marry_character_trigger = { CHARACTER = $CHARACTER$ } #Gender, recent divorce, allowed to marry, no illegal incest etc.",
+      "linenr": 272,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 39,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\tcompatible_race_non_mule_trigger = {",
+      "linenr": 7,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 274,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 10,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 46,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\tcompatible_race_non_mule_trigger = {",
+      "linenr": 7,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 141,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tcould_marry_character_trigger = { CHARACTER = $CHARACTER$ } #Gender, recent divorce, allowed to marry, no illegal incest etc.",
+      "linenr": 272,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 10,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 46,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\tcompatible_race_non_mule_trigger = {",
+      "linenr": 7,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 274,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 10,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 55,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\tcompatible_race_non_mule_trigger = {",
+      "linenr": 7,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 141,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tcould_marry_character_trigger = { CHARACTER = $CHARACTER$ } #Gender, recent divorce, allowed to marry, no illegal incest etc.",
+      "linenr": 272,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 10,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 55,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\tcompatible_race_non_mule_trigger = {",
+      "linenr": 7,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 274,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 10,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 134,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\tcompatible_race_non_mule_trigger = {",
+      "linenr": 7,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 141,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tcould_marry_character_trigger = { CHARACTER = $CHARACTER$ } #Gender, recent divorce, allowed to marry, no illegal incest etc.",
+      "linenr": 272,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 10,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 134,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\tcompatible_race_non_mule_trigger = {",
+      "linenr": 7,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 274,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 10,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 146,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\tcompatible_race_non_mule_trigger = {",
+      "linenr": 7,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 141,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tcould_marry_character_trigger = { CHARACTER = $CHARACTER$ } #Gender, recent divorce, allowed to marry, no illegal incest etc.",
+      "linenr": 272,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 10,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 146,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\tcompatible_race_non_mule_trigger = {",
+      "linenr": 7,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 274,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 10,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 176,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\tcompatible_race_non_mule_trigger = {",
+      "linenr": 7,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 141,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tcould_marry_character_trigger = { CHARACTER = $CHARACTER$ } #Gender, recent divorce, allowed to marry, no illegal incest etc.",
+      "linenr": 272,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 10,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 176,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\tcompatible_race_non_mule_trigger = {",
+      "linenr": 7,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 274,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 192,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\telf_duke_marriage_trigger = {",
+      "linenr": 17,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 141,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tcould_marry_character_trigger = { CHARACTER = $CHARACTER$ } #Gender, recent divorce, allowed to marry, no illegal incest etc.",
+      "linenr": 272,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 192,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\telf_duke_marriage_trigger = {",
+      "linenr": 17,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 274,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 10,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 204,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\telf_duke_marriage_trigger = {",
+      "linenr": 17,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 141,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tcould_marry_character_trigger = { CHARACTER = $CHARACTER$ } #Gender, recent divorce, allowed to marry, no illegal incest etc.",
+      "linenr": 272,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 10,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 204,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\telf_duke_marriage_trigger = {",
+      "linenr": 17,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 274,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 225,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\telf_succession_marriage_trigger = {",
+      "linenr": 21,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 141,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tcould_marry_character_trigger = { CHARACTER = $CHARACTER$ } #Gender, recent divorce, allowed to marry, no illegal incest etc.",
+      "linenr": 272,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 225,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\telf_succession_marriage_trigger = {",
+      "linenr": 21,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 274,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 11,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tAND = {",
+      "linenr": 230,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\telf_succession_marriage_trigger = {",
+      "linenr": 21,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 141,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tcould_marry_character_trigger = { CHARACTER = $CHARACTER$ } #Gender, recent divorce, allowed to marry, no illegal incest etc.",
+      "linenr": 272,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "negated AND is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 11,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tAND = {",
+      "linenr": 230,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\telf_succession_marriage_trigger = {",
+      "linenr": 21,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 274,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "negated AND is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 11,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tAND = {",
+      "linenr": 236,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\telf_succession_marriage_trigger = {",
+      "linenr": 21,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 141,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tcould_marry_character_trigger = { CHARACTER = $CHARACTER$ } #Gender, recent divorce, allowed to marry, no illegal incest etc.",
+      "linenr": 272,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "negated AND is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 11,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tAND = {",
+      "linenr": 236,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\telf_succession_marriage_trigger = {",
+      "linenr": 21,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 274,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "negated AND is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 10,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 250,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\telf_succession_marriage_trigger = {",
+      "linenr": 21,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 141,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tcould_marry_character_trigger = { CHARACTER = $CHARACTER$ } #Gender, recent divorce, allowed to marry, no illegal incest etc.",
+      "linenr": 272,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 10,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 250,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\telf_succession_marriage_trigger = {",
+      "linenr": 21,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 274,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 13,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\tAND = {",
+      "linenr": 253,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\telf_succession_marriage_trigger = {",
+      "linenr": 21,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 141,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tcould_marry_character_trigger = { CHARACTER = $CHARACTER$ } #Gender, recent divorce, allowed to marry, no illegal incest etc.",
+      "linenr": 272,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "negated AND is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 13,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\tAND = {",
+      "linenr": 253,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\telf_succession_marriage_trigger = {",
+      "linenr": 21,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 274,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "negated AND is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 13,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\tAND = {",
+      "linenr": 259,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\telf_succession_marriage_trigger = {",
+      "linenr": 21,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 141,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tcould_marry_character_trigger = { CHARACTER = $CHARACTER$ } #Gender, recent divorce, allowed to marry, no illegal incest etc.",
+      "linenr": 272,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "negated AND is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 13,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\t\t\tAND = {",
+      "linenr": 259,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\telf_succession_marriage_trigger = {",
+      "linenr": 21,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 274,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "negated AND is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 10,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 273,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\telf_succession_marriage_trigger = {",
+      "linenr": 21,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 141,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tcould_marry_character_trigger = { CHARACTER = $CHARACTER$ } #Gender, recent divorce, allowed to marry, no illegal incest etc.",
+      "linenr": 272,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 10,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tOR = {",
+      "linenr": 273,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\telf_succession_marriage_trigger = {",
+      "linenr": 21,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 274,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 297,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\tsun_elf_marriage_trigger = {",
+      "linenr": 25,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 141,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tcould_marry_character_trigger = { CHARACTER = $CHARACTER$ } #Gender, recent divorce, allowed to marry, no illegal incest etc.",
+      "linenr": 272,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 7,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\tOR = {",
+      "linenr": 297,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\tsun_elf_marriage_trigger = {",
+      "linenr": 25,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 274,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 12,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tNAND = {",
+      "linenr": 309,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\tsun_elf_marriage_trigger = {",
+      "linenr": 25,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 141,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tcould_marry_character_trigger = { CHARACTER = $CHARACTER$ } #Gender, recent divorce, allowed to marry, no illegal incest etc.",
+      "linenr": 272,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "NAND is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": "Try adding a custom_description or custom_tooltip, or simplifying the trigger",
+  "key": "tooltip",
+  "locations": [
+    {
+      "column": 12,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "length": 1,
+      "line": "\t\t\t\tNAND = {",
+      "linenr": 309,
+      "path": "common\\scripted_triggers\\anb_scripted_triggers\\anb_racial_triggers.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "length": 1,
+      "line": "\t\tsun_elf_marriage_trigger = {",
+      "linenr": 25,
+      "path": "common\\scripted_triggers\\zz_aov_race_relations_overrides.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 2,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_triggers\\00_marriage_triggers.txt",
+      "length": 1,
+      "line": "\tanb_marriage_trigger = {",
+      "linenr": 274,
+      "path": "common\\scripted_triggers\\00_marriage_triggers.txt",
+      "stage": null,
+      "tag": "from here"
+    },
+    {
+      "column": 5,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\character_interactions\\00_marriage_interactions.txt",
+      "length": 1,
+      "line": "\t\t\t\tcan_become_concubine_of_character_trigger = { CHARACTER = scope:actor }",
+      "linenr": 2847,
+      "path": "common\\character_interactions\\00_marriage_interactions.txt",
+      "stage": null,
+      "tag": "from here"
+    }
+  ],
+  "message": "NAND is a too complex trigger to be tooltipped in a trigger that shows failures only.",
   "severity": "warning",
   "wiki": null
 },
@@ -4318,6 +6404,92 @@
     }
   ],
   "message": "OR is a too complex trigger to be tooltipped in a trigger that shows failures only.",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "strict-scopes",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\secret_types\\aov_race_relations_secrets.txt",
+      "length": 34,
+      "line": "\t\tsecret_exposed_notification_effect = yes",
+      "linenr": 24,
+      "path": "common\\secret_types\\aov_race_relations_secrets.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_effects\\00_secret_effects.txt",
+      "length": 12,
+      "line": "\t\tscope:victim = { save_list_targets_for_secret_exposure_events_effect = { SECRET = scope:secret CHARACTER = scope:victim } }",
+      "linenr": 838,
+      "path": "common\\scripted_effects\\00_secret_effects.txt",
+      "stage": null,
+      "tag": "here"
+    },
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\common\\secret_types\\aov_race_relations_secrets.txt",
+      "length": 18,
+      "line": "secret_aov_vampire = {",
+      "linenr": 4,
+      "path": "common\\secret_types\\aov_race_relations_secrets.txt",
+      "stage": null,
+      "tag": "scopes initialized here"
+    }
+  ],
+  "message": "`secret_exposed_notification_effect` expects scope:victim to be set",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "strict-scopes",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\secret_types\\aov_race_relations_secrets.txt",
+      "length": 34,
+      "line": "\t\tsecret_exposed_notification_effect = yes",
+      "linenr": 49,
+      "path": "common\\secret_types\\aov_race_relations_secrets.txt",
+      "stage": null,
+      "tag": null
+    },
+    {
+      "column": 3,
+      "from": "Anbennar",
+      "fullpath": "C:\\Users\\tyler\\Documents\\Paradox Interactive\\Crusader Kings III\\mod\\anbennar-ck3-dev-master\\common\\scripted_effects\\00_secret_effects.txt",
+      "length": 12,
+      "line": "\t\tscope:victim = { save_list_targets_for_secret_exposure_events_effect = { SECRET = scope:secret CHARACTER = scope:victim } }",
+      "linenr": 838,
+      "path": "common\\scripted_effects\\00_secret_effects.txt",
+      "stage": null,
+      "tag": "here"
+    },
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\common\\secret_types\\aov_race_relations_secrets.txt",
+      "length": 19,
+      "line": "secret_aov_werewolf = {",
+      "linenr": 29,
+      "path": "common\\secret_types\\aov_race_relations_secrets.txt",
+      "stage": null,
+      "tag": "scopes initialized here"
+    }
+  ],
+  "message": "`secret_exposed_notification_effect` expects scope:victim to be set",
   "severity": "warning",
   "wiki": null
 },

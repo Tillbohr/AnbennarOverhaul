@@ -1,0 +1,95 @@
+﻿# Anbennar Overhaul: race relations (docs/systems/race-relations.md). As in EU4 Anbennar, the monstrous races are
+# hostile to everyone else and everyone else to them. Liches, and Vampires and Werewolves once exposed, count as monstrous.
+
+# Character scope
+aov_is_monstrous_trigger = {
+	OR = {
+		is_monstrous_race = yes
+		has_trait = lich
+		aov_is_exposed_monster_trigger = yes
+	}
+}
+
+# Character scope: a Vampire or Werewolf whose secret is out
+aov_is_exposed_monster_trigger = {
+	has_character_flag = aov_exposed_monster
+	OR = {
+		has_trait = vampire
+		has_trait = lycanthrope
+	}
+}
+
+# Character scope: a Vampire or Werewolf that still needs its secret
+aov_needs_monster_secret_trigger = {
+	NOT = { has_character_flag = aov_exposed_monster }
+	OR = {
+		AND = {
+			has_trait = vampire
+			NOT = { any_secret = { type = secret_aov_vampire } }
+		}
+		AND = {
+			has_trait = lycanthrope
+			NOT = { any_secret = { type = secret_aov_werewolf } }
+		}
+	}
+}
+
+# Character scope: the marker trait does not match aov_is_monstrous_trigger, or a monster secret is missing
+aov_race_relations_stale_trigger = {
+	OR = {
+		AND = {
+			NOT = { has_trait = aov_monstrous }
+			aov_is_monstrous_trigger = yes
+		}
+		AND = {
+			NOT = { has_trait = aov_civilized }
+			aov_is_monstrous_trigger = no
+		}
+		aov_needs_monster_secret_trigger = yes
+	}
+}
+
+# ACTOR and RECIPIENT stand on opposite sides: one monstrous, the other not
+aov_race_hostile_trigger = {
+	OR = {
+		AND = {
+			$ACTOR$ = { aov_is_monstrous_trigger = yes }
+			$RECIPIENT$ = { aov_is_monstrous_trigger = no }
+		}
+		AND = {
+			$ACTOR$ = { aov_is_monstrous_trigger = no }
+			$RECIPIENT$ = { aov_is_monstrous_trigger = yes }
+		}
+	}
+}
+
+# ACTOR and RECIPIENT may marry, betroth or take each other as concubine. Every marriage check reaches this through
+# anb_marriage_trigger (zz_aov_race_relations_overrides.txt, generated); add future racial marriage rules here.
+aov_race_marriage_allowed_trigger = {
+	custom_description = {
+		text = aov_race_hostile_marriage
+		subject = $ACTOR$
+		object = $RECIPIENT$
+		NOT = {
+			aov_race_hostile_trigger = {
+				ACTOR = $ACTOR$
+				RECIPIENT = $RECIPIENT$
+			}
+		}
+	}
+}
+
+# ACTOR and RECIPIENT may ally. Gates the alliance interactions (zz_aov_race_relations_overrides.txt, generated).
+aov_race_alliance_allowed_trigger = {
+	custom_description = {
+		text = aov_race_hostile_alliance
+		subject = $ACTOR$
+		object = $RECIPIENT$
+		NOT = {
+			aov_race_hostile_trigger = {
+				ACTOR = $ACTOR$
+				RECIPIENT = $RECIPIENT$
+			}
+		}
+	}
+}

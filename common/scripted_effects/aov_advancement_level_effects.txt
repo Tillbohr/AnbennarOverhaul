@@ -582,6 +582,7 @@ aov_adv_lichdom_3_effect = {
 # their faith thinks of magic. The skeleton portrait follows the trait (gfx/portraits/portrait_modifiers/aov_lich.txt)
 aov_adv_lich_ascend = {
 	add_trait = lich
+	aov_race_relations_update_effect = yes # monstrous from now on (docs/systems/race-relations.md)
 	aov_lich_maa_on_becoming_lich = yes
 	if = {
 		limit = { has_character_modifier = aov_lichdom_potion }
