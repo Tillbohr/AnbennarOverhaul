@@ -1,17 +1,19 @@
-"""Generate holy sites for Anbennar faiths that have none (Devouring Path, Silk Turban).
+"""Generate holy sites for Anbennar faiths that have none (Devouring Path, Silk Turban), and real icons for the
+faiths Anbennar ships with the placeholder icon.
 
-A faith's holy sites can only be listed inside its religion's definition, and religions can only be overridden as
-whole files, so this script writes full copies of the Anbennar religion files involved, each faith gaining a
-holy_site line per site in tools/data/holy_sites.py. It also writes the holy site definitions and their names:
+A faith's holy sites and icon can only be set inside its religion's definition, and religions can only be overridden
+as whole files, so this script writes full copies of the Anbennar religion files involved, each faith gaining a
+holy_site line per site in tools/data/holy_sites.py and its icon from tools/data/faith_icons.py (the icon pictures
+are imported once and committed under gfx/interface/icons/faith/). It also writes the holy sites and their names:
 
     common/religion/holy_site_types/aov_holy_sites.txt     the new holy sites
-    common/religion/religion_types/<anbennar file>.txt     whole-file copies with the holy_site lines added
+    common/religion/religion_types/<anbennar file>.txt     whole-file copies with holy_site and icon lines changed
     localization/english/aov_holy_sites_l_english.yml      holy site and modifier names
 
     python -I tools/build_holy_sites.py [--anbennar PATH]
 
 Rerun after an Anbennar update (see docs/systems/holy-sites.md). It stops if a faith is missing, already has
-holy sites of its own, or a site's county or barony no longer exists.
+holy sites of its own, no longer has the placeholder icon, or a site's county or barony or an icon file is missing.
 """
 
 import argparse
@@ -23,11 +25,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))  # python -I does not a
 
 from build_hud_override import GeneratorError  # noqa: E402
 from pdx_script import ANBENNAR_CK3, _balanced, ck3_titles, parse_blocks, strip_comments  # noqa: E402
+from data.faith_icons import FAITH_ICONS, PLACEHOLDER  # noqa: E402
 from data.holy_sites import HOLY_SITES  # noqa: E402
 
 SUBMOD = Path(__file__).resolve().parent.parent
 RELIGION_DIR = "common/religion/religion_types"
 HOLY_SITE_DIR = "common/religion/holy_site_types"
+ICON_DIR = "gfx/interface/icons/faith"
 SITES_FILE = f"{HOLY_SITE_DIR}/aov_holy_sites.txt"
 LOC_FILE = "localization/english/aov_holy_sites_l_english.yml"
 MARKER = "# Anbennar Overhaul"
@@ -82,6 +86,40 @@ def check_sites(anbennar: Path, faiths: dict) -> None:
                 raise GeneratorError(f"faith {faith} now has Anbennar holy sites; drop it from tools/data/holy_sites.py")
 
 
+def check_icons(anbennar: Path, faiths: dict) -> None:
+    for faith, entry in FAITH_ICONS.items():
+        if faith not in faiths:
+            raise GeneratorError(f"faith {faith} no longer exists; drop it from tools/data/faith_icons.py")
+        current = re.findall(r"(?m)^\s*icon\s*=\s*(\w+)", faiths[faith][1])
+        if current != [PLACEHOLDER]:
+            raise GeneratorError(f"faith {faith} now has icon {current} in Anbennar; drop it from tools/data/faith_icons.py")
+        name = f"{ICON_DIR}/{entry['icon']}.dds"
+        if not (SUBMOD / name).is_file() and not (anbennar / name).is_file():
+            raise GeneratorError(f"faith {faith}: icon file {name} is missing")
+
+
+def set_icons(text: str, faith_icons: dict) -> str:
+    """Point each faith's placeholder icon and reformed_icon lines at its new icon, marking the changed lines."""
+    lines = text.split("\n")
+    for faith, icon in faith_icons.items():
+        hits = [i for i, l in enumerate(lines) if re.match(rf"^\s*{re.escape(faith)}\s*=\s*\{{", l.split("#", 1)[0])]
+        if len(hits) != 1:
+            raise GeneratorError(f"faith {faith}: expected one opening line, found {len(hits)}")
+        depth, changed = 0, []
+        for i in range(hits[0], len(lines)):
+            m = re.match(r"^(\s*)(icon|reformed_icon)\s*=\s*(\w+)\s*$", lines[i])
+            if depth == 1 and m and m.group(3) == PLACEHOLDER:
+                lines[i] = f"{m.group(1)}{m.group(2)} = {icon} {MARKER}, was {PLACEHOLDER}"
+                changed.append(m.group(2))
+            code = lines[i].split("#", 1)[0]
+            depth += code.count("{") - code.count("}")
+            if depth == 0:
+                break
+        if "icon" not in changed:
+            raise GeneratorError(f"faith {faith}: no 'icon = {PLACEHOLDER}' line to replace")
+    return "\n".join(lines)
+
+
 def sites_by_faith() -> dict:
     out = {}
     for site in HOLY_SITES:
@@ -103,13 +141,13 @@ def add_holy_sites(text: str, faith_sites: dict) -> str:
     return "\n".join(lines)
 
 
-def religion_file(anbennar: Path, name: str, faith_sites: dict) -> bytes:
+def religion_file(anbennar: Path, name: str, faith_sites: dict, faith_icons: dict) -> bytes:
     raw = (anbennar / RELIGION_DIR / name).read_bytes()
     text = raw.decode("utf-8-sig")
     crlf = "\r\n" in text
-    text = add_holy_sites(text.replace("\r\n", "\n"), faith_sites)
+    text = add_holy_sites(set_icons(text.replace("\r\n", "\n"), faith_icons), faith_sites)
     text = (f"{MARKER}: generated by tools/build_holy_sites.py from Anbennar's {RELIGION_DIR}/{name}.\n"
-            f"{MARKER}: do not edit by hand; edit tools/data/holy_sites.py and rerun it.\n") + text
+            f"{MARKER}: do not edit by hand; edit tools/data/holy_sites.py or faith_icons.py and rerun it.\n") + text
     if crlf:
         text = text.replace("\n", "\r\n")
     return (BOM if raw.startswith(BOM) else b"") + text.encode("utf-8")
@@ -139,12 +177,15 @@ def build_all(anbennar: Path = ANBENNAR_CK3) -> dict:
     """-> {path relative to the submod: file bytes}."""
     faiths = faith_files(anbennar)
     check_sites(anbennar, faiths)
-    per_file = {}
+    check_icons(anbennar, faiths)
+    sites, icons = {}, {}
     for faith, keys in sites_by_faith().items():
-        per_file.setdefault(faiths[faith][0], {})[faith] = keys
+        sites.setdefault(faiths[faith][0], {})[faith] = keys
+    for faith, entry in FAITH_ICONS.items():
+        icons.setdefault(faiths[faith][0], {})[faith] = entry["icon"]
     files = {SITES_FILE: sites_file(), LOC_FILE: loc_file()}
-    for name, faith_sites in sorted(per_file.items()):
-        files[f"{RELIGION_DIR}/{name}"] = religion_file(anbennar, name, faith_sites)
+    for name in sorted(set(sites) | set(icons)):
+        files[f"{RELIGION_DIR}/{name}"] = religion_file(anbennar, name, sites.get(name, {}), icons.get(name, {}))
     return files
 
 

@@ -47,6 +47,37 @@ class AddHolySitesTests(unittest.TestCase):
             bhs.add_holy_sites(RELIGION_FIXTURE, {"third_faith": ["site_a"]})
 
 
+ICON_FIXTURE = """test_religion = {
+\tfaiths = {
+\t\tfirst_faith = {
+\t\t\ticon = the_dame
+\t\t\treformed_icon = the_dame
+\t\t\tlocalization = {
+\t\t\t\ticon = the_dame
+\t\t\t}
+\t\t}
+\t\tsecond_faith = {
+\t\t\ticon = the_dame
+\t\t}
+\t}
+}
+"""
+
+
+class SetIconsTests(unittest.TestCase):
+    def test_icon_and_reformed_icon_replaced_only_in_the_faith(self):
+        out = bhs.set_icons(ICON_FIXTURE, {"first_faith": "aov_first"})
+        lines = out.split("\n")
+        self.assertEqual(lines[3], f"\t\t\ticon = aov_first {bhs.MARKER}, was {bhs.PLACEHOLDER}")
+        self.assertEqual(lines[4], f"\t\t\treformed_icon = aov_first {bhs.MARKER}, was {bhs.PLACEHOLDER}")
+        self.assertEqual(lines[6], "\t\t\t\ticon = the_dame")  # nested block untouched
+        self.assertEqual(lines[10], "\t\t\ticon = the_dame")  # other faith untouched
+
+    def test_faith_without_placeholder_is_an_error(self):
+        with self.assertRaises(GeneratorError):
+            bhs.set_icons(RELIGION_FIXTURE, {"first_faith": "aov_first"})
+
+
 @unittest.skipUnless(HAVE_REAL, "needs Anbennar")
 class DataTests(unittest.TestCase):
     @classmethod
@@ -61,6 +92,16 @@ class DataTests(unittest.TestCase):
             self.assertGreaterEqual(len(keys), 3, faith)
             counties = [s["county"] for s in bhs.HOLY_SITES if s["key"] in keys]
             self.assertEqual(len(counties), len(set(counties)), faith)
+
+    def test_every_icon_faith_still_has_the_placeholder(self):
+        bhs.check_icons(bhs.ANBENNAR_CK3, self.faiths)  # raises on a missing faith, changed icon or missing file
+
+    def test_icons_are_distinct_and_imported_icons_are_ours(self):
+        icons = [entry["icon"] for entry in bhs.FAITH_ICONS.values()]
+        self.assertEqual(len(icons), len(set(icons)))
+        for icon in icons:
+            if icon.startswith("aov_"):
+                self.assertTrue((bhs.SUBMOD / bhs.ICON_DIR / f"{icon}.dds").is_file(), icon)
 
     def test_modifiers_are_numbers(self):
         for site in bhs.HOLY_SITES:
@@ -91,7 +132,8 @@ class FreshnessTests(unittest.TestCase):
             src = (bhs.ANBENNAR_CK3 / rel).read_bytes().decode("utf-8-sig").replace("\r\n", "\n")
             lines = content.decode("utf-8-sig").replace("\r\n", "\n").split("\n")
             self.assertTrue(all(l.startswith(bhs.MARKER) for l in lines[:2]), rel)
-            rest = [l for l in lines[2:] if not l.endswith(" " + bhs.MARKER)]
+            rest = [re.sub(rf"^(\s*\w+) = \w+ {bhs.MARKER}, was (\w+)$", r"\1 = \2", l)
+                    for l in lines[2:] if not l.endswith(" " + bhs.MARKER)]
             self.assertEqual("\n".join(rest), src, rel)
 
     def test_every_site_named(self):
