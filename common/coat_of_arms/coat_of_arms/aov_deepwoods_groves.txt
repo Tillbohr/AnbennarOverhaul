@@ -1,5 +1,23 @@
-﻿# Anbennar Overhaul: the Deepwoods grove duchies carry their EU4 Anbennar realm's flag.
+﻿# Anbennar Overhaul: the Deepwoods grove duchies carry their EU4 Anbennar realm's flag, and the Deepwoods
+# kingdom and empire carry Cyranvar's.
 # Imported once from EU4 Anbennar flags (each upscaled into a textured emblem); edit by hand.
+
+# Cyranvar (EU4 I45)
+e_deepwoods = {
+	pattern = "pattern_solid.dds"
+	color1 = rgb { 22 64 7 }
+	textured_emblem = {
+		texture = "aov_cyranvar.dds"
+	}
+}
+
+k_deepwoods = {
+	pattern = "pattern_solid.dds"
+	color1 = rgb { 22 64 7 }
+	textured_emblem = {
+		texture = "aov_cyranvar.dds"
+	}
+}
 
 # Salla Elyn (EU4 I26)
 d_lake_grove_1 = {

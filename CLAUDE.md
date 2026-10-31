@@ -90,7 +90,7 @@ Read only the doc for the system you are working on. Each holds the generated-fi
 | RiE holding models, walls and army models (elves, dwarves, Castanorians) | `docs/systems/holding-models.md` | `build_holding_models.py` |
 | RiE portraits (halfling hair, elves, dwarves) | `docs/systems/rie-portraits.md` | `build_portraits.py` |
 | RiE character backgrounds and royal courts | `docs/systems/rie-courts.md` | `build_rie_courts.py` |
-| Deepwoods grove arms and EU4 names | `docs/systems/deepwoods-groves.md` | none (imported once; edit by hand) |
+| Deepwoods grove arms and EU4 names; Cyranvar arms for the Deepwoods kingdom and empire | `docs/systems/deepwoods-groves.md` | none (imported once; edit by hand) |
 | Map graphics: RiE shaders and terrain, raised dwarven mountains, dwarven gates | `docs/systems/map-graphics.md` | `build_map_graphics.py` |
 | Racial armies: levies, domain limit, elf and dwarf MAA (moon, sun, wood elves; dwarf clans) with RiE icons and art, per-holding levy correction | `docs/systems/racial-armies.md` | `build_racial_levies.py` |
 | Faith men-at-arms: Dercinges, Druids, Skalds and Knights of the Spear recruited by faith tenet or patron god instead of a culture tradition | `docs/systems/faith-maa.md` | none (hand-written overrides) |

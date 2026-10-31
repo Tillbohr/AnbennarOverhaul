@@ -2,8 +2,8 @@
 
 ## Imported files (no generator)
 
-`common/coat_of_arms/coat_of_arms/aov_deepwoods_groves.txt`, `gfx/coat_of_arms/textured_emblems/aov_grove_salla_*.dds`
-and `localization/replace/english/aov_deepwoods_groves_replace_l_english.yml` were generated once from EU4 Anbennar
+`common/coat_of_arms/coat_of_arms/aov_deepwoods_groves.txt`, `gfx/coat_of_arms/textured_emblems/aov_grove_salla_*.dds`,
+`gfx/coat_of_arms/textured_emblems/aov_cyranvar.dds` and `localization/replace/english/aov_deepwoods_groves_replace_l_english.yml` were generated once from EU4 Anbennar
 (each Salla flag, `gfx/flags/<tag>.tga`, upscaled 2x into a 256x256 uncompressed BGRA textured emblem with a full mip
 chain; each county's EU4 province name, also given to its capital barony, plus EU4 names for other baronies). The
 generator `tools/build_deepwoods_groves.py` was removed (it is in git history); edit these files by hand. A new
@@ -13,4 +13,7 @@ still exist (`database_conflicts.log`, tiger's missing-title reports).
 
 ## System
 
+- **Deepwoods kingdom and empire:** `k_deepwoods` and `e_deepwoods` carry the flag of EU4 Anbennar's Cyranvar (I45,
+  the white tree on green; `aov_cyranvar.dds`, same conversion as the grove flags). Anbennar gives neither title
+  scripted arms, so these are new definitions.
 - **Deepwoods groves:** the nine wood-elf grove duchies of `k_deepwoods` carry the flags of their EU4 Anbennar Salla realms as coats of arms (Lake Grove = Salla Elyn I26, Bone = Cenág I29, Thorn = Drennen I28, Mountain = Myna I27, Hunter = Fealgarn I30, Arrow = Ayeth I33, Flower = Scotha I31, River = Ahain I32, Shadow = Ghúl I34; Anbennar gives these duchies no scripted arms, so these are new definitions, not overrides), and their 29 counties and 68 of their 122 baronies the EU4 names of their provinces. Matching: the CK3 Deepwoods is a reshaped copy of EU4's; without EU4's `Vyr` forest-path provinces the EU4 region falls into nine clearings of 7-9 provinces, one per grove duchy. Anbennar had already named each county after an EU4 province of its clearing in the same part of it (checked on side-by-side renders), but without accents, with two misspellings (Hofoon, Drennenthille) and with no name for `c_bone_grove_1_5` (its name sits on the unused key `c_bone_grove_1_2`); so the counties keep Anbennar's province choices with EU4's spelling (13 change). Baronies: each county's capital barony (its first in the landed titles) takes the county's name, and 39 other baronies get the clearing's remaining EU4 provinces. Each clearing was laid over its duchy by an affine fit of EU4's province map onto CK3's (maximising outline overlap plus the share of each county's EU4 province landing in that county; IoU 0.69-0.82), then each remaining province went to the non-capital barony it covers most (at least 10% of the province, one per barony, largest total overlap); the result is fixed in the data (`baronies`), with the method in its docstring. Unused: Contann (7015) and Trónnghúl (3046), which lie under capitals and already named baronies. CK3 has ~13 baronies per duchy and EU4 7-9 provinces per clearing, so 54 of the 122 baronies get no EU4 name and keep Anbennar's (mostly none; "Lake Grove 5"-style placeholders; and 5 earlier Anbennar copies of EU4 names that a renamed barony now also has: `b_lake_grove_2/3/8`, `b_mountain_grove_2/3`); the build lists them. The flag is a textured emblem over the whole coat of arms, like RiE's `te_*` arms; EU4 flags are pictures CK3's coloured emblems cannot rebuild. **To confirm in game:** the arms render (shield mask over the square flag, mips at small sizes) and the accented names show in the map font.
