@@ -2,7 +2,8 @@
 # Druids need a faith with the Druids of the Deruwren tenet (Ollodousges), Skalds the Skaldic Tales tenet
 # (Skaldhyrric Faith, Reverian Cult, West Damish), Knights of the Spear Adean as patron god (alone, with the Dame or
 # with Minara). Their culture traditions are retired in common/culture/traditions/zz_aov_faith_traditions.txt.
-# Each block is otherwise Anbennar's. See docs/systems/faith-maa.md.
+# Each block is otherwise Anbennar's, except that Druids and Skalds use Anbennar's unused druids and skalds icons
+# (docs/systems/base-art-fixes.md). See docs/systems/faith-maa.md.
 
 @cultural_maa_extra_ai_score = 80
 
@@ -73,7 +74,7 @@ druids = {
 	
 	stack = 50
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = mages
+	icon = druids
 }
 
 skalds = {
@@ -115,7 +116,7 @@ skalds = {
 	
 	stack = 50
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = mages
+	icon = skalds
 }
 
 knights_of_the_spear = {

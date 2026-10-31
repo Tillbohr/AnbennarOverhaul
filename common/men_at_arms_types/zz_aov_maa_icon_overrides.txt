@@ -1,0 +1,159 @@
+﻿# Anbennar Overhaul: Anbennar men-at-arms given the unit icons Anbennar ships for them but never set (it left them on
+# the generic vanilla icon). Each block is Anbennar's with only its `icon` line changed; the icon also names the
+# unit's two pictures (gfx/interface/illustrations/men_at_arms_{big,small}/<icon>.dds).
+# See docs/systems/base-art-fixes.md.
+
+@cultural_maa_extra_ai_score = 80
+
+adventurers_maa = {
+	type = heavy_infantry
+
+	damage = 40
+	toughness = 20
+	pursuit = 0
+	screen = 24	
+	counters = {
+		pikemen = 1
+		mages = 0.5
+		beasts = 0.5
+	}
+
+	can_recruit = {
+		always = no # spawned via event
+	}
+	
+	buy_cost = { gold = heavy_infantry_recruitment_cost }
+	low_maintenance_cost = { gold = heavy_infantry_low_maint_cost }
+	high_maintenance_cost = { gold = heavy_infantry_high_maint_cost }
+	
+	stack = 50
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = adventurers
+}
+
+damerian_longbowmen = {
+	type = archers
+
+	damage = 20
+	toughness = 11
+	pursuit = 0
+	screen = 0
+
+	terrain_bonus = {
+		hills = { damage = 10 toughness = 8 }
+	}
+
+	counters = {
+		skirmishers = 1
+		heavy_cavalry = 1
+		mages = 1
+	}
+
+	can_recruit = {
+		culture = {
+			 has_cultural_parameter = unlock_maa_anb_longbowmen
+		}
+	}
+	
+	buy_cost = { gold = damerian_longbowmen_recruitment_cost }
+	low_maintenance_cost = { gold = damerian_longbowmen_low_maint_cost }
+	high_maintenance_cost = { gold = damerian_longbowmen_high_maint_cost }
+	
+	stack = 100
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = damerian_longbowmen
+}
+
+oakfoot_rangers = {
+	type = archers
+
+	damage = 20
+	toughness = 20
+	pursuit = 20
+	screen = 50
+
+	terrain_bonus = {
+		forest = { damage = 10 toughness = 8 }
+	}
+
+	counters = {
+		skirmishers = 1
+		mages = 0.5
+	}
+
+	can_recruit = {
+		culture = {
+			 has_cultural_parameter = unlock_maa_anb_oakfoot_rangers
+		}
+	}
+	
+	buy_cost = { gold = oakfoot_rangers_recruitment_cost }
+	low_maintenance_cost = { gold = oakfoot_rangers_low_maint_cost }
+	high_maintenance_cost = { gold = oakfoot_rangers_high_maint_cost }
+	
+	stack = 100
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = rangers
+}
+
+thorn_squares = {
+	type = pikemen
+
+	damage = 40
+	toughness = 32
+	pursuit = 0
+	screen = 0
+
+	terrain_bonus = {
+		drylands = { damage = 10 toughness = 8 }
+		plains = { damage = 10 toughness = 8 }
+		forest = { damage = -10 toughness = -8 }
+		wetlands = { damage = -10 toughness = -8 }
+	}
+
+	counters = {
+		light_cavalry = 1
+		heavy_cavalry = 1
+	}
+
+	can_recruit = {
+		culture = {
+			 has_cultural_parameter = unlock_maa_anb_thorn_squares
+		}
+	}
+	
+	buy_cost = { gold = thorn_squares_recruitment_cost }
+	low_maintenance_cost = { gold = thorn_squares_low_maint_cost }
+	high_maintenance_cost = { gold = thorn_squares_high_maint_cost }
+	
+	stack = 100
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = thorn_square
+}
+
+wexonard_greatswords = {
+	type = heavy_infantry
+
+	damage = 60
+	toughness = 30
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		pikemen = 1
+	}
+
+	can_recruit = {
+		culture = {
+			 has_cultural_parameter = unlock_maa_anb_wexonard_greatswords
+		}
+	}
+	
+	buy_cost = { gold = wexonard_greatswords_recruitment_cost }
+	low_maintenance_cost = { gold = wexonard_greatswords_low_maint_cost }
+	high_maintenance_cost = { gold = wexonard_greatswords_high_maint_cost }
+	
+	stack = 100
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = wexonard_greatswords
+}

@@ -37,6 +37,18 @@ KEPT_MAGES = {"skalds", "druids", "wren_hedge_witches", "bladedancers"}
 RETIRED = ("tradition_test_maa_anb_storm_sorcerers",)
 # Anbennar flavor keys left as "LOC TO-DO": units nobody can recruit, and keys no unit uses.
 NO_FLAVOR_NEEDED = {"storm_sorcerers", "dwarven_handgunners", "bulwari_phalanx", "dwarven_bombard"}
+# Units the overhaul gives the icon Anbennar ships for them (docs/systems/base-art-fixes.md): Anbennar icon, ours.
+ICON_SWAPS = {
+    "battlemages": ("mages", "battlemages"),
+    "druids": ("mages", "druids"),
+    "skalds": ("mages", "skalds"),
+    "smallknights": ("heavy_cavalry", "smallknights"),
+    "adventurers_maa": ("heavy_infantry", "adventurers"),
+    "damerian_longbowmen": ("bowmen", "damerian_longbowmen"),
+    "oakfoot_rangers": ("bowmen", "rangers"),
+    "thorn_squares": ("pikemen", "thorn_square"),
+    "wexonard_greatswords": ("heavy_infantry", "wexonard_greatswords"),
+}
 
 
 def _text(path):
@@ -64,6 +76,14 @@ def without_blocks(body, names):
     return body
 
 
+def anbennar_icon(body, key):
+    """Our block with its swapped icon (ICON_SWAPS) put back to Anbennar's, to compare the rest with Anbennar."""
+    if key not in ICON_SWAPS:
+        return body
+    old, new = ICON_SWAPS[key]
+    return re.sub(rf"(?m)^(\s*)icon = {new}\s*$", rf"\g<1>icon = {old}", body)
+
+
 def maa_files():
     """Every men-at-arms file of the game, Anbennar and the overhaul, in load order (a same-named file of a later
     mod replaces the earlier one; objects defined twice: the last file wins)."""
@@ -87,7 +107,7 @@ class MageMaaTests(unittest.TestCase):
     def test_units_regated_and_otherwise_anbennars(self):
         for key, gate in GATES.items():
             self.assertEqual(squash(parse_blocks(self.ours[key]).get("can_recruit", "")), gate, key)
-            self.assertEqual(squash(without_blocks(self.ours[key], ("can_recruit",))),
+            self.assertEqual(squash(without_blocks(anbennar_icon(self.ours[key], key), ("can_recruit",))),
                              squash(without_blocks(self.base[key], ("can_recruit",))), key)
 
     def test_no_other_cultural_mage_unit_changes_hands(self):
@@ -123,7 +143,8 @@ class HalflingMaaTests(unittest.TestCase):
         self.assertEqual(set(ours), {"smallknights"})
         self.assertEqual(squash(parse_blocks(ours["smallknights"]).get("can_recruit", "")),
                          "culture = { has_cultural_parameter = unlock_maa_anb_smallknights }")
-        self.assertEqual(squash(without_blocks(ours["smallknights"], ("can_recruit",))),
+        knights = anbennar_icon(ours["smallknights"], "smallknights")
+        self.assertEqual(squash(without_blocks(knights, ("can_recruit",))),
                          squash(without_blocks(base["smallknights"], ("can_recruit",))))
 
 

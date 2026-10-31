@@ -12,7 +12,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from pdx_script import ANBENNAR_CK3 as ANBENNAR, parse_blocks  # noqa: E402
-from test_cultural_maa import _text, base_blocks, blocks, maa_files, squash, without_blocks  # noqa: E402
+from test_cultural_maa import _text, anbennar_icon, base_blocks, blocks, maa_files, squash, without_blocks  # noqa: E402
 
 MAA_FILE = "common/men_at_arms_types/zz_aov_faith_maa_overrides.txt"
 BASE_MAA_FILE = "common/men_at_arms_types/anb_cultural_maa_types.txt"
@@ -46,7 +46,7 @@ class FaithMaaTests(unittest.TestCase):
     def test_units_regated_and_otherwise_anbennars(self):
         for key, gate in GATES.items():
             self.assertEqual(squash(parse_blocks(self.ours[key]).get("can_recruit", "")), gate, key)
-            self.assertEqual(squash(without_blocks(self.ours[key], ("can_recruit",))),
+            self.assertEqual(squash(without_blocks(anbennar_icon(self.ours[key], key), ("can_recruit",))),
                              squash(without_blocks(self.base[key], ("can_recruit",))), key)
 
     def test_our_definitions_win(self):

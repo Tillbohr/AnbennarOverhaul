@@ -96,6 +96,7 @@ Read only the doc for the system you are working on. Each holds the generated-fi
 | Faith men-at-arms: Dercinges, Druids, Skalds and Knights of the Spear recruited by faith tenet or patron god instead of a culture tradition | `docs/systems/faith-maa.md` | none (hand-written overrides) |
 | Holy sites for Devouring Path and Silk Turban (Anbennar ships them with none); real icons for the 31 faiths Anbennar ships with the `the_dame` placeholder | `docs/systems/holy-sites.md` | `build_holy_sites.py` |
 | Race relations: monstrous races, Liches and exposed Vampires/Werewolves hostile to everyone else (EU4 monstrous opinions as marker traits, two conquest CBs, vampire/werewolf secrets, no marriage or alliance across the line; future racial marriage rules go in `aov_race_marriage_allowed_trigger`) | `docs/systems/race-relations.md` | `build_race_relations.py` |
+| Base art fixes: Anbennar art copied to the file name the game looks up (Adeanic knight education icons, griffon rider icon); Warcraft mod pictures for griffon riders; nine men-at-arms switched to the unit icons Anbennar ships for them | `docs/systems/base-art-fixes.md` | none (copied once) |
 | Race knight badges: EU4 tech group icons (gear removed) as the knight badge for elf, dwarf, gnome and kobold rulers; RiE levy and knight pictures in the military window for elf and dwarf rulers | `docs/systems/knight-icons.md` | `build_knight_icons.py` |
 
 ## Updating and validation

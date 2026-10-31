@@ -1,6 +1,6 @@
 ﻿# Anbennar Overhaul: Anbennar's Small Knights, recruitable by any culture with the Little Lords tradition. Anbennar also
 # requires the high medieval culture era, which halfling cultures do not reach (their history stops in the early
-# medieval era). Otherwise Anbennar's block.
+# medieval era). Otherwise Anbennar's block, with Anbennar's unused smallknights icon (docs/systems/base-art-fixes.md).
 
 @cultural_maa_extra_ai_score = 80
 
@@ -36,5 +36,5 @@ smallknights = {
 	
 	stack = 50
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = heavy_cavalry
+	icon = smallknights
 }
