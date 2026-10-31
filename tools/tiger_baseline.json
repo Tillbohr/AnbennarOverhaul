@@ -4537,6 +4537,2610 @@
   "key": "missing-localization",
   "locations": [
     {
+      "column": 13,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 29,
+      "line": "\t\t{ name = \"holy_order_jaherian_exemplars\" }",
+      "linenr": 67,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key holy_order_jaherian_exemplars",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 14,
+      "line": "\t\tjaherian_cults = {",
+      "linenr": 240,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHim",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 14,
+      "line": "\t\tjaherian_cults = {",
+      "linenr": 240,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHis",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 14,
+      "line": "\t\tjaherian_cults = {",
+      "linenr": 240,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMistressMaster",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 14,
+      "line": "\t\tjaherian_cults = {",
+      "linenr": 240,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMotherFather",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 14,
+      "line": "\t\tjaherian_cults = {",
+      "linenr": 240,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodName",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 14,
+      "line": "\t\tjaherian_cults = {",
+      "linenr": 240,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodNamePossessive",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 14,
+      "line": "\t\tjaherian_cults = {",
+      "linenr": 240,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodSheHe",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 19,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 31,
+      "line": "\t\t\t\tCreatorName = jaherian_cults_creator_god_name",
+      "linenr": 267,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key jaherian_cults_creator_god_name",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 29,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 42,
+      "line": "\t\t\t\tCreatorNamePossessive = jaherian_cults_creator_god_name_possessive",
+      "linenr": 268,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key jaherian_cults_creator_god_name_possessive",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 20,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 29,
+      "line": "\t\t\t\tNightGodName = jaherian_cults_night_god_name",
+      "linenr": 303,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key jaherian_cults_night_god_name",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 30,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 40,
+      "line": "\t\t\t\tNightGodNamePossessive = jaherian_cults_night_god_name_possessive",
+      "linenr": 304,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key jaherian_cults_night_god_name_possessive",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 12,
+      "line": "\t\tway_of_kings = { ",
+      "linenr": 314,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHim",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 12,
+      "line": "\t\tway_of_kings = { ",
+      "linenr": 314,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHis",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 12,
+      "line": "\t\tway_of_kings = { ",
+      "linenr": 314,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMistressMaster",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 12,
+      "line": "\t\tway_of_kings = { ",
+      "linenr": 314,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMotherFather",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 12,
+      "line": "\t\tway_of_kings = { ",
+      "linenr": 314,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodName",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 12,
+      "line": "\t\tway_of_kings = { ",
+      "linenr": 314,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodNamePossessive",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 12,
+      "line": "\t\tway_of_kings = { ",
+      "linenr": 314,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodSheHe",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 19,
+      "line": "\t\tcult_of_the_eclipse = {",
+      "linenr": 331,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHim",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 19,
+      "line": "\t\tcult_of_the_eclipse = {",
+      "linenr": 331,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHis",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 19,
+      "line": "\t\tcult_of_the_eclipse = {",
+      "linenr": 331,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMistressMaster",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 19,
+      "line": "\t\tcult_of_the_eclipse = {",
+      "linenr": 331,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMotherFather",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 19,
+      "line": "\t\tcult_of_the_eclipse = {",
+      "linenr": 331,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodName",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 19,
+      "line": "\t\tcult_of_the_eclipse = {",
+      "linenr": 331,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodNamePossessive",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 19,
+      "line": "\t\tcult_of_the_eclipse = {",
+      "linenr": 331,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodSheHe",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\tway_of_the_moon = {",
+      "linenr": 346,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHim",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\tway_of_the_moon = {",
+      "linenr": 346,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHis",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\tway_of_the_moon = {",
+      "linenr": 346,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMistressMaster",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\tway_of_the_moon = {",
+      "linenr": 346,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMotherFather",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\tway_of_the_moon = {",
+      "linenr": 346,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodName",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\tway_of_the_moon = {",
+      "linenr": 346,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodNamePossessive",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\tway_of_the_moon = {",
+      "linenr": 346,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodSheHe",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 19,
+      "line": "\t\tcult_of_the_citadel = {",
+      "linenr": 364,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHim",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 19,
+      "line": "\t\tcult_of_the_citadel = {",
+      "linenr": 364,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHis",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 19,
+      "line": "\t\tcult_of_the_citadel = {",
+      "linenr": 364,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMistressMaster",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 19,
+      "line": "\t\tcult_of_the_citadel = {",
+      "linenr": 364,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMotherFather",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 19,
+      "line": "\t\tcult_of_the_citadel = {",
+      "linenr": 364,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodName",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 19,
+      "line": "\t\tcult_of_the_citadel = {",
+      "linenr": 364,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodNamePossessive",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 19,
+      "line": "\t\tcult_of_the_citadel = {",
+      "linenr": 364,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodSheHe",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 17,
+      "line": "\t\trite_of_birsartan = {",
+      "linenr": 382,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHim",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 17,
+      "line": "\t\trite_of_birsartan = {",
+      "linenr": 382,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHis",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 17,
+      "line": "\t\trite_of_birsartan = {",
+      "linenr": 382,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMistressMaster",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 17,
+      "line": "\t\trite_of_birsartan = {",
+      "linenr": 382,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMotherFather",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 17,
+      "line": "\t\trite_of_birsartan = {",
+      "linenr": 382,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodName",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 17,
+      "line": "\t\trite_of_birsartan = {",
+      "linenr": 382,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodNamePossessive",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 17,
+      "line": "\t\trite_of_birsartan = {",
+      "linenr": 382,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodSheHe",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 25,
+      "line": "\t\tway_of_the_eseral_mitellu = {",
+      "linenr": 399,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHim",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 25,
+      "line": "\t\tway_of_the_eseral_mitellu = {",
+      "linenr": 399,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHis",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 25,
+      "line": "\t\tway_of_the_eseral_mitellu = {",
+      "linenr": 399,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMistressMaster",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 25,
+      "line": "\t\tway_of_the_eseral_mitellu = {",
+      "linenr": 399,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMotherFather",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 25,
+      "line": "\t\tway_of_the_eseral_mitellu = {",
+      "linenr": 399,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodName",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 25,
+      "line": "\t\tway_of_the_eseral_mitellu = {",
+      "linenr": 399,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodNamePossessive",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 25,
+      "line": "\t\tway_of_the_eseral_mitellu = {",
+      "linenr": 399,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodSheHe",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 14,
+      "line": "\t\tway_of_the_sea = {",
+      "linenr": 417,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHim",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 14,
+      "line": "\t\tway_of_the_sea = {",
+      "linenr": 417,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHis",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 14,
+      "line": "\t\tway_of_the_sea = {",
+      "linenr": 417,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMistressMaster",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 14,
+      "line": "\t\tway_of_the_sea = {",
+      "linenr": 417,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMotherFather",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 14,
+      "line": "\t\tway_of_the_sea = {",
+      "linenr": 417,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodName",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 14,
+      "line": "\t\tway_of_the_sea = {",
+      "linenr": 417,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodNamePossessive",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 14,
+      "line": "\t\tway_of_the_sea = {",
+      "linenr": 417,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodSheHe",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 24,
+      "line": "\t\trite_of_the_eternal_home = {",
+      "linenr": 434,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHim",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 24,
+      "line": "\t\trite_of_the_eternal_home = {",
+      "linenr": 434,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHis",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 24,
+      "line": "\t\trite_of_the_eternal_home = {",
+      "linenr": 434,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMistressMaster",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 24,
+      "line": "\t\trite_of_the_eternal_home = {",
+      "linenr": 434,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMotherFather",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 24,
+      "line": "\t\trite_of_the_eternal_home = {",
+      "linenr": 434,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodName",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 24,
+      "line": "\t\trite_of_the_eternal_home = {",
+      "linenr": 434,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodNamePossessive",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 24,
+      "line": "\t\trite_of_the_eternal_home = {",
+      "linenr": 434,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodSheHe",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 16,
+      "line": "\t\tcult_of_mourning = {",
+      "linenr": 455,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHim",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 16,
+      "line": "\t\tcult_of_mourning = {",
+      "linenr": 455,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHis",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 16,
+      "line": "\t\tcult_of_mourning = {",
+      "linenr": 455,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMistressMaster",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 16,
+      "line": "\t\tcult_of_mourning = {",
+      "linenr": 455,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMotherFather",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 16,
+      "line": "\t\tcult_of_mourning = {",
+      "linenr": 455,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodName",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 16,
+      "line": "\t\tcult_of_mourning = {",
+      "linenr": 455,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodNamePossessive",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 16,
+      "line": "\t\tcult_of_mourning = {",
+      "linenr": 455,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodSheHe",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 26,
+      "line": "\t\trite_of_the_dancing_flames = {",
+      "linenr": 472,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHim",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 26,
+      "line": "\t\trite_of_the_dancing_flames = {",
+      "linenr": 472,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHis",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 26,
+      "line": "\t\trite_of_the_dancing_flames = {",
+      "linenr": 472,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMistressMaster",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 26,
+      "line": "\t\trite_of_the_dancing_flames = {",
+      "linenr": 472,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMotherFather",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 26,
+      "line": "\t\trite_of_the_dancing_flames = {",
+      "linenr": 472,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodName",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 26,
+      "line": "\t\trite_of_the_dancing_flames = {",
+      "linenr": 472,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodNamePossessive",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 26,
+      "line": "\t\trite_of_the_dancing_flames = {",
+      "linenr": 472,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodSheHe",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 23,
+      "line": "\t\tcult_of_the_white_stone = {",
+      "linenr": 493,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHim",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 23,
+      "line": "\t\tcult_of_the_white_stone = {",
+      "linenr": 493,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHis",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 23,
+      "line": "\t\tcult_of_the_white_stone = {",
+      "linenr": 493,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMistressMaster",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 23,
+      "line": "\t\tcult_of_the_white_stone = {",
+      "linenr": 493,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMotherFather",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 23,
+      "line": "\t\tcult_of_the_white_stone = {",
+      "linenr": 493,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodName",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 23,
+      "line": "\t\tcult_of_the_white_stone = {",
+      "linenr": 493,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodNamePossessive",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 23,
+      "line": "\t\tcult_of_the_white_stone = {",
+      "linenr": 493,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodSheHe",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\tcult_of_the_law = {",
+      "linenr": 510,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHim",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\tcult_of_the_law = {",
+      "linenr": 510,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHis",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\tcult_of_the_law = {",
+      "linenr": 510,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMistressMaster",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\tcult_of_the_law = {",
+      "linenr": 510,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMotherFather",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\tcult_of_the_law = {",
+      "linenr": 510,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodName",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\tcult_of_the_law = {",
+      "linenr": 510,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodNamePossessive",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\tcult_of_the_law = {",
+      "linenr": 510,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodSheHe",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\trite_of_hammura = {",
+      "linenr": 529,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHim",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\trite_of_hammura = {",
+      "linenr": 529,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHis",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\trite_of_hammura = {",
+      "linenr": 529,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMistressMaster",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\trite_of_hammura = {",
+      "linenr": 529,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMotherFather",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\trite_of_hammura = {",
+      "linenr": 529,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodName",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\trite_of_hammura = {",
+      "linenr": 529,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodNamePossessive",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 15,
+      "line": "\t\trite_of_hammura = {",
+      "linenr": 529,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodSheHe",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 23,
+      "line": "\t\tcult_of_the_wise_master = {",
+      "linenr": 549,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHim",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 23,
+      "line": "\t\tcult_of_the_wise_master = {",
+      "linenr": 549,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHis",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 23,
+      "line": "\t\tcult_of_the_wise_master = {",
+      "linenr": 549,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMistressMaster",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 23,
+      "line": "\t\tcult_of_the_wise_master = {",
+      "linenr": 549,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMotherFather",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 23,
+      "line": "\t\tcult_of_the_wise_master = {",
+      "linenr": 549,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodName",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 23,
+      "line": "\t\tcult_of_the_wise_master = {",
+      "linenr": 549,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodNamePossessive",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 23,
+      "line": "\t\tcult_of_the_wise_master = {",
+      "linenr": 549,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodSheHe",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 17,
+      "line": "\t\tcult_of_the_sands = {",
+      "linenr": 568,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHim",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 17,
+      "line": "\t\tcult_of_the_sands = {",
+      "linenr": 568,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHis",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 17,
+      "line": "\t\tcult_of_the_sands = {",
+      "linenr": 568,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMistressMaster",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 17,
+      "line": "\t\tcult_of_the_sands = {",
+      "linenr": 568,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMotherFather",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 17,
+      "line": "\t\tcult_of_the_sands = {",
+      "linenr": 568,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodName",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 17,
+      "line": "\t\tcult_of_the_sands = {",
+      "linenr": 568,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodNamePossessive",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 17,
+      "line": "\t\tcult_of_the_sands = {",
+      "linenr": 568,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodSheHe",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 18,
+      "line": "\t\tcult_cult_of_maqet = {",
+      "linenr": 585,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHim",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 18,
+      "line": "\t\tcult_cult_of_maqet = {",
+      "linenr": 585,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodHerHis",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 18,
+      "line": "\t\tcult_cult_of_maqet = {",
+      "linenr": 585,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMistressMaster",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 18,
+      "line": "\t\tcult_cult_of_maqet = {",
+      "linenr": 585,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodMotherFather",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 18,
+      "line": "\t\tcult_cult_of_maqet = {",
+      "linenr": 585,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodName",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 18,
+      "line": "\t\tcult_cult_of_maqet = {",
+      "linenr": 585,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodNamePossessive",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 3,
+      "from": "MOD",
+      "fullpath": ".\\common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "length": 18,
+      "line": "\t\tcult_cult_of_maqet = {",
+      "linenr": 585,
+      "path": "common\\religion\\religion_types\\anb_bulwari_sun_cults.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "faith or religion missing localization for WitchGodSheHe",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
       "column": 3,
       "from": "MOD",
       "fullpath": ".\\common\\religion\\religion_types\\anb_businori.txt",

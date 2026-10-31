@@ -6,6 +6,10 @@ from other CK3 total conversions (100x100 DDS, unchanged, except Za'am, resized 
 committed; the generator only swaps the faith's `icon` (and `reformed_icon`, where it is also the placeholder) line
 in a whole-file copy of the Anbennar religion file.
 
+An entry with `replaces` swaps that Anbennar icon instead of the placeholder: Jaherian Cults shares the generic Sun Cult
+icon and gets EU4 Anbennar's New Sun Cult icon instead (the phoenix of the denomination that holds Jaher to be Surael
+Reborn).
+
 Sources: EK2 = Elder Kings 2 (2887120253), RiE = LotR: Realms in Exile (2291024373), Godherja = Godherja (2326030123),
 PoD = Princes of Darkness (2216659254), AGOT = A Game of Thrones (2962333032), AtE = After the End (3192256710),
 WC = the Warcraft total conversion (2949767945). Workshop ids are under steamapps/workshop/content/1158310.
@@ -23,6 +27,9 @@ FAITH_ICONS = {
     "moors_cult": {"icon": "aov_moors_cult", "source": "EK2 hagraven_cult"},  # the Crimson One, open witchcraft
     # Businori: Selkar-Nera, Judge of the Dead, is their Nerat; Anbennar ships an unused Nerat icon.
     "businori_cult": {"icon": "cult_of_nerat", "source": "Anbennar cult_of_nerat"},
+    # Bulwari Sun Cults: Jaher, founder of the Phoenix Empire, worshipped as Surael reborn.
+    "jaherian_cults": {"icon": "aov_jaherian_cults", "replaces": "bulwari_sun_cult",
+                       "source": "EU4 Anbennar icon_religion.dds frame 46, bulwari_sun_cult (64 px, Lanczos 2x, 100 px)"},
     # Cannorian Pantheon
     "cult_of_ryala": {"icon": "aov_cult_of_ryala", "source": "EK2 dibella"},  # love and beauty
     "southern_cult_of_castellos": {"icon": "aov_southern_cult_of_castellos", "source": "PoD viaregalis"},

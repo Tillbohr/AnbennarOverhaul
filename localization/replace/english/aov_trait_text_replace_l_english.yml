@@ -1,0 +1,14 @@
+﻿l_english:
+ # Anbennar Overhaul: trait text that Anbennar left as "GILLY TODO", and the name of the Sun Reborn's line, which
+ # Anbennar gave the same name as the Sun Reborn's own trait.
+ # Written so it fits Jaher and any later Sun Reborn. See docs/systems/base-art-fixes.md (Trait text).
+ # tools/tests/test_trait_text.py fails if a key here is empty or still a placeholder.
+
+ # Sun Reborn: Jaher ta'Diranhria at game start (history/characters/anb_sun_elvish.txt), or any later claimant
+ trait_sun_reborn_desc:0 "This character has been proclaimed [lore_description_surael_reborn|E] by the clergy of the Sun Cult: a hero who bears a great shard of Surael's [lore_description_light|E] and is tasked with restoring [lore_description_order|E] to Bulwar. They speak to every people in its own tongue, and the faithful see the hand of Surael in all they do."
+ TRAIT_FLAG_DESC_jaher_languages_flag:0 "Learns the tongue of every people they rule with ease"
+
+ # Descendants of a Sun Reborn (given at birth to every child of a Sun Reborn or of a descendant)
+ trait_sun_reborn_descendant:0 "Scion of the Sun Reborn"
+ trait_sun_reborn_descendant_desc:0 "This character descends from one proclaimed [lore_description_surael_reborn|E]. The faithful of the Sun Cult honor that blood, and look to the line for a glimmer of Surael's [lore_description_light|E]."
+ trait_sun_reborn_descendant_character_desc:0 "[ROOT.GetCharacter.GetFirstNameNoTooltip] descends from one proclaimed [lore_description_surael_reborn|E], and the faithful of the Sun Cult honor that blood in [ROOT.GetCharacter.GetHerHim]."

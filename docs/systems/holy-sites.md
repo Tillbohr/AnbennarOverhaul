@@ -24,10 +24,16 @@ conversions (Za'am's resized from RiE's 758x768 original) into `gfx/interface/ic
 imported once and committed, not regenerated. Businori uses Anbennar's own unused `cult_of_nerat` icon, since
 Selkar-Nera is their Nerat. `tools/data/faith_icons.py` lists every faith, its icon and the source mod and file.
 
+An entry with `replaces` swaps that Anbennar icon instead of `the_dame`. Jaherian Cults shares the generic Sun Cult
+icon (`bulwari_sun_cult`) and gets EU4 Anbennar's icon for the New Sun Cult instead, the EU4 religion (also keyed
+`bulwari_sun_cult`) that holds Jaher to be Surael Reborn: frame 46 of `gfx/interface/icon_religion.dds` (64 px
+frames), cropped, Lanczos 2x and resized to 100 px with `eu4_import.py`'s helpers.
+
 | Religion | Faiths and icon source |
 |---|---|
 | Akasi | Father Amahash, Mother Akhat, Father Aiji: the Warcraft TC's water, fire and air runes (Mother Akasik is earth) |
 | Alenic | Ansuwir: AGOT storm god; Moors Cult: EK2 Hagraven cult |
+| Bulwari Sun Cults | Jaherian Cults: EU4 Anbennar New Sun Cult (replaces `bulwari_sun_cult`) |
 | Businori | Selkaran Primacy: Anbennar's `cult_of_nerat` |
 | Cannorian Pantheon | Ryala: EK2 Dibella; Southern Castellos: PoD Via Regalis crown; Emulant Cults: EK2 cult of heroes; Luna Damish: RiE moon; Cult of Adean (Adenica): Godherja war knight; Border Cults: Godherja Gravewatch; Tefori Damish: AGOT Lady of the Waves; Lightfather: RiE sun; Stonescepter Court: After the End throne |
 | Dragon cults | Korbarid: PoD thrashing dragon; Elkaesal: Warcraft blue dragonflight; Za'am: RiE dragon cult |
@@ -47,16 +53,16 @@ generator.
 |---|---|---|
 | `common/religion/holy_site_types/aov_holy_sites.txt` | `build_holy_sites.py` | the eight holy sites |
 | `localization/english/aov_holy_sites_l_english.yml` | `build_holy_sites.py` | site and modifier names |
-| `common/religion/religion_types/anb_*.txt` (13 files: `akasi`, `alenic`, `businori`, `cannorian_pantheon`, `dragon_cult`, `fey`, `gerudian`, `halessi`, `high_philosophy`, `infernal_court`, `lencori`, `milcori`, `tyvorkan`) | `build_holy_sites.py` | a faith's holy sites and icon can only be set in its religion, and religions are whole-file overrides; these are Anbennar's files with marked `holy_site` lines added and marked `icon`/`reformed_icon` lines (`# Anbennar Overhaul, was the_dame`) changed |
+| `common/religion/religion_types/anb_*.txt` (14 files: `akasi`, `alenic`, `bulwari_sun_cults`, `businori`, `cannorian_pantheon`, `dragon_cult`, `fey`, `gerudian`, `halessi`, `high_philosophy`, `infernal_court`, `lencori`, `milcori`, `tyvorkan`) | `build_holy_sites.py` | a faith's holy sites and icon can only be set in its religion, and religions are whole-file overrides; these are Anbennar's files with marked `holy_site` lines added and marked `icon`/`reformed_icon` lines (`# Anbennar Overhaul, was <old icon>`) changed |
 
 The data is in `tools/data/holy_sites.py` and `tools/data/faith_icons.py`; the icon pictures in
 `gfx/interface/icons/faith/aov_*.dds` are committed by hand. Rerun `python -I tools/build_holy_sites.py` after every
 Anbennar update, or Anbennar's later changes to these religions are hidden by the stale copies.
 `tools/tests/test_build_holy_sites.py` fails when the copies are stale, and the generator stops when a county or
 barony is gone, a faith is renamed, a faith gains holy sites of its own in Anbennar, or a faith no longer has the
-`the_dame` icon (then drop it from the data), or an icon file is missing.
+icon it replaces (then drop it from the data), or an icon file is missing.
 
-The copies carry Anbennar's own tiger reports (480 in all, none on a changed line); see `validation-baseline.md`.
+The copies carry Anbennar's own tiger reports (604 in all, none on a changed line); see `validation-baseline.md`.
 
 ## In-game checks
 

@@ -1,0 +1,512 @@
+﻿# Anbennar Overhaul: Anbennar's planetouched traits with their own icons instead of vanilla's varangian.dds (the
+# Warcraft TC's elemental, life and shadow magic icons, one to three stars). Each block is Anbennar's with only
+# `varangian.dds` replaced by `<trait key>.dds`. See docs/systems/base-art-fixes.md.
+
+planetouched_fire_1 = {
+	prowess = 2
+	advantage = 1
+	life_expectancy = 5
+	physical = yes
+	icon = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = planetouched_fire_1.dds
+			}
+			desc = planetouched_fire_1.dds
+		}
+	}	
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_planetouched_fire_1_desc
+			}
+			desc = trait_planetouched_fire_1_character_desc
+		}
+	}
+}
+
+planetouched_fire_2 = {
+	prowess = 5
+	advantage = 3
+	glory_hound_opinion = 10
+	stewardship = -1
+	life_expectancy = 10
+	physical = yes
+	icon = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = planetouched_fire_2.dds
+			}
+			desc = planetouched_fire_2.dds
+		}
+	}	
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_planetouched_fire_2_desc
+			}
+			desc = trait_planetouched_fire_2_character_desc
+		}
+	}
+}
+
+planetouched_fire_3 = {
+	prowess = 8
+	advantage = 5
+	glory_hound_opinion = 20
+	stewardship = -2
+	life_expectancy = 15
+	physical = yes
+	icon = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = planetouched_fire_3.dds
+			}
+			desc = planetouched_fire_3.dds
+		}
+	}	
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_planetouched_fire_3_desc
+			}
+			desc = trait_planetouched_fire_3_character_desc
+		}
+	}
+}
+
+planetouched_water_1 = {
+	learning = 1
+	life_expectancy = 5
+	physical = yes
+	icon = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = planetouched_water_1.dds
+			}
+			desc = planetouched_water_1.dds
+		}
+	}	
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_planetouched_water_1_desc
+			}
+			desc = trait_planetouched_water_1_character_desc
+		}
+	}
+}
+
+planetouched_water_2 = {
+	learning = 2
+	naval_movement_speed_mult = 0.1
+	diplomacy = -1
+	life_expectancy = 10
+	physical = yes
+	icon = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = planetouched_water_2.dds
+			}
+			desc = planetouched_water_2.dds
+		}
+	}	
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_planetouched_water_2_desc
+			}
+			desc = trait_planetouched_water_2_character_desc
+		}
+	}
+}
+
+planetouched_water_3 = {
+	learning = 4
+	naval_movement_speed_mult = 0.2
+	no_water_crossing_penalty = yes
+	diplomacy = -2
+	life_expectancy = 15
+	physical = yes
+	icon = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = planetouched_water_3.dds
+			}
+			desc = planetouched_water_3.dds
+		}
+	}	
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_planetouched_water_3_desc
+			}
+			desc = trait_planetouched_water_3_character_desc
+		}
+	}
+}
+
+planetouched_earth_1 = {
+	stewardship = 1
+	life_expectancy = 5
+	physical = yes
+	icon = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = planetouched_earth_1.dds
+			}
+			desc = planetouched_earth_1.dds
+		}
+	}	
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_planetouched_earth_1_desc
+			}
+			desc = trait_planetouched_earth_1_character_desc
+		}
+	}
+}
+
+planetouched_earth_2 = {
+	stewardship = 2
+	siege_phase_time = -0.1
+	intrigue = -1
+	life_expectancy = 10
+	physical = yes
+	icon = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = planetouched_earth_2.dds
+			}
+			desc = planetouched_earth_2.dds
+		}
+	}	
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_planetouched_earth_2_desc
+			}
+			desc = trait_planetouched_earth_2_character_desc
+		}
+	}
+}
+
+planetouched_earth_3 = {
+	stewardship = 4
+	siege_phase_time = -0.2
+	intrigue = -2
+	life_expectancy = 15
+	physical = yes
+	icon = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = planetouched_earth_3.dds
+			}
+			desc = planetouched_earth_3.dds
+		}
+	}	
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_planetouched_earth_3_desc
+			}
+			desc = trait_planetouched_earth_3_character_desc
+		}
+	}
+}
+
+planetouched_wind_1 = {
+	diplomacy = 1
+	stress_gain_mult = -0.05
+	life_expectancy = 5
+	physical = yes
+	icon = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = planetouched_wind_1.dds
+			}
+			desc = planetouched_wind_1.dds
+		}
+	}	
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_planetouched_wind_1_desc
+			}
+			desc = trait_planetouched_wind_1_character_desc
+		}
+	}
+}
+
+planetouched_wind_2 = {
+	diplomacy = 2
+	movement_speed = 0.1
+	different_culture_opinion = 5
+	stress_gain_mult = -0.1
+	stewardship = -1
+	life_expectancy = 10
+	physical = yes
+	icon = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = planetouched_wind_2.dds
+			}
+			desc = planetouched_wind_2.dds
+		}
+	}	
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_planetouched_wind_2_desc
+			}
+			desc = trait_planetouched_wind_2_character_desc
+		}
+	}
+}
+
+planetouched_wind_3 = {
+	diplomacy = 4
+	movement_speed = 0.2
+	different_culture_opinion = 10
+	stress_gain_mult = -0.2
+	stewardship = -2
+	life_expectancy = 15
+	physical = yes
+	icon = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = planetouched_wind_3.dds
+			}
+			desc = planetouched_wind_3.dds
+		}
+	}	
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_planetouched_wind_3_desc
+			}
+			desc = trait_planetouched_wind_3_character_desc
+		}
+	}
+}
+
+planetouched_life_1 = {
+	fertility = 0.1
+	attraction_opinion = 10
+	life_expectancy = 10
+	physical = yes
+	icon = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = planetouched_life_1.dds
+			}
+			desc = planetouched_life_1.dds
+		}
+	}	
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_planetouched_life_1_desc
+			}
+			desc = trait_planetouched_life_1_character_desc
+		}
+	}
+}
+
+planetouched_life_2 = {
+	fertility = 0.2
+	years_of_fertility = 5
+	general_opinion = 5
+	attraction_opinion = 10
+	hard_casualty_modifier = -0.1
+	enemy_hard_casualty_modifier = -0.1
+	life_expectancy = 15
+	physical = yes
+	icon = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = planetouched_life_2.dds
+			}
+			desc = planetouched_life_2.dds
+		}
+	}	
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_planetouched_life_2_desc
+			}
+			desc = trait_planetouched_life_2_character_desc
+		}
+	}
+}
+
+planetouched_life_3 = {
+	fertility = 0.3
+	years_of_fertility = 10
+	general_opinion = 10
+	attraction_opinion = 10
+	hard_casualty_modifier = -0.2
+	enemy_hard_casualty_modifier = -0.2
+	life_expectancy = 20
+	physical = yes
+	icon = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = planetouched_life_3.dds
+			}
+			desc = planetouched_life_3.dds
+		}
+	}	
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_planetouched_life_3_desc
+			}
+			desc = trait_planetouched_life_3_character_desc
+		}
+	}
+}
+
+planetouched_shadow_1 = {
+	intrigue = 5
+	dread_baseline_add = 5
+	life_expectancy = 5
+	physical = yes
+	icon = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = planetouched_shadow_1.dds
+			}
+			desc = planetouched_shadow_1.dds
+		}
+	}	
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_planetouched_shadow_1_desc
+			}
+			desc = trait_planetouched_shadow_1_character_desc
+		}
+	}
+}
+
+planetouched_shadow_2 = {
+	intrigue = 2
+	dread_baseline_add = 10
+	general_opinion = -10
+	life_expectancy = 10
+	physical = yes
+	icon = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = planetouched_shadow_2.dds
+			}
+			desc = planetouched_shadow_2.dds
+		}
+	}	
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_planetouched_shadow_2_desc
+			}
+			desc = trait_planetouched_shadow_2_character_desc
+		}
+	}
+}
+
+planetouched_shadow_3 = {
+	intrigue = 4
+	dread_baseline_add = 20
+	general_opinion = -20
+	life_expectancy = 15
+	physical = yes
+	icon = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = planetouched_shadow_3.dds
+			}
+			desc = planetouched_shadow_3.dds
+		}
+	}	
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_planetouched_shadow_3_desc
+			}
+			desc = trait_planetouched_shadow_3_character_desc
+		}
+	}
+}

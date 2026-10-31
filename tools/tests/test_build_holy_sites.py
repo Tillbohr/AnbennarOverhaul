@@ -77,6 +77,12 @@ class SetIconsTests(unittest.TestCase):
         with self.assertRaises(GeneratorError):
             bhs.set_icons(RELIGION_FIXTURE, {"first_faith": "aov_first"})
 
+    def test_replaces_swaps_another_icon(self):
+        text = ICON_FIXTURE.replace("\t\t\ticon = the_dame\n\t\t\treformed_icon", "\t\t\ticon = sun\n\t\t\treformed_icon", 1)
+        lines = bhs.set_icons(text, {"first_faith": "aov_first"}, {"first_faith": "sun"}).split("\n")
+        self.assertEqual(lines[3], f"\t\t\ticon = aov_first {bhs.MARKER}, was sun")
+        self.assertEqual(lines[4], "\t\t\treformed_icon = the_dame")  # not the replaced icon
+
 
 @unittest.skipUnless(HAVE_REAL, "needs Anbennar")
 class DataTests(unittest.TestCase):
