@@ -30,10 +30,12 @@ COPIES = {
        f"gfx/interface/illustrations/men_at_arms_{size}/mages.dds"
        for size in ("big", "small") for unit in ("battlemages", "druids", "skalds")},
 }
+PURISTS = ("elven_purist", "human_purist", "gnomish_purist", "dwarven_purist", "half_elf_purist", "halfling_purist")
 GAME_COPIES = {
     **{f"gfx/interface/illustrations/men_at_arms_{size}/rangers.dds":
        f"gfx/interface/illustrations/men_at_arms_{size}/bowmen.dds" for size in ("big", "small")},
     "gfx/interface/icons/traits/bladeshunned.dds": "gfx/interface/icons/traits/disinherited.dds",
+    **{f"gfx/interface/icons/traits/{key}.dds": "gfx/interface/icons/traits/pure_blooded.dds" for key in PURISTS},
 }
 ART = ("gfx/interface/icons/regimenttypes", "gfx/interface/illustrations/men_at_arms_big",
        "gfx/interface/illustrations/men_at_arms_small")
@@ -46,13 +48,10 @@ ELEMENTS = {"fire": "user_of_elemental_fire_magic", "water": "user_of_elemental_
             "earth": "user_of_elemental_earth_magic", "wind": "user_of_elemental_air_magic",
             "life": "user_of_life_magic", "shadow": "user_of_shadow_magic"}
 PLANETOUCHED = {f"planetouched_{element}_{n}": f"{stem}_{n}" for element, stem in ELEMENTS.items() for n in (1, 2, 3)}
-PURISTS = ("elven_purist", "human_purist", "gnomish_purist", "dwarven_purist", "half_elf_purist", "halfling_purist")
-# Overhaul trait icon -> Workshop file it is a byte copy of: Supernatural (2856525601), the Warcraft TC (2949767945) and
-# Elder Kings 2 (2887120253).
+# Overhaul trait icon -> Workshop file it is a byte copy of: the Warcraft TC (2949767945) and Elder Kings 2 (2887120253).
 WORKSHOP_COPIES = {
     f"{TRAITS}/vampire.dds": f"2887120253/{TRAITS}/vampire_character.dds",
     f"{TRAITS}/lycanthrope.dds": f"2887120253/{TRAITS}/lycan_character.dds",
-    **{f"{TRAITS}/{key}.dds": f"2856525601/{TRAITS}/pure_blooded.dds" for key in PURISTS},
     **{f"{TRAITS}/{key}.dds": f"2949767945/{TRAITS}/{stem}.dds" for key, stem in PLANETOUCHED.items()},
 }
 
