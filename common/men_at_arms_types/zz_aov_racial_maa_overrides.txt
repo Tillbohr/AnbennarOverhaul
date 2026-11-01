@@ -131,7 +131,7 @@ sundancer_legions = {
 		harsh_winter = { damage = -56 toughness = -48 }
 	}
 	can_recruit = {
-		culture = { aov_sun_elven_lineage_trigger = yes }
+		valid_for_maa_trigger = { PARAMETER = unlock_maa_anb_sundancer_legions } # Anbennar Overhaul: the tradition's unit again (racial-traditions.md)
 	}
 	buy_cost = { gold = aov_sundancer_legions_recruitment_cost }
 	low_maintenance_cost = { gold = aov_sundancer_legions_low_maint_cost }
@@ -165,7 +165,7 @@ jaherkadezim = {
 		harsh_winter = { damage = -96 toughness = -30 }
 	}
 	can_recruit = {
-		culture = { aov_sun_elven_lineage_trigger = yes }
+		valid_for_maa_trigger = { PARAMETER = unlock_maa_anb_jaherkadezim } # Anbennar Overhaul: the tradition's unit again (racial-traditions.md)
 	}
 	buy_cost = { gold = aov_jaherkadezim_recruitment_cost }
 	low_maintenance_cost = { gold = aov_jaherkadezim_low_maint_cost }

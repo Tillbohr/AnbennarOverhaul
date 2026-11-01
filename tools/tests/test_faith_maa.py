@@ -25,7 +25,8 @@ ADEAN = ("faith = { OR = { has_doctrine = doctrine_patron_deity_adean "
          "has_doctrine = doctrine_patron_deity_the_dame_adean has_doctrine = doctrine_patron_deity_adean_minara } }")
 GATES = {
     "dercinges": DRUIDIC,
-    "druids": DRUIDIC,
+    # the Thorn grove tradition is a second way in (docs/systems/racial-traditions.md)
+    "druids": f"OR = {{ {DRUIDIC} valid_for_maa_trigger = {{ PARAMETER = aov_unlock_maa_thorn_druids }} }}",
     "skalds": "faith = { has_doctrine = tenet_skaldic_tales }",
     "knights_of_the_spear": ADEAN,
 }

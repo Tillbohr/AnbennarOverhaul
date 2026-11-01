@@ -295,7 +295,6 @@ aov_holding_levy_size_bonus = {
 	if = { limit = { terrain = terraced_hills } if = { limit = { county.culture = { has_cultural_tradition = tradition_tgp_rice_cultivators } } add = 0.1 } } # culture/traditions tradition_tgp_rice_cultivators
 	if = { limit = { terrain = farmlands } if = { limit = { county.culture = { has_cultural_tradition = tradition_intensive_farming } } add = 0.1 } } # culture/traditions tradition_intensive_farming
 	if = { limit = { terrain = terraced_hills } if = { limit = { county.culture = { has_cultural_tradition = tradition_intensive_farming } } add = 0.1 } } # culture/traditions tradition_intensive_farming
-	if = { limit = { province_owner.culture = { has_cultural_tradition = tradition_sundancer_legions } } add = -0.35 } # culture/traditions tradition_sundancer_legions
 	if = { limit = { province_owner = { has_government = administrative_government } } add = -0.5 } # governments administrative_government
 	if = { limit = { province_owner = { has_government = celestial_government } } add = -0.5 } # governments celestial_government
 	if = { limit = { province_owner = { has_government = steppe_admin_government } } add = -0.5 } # governments steppe_admin_government

@@ -14,7 +14,7 @@ traditions. Every new culture is a divergence (`parents`) of `wood_elvish` or `m
 | `common/on_action/aov_elven_cultures_on_actions.txt` | `on_game_start` hook |
 | `common/scripted_effects/aov_elven_cultures_effects.txt` | county and character assignment |
 | `common/scripted_effects/zz_aov_elven_culture_overrides.txt` | Anbennar's `roll_racial_purity_trait_for_character`, copied with lineage checks |
-| `tools/tests/test_elven_cultures.py` | definitions match their parent, loc, assignment titles still hold parent-culture counties, override still matches Anbennar |
+| `tools/tests/test_elven_cultures.py` | definitions match their parent (traditions: the chosen set), loc, assignment titles still hold parent-culture counties, override still matches Anbennar |
 
 ## Cultures
 
@@ -37,10 +37,33 @@ traditions. Every new culture is a divergence (`parents`) of `wood_elvish` or `m
 `created` is cosmetic (the culture window's history line): 1020 for the groves (after the 1017 retreat); Redglades
 1001, Celmaldor 995, Ibevar and Venáil 1021.10.31 (their title history).
 
-Each copies its parent's traditions, martial custom, head determination, name list, ethnicities and gfx (coat of
-arms, buildings, clothing and units, as the overhaul's generated `anb_elven.txt` gives the parent), so nothing
-changes in play until regional traditions are added. `CultureDefinitionTests` fail if a parent's field changes
-(say, after `build_holding_models.py` gives it a new gfx key): copy the new value. The name list stays the parent's
+Each copies its parent's martial custom, head determination, name list, ethnicities and gfx (coat of arms,
+buildings, clothing and units, as the overhaul's generated `anb_elven.txt` gives the parent).
+`CultureDefinitionTests` fail if a parent's field changes (say, after `build_holding_models.py` gives it a new gfx
+key): copy the new value.
+
+Traditions: every culture keeps its parent's Equal Inheritance, and every grove keeps Forest Folk. The parent's other
+traditions (moon: Storytellers and Refined Poetry; wood: Isolationist) are replaced from the realm's EU4 ideas. Two
+more are added at game start by the racial traditions system (`racial-traditions.md`): the parent's racial tradition
+and the culture's own.
+
+| Culture | Replaced | With | EU4 |
+|---|---|---|---|
+| Lake | Isolationist | Philosopher Culture | Elynáile, Heralds of a New Age |
+| Mountain | Isolationist | Mountain Homes | Ciranmyna; Twin Gateways to Escann |
+| Thorn | Isolationist | Sacred Groves | Closest to the Fey, First Grove of Druids |
+| Bone | Isolationist | Hit-and-Run Tacticians | Horrors of the Bone Grove, Bonecoated Infiltrators |
+| Hunter | Isolationist | Prolific Hunters | Great Beast Hunters, Survival of the Fittest |
+| Flower | Isolationist | Medicinal Herbalists | Every Elf a Botanist, Poisons and Potions |
+| River | Isolationist | Xenophilic | Satyr Communities, First Friends of the Fey |
+| Arrow | Isolationist | Expert Artisans | Finest Carpenters |
+| Shadow | Isolationist | Mystical Ancestors | Home of the Ashentree Fey, The Witch of the East |
+| Redglader | Storytellers | Astute Diplomats (keeps Refined Poetry) | Ioriel's Accords, Voice of the Rose Throne |
+| Ibevari | Storytellers, Refined Poetry | Stalwart Defenders, Expert Artisans | Defense of the Forlorn Vale, Ibevari Artisans |
+| Celmaldorian | Storytellers, Refined Poetry | Maritime Mercantilism, Seafarers | Icewind Palace of Commerce, Sea is Our Land |
+| Venáili | Storytellers, Refined Poetry | Seafarers, Isolationist | Lessons of the Remnant Fleet, Venáili Arks |
+
+The name list stays the parent's
 because Anbennar's title flavorization (`common/flavorization/00_anb_title_holders.txt`: Ceann, Prince) and
 dynasty naming are keyed on it; a regional name list can be added later as a second `name_list` line (the first
 one is the primary).

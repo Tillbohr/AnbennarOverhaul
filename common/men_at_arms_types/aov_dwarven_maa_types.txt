@@ -1,5 +1,6 @@
 ﻿# Anbennar Overhaul: racial armies. New dwarven men-at-arms (spec roster tables); costs in
-# common/script_values/aov_racial_maa_values.txt, gates in common/scripted_triggers/aov_racial_maa_triggers.txt.
+# common/script_values/aov_racial_maa_values.txt. Each clan's unit needs its clan tradition
+# (common/culture/traditions/aov_racial_traditions.txt, docs/systems/racial-traditions.md).
 
 @cultural_maa_extra_ai_score = 80 # Anbennar's value (anb_cultural_maa_generics.txt)
 
@@ -32,7 +33,7 @@ aov_grudgebearers = {
 		farmlands = { damage = 8 toughness = 12 }
 	}
 	can_recruit = {
-		culture = { aov_ruby_dwarven_lineage_trigger = yes }
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_grudgebearers } # the clan tradition (racial-traditions.md)
 	}
 	buy_cost = { gold = aov_grudgebearers_recruitment_cost }
 	low_maintenance_cost = { gold = aov_grudgebearers_low_maint_cost }
@@ -68,7 +69,7 @@ aov_tortoise_formation = {
 		forest = { damage = -4 toughness = -17 }
 	}
 	can_recruit = {
-		culture = { aov_stone_dwarven_lineage_trigger = yes }
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_tortoise_formation } # the clan tradition (racial-traditions.md)
 	}
 	buy_cost = { gold = aov_tortoise_formation_recruitment_cost }
 	low_maintenance_cost = { gold = aov_tortoise_formation_low_maint_cost }
@@ -104,7 +105,7 @@ aov_giantbane_crossbows = {
 		forest = { damage = -10 toughness = -5 }
 	}
 	can_recruit = {
-		culture = { aov_agate_dwarven_lineage_trigger = yes }
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_giantbane_crossbows } # the clan tradition (racial-traditions.md)
 	}
 	buy_cost = { gold = aov_giantbane_crossbows_recruitment_cost }
 	low_maintenance_cost = { gold = aov_giantbane_crossbows_low_maint_cost }
@@ -140,7 +141,7 @@ aov_uthojdihr_marines = {
 		oasis = { damage = 15 toughness = 25 }
 	}
 	can_recruit = {
-		culture = { aov_copper_dwarven_lineage_trigger = yes }
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_uthojdihr_marines } # the clan tradition (racial-traditions.md)
 	}
 	buy_cost = { gold = aov_uthojdihr_marines_recruitment_cost }
 	low_maintenance_cost = { gold = aov_uthojdihr_marines_low_maint_cost }
@@ -175,7 +176,7 @@ aov_seg_band_gnollhunters = {
 		drylands = { damage = 18 toughness = 20 }
 	}
 	can_recruit = {
-		culture = { aov_citrine_dwarven_lineage_trigger = yes }
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_seg_band_gnollhunters } # the clan tradition (racial-traditions.md)
 	}
 	buy_cost = { gold = aov_seg_band_gnollhunters_recruitment_cost }
 	low_maintenance_cost = { gold = aov_seg_band_gnollhunters_low_maint_cost }
@@ -209,7 +210,7 @@ aov_golden_gate_guard = {
 		forest = { damage = -11 toughness = -24 }
 	}
 	can_recruit = {
-		culture = { aov_gold_dwarven_lineage_trigger = yes }
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_golden_gate_guard } # the clan tradition (racial-traditions.md)
 	}
 	buy_cost = { gold = aov_golden_gate_guard_recruitment_cost }
 	low_maintenance_cost = { gold = aov_golden_gate_guard_low_maint_cost }
@@ -244,7 +245,7 @@ aov_clockwork_bows = {
 		forest = { damage = -12 toughness = -5 }
 	}
 	can_recruit = {
-		culture = { aov_pyrite_dwarven_lineage_trigger = yes }
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_clockwork_bows } # the clan tradition (racial-traditions.md)
 	}
 	buy_cost = { gold = aov_clockwork_bows_recruitment_cost }
 	low_maintenance_cost = { gold = aov_clockwork_bows_low_maint_cost }
@@ -280,7 +281,7 @@ aov_dauvek_veker = {
 		forest = { damage = -17 toughness = -14 }
 	}
 	can_recruit = {
-		culture = { aov_titanium_dwarven_lineage_trigger = yes }
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_dauvek_veker } # the clan tradition (racial-traditions.md)
 	}
 	buy_cost = { gold = aov_dauvek_veker_recruitment_cost }
 	low_maintenance_cost = { gold = aov_dauvek_veker_low_maint_cost }
@@ -314,7 +315,7 @@ aov_copper_road_wardens = {
 		forest = { damage = -8 toughness = -8 }
 	}
 	can_recruit = {
-		culture = { aov_topaz_dwarven_lineage_trigger = yes }
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_copper_road_wardens } # the clan tradition (racial-traditions.md)
 	}
 	buy_cost = { gold = aov_copper_road_wardens_recruitment_cost }
 	low_maintenance_cost = { gold = aov_copper_road_wardens_low_maint_cost }
@@ -349,7 +350,7 @@ aov_brightbeard_hammers = {
 		forest = { damage = -15 toughness = -11 }
 	}
 	can_recruit = {
-		culture = { aov_marble_dwarven_lineage_trigger = yes }
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_brightbeard_hammers } # the clan tradition (racial-traditions.md)
 	}
 	buy_cost = { gold = aov_brightbeard_hammers_recruitment_cost }
 	low_maintenance_cost = { gold = aov_brightbeard_hammers_low_maint_cost }
@@ -371,7 +372,7 @@ aov_silverforge_engineers = {
 	siege_value = 0.9
 
 	can_recruit = {
-		culture = { aov_silver_dwarven_lineage_trigger = yes }
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_silverforge_engineers } # the clan tradition (racial-traditions.md)
 	}
 	buy_cost = { gold = aov_silverforge_engineers_recruitment_cost }
 	low_maintenance_cost = { gold = aov_silverforge_engineers_low_maint_cost }

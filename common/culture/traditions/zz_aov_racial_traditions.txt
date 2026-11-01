@@ -1,8 +1,9 @@
-﻿# Anbennar Overhaul: racial armies. Overrides three Anbennar traditions (common/culture/traditions/anb_maa_traditions.txt)
-# so they can never be shown or picked; aov_racial_armies_game_start removes them from every culture. Everything
-# but is_shown and can_pick is copied unchanged. See docs/systems/racial-armies.md.
+﻿# Anbennar Overhaul: overrides three Anbennar traditions (common/culture/traditions/anb_maa_traditions.txt).
+# Racial armies (docs/systems/racial-armies.md): the two dwarf traditions can never be shown or picked, and
+# aov_racial_armies_game_start removes them from every culture; everything but is_shown and can_pick is unchanged.
+# Racial traditions (docs/systems/racial-traditions.md): the Sundancer Legions lose their levy penalty.
 
-# Sun elves: its units (sundancer_legions, jaherkadezim) belong to every sun elf culture instead.
+# Sun elves: Anbennar's tradition without levy_size and levy_reinforcement_rate; it unlocks its two units again.
 tradition_sundancer_legions = {
 	category = combat
 
@@ -12,8 +13,17 @@ tradition_sundancer_legions = {
 		4 = laurel.dds
 	}
 
-	is_shown = { always = no }
-	can_pick = { always = no }
+	is_shown = {
+		has_cultural_pillar = heritage_elven
+	}
+	can_pick = {
+		OR ={
+			this = culture:sun_elvish
+			any_parent_culture_or_above = {
+				this = culture:sun_elvish
+			}
+		}
+	}
 
 	parameters = {
 		unlock_maa_anb_jaherkadezim = yes
@@ -21,10 +31,8 @@ tradition_sundancer_legions = {
 	}
 	
 	character_modifier = {
-		levy_size = -0.35
 		men_at_arms_recruitment_cost = -0.25
 		men_at_arms_maintenance = -0.35
-		levy_reinforcement_rate = -0.35
 		men_at_arms_cap = 1
 		hard_casualty_modifier = -0.15
 	}

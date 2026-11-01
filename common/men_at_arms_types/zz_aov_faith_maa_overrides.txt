@@ -62,7 +62,10 @@ druids = {
 	}
 
 	can_recruit = { # Anbennar Overhaul: was the Carnetori tradition
-		faith = { has_doctrine = tenet_druids_of_the_deruwren }
+		OR = {
+			faith = { has_doctrine = tenet_druids_of_the_deruwren }
+			valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_thorn_druids } # Thorn grove tradition (racial-traditions.md)
+		}
 	}
 	
 	buy_cost = { gold = druids_recruitment_cost }

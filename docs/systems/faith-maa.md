@@ -6,7 +6,7 @@ recruiter's faith. Anbennar marked Druids and Skalds `# Change to religion` itse
 | Unit | Recruited by a faith with | Faiths at game start | Was |
 |---|---|---|---|
 | Dercinges | `tenet_druids_of_the_deruwren` | Ollodousges | Carnetori tradition |
-| Druids | `tenet_druids_of_the_deruwren` | Ollodousges | Carnetori tradition |
+| Druids | `tenet_druids_of_the_deruwren`, or the Thorn grove tradition (`racial-traditions.md`) | Ollodousges | Carnetori tradition |
 | Skalds | `tenet_skaldic_tales` | Skaldhyrric Faith, Reverian Cult, West Damish | Gerudian tradition |
 | Knights of the Spear | `doctrine_patron_deity_adean`, `_the_dame_adean` or `_adean_minara` | Court of Adean, Cult of Adean, Vernid Adean, Whiterose Court, Luna Damish | Adenner tradition |
 

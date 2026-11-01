@@ -1,6 +1,7 @@
 ﻿# Anbennar Overhaul: regional elven cultures (docs/systems/elven-cultures.md).
-# Each splits from Anbennar's wood_elvish or moon_elvish and copies its parent's traditions, gfx (as the overhaul's
-# anb_elven.txt override gives them), name list and ethnicities; regional traditions come later. Assigned to
+# Each splits from Anbennar's wood_elvish or moon_elvish and copies its parent's gfx (as the overhaul's
+# anb_elven.txt override gives them), name list and ethnicities. Its traditions keep the parent's Equal Inheritance
+# (and Forest Folk for wood elves) with the rest chosen from its EU4 ideas; racial-traditions.md adds two more. Assigned to
 # counties and characters at game start by aov_elven_cultures_game_start (aov_elven_cultures_on_actions.txt).
 
 # Lake Grove: Salla Elyn (EU4 I26)
@@ -16,7 +17,7 @@ lake_elvish = {
 	martial_custom = martial_custom_equal
 	head_determination = head_determination_domain
 	traditions = {
-		tradition_isolationist
+		tradition_philosopher_culture
 		tradition_equal_inheritance
 		tradition_forest_folk
 	}
@@ -47,7 +48,7 @@ mountain_elvish = {
 	martial_custom = martial_custom_equal
 	head_determination = head_determination_domain
 	traditions = {
-		tradition_isolationist
+		tradition_mountain_homes
 		tradition_equal_inheritance
 		tradition_forest_folk
 	}
@@ -78,7 +79,7 @@ thorn_elvish = {
 	martial_custom = martial_custom_equal
 	head_determination = head_determination_domain
 	traditions = {
-		tradition_isolationist
+		tradition_sacred_groves
 		tradition_equal_inheritance
 		tradition_forest_folk
 	}
@@ -109,7 +110,7 @@ bone_elvish = {
 	martial_custom = martial_custom_equal
 	head_determination = head_determination_domain
 	traditions = {
-		tradition_isolationist
+		tradition_hit_and_run
 		tradition_equal_inheritance
 		tradition_forest_folk
 	}
@@ -140,7 +141,7 @@ hunter_elvish = {
 	martial_custom = martial_custom_equal
 	head_determination = head_determination_domain
 	traditions = {
-		tradition_isolationist
+		tradition_hunters
 		tradition_equal_inheritance
 		tradition_forest_folk
 	}
@@ -171,7 +172,7 @@ flower_elvish = {
 	martial_custom = martial_custom_equal
 	head_determination = head_determination_domain
 	traditions = {
-		tradition_isolationist
+		tradition_medicinal_plants
 		tradition_equal_inheritance
 		tradition_forest_folk
 	}
@@ -202,7 +203,7 @@ river_elvish = {
 	martial_custom = martial_custom_equal
 	head_determination = head_determination_domain
 	traditions = {
-		tradition_isolationist
+		tradition_xenophilic
 		tradition_equal_inheritance
 		tradition_forest_folk
 	}
@@ -233,7 +234,7 @@ arrow_elvish = {
 	martial_custom = martial_custom_equal
 	head_determination = head_determination_domain
 	traditions = {
-		tradition_isolationist
+		tradition_artisans
 		tradition_equal_inheritance
 		tradition_forest_folk
 	}
@@ -264,7 +265,7 @@ shadow_elvish = {
 	martial_custom = martial_custom_equal
 	head_determination = head_determination_domain
 	traditions = {
-		tradition_isolationist
+		tradition_mystical_ancestors
 		tradition_equal_inheritance
 		tradition_forest_folk
 	}
@@ -295,7 +296,7 @@ redglader = {
 	martial_custom = martial_custom_equal
 	head_determination = head_determination_domain
 	traditions = {
-		tradition_storytellers
+		tradition_astute_diplomats
 		tradition_equal_inheritance
 		tradition_poetry
 	}
@@ -326,9 +327,9 @@ ibevari = {
 	martial_custom = martial_custom_equal
 	head_determination = head_determination_domain
 	traditions = {
-		tradition_storytellers
+		tradition_stalwart_defenders
 		tradition_equal_inheritance
-		tradition_poetry
+		tradition_artisans
 	}
 
 	name_list = name_list_moon_elven
@@ -357,9 +358,9 @@ celmaldorian = {
 	martial_custom = martial_custom_equal
 	head_determination = head_determination_domain
 	traditions = {
-		tradition_storytellers
+		tradition_maritime_mercantilism
 		tradition_equal_inheritance
-		tradition_poetry
+		tradition_seafaring
 	}
 
 	name_list = name_list_moon_elven
@@ -388,9 +389,9 @@ venaili = {
 	martial_custom = martial_custom_equal
 	head_determination = head_determination_domain
 	traditions = {
-		tradition_storytellers
+		tradition_seafaring
 		tradition_equal_inheritance
-		tradition_poetry
+		tradition_isolationist
 	}
 
 	name_list = name_list_moon_elven

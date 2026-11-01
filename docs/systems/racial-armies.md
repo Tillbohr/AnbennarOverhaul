@@ -49,17 +49,20 @@ Spec: `docs/superpowers/specs/2026-10-21-racial-armies-design.md` (every stat an
     yearly (`yearly_playable_pulse`) for every holding of the counties of rulers who are racial or have a corrected
     holding there (this reaches vassal barons' temples and cities).
 - **Removed traditions** (`common/culture/traditions/zz_aov_racial_traditions.txt`, hidden and unpickable; removed
-  from every culture by `aov_racial_armies_game_start`): `tradition_sundancer_legions` (its units belong to every sun
-  elf culture), `tradition_test_maa_anb_dwarven_handgunners` (`dwarven_handgunners` is overridden with
+  from every culture by `aov_racial_armies_game_start`): `tradition_test_maa_anb_dwarven_handgunners` (`dwarven_handgunners` is overridden with
   `can_recruit = { always = no }`; the key stays for saves and Anbennar's debug `tradition_test_maa`) and
   `tradition_test_maa_anb_dwarven_bombard` (it unlocked nothing: Anbennar comments out its `dwarven_bombard` unit, and
-  every late-medieval dwarven culture already has the generic `dwarven_bombards`).
+  every late-medieval dwarven culture already has the generic `dwarven_bombards`). The same file keeps
+  `tradition_sundancer_legions` without its levy penalty; it unlocks Sundancer Legionaries and Jaherkadezim again
+  (`racial-traditions.md`).
 - **Men-at-arms.** Elves: few men per regiment with very high stats; dwarves: 80-man tough regiments strong in holds,
   mountains, caverns and on dwarven roads. Every unit costs its role's vanilla buy cost and upkeep times
   √(regiment damage ratio × regiment toughness ratio), so the same gold buys the same power
   (`common/script_values/aov_racial_maa_values.txt`). Gates are culture lineage (the culture or any ancestor;
-  `common/scripted_triggers/aov_racial_maa_triggers.txt`), never a tradition; shared dwarf units keep
-  `has_cultural_pillar = heritage_dwarven`. Wood elves descend from moon elves, so the moon trigger excludes the wood and
+  `common/scripted_triggers/aov_racial_maa_triggers.txt`); shared dwarf units keep
+  `has_cultural_pillar = heritage_dwarven`. Exceptions (`racial-traditions.md`): Sundancer Legionaries and
+  Jaherkadezim need `tradition_sundancer_legions`, and each clan unit (and the Silverforge Engineer Corps) needs its
+  clan's tradition (`aov_unlock_maa_<unit>`). Wood elves descend from moon elves, so the moon trigger excludes the wood and
   sun lineages.
 
   | Culture | Units |
@@ -115,8 +118,8 @@ A clean tiger pass does not prove the engine accepts this. Still to confirm:
    `levy_size` add into one total, and that county modifiers from several building instances stack).
 2. Whether an elven ruler's +30/+30 levy damage and toughness also applies to a human vassal's levies in their army.
 3. The correction updates when a levy building finishes and when a holding changes hands.
-4. Each culture's recruit list shows exactly its roster, with the RiE icon and picture on every elf and dwarf unit; no culture has the Sundancer Legions or Dwarven Handgunners
-   traditions, and no one can recruit Dwarven Handgunners.
+4. Each culture's recruit list shows exactly its roster, with the RiE icon and picture on every elf and dwarf unit; no
+   culture has the Dwarven Handgunners tradition, and no one can recruit Dwarven Handgunners.
 5. Debug battles (console, playing a human-culture ruler): `event aov_racial_armies_debug.0001` (vs a random elven
    ruler) and `event aov_racial_armies_debug.0002` (vs a random dwarven ruler) declare war and spawn equal-cost
    armies at root's capital (`events/aov_racial_armies_debug_events.txt`); the result should be within about 15%.

@@ -118,8 +118,9 @@ class LineageTriggerTests(unittest.TestCase):
 TRADITION_FILE = "common/culture/traditions/zz_aov_racial_traditions.txt"
 BASE_TRADITION_FILE = "common/culture/traditions/anb_maa_traditions.txt"
 ON_ACTION_FILE = "common/on_action/aov_racial_armies_on_actions.txt"
-REMOVED = ("tradition_sundancer_legions", "tradition_test_maa_anb_dwarven_handgunners",
-           "tradition_test_maa_anb_dwarven_bombard")
+REMOVED = ("tradition_test_maa_anb_dwarven_handgunners", "tradition_test_maa_anb_dwarven_bombard")
+SUNDANCER = "tradition_sundancer_legions"  # restored without its levy penalty (docs/systems/racial-traditions.md)
+SUNDANCER_DROPPED = ("levy_size = -0.35", "levy_reinforcement_rate = -0.35")
 
 
 def without_blocks(body, names):
@@ -139,7 +140,7 @@ class TraditionRemovalTests(unittest.TestCase):
         cls.on_actions = blocks(ON_ACTION_FILE)
 
     def test_removed_traditions_hidden_and_unpickable(self):
-        self.assertEqual(set(self.ours), set(REMOVED))
+        self.assertEqual(set(self.ours), set(REMOVED) | {SUNDANCER})
         for key in REMOVED:
             inner = parse_blocks(self.ours[key])
             self.assertEqual(squash(inner.get("is_shown", "")), "always = no", key)
@@ -149,6 +150,16 @@ class TraditionRemovalTests(unittest.TestCase):
         for key in REMOVED:
             self.assertEqual(squash(without_blocks(self.ours.get(key, ""), ("is_shown", "can_pick"))),
                              squash(without_blocks(self.base[key], ("is_shown", "can_pick"))), key)
+
+    def test_sundancer_is_anbennars_without_the_levy_penalty(self):
+        base = squash(self.base[SUNDANCER])
+        for line in SUNDANCER_DROPPED:
+            self.assertIn(line, base)
+            base = squash(base.replace(line, ""))
+        self.assertEqual(squash(self.ours.get(SUNDANCER, "")), base)
+
+    def test_game_start_keeps_sundancer(self):
+        self.assertNotIn(SUNDANCER, squash(self.on_actions.get("aov_racial_armies_game_start", "")))
 
     def test_game_start_removes_both(self):
         self.assertIn("aov_racial_armies_game_start", squash(self.on_actions.get("on_game_start", "")))
@@ -233,8 +244,8 @@ EXPECTED = {  # key -> type, stack, damage, toughness, pursuit, screen, gate (sp
     "marcairna": ("light_cavalry", 50, 90, 60, 90, 90, MOON),
     "aov_elven_knights": ("heavy_cavalry", 25, 450, 160, 40, 0, MOON),
     "aov_gladeguards": ("skirmishers", 50, 45, 70, 30, 60, MOON),
-    "sundancer_legions": ("heavy_infantry", 25, 280, 240, 20, 20, SUN),
-    "jaherkadezim": ("heavy_cavalry", 25, 480, 150, 40, 0, SUN),
+    "sundancer_legions": ("heavy_infantry", 25, 280, 240, 20, 20, "PARAM:unlock_maa_anb_sundancer_legions"),
+    "jaherkadezim": ("heavy_cavalry", 25, 480, 150, 40, 0, "PARAM:unlock_maa_anb_jaherkadezim"),
     "aov_sunspear_phalanx": ("pikemen", 50, 80, 130, 0, 0, SUN),
     "aov_phoenix_bowmen": ("archers", 50, 110, 40, 0, 0, SUN),
     "aov_sandwind_outriders": ("light_cavalry", 50, 80, 55, 100, 80, SUN),
@@ -251,9 +262,11 @@ WOOD_TERRAIN = {"forest": 0.5, "taiga": 0.5, "jungle": 0.5, "wetlands": 0.5, "de
 TERRAIN_SETS = {key: {} for key in EXPECTED}  # key -> terrain -> fraction of base damage/toughness
 TERRAIN_SETS.update({"aithchri": {"forest": 0.2, "hills": 0.2, "taiga": 0.2},
                      "aov_gladeguards": {"forest": 0.5, "hills": 0.2, "taiga": 0.2}})
-TERRAIN_SETS.update({key: SUN_TERRAIN for key, row in EXPECTED.items() if row[6] == SUN})
+TERRAIN_SETS.update({key: SUN_TERRAIN for key, row in EXPECTED.items()
+                     if row[6] == SUN or key in ("sundancer_legions", "jaherkadezim")})
 TERRAIN_SETS.update({key: WOOD_TERRAIN for key, row in EXPECTED.items() if row[6] == WOOD})
-WINTER_SETS = {key: {"normal_winter": -0.2, "harsh_winter": -0.2} for key, row in EXPECTED.items() if row[6] == SUN}
+WINTER_SETS = {key: {"normal_winter": -0.2, "harsh_winter": -0.2} for key, row in EXPECTED.items()
+               if row[6] == SUN or key in ("sundancer_legions", "jaherkadezim")}
 
 DWARF = "heritage_dwarven"
 EXPECTED.update({  # spec dwarf tables
@@ -261,16 +274,16 @@ EXPECTED.update({  # spec dwarf tables
     "shieldwall": ("pikemen", 80, 30, 70, 0, 0, DWARF),
     "armor_breakers": ("archers", 80, 55, 35, 0, 0, DWARF),
     "ramriders": ("light_cavalry", 50, 50, 45, 25, 40, DWARF),
-    "aov_grudgebearers": ("pikemen", 80, 40, 60, 0, 0, "aov_ruby_dwarven_lineage_trigger"),
-    "aov_tortoise_formation": ("pikemen", 80, 26, 110, 0, 0, "aov_stone_dwarven_lineage_trigger"),
-    "aov_giantbane_crossbows": ("archers", 80, 65, 35, 0, 0, "aov_agate_dwarven_lineage_trigger"),
-    "aov_uthojdihr_marines": ("skirmishers", 80, 30, 50, 0, 0, "aov_copper_dwarven_lineage_trigger"),
-    "aov_seg_band_gnollhunters": ("skirmishers", 80, 35, 40, 40, 0, "aov_citrine_dwarven_lineage_trigger"),
-    "aov_golden_gate_guard": ("heavy_infantry", 50, 70, 160, 0, 0, "aov_gold_dwarven_lineage_trigger"),
-    "aov_clockwork_bows": ("archers", 80, 80, 30, 0, 0, "aov_pyrite_dwarven_lineage_trigger"),
-    "aov_dauvek_veker": ("heavy_infantry", 50, 110, 90, 0, 0, "aov_titanium_dwarven_lineage_trigger"),
-    "aov_copper_road_wardens": ("light_cavalry", 50, 55, 55, 30, 60, "aov_topaz_dwarven_lineage_trigger"),
-    "aov_brightbeard_hammers": ("heavy_infantry", 50, 100, 70, 0, 0, "aov_marble_dwarven_lineage_trigger"),
+    "aov_grudgebearers": ("pikemen", 80, 40, 60, 0, 0, "PARAM:aov_unlock_maa_grudgebearers"),
+    "aov_tortoise_formation": ("pikemen", 80, 26, 110, 0, 0, "PARAM:aov_unlock_maa_tortoise_formation"),
+    "aov_giantbane_crossbows": ("archers", 80, 65, 35, 0, 0, "PARAM:aov_unlock_maa_giantbane_crossbows"),
+    "aov_uthojdihr_marines": ("skirmishers", 80, 30, 50, 0, 0, "PARAM:aov_unlock_maa_uthojdihr_marines"),
+    "aov_seg_band_gnollhunters": ("skirmishers", 80, 35, 40, 40, 0, "PARAM:aov_unlock_maa_seg_band_gnollhunters"),
+    "aov_golden_gate_guard": ("heavy_infantry", 50, 70, 160, 0, 0, "PARAM:aov_unlock_maa_golden_gate_guard"),
+    "aov_clockwork_bows": ("archers", 80, 80, 30, 0, 0, "PARAM:aov_unlock_maa_clockwork_bows"),
+    "aov_dauvek_veker": ("heavy_infantry", 50, 110, 90, 0, 0, "PARAM:aov_unlock_maa_dauvek_veker"),
+    "aov_copper_road_wardens": ("light_cavalry", 50, 55, 55, 30, 60, "PARAM:aov_unlock_maa_copper_road_wardens"),
+    "aov_brightbeard_hammers": ("heavy_infantry", 50, 100, 70, 0, 0, "PARAM:aov_unlock_maa_brightbeard_hammers"),
 })
 DWARF_TERRAIN = {"hills": 0.3, "mountains": 0.45, "desert_mountains": 0.45, "dwarven_hold": 0.65,
                  "dwarven_hold_surface": 0.65, "cavern": 0.65, "dwarven_road": 0.65, "forest": -0.15}
@@ -279,7 +292,7 @@ DWARF_EXTRA = {"aov_grudgebearers": {"plains": 0.2, "farmlands": 0.2},
                "aov_seg_band_gnollhunters": {"desert": 0.5, "drylands": 0.5, "desert_mountains": 0.5},
                "aov_golden_gate_guard": {"dwarven_hold": 1.0}, "aov_copper_road_wardens": {"dwarven_road": 1.0}}
 TERRAIN_SETS.update({key: dict(DWARF_TERRAIN, **DWARF_EXTRA.get(key, {}))
-                     for key, row in EXPECTED.items() if row[6] == DWARF or "dwarven_lineage" in row[6]})
+                     for key, row in EXPECTED.items() if row[6] == DWARF or row[6].startswith("PARAM:aov_")})
 CHANGED_FIELDS = ("stack", "damage", "toughness", "pursuit", "screen", "icon")
 CHANGED_BLOCKS = ("terrain_bonus", "winter_bonus", "can_recruit", "buy_cost", "low_maintenance_cost",
                   "high_maintenance_cost", "ai_quality")
@@ -320,11 +333,15 @@ class MaaTests(unittest.TestCase):
             got = [field(body, f) for f in ("type", "stack", "damage", "toughness", "pursuit", "screen")]
             self.assertEqual(got, [kind] + [str(v) for v in (stack, dmg, tough, pursuit, screen)], key)
 
-    def test_units_gated_by_their_lineage(self):
+    def test_units_gated_by_their_lineage_or_tradition(self):
         for key, row in EXPECTED.items():
             gate = row[6]
-            want = (f"culture = {{ has_cultural_pillar = {gate} }}" if gate.startswith("heritage_")
-                    else f"culture = {{ {gate} = yes }}")
+            if gate.startswith("PARAM:"):
+                want = f"valid_for_maa_trigger = {{ PARAMETER = {gate[6:]} }}"
+            elif gate.startswith("heritage_"):
+                want = f"culture = {{ has_cultural_pillar = {gate} }}"
+            else:
+                want = f"culture = {{ {gate} = yes }}"
             self.assertEqual(squash(parse_blocks(self.unit(key)).get("can_recruit", "")), want, key)
 
     def test_units_use_their_cost_values(self):
@@ -369,7 +386,8 @@ class MaaTests(unittest.TestCase):
         got = [field(body, f) for f in ("type", "stack", "toughness", "siege_tier", "siege_value")]
         self.assertEqual(got, ["siege_weapon", "20", "40", "4", "0.9"])
         inner = parse_blocks(body)
-        self.assertEqual(squash(inner.get("can_recruit", "")), "culture = { aov_silver_dwarven_lineage_trigger = yes }")
+        self.assertEqual(squash(inner.get("can_recruit", "")),
+                         "valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_silverforge_engineers }")
         self.assertEqual(squash(inner.get("buy_cost", "")), "gold = aov_silverforge_engineers_recruitment_cost")
         self.assertIn("aov_silverforge_engineers_flavor", self.loc)
 
@@ -379,9 +397,12 @@ class MaaTests(unittest.TestCase):
         self.assertEqual(squash(without_blocks(ours, ("can_recruit",))),
                          squash(without_blocks(self.base["dwarven_handgunners"], ("can_recruit",))))
 
-    def test_no_racial_unit_gated_by_tradition(self):
-        for key, body in self.units.items():
-            self.assertNotIn("has_cultural_parameter", parse_blocks(body).get("can_recruit", ""), key)
+    def test_only_tradition_units_gated_by_tradition(self):
+        """The Sundancer units and the clan units need their tradition (racial-traditions.md); the rest go by lineage."""
+        want = {key for key, row in EXPECTED.items() if row[6].startswith("PARAM:")} | {"aov_silverforge_engineers"}
+        got = {key for key, body in self.units.items()
+               if re.search(r"has_cultural_parameter|valid_for_maa_trigger", parse_blocks(body).get("can_recruit", ""))}
+        self.assertEqual(got, want)
 
     def test_ai_quality_uses_cultural_extra_score(self):
         for key in EXPECTED:

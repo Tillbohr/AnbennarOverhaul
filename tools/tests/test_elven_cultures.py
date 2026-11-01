@@ -29,9 +29,19 @@ CULTURES = {  # culture -> parent
     "river_elvish": "wood_elvish", "arrow_elvish": "wood_elvish", "shadow_elvish": "wood_elvish",
     "redglader": "moon_elvish", "ibevari": "moon_elvish", "celmaldorian": "moon_elvish", "venaili": "moon_elvish",
 }
-# Fields a regional culture copies from its parent (everything but color, created, parents, ethos and history loc).
-COPIED = ("heritage", "language", "martial_custom", "head_determination", "traditions", "name_list", "coa_gfx",
+# Fields a regional culture copies from its parent (everything but color, created, parents, ethos, traditions and
+# history loc).
+COPIED = ("heritage", "language", "martial_custom", "head_determination", "name_list", "coa_gfx",
           "building_gfx", "clothing_gfx", "unit_gfx", "ethnicities")
+# Traditions in the culture file, chosen from each realm's EU4 ideas (racial-traditions.md grants two more at game
+# start). Every culture keeps Equal Inheritance, and every wood elf culture Forest Folk.
+TRADITIONS = {
+    "lake_elvish": "philosopher_culture", "mountain_elvish": "mountain_homes", "thorn_elvish": "sacred_groves",
+    "bone_elvish": "hit_and_run", "hunter_elvish": "hunters", "flower_elvish": "medicinal_plants",
+    "river_elvish": "xenophilic", "arrow_elvish": "artisans", "shadow_elvish": "mystical_ancestors",
+    "redglader": "astute_diplomats poetry", "ibevari": "stalwart_defenders artisans",
+    "celmaldorian": "maritime_mercantilism seafaring", "venaili": "seafaring isolationist",
+}
 
 
 def _text(path):
@@ -119,6 +129,13 @@ class CultureDefinitionTests(unittest.TestCase):
             got, want = fields(self.cultures[key]), fields(self.parents[parent])
             for name in COPIED:
                 self.assertEqual(got.get(name), want.get(name), f"{key}.{name}")
+
+    def test_traditions_chosen_per_culture(self):
+        for key, parent in CULTURES.items():
+            want = {f"tradition_{t}" for t in TRADITIONS[key].split()} | {"tradition_equal_inheritance"}
+            if parent == "wood_elvish":
+                want.add("tradition_forest_folk")
+            self.assertEqual(set(fields(self.cultures[key])["traditions"].split()), want, key)
 
     def test_colors_distinct(self):
         colors = [fields(body)["color"] for body in self.cultures.values()]
