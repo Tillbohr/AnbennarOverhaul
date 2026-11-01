@@ -1,0 +1,21 @@
+﻿# Anbennar Overhaul: the Isle of Adráil, appended to vanilla on_actions (docs/systems/adrail.md).
+
+on_game_start = {
+	on_actions = { aov_adrail_game_start }
+}
+
+# Emperor Testor (6000000) held Anbennar's test titles; with the island given to Marion he would be left as a
+# landless pool character, so he is removed at game start.
+aov_adrail_game_start = {
+	effect = {
+		if = {
+			limit = {
+				exists = character:6000000
+				character:6000000 = { is_alive = yes }
+			}
+			character:6000000 = {
+				death = { death_reason = death_vanished }
+			}
+		}
+	}
+}

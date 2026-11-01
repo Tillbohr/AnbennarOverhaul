@@ -1,0 +1,26 @@
+﻿# Anbennar Overhaul: the Isle of Adráil (docs/systems/adrail.md).
+# Anbennar ships province 524 (EU4's Isle of Adráil) as c_test_1, de jure under the test titles d_test_1, k_test and
+# e_test and held by the test character Emperor Testor (history/titles/000_k_test.txt). The county moves under
+# d_damesear, which leaves the test titles with no de jure land, and goes to King Marion, who holds Damesear.
+# d_test_1 keeps its key: Anbennar uses it as a placeholder duchy in geographical regions and in event 0045.
+
+c_test_1 = {
+	1000.1.1 = {
+		de_jure_liege = d_damesear
+	}
+	1021.10.4 = {
+		holder = silmuna_0001 # Marion Silmuna
+	}
+}
+
+d_test_1 = {
+	1021.10.4 = {
+		holder = 0
+	}
+}
+
+e_test = {
+	1021.10.4 = {
+		holder = 0
+	}
+}
