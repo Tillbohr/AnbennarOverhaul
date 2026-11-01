@@ -83,8 +83,12 @@ BLOCK_REPLACEMENTS = (
      r"next_level_elf_guild\s*\}\s*\}\s*\}\s*(has_building_or_higher\s*=\s*elven_settlement_\d\d)\s*\}\s*"
      r"trigger_else\s*=\s*\{\s*culture\s*=\s*\{\s*has_cultural_parameter\s*=\s*next_level_elf_guild\s*\}\s*"
      r"has_building_or_higher\s*=\s*elven_settlement_\d\d\s*\}", r"\1"),
-    # RiE's high elves (Calaquendi) are Anbennar's moon and sun elves.
-    (r"has_cultural_pillar\s*=\s*heritage_calaquendi", "OR = { this = culture:moon_elvish this = culture:sun_elvish }"),
+    # RiE's high elves (Calaquendi) are Anbennar's moon and sun elves with the cultures descended from them: every
+    # elven culture outside the wood elf lineage (as aov_racial_maa_triggers.txt splits them; written out, since the
+    # generator only accepts scripted triggers from RiE, Anbennar or the game; docs/systems/elven-cultures.md).
+    (r"has_cultural_pillar\s*=\s*heritage_calaquendi",
+     "AND = { has_cultural_pillar = heritage_elven NOT = { this = culture:wood_elvish } "
+     "NOT = { any_parent_culture_or_above = { this = culture:wood_elvish } } }"),
 )
 DROP_BLOCKS = ("province_dynasty_modifier", "effect_desc")  # effect_desc blocks: see DROP_EFFECT_DESC
 # Every effect_desc goes: RiE's describe discounts its own activities (sailing, explore history) and scripts give for

@@ -194,7 +194,7 @@ aov_monument_deshak_temple_of_the_elements_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_deshak_temple_of_the_elements_gate
-				OR = { faith.religion = religion:khetism_religion faith = faith:mother_akasik culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { faith.religion = religion:khetism_religion faith = faith:mother_akasik culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -203,7 +203,7 @@ aov_monument_deshak_temple_of_the_elements_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_deshak_temple_of_the_elements_gate
-				OR = { faith.religion = religion:khetism_religion faith = faith:mother_akasik culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { faith.religion = religion:khetism_religion faith = faith:mother_akasik culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -245,7 +245,7 @@ aov_monument_deshak_temple_of_the_elements_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_deshak_temple_of_the_elements_gate
-				OR = { faith.religion = religion:khetism_religion faith = faith:mother_akasik culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { faith.religion = religion:khetism_religion faith = faith:mother_akasik culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -254,7 +254,7 @@ aov_monument_deshak_temple_of_the_elements_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_deshak_temple_of_the_elements_gate
-				OR = { faith.religion = religion:khetism_religion faith = faith:mother_akasik culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { faith.religion = religion:khetism_religion faith = faith:mother_akasik culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -297,7 +297,7 @@ aov_monument_deshak_temple_of_the_elements_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_deshak_temple_of_the_elements_gate
-				OR = { faith.religion = religion:khetism_religion faith = faith:mother_akasik culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { faith.religion = religion:khetism_religion faith = faith:mother_akasik culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -306,7 +306,7 @@ aov_monument_deshak_temple_of_the_elements_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_deshak_temple_of_the_elements_gate
-				OR = { faith.religion = religion:khetism_religion faith = faith:mother_akasik culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { faith.religion = religion:khetism_religion faith = faith:mother_akasik culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -347,7 +347,7 @@ aov_monument_ekha_harbor_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ekha_harbor_gate
-				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -356,7 +356,7 @@ aov_monument_ekha_harbor_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ekha_harbor_gate
-				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -397,7 +397,7 @@ aov_monument_ekha_harbor_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ekha_harbor_gate
-				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -406,7 +406,7 @@ aov_monument_ekha_harbor_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ekha_harbor_gate
-				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -451,7 +451,7 @@ aov_monument_ekha_harbor_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ekha_harbor_gate
-				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -460,7 +460,7 @@ aov_monument_ekha_harbor_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ekha_harbor_gate
-				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -642,7 +642,7 @@ aov_monument_koroshesh_grain_port_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_koroshesh_grain_port_gate
-				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -651,7 +651,7 @@ aov_monument_koroshesh_grain_port_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_koroshesh_grain_port_gate
-				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -693,7 +693,7 @@ aov_monument_koroshesh_grain_port_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_koroshesh_grain_port_gate
-				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -702,7 +702,7 @@ aov_monument_koroshesh_grain_port_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_koroshesh_grain_port_gate
-				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -744,7 +744,7 @@ aov_monument_koroshesh_grain_port_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_koroshesh_grain_port_gate
-				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -753,7 +753,7 @@ aov_monument_koroshesh_grain_port_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_koroshesh_grain_port_gate
-				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -1265,7 +1265,7 @@ aov_monument_zornartakel_naval_harbor_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_zornartakel_naval_harbor_gate
-				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -1274,7 +1274,7 @@ aov_monument_zornartakel_naval_harbor_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_zornartakel_naval_harbor_gate
-				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -1316,7 +1316,7 @@ aov_monument_zornartakel_naval_harbor_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_zornartakel_naval_harbor_gate
-				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -1325,7 +1325,7 @@ aov_monument_zornartakel_naval_harbor_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_zornartakel_naval_harbor_gate
-				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -1368,7 +1368,7 @@ aov_monument_zornartakel_naval_harbor_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_zornartakel_naval_harbor_gate
-				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -1377,7 +1377,7 @@ aov_monument_zornartakel_naval_harbor_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_zornartakel_naval_harbor_gate
-				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}

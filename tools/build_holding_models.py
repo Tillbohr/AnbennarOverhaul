@@ -558,10 +558,13 @@ LEVEL_MARKER = f"{MARKER}: walls by holding level"
 
 
 def uses_elf_gfx(cultures: list) -> str:
-    """A trigger that holds when the holder's culture is one of the cultures. Not has_building_gfx on the elf keys:
-    in game that held for every culture (all castles drew the elven walls), presumably through the keys' fallback
-    western_building_gfx."""
-    return "scope:holder ?= { OR = { %s } }" % " ".join(f"culture = culture:{culture}" for culture in cultures)
+    """A trigger that holds when the holder's culture is an elven one of the cultures or descends from one (the
+    regional elven cultures, docs/systems/elven-cultures.md, copy their parent's gfx; the elven heritage keeps out the
+    human cultures with an elven parent). Not has_building_gfx on the elf keys: in game that held for every culture
+    (all castles drew the elven walls), presumably through the keys' fallback western_building_gfx."""
+    lineage = " ".join(f"this = culture:{culture} any_parent_culture_or_above = {{ this = culture:{culture} }}"
+                       for culture in cultures)
+    return "scope:holder ?= { culture = { has_cultural_pillar = heritage_elven OR = { %s } } }" % lineage
 
 
 def elf_cultures(roots: Roots) -> list:

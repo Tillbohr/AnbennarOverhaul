@@ -92,6 +92,7 @@ Read only the doc for the system you are working on. Each holds the generated-fi
 | RiE character backgrounds and royal courts | `docs/systems/rie-courts.md` | `build_rie_courts.py` |
 | Deepwoods grove arms and EU4 names; Cyranvar arms for the Deepwoods kingdom and empire | `docs/systems/deepwoods-groves.md` | none (imported once; edit by hand) |
 | Map graphics: RiE shaders and terrain, raised dwarven mountains, dwarven gates | `docs/systems/map-graphics.md` | `build_map_graphics.py` |
+| Regional elven cultures: 9 Deepwoods grove cultures (from wood elves) and 4 moon elf realm cultures (Redglades, Ibevar, Celmaldor, Venáil), set on counties and characters at game start; structure for later regional traditions | `docs/systems/elven-cultures.md` | none (hand-written) |
 | Racial armies: levies, domain limit, elf and dwarf MAA (moon, sun, wood elves; dwarf clans) with RiE icons and art, per-holding levy correction | `docs/systems/racial-armies.md` | `build_racial_levies.py` |
 | Faith men-at-arms: Dercinges, Druids, Skalds and Knights of the Spear recruited by faith tenet or patron god instead of a culture tradition | `docs/systems/faith-maa.md` | none (hand-written overrides) |
 | Holy sites for Devouring Path and Silk Turban (Anbennar ships them with none); real icons for the 31 faiths Anbennar ships with the `the_dame` placeholder, and EU4's New Sun Cult icon for Jaherian Cults | `docs/systems/holy-sites.md` | `build_holy_sites.py` |

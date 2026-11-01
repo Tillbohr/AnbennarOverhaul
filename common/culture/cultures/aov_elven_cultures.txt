@@ -1,0 +1,407 @@
+﻿# Anbennar Overhaul: regional elven cultures (docs/systems/elven-cultures.md).
+# Each splits from Anbennar's wood_elvish or moon_elvish and copies its parent's traditions, gfx (as the overhaul's
+# anb_elven.txt override gives them), name list and ethnicities; regional traditions come later. Assigned to
+# counties and characters at game start by aov_elven_cultures_game_start (aov_elven_cultures_on_actions.txt).
+
+# Lake Grove: Salla Elyn (EU4 I26)
+lake_elvish = {
+	color = { 70 150 190 }
+	created = 1020.1.1
+	parents = { wood_elvish }
+	history_loc_override = lake_elvish_history_loc
+
+	ethos = ethos_courtly
+	heritage = heritage_elven
+	language = language_moon_elven
+	martial_custom = martial_custom_equal
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_isolationist
+		tradition_equal_inheritance
+		tradition_forest_folk
+	}
+
+	name_list = name_list_wood_elven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_wood_elf_building_gfx western_building_gfx }
+	clothing_gfx = { aov_lasgalendrim_clothing_gfx elvish_clothing_gfx western_clothing_gfx }
+	unit_gfx = { aov_wood_elf_unit_gfx western_unit_gfx }
+
+	ethnicities = {
+		25 = moon_elvish
+		5 = sun_elvish
+	}
+}
+
+# Mountain Grove: Salla Myna (EU4 I27)
+mountain_elvish = {
+	color = { 120 130 110 }
+	created = 1020.1.1
+	parents = { wood_elvish }
+	history_loc_override = mountain_elvish_history_loc
+
+	ethos = ethos_stoic
+	heritage = heritage_elven
+	language = language_moon_elven
+	martial_custom = martial_custom_equal
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_isolationist
+		tradition_equal_inheritance
+		tradition_forest_folk
+	}
+
+	name_list = name_list_wood_elven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_wood_elf_building_gfx western_building_gfx }
+	clothing_gfx = { aov_lasgalendrim_clothing_gfx elvish_clothing_gfx western_clothing_gfx }
+	unit_gfx = { aov_wood_elf_unit_gfx western_unit_gfx }
+
+	ethnicities = {
+		25 = moon_elvish
+		5 = sun_elvish
+	}
+}
+
+# Thorn Grove: Salla Drennen (EU4 I28)
+thorn_elvish = {
+	color = { 60 110 40 }
+	created = 1020.1.1
+	parents = { wood_elvish }
+	history_loc_override = thorn_elvish_history_loc
+
+	ethos = ethos_spiritual
+	heritage = heritage_elven
+	language = language_moon_elven
+	martial_custom = martial_custom_equal
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_isolationist
+		tradition_equal_inheritance
+		tradition_forest_folk
+	}
+
+	name_list = name_list_wood_elven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_wood_elf_building_gfx western_building_gfx }
+	clothing_gfx = { aov_lasgalendrim_clothing_gfx elvish_clothing_gfx western_clothing_gfx }
+	unit_gfx = { aov_wood_elf_unit_gfx western_unit_gfx }
+
+	ethnicities = {
+		25 = moon_elvish
+		5 = sun_elvish
+	}
+}
+
+# Bone Grove: Salla Cenág (EU4 I29)
+bone_elvish = {
+	color = { 190 180 150 }
+	created = 1020.1.1
+	parents = { wood_elvish }
+	history_loc_override = bone_elvish_history_loc
+
+	ethos = ethos_stoic
+	heritage = heritage_elven
+	language = language_moon_elven
+	martial_custom = martial_custom_equal
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_isolationist
+		tradition_equal_inheritance
+		tradition_forest_folk
+	}
+
+	name_list = name_list_wood_elven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_wood_elf_building_gfx western_building_gfx }
+	clothing_gfx = { aov_lasgalendrim_clothing_gfx elvish_clothing_gfx western_clothing_gfx }
+	unit_gfx = { aov_wood_elf_unit_gfx western_unit_gfx }
+
+	ethnicities = {
+		25 = moon_elvish
+		5 = sun_elvish
+	}
+}
+
+# Hunter Grove: Salla Fealgarn (EU4 I30)
+hunter_elvish = {
+	color = { 110 80 40 }
+	created = 1020.1.1
+	parents = { wood_elvish }
+	history_loc_override = hunter_elvish_history_loc
+
+	ethos = ethos_bellicose
+	heritage = heritage_elven
+	language = language_moon_elven
+	martial_custom = martial_custom_equal
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_isolationist
+		tradition_equal_inheritance
+		tradition_forest_folk
+	}
+
+	name_list = name_list_wood_elven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_wood_elf_building_gfx western_building_gfx }
+	clothing_gfx = { aov_lasgalendrim_clothing_gfx elvish_clothing_gfx western_clothing_gfx }
+	unit_gfx = { aov_wood_elf_unit_gfx western_unit_gfx }
+
+	ethnicities = {
+		25 = moon_elvish
+		5 = sun_elvish
+	}
+}
+
+# Flower Grove: Salla Scotha (EU4 I31)
+flower_elvish = {
+	color = { 200 90 150 }
+	created = 1020.1.1
+	parents = { wood_elvish }
+	history_loc_override = flower_elvish_history_loc
+
+	ethos = ethos_bureaucratic
+	heritage = heritage_elven
+	language = language_moon_elven
+	martial_custom = martial_custom_equal
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_isolationist
+		tradition_equal_inheritance
+		tradition_forest_folk
+	}
+
+	name_list = name_list_wood_elven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_wood_elf_building_gfx western_building_gfx }
+	clothing_gfx = { aov_lasgalendrim_clothing_gfx elvish_clothing_gfx western_clothing_gfx }
+	unit_gfx = { aov_wood_elf_unit_gfx western_unit_gfx }
+
+	ethnicities = {
+		25 = moon_elvish
+		5 = sun_elvish
+	}
+}
+
+# River Grove: Salla Ahain (EU4 I32)
+river_elvish = {
+	color = { 60 160 140 }
+	created = 1020.1.1
+	parents = { wood_elvish }
+	history_loc_override = river_elvish_history_loc
+
+	ethos = ethos_communal
+	heritage = heritage_elven
+	language = language_moon_elven
+	martial_custom = martial_custom_equal
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_isolationist
+		tradition_equal_inheritance
+		tradition_forest_folk
+	}
+
+	name_list = name_list_wood_elven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_wood_elf_building_gfx western_building_gfx }
+	clothing_gfx = { aov_lasgalendrim_clothing_gfx elvish_clothing_gfx western_clothing_gfx }
+	unit_gfx = { aov_wood_elf_unit_gfx western_unit_gfx }
+
+	ethnicities = {
+		25 = moon_elvish
+		5 = sun_elvish
+	}
+}
+
+# Arrow Grove: Salla Ayeth (EU4 I33)
+arrow_elvish = {
+	color = { 150 170 60 }
+	created = 1020.1.1
+	parents = { wood_elvish }
+	history_loc_override = arrow_elvish_history_loc
+
+	ethos = ethos_bellicose
+	heritage = heritage_elven
+	language = language_moon_elven
+	martial_custom = martial_custom_equal
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_isolationist
+		tradition_equal_inheritance
+		tradition_forest_folk
+	}
+
+	name_list = name_list_wood_elven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_wood_elf_building_gfx western_building_gfx }
+	clothing_gfx = { aov_lasgalendrim_clothing_gfx elvish_clothing_gfx western_clothing_gfx }
+	unit_gfx = { aov_wood_elf_unit_gfx western_unit_gfx }
+
+	ethnicities = {
+		25 = moon_elvish
+		5 = sun_elvish
+	}
+}
+
+# Shadow Grove: Salla Ghúl (EU4 I34)
+shadow_elvish = {
+	color = { 40 50 60 }
+	created = 1020.1.1
+	parents = { wood_elvish }
+	history_loc_override = shadow_elvish_history_loc
+
+	ethos = ethos_courtly
+	heritage = heritage_elven
+	language = language_moon_elven
+	martial_custom = martial_custom_equal
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_isolationist
+		tradition_equal_inheritance
+		tradition_forest_folk
+	}
+
+	name_list = name_list_wood_elven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_wood_elf_building_gfx western_building_gfx }
+	clothing_gfx = { aov_lasgalendrim_clothing_gfx elvish_clothing_gfx western_clothing_gfx }
+	unit_gfx = { aov_wood_elf_unit_gfx western_unit_gfx }
+
+	ethnicities = {
+		25 = moon_elvish
+		5 = sun_elvish
+	}
+}
+
+# Redglades (EU4 A03): Ioriel's Accords with Lorent, 1001
+redglader = {
+	color = { 170 40 50 }
+	created = 1001.1.1
+	parents = { moon_elvish }
+	history_loc_override = redglader_history_loc
+
+	ethos = ethos_courtly
+	heritage = heritage_elven
+	language = language_moon_elven
+	martial_custom = martial_custom_equal
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_storytellers
+		tradition_equal_inheritance
+		tradition_poetry
+	}
+
+	name_list = name_list_moon_elven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_high_elf_building_gfx western_building_gfx }
+	clothing_gfx = { aov_noldor_clothing_gfx elvish_clothing_gfx western_clothing_gfx }
+	unit_gfx = { aov_moon_elf_unit_gfx western_unit_gfx }
+
+	ethnicities = {
+		25 = moon_elvish
+		5 = sun_elvish
+	}
+}
+
+# Elfrealm of Ibevar (EU4 A32), granted after the War of the Sorcerer-King
+ibevari = {
+	color = { 90 140 210 }
+	created = 1021.10.31
+	parents = { moon_elvish }
+	history_loc_override = ibevari_history_loc
+
+	ethos = ethos_bellicose
+	heritage = heritage_elven
+	language = language_moon_elven
+	martial_custom = martial_custom_equal
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_storytellers
+		tradition_equal_inheritance
+		tradition_poetry
+	}
+
+	name_list = name_list_moon_elven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_high_elf_building_gfx western_building_gfx }
+	clothing_gfx = { aov_noldor_clothing_gfx elvish_clothing_gfx western_clothing_gfx }
+	unit_gfx = { aov_moon_elf_unit_gfx western_unit_gfx }
+
+	ethnicities = {
+		25 = moon_elvish
+		5 = sun_elvish
+	}
+}
+
+# Celmaldor (EU4 Z22): Maldorian and the Elves of the Reach
+celmaldorian = {
+	color = { 150 200 230 }
+	created = 995.1.1
+	parents = { moon_elvish }
+	history_loc_override = celmaldorian_history_loc
+
+	ethos = ethos_communal
+	heritage = heritage_elven
+	language = language_moon_elven
+	martial_custom = martial_custom_equal
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_storytellers
+		tradition_equal_inheritance
+		tradition_poetry
+	}
+
+	name_list = name_list_moon_elven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_high_elf_building_gfx western_building_gfx }
+	clothing_gfx = { aov_noldor_clothing_gfx elvish_clothing_gfx western_clothing_gfx }
+	unit_gfx = { aov_moon_elf_unit_gfx western_unit_gfx }
+
+	ethnicities = {
+		25 = moon_elvish
+		5 = sun_elvish
+	}
+}
+
+# Venáil (EU4 A21): seafarers of the Remnant Fleet
+venaili = {
+	color = { 80 110 170 }
+	created = 1021.10.31
+	parents = { moon_elvish }
+	history_loc_override = venaili_history_loc
+
+	ethos = ethos_stoic
+	heritage = heritage_elven
+	language = language_moon_elven
+	martial_custom = martial_custom_equal
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_storytellers
+		tradition_equal_inheritance
+		tradition_poetry
+	}
+
+	name_list = name_list_moon_elven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_high_elf_building_gfx western_building_gfx }
+	clothing_gfx = { aov_noldor_clothing_gfx elvish_clothing_gfx western_clothing_gfx }
+	unit_gfx = { aov_moon_elf_unit_gfx western_unit_gfx }
+
+	ethnicities = {
+		25 = moon_elvish
+		5 = sun_elvish
+	}
+}

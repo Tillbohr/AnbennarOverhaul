@@ -647,8 +647,8 @@ class RealWallTests(unittest.TestCase):
         enabled = block[block.index("is_enabled"):]
         self.assertNotIn("has_building_gfx", enabled)
         for culture in self.elf_cultures:
-            self.assertIn(f"culture = culture:{culture}", enabled)
-        self.assertIn("scope:holder ?= { OR = {", enabled)
+            self.assertIn(f"this = culture:{culture} any_parent_culture_or_above = {{ this = culture:{culture} }}", enabled)
+        self.assertIn("scope:holder ?= { culture = { has_cultural_pillar = heritage_elven OR = {", enabled)
         self.assertIn("is_county_capital = yes", enabled)
         self.assertIn("NOT = { aov_dwarven_model_province_trigger = yes }", enabled)
         self.assertIn("fort_level > 0", enabled)
@@ -689,10 +689,11 @@ class RealWallTests(unittest.TestCase):
         self.assertEqual(new[:at], old[:at], key)
         inserted = new[at]
         self.assertEqual(new[at + 1], DWARF_LINE, key)
-        self.assertTrue(inserted.startswith("\t\tNOT = { scope:holder ?= { OR = { culture = culture:"), key)
-        self.assertTrue(inserted.endswith(" } } } # Anbennar Overhaul: elven walls\n"), key)
+        self.assertTrue(inserted.startswith(
+            "\t\tNOT = { scope:holder ?= { culture = { has_cultural_pillar = heritage_elven OR = { this = culture:"), key)
+        self.assertTrue(inserted.endswith(" } } } } } # Anbennar Overhaul: elven walls\n"), key)
         for culture in self.elf_cultures:
-            self.assertIn(f"culture = culture:{culture}", inserted)
+            self.assertIn(f"any_parent_culture_or_above = {{ this = culture:{culture} }}", inserted)
         return old[at:], new[at + 2:]
 
     def test_early_walls_never_show(self):
@@ -741,7 +742,7 @@ class RealWallTests(unittest.TestCase):
     def test_walls_00_leaves_elves_with_elven_walls_alone(self):
         text = "".join(self._block_lines(self.overrides, "walls_00"))
         child = text[text.index("walls by holding level"):]
-        self.assertIn("culture = culture:", child)
+        self.assertIn("any_parent_culture_or_above = { this = culture:", child)
         self.assertNotIn("has_building_gfx", child)
         self.assertIn("is_county_capital = yes", child)
         self.assertIn("fort_level > 0", child)

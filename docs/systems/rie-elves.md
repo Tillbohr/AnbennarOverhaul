@@ -28,7 +28,7 @@ and the Haven branch of `common/scripted_triggers/zz_aov_building_requirement_tr
   it stop working (their `is_enabled`).
 - **Rewrites** (data `TOKEN_RENAMES`, `BLOCK_REPLACEMENTS`, `DROP_STATEMENTS`): `is_elf` to `is_elvish_culture`; RiE's
   Maiar, hope, Valinor, wastelands, elven-county and tribal gates removed (tribal elves may raise Havens); RiE's
-  guild parameter gate reduced to its default level; RiE's high elves (`heritage_calaquendi`) are moon and sun elves;
+  guild parameter gate reduced to its default level; RiE's high elves (`heritage_calaquendi`) are every elven culture outside the wood elf lineage (moon and sun elves and their regional cultures, `elven-cultures.md`);
   RiE's monster men-at-arms modifiers dropped; every `effect_desc` dropped (they describe activity discounts wired to
   RiE activities or vanilla building keys); RiE's three elven terrain triggers copied as `aov_rie_elven_*` without
   terrains Anbennar lacks. RiE's per-duchy and per-kingdom caps on Haven levels are commented out in RiE itself, so

@@ -1,0 +1,42 @@
+﻿# Anbennar Overhaul: single-object override of Anbennar's roll_racial_purity_trait_for_character
+# (common/scripted_effects/anb_scripted_effects/anb_racial_effects.txt), copied verbatim except the two lines marked
+# "# Anbennar Overhaul": sun and moon elves are matched by culture lineage, so the regional moon elf cultures keep the
+# moon elves' 25% chance (docs/systems/elven-cultures.md). Re-copy after an Anbennar update (docs/systems/updating.md).
+
+roll_racial_purity_trait_for_character = {
+	if = {
+		limit = { 
+			has_trait = race_elf
+			culture = { aov_sun_elven_lineage_trigger = yes } # Anbennar Overhaul: regional elven cultures
+			NOT = { has_variable = no_purist_trait }
+			NOT = { primary_spouse ?= { NOT = { has_trait = race_elf } } }
+		}
+		random_list = {
+			90 = {
+				try_to_add_racial_purist_effect = yes
+			}
+			10 = { }
+		}
+	}
+	else_if = {
+		limit = {
+			has_trait = race_elf
+			culture = { aov_moon_elven_lineage_trigger = yes } # Anbennar Overhaul: regional elven cultures
+			NOT = { primary_spouse ?= { NOT = { has_trait = race_elf } } }
+		}
+		random_list = {
+			25 = {
+				try_to_add_racial_purist_effect = yes
+			}
+			75 = { }
+		}
+	}
+	else = {
+		random_list = {
+			5 = {
+				try_to_add_racial_purist_effect = yes
+			}
+			95 = { }
+		}
+	}
+}

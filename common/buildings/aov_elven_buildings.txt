@@ -886,7 +886,7 @@ elven_mine_01 = {
 		modifier = {
 			factor = 3
 			scope:holder = {
-				culture = { OR = { this = culture:moon_elvish this = culture:sun_elvish } } # Noldor more likely to build quarries
+				culture = { AND = { has_cultural_pillar = heritage_elven NOT = { this = culture:wood_elvish } NOT = { any_parent_culture_or_above = { this = culture:wood_elvish } } } } # Noldor more likely to build quarries
 			}
 		}
 	}
@@ -2247,7 +2247,7 @@ elven_library_01 = {
 		modifier = {
 			factor = 5
 			scope:holder = {
-				culture = { OR = { this = culture:moon_elvish this = culture:sun_elvish } } # High-Elves more likely to build libraries
+				culture = { AND = { has_cultural_pillar = heritage_elven NOT = { this = culture:wood_elvish } NOT = { any_parent_culture_or_above = { this = culture:wood_elvish } } } } # High-Elves more likely to build libraries
 			}
 		}
 	}

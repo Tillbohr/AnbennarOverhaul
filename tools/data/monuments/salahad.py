@@ -107,7 +107,7 @@ MONUMENTS = [{'eu4_key': 'aur_kes_akasik',
   'gate': 'OR = { faith.religion = religion:khetism_religion faith = faith:mother_akasik culture = { '
           'has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = heritage_akasi } '
           'culture = { has_cultural_pillar = heritage_gnollish } culture = culture:delta_gnomish culture = '
-          'culture:sun_elvish culture = culture:castanorian }',
+          '{ aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }',
   'gate_desc': 'Khetism, Mother Akasik, Kheteratan, Akasi, Gnollish, Delta Gnomish, Sun Elvish, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'tax_mult': 0.05},
@@ -146,7 +146,7 @@ MONUMENTS = [{'eu4_key': 'aur_kes_akasik',
   'category': 'port',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = '
           'heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = '
-          'culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }',
+          'culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }',
   'gate_desc': 'Kheteratan, Akasi, Gnollish, Delta Gnomish, Sun Elvish, Castanorian',
   'tiers': [{'province_modifier': {'build_speed': -0.05},
              'county_modifier': {'levy_size': 0.0625},
@@ -227,7 +227,7 @@ MONUMENTS = [{'eu4_key': 'aur_kes_akasik',
   'category': 'port',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = '
           'heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = '
-          'culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }',
+          'culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }',
   'gate_desc': 'Kheteratan, Akasi, Gnollish, Delta Gnomish, Sun Elvish, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'tax_mult': 0.055, 'development_growth_factor': 0.1},
@@ -467,7 +467,7 @@ MONUMENTS = [{'eu4_key': 'aur_kes_akasik',
   'category': 'port',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_kheteratan } culture = { has_cultural_pillar = '
           'heritage_akasi } culture = { has_cultural_pillar = heritage_gnollish } culture = '
-          'culture:delta_gnomish culture = culture:sun_elvish culture = culture:castanorian }',
+          'culture:delta_gnomish culture = { aov_sun_elven_lineage_trigger = yes } culture = culture:castanorian }',
   'gate_desc': 'Kheteratan, Akasi, Gnollish, Delta Gnomish, Sun Elvish, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'levy_reinforcement_rate': 0.0625, 'levy_size': 0.0625},

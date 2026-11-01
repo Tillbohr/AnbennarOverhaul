@@ -36,6 +36,12 @@
    fail, re-copy the decision from Anbennar into `common/decisions/zz_aov_decision_overrides.txt`, keeping the line
    marked `# Anbennar Overhaul` (Restore the Reaver Kingdom of Divenhal points its `desc` at the `_desc` key), or
    drop the override if Anbennar fixed it.
+   If `tools/tests/test_elven_cultures.py` fails: for `PuristOverrideTests`, re-copy Anbennar's
+   `roll_racial_purity_trait_for_character` (`common/scripted_effects/anb_scripted_effects/anb_racial_effects.txt`)
+   into `common/scripted_effects/zz_aov_elven_culture_overrides.txt`, keeping the two lines marked
+   `# Anbennar Overhaul`; for `CultureDefinitionTests`, copy the parent culture's changed field into
+   `aov_elven_cultures.txt`; for `GameStartTests`, fix the title list in `aov_elven_cultures_effects.txt` (see
+   `elven-cultures.md`).
 8. Test in game; check `database_conflicts.log` for overhaul keys now also defined by Anbennar (notably `magic_duelist_focus`, which `zz_aov_magic_focuses.txt` must keep overriding).
 
 After a CK3 patch, rerun `python -I tools/build_hud_override.py`, `python -I tools/build_lifestyle_override.py` and `python -I tools/build_county_view_override.py` too: their sources are the game's `hud.gui`, `window_character_lifestyle.gui` and `window_county_view.gui` (when Anbennar ships no copy).

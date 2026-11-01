@@ -151,7 +151,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'category': 'temple',
   'gate': 'OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = '
           'heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish '
-          'culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard '
+          'culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard '
           'culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }',
   'gate_desc': 'Cannorian Pantheon, Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver '
                'Dwarven, Wexonard, Vertesker, Roilsardi, Castanorian',
@@ -633,7 +633,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'category': 'market',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman '
           'culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman '
-          'culture = culture:moon_elvish culture = culture:castanorian }',
+          'culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }',
   'gate_desc': 'Alenic, Blue Reachman, White Reachman, Moorman, Moon Elvish, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.05, 'tax_mult': 0.05},
@@ -676,7 +676,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 1,
   'category': 'market',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = '
-          'heritage_halfling } culture = culture:imperial_gnomish culture = culture:moon_elvish culture = '
+          'heritage_halfling } culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = '
           'culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = '
           'culture:roilsardi culture = culture:castanorian }',
   'gate_desc': 'Damesheader, Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, Vertesker, '
@@ -1018,7 +1018,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'category': 'palace',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman '
           'culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman '
-          'culture = culture:moon_elvish culture = culture:castanorian }',
+          'culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }',
   'gate_desc': 'Alenic, Blue Reachman, White Reachman, Moorman, Moon Elvish, Castanorian',
   'tiers': [{'province_modifier': {'monthly_income': 0.3},
              'county_modifier': {'development_growth_factor': 0.1},
@@ -1065,7 +1065,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 1,
   'category': 'market',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = '
-          'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
+          'culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = culture:castanorian }',
   'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
@@ -1121,7 +1121,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 1,
   'category': 'library',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = '
-          'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
+          'culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = culture:castanorian }',
   'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
@@ -1176,7 +1176,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'category': 'temple',
   'gate': 'OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = '
           'heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish '
-          'culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard '
+          'culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard '
           'culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }',
   'gate_desc': 'Cannorian Pantheon, Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver '
                'Dwarven, Wexonard, Vertesker, Roilsardi, Castanorian',
@@ -1225,7 +1225,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 1,
   'category': 'port',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { has_cultural_pillar = '
-          'heritage_gerudian } culture = culture:moon_elvish culture = culture:castanorian }',
+          'heritage_gerudian } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }',
   'gate_desc': 'Lencori, Gerudian, Moon Elvish, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.05,
@@ -1665,7 +1665,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 1,
   'category': 'fortress',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = '
-          'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
+          'culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } '
           'culture = culture:silver_dwarvish culture = { has_cultural_pillar = heritage_alenic } OR = { '
           'culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } '
           'culture = culture:white_reachman culture = culture:vertesker culture = culture:roilsardi culture '
@@ -1778,7 +1778,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 1,
   'category': 'academy',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = '
-          'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
+          'culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = culture:castanorian }',
   'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
@@ -1886,7 +1886,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
           'heritage_dostanorian } culture = culture:marrodic culture = { has_cultural_pillar = '
           'heritage_dwarven } culture = { has_cultural_pillar = heritage_gnomish } culture = { '
           'has_cultural_pillar = heritage_kobold } culture = { has_cultural_pillar = heritage_halfling } '
-          'culture = culture:moon_elvish culture = culture:hapremiti }',
+          'culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:hapremiti }',
   'gate_desc': 'Escanni, Dostanorian, Marrodic, Dwarven, Gnomish, Kobold, Halfling, Moon Elvish, Hapremiti',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.05, 'tax_mult': 0.05},
@@ -2011,7 +2011,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'category': 'temple',
   'gate': 'OR = { faith.religion = religion:cannorian_pantheon_religion faith = faith:elven_forebears '
           'culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling '
-          'culture = culture:imperial_gnomish culture = culture:moon_elvish culture = '
+          'culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = '
           'culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = '
           'culture:roilsardi culture = culture:castanorian }',
   'gate_desc': 'Cannorian Pantheon, Elven Forebears, Damesheader, Imperial Halfling, Imperial Gnomish, Moon '
@@ -2257,7 +2257,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 1,
   'category': 'library',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = '
-          'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
+          'culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = culture:castanorian }',
   'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
@@ -2363,7 +2363,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'province': 82,
   'start_level': 0,
   'category': 'academy',
-  'gate': 'OR = { culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture '
+  'gate': 'OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture '
           '= culture:castanorian }',
   'gate_desc': 'Lencori, Moon Elvish, Castanorian',
   'tiers': [{'province_modifier': {},
@@ -2413,7 +2413,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'province': 1023,
   'start_level': 0,
   'category': 'academy',
-  'gate': 'OR = { culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture '
+  'gate': 'OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture '
           '= culture:castanorian }',
   'gate_desc': 'Lencori, Moon Elvish, Castanorian',
   'tiers': [{'province_modifier': {'fort_level': 1},
@@ -2472,7 +2472,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'gate': 'OR = { culture = culture:marrodic culture = { has_cultural_pillar = heritage_halfling } culture = '
           '{ has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian '
           '} culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = '
-          'heritage_kobold } culture = culture:moon_elvish }',
+          'heritage_kobold } culture = { aov_moon_elven_lineage_trigger = yes } }',
   'gate_desc': 'Marrodic, Halfling, Escanni, Dostanorian, Dwarven, Kobold, Moon Elvish',
   'tiers': [{'province_modifier': {'fort_level': 1},
              'county_modifier': {'levy_size': 0.05},
@@ -2569,7 +2569,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 1,
   'category': 'monument',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = '
-          'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
+          'culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = culture:castanorian }',
   'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
@@ -2611,7 +2611,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 1,
   'category': 'temple',
   'gate': 'OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = '
-          'heritage_lencori } culture = culture:moon_elvish culture = culture:castanorian }',
+          'heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }',
   'gate_desc': 'Cannorian Pantheon, Lencori, Moon Elvish, Castanorian',
   'tiers': [{'province_modifier': {},
              'county_modifier': {'development_growth_factor': 0.05, 'tax_mult': 0.1, 'county_opinion_add': 2},
@@ -2656,7 +2656,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 1,
   'category': 'port',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = '
-          'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
+          'culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = culture:castanorian }',
   'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
@@ -2705,7 +2705,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 1,
   'category': 'monument',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = '
-          'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
+          'culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = { has_cultural_pillar = heritage_gnollish } culture = { '
           'has_cultural_pillar = heritage_dostanorian } culture = culture:castanorian }',
@@ -2755,7 +2755,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 1,
   'category': 'port',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = '
-          'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
+          'culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = culture:castanorian }',
   'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
@@ -3351,7 +3351,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 1,
   'category': 'academy',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = '
-          'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
+          'culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = culture:castanorian }',
   'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
@@ -3397,7 +3397,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 1,
   'category': 'temple',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = '
-          'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
+          'culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = culture:castanorian }',
   'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
@@ -3449,7 +3449,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 0,
   'category': 'academy',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = '
-          'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
+          'culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } '
           'culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = '
           'culture:castanorian culture = { has_cultural_pillar = heritage_dwarven } culture = { '
           'has_cultural_pillar = heritage_kobold } }',
@@ -3509,7 +3509,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'category': 'port',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = '
           'heritage_businori } culture = culture:imperial_halfling culture = culture:imperial_gnomish '
-          'culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard '
+          'culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard '
           'culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }',
   'gate_desc': 'Damesheader, Businori, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, '
                'Wexonard, Vertesker, Roilsardi, Castanorian',
@@ -3557,7 +3557,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'start_level': 1,
   'category': 'foundry',
   'gate': 'OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = '
-          'culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish '
+          'culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } '
           'culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture '
           '= culture:roilsardi culture = culture:castanorian }',
   'gate_desc': 'Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver Dwarven, Wexonard, '
@@ -3601,7 +3601,7 @@ MONUMENTS = [{'eu4_key': 'adenica_longlance_knights_academy',
   'category': 'temple',
   'gate': 'OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = '
           'heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish '
-          'culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard '
+          'culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard '
           'culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }',
   'gate_desc': 'Cannorian Pantheon, Damesheader, Imperial Halfling, Imperial Gnomish, Moon Elvish, Silver '
                'Dwarven, Wexonard, Vertesker, Roilsardi, Castanorian',

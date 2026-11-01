@@ -76,7 +76,7 @@ MONUMENTS = [{'eu4_key': 'anzarzax_palace',
   'category': 'palace',
   'gate': 'OR = { faith.religion = religion:bulwari_sun_cults_religion culture = { has_cultural_pillar = '
           'heritage_bulwari } culture = { has_cultural_pillar = heritage_gnollish } culture = '
-          'culture:sun_elvish culture = { has_cultural_pillar = heritage_elven } }',
+          '{ aov_sun_elven_lineage_trigger = yes } culture = { has_cultural_pillar = heritage_elven } }',
   'gate_desc': 'Bulwari Sun Cults, Bulwari, Gnollish, Sun Elvish, Elven',
   'tiers': [{'province_modifier': {},
              'county_modifier': {},
@@ -458,7 +458,7 @@ MONUMENTS = [{'eu4_key': 'anzarzax_palace',
   'province': 2956,
   'start_level': 0,
   'category': 'temple',
-  'gate': 'OR = { culture = { has_cultural_pillar = heritage_bulwari } culture = culture:sun_elvish culture '
+  'gate': 'OR = { culture = { has_cultural_pillar = heritage_bulwari } culture = { aov_sun_elven_lineage_trigger = yes } culture '
           '= { has_cultural_pillar = heritage_elven } }',
   'gate_desc': 'Bulwari, Sun Elvish, Elven',
   'tiers': [{'province_modifier': {},

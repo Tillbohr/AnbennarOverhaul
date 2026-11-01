@@ -1,0 +1,13 @@
+﻿# Anbennar Overhaul: regional elven cultures, appended to vanilla on_actions (docs/systems/elven-cultures.md).
+
+on_game_start = {
+	on_actions = { aov_elven_cultures_game_start }
+}
+
+# The grove duchies and moon elf realms take their regional culture, then every wood or moon elf living there
+# (the generated Deepwoods rulers, the historical rulers and their courts) takes it too.
+aov_elven_cultures_game_start = {
+	effect = {
+		aov_elven_cultures_game_start_effect = yes
+	}
+}

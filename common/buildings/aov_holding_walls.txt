@@ -18,7 +18,7 @@ aov_elven_walls = {
 		}
 
 	is_enabled = {
-		scope:holder ?= { OR = { culture = culture:moon_elvish culture = culture:sun_elvish culture = culture:wood_elvish } }
+		scope:holder ?= { culture = { has_cultural_pillar = heritage_elven OR = { this = culture:moon_elvish any_parent_culture_or_above = { this = culture:moon_elvish } this = culture:sun_elvish any_parent_culture_or_above = { this = culture:sun_elvish } this = culture:wood_elvish any_parent_culture_or_above = { this = culture:wood_elvish } } } }
 		NOT = { aov_dwarven_model_province_trigger = yes }
 		# the walls a vanilla holding shows (see walls_00 in Anbennar's background buildings)
 		OR = {

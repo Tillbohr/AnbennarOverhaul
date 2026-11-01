@@ -1,0 +1,65 @@
+﻿# Anbennar Overhaul: regional elven cultures (docs/systems/elven-cultures.md).
+
+# Title scope (duchy or kingdom): every de jure county still of culture PARENT takes CULTURE.
+aov_set_regional_elven_culture_effect = {
+	every_de_jure_county = {
+		limit = { culture = culture:$PARENT$ }
+		set_county_culture = culture:$CULTURE$
+	}
+}
+
+# County title scope: the county takes CULTURE if it is still of culture PARENT.
+aov_set_regional_elven_county_culture_effect = {
+	if = {
+		limit = { culture = culture:$PARENT$ }
+		set_county_culture = culture:$CULTURE$
+	}
+}
+
+# Character scope: a character of culture PARENT who lives in a county of an elven culture descended from PARENT
+# takes that culture.
+aov_adopt_regional_elven_culture_effect = {
+	if = {
+		limit = {
+			culture = culture:$PARENT$
+			location ?= {
+				county.culture = {
+					has_cultural_pillar = heritage_elven
+					any_parent_culture = { this = culture:$PARENT$ }
+				}
+			}
+		}
+		set_culture = location.county.culture
+	}
+}
+
+# Game start: counties first, then characters.
+aov_elven_cultures_game_start_effect = {
+	# Deepwoods groves (wood elves)
+	title:d_lake_grove_1 = { aov_set_regional_elven_culture_effect = { PARENT = wood_elvish CULTURE = lake_elvish } }
+	title:d_mountain_grove_1 = { aov_set_regional_elven_culture_effect = { PARENT = wood_elvish CULTURE = mountain_elvish } }
+	title:d_thorn_grove_1 = { aov_set_regional_elven_culture_effect = { PARENT = wood_elvish CULTURE = thorn_elvish } }
+	title:d_bone_grove_1 = { aov_set_regional_elven_culture_effect = { PARENT = wood_elvish CULTURE = bone_elvish } }
+	title:d_hunter_grove_1 = { aov_set_regional_elven_culture_effect = { PARENT = wood_elvish CULTURE = hunter_elvish } }
+	title:d_flower_grove_1 = { aov_set_regional_elven_culture_effect = { PARENT = wood_elvish CULTURE = flower_elvish } }
+	title:d_river_grove_1 = { aov_set_regional_elven_culture_effect = { PARENT = wood_elvish CULTURE = river_elvish } }
+	title:d_arrow_grove_1 = { aov_set_regional_elven_culture_effect = { PARENT = wood_elvish CULTURE = arrow_elvish } }
+	title:d_shadow_grove_1 = { aov_set_regional_elven_culture_effect = { PARENT = wood_elvish CULTURE = shadow_elvish } }
+	# Moon elf realms
+	title:d_redglades = { aov_set_regional_elven_culture_effect = { PARENT = moon_elvish CULTURE = redglader } }
+	title:k_ibevar = { aov_set_regional_elven_culture_effect = { PARENT = moon_elvish CULTURE = ibevari } }
+	title:d_venail = { aov_set_regional_elven_culture_effect = { PARENT = moon_elvish CULTURE = venaili } }
+	title:c_gladegate = { aov_set_regional_elven_county_culture_effect = { PARENT = moon_elvish CULTURE = redglader } }
+	title:c_celmaldor = { aov_set_regional_elven_county_culture_effect = { PARENT = moon_elvish CULTURE = celmaldorian } }
+	# Characters
+	every_living_character = {
+		limit = {
+			OR = {
+				culture = culture:wood_elvish
+				culture = culture:moon_elvish
+			}
+		}
+		aov_adopt_regional_elven_culture_effect = { PARENT = wood_elvish }
+		aov_adopt_regional_elven_culture_effect = { PARENT = moon_elvish }
+	}
+}

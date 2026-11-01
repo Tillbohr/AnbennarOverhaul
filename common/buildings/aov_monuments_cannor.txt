@@ -322,7 +322,7 @@ aov_monument_ara_temple_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ara_temple_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -331,7 +331,7 @@ aov_monument_ara_temple_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ara_temple_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -377,7 +377,7 @@ aov_monument_ara_temple_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ara_temple_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -386,7 +386,7 @@ aov_monument_ara_temple_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ara_temple_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -432,7 +432,7 @@ aov_monument_ara_temple_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ara_temple_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -441,7 +441,7 @@ aov_monument_ara_temple_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ara_temple_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -1347,7 +1347,7 @@ aov_monument_bayvic_grandest_city_of_the_reach_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_bayvic_grandest_city_of_the_reach_gate
-				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -1356,7 +1356,7 @@ aov_monument_bayvic_grandest_city_of_the_reach_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_bayvic_grandest_city_of_the_reach_gate
-				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -1399,7 +1399,7 @@ aov_monument_bayvic_grandest_city_of_the_reach_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_bayvic_grandest_city_of_the_reach_gate
-				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -1408,7 +1408,7 @@ aov_monument_bayvic_grandest_city_of_the_reach_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_bayvic_grandest_city_of_the_reach_gate
-				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -1451,7 +1451,7 @@ aov_monument_bayvic_grandest_city_of_the_reach_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_bayvic_grandest_city_of_the_reach_gate
-				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -1460,7 +1460,7 @@ aov_monument_bayvic_grandest_city_of_the_reach_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_bayvic_grandest_city_of_the_reach_gate
-				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -1502,7 +1502,7 @@ aov_monument_beepeck_the_largest_small_city_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_beepeck_the_largest_small_city_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_halfling } culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_halfling } culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -1511,7 +1511,7 @@ aov_monument_beepeck_the_largest_small_city_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_beepeck_the_largest_small_city_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_halfling } culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_halfling } culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -1553,7 +1553,7 @@ aov_monument_beepeck_the_largest_small_city_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_beepeck_the_largest_small_city_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_halfling } culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_halfling } culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -1562,7 +1562,7 @@ aov_monument_beepeck_the_largest_small_city_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_beepeck_the_largest_small_city_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_halfling } culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_halfling } culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -1608,7 +1608,7 @@ aov_monument_beepeck_the_largest_small_city_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_beepeck_the_largest_small_city_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_halfling } culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_halfling } culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -1617,7 +1617,7 @@ aov_monument_beepeck_the_largest_small_city_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_beepeck_the_largest_small_city_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_halfling } culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_halfling } culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -2347,7 +2347,7 @@ aov_monument_celmaldor_icewind_palace_of_commerce_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_celmaldor_icewind_palace_of_commerce_gate
-				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -2356,7 +2356,7 @@ aov_monument_celmaldor_icewind_palace_of_commerce_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_celmaldor_icewind_palace_of_commerce_gate
-				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -2402,7 +2402,7 @@ aov_monument_celmaldor_icewind_palace_of_commerce_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_celmaldor_icewind_palace_of_commerce_gate
-				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -2411,7 +2411,7 @@ aov_monument_celmaldor_icewind_palace_of_commerce_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_celmaldor_icewind_palace_of_commerce_gate
-				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -2461,7 +2461,7 @@ aov_monument_celmaldor_icewind_palace_of_commerce_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_celmaldor_icewind_palace_of_commerce_gate
-				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -2470,7 +2470,7 @@ aov_monument_celmaldor_icewind_palace_of_commerce_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_celmaldor_icewind_palace_of_commerce_gate
-				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -2515,7 +2515,7 @@ aov_monument_damescrown_grand_exchange_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_damescrown_grand_exchange_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -2524,7 +2524,7 @@ aov_monument_damescrown_grand_exchange_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_damescrown_grand_exchange_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -2565,7 +2565,7 @@ aov_monument_damescrown_grand_exchange_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_damescrown_grand_exchange_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -2574,7 +2574,7 @@ aov_monument_damescrown_grand_exchange_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_damescrown_grand_exchange_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -2619,7 +2619,7 @@ aov_monument_damescrown_grand_exchange_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_damescrown_grand_exchange_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -2628,7 +2628,7 @@ aov_monument_damescrown_grand_exchange_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_damescrown_grand_exchange_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -2667,7 +2667,7 @@ aov_monument_damish_temple_moonmount_library_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_damish_temple_moonmount_library_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -2676,7 +2676,7 @@ aov_monument_damish_temple_moonmount_library_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_damish_temple_moonmount_library_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -2713,7 +2713,7 @@ aov_monument_damish_temple_moonmount_library_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_damish_temple_moonmount_library_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -2722,7 +2722,7 @@ aov_monument_damish_temple_moonmount_library_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_damish_temple_moonmount_library_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -2763,7 +2763,7 @@ aov_monument_damish_temple_moonmount_library_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_damish_temple_moonmount_library_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -2772,7 +2772,7 @@ aov_monument_damish_temple_moonmount_library_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_damish_temple_moonmount_library_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -2839,7 +2839,7 @@ aov_monument_damish_temple_temple_of_the_highest_moon_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_damish_temple_temple_of_the_highest_moon_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -2889,7 +2889,7 @@ aov_monument_damish_temple_temple_of_the_highest_moon_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_damish_temple_temple_of_the_highest_moon_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -2913,7 +2913,7 @@ aov_monument_deranne_westport_gateway_to_aelantir_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_deranne_westport_gateway_to_aelantir_gate
-				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { has_cultural_pillar = heritage_gerudian } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { has_cultural_pillar = heritage_gerudian } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -2922,7 +2922,7 @@ aov_monument_deranne_westport_gateway_to_aelantir_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_deranne_westport_gateway_to_aelantir_gate
-				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { has_cultural_pillar = heritage_gerudian } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { has_cultural_pillar = heritage_gerudian } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -2962,7 +2962,7 @@ aov_monument_deranne_westport_gateway_to_aelantir_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_deranne_westport_gateway_to_aelantir_gate
-				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { has_cultural_pillar = heritage_gerudian } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { has_cultural_pillar = heritage_gerudian } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -2971,7 +2971,7 @@ aov_monument_deranne_westport_gateway_to_aelantir_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_deranne_westport_gateway_to_aelantir_gate
-				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { has_cultural_pillar = heritage_gerudian } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { has_cultural_pillar = heritage_gerudian } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -3015,7 +3015,7 @@ aov_monument_deranne_westport_gateway_to_aelantir_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_deranne_westport_gateway_to_aelantir_gate
-				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { has_cultural_pillar = heritage_gerudian } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { has_cultural_pillar = heritage_gerudian } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -3024,7 +3024,7 @@ aov_monument_deranne_westport_gateway_to_aelantir_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_deranne_westport_gateway_to_aelantir_gate
-				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { has_cultural_pillar = heritage_gerudian } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { has_cultural_pillar = heritage_gerudian } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -4117,7 +4117,7 @@ aov_monument_freecestir_mustering_grounds_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_freecestir_mustering_grounds_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -4126,7 +4126,7 @@ aov_monument_freecestir_mustering_grounds_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_freecestir_mustering_grounds_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -4170,7 +4170,7 @@ aov_monument_freecestir_mustering_grounds_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_freecestir_mustering_grounds_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -4179,7 +4179,7 @@ aov_monument_freecestir_mustering_grounds_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_freecestir_mustering_grounds_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -4227,7 +4227,7 @@ aov_monument_freecestir_mustering_grounds_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_freecestir_mustering_grounds_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -4236,7 +4236,7 @@ aov_monument_freecestir_mustering_grounds_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_freecestir_mustering_grounds_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = { has_cultural_pillar = heritage_alenic } OR = { culture = culture:blue_reachman culture = culture:white_reachman culture = culture:moorman } culture = culture:white_reachman culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -4446,7 +4446,7 @@ aov_monument_giberd_academy_of_engineering_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_giberd_academy_of_engineering_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -4455,7 +4455,7 @@ aov_monument_giberd_academy_of_engineering_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_giberd_academy_of_engineering_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -4497,7 +4497,7 @@ aov_monument_giberd_academy_of_engineering_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_giberd_academy_of_engineering_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -4506,7 +4506,7 @@ aov_monument_giberd_academy_of_engineering_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_giberd_academy_of_engineering_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -4548,7 +4548,7 @@ aov_monument_giberd_academy_of_engineering_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_giberd_academy_of_engineering_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -4557,7 +4557,7 @@ aov_monument_giberd_academy_of_engineering_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_giberd_academy_of_engineering_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -4682,7 +4682,7 @@ aov_monument_hammerhome_artificers_guild_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_hammerhome_artificers_guild_gate
-				OR = { culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:marrodic culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_gnomish } culture = { has_cultural_pillar = heritage_kobold } culture = { has_cultural_pillar = heritage_halfling } culture = culture:moon_elvish culture = culture:hapremiti }
+				OR = { culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:marrodic culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_gnomish } culture = { has_cultural_pillar = heritage_kobold } culture = { has_cultural_pillar = heritage_halfling } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:hapremiti }
 			}
 		}
 	}
@@ -4691,7 +4691,7 @@ aov_monument_hammerhome_artificers_guild_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_hammerhome_artificers_guild_gate
-				OR = { culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:marrodic culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_gnomish } culture = { has_cultural_pillar = heritage_kobold } culture = { has_cultural_pillar = heritage_halfling } culture = culture:moon_elvish culture = culture:hapremiti }
+				OR = { culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:marrodic culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_gnomish } culture = { has_cultural_pillar = heritage_kobold } culture = { has_cultural_pillar = heritage_halfling } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:hapremiti }
 			}
 		}
 	}
@@ -4734,7 +4734,7 @@ aov_monument_hammerhome_artificers_guild_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_hammerhome_artificers_guild_gate
-				OR = { culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:marrodic culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_gnomish } culture = { has_cultural_pillar = heritage_kobold } culture = { has_cultural_pillar = heritage_halfling } culture = culture:moon_elvish culture = culture:hapremiti }
+				OR = { culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:marrodic culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_gnomish } culture = { has_cultural_pillar = heritage_kobold } culture = { has_cultural_pillar = heritage_halfling } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:hapremiti }
 			}
 		}
 	}
@@ -4743,7 +4743,7 @@ aov_monument_hammerhome_artificers_guild_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_hammerhome_artificers_guild_gate
-				OR = { culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:marrodic culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_gnomish } culture = { has_cultural_pillar = heritage_kobold } culture = { has_cultural_pillar = heritage_halfling } culture = culture:moon_elvish culture = culture:hapremiti }
+				OR = { culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:marrodic culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_gnomish } culture = { has_cultural_pillar = heritage_kobold } culture = { has_cultural_pillar = heritage_halfling } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:hapremiti }
 			}
 		}
 	}
@@ -4790,7 +4790,7 @@ aov_monument_hammerhome_artificers_guild_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_hammerhome_artificers_guild_gate
-				OR = { culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:marrodic culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_gnomish } culture = { has_cultural_pillar = heritage_kobold } culture = { has_cultural_pillar = heritage_halfling } culture = culture:moon_elvish culture = culture:hapremiti }
+				OR = { culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:marrodic culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_gnomish } culture = { has_cultural_pillar = heritage_kobold } culture = { has_cultural_pillar = heritage_halfling } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:hapremiti }
 			}
 		}
 	}
@@ -4799,7 +4799,7 @@ aov_monument_hammerhome_artificers_guild_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_hammerhome_artificers_guild_gate
-				OR = { culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:marrodic culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_gnomish } culture = { has_cultural_pillar = heritage_kobold } culture = { has_cultural_pillar = heritage_halfling } culture = culture:moon_elvish culture = culture:hapremiti }
+				OR = { culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:marrodic culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_gnomish } culture = { has_cultural_pillar = heritage_kobold } culture = { has_cultural_pillar = heritage_halfling } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:hapremiti }
 			}
 		}
 	}
@@ -4951,7 +4951,7 @@ aov_monument_ibevar_temple_of_munas_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ibevar_temple_of_munas_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion faith = faith:elven_forebears culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion faith = faith:elven_forebears culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -4960,7 +4960,7 @@ aov_monument_ibevar_temple_of_munas_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ibevar_temple_of_munas_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion faith = faith:elven_forebears culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion faith = faith:elven_forebears culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -5005,7 +5005,7 @@ aov_monument_ibevar_temple_of_munas_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ibevar_temple_of_munas_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion faith = faith:elven_forebears culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion faith = faith:elven_forebears culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -5014,7 +5014,7 @@ aov_monument_ibevar_temple_of_munas_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ibevar_temple_of_munas_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion faith = faith:elven_forebears culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion faith = faith:elven_forebears culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -5059,7 +5059,7 @@ aov_monument_ibevar_temple_of_munas_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ibevar_temple_of_munas_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion faith = faith:elven_forebears culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion faith = faith:elven_forebears culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -5068,7 +5068,7 @@ aov_monument_ibevar_temple_of_munas_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ibevar_temple_of_munas_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion faith = faith:elven_forebears culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion faith = faith:elven_forebears culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -5541,7 +5541,7 @@ aov_monument_konwell_the_imperial_archives_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_konwell_the_imperial_archives_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -5550,7 +5550,7 @@ aov_monument_konwell_the_imperial_archives_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_konwell_the_imperial_archives_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -5587,7 +5587,7 @@ aov_monument_konwell_the_imperial_archives_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_konwell_the_imperial_archives_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -5596,7 +5596,7 @@ aov_monument_konwell_the_imperial_archives_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_konwell_the_imperial_archives_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -5634,7 +5634,7 @@ aov_monument_konwell_the_imperial_archives_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_konwell_the_imperial_archives_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -5643,7 +5643,7 @@ aov_monument_konwell_the_imperial_archives_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_konwell_the_imperial_archives_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -5775,7 +5775,7 @@ aov_monument_lorent_new_adea_naval_school_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_lorent_new_adea_naval_school_gate
-				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -5784,7 +5784,7 @@ aov_monument_lorent_new_adea_naval_school_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_lorent_new_adea_naval_school_gate
-				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -5822,7 +5822,7 @@ aov_monument_lorent_new_adea_naval_school_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_lorent_new_adea_naval_school_gate
-				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -5831,7 +5831,7 @@ aov_monument_lorent_new_adea_naval_school_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_lorent_new_adea_naval_school_gate
-				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -5869,7 +5869,7 @@ aov_monument_lorent_new_adea_naval_school_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_lorent_new_adea_naval_school_gate
-				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -5878,7 +5878,7 @@ aov_monument_lorent_new_adea_naval_school_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_lorent_new_adea_naval_school_gate
-				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -5914,7 +5914,7 @@ aov_monument_lorentaine_mage_academy_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_lorentaine_mage_academy_gate
-				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -5923,7 +5923,7 @@ aov_monument_lorentaine_mage_academy_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_lorentaine_mage_academy_gate
-				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -5972,7 +5972,7 @@ aov_monument_lorentaine_mage_academy_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_lorentaine_mage_academy_gate
-				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -5981,7 +5981,7 @@ aov_monument_lorentaine_mage_academy_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_lorentaine_mage_academy_gate
-				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -6032,7 +6032,7 @@ aov_monument_lorentaine_mage_academy_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_lorentaine_mage_academy_gate
-				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -6041,7 +6041,7 @@ aov_monument_lorentaine_mage_academy_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_lorentaine_mage_academy_gate
-				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -6091,7 +6091,7 @@ aov_monument_marrhold_gate_to_the_serpentspine_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_marrhold_gate_to_the_serpentspine_gate
-				OR = { culture = culture:marrodic culture = { has_cultural_pillar = heritage_halfling } culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } culture = culture:moon_elvish }
+				OR = { culture = culture:marrodic culture = { has_cultural_pillar = heritage_halfling } culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } culture = { aov_moon_elven_lineage_trigger = yes } }
 			}
 		}
 	}
@@ -6100,7 +6100,7 @@ aov_monument_marrhold_gate_to_the_serpentspine_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_marrhold_gate_to_the_serpentspine_gate
-				OR = { culture = culture:marrodic culture = { has_cultural_pillar = heritage_halfling } culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } culture = culture:moon_elvish }
+				OR = { culture = culture:marrodic culture = { has_cultural_pillar = heritage_halfling } culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } culture = { aov_moon_elven_lineage_trigger = yes } }
 			}
 		}
 	}
@@ -6146,7 +6146,7 @@ aov_monument_marrhold_gate_to_the_serpentspine_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_marrhold_gate_to_the_serpentspine_gate
-				OR = { culture = culture:marrodic culture = { has_cultural_pillar = heritage_halfling } culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } culture = culture:moon_elvish }
+				OR = { culture = culture:marrodic culture = { has_cultural_pillar = heritage_halfling } culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } culture = { aov_moon_elven_lineage_trigger = yes } }
 			}
 		}
 	}
@@ -6155,7 +6155,7 @@ aov_monument_marrhold_gate_to_the_serpentspine_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_marrhold_gate_to_the_serpentspine_gate
-				OR = { culture = culture:marrodic culture = { has_cultural_pillar = heritage_halfling } culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } culture = culture:moon_elvish }
+				OR = { culture = culture:marrodic culture = { has_cultural_pillar = heritage_halfling } culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } culture = { aov_moon_elven_lineage_trigger = yes } }
 			}
 		}
 	}
@@ -6206,7 +6206,7 @@ aov_monument_marrhold_gate_to_the_serpentspine_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_marrhold_gate_to_the_serpentspine_gate
-				OR = { culture = culture:marrodic culture = { has_cultural_pillar = heritage_halfling } culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } culture = culture:moon_elvish }
+				OR = { culture = culture:marrodic culture = { has_cultural_pillar = heritage_halfling } culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } culture = { aov_moon_elven_lineage_trigger = yes } }
 			}
 		}
 	}
@@ -6215,7 +6215,7 @@ aov_monument_marrhold_gate_to_the_serpentspine_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_marrhold_gate_to_the_serpentspine_gate
-				OR = { culture = culture:marrodic culture = { has_cultural_pillar = heritage_halfling } culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } culture = culture:moon_elvish }
+				OR = { culture = culture:marrodic culture = { has_cultural_pillar = heritage_halfling } culture = { has_cultural_pillar = heritage_escanni } culture = { has_cultural_pillar = heritage_dostanorian } culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } culture = { aov_moon_elven_lineage_trigger = yes } }
 			}
 		}
 	}
@@ -6371,7 +6371,7 @@ aov_monument_menibor_hall_of_the_gallant_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_menibor_hall_of_the_gallant_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -6380,7 +6380,7 @@ aov_monument_menibor_hall_of_the_gallant_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_menibor_hall_of_the_gallant_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -6426,7 +6426,7 @@ aov_monument_menibor_hall_of_the_gallant_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_menibor_hall_of_the_gallant_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -6435,7 +6435,7 @@ aov_monument_menibor_hall_of_the_gallant_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_menibor_hall_of_the_gallant_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -6481,7 +6481,7 @@ aov_monument_menibor_hall_of_the_gallant_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_menibor_hall_of_the_gallant_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -6490,7 +6490,7 @@ aov_monument_menibor_hall_of_the_gallant_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_menibor_hall_of_the_gallant_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -6531,7 +6531,7 @@ aov_monument_minara_temple_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_minara_temple_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -6540,7 +6540,7 @@ aov_monument_minara_temple_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_minara_temple_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -6585,7 +6585,7 @@ aov_monument_minara_temple_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_minara_temple_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -6594,7 +6594,7 @@ aov_monument_minara_temple_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_minara_temple_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -6639,7 +6639,7 @@ aov_monument_minara_temple_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_minara_temple_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -6648,7 +6648,7 @@ aov_monument_minara_temple_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_minara_temple_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_lencori } culture = culture:moon_elvish culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_lencori } culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:castanorian }
 			}
 		}
 	}
@@ -6691,7 +6691,7 @@ aov_monument_moonhaven_port_munas_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_moonhaven_port_munas_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -6700,7 +6700,7 @@ aov_monument_moonhaven_port_munas_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_moonhaven_port_munas_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -6742,7 +6742,7 @@ aov_monument_moonhaven_port_munas_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_moonhaven_port_munas_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -6751,7 +6751,7 @@ aov_monument_moonhaven_port_munas_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_moonhaven_port_munas_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -6793,7 +6793,7 @@ aov_monument_moonhaven_port_munas_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_moonhaven_port_munas_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -6802,7 +6802,7 @@ aov_monument_moonhaven_port_munas_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_moonhaven_port_munas_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -6842,7 +6842,7 @@ aov_monument_nathalaire_city_of_pirates_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_nathalaire_city_of_pirates_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = { has_cultural_pillar = heritage_gnollish } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = { has_cultural_pillar = heritage_gnollish } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:castanorian }
 			}
 		}
 	}
@@ -6851,7 +6851,7 @@ aov_monument_nathalaire_city_of_pirates_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_nathalaire_city_of_pirates_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = { has_cultural_pillar = heritage_gnollish } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = { has_cultural_pillar = heritage_gnollish } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:castanorian }
 			}
 		}
 	}
@@ -6898,7 +6898,7 @@ aov_monument_nathalaire_city_of_pirates_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_nathalaire_city_of_pirates_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = { has_cultural_pillar = heritage_gnollish } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = { has_cultural_pillar = heritage_gnollish } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:castanorian }
 			}
 		}
 	}
@@ -6907,7 +6907,7 @@ aov_monument_nathalaire_city_of_pirates_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_nathalaire_city_of_pirates_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = { has_cultural_pillar = heritage_gnollish } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = { has_cultural_pillar = heritage_gnollish } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:castanorian }
 			}
 		}
 	}
@@ -6958,7 +6958,7 @@ aov_monument_nathalaire_city_of_pirates_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_nathalaire_city_of_pirates_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = { has_cultural_pillar = heritage_gnollish } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = { has_cultural_pillar = heritage_gnollish } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:castanorian }
 			}
 		}
 	}
@@ -6967,7 +6967,7 @@ aov_monument_nathalaire_city_of_pirates_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_nathalaire_city_of_pirates_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = { has_cultural_pillar = heritage_gnollish } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = { has_cultural_pillar = heritage_gnollish } culture = { has_cultural_pillar = heritage_dostanorian } culture = culture:castanorian }
 			}
 		}
 	}
@@ -7012,7 +7012,7 @@ aov_monument_neckcliffe_the_imperial_dockyard_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_neckcliffe_the_imperial_dockyard_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -7021,7 +7021,7 @@ aov_monument_neckcliffe_the_imperial_dockyard_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_neckcliffe_the_imperial_dockyard_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -7067,7 +7067,7 @@ aov_monument_neckcliffe_the_imperial_dockyard_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_neckcliffe_the_imperial_dockyard_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -7076,7 +7076,7 @@ aov_monument_neckcliffe_the_imperial_dockyard_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_neckcliffe_the_imperial_dockyard_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -7123,7 +7123,7 @@ aov_monument_neckcliffe_the_imperial_dockyard_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_neckcliffe_the_imperial_dockyard_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -7132,7 +7132,7 @@ aov_monument_neckcliffe_the_imperial_dockyard_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_neckcliffe_the_imperial_dockyard_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -8453,7 +8453,7 @@ aov_monument_seinathil_institute_of_song_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_seinathil_institute_of_song_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -8462,7 +8462,7 @@ aov_monument_seinathil_institute_of_song_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_seinathil_institute_of_song_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -8504,7 +8504,7 @@ aov_monument_seinathil_institute_of_song_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_seinathil_institute_of_song_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -8513,7 +8513,7 @@ aov_monument_seinathil_institute_of_song_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_seinathil_institute_of_song_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -8555,7 +8555,7 @@ aov_monument_seinathil_institute_of_song_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_seinathil_institute_of_song_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -8564,7 +8564,7 @@ aov_monument_seinathil_institute_of_song_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_seinathil_institute_of_song_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -8604,7 +8604,7 @@ aov_monument_silvelar_silver_spires_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_silvelar_silver_spires_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -8613,7 +8613,7 @@ aov_monument_silvelar_silver_spires_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_silvelar_silver_spires_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -8652,7 +8652,7 @@ aov_monument_silvelar_silver_spires_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_silvelar_silver_spires_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -8661,7 +8661,7 @@ aov_monument_silvelar_silver_spires_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_silvelar_silver_spires_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -8704,7 +8704,7 @@ aov_monument_silvelar_silver_spires_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_silvelar_silver_spires_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -8713,7 +8713,7 @@ aov_monument_silvelar_silver_spires_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_silvelar_silver_spires_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -8754,7 +8754,7 @@ aov_monument_silverforge_strongbellow_academy_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_silverforge_strongbellow_academy_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
 			}
 		}
 	}
@@ -8763,7 +8763,7 @@ aov_monument_silverforge_strongbellow_academy_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_silverforge_strongbellow_academy_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
 			}
 		}
 	}
@@ -8809,7 +8809,7 @@ aov_monument_silverforge_strongbellow_academy_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_silverforge_strongbellow_academy_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
 			}
 		}
 	}
@@ -8818,7 +8818,7 @@ aov_monument_silverforge_strongbellow_academy_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_silverforge_strongbellow_academy_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
 			}
 		}
 	}
@@ -8865,7 +8865,7 @@ aov_monument_silverforge_strongbellow_academy_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_silverforge_strongbellow_academy_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
 			}
 		}
 	}
@@ -8874,7 +8874,7 @@ aov_monument_silverforge_strongbellow_academy_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_silverforge_strongbellow_academy_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian culture = { has_cultural_pillar = heritage_dwarven } culture = { has_cultural_pillar = heritage_kobold } }
 			}
 		}
 	}
@@ -8924,7 +8924,7 @@ aov_monument_sorncell_deepwater_harbor_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_sorncell_deepwater_harbor_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_businori } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_businori } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -8933,7 +8933,7 @@ aov_monument_sorncell_deepwater_harbor_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_sorncell_deepwater_harbor_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_businori } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_businori } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -8980,7 +8980,7 @@ aov_monument_sorncell_deepwater_harbor_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_sorncell_deepwater_harbor_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_businori } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_businori } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -8989,7 +8989,7 @@ aov_monument_sorncell_deepwater_harbor_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_sorncell_deepwater_harbor_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_businori } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_businori } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -9036,7 +9036,7 @@ aov_monument_sorncell_deepwater_harbor_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_sorncell_deepwater_harbor_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_businori } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_businori } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -9045,7 +9045,7 @@ aov_monument_sorncell_deepwater_harbor_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_sorncell_deepwater_harbor_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_businori } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = { has_cultural_pillar = heritage_businori } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -9090,7 +9090,7 @@ aov_monument_telgeir_vanbury_steel_foundry_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_telgeir_vanbury_steel_foundry_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -9099,7 +9099,7 @@ aov_monument_telgeir_vanbury_steel_foundry_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_telgeir_vanbury_steel_foundry_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -9140,7 +9140,7 @@ aov_monument_telgeir_vanbury_steel_foundry_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_telgeir_vanbury_steel_foundry_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -9149,7 +9149,7 @@ aov_monument_telgeir_vanbury_steel_foundry_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_telgeir_vanbury_steel_foundry_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -9191,7 +9191,7 @@ aov_monument_telgeir_vanbury_steel_foundry_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_telgeir_vanbury_steel_foundry_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -9200,7 +9200,7 @@ aov_monument_telgeir_vanbury_steel_foundry_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_telgeir_vanbury_steel_foundry_gate
-				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -9240,7 +9240,7 @@ aov_monument_temple_of_ryala_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_temple_of_ryala_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -9249,7 +9249,7 @@ aov_monument_temple_of_ryala_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_temple_of_ryala_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -9294,7 +9294,7 @@ aov_monument_temple_of_ryala_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_temple_of_ryala_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -9303,7 +9303,7 @@ aov_monument_temple_of_ryala_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_temple_of_ryala_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -9348,7 +9348,7 @@ aov_monument_temple_of_ryala_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_temple_of_ryala_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}
@@ -9357,7 +9357,7 @@ aov_monument_temple_of_ryala_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_temple_of_ryala_gate
-				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = culture:moon_elvish culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
+				OR = { faith.religion = religion:cannorian_pantheon_religion culture = { has_cultural_pillar = heritage_damesheader } culture = culture:imperial_halfling culture = culture:imperial_gnomish culture = { aov_moon_elven_lineage_trigger = yes } culture = culture:silver_dwarvish culture = culture:wexonard culture = culture:vertesker culture = culture:roilsardi culture = culture:castanorian }
 			}
 		}
 	}

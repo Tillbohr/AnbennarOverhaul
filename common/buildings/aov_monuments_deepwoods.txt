@@ -13,7 +13,7 @@ aov_monument_ciranmyna_the_shimmering_city_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ciranmyna_the_shimmering_city_gate
-				culture = culture:wood_elvish
+				culture = { aov_wood_elven_lineage_trigger = yes }
 			}
 		}
 	}
@@ -22,7 +22,7 @@ aov_monument_ciranmyna_the_shimmering_city_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ciranmyna_the_shimmering_city_gate
-				culture = culture:wood_elvish
+				culture = { aov_wood_elven_lineage_trigger = yes }
 			}
 		}
 	}
@@ -64,7 +64,7 @@ aov_monument_ciranmyna_the_shimmering_city_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ciranmyna_the_shimmering_city_gate
-				culture = culture:wood_elvish
+				culture = { aov_wood_elven_lineage_trigger = yes }
 			}
 		}
 	}
@@ -73,7 +73,7 @@ aov_monument_ciranmyna_the_shimmering_city_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ciranmyna_the_shimmering_city_gate
-				culture = culture:wood_elvish
+				culture = { aov_wood_elven_lineage_trigger = yes }
 			}
 		}
 	}
@@ -119,7 +119,7 @@ aov_monument_ciranmyna_the_shimmering_city_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ciranmyna_the_shimmering_city_gate
-				culture = culture:wood_elvish
+				culture = { aov_wood_elven_lineage_trigger = yes }
 			}
 		}
 	}
@@ -128,7 +128,7 @@ aov_monument_ciranmyna_the_shimmering_city_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ciranmyna_the_shimmering_city_gate
-				culture = culture:wood_elvish
+				culture = { aov_wood_elven_lineage_trigger = yes }
 			}
 		}
 	}
@@ -512,7 +512,7 @@ aov_monument_mines_of_yfelorr_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_mines_of_yfelorr_gate
-				culture = culture:wood_elvish
+				culture = { aov_wood_elven_lineage_trigger = yes }
 			}
 		}
 	}
@@ -521,7 +521,7 @@ aov_monument_mines_of_yfelorr_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_mines_of_yfelorr_gate
-				culture = culture:wood_elvish
+				culture = { aov_wood_elven_lineage_trigger = yes }
 			}
 		}
 	}
@@ -558,7 +558,7 @@ aov_monument_mines_of_yfelorr_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_mines_of_yfelorr_gate
-				culture = culture:wood_elvish
+				culture = { aov_wood_elven_lineage_trigger = yes }
 			}
 		}
 	}
@@ -567,7 +567,7 @@ aov_monument_mines_of_yfelorr_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_mines_of_yfelorr_gate
-				culture = culture:wood_elvish
+				culture = { aov_wood_elven_lineage_trigger = yes }
 			}
 		}
 	}
@@ -604,7 +604,7 @@ aov_monument_mines_of_yfelorr_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_mines_of_yfelorr_gate
-				culture = culture:wood_elvish
+				culture = { aov_wood_elven_lineage_trigger = yes }
 			}
 		}
 	}
@@ -613,7 +613,7 @@ aov_monument_mines_of_yfelorr_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_mines_of_yfelorr_gate
-				culture = culture:wood_elvish
+				culture = { aov_wood_elven_lineage_trigger = yes }
 			}
 		}
 	}

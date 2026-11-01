@@ -165,7 +165,7 @@ aov_monument_ash_palace_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ash_palace_gate
-				OR = { faith.religion = religion:bulwari_sun_cults_religion culture = { has_cultural_pillar = heritage_bulwari } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:sun_elvish culture = { has_cultural_pillar = heritage_elven } }
+				OR = { faith.religion = religion:bulwari_sun_cults_religion culture = { has_cultural_pillar = heritage_bulwari } culture = { has_cultural_pillar = heritage_gnollish } culture = { aov_sun_elven_lineage_trigger = yes } culture = { has_cultural_pillar = heritage_elven } }
 			}
 		}
 	}
@@ -174,7 +174,7 @@ aov_monument_ash_palace_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ash_palace_gate
-				OR = { faith.religion = religion:bulwari_sun_cults_religion culture = { has_cultural_pillar = heritage_bulwari } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:sun_elvish culture = { has_cultural_pillar = heritage_elven } }
+				OR = { faith.religion = religion:bulwari_sun_cults_religion culture = { has_cultural_pillar = heritage_bulwari } culture = { has_cultural_pillar = heritage_gnollish } culture = { aov_sun_elven_lineage_trigger = yes } culture = { has_cultural_pillar = heritage_elven } }
 			}
 		}
 	}
@@ -211,7 +211,7 @@ aov_monument_ash_palace_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ash_palace_gate
-				OR = { faith.religion = religion:bulwari_sun_cults_religion culture = { has_cultural_pillar = heritage_bulwari } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:sun_elvish culture = { has_cultural_pillar = heritage_elven } }
+				OR = { faith.religion = religion:bulwari_sun_cults_religion culture = { has_cultural_pillar = heritage_bulwari } culture = { has_cultural_pillar = heritage_gnollish } culture = { aov_sun_elven_lineage_trigger = yes } culture = { has_cultural_pillar = heritage_elven } }
 			}
 		}
 	}
@@ -220,7 +220,7 @@ aov_monument_ash_palace_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ash_palace_gate
-				OR = { faith.religion = religion:bulwari_sun_cults_religion culture = { has_cultural_pillar = heritage_bulwari } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:sun_elvish culture = { has_cultural_pillar = heritage_elven } }
+				OR = { faith.religion = religion:bulwari_sun_cults_religion culture = { has_cultural_pillar = heritage_bulwari } culture = { has_cultural_pillar = heritage_gnollish } culture = { aov_sun_elven_lineage_trigger = yes } culture = { has_cultural_pillar = heritage_elven } }
 			}
 		}
 	}
@@ -257,7 +257,7 @@ aov_monument_ash_palace_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ash_palace_gate
-				OR = { faith.religion = religion:bulwari_sun_cults_religion culture = { has_cultural_pillar = heritage_bulwari } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:sun_elvish culture = { has_cultural_pillar = heritage_elven } }
+				OR = { faith.religion = religion:bulwari_sun_cults_religion culture = { has_cultural_pillar = heritage_bulwari } culture = { has_cultural_pillar = heritage_gnollish } culture = { aov_sun_elven_lineage_trigger = yes } culture = { has_cultural_pillar = heritage_elven } }
 			}
 		}
 	}
@@ -266,7 +266,7 @@ aov_monument_ash_palace_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_ash_palace_gate
-				OR = { faith.religion = religion:bulwari_sun_cults_religion culture = { has_cultural_pillar = heritage_bulwari } culture = { has_cultural_pillar = heritage_gnollish } culture = culture:sun_elvish culture = { has_cultural_pillar = heritage_elven } }
+				OR = { faith.religion = religion:bulwari_sun_cults_religion culture = { has_cultural_pillar = heritage_bulwari } culture = { has_cultural_pillar = heritage_gnollish } culture = { aov_sun_elven_lineage_trigger = yes } culture = { has_cultural_pillar = heritage_elven } }
 			}
 		}
 	}
@@ -986,7 +986,7 @@ aov_monument_mount_lazzaward_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_mount_lazzaward_gate
-				OR = { culture = { has_cultural_pillar = heritage_bulwari } culture = culture:sun_elvish culture = { has_cultural_pillar = heritage_elven } }
+				OR = { culture = { has_cultural_pillar = heritage_bulwari } culture = { aov_sun_elven_lineage_trigger = yes } culture = { has_cultural_pillar = heritage_elven } }
 			}
 		}
 	}
@@ -995,7 +995,7 @@ aov_monument_mount_lazzaward_01 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_mount_lazzaward_gate
-				OR = { culture = { has_cultural_pillar = heritage_bulwari } culture = culture:sun_elvish culture = { has_cultural_pillar = heritage_elven } }
+				OR = { culture = { has_cultural_pillar = heritage_bulwari } culture = { aov_sun_elven_lineage_trigger = yes } culture = { has_cultural_pillar = heritage_elven } }
 			}
 		}
 	}
@@ -1034,7 +1034,7 @@ aov_monument_mount_lazzaward_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_mount_lazzaward_gate
-				OR = { culture = { has_cultural_pillar = heritage_bulwari } culture = culture:sun_elvish culture = { has_cultural_pillar = heritage_elven } }
+				OR = { culture = { has_cultural_pillar = heritage_bulwari } culture = { aov_sun_elven_lineage_trigger = yes } culture = { has_cultural_pillar = heritage_elven } }
 			}
 		}
 	}
@@ -1043,7 +1043,7 @@ aov_monument_mount_lazzaward_02 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_mount_lazzaward_gate
-				OR = { culture = { has_cultural_pillar = heritage_bulwari } culture = culture:sun_elvish culture = { has_cultural_pillar = heritage_elven } }
+				OR = { culture = { has_cultural_pillar = heritage_bulwari } culture = { aov_sun_elven_lineage_trigger = yes } culture = { has_cultural_pillar = heritage_elven } }
 			}
 		}
 	}
@@ -1082,7 +1082,7 @@ aov_monument_mount_lazzaward_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_mount_lazzaward_gate
-				OR = { culture = { has_cultural_pillar = heritage_bulwari } culture = culture:sun_elvish culture = { has_cultural_pillar = heritage_elven } }
+				OR = { culture = { has_cultural_pillar = heritage_bulwari } culture = { aov_sun_elven_lineage_trigger = yes } culture = { has_cultural_pillar = heritage_elven } }
 			}
 		}
 	}
@@ -1091,7 +1091,7 @@ aov_monument_mount_lazzaward_03 = {
 		scope:holder = {
 			custom_tooltip = {
 				text = aov_monument_mount_lazzaward_gate
-				OR = { culture = { has_cultural_pillar = heritage_bulwari } culture = culture:sun_elvish culture = { has_cultural_pillar = heritage_elven } }
+				OR = { culture = { has_cultural_pillar = heritage_bulwari } culture = { aov_sun_elven_lineage_trigger = yes } culture = { has_cultural_pillar = heritage_elven } }
 			}
 		}
 	}
