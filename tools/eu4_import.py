@@ -96,6 +96,19 @@ def eu4_loc(roots: dict = EU4_ROOTS) -> dict:
     return loc
 
 
+def culture_dynasty_names(eu4: Path = EU4_ROOTS["anbennar"]) -> dict:
+    """EU4 culture group or culture key -> its dynasty_names, in file order. The cultures file is Windows-1252
+    (`Gill\\x9a` and similar), not plain Latin-1."""
+    text = strip_comments((eu4 / "common" / "cultures" / "anb_cultures.txt").read_bytes().decode("cp1252"))
+    out = {}
+    for group, group_body in parse_blocks(text).items():
+        children = parse_blocks(group_body)
+        for key, body in [(group, children)] + [(k, parse_blocks(v)) for k, v in children.items()]:
+            if "dynasty_names" in body:
+                out[key] = [a or b for a, b in re.findall(r'"([^"]*)"|([^\s"]+)', body["dynasty_names"])]
+    return out
+
+
 # --- map ----------------------------------------------------------------------------------------------------------
 
 def province_names(eu4: Path = EU4_ROOTS["anbennar"]) -> dict:

@@ -3234,6 +3234,27 @@
   "key": "missing-localization",
   "locations": [
     {
+      "column": 32,
+      "from": "MOD",
+      "fullpath": ".\\common\\culture\\name_lists\\zz_aov_dynasty_names.txt",
+      "length": 3,
+      "line": "\tdynasty_of_location_prefix = \"sil\"",
+      "linenr": 5739,
+      "path": "common\\culture\\name_lists\\zz_aov_dynasty_names.txt",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key sil",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
       "column": 3,
       "from": "MOD",
       "fullpath": ".\\common\\culture\\traditions\\zz_aov_faith_traditions.txt",
