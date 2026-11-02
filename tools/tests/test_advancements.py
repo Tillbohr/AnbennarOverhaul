@@ -217,13 +217,23 @@ class OrbOfOmniscienceTests(unittest.TestCase):
         self.assertIn("enemy_scheme_secrecy_add = -", block(mods, "aov_orb_2"))
         block(mods, "aov_orb_3")
 
+    def test_orb_texts_name_the_revised_spells(self):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("aov_adv_data", MOD / "tools" / "data" / "advancements.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        orb = next(a for a in module.ADVANCEMENTS if a["key"] == "orb_of_omniscience")
+        self.assertIn("every secret the target knows", orb["levels"][1]["desc"])
+        self.assertIn("Augury", orb["levels"][2]["desc"])
+        self.assertNotIn("Manipulated Fortune", orb["levels"][2]["desc"])
+
     def test_scry_reveals_more_with_the_orb(self):
         scry = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_scry_reveal")
         self.assertIn("aov_adv_orb_of_omniscience_level >= 2", scry)
 
-    def test_foresight_and_fortune_last_longer(self):
+    def test_foresight_and_augury_last_longer(self):
         vals = read("common/script_values/aov_spell_values.txt")
-        for k in ("foresight", "manipulated_fortune"):
+        for k in ("foresight", "augury"):
             self.assertIn("multiply = aov_adv_orb_spell_years_mult", block(vals, f"aov_spell_{k}_years"))
         self.assertNotIn("aov_adv_orb_spell_years_mult", block(vals, "aov_spell_guidance_years"))
         self.assertIn("aov_adv_orb_of_omniscience_level >= 3", block(read(TUNING), "aov_adv_orb_spell_years_mult"))

@@ -312,6 +312,28 @@ aov_spell_guidance_castable = {
 	}
 }
 
+aov_spell_detect_plots_known = {
+	aov_school_level_at_least = { SCHOOL = divination LEVEL = 1 }
+}
+aov_spell_detect_plots_ready = {
+	NOT = { has_variable = aov_spell_detect_plots_cd }
+}
+aov_spell_detect_plots_castable = {
+	aov_is_mage = yes
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_DIVINATION_1
+		aov_spell_detect_plots_known = yes
+	}
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_READY
+		aov_spell_detect_plots_ready = yes
+	}
+	custom_tooltip = {
+		text = aov_spell_detect_plots_req_mana
+		aov_mana >= aov_spell_detect_plots_cost
+	}
+}
+
 aov_spell_eye_for_talent_known = {
 	aov_school_level_at_least = { SCHOOL = divination LEVEL = 1 }
 }
@@ -331,32 +353,6 @@ aov_spell_eye_for_talent_castable = {
 	custom_tooltip = {
 		text = aov_spell_eye_for_talent_req_mana
 		aov_mana >= aov_spell_eye_for_talent_cost
-	}
-}
-
-aov_spell_deposit_divination_known = {
-	aov_school_level_at_least = { SCHOOL = divination LEVEL = 1 }
-}
-aov_spell_deposit_divination_ready = {
-	NOT = { has_variable = aov_spell_deposit_divination_cd }
-}
-aov_spell_deposit_divination_castable = {
-	aov_is_mage = yes
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_DIVINATION_1
-		aov_spell_deposit_divination_known = yes
-	}
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_READY
-		aov_spell_deposit_divination_ready = yes
-	}
-	custom_tooltip = {
-		text = aov_spell_deposit_divination_req_mana
-		aov_mana >= aov_spell_deposit_divination_cost
-	}
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_LANDED
-		is_landed = yes
 	}
 }
 
@@ -382,25 +378,25 @@ aov_spell_scry_castable = {
 	}
 }
 
-aov_spell_manipulated_fortune_known = {
+aov_spell_augury_known = {
 	aov_school_level_at_least = { SCHOOL = divination LEVEL = 2 }
 }
-aov_spell_manipulated_fortune_ready = {
-	NOT = { has_variable = aov_spell_manipulated_fortune_cd }
+aov_spell_augury_ready = {
+	NOT = { has_variable = aov_spell_augury_cd }
 }
-aov_spell_manipulated_fortune_castable = {
+aov_spell_augury_castable = {
 	aov_is_mage = yes
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_DIVINATION_2
-		aov_spell_manipulated_fortune_known = yes
+		aov_spell_augury_known = yes
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_READY
-		aov_spell_manipulated_fortune_ready = yes
+		aov_spell_augury_ready = yes
 	}
 	custom_tooltip = {
-		text = aov_spell_manipulated_fortune_req_mana
-		aov_mana >= aov_spell_manipulated_fortune_cost
+		text = aov_spell_augury_req_mana
+		aov_mana >= aov_spell_augury_cost
 	}
 }
 
@@ -1149,9 +1145,9 @@ aov_magic_ai_any_castable = {
 		aov_spell_aid_construction_castable = yes
 		aov_spell_planar_gate_castable = yes
 		aov_spell_guidance_castable = yes
+		aov_spell_detect_plots_castable = yes
 		aov_spell_eye_for_talent_castable = yes
-		aov_spell_deposit_divination_castable = yes
-		aov_spell_manipulated_fortune_castable = yes
+		aov_spell_augury_castable = yes
 		aov_spell_foresight_castable = yes
 		aov_spell_enchanting_envoy_castable = yes
 		aov_spell_command_animals_castable = yes

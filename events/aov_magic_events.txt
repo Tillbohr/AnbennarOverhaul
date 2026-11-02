@@ -187,3 +187,45 @@ aov_magic.50 = {
 		name = aov_magic.50.a
 	}
 }
+
+# Augury: the threats of the coming years (saved by aov_augury)
+aov_magic.45 = {
+	type = character_event
+	title = aov_magic.45.t
+	desc = {
+		desc = aov_magic.45.desc.intro
+		triggered_desc = {
+			trigger = { exists = scope:aov_augury_claimant }
+			desc = aov_magic.45.desc.claimant
+		}
+		triggered_desc = {
+			trigger = { exists = scope:aov_augury_faction }
+			desc = aov_magic.45.desc.faction
+		}
+		triggered_desc = {
+			trigger = { exists = scope:aov_augury_dying }
+			desc = aov_magic.45.desc.dying
+		}
+		triggered_desc = {
+			trigger = { exists = scope:aov_augury_plotter }
+			desc = aov_magic.45.desc.plotter
+		}
+		triggered_desc = {
+			trigger = {
+				NOR = {
+					exists = scope:aov_augury_claimant
+					exists = scope:aov_augury_faction
+					exists = scope:aov_augury_dying
+					exists = scope:aov_augury_plotter
+				}
+			}
+			desc = aov_magic.45.desc.none
+		}
+	}
+	theme = learning
+	left_portrait = root
+
+	option = {
+		name = aov_magic.45.a
+	}
+}

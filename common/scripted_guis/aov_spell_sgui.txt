@@ -74,22 +74,22 @@ aov_spell_guidance_sgui = {
 	effect = { aov_spell_guidance_cast = yes }
 }
 
+aov_spell_detect_plots_sgui = {
+	scope = character
+	is_valid = { aov_spell_detect_plots_castable = yes }
+	effect = { aov_spell_detect_plots_cast = yes }
+}
+
 aov_spell_eye_for_talent_sgui = {
 	scope = character
 	is_valid = { aov_spell_eye_for_talent_castable = yes }
 	effect = { aov_spell_eye_for_talent_cast = yes }
 }
 
-aov_spell_deposit_divination_sgui = {
+aov_spell_augury_sgui = {
 	scope = character
-	is_valid = { aov_spell_deposit_divination_castable = yes }
-	effect = { aov_spell_deposit_divination_cast = yes }
-}
-
-aov_spell_manipulated_fortune_sgui = {
-	scope = character
-	is_valid = { aov_spell_manipulated_fortune_castable = yes }
-	effect = { aov_spell_manipulated_fortune_cast = yes }
+	is_valid = { aov_spell_augury_castable = yes }
+	effect = { aov_spell_augury_cast = yes }
 }
 
 aov_spell_foresight_sgui = {

@@ -150,5 +150,54 @@ class ConjurationTests(unittest.TestCase):
             self.assertNotIn(k, BY)
 
 
+class DivinationTests(unittest.TestCase):
+    def test_keys(self):
+        self.assertEqual(keys_in_slot_order("divination"),
+                         ["guidance", "detect_plots", "eye_for_talent", "scry", "augury", "foresight"])
+
+    def test_numbers(self):
+        self.assertIn("learning = 4", BY["guidance"]["modifier"])
+        self.assertIn("monthly_lifestyle_xp_gain_mult = 0.15", BY["guidance"]["modifier"])
+        f = BY["foresight"]["modifier"]
+        for s in ("advantage = 12", "enemy_scheme_secrecy_add = -50", "owned_hostile_scheme_success_chance_add = 10"):
+            self.assertIn(s, f)
+        a = BY["augury"]
+        self.assertIn("owned_hostile_scheme_success_chance_add = 10", a["modifier"])
+        self.assertIn("monthly_prestige_gain_mult = 0.1", a["modifier"])
+        self.assertEqual(a["years_mult"], "aov_adv_orb_spell_years_mult")
+        self.assertEqual(a["effect"].strip(), "aov_augury = yes")
+        self.assertEqual(BY["detect_plots"]["effect"].strip(), "aov_detect_plots = yes")
+
+    def test_detect_plots_exposes_hostile_schemes_and_agents(self):
+        b = block(effects(), "aov_detect_plots")
+        for s in ("every_targeting_scheme = {", "is_hostile = yes", "every_scheme_agent_character = {",
+                  "expose_scheme_agent = scope:aov_plot_agent", "expose_scheme = yes"):
+            self.assertIn(s, b)
+
+    def test_scry_reveals_everything(self):
+        b = block(effects(), "aov_scry_reveal")
+        self.assertIn("every_secret = {", b)
+        self.assertIn("reveal_to = scope:aov_scryer", b)
+        orb = b.split("aov_adv_orb_of_omniscience_level >= 2", 1)[1]
+        self.assertIn("every_known_secret = {", orb)
+
+    def test_augury_event(self):
+        e = block(read("events/aov_magic_events.txt"), "aov_magic.45")
+        for s in ("aov_augury_claimant", "aov_augury_faction", "aov_augury_dying", "aov_augury_plotter"):
+            self.assertIn(f"exists = scope:{s}", e)
+        b = block(effects(), "aov_augury")
+        for s in ("every_claimant", "max_military_strength", "every_targeting_faction", "health < fine_health",
+                  "every_targeting_scheme", "trigger_event = aov_magic.45"):
+            self.assertIn(s, b)
+        loc = read("localization/english/aov_magic_l_english.yml")
+        for k in ("t", "desc.intro", "desc.claimant", "desc.faction", "desc.dying", "desc.plotter", "desc.none", "a"):
+            self.assertIn(f" aov_magic.45.{k}:", loc)
+
+    def test_removed(self):
+        for k in ("deposit_divination", "manipulated_fortune"):
+            self.assertNotIn(k, BY)
+        self.assertNotIn("aov_deposit_divination = {", effects())
+
+
 if __name__ == "__main__":
     unittest.main()

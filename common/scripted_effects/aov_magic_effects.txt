@@ -228,55 +228,93 @@ aov_dark_magic_roll = {
 
 ### One-off spell effects (tools/data/spells.py). Caster scope.
 
-# Deposit Divination: gold from a newly found deposit
-aov_deposit_divination = {
-	if = {
-		limit = { exists = capital_county }
-		add_gold = {
-			value = capital_county.development_level
-			multiply = 5
-			add = 25
-		}
-	}
-	else = {
-		add_gold = 25
-	}
-}
-
 # Scry (scope:recipient = target): reveal a secret, else intrigue experience
 aov_scry_reveal = {
+	save_scope_as = aov_scryer
 	if = {
 		limit = {
 			scope:recipient = {
-				any_secret = { NOT = { is_known_by = root } }
+				any_secret = { NOT = { is_known_by = scope:aov_scryer } }
 			}
 		}
 		scope:recipient = {
-			random_secret = {
-				limit = { NOT = { is_known_by = root } }
-				reveal_to = root
-			}
-		}
-		# Orb of Omniscience (Divination advancement) level 2: a second secret
-		if = {
-			limit = {
-				aov_adv_orb_of_omniscience_level >= 2
-				scope:recipient = {
-					any_secret = { NOT = { is_known_by = root } }
-				}
-			}
-			scope:recipient = {
-				random_secret = {
-					limit = { NOT = { is_known_by = root } }
-					reveal_to = root
-				}
+			every_secret = {
+				limit = { NOT = { is_known_by = scope:aov_scryer } }
+				reveal_to = scope:aov_scryer
 			}
 		}
 	}
 	else = {
 		add_intrigue_lifestyle_xp = 500
 	}
+	# Orb of Omniscience (Divination advancement) level 2: also every secret the target knows about others
+	if = {
+		limit = { aov_adv_orb_of_omniscience_level >= 2 }
+		scope:recipient = {
+			every_known_secret = {
+				limit = { NOT = { is_known_by = scope:aov_scryer } }
+				reveal_to = scope:aov_scryer
+			}
+		}
+	}
 }
+
+# Detect Plots: every hostile scheme against the caster is exposed, with its agents
+aov_detect_plots = {
+	every_targeting_scheme = {
+		limit = { is_hostile = yes }
+		save_scope_as = aov_plot
+		every_scheme_agent_character = {
+			save_scope_as = aov_plot_agent
+			scope:aov_plot = { expose_scheme_agent = scope:aov_plot_agent }
+		}
+		expose_scheme = yes
+	}
+}
+
+# Augury: one name for each threat of the coming years, shown in aov_magic.45
+aov_augury = {
+	save_scope_as = aov_augur
+	# A claimant to one of my titles strong enough to press it
+	every_held_title = {
+		every_claimant = {
+			limit = {
+				NOT = { this = scope:aov_augur }
+				max_military_strength > scope:aov_augur.max_military_strength
+			}
+			add_to_temporary_list = aov_augury_claimants
+		}
+	}
+	random_in_list = {
+		list = aov_augury_claimants
+		save_scope_as = aov_augury_claimant
+	}
+	# The leader of a faction against me
+	every_targeting_faction = {
+		limit = { exists = faction_leader }
+		faction_leader = { add_to_temporary_list = aov_augury_faction_leaders }
+	}
+	random_in_list = {
+		list = aov_augury_faction_leaders
+		save_scope_as = aov_augury_faction
+	}
+	# A close relative near death
+	random_close_family_member = {
+		limit = { health < fine_health }
+		save_scope_as = aov_augury_dying
+	}
+	# Someone plotting against me
+	every_targeting_scheme = {
+		limit = { is_hostile = yes }
+		scheme_owner = { add_to_temporary_list = aov_augury_plotters }
+	}
+	random_in_list = {
+		list = aov_augury_plotters
+		save_scope_as = aov_augury_plotter
+	}
+	trigger_event = aov_magic.45
+}
+
 
 # Speak With Dead: the ancestors teach, and sometimes tell
 aov_speak_with_dead = {

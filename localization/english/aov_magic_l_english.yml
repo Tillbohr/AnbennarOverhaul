@@ -106,3 +106,13 @@
  aov_magic.50.t: "A Spell Turned Aside"
  aov_magic.50.desc: "A spell struck at me and failed. I felt its shape, and I know whose hand cast it: [aov_spell_caster.GetName]."
  aov_magic.50.a: "I will remember this."
+
+ # Augury
+ aov_magic.45.t: "Augury"
+ aov_magic.45.desc.intro: "The bones fall, the birds wheel, and for a moment the coming years lie open before me."
+ aov_magic.45.desc.claimant: "\n\n#bold A rival claim:#! [aov_augury_claimant.GetName] has a claim on my titles and the armies to press it."
+ aov_magic.45.desc.faction: "\n\n#bold A faction:#! [aov_augury_faction.GetName] gathers my vassals against me."
+ aov_magic.45.desc.dying: "\n\n#bold A death:#! [aov_augury_dying.GetName] has not long left."
+ aov_magic.45.desc.plotter: "\n\n#bold A plot:#! [aov_augury_plotter.GetName] schemes against me."
+ aov_magic.45.desc.none: "\n\nThe threads are calm. No great danger gathers, for now."
+ aov_magic.45.a: "Forewarned is forearmed."

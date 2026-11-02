@@ -1117,6 +1117,71 @@ types AovMagic
 		}
 
 		widget = {
+			name = "aov_spell_card_detect_plots"
+			size = { 480 88 }
+			tooltip = "aov_spell_detect_plots_tt"
+
+			icon = {
+				position = { 0 0 }
+				size = { 290 64 }
+				texture = "gfx/interface/icons/aov_magic/spell_plate.dds"
+			}
+			icon = {
+				position = { 2 2 }
+				size = { 60 60 }
+				texture = "gfx/interface/icons/aov_magic/spell_slot_2.dds"
+				framesize = { 60 60 }
+				frame = 3
+			}
+			icon = {
+				position = { 0 0 }
+				size = { 64 76 }
+				texture = "gfx/interface/icons/aov_magic/spell_frames.dds"
+				framesize = { 64 76 }
+				frame = 2
+			}
+
+			text_single = {
+				position = { 72 8 }
+				text = "aov_spell_detect_plots"
+				default_format = "#T"
+				max_width = 205
+				align = left|nobaseline
+			}
+			text_single = {
+				position = { 72 38 }
+				text = "aov_spell_detect_plots_facts"
+				default_format = "#weak"
+				max_width = 280
+				align = left|nobaseline
+			}
+			text_single = {
+				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_detect_plots_cd' ).IsSet )]"
+				position = { 72 66 }
+				text = "aov_spell_detect_plots_desc"
+				max_width = 400
+				align = left|nobaseline
+			}
+			text_single = {
+				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_detect_plots_cd' ).IsSet]"
+				position = { 72 66 }
+				text = "AOV_SPELL_ON_COOLDOWN"
+				max_width = 400
+				align = left|nobaseline
+			}
+
+			button_standard = {
+				parentanchor = right
+				position = { -6 16 }
+				size = { 110 32 }
+				text = "AOV_SPELL_CAST"
+				enabled = "[GetScriptedGui('aov_spell_detect_plots_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				tooltip = "[GetScriptedGui('aov_spell_detect_plots_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				onclick = "[GetScriptedGui('aov_spell_detect_plots_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			}
+		}
+
+		widget = {
 			name = "aov_spell_card_eye_for_talent"
 			size = { 480 88 }
 			tooltip = "aov_spell_eye_for_talent_tt"
@@ -1129,7 +1194,7 @@ types AovMagic
 			icon = {
 				position = { 2 2 }
 				size = { 60 60 }
-				texture = "gfx/interface/icons/aov_magic/spell_slot_2.dds"
+				texture = "gfx/interface/icons/aov_magic/spell_slot_3.dds"
 				framesize = { 60 60 }
 				frame = 3
 			}
@@ -1178,71 +1243,6 @@ types AovMagic
 				enabled = "[GetScriptedGui('aov_spell_eye_for_talent_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				tooltip = "[GetScriptedGui('aov_spell_eye_for_talent_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				onclick = "[GetScriptedGui('aov_spell_eye_for_talent_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-			}
-		}
-
-		widget = {
-			name = "aov_spell_card_deposit_divination"
-			size = { 480 88 }
-			tooltip = "aov_spell_deposit_divination_tt"
-
-			icon = {
-				position = { 0 0 }
-				size = { 290 64 }
-				texture = "gfx/interface/icons/aov_magic/spell_plate.dds"
-			}
-			icon = {
-				position = { 2 2 }
-				size = { 60 60 }
-				texture = "gfx/interface/icons/aov_magic/spell_slot_3.dds"
-				framesize = { 60 60 }
-				frame = 3
-			}
-			icon = {
-				position = { 0 0 }
-				size = { 64 76 }
-				texture = "gfx/interface/icons/aov_magic/spell_frames.dds"
-				framesize = { 64 76 }
-				frame = 2
-			}
-
-			text_single = {
-				position = { 72 8 }
-				text = "aov_spell_deposit_divination"
-				default_format = "#T"
-				max_width = 205
-				align = left|nobaseline
-			}
-			text_single = {
-				position = { 72 38 }
-				text = "aov_spell_deposit_divination_facts"
-				default_format = "#weak"
-				max_width = 280
-				align = left|nobaseline
-			}
-			text_single = {
-				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_deposit_divination_cd' ).IsSet )]"
-				position = { 72 66 }
-				text = "aov_spell_deposit_divination_desc"
-				max_width = 400
-				align = left|nobaseline
-			}
-			text_single = {
-				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_deposit_divination_cd' ).IsSet]"
-				position = { 72 66 }
-				text = "AOV_SPELL_ON_COOLDOWN"
-				max_width = 400
-				align = left|nobaseline
-			}
-
-			button_standard = {
-				parentanchor = right
-				position = { -6 16 }
-				size = { 110 32 }
-				text = "AOV_SPELL_CAST"
-				enabled = "[GetScriptedGui('aov_spell_deposit_divination_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_spell_deposit_divination_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_spell_deposit_divination_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			}
 		}
 
@@ -1312,9 +1312,9 @@ types AovMagic
 		}
 
 		widget = {
-			name = "aov_spell_card_manipulated_fortune"
+			name = "aov_spell_card_augury"
 			size = { 480 88 }
-			tooltip = "aov_spell_manipulated_fortune_tt"
+			tooltip = "aov_spell_augury_tt"
 
 			icon = {
 				position = { 0 0 }
@@ -1338,27 +1338,27 @@ types AovMagic
 
 			text_single = {
 				position = { 72 8 }
-				text = "aov_spell_manipulated_fortune"
+				text = "aov_spell_augury"
 				default_format = "#T"
 				max_width = 205
 				align = left|nobaseline
 			}
 			text_single = {
 				position = { 72 38 }
-				text = "aov_spell_manipulated_fortune_facts"
+				text = "aov_spell_augury_facts"
 				default_format = "#weak"
 				max_width = 280
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_manipulated_fortune_cd' ).IsSet )]"
+				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_augury_cd' ).IsSet )]"
 				position = { 72 66 }
-				text = "aov_spell_manipulated_fortune_desc"
+				text = "aov_spell_augury_desc"
 				max_width = 400
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_manipulated_fortune_cd' ).IsSet]"
+				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_augury_cd' ).IsSet]"
 				position = { 72 66 }
 				text = "AOV_SPELL_ON_COOLDOWN"
 				max_width = 400
@@ -1370,9 +1370,9 @@ types AovMagic
 				position = { -6 16 }
 				size = { 110 32 }
 				text = "AOV_SPELL_CAST"
-				enabled = "[GetScriptedGui('aov_spell_manipulated_fortune_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_spell_manipulated_fortune_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_spell_manipulated_fortune_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				enabled = "[GetScriptedGui('aov_spell_augury_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				tooltip = "[GetScriptedGui('aov_spell_augury_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				onclick = "[GetScriptedGui('aov_spell_augury_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			}
 		}
 

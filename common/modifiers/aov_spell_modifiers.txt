@@ -37,16 +37,11 @@ aov_spell_aid_construction = {
 
 aov_spell_guidance = {
 	icon = learning_positive
-	learning = 3
-	monthly_lifestyle_xp_gain_mult = 0.1
+	learning = 4
+	monthly_lifestyle_xp_gain_mult = 0.15
 }
 
-aov_spell_deposit_divination = {
-	icon = learning_positive
-	character_capital_county_monthly_development_growth_add = 0.2
-}
-
-aov_spell_manipulated_fortune = {
+aov_spell_augury = {
 	icon = learning_positive
 	owned_hostile_scheme_success_chance_add = 10
 	monthly_prestige_gain_mult = 0.1
@@ -54,8 +49,9 @@ aov_spell_manipulated_fortune = {
 
 aov_spell_foresight = {
 	icon = learning_positive
-	advantage = 8
-	enemy_scheme_secrecy_add = -30
+	advantage = 12
+	enemy_scheme_secrecy_add = -50
+	owned_hostile_scheme_success_chance_add = 10
 }
 
 aov_spell_enchanting_envoy = {

@@ -146,6 +146,17 @@ aov_spell_guidance_cast = {
 	add_character_modifier = { modifier = aov_spell_guidance years = aov_spell_guidance_years }
 }
 
+aov_spell_detect_plots_cast = {
+	custom_tooltip = aov_spell_detect_plots_cost_tt
+	hidden_effect = {
+		aov_mana_spend = { AMOUNT = aov_spell_detect_plots_cost }
+		aov_school_add_progress = { SCHOOL = divination AMOUNT = 50 }
+		add_magic_lifestyle_xp = 50
+		set_variable = { name = aov_spell_detect_plots_cd years = aov_spell_detect_plots_years }
+	}
+	aov_detect_plots = yes
+}
+
 aov_spell_eye_for_talent_cast = {
 	custom_tooltip = aov_spell_eye_for_talent_cost_tt
 	hidden_effect = {
@@ -155,18 +166,6 @@ aov_spell_eye_for_talent_cast = {
 		set_variable = { name = aov_spell_eye_for_talent_cd years = aov_spell_eye_for_talent_years }
 	}
 	aov_eye_for_talent = yes
-}
-
-aov_spell_deposit_divination_cast = {
-	custom_tooltip = aov_spell_deposit_divination_cost_tt
-	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_deposit_divination_cost }
-		aov_school_add_progress = { SCHOOL = divination AMOUNT = 50 }
-		add_magic_lifestyle_xp = 50
-		set_variable = { name = aov_spell_deposit_divination_cd years = aov_spell_deposit_divination_years }
-	}
-	add_character_modifier = { modifier = aov_spell_deposit_divination years = aov_spell_deposit_divination_years }
-	aov_deposit_divination = yes
 }
 
 aov_spell_scry_cast = {
@@ -180,15 +179,16 @@ aov_spell_scry_cast = {
 	aov_scry_reveal = yes
 }
 
-aov_spell_manipulated_fortune_cast = {
-	custom_tooltip = aov_spell_manipulated_fortune_cost_tt
+aov_spell_augury_cast = {
+	custom_tooltip = aov_spell_augury_cost_tt
 	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_manipulated_fortune_cost }
+		aov_mana_spend = { AMOUNT = aov_spell_augury_cost }
 		aov_school_add_progress = { SCHOOL = divination AMOUNT = 100 }
 		add_magic_lifestyle_xp = 100
-		set_variable = { name = aov_spell_manipulated_fortune_cd years = aov_spell_manipulated_fortune_years }
+		set_variable = { name = aov_spell_augury_cd years = aov_spell_augury_years }
 	}
-	add_character_modifier = { modifier = aov_spell_manipulated_fortune years = aov_spell_manipulated_fortune_years }
+	add_character_modifier = { modifier = aov_spell_augury years = aov_spell_augury_years }
+	aov_augury = yes
 }
 
 aov_spell_foresight_cast = {
@@ -630,16 +630,16 @@ aov_magic_ai_cast_random = {
 			aov_spell_guidance_cast = yes
 		}
 		10 = {
+			trigger = { aov_spell_detect_plots_castable = yes }
+			aov_spell_detect_plots_cast = yes
+		}
+		10 = {
 			trigger = { aov_spell_eye_for_talent_castable = yes }
 			aov_spell_eye_for_talent_cast = yes
 		}
 		10 = {
-			trigger = { aov_spell_deposit_divination_castable = yes }
-			aov_spell_deposit_divination_cast = yes
-		}
-		10 = {
-			trigger = { aov_spell_manipulated_fortune_castable = yes }
-			aov_spell_manipulated_fortune_cast = yes
+			trigger = { aov_spell_augury_castable = yes }
+			aov_spell_augury_cast = yes
 		}
 		10 = {
 			trigger = { aov_spell_foresight_castable = yes }
