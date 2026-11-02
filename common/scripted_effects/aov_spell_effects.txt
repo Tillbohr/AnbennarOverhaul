@@ -592,26 +592,26 @@ aov_spell_finger_of_death_cast = {
 	aov_dark_magic_roll = yes
 }
 
+aov_spell_enhance_ability_cast = {
+	custom_tooltip = aov_spell_enhance_ability_cost_tt
+	hidden_effect = {
+		aov_mana_spend = { AMOUNT = aov_spell_enhance_ability_cost }
+		aov_school_add_progress = { SCHOOL = transmutation AMOUNT = 25 }
+		add_magic_lifestyle_xp = 25
+		set_variable = { name = aov_spell_enhance_ability_cd years = aov_spell_enhance_ability_years }
+	}
+	trigger_event = aov_magic.40
+}
+
 aov_spell_longstrider_cast = {
 	custom_tooltip = aov_spell_longstrider_cost_tt
 	hidden_effect = {
 		aov_mana_spend = { AMOUNT = aov_spell_longstrider_cost }
-		aov_school_add_progress = { SCHOOL = transmutation AMOUNT = 25 }
-		add_magic_lifestyle_xp = 25
+		aov_school_add_progress = { SCHOOL = transmutation AMOUNT = 50 }
+		add_magic_lifestyle_xp = 50
 		set_variable = { name = aov_spell_longstrider_cd years = aov_spell_longstrider_years }
 	}
 	add_character_modifier = { modifier = aov_spell_longstrider years = aov_spell_longstrider_years }
-}
-
-aov_spell_plant_growth_cast = {
-	custom_tooltip = aov_spell_plant_growth_cost_tt
-	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_plant_growth_cost }
-		aov_school_add_progress = { SCHOOL = transmutation AMOUNT = 50 }
-		add_magic_lifestyle_xp = 50
-		set_variable = { name = aov_spell_plant_growth_cd years = aov_spell_plant_growth_years }
-	}
-	add_character_modifier = { modifier = aov_spell_plant_growth years = aov_spell_plant_growth_years }
 }
 
 aov_spell_mass_enlarge_cast = {
@@ -625,37 +625,37 @@ aov_spell_mass_enlarge_cast = {
 	add_character_modifier = { modifier = aov_spell_mass_enlarge years = aov_spell_mass_enlarge_years }
 }
 
-aov_spell_transmute_to_gold_cast = {
-	custom_tooltip = aov_spell_transmute_to_gold_cost_tt
+aov_spell_living_steel_cast = {
+	custom_tooltip = aov_spell_living_steel_cost_tt
 	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_transmute_to_gold_cost }
+		aov_mana_spend = { AMOUNT = aov_spell_living_steel_cost }
 		aov_school_add_progress = { SCHOOL = transmutation AMOUNT = 100 }
 		add_magic_lifestyle_xp = 100
-		set_variable = { name = aov_spell_transmute_to_gold_cd years = aov_spell_transmute_to_gold_years }
+		set_variable = { name = aov_spell_living_steel_cd years = aov_spell_living_steel_years }
 	}
-	aov_transmute_to_gold = yes
+	trigger_event = aov_magic.41
 }
 
-aov_spell_reshape_terrain_cast = {
-	custom_tooltip = aov_spell_reshape_terrain_cost_tt
+aov_spell_shapechange_cast = {
+	custom_tooltip = aov_spell_shapechange_cost_tt
 	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_reshape_terrain_cost }
+		aov_mana_spend = { AMOUNT = aov_spell_shapechange_cost }
 		aov_school_add_progress = { SCHOOL = transmutation AMOUNT = 100 }
 		add_magic_lifestyle_xp = 100
-		set_variable = { name = aov_spell_reshape_terrain_cd years = aov_spell_reshape_terrain_years }
+		set_variable = { name = aov_spell_shapechange_cd years = aov_spell_shapechange_years }
 	}
-	add_character_modifier = { modifier = aov_spell_reshape_terrain years = aov_spell_reshape_terrain_years }
+	trigger_event = aov_magic.42
 }
 
-aov_spell_rite_of_conception_cast = {
-	custom_tooltip = aov_spell_rite_of_conception_cost_tt
+aov_spell_perfect_form_cast = {
+	custom_tooltip = aov_spell_perfect_form_cost_tt
 	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_rite_of_conception_cost }
+		aov_mana_spend = { AMOUNT = aov_spell_perfect_form_cost }
 		aov_school_add_progress = { SCHOOL = transmutation AMOUNT = 200 }
 		add_magic_lifestyle_xp = 200
-		set_variable = { name = aov_spell_rite_of_conception_cd years = aov_spell_rite_of_conception_years }
+		set_variable = { name = aov_spell_perfect_form_cd years = aov_spell_perfect_form_years }
 	}
-	add_character_modifier = { modifier = aov_spell_rite_of_conception years = aov_spell_rite_of_conception_years }
+	aov_perfect_form = yes
 }
 
 # Purify: remove every hostile spell's modifier from this character
@@ -810,28 +810,28 @@ aov_magic_ai_cast_random = {
 			aov_spell_raise_dead_cast = yes
 		}
 		10 = {
-			trigger = { aov_spell_longstrider_castable = yes }
-			aov_spell_longstrider_cast = yes
+			trigger = { aov_spell_enhance_ability_castable = yes }
+			aov_spell_enhance_ability_cast = yes
 		}
 		10 = {
-			trigger = { aov_spell_plant_growth_castable = yes }
-			aov_spell_plant_growth_cast = yes
+			trigger = { aov_spell_longstrider_castable = yes }
+			aov_spell_longstrider_cast = yes
 		}
 		30 = {
 			trigger = { aov_spell_mass_enlarge_castable = yes }
 			aov_spell_mass_enlarge_cast = yes
 		}
-		10 = {
-			trigger = { aov_spell_transmute_to_gold_castable = yes }
-			aov_spell_transmute_to_gold_cast = yes
+		30 = {
+			trigger = { aov_spell_living_steel_castable = yes }
+			aov_spell_living_steel_cast = yes
 		}
 		10 = {
-			trigger = { aov_spell_reshape_terrain_castable = yes }
-			aov_spell_reshape_terrain_cast = yes
+			trigger = { aov_spell_shapechange_castable = yes }
+			aov_spell_shapechange_cast = yes
 		}
 		10 = {
-			trigger = { aov_spell_rite_of_conception_castable = yes }
-			aov_spell_rite_of_conception_cast = yes
+			trigger = { aov_spell_perfect_form_castable = yes }
+			aov_spell_perfect_form_cast = yes
 		}
 	}
 }

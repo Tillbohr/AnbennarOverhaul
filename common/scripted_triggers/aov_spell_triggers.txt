@@ -970,8 +970,30 @@ aov_spell_finger_of_death_castable = {
 	}
 }
 
-aov_spell_longstrider_known = {
+aov_spell_enhance_ability_known = {
 	aov_school_level_at_least = { SCHOOL = transmutation LEVEL = 0 }
+}
+aov_spell_enhance_ability_ready = {
+	NOT = { has_variable = aov_spell_enhance_ability_cd }
+}
+aov_spell_enhance_ability_castable = {
+	aov_is_mage = yes
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_TRANSMUTATION_0
+		aov_spell_enhance_ability_known = yes
+	}
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_READY
+		aov_spell_enhance_ability_ready = yes
+	}
+	custom_tooltip = {
+		text = aov_spell_enhance_ability_req_mana
+		aov_mana >= aov_spell_enhance_ability_cost
+	}
+}
+
+aov_spell_longstrider_known = {
+	aov_school_level_at_least = { SCHOOL = transmutation LEVEL = 1 }
 }
 aov_spell_longstrider_ready = {
 	NOT = { has_variable = aov_spell_longstrider_cd }
@@ -979,7 +1001,7 @@ aov_spell_longstrider_ready = {
 aov_spell_longstrider_castable = {
 	aov_is_mage = yes
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_TRANSMUTATION_0
+		text = AOV_SPELL_REQ_TRANSMUTATION_1
 		aov_spell_longstrider_known = yes
 	}
 	custom_tooltip = {
@@ -989,32 +1011,6 @@ aov_spell_longstrider_castable = {
 	custom_tooltip = {
 		text = aov_spell_longstrider_req_mana
 		aov_mana >= aov_spell_longstrider_cost
-	}
-}
-
-aov_spell_plant_growth_known = {
-	aov_school_level_at_least = { SCHOOL = transmutation LEVEL = 1 }
-}
-aov_spell_plant_growth_ready = {
-	NOT = { has_variable = aov_spell_plant_growth_cd }
-}
-aov_spell_plant_growth_castable = {
-	aov_is_mage = yes
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_TRANSMUTATION_1
-		aov_spell_plant_growth_known = yes
-	}
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_READY
-		aov_spell_plant_growth_ready = yes
-	}
-	custom_tooltip = {
-		text = aov_spell_plant_growth_req_mana
-		aov_mana >= aov_spell_plant_growth_cost
-	}
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_LANDED
-		is_landed = yes
 	}
 }
 
@@ -1044,69 +1040,77 @@ aov_spell_mass_enlarge_castable = {
 	}
 }
 
-aov_spell_transmute_to_gold_known = {
+aov_spell_living_steel_known = {
 	aov_school_level_at_least = { SCHOOL = transmutation LEVEL = 2 }
 }
-aov_spell_transmute_to_gold_ready = {
-	NOT = { has_variable = aov_spell_transmute_to_gold_cd }
+aov_spell_living_steel_ready = {
+	NOT = { has_variable = aov_spell_living_steel_cd }
 }
-aov_spell_transmute_to_gold_castable = {
+aov_spell_living_steel_castable = {
 	aov_is_mage = yes
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_TRANSMUTATION_2
-		aov_spell_transmute_to_gold_known = yes
+		aov_spell_living_steel_known = yes
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_READY
-		aov_spell_transmute_to_gold_ready = yes
+		aov_spell_living_steel_ready = yes
 	}
 	custom_tooltip = {
-		text = aov_spell_transmute_to_gold_req_mana
-		aov_mana >= aov_spell_transmute_to_gold_cost
+		text = aov_spell_living_steel_req_mana
+		aov_mana >= aov_spell_living_steel_cost
+	}
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_WAR
+		is_at_war = yes
 	}
 }
 
-aov_spell_reshape_terrain_known = {
+aov_spell_shapechange_known = {
 	aov_school_level_at_least = { SCHOOL = transmutation LEVEL = 2 }
 }
-aov_spell_reshape_terrain_ready = {
-	NOT = { has_variable = aov_spell_reshape_terrain_cd }
+aov_spell_shapechange_ready = {
+	NOT = { has_variable = aov_spell_shapechange_cd }
 }
-aov_spell_reshape_terrain_castable = {
+aov_spell_shapechange_castable = {
 	aov_is_mage = yes
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_TRANSMUTATION_2
-		aov_spell_reshape_terrain_known = yes
+		aov_spell_shapechange_known = yes
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_READY
-		aov_spell_reshape_terrain_ready = yes
+		aov_spell_shapechange_ready = yes
 	}
 	custom_tooltip = {
-		text = aov_spell_reshape_terrain_req_mana
-		aov_mana >= aov_spell_reshape_terrain_cost
+		text = aov_spell_shapechange_req_mana
+		aov_mana >= aov_spell_shapechange_cost
 	}
 }
 
-aov_spell_rite_of_conception_known = {
+aov_spell_perfect_form_known = {
 	aov_school_level_at_least = { SCHOOL = transmutation LEVEL = 3 }
 }
-aov_spell_rite_of_conception_ready = {
-	NOT = { has_variable = aov_spell_rite_of_conception_cd }
+aov_spell_perfect_form_ready = {
+	NOT = { has_variable = aov_spell_perfect_form_cd }
 }
-aov_spell_rite_of_conception_castable = {
+aov_spell_perfect_form_castable = {
 	aov_is_mage = yes
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_TRANSMUTATION_3
-		aov_spell_rite_of_conception_known = yes
+		aov_spell_perfect_form_known = yes
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_READY
-		aov_spell_rite_of_conception_ready = yes
+		aov_spell_perfect_form_ready = yes
 	}
 	custom_tooltip = {
-		text = aov_spell_rite_of_conception_req_mana
-		aov_mana >= aov_spell_rite_of_conception_cost
+		text = aov_spell_perfect_form_req_mana
+		aov_mana >= aov_spell_perfect_form_cost
+	}
+	custom_tooltip = {
+		text = aov_spell_perfect_form_req
+		aov_perfect_form_possible = yes
 	}
 }
 
@@ -1139,11 +1143,11 @@ aov_magic_ai_any_castable = {
 		aov_spell_fear_and_loathing_castable = yes
 		aov_spell_shadows_in_the_night_castable = yes
 		aov_spell_raise_dead_castable = yes
+		aov_spell_enhance_ability_castable = yes
 		aov_spell_longstrider_castable = yes
-		aov_spell_plant_growth_castable = yes
 		aov_spell_mass_enlarge_castable = yes
-		aov_spell_transmute_to_gold_castable = yes
-		aov_spell_reshape_terrain_castable = yes
-		aov_spell_rite_of_conception_castable = yes
+		aov_spell_living_steel_castable = yes
+		aov_spell_shapechange_castable = yes
+		aov_spell_perfect_form_castable = yes
 	}
 }

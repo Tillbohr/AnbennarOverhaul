@@ -70,3 +70,95 @@ aov_spell_ray_of_sickness_victim = {
 	icon = health_negative
 	health = -1
 }
+
+# Enhance Ability
+aov_spell_enhance_diplomacy = {
+	icon = diplomacy_positive
+	diplomacy = 4
+}
+
+aov_spell_enhance_martial = {
+	icon = martial_positive
+	martial = 4
+}
+
+aov_spell_enhance_stewardship = {
+	icon = stewardship_positive
+	stewardship = 4
+}
+
+aov_spell_enhance_intrigue = {
+	icon = intrigue_positive
+	intrigue = 4
+}
+
+aov_spell_enhance_learning = {
+	icon = learning_positive
+	learning = 4
+}
+
+# Living Steel
+aov_spell_living_steel_heavy_infantry = {
+	icon = martial_positive
+	heavy_infantry_damage_mult = 0.3
+	heavy_infantry_toughness_mult = 0.3
+}
+
+aov_spell_living_steel_skirmishers = {
+	icon = martial_positive
+	skirmishers_damage_mult = 0.3
+	skirmishers_toughness_mult = 0.3
+}
+
+aov_spell_living_steel_pikemen = {
+	icon = martial_positive
+	pikemen_damage_mult = 0.3
+	pikemen_toughness_mult = 0.3
+}
+
+aov_spell_living_steel_archers = {
+	icon = martial_positive
+	archers_damage_mult = 0.3
+	archers_toughness_mult = 0.3
+}
+
+aov_spell_living_steel_light_cavalry = {
+	icon = martial_positive
+	light_cavalry_damage_mult = 0.3
+	light_cavalry_toughness_mult = 0.3
+}
+
+aov_spell_living_steel_heavy_cavalry = {
+	icon = martial_positive
+	heavy_cavalry_damage_mult = 0.3
+	heavy_cavalry_toughness_mult = 0.3
+}
+
+# Shapechange
+aov_spell_shape_bear = {
+	icon = prowess_positive
+	prowess = 10
+	health = 0.5
+	dread_baseline_add = 20
+}
+
+aov_spell_shape_wolf = {
+	icon = prowess_positive
+	martial = 3
+	advantage = 4
+	dread_baseline_add = 20
+}
+
+aov_spell_shape_hawk = {
+	icon = prowess_positive
+	intrigue = 3
+	character_travel_speed_mult = 0.4
+	owned_scheme_secrecy_add = 20
+	dread_baseline_add = 20
+}
+
+# Perfect Form: the strain of reshaping
+aov_perfect_form_strain = {
+	icon = health_negative
+	health = -1
+}

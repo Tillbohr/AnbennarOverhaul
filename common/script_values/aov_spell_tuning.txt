@@ -63,3 +63,8 @@ aov_finger_injury_chance = {
 aov_finger_disease_chance = {
 	value = 40
 }
+
+# Perfect Form: chance of a lasting -1 health (5 years)
+aov_perfect_form_health_risk = {
+	value = 10
+}

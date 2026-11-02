@@ -492,5 +492,118 @@ class NecromancyTests(unittest.TestCase):
         self.assertNotIn("aov_speak_with_dead = {", effects())
 
 
+
+SKILLS = ("diplomacy", "martial", "stewardship", "intrigue", "learning")
+TROOPS = ("heavy_infantry", "skirmishers", "pikemen", "archers", "light_cavalry", "heavy_cavalry")
+FORMS = ("bear", "wolf", "hawk")
+TIERED = ("beauty", "intellect", "physique")
+DEFECTS = ("clubfooted", "hunchbacked", "lisping", "stuttering", "dwarf", "giant", "spindly", "scaly", "wheezing",
+           "bleeder", "infertile", "depressed_genetic", "lunatic_genetic", "possessed_genetic")
+
+
+class TransmutationTests(unittest.TestCase):
+    def events(self):
+        return read("events/aov_magic_events.txt")
+
+    def test_keys(self):
+        self.assertEqual(keys_in_slot_order("transmutation"),
+                         ["enhance_ability", "longstrider", "mass_enlarge", "living_steel", "shapechange", "perfect_form"])
+
+    def test_numbers(self):
+        ls = BY["longstrider"]
+        self.assertEqual((ls["level"], ls["slot"]), (1, 2))
+        self.assertIn("movement_speed = 0.3", ls["modifier"])
+        self.assertIn("character_travel_speed_mult = 0.4", ls["modifier"])
+        self.assertIn("maa_toughness_mult = 0.2", BY["mass_enlarge"]["modifier"])
+        self.assertIn("maa_damage_mult = 0.2", BY["mass_enlarge"]["modifier"])
+        self.assertEqual(BY["living_steel"]["type"], "war")
+        for k, ev in (("enhance_ability", "aov_magic.40"), ("living_steel", "aov_magic.41"), ("shapechange", "aov_magic.42")):
+            self.assertEqual(BY[k]["effect"].strip(), f"trigger_event = {ev}", k)
+            self.assertTrue(BY[k]["scales_duration"], k)
+
+    def choice_event(self, event, modifiers, spell):
+        e = block(self.events(), event)
+        self.assertEqual(e.count("option = {"), len(modifiers), event)
+        self.assertEqual(e.count("ai_chance"), len(modifiers), event)
+        self.assertIn(f"value = aov_spell_{spell}_years", e)
+        for m in modifiers:
+            self.assertIn(f"modifier = {m} years = scope:aov_choice_years", e)
+            block(modifiers_text(), m)
+
+    def test_enhance_ability(self):
+        mods = [f"aov_spell_enhance_{s}" for s in SKILLS]
+        self.choice_event("aov_magic.40", mods, "enhance_ability")
+        for s in SKILLS:
+            self.assertIn(f"{s} = 4", block(modifiers_text(), f"aov_spell_enhance_{s}"))
+
+    def test_living_steel(self):
+        mods = [f"aov_spell_living_steel_{t}" for t in TROOPS]
+        self.choice_event("aov_magic.41", mods, "living_steel")
+        for t in TROOPS:
+            m = block(modifiers_text(), f"aov_spell_living_steel_{t}")
+            self.assertIn(f"{t}_damage_mult = 0.3", m)
+            self.assertIn(f"{t}_toughness_mult = 0.3", m)
+
+    def test_shapechange(self):
+        mods = [f"aov_spell_shape_{f}" for f in FORMS]
+        self.choice_event("aov_magic.42", mods, "shapechange")
+        for f in FORMS:
+            self.assertIn("dread_baseline_add = 20", block(modifiers_text(), f"aov_spell_shape_{f}"))
+        self.assertIn("prowess = 10", block(modifiers_text(), "aov_spell_shape_bear"))
+        self.assertIn("martial = 3", block(modifiers_text(), "aov_spell_shape_wolf"))
+        self.assertIn("intrigue = 3", block(modifiers_text(), "aov_spell_shape_hawk"))
+
+    def test_perfect_form_pool_guards(self):
+        pf = BY["perfect_form"]
+        self.assertEqual(pf["requires"], "aov_perfect_form_possible")
+        self.assertEqual(pf["effect"].strip(), "aov_perfect_form = yes")
+        b = block(effects(), "aov_perfect_form")
+        possible = block(read("common/scripted_triggers/aov_magic_triggers.txt"), "aov_perfect_form_possible")
+        for g in TIERED:
+            # none -> good 1, only without the bad trait of that group
+            self.assertIn(f"add_trait = {g}_good_1", b)
+            self.assertIn(f"remove_trait = {g}_good_1", b)
+            self.assertIn(f"add_trait = {g}_good_2", b)
+            self.assertIn(f"add_trait = {g}_good_3", b)
+            self.assertNotIn(f"add_trait = {g}_good_4", b)
+            for n in (1, 2, 3):
+                self.assertIn(f"remove_trait = {g}_bad_{n}", b)
+            self.assertIn(f"{g}_bad_1", possible)
+        for d in DEFECTS:
+            self.assertIn(f"remove_trait = {d}", b)
+            self.assertIn(f"has_trait = {d}", possible)
+        self.assertIn("add_trait = fecund", b)
+        self.assertIn("NOT = { has_trait = fecund }", possible)
+        self.assertNotIn("albino", b)
+        self.assertNotIn("magical_affinity", b)
+        self.assertIn("add_stress = 50", b)
+        self.assertIn("chance = aov_perfect_form_health_risk", b)
+        self.assertIn("value = 10", block(tuning(), "aov_perfect_form_health_risk"))
+
+    def test_perfect_form_branch_guards(self):
+        """Each pool entry is limited so it never gives a trait already held, never upgrades past good 3 and never
+        offers a good trait while the bad trait of that group is held."""
+        b = block(effects(), "aov_perfect_form")
+        for g in TIERED:
+            entry = b.split(f"add_trait = {g}_good_1")[0].rsplit("1 = {", 1)[1]
+            for n in (1, 2, 3):
+                self.assertIn(f"has_trait = {g}_good_{n}", entry)
+                self.assertIn(f"has_trait = {g}_bad_{n}", entry)
+            up2 = b.split(f"add_trait = {g}_good_2")[0].rsplit("1 = {", 1)[1]
+            self.assertIn(f"has_trait = {g}_good_1", up2)
+            up3 = b.split(f"add_trait = {g}_good_3")[0].rsplit("1 = {", 1)[1]
+            self.assertIn(f"has_trait = {g}_good_2", up3)
+
+    def test_removed(self):
+        for k in ("plant_growth", "transmute_to_gold", "reshape_terrain", "rite_of_conception"):
+            self.assertNotIn(k, BY)
+        self.assertNotIn("aov_transmute_to_gold = {", effects())
+        self.assertNotIn("aov_magic_on_birth", read("common/on_action/aov_magic_on_actions.txt"))
+
+
+def modifiers_text():
+    return read("common/modifiers/aov_magic_modifiers.txt")
+
+
 if __name__ == "__main__":
     unittest.main()

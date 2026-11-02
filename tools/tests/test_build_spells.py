@@ -73,7 +73,8 @@ class DataTests(unittest.TestCase):
         # Hand-written interactions (send options); Anbennar's Compel and Dominate are hidden
         self.assertEqual(by["thoughtweave"]["interaction"], "aov_thoughtweave_interaction")
         self.assertEqual(by["dominate_to_surrender"]["interaction"], "aov_dominate_interaction")
-        self.assertNotIn("enhance_ability", by)  # removed from the game (zz_aov_spell_overrides.txt)
+        # Anbennar's Enhance Ability interaction stays hidden; ours is a window spell (Transmutation 0)
+        self.assertEqual((by["enhance_ability"]["type"], by["enhance_ability"]["interaction"]), ("self", ""))
 
     def test_types(self):
         targeted = {s["key"] for s in SPELLS if s["type"] == "targeted"}
@@ -182,7 +183,7 @@ class GeneratedTests(unittest.TestCase):
 
     def test_land_spells_need_land(self):
         # Landless adventurer mages cast only what works without a domain
-        self.assertIn("is_landed = yes", block(bs.triggers(SPELLS), "aov_spell_plant_growth_castable"))
+        self.assertIn("is_landed = yes", block(bs.triggers(SPELLS), "aov_spell_aid_construction_castable"))
         self.assertIn("text = AOV_SPELL_REQ_LANDED", block(bs.triggers(SPELLS), "aov_spell_enchanting_embassy_castable"))
         self.assertNotIn("is_landed", block(bs.triggers(SPELLS), "aov_spell_combat_ward_castable"))
         self.assertNotIn("is_landed", block(bs.triggers(SPELLS), "aov_spell_summon_elementals_castable"))

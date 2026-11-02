@@ -639,7 +639,7 @@ aov_spell_finger_of_death_years = {
 	floor = yes
 }
 
-aov_spell_longstrider_cost = {
+aov_spell_enhance_ability_cost = {
 	value = 1
 	subtract = aov_cost_cut_transmutation
 	min = 0.5
@@ -647,14 +647,14 @@ aov_spell_longstrider_cost = {
 	add = 0.5
 	floor = yes
 }
-aov_spell_longstrider_years = {
+aov_spell_enhance_ability_years = {
 	value = 1
 	multiply = aov_years_mult_transmutation
 	add = 0.5
 	floor = yes
 }
 
-aov_spell_plant_growth_cost = {
+aov_spell_longstrider_cost = {
 	value = 1
 	subtract = aov_cost_cut_transmutation
 	min = 0.5
@@ -662,7 +662,7 @@ aov_spell_plant_growth_cost = {
 	add = 0.5
 	floor = yes
 }
-aov_spell_plant_growth_years = {
+aov_spell_longstrider_years = {
 	value = 2
 	multiply = aov_years_mult_transmutation
 	add = 0.5
@@ -685,36 +685,38 @@ aov_spell_mass_enlarge_years = {
 	floor = yes
 }
 
-aov_spell_transmute_to_gold_cost = {
+aov_spell_living_steel_cost = {
 	value = 1
 	subtract = aov_cost_cut_transmutation
+	subtract = aov_cost_cut_war
 	min = 0.5
 	multiply = 100
 	add = 0.5
 	floor = yes
 }
-aov_spell_transmute_to_gold_years = {
-	value = 3
-	add = 0.5
-	floor = yes
-}
-
-aov_spell_reshape_terrain_cost = {
-	value = 1
-	subtract = aov_cost_cut_transmutation
-	min = 0.5
-	multiply = 100
-	add = 0.5
-	floor = yes
-}
-aov_spell_reshape_terrain_years = {
+aov_spell_living_steel_years = {
 	value = 3
 	multiply = aov_years_mult_transmutation
 	add = 0.5
 	floor = yes
 }
 
-aov_spell_rite_of_conception_cost = {
+aov_spell_shapechange_cost = {
+	value = 1
+	subtract = aov_cost_cut_transmutation
+	min = 0.5
+	multiply = 100
+	add = 0.5
+	floor = yes
+}
+aov_spell_shapechange_years = {
+	value = 3
+	multiply = aov_years_mult_transmutation
+	add = 0.5
+	floor = yes
+}
+
+aov_spell_perfect_form_cost = {
 	value = 1
 	subtract = aov_cost_cut_transmutation
 	min = 0.5
@@ -722,9 +724,8 @@ aov_spell_rite_of_conception_cost = {
 	add = 0.5
 	floor = yes
 }
-aov_spell_rite_of_conception_years = {
+aov_spell_perfect_form_years = {
 	value = 5
-	multiply = aov_years_mult_transmutation
 	add = 0.5
 	floor = yes
 }

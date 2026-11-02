@@ -323,3 +323,172 @@ aov_magic.44 = {
 		ai_chance = { base = 10 }
 	}
 }
+
+# Enhance Ability: the caster chooses (duration: the caster's aov_spell_enhance_ability_years)
+aov_magic.40 = {
+	type = character_event
+	title = aov_magic.40.t
+	desc = aov_magic.40.desc
+	theme = learning
+	left_portrait = root
+
+	immediate = {
+		save_scope_value_as = {
+			name = aov_choice_years
+			value = aov_spell_enhance_ability_years
+		}
+	}
+
+	option = {
+		name = aov_magic.40.a
+		add_character_modifier = { modifier = aov_spell_enhance_diplomacy years = scope:aov_choice_years }
+		ai_chance = {
+			base = 10
+			modifier = {
+				add = 10
+				diplomacy >= martial diplomacy >= stewardship diplomacy >= intrigue diplomacy >= learning
+			}
+		}
+	}
+	option = {
+		name = aov_magic.40.b
+		add_character_modifier = { modifier = aov_spell_enhance_martial years = scope:aov_choice_years }
+		ai_chance = {
+			base = 10
+			modifier = {
+				add = 10
+				martial >= diplomacy martial >= stewardship martial >= intrigue martial >= learning
+			}
+		}
+	}
+	option = {
+		name = aov_magic.40.c
+		add_character_modifier = { modifier = aov_spell_enhance_stewardship years = scope:aov_choice_years }
+		ai_chance = {
+			base = 10
+			modifier = {
+				add = 10
+				stewardship >= diplomacy stewardship >= martial stewardship >= intrigue stewardship >= learning
+			}
+		}
+	}
+	option = {
+		name = aov_magic.40.d
+		add_character_modifier = { modifier = aov_spell_enhance_intrigue years = scope:aov_choice_years }
+		ai_chance = {
+			base = 10
+			modifier = {
+				add = 10
+				intrigue >= diplomacy intrigue >= martial intrigue >= stewardship intrigue >= learning
+			}
+		}
+	}
+	option = {
+		name = aov_magic.40.e
+		add_character_modifier = { modifier = aov_spell_enhance_learning years = scope:aov_choice_years }
+		ai_chance = {
+			base = 10
+			modifier = {
+				add = 10
+				learning >= diplomacy learning >= martial learning >= stewardship learning >= intrigue
+			}
+		}
+	}
+}
+
+# Living Steel: the caster chooses (duration: the caster's aov_spell_living_steel_years)
+aov_magic.41 = {
+	type = character_event
+	title = aov_magic.41.t
+	desc = aov_magic.41.desc
+	theme = learning
+	left_portrait = root
+
+	immediate = {
+		save_scope_value_as = {
+			name = aov_choice_years
+			value = aov_spell_living_steel_years
+		}
+	}
+
+	option = {
+		name = aov_magic.41.a
+		add_character_modifier = { modifier = aov_spell_living_steel_heavy_infantry years = scope:aov_choice_years }
+		ai_chance = {
+			base = 10
+		}
+	}
+	option = {
+		name = aov_magic.41.b
+		add_character_modifier = { modifier = aov_spell_living_steel_skirmishers years = scope:aov_choice_years }
+		ai_chance = {
+			base = 10
+		}
+	}
+	option = {
+		name = aov_magic.41.c
+		add_character_modifier = { modifier = aov_spell_living_steel_pikemen years = scope:aov_choice_years }
+		ai_chance = {
+			base = 10
+		}
+	}
+	option = {
+		name = aov_magic.41.d
+		add_character_modifier = { modifier = aov_spell_living_steel_archers years = scope:aov_choice_years }
+		ai_chance = {
+			base = 10
+		}
+	}
+	option = {
+		name = aov_magic.41.e
+		add_character_modifier = { modifier = aov_spell_living_steel_light_cavalry years = scope:aov_choice_years }
+		ai_chance = {
+			base = 10
+		}
+	}
+	option = {
+		name = aov_magic.41.f
+		add_character_modifier = { modifier = aov_spell_living_steel_heavy_cavalry years = scope:aov_choice_years }
+		ai_chance = {
+			base = 10
+		}
+	}
+}
+
+# Shapechange: the caster chooses (duration: the caster's aov_spell_shapechange_years)
+aov_magic.42 = {
+	type = character_event
+	title = aov_magic.42.t
+	desc = aov_magic.42.desc
+	theme = learning
+	left_portrait = root
+
+	immediate = {
+		save_scope_value_as = {
+			name = aov_choice_years
+			value = aov_spell_shapechange_years
+		}
+	}
+
+	option = {
+		name = aov_magic.42.a
+		add_character_modifier = { modifier = aov_spell_shape_bear years = scope:aov_choice_years }
+		ai_chance = {
+			base = 10
+		}
+	}
+	option = {
+		name = aov_magic.42.b
+		add_character_modifier = { modifier = aov_spell_shape_wolf years = scope:aov_choice_years }
+		ai_chance = {
+			base = 10
+		}
+	}
+	option = {
+		name = aov_magic.42.c
+		add_character_modifier = { modifier = aov_spell_shape_hawk years = scope:aov_choice_years }
+		ai_chance = {
+			base = 10
+		}
+	}
+}

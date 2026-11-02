@@ -158,16 +158,16 @@ aov_spell_raise_dead_sgui = {
 	effect = { aov_spell_raise_dead_cast = yes }
 }
 
+aov_spell_enhance_ability_sgui = {
+	scope = character
+	is_valid = { aov_spell_enhance_ability_castable = yes }
+	effect = { aov_spell_enhance_ability_cast = yes }
+}
+
 aov_spell_longstrider_sgui = {
 	scope = character
 	is_valid = { aov_spell_longstrider_castable = yes }
 	effect = { aov_spell_longstrider_cast = yes }
-}
-
-aov_spell_plant_growth_sgui = {
-	scope = character
-	is_valid = { aov_spell_plant_growth_castable = yes }
-	effect = { aov_spell_plant_growth_cast = yes }
 }
 
 aov_spell_mass_enlarge_sgui = {
@@ -176,22 +176,22 @@ aov_spell_mass_enlarge_sgui = {
 	effect = { aov_spell_mass_enlarge_cast = yes }
 }
 
-aov_spell_transmute_to_gold_sgui = {
+aov_spell_living_steel_sgui = {
 	scope = character
-	is_valid = { aov_spell_transmute_to_gold_castable = yes }
-	effect = { aov_spell_transmute_to_gold_cast = yes }
+	is_valid = { aov_spell_living_steel_castable = yes }
+	effect = { aov_spell_living_steel_cast = yes }
 }
 
-aov_spell_reshape_terrain_sgui = {
+aov_spell_shapechange_sgui = {
 	scope = character
-	is_valid = { aov_spell_reshape_terrain_castable = yes }
-	effect = { aov_spell_reshape_terrain_cast = yes }
+	is_valid = { aov_spell_shapechange_castable = yes }
+	effect = { aov_spell_shapechange_cast = yes }
 }
 
-aov_spell_rite_of_conception_sgui = {
+aov_spell_perfect_form_sgui = {
 	scope = character
-	is_valid = { aov_spell_rite_of_conception_castable = yes }
-	effect = { aov_spell_rite_of_conception_cast = yes }
+	is_valid = { aov_spell_perfect_form_castable = yes }
+	effect = { aov_spell_perfect_form_cast = yes }
 }
 
 aov_study_abjuration_sgui = {

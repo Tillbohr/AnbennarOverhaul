@@ -108,28 +108,12 @@ aov_spell_steal_vitality = {
 
 aov_spell_longstrider = {
 	icon = learning_positive
-	movement_speed = 0.2
-	character_travel_speed_mult = 0.25
-}
-
-aov_spell_plant_growth = {
-	icon = learning_positive
-	character_capital_county_monthly_development_growth_add = 0.3
-	supply_limit_mult = 0.2
+	movement_speed = 0.3
+	character_travel_speed_mult = 0.4
 }
 
 aov_spell_mass_enlarge = {
 	icon = learning_positive
-	maa_toughness_mult = 0.15
-	maa_damage_mult = 0.15
-}
-
-aov_spell_reshape_terrain = {
-	icon = learning_positive
-	defender_advantage = 4
-}
-
-aov_spell_rite_of_conception = {
-	icon = learning_positive
-	fertility = 0.5
+	maa_toughness_mult = 0.2
+	maa_damage_mult = 0.2
 }

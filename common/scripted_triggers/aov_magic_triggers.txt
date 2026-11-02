@@ -119,3 +119,42 @@ aov_spell_target_has_capital = {
 		scope:recipient = { exists = capital_province }
 	}
 }
+
+# Perfect Form has something to change (mirrors the pool in aov_perfect_form)
+aov_perfect_form_possible = {
+	OR = {
+		NOR = { has_trait = beauty_good_1 has_trait = beauty_good_2 has_trait = beauty_good_3 has_trait = beauty_bad_1 has_trait = beauty_bad_2 has_trait = beauty_bad_3 }
+		has_trait = beauty_good_1
+		has_trait = beauty_good_2
+		has_trait = beauty_bad_1
+		has_trait = beauty_bad_2
+		has_trait = beauty_bad_3
+		NOR = { has_trait = intellect_good_1 has_trait = intellect_good_2 has_trait = intellect_good_3 has_trait = intellect_bad_1 has_trait = intellect_bad_2 has_trait = intellect_bad_3 }
+		has_trait = intellect_good_1
+		has_trait = intellect_good_2
+		has_trait = intellect_bad_1
+		has_trait = intellect_bad_2
+		has_trait = intellect_bad_3
+		NOR = { has_trait = physique_good_1 has_trait = physique_good_2 has_trait = physique_good_3 has_trait = physique_bad_1 has_trait = physique_bad_2 has_trait = physique_bad_3 }
+		has_trait = physique_good_1
+		has_trait = physique_good_2
+		has_trait = physique_bad_1
+		has_trait = physique_bad_2
+		has_trait = physique_bad_3
+		NOT = { has_trait = fecund }
+		has_trait = clubfooted
+		has_trait = hunchbacked
+		has_trait = lisping
+		has_trait = stuttering
+		has_trait = dwarf
+		has_trait = giant
+		has_trait = spindly
+		has_trait = scaly
+		has_trait = wheezing
+		has_trait = bleeder
+		has_trait = infertile
+		has_trait = depressed_genetic
+		has_trait = lunatic_genetic
+		has_trait = possessed_genetic
+	}
+}
