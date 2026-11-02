@@ -135,6 +135,77 @@ class BuildMonumentTests(unittest.TestCase):
             self.assertNotIn('"', m.group(1), line)
 
 
+class CoreEffectTests(unittest.TestCase):
+    """The category core packages of tools/data/monuments/balance.py."""
+
+    def test_core_mods_scale_by_tier(self):
+        m = fake()
+        m["category"] = "mine"
+        self.assertEqual(bm.core_mods(m, 1)["province_modifier"]["monthly_income"], 8)
+        self.assertEqual(bm.core_mods(m, 3)["province_modifier"]["monthly_income"], 14)
+        self.assertEqual(bm.core_mods(m, 3)["county_modifier"]["tax_mult"], 0.35)
+
+    def test_core_override_none_gives_no_core(self):
+        with mock.patch.dict(bm.balance.CORE_OVERRIDES, {"x": None}):
+            self.assertEqual(bm.core_mods(fake(), 2), {b: {} for b in bm.BLOCKS})
+
+    def test_core_override_swaps_package(self):
+        with mock.patch.dict(bm.balance.CORE_OVERRIDES, {"x": "mine"}):
+            self.assertEqual(bm.core_mods(fake(), 3)["province_modifier"]["monthly_income"], 14)
+
+    def test_zero_tier_value_is_left_out(self):
+        with mock.patch.dict(bm.balance.CORE, {"palace": [("character_modifier", "learning", (0, 1, 1))]}):
+            self.assertEqual(bm.core_mods(fake(), 1)["character_modifier"], {})
+            self.assertEqual(bm.core_mods(fake(), 2)["character_modifier"], {"learning": 1})
+
+    def test_stronger(self):
+        self.assertEqual(bm.stronger(0.3, 0.2), 0.3)
+        self.assertEqual(bm.stronger(0.1, 0.2), 0.2)
+        self.assertEqual(bm.stronger(-5, -10), -10)  # travel_danger: lower is stronger
+        self.assertEqual(bm.stronger(-6, 5), -1)  # a penalty is kept, not replaced
+
+    def test_building_merges_core_without_duplicates(self):
+        m = fake(county_modifier={"tax_mult": 0.3, "levy_size": 0.1})
+        m["category"] = "mine"
+        text = bm.building(m, 1, "aov_monument_x_01", None)
+        self.assertIn("\t\ttax_mult = 0.3\n", text)  # flavor 0.3 beats core 0.25
+        self.assertEqual(text.count("tax_mult ="), 1)
+        self.assertIn("\t\tlevy_size = 0.1\n", text)
+        self.assertIn("\t\tmonthly_income = 8\n", text)
+        self.assertIn("\tflag = travel_point_of_interest_economic\n", text)
+
+    def test_merge_core_into_anbennar_definition(self):
+        values = bm.parse_values("big_value = 0.5\n")
+        base = ("x_01 = {\n\tcounty_modifier = {\n\t\ttax_mult = big_value\n\t\tdevelopment_growth_factor = 0.05\n\t}\n\n"
+                "\ttype = special\n\tflag = travel_point_of_interest_martial\n}\n")
+        tier = {"province_modifier": {}, "county_modifier": {}, "character_modifier": {}, "on_complete": ""}
+        m = fake()
+        m["category"] = "mine"
+        out = bm.override(base, "x_01", tier, None, 3, values, [], bm.core_mods(m, 3), "travel_point_of_interest_economic")
+        self.assertIn("\t\ttax_mult = big_value\n", out)  # Anbennar's 0.5 is stronger than the core 0.35
+        self.assertIn("\t\tdevelopment_growth_factor = 0.2\n", out)
+        self.assertIn("(stronger of 0.05 and 0.2)", out)
+        self.assertIn("\tprovince_modifier = {\n\t\t# Anbennar Overhaul: core effects tier 3\n\t\tmonthly_income = 14\n", out)
+        self.assertNotIn("travel_point_of_interest_economic", out)  # Anbennar's own travel flag is kept
+
+    def test_every_category_has_a_core_package_and_flag(self):
+        for category in bm.translation.ICONS:
+            self.assertIn(category, bm.balance.CATEGORY_CORE)
+            self.assertIn(category, bm.balance.POI_FLAGS)
+
+    @unittest.skipUnless(LIVE, "Anbennar CK3 not present")
+    def test_every_generated_top_level_has_core_effects(self):
+        """Every last level of every region carries its category's top-tier core values (or stronger)."""
+        for region in bm.REGIONS:
+            files = bm.render_all(region)
+            text = "\n".join(t for rel, t in files.items() if rel.startswith("common/buildings/"))
+            for m in bm.load_monuments(region):
+                body = block(text, m["levels"][-1])
+                for name, mods in bm.core_mods(m, 3).items():
+                    for k in mods:
+                        self.assertRegex(body, rf"(?m)^\t\t{k} = ", f"{m['levels'][-1]} {k}")
+
+
 BASE_PLAIN = """x_01 = {
 \tcost_gold = 1
 
@@ -229,7 +300,7 @@ class OverrideTests(unittest.TestCase):
     def test_inserted_lines_are_inside_the_block(self):
         ours = block(overrides(), "castanorian_citadel_bal_ouord_02")
         m = re.search(r"^\tprovince_modifier = \{\n(.*?)^\t\}", ours, re.M | re.S)
-        self.assertIn("garrison_size = 0.15", m.group(1))
+        self.assertIn("garrison_size = 0.2", m.group(1))  # the EU4 tier's 0.15, raised by the fortress core
         self.assertIn("defender_holding_advantage", m.group(1))
 
     def test_overrides_file_is_brace_balanced(self):

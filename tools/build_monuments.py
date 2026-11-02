@@ -1,7 +1,8 @@
 """Generate the great-project monument buildings, province history and localization, region by region.
 
 Source: tools/data/monuments/<region>.py (monument data, imported once from EU4 Anbennar; edit it there) and
-translation.py (allowed modifier keys, icons). The paintings in gfx/interface/illustrations/aov_monuments/ were
+translation.py (allowed modifier keys, icons); balance.py adds each category's core effects and travel flag to
+every level (the stronger of a core value and an existing value of the same key is kept). The paintings in gfx/interface/illustrations/aov_monuments/ were
 converted once from EU4 and are committed; this script only writes their mask. Rerun after editing the data:
 
     python -I tools/build_monuments.py [--region cannor|dwarovar|bulwar|salahad|deepwoods]   (default: every region)
@@ -25,7 +26,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # python -I does not add the script's folder
-from data.monuments import translation  # noqa: E402
+from data.monuments import balance, translation  # noqa: E402
 from data import holding_art  # noqa: E402
 from eu4_import import write_bgra  # noqa: E402
 
@@ -221,8 +222,79 @@ def merge_modifier(lines: list, name: str, k: str, v, values: dict, note: str, w
     return False
 
 
-def override(base_text: str, key: str, tier: dict, next_key, n: int, values=None, warnings=None) -> str:
-    """Anbennar's definition of `key` with the EU4 tier `n` effects inserted and next_building set."""
+def core_mods(m: dict, level: int) -> dict:
+    """block -> {key: value} of the monument's core package (balance.py) at `level`; empty blocks without one."""
+    eu4_key = m.get("eu4_key")
+    pkg = balance.CORE_OVERRIDES[eu4_key] if eu4_key in balance.CORE_OVERRIDES else balance.CATEGORY_CORE.get(m["category"])
+    out = {b: {} for b in BLOCKS}
+    for block, k, tiers in balance.CORE.get(pkg, []) if pkg else []:
+        if tiers[level - 1]:
+            out[block][k] = tiers[level - 1]
+    return out
+
+
+def stronger(old: float, core: float) -> float:
+    """The stronger of an existing value and a core value of the same key: the larger for a positive core value, the
+    smaller for a negative one; an existing value of the opposite sign is a penalty and is summed."""
+    if old * core < 0:
+        return old + core
+    return max(old, core) if core > 0 else min(old, core)
+
+
+def with_core(tier: dict, core: dict) -> dict:
+    """The tier with the core package merged into its modifier blocks (stronger() on a shared key)."""
+    out = dict(tier)
+    for block in BLOCKS:
+        mods = dict(tier[block])
+        for k, v in core[block].items():
+            mods[k] = stronger(float(mods[k]), v) if k in mods else v
+        out[block] = mods
+    return out
+
+
+def merge_core(lines: list, core: dict, n: int, values: dict, warnings: list, key: str) -> None:
+    """Merge the core package into a copied Anbennar definition: a key already in the block (Anbennar's line, with
+    any EU4 tier value summed in) becomes stronger() of the two; a new key is appended to its block."""
+    note = f"# Anbennar Overhaul: core effects tier {n}"
+    for name in BLOCKS:
+        noted = False
+        for k, v in core[name].items():
+            found = find_block(lines, name)
+            if not found:
+                at = insert_point(lines)
+                lines[at:at] = [f"\t{name} = {{", f"\t\t{note}", f"\t\t{k} = {num(v)}", "\t}", ""]
+                noted = True
+                continue
+            start, end = found
+            for i in range(start + 1, end):
+                m = re.match(rf"(\s*){re.escape(k)}\s*=\s*([^#\s]+)", lines[i])
+                if m:
+                    indent, old = m.group(1), m.group(2)
+                    try:
+                        base = resolve(old, values)
+                    except ValueError as e:
+                        warnings.append(f"{key} core tier {n}: {k} {old} kept ({e})")
+                        break
+                    total = stronger(base, v)
+                    if total != base:
+                        lines[i:i + 1] = [f"{indent}{note} (stronger of {old} and {num(v)})", f"{indent}{k} = {num(total)}"]
+                    break
+            else:
+                lines[end:end] = ([] if noted else [f"\t\t{note}"]) + [f"\t\t{k} = {num(v)}"]
+                noted = True
+
+
+def add_flag(lines: list, flag, note: str) -> None:
+    """Add the travel point-of-interest flag before `type`, unless the definition already has one."""
+    if flag and not any(re.match(r"\tflag\s*=\s*travel_point_of_interest_", l) for l in lines):
+        at = insert_point(lines)
+        lines[at:at] = [f"\tflag = {flag} {note}", ""]
+
+
+def override(base_text: str, key: str, tier: dict, next_key, n: int, values=None, warnings=None, core=None,
+             flag=None) -> str:
+    """Anbennar's definition of `key` with the EU4 tier `n` effects inserted, then the core package (merge_core) and
+    travel flag added, and next_building set."""
     values = values or {}
     warnings = [] if warnings is None else warnings
     lines = base_text.rstrip(NL).split(NL)
@@ -251,6 +323,9 @@ def override(base_text: str, key: str, tier: dict, next_key, n: int, values=None
         else:
             at = insert_point(lines)
             lines[at:at] = ["\ton_complete = {"] + body + ["\t}", ""]
+    if core:
+        merge_core(lines, core, n, values, warnings, key)
+    add_flag(lines, flag, f"# Anbennar Overhaul: core effects tier {n}")
     if next_key:
         depths = depths_of(lines)
         line = f"\tnext_building = {next_key} {note}"
@@ -291,7 +366,7 @@ def gate_body(m: dict) -> list:
 
 
 def building(m: dict, level: int, key: str, next_key) -> str:
-    tier = m["tiers"][level - 1]
+    tier = with_core(m["tiers"][level - 1], core_mods(m, level))
     icon = translation.ICONS[m["category"]]
     out = [f"{key} = {{", f"\tconstruction_time = {tier['days']}", "",
            f'\ttype_icon = "{icon}"', "",
@@ -310,7 +385,10 @@ def building(m: dict, level: int, key: str, next_key) -> str:
         out += ["\ton_complete = {", f"\t\t{tier['on_complete'].strip()}", "\t}", ""]
     if next_key:
         out += [f"\tnext_building = {next_key}", ""]
-    out += ai_value(m["category"]) + ["", "\ttype = special", "}", ""]
+    out += ai_value(m["category"]) + ["", "\ttype = special"]
+    if balance.POI_FLAGS.get(m["category"]):
+        out.append(f"\tflag = {balance.POI_FLAGS[m['category']]}")
+    out += ["}", ""]
     return "\n".join(out)
 
 
@@ -389,7 +467,8 @@ def upper_level(m: dict, level: int, key: str, next_key, top: str, root, values:
     and vanilla's free-building-slot guard added to Anbennar's ai_value."""
     tier = m["tiers"][level - 1]
     note = f"# Anbennar Overhaul: EU4 tier {level}"
-    lines = override(anbennar_definition(root, top), key, tier, next_key, level, values, warnings).rstrip(NL).split(NL)
+    lines = override(anbennar_definition(root, top), key, tier, next_key, level, values, warnings, core_mods(m, level),
+                     balance.POI_FLAGS.get(m["category"])).rstrip(NL).split(NL)
     if not next_key:
         depths = depths_of(lines)
         lines = [l for i, l in enumerate(lines) if not (depths[i] == 1 and re.match(r"\tnext_building\s*=", l))]
@@ -447,7 +526,8 @@ def overrides(monuments: list, known: set, root: Path = ANBENNAR_CK3) -> str:
         for i, key in enumerate(keys):
             if key in known:
                 nxt = keys[i + 1] if i + 1 < len(keys) else None
-                out.append(override(anbennar_definition(root, key), key, m["tiers"][i], nxt, i + 1, values, warnings))
+                out.append(override(anbennar_definition(root, key), key, m["tiers"][i], nxt, i + 1, values, warnings,
+                                    core_mods(m, i + 1), balance.POI_FLAGS.get(m["category"])))
     for w in warnings:
         print(f"warning: {w}", file=sys.stderr)
     return "\n".join(out)
@@ -589,6 +669,13 @@ def validate(monuments: list, known: set) -> None:
     desc, a category without an icon, a modifier key not in translation.MODIFIER_KEYS, or a level without any effect (no modifier and no on_complete). Levels of chains that start
     with an Anbennar building carry Anbennar's effects, so they need no EU4 effect of their own."""
     allowed = translation.MODIFIER_KEYS
+    for pkg, entries in balance.CORE.items():
+        for block, k, tiers in entries:
+            if block not in BLOCKS or k not in allowed or len(tiers) != 3:
+                raise GeneratorError(f"core package {pkg}: bad entry {block} {k} {tiers}")
+    for pkg in list(balance.CATEGORY_CORE.values()) + list(balance.CORE_OVERRIDES.values()):
+        if pkg is not None and pkg not in balance.CORE:
+            raise GeneratorError(f"core package {pkg} is not defined in balance.CORE")
     seen = {}
     for m in monuments:
         key = m.get("eu4_key", "?")
@@ -606,6 +693,8 @@ def validate(monuments: list, known: set) -> None:
                 fail(f"empty {field}")
         if m.get("category") not in translation.ICONS:
             fail(f"category {m.get('category')!r} has no icon in translation.ICONS")
+        if key not in balance.CORE_OVERRIDES and m["category"] not in balance.CATEGORY_CORE:
+            fail(f"category {m['category']!r} has no core package in balance.CATEGORY_CORE")
         top = chain_top(m, known)
         for level, tier in enumerate(m["tiers"], 1):
             for block in BLOCKS:

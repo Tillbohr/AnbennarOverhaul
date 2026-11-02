@@ -27,6 +27,11 @@ calasandur_castle_aelcandar_01 = {
 		defender_holding_advantage = normal_building_advantage_tier_3
 		# Anbennar Overhaul: EU4 tier 1 (+1 to good_building_fort_level_tier_3 = 6)
 		fort_level = 7
+		# Anbennar Overhaul: core effects tier 1
+		garrison_size = 0.2
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -10
 	}
 	county_modifier = {
 		development_growth = 0.2
@@ -37,6 +42,8 @@ calasandur_castle_aelcandar_01 = {
 		base = 100
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 1
+
 	next_building = aov_monument_aelcandar_02 # Anbennar Overhaul: EU4 tier 1
 
 	type = special
@@ -67,6 +74,11 @@ castanorian_citadel_bal_dostan_01 = {
 		defender_holding_advantage = normal_building_advantage_tier_3
 		# Anbennar Overhaul: EU4 tier 1 (+1 to good_building_fort_level_tier_3 = 6)
 		fort_level = 7
+		# Anbennar Overhaul: core effects tier 1
+		garrison_size = 0.2
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -10
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -81,6 +93,8 @@ castanorian_citadel_bal_dostan_01 = {
 		# Anbennar Overhaul: EU4 tier 1
 		barony.holder = { add_prestige = 50 }
 	}
+
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 1
 
 	next_building = aov_monument_bal_dostan_02 # Anbennar Overhaul: EU4 tier 1
 
@@ -114,6 +128,11 @@ castanorian_citadel_bal_hyl_01 = {
 		defender_holding_advantage = normal_building_advantage_tier_3
 		# Anbennar Overhaul: EU4 tier 1 (+1 to good_building_fort_level_tier_3 = 6)
 		fort_level = 7
+		# Anbennar Overhaul: core effects tier 1
+		garrison_size = 0.2
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -10
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -124,6 +143,8 @@ castanorian_citadel_bal_hyl_01 = {
 		base = 100
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 1
+
 	next_building = aov_monument_bal_hyl_02 # Anbennar Overhaul: EU4 tier 1
 
 	type = special
@@ -158,6 +179,11 @@ castanorian_citadel_bal_mire_02 = {
 		fort_level = 7
 		# Anbennar Overhaul: EU4 tier 1
 		hostile_raid_time = 0.25
+		# Anbennar Overhaul: core effects tier 1
+		garrison_size = 0.2
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -10
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -168,6 +194,8 @@ castanorian_citadel_bal_mire_02 = {
 		base = 100
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 1
+
 	next_building = aov_monument_bal_mire_02 # Anbennar Overhaul: EU4 tier 1
 
 	type = special
@@ -201,7 +229,12 @@ castanorian_citadel_bal_ouord_02 = {
 		# Anbennar Overhaul: EU4 tier 1 (+1 to good_building_fort_level_tier_3 = 6)
 		fort_level = 7
 		# Anbennar Overhaul: EU4 tier 1
-		garrison_size = 0.15
+		# Anbennar Overhaul: core effects tier 1 (stronger of 0.15 and 0.2)
+		garrison_size = 0.2
+		# Anbennar Overhaul: core effects tier 1
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -10
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -212,6 +245,8 @@ castanorian_citadel_bal_ouord_02 = {
 		base = 100
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 1
+
 	next_building = aov_monument_bal_ouord_02 # Anbennar Overhaul: EU4 tier 1
 
 	type = special
@@ -244,6 +279,11 @@ castanorian_citadel_bal_vertesk_01 = {
 		defender_holding_advantage = normal_building_advantage_tier_3
 		# Anbennar Overhaul: EU4 tier 1 (+1 to good_building_fort_level_tier_3 = 6)
 		fort_level = 7
+		# Anbennar Overhaul: core effects tier 1
+		garrison_size = 0.2
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -10
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -254,6 +294,8 @@ castanorian_citadel_bal_vertesk_01 = {
 		base = 100
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 1
+
 	next_building = aov_monument_bal_vertesk_02 # Anbennar Overhaul: EU4 tier 1
 
 	type = special
@@ -286,6 +328,11 @@ castanorian_citadel_bal_vroren_02 = {
 		defender_holding_advantage = normal_building_advantage_tier_3
 		# Anbennar Overhaul: EU4 tier 1 (+1 to good_building_fort_level_tier_3 = 6)
 		fort_level = 7
+		# Anbennar Overhaul: core effects tier 1
+		garrison_size = 0.2
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -10
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -296,6 +343,8 @@ castanorian_citadel_bal_vroren_02 = {
 		base = 100
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 1
+
 	next_building = aov_monument_bal_vroren_02 # Anbennar Overhaul: EU4 tier 1
 
 	type = special
@@ -317,6 +366,8 @@ castle_bladeskeep_02 = {
 		martial_per_prestige_level = 1 #moved from Calindal
 		# Anbennar Overhaul: EU4 tier 1
 		monthly_martial_lifestyle_xp_gain_mult = 0.025
+		# Anbennar Overhaul: core effects tier 1
+		monthly_prestige = 0.1
 	}
 	max_garrison = good_building_max_garrison_tier_2
 	province_modifier = {
@@ -324,6 +375,9 @@ castle_bladeskeep_02 = {
 		fort_level = normal_building_fort_level_tier_2
 		stationed_maa_damage_mult = high_maa_damage_tier_2
 		stationed_maa_toughness_mult = high_maa_toughness_tier_2
+		# Anbennar Overhaul: core effects tier 1
+		garrison_size = 0.2
+		travel_danger = -10
 	}
 	county_modifier = {
 		tax_mult = 0.05
@@ -335,6 +389,8 @@ castle_bladeskeep_02 = {
 		base = 100
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 1
+
 	next_building = aov_monument_bladeskeep_monument_02 # Anbennar Overhaul: EU4 tier 1
 
 	type = special
@@ -358,9 +414,13 @@ calasandur_castle_calascandar_01 = {
 	cost_gold = 2000
 
 	character_modifier = {
-		monthly_prestige = 0.3
+		# Anbennar Overhaul: core effects tier 1 (stronger of 0.3 and 0.5)
+		monthly_prestige = 0.5
 		# Anbennar Overhaul: EU4 tier 1
 		monthly_income_mult = 0.02
+		# Anbennar Overhaul: core effects tier 1
+		vassal_opinion = 5
+		monthly_dynasty_prestige_mult = 0.02
 	}
 	max_garrison = good_building_max_garrison_tier_4
 	province_modifier = {
@@ -368,6 +428,8 @@ calasandur_castle_calascandar_01 = {
 		defender_holding_advantage = 9
 		# Anbennar Overhaul: EU4 tier 1 (+1 to good_building_fort_level_tier_4 = 8, capped at 8; 1 moved to defender_holding_advantage)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 1
+		monthly_income = 1
 	}
 	county_modifier = {
 		development_growth = 0.2
@@ -379,6 +441,8 @@ calasandur_castle_calascandar_01 = {
 		base = 100
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 1
+
 	next_building = aov_monument_calascandar_02 # Anbennar Overhaul: EU4 tier 1
 
 	type = special
@@ -397,7 +461,8 @@ temple_highest_moon_01 = {
 		development_growth_factor = 0.45
 		development_growth = 0.3
 		# Anbennar Overhaul: EU4 tier 1
-		county_opinion_add = 2
+		# Anbennar Overhaul: core effects tier 1 (stronger of 2 and 3)
+		county_opinion_add = 3
 	}
 	character_modifier = {
 		# Anbennar Overhaul: EU4 tier 1 (+0.125 to 1 = 1)
@@ -451,6 +516,11 @@ calasandur_castle_escandar_01 = {
 		defender_holding_advantage = normal_building_advantage_tier_3
 		# Anbennar Overhaul: EU4 tier 1 (+1 to good_building_fort_level_tier_3 = 6)
 		fort_level = 7
+		# Anbennar Overhaul: core effects tier 1
+		garrison_size = 0.2
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -10
 	}
 	county_modifier = {
 		development_growth = 0.2
@@ -461,6 +531,8 @@ calasandur_castle_escandar_01 = {
 		base = 100
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 1
+
 	next_building = aov_monument_escandar_02 # Anbennar Overhaul: EU4 tier 1
 
 	type = special
@@ -470,7 +542,8 @@ lorenans_rest_01 = {
 	type_icon = "icon_structure_cilician_gates.dds"
 
 	province_modifier = {
-		monthly_income = 0.5
+		# Anbennar Overhaul: core effects tier 1 (stronger of 0.5 and 1)
+		monthly_income = 1
 		# funeral cost -50%
 	}
 	character_modifier = {
@@ -495,6 +568,12 @@ lorenans_rest_01 = {
 		}
 	}
 	
+	county_modifier = {
+		# Anbennar Overhaul: core effects tier 1
+		tax_mult = 0.1
+		development_growth_factor = 0.1
+	}
+
 	next_building = aov_monument_lorenans_rest_02 # Anbennar Overhaul: EU4 tier 1
 
 	type = special
@@ -518,6 +597,8 @@ lake_palace_01 = {
 		# Anbennar Overhaul: EU4 tier 1 (+1 to good_building_fort_level_tier_1 = 2)
 		fort_level = 3
 		hostile_raid_time = 1
+		# Anbennar Overhaul: core effects tier 1
+		monthly_income = 1
 	}
 
 	county_modifier = {
@@ -530,6 +611,10 @@ lake_palace_01 = {
 		naval_movement_speed_mult = 0.25
 		# Anbennar Overhaul: EU4 tier 1
 		life_expectancy = 1
+		# Anbennar Overhaul: core effects tier 1
+		monthly_prestige = 0.5
+		vassal_opinion = 5
+		monthly_dynasty_prestige_mult = 0.02
 	}
 	
 	next_building = lake_palace_02 # Anbennar Overhaul: EU4 tier 1
@@ -575,11 +660,14 @@ lake_palace_02 = {
 		# Anbennar Overhaul: EU4 tier 2 (+1 to 1 = 1)
 		fort_level = 2
 		hostile_raid_time = 0.5
+		# Anbennar Overhaul: core effects tier 2
+		monthly_income = 1.5
 	}
 
 	county_modifier = {
 		monthly_county_control_growth_add = 0.5
-		development_growth_factor = 0.1
+		# Anbennar Overhaul: core effects tier 2 (stronger of 0.1 and 0.15)
+		development_growth_factor = 0.15
 	}
 
 	character_modifier = {
@@ -593,6 +681,9 @@ lake_palace_02 = {
 		parochial_opinion = 5
 		# Anbennar Overhaul: EU4 tier 2
 		life_expectancy = 2
+		# Anbennar Overhaul: core effects tier 2
+		monthly_prestige = 0.75
+		vassal_opinion = 8
 	}
 	
 	ai_value = {
@@ -675,6 +766,8 @@ holy_site_the_necropolis_01 = {
 		# Anbennar Overhaul: EU4 tier 1
 		faith_conversion_piety_cost_mult = -0.05
 		county_opinion_add = 1
+		# Anbennar Overhaul: core effects tier 1
+		monthly_prestige = 0.5
 	}
 	
 	county_modifier = {
@@ -736,6 +829,11 @@ castanorian_citadel_north_citadel_01 = {
 		defender_holding_advantage = 9
 		# Anbennar Overhaul: EU4 tier 1 (+1 to good_building_fort_level_tier_4 = 8, capped at 8; 1 moved to defender_holding_advantage)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 1
+		garrison_size = 0.2
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -10
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -747,6 +845,8 @@ castanorian_citadel_north_citadel_01 = {
 		base = 100
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 1
+
 	next_building = aov_monument_the_north_citadel_02 # Anbennar Overhaul: EU4 tier 1
 
 	type = special
@@ -782,6 +882,11 @@ castanorian_citadel_south_citadel_01 = {
 		defender_holding_advantage = 9
 		# Anbennar Overhaul: EU4 tier 1 (+1 to good_building_fort_level_tier_4 = 8, capped at 8; 1 moved to defender_holding_advantage)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 1
+		garrison_size = 0.2
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -10
 	}
 	county_modifier = {
 		development_growth = 0.2
@@ -797,6 +902,8 @@ castanorian_citadel_south_citadel_01 = {
 		# Anbennar Overhaul: EU4 tier 1
 		barony.holder = { add_prestige = 50 }
 	}
+
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 1
 
 	next_building = aov_monument_the_south_citadel_02 # Anbennar Overhaul: EU4 tier 1
 

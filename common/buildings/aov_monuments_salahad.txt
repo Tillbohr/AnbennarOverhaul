@@ -11,9 +11,20 @@ aov_monument_aur_kes_akasik_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1
+	}
+
+	county_modifier = {
+		development_growth_factor = 0.1
+	}
+
 	character_modifier = {
 		monthly_piety = 0.5
 		different_faith_county_opinion_mult = -0.15
+		monthly_prestige = 0.5
+		vassal_opinion = 5
+		monthly_dynasty_prestige_mult = 0.02
 	}
 
 	next_building = aov_monument_aur_kes_akasik_02
@@ -27,6 +38,7 @@ aov_monument_aur_kes_akasik_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 aov_monument_aur_kes_akasik_02 = {
@@ -40,9 +52,20 @@ aov_monument_aur_kes_akasik_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 1.5
+	}
+
+	county_modifier = {
+		development_growth_factor = 0.15
+	}
+
 	character_modifier = {
 		monthly_piety = 1
 		different_faith_county_opinion_mult = -0.15
+		monthly_prestige = 0.75
+		vassal_opinion = 8
+		monthly_dynasty_prestige_mult = 0.03
 	}
 
 	next_building = aov_monument_aur_kes_akasik_03
@@ -56,6 +79,7 @@ aov_monument_aur_kes_akasik_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 aov_monument_aur_kes_akasik_03 = {
@@ -69,9 +93,20 @@ aov_monument_aur_kes_akasik_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
+	county_modifier = {
+		development_growth_factor = 0.2
+	}
+
 	character_modifier = {
 		monthly_piety = 1
 		different_faith_county_opinion_mult = -0.2
+		monthly_prestige = 1
+		vassal_opinion = 10
+		monthly_dynasty_prestige_mult = 0.05
 	}
 
 	ai_value = {
@@ -83,6 +118,7 @@ aov_monument_aur_kes_akasik_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 aov_monument_bronze_dragon_academy_01 = {
@@ -98,10 +134,14 @@ aov_monument_bronze_dragon_academy_01 = {
 
 	county_modifier = {
 		levy_size = 0.05
+		tax_mult = 0.1
+		development_growth_factor = 0.1
+		development_growth = 0.1
 	}
 
 	character_modifier = {
 		siege_phase_time = -0.1
+		monthly_lifestyle_xp_gain_mult = 0.05
 	}
 
 	next_building = aov_monument_bronze_dragon_academy_02
@@ -115,6 +155,7 @@ aov_monument_bronze_dragon_academy_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_bronze_dragon_academy_02 = {
@@ -130,11 +171,15 @@ aov_monument_bronze_dragon_academy_02 = {
 
 	county_modifier = {
 		levy_size = 0.075
+		tax_mult = 0.15
+		development_growth_factor = 0.2
+		development_growth = 0.2
 	}
 
 	character_modifier = {
 		siege_phase_time = -0.1
 		vassal_opinion = 1.25
+		monthly_lifestyle_xp_gain_mult = 0.1
 	}
 
 	next_building = aov_monument_bronze_dragon_academy_03
@@ -148,6 +193,7 @@ aov_monument_bronze_dragon_academy_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_bronze_dragon_academy_03 = {
@@ -163,11 +209,15 @@ aov_monument_bronze_dragon_academy_03 = {
 
 	county_modifier = {
 		levy_size = 0.1
+		tax_mult = 0.2
+		development_growth_factor = 0.25
+		development_growth = 0.25
 	}
 
 	character_modifier = {
 		siege_phase_time = -0.15
 		vassal_opinion = 2.5
+		monthly_lifestyle_xp_gain_mult = 0.15
 	}
 
 	ai_value = {
@@ -179,6 +229,7 @@ aov_monument_bronze_dragon_academy_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_deshak_temple_of_the_elements_01 = {
@@ -210,12 +261,21 @@ aov_monument_deshak_temple_of_the_elements_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1.5
+	}
+
 	county_modifier = {
-		tax_mult = 0.05
+		tax_mult = 0.1
+		development_growth_factor = 0.15
+		development_growth = 0.1
+		county_opinion_add = 3
 	}
 
 	character_modifier = {
 		faith_conversion_piety_cost_mult = -0.05
+		monthly_piety = 0.5
+		monthly_dynasty_prestige_mult = 0.02
 	}
 
 	next_building = aov_monument_deshak_temple_of_the_elements_02
@@ -230,6 +290,7 @@ aov_monument_deshak_temple_of_the_elements_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_deshak_temple_of_the_elements_02 = {
@@ -261,13 +322,21 @@ aov_monument_deshak_temple_of_the_elements_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
 	county_modifier = {
-		tax_mult = 0.075
+		tax_mult = 0.15
+		development_growth_factor = 0.2
+		development_growth = 0.2
+		county_opinion_add = 4
 	}
 
 	character_modifier = {
 		faith_conversion_piety_cost_mult = -0.2
-		monthly_piety = 0.5
+		monthly_piety = 0.75
+		monthly_dynasty_prestige_mult = 0.03
 	}
 
 	next_building = aov_monument_deshak_temple_of_the_elements_03
@@ -282,6 +351,7 @@ aov_monument_deshak_temple_of_the_elements_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_deshak_temple_of_the_elements_03 = {
@@ -313,13 +383,21 @@ aov_monument_deshak_temple_of_the_elements_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
 	county_modifier = {
-		tax_mult = 0.125
+		tax_mult = 0.2
+		development_growth_factor = 0.25
+		development_growth = 0.25
+		county_opinion_add = 5
 	}
 
 	character_modifier = {
 		faith_conversion_piety_cost_mult = -0.25
 		monthly_piety = 1
+		monthly_dynasty_prestige_mult = 0.05
 	}
 
 	ai_value = {
@@ -332,6 +410,7 @@ aov_monument_deshak_temple_of_the_elements_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_ekha_harbor_01 = {
@@ -365,10 +444,13 @@ aov_monument_ekha_harbor_01 = {
 
 	province_modifier = {
 		build_speed = -0.05
+		monthly_income = 4
 	}
 
 	county_modifier = {
 		levy_size = 0.062
+		tax_mult = 0.15
+		development_growth_factor = 0.1
 	}
 
 	next_building = aov_monument_ekha_harbor_02
@@ -382,6 +464,7 @@ aov_monument_ekha_harbor_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_ekha_harbor_02 = {
@@ -415,10 +498,13 @@ aov_monument_ekha_harbor_02 = {
 
 	province_modifier = {
 		build_speed = -0.1
+		monthly_income = 6
 	}
 
 	county_modifier = {
 		levy_size = 0.125
+		tax_mult = 0.25
+		development_growth_factor = 0.15
 	}
 
 	character_modifier = {
@@ -436,6 +522,7 @@ aov_monument_ekha_harbor_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_ekha_harbor_03 = {
@@ -470,10 +557,13 @@ aov_monument_ekha_harbor_03 = {
 	province_modifier = {
 		build_speed = -0.165
 		building_slot_add = 1
+		monthly_income = 8
 	}
 
 	county_modifier = {
 		levy_size = 0.25
+		tax_mult = 0.3
+		development_growth_factor = 0.2
 	}
 
 	character_modifier = {
@@ -489,6 +579,7 @@ aov_monument_ekha_harbor_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_elikhet_pyramid_01 = {
@@ -520,8 +611,17 @@ aov_monument_elikhet_pyramid_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1
+	}
+
+	county_modifier = {
+		tax_mult = 0.1
+		development_growth_factor = 0.1
+	}
+
 	character_modifier = {
-		monthly_prestige = 0.1
+		monthly_prestige = 0.5
 	}
 
 	next_building = aov_monument_elikhet_pyramid_02
@@ -535,6 +635,7 @@ aov_monument_elikhet_pyramid_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_elikhet_pyramid_02 = {
@@ -566,8 +667,17 @@ aov_monument_elikhet_pyramid_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
+	county_modifier = {
+		tax_mult = 0.12
+		development_growth_factor = 0.15
+	}
+
 	character_modifier = {
-		monthly_prestige = 0.3
+		monthly_prestige = 0.75
 		faith_conversion_piety_cost_mult = -0.05
 	}
 
@@ -582,6 +692,7 @@ aov_monument_elikhet_pyramid_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_elikhet_pyramid_03 = {
@@ -613,8 +724,17 @@ aov_monument_elikhet_pyramid_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
+	county_modifier = {
+		tax_mult = 0.15
+		development_growth_factor = 0.2
+	}
+
 	character_modifier = {
-		monthly_prestige = 0.5
+		monthly_prestige = 1
 		faith_conversion_piety_cost_mult = -0.1
 	}
 
@@ -627,6 +747,7 @@ aov_monument_elikhet_pyramid_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_koroshesh_grain_port_01 = {
@@ -658,8 +779,12 @@ aov_monument_koroshesh_grain_port_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 4
+	}
+
 	county_modifier = {
-		tax_mult = 0.055
+		tax_mult = 0.15
 		development_growth_factor = 0.1
 	}
 
@@ -678,6 +803,7 @@ aov_monument_koroshesh_grain_port_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_koroshesh_grain_port_02 = {
@@ -709,8 +835,12 @@ aov_monument_koroshesh_grain_port_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 6
+	}
+
 	county_modifier = {
-		tax_mult = 0.11
+		tax_mult = 0.25
 		development_growth_factor = 0.2
 	}
 
@@ -729,6 +859,7 @@ aov_monument_koroshesh_grain_port_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_koroshesh_grain_port_03 = {
@@ -762,10 +893,11 @@ aov_monument_koroshesh_grain_port_03 = {
 
 	province_modifier = {
 		building_slot_add = 1
+		monthly_income = 8
 	}
 
 	county_modifier = {
-		tax_mult = 0.199
+		tax_mult = 0.3
 		development_growth_factor = 0.3
 	}
 
@@ -782,6 +914,7 @@ aov_monument_koroshesh_grain_port_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_koroshesh_library_01 = {
@@ -814,11 +947,14 @@ aov_monument_koroshesh_library_01 = {
 	cost_gold = 400
 
 	county_modifier = {
-		development_growth_factor = 0.02
+		development_growth_factor = 0.1
+		tax_mult = 0.1
+		development_growth = 0.1
 	}
 
 	character_modifier = {
-		monthly_lifestyle_xp_gain_mult = 0.025
+		monthly_lifestyle_xp_gain_mult = 0.05
+		learning = 1
 	}
 
 	next_building = aov_monument_koroshesh_library_02
@@ -832,6 +968,7 @@ aov_monument_koroshesh_library_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_koroshesh_library_02 = {
@@ -864,11 +1001,14 @@ aov_monument_koroshesh_library_02 = {
 	cost_gold = 1000
 
 	county_modifier = {
-		development_growth_factor = 0.04
+		development_growth_factor = 0.2
+		tax_mult = 0.15
+		development_growth = 0.2
 	}
 
 	character_modifier = {
-		monthly_lifestyle_xp_gain_mult = 0.05
+		monthly_lifestyle_xp_gain_mult = 0.1
+		learning = 1
 	}
 
 	next_building = aov_monument_koroshesh_library_03
@@ -882,6 +1022,7 @@ aov_monument_koroshesh_library_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_koroshesh_library_03 = {
@@ -914,11 +1055,14 @@ aov_monument_koroshesh_library_03 = {
 	cost_gold = 2000
 
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.25
+		tax_mult = 0.2
+		development_growth = 0.25
 	}
 
 	character_modifier = {
-		monthly_lifestyle_xp_gain_mult = 0.1
+		monthly_lifestyle_xp_gain_mult = 0.15
+		learning = 1
 	}
 
 	ai_value = {
@@ -930,6 +1074,7 @@ aov_monument_koroshesh_library_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_krahgradir_01 = {
@@ -961,13 +1106,19 @@ aov_monument_krahgradir_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1
+	}
+
 	county_modifier = {
-		tax_mult = 0.045
+		tax_mult = 0.1
 		supply_limit_mult = 0.05
+		development_growth_factor = 0.1
 	}
 
 	character_modifier = {
 		vassal_opinion = 5
+		monthly_prestige = 0.5
 	}
 
 	next_building = aov_monument_krahgradir_02
@@ -981,6 +1132,7 @@ aov_monument_krahgradir_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_krahgradir_02 = {
@@ -1012,13 +1164,19 @@ aov_monument_krahgradir_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
 	county_modifier = {
-		tax_mult = 0.09
+		tax_mult = 0.12
 		supply_limit_mult = 0.1
+		development_growth_factor = 0.15
 	}
 
 	character_modifier = {
 		vassal_opinion = 10
+		monthly_prestige = 0.75
 	}
 
 	next_building = aov_monument_krahgradir_03
@@ -1032,6 +1190,7 @@ aov_monument_krahgradir_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_krahgradir_03 = {
@@ -1063,13 +1222,19 @@ aov_monument_krahgradir_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
 	county_modifier = {
 		tax_mult = 0.15
 		supply_limit_mult = 0.2
+		development_growth_factor = 0.2
 	}
 
 	character_modifier = {
 		vassal_opinion = 12.5
+		monthly_prestige = 1
 	}
 
 	ai_value = {
@@ -1081,6 +1246,7 @@ aov_monument_krahgradir_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_water_dreams_oasis_01 = {
@@ -1114,15 +1280,21 @@ aov_monument_water_dreams_oasis_01 = {
 
 	province_modifier = {
 		hostile_raid_time = 0.5
+		monthly_income = 1.5
 	}
 
 	county_modifier = {
 		supply_limit_mult = 0.125
+		tax_mult = 0.1
+		development_growth_factor = 0.15
+		development_growth = 0.1
+		county_opinion_add = 3
 	}
 
 	character_modifier = {
 		monthly_piety = 0.5
 		monthly_income_mult = 0.02
+		monthly_dynasty_prestige_mult = 0.02
 	}
 
 	next_building = aov_monument_water_dreams_oasis_02
@@ -1137,6 +1309,7 @@ aov_monument_water_dreams_oasis_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_water_dreams_oasis_02 = {
@@ -1168,14 +1341,23 @@ aov_monument_water_dreams_oasis_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
 	county_modifier = {
 		supply_limit_mult = 0.125
 		hostile_raid_time = 0.5
+		tax_mult = 0.15
+		development_growth_factor = 0.2
+		development_growth = 0.2
+		county_opinion_add = 4
 	}
 
 	character_modifier = {
-		monthly_piety = 0.5
+		monthly_piety = 0.75
 		monthly_income_mult = 0.04
+		monthly_dynasty_prestige_mult = 0.03
 	}
 
 	on_complete = {
@@ -1194,6 +1376,7 @@ aov_monument_water_dreams_oasis_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_water_dreams_oasis_03 = {
@@ -1225,15 +1408,23 @@ aov_monument_water_dreams_oasis_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
 	county_modifier = {
 		tax_mult = 0.3
 		supply_limit_mult = 0.125
 		hostile_raid_time = 0.5
+		development_growth_factor = 0.25
+		development_growth = 0.25
+		county_opinion_add = 5
 	}
 
 	character_modifier = {
 		monthly_piety = 1
 		monthly_income_mult = 0.04
+		monthly_dynasty_prestige_mult = 0.05
 	}
 
 	on_complete = {
@@ -1250,6 +1441,7 @@ aov_monument_water_dreams_oasis_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_zornartakel_naval_harbor_01 = {
@@ -1281,9 +1473,15 @@ aov_monument_zornartakel_naval_harbor_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 4
+	}
+
 	county_modifier = {
 		levy_reinforcement_rate = 0.062
 		levy_size = 0.062
+		tax_mult = 0.15
+		development_growth_factor = 0.1
 	}
 
 	character_modifier = {
@@ -1301,6 +1499,7 @@ aov_monument_zornartakel_naval_harbor_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_zornartakel_naval_harbor_02 = {
@@ -1332,10 +1531,15 @@ aov_monument_zornartakel_naval_harbor_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 6
+	}
+
 	county_modifier = {
 		levy_reinforcement_rate = 0.125
-		tax_mult = 0.05
+		tax_mult = 0.25
 		levy_size = 0.125
+		development_growth_factor = 0.15
 	}
 
 	character_modifier = {
@@ -1353,6 +1557,7 @@ aov_monument_zornartakel_naval_harbor_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_zornartakel_naval_harbor_03 = {
@@ -1384,10 +1589,15 @@ aov_monument_zornartakel_naval_harbor_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 8
+	}
+
 	county_modifier = {
 		levy_reinforcement_rate = 0.25
-		tax_mult = 0.1
+		tax_mult = 0.3
 		levy_size = 0.25
+		development_growth_factor = 0.2
 	}
 
 	character_modifier = {
@@ -1403,4 +1613,5 @@ aov_monument_zornartakel_naval_harbor_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }

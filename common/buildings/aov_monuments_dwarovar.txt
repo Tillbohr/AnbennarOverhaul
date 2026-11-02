@@ -29,8 +29,19 @@ aov_monument_gor_ozumbrog_the_topaz_throne_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1
+	}
+
+	county_modifier = {
+		development_growth_factor = 0.1
+	}
+
 	character_modifier = {
 		monthly_legitimacy_add = 0.062
+		monthly_prestige = 0.5
+		vassal_opinion = 5
+		monthly_dynasty_prestige_mult = 0.02
 	}
 
 	next_building = aov_monument_gor_ozumbrog_the_topaz_throne_02
@@ -44,6 +55,7 @@ aov_monument_gor_ozumbrog_the_topaz_throne_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 aov_monument_gor_ozumbrog_the_topaz_throne_02 = {
@@ -73,10 +85,21 @@ aov_monument_gor_ozumbrog_the_topaz_throne_02 = {
 		}
 	}
 
-	cost_gold = 1400
+	cost_gold = 1000
+
+	province_modifier = {
+		monthly_income = 1.5
+	}
+
+	county_modifier = {
+		development_growth_factor = 0.15
+	}
 
 	character_modifier = {
 		monthly_legitimacy_add = 0.125
+		monthly_prestige = 0.75
+		vassal_opinion = 8
+		monthly_dynasty_prestige_mult = 0.03
 	}
 
 	next_building = aov_monument_gor_ozumbrog_the_topaz_throne_03
@@ -90,6 +113,7 @@ aov_monument_gor_ozumbrog_the_topaz_throne_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 aov_monument_gor_ozumbrog_the_topaz_throne_03 = {
@@ -119,10 +143,21 @@ aov_monument_gor_ozumbrog_the_topaz_throne_03 = {
 		}
 	}
 
-	cost_gold = 2800
+	cost_gold = 2000
+
+	province_modifier = {
+		monthly_income = 2
+	}
+
+	county_modifier = {
+		development_growth_factor = 0.2
+	}
 
 	character_modifier = {
 		monthly_legitimacy_add = 0.25
+		monthly_prestige = 1
+		vassal_opinion = 10
+		monthly_dynasty_prestige_mult = 0.05
 	}
 
 	ai_value = {
@@ -134,6 +169,7 @@ aov_monument_gor_ozumbrog_the_topaz_throne_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 aov_monument_hehodovar_school_of_architecture_01 = {
@@ -171,11 +207,14 @@ aov_monument_hehodovar_school_of_architecture_01 = {
 
 	county_modifier = {
 		development_growth_factor = 0.1
+		tax_mult = 0.1
+		development_growth = 0.1
 	}
 
 	character_modifier = {
 		build_gold_cost = -0.05
 		build_speed = -0.05
+		monthly_lifestyle_xp_gain_mult = 0.05
 	}
 
 	next_building = aov_monument_hehodovar_school_of_architecture_02
@@ -189,6 +228,7 @@ aov_monument_hehodovar_school_of_architecture_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_hehodovar_school_of_architecture_02 = {
@@ -218,16 +258,19 @@ aov_monument_hehodovar_school_of_architecture_02 = {
 		}
 	}
 
-	cost_gold = 1400
+	cost_gold = 1000
 
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.2
 		building_slot_add = 1
+		tax_mult = 0.15
+		development_growth = 0.2
 	}
 
 	character_modifier = {
 		build_gold_cost = -0.075
 		build_speed = -0.075
+		monthly_lifestyle_xp_gain_mult = 0.1
 	}
 
 	next_building = aov_monument_hehodovar_school_of_architecture_03
@@ -241,6 +284,7 @@ aov_monument_hehodovar_school_of_architecture_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_hehodovar_school_of_architecture_03 = {
@@ -270,11 +314,18 @@ aov_monument_hehodovar_school_of_architecture_03 = {
 		}
 	}
 
-	cost_gold = 2800
+	cost_gold = 2000
+
+	county_modifier = {
+		tax_mult = 0.2
+		development_growth_factor = 0.25
+		development_growth = 0.25
+	}
 
 	character_modifier = {
 		build_gold_cost = -0.2
 		build_speed = -0.1
+		monthly_lifestyle_xp_gain_mult = 0.15
 	}
 
 	ai_value = {
@@ -286,6 +337,7 @@ aov_monument_hehodovar_school_of_architecture_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_khugdihr_bank_01 = {
@@ -319,6 +371,12 @@ aov_monument_khugdihr_bank_01 = {
 
 	province_modifier = {
 		fort_level = 1
+		monthly_income = 4
+	}
+
+	county_modifier = {
+		tax_mult = 0.15
+		development_growth_factor = 0.1
 	}
 
 	next_building = aov_monument_khugdihr_bank_02
@@ -332,6 +390,7 @@ aov_monument_khugdihr_bank_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_khugdihr_bank_02 = {
@@ -361,11 +420,17 @@ aov_monument_khugdihr_bank_02 = {
 		}
 	}
 
-	cost_gold = 1400
+	cost_gold = 1000
 
 	province_modifier = {
 		fort_level = 1
 		hostile_raid_time = 0.125
+		monthly_income = 6
+	}
+
+	county_modifier = {
+		tax_mult = 0.25
+		development_growth_factor = 0.15
 	}
 
 	next_building = aov_monument_khugdihr_bank_03
@@ -379,6 +444,7 @@ aov_monument_khugdihr_bank_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_khugdihr_bank_03 = {
@@ -408,12 +474,18 @@ aov_monument_khugdihr_bank_03 = {
 		}
 	}
 
-	cost_gold = 2800
+	cost_gold = 2000
 
 	province_modifier = {
 		fort_level = 2
 		hostile_raid_time = 0.25
 		defender_holding_advantage = 4
+		monthly_income = 8
+	}
+
+	county_modifier = {
+		tax_mult = 0.3
+		development_growth_factor = 0.2
 	}
 
 	ai_value = {
@@ -425,6 +497,7 @@ aov_monument_khugdihr_bank_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_seghdihr_home_of_the_seg_band_01 = {
@@ -458,11 +531,17 @@ aov_monument_seghdihr_home_of_the_seg_band_01 = {
 
 	province_modifier = {
 		fort_level = 1
+		defender_holding_advantage = 2
+		garrison_size = 0.2
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -10
 	}
 
 	character_modifier = {
 		vassal_levy_contribution_mult = 0.05
 		vassal_opinion = 5
+		monthly_prestige = 0.1
 	}
 
 	next_building = aov_monument_seghdihr_home_of_the_seg_band_02
@@ -477,6 +556,7 @@ aov_monument_seghdihr_home_of_the_seg_band_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_seghdihr_home_of_the_seg_band_02 = {
@@ -511,12 +591,18 @@ aov_monument_seghdihr_home_of_the_seg_band_02 = {
 	province_modifier = {
 		fort_level = 1
 		hostile_raid_time = 0.125
+		defender_holding_advantage = 4
+		garrison_size = 0.35
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -15
 	}
 
 	character_modifier = {
 		maa_toughness_mult = 0.025
 		vassal_levy_contribution_mult = 0.1
 		vassal_opinion = 10
+		monthly_prestige = 0.2
 	}
 
 	next_building = aov_monument_seghdihr_home_of_the_seg_band_03
@@ -531,6 +617,7 @@ aov_monument_seghdihr_home_of_the_seg_band_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_seghdihr_home_of_the_seg_band_03 = {
@@ -565,13 +652,18 @@ aov_monument_seghdihr_home_of_the_seg_band_03 = {
 	province_modifier = {
 		fort_level = 2
 		hostile_raid_time = 0.25
-		defender_holding_advantage = 4
+		defender_holding_advantage = 6
+		garrison_size = 0.5
+		stationed_maa_damage_mult = 0.2
+		stationed_maa_toughness_mult = 0.2
+		travel_danger = -20
 	}
 
 	character_modifier = {
 		maa_toughness_mult = 0.05
 		vassal_levy_contribution_mult = 0.15
 		vassal_opinion = 15
+		monthly_prestige = 0.3
 	}
 
 	ai_value = {
@@ -584,6 +676,7 @@ aov_monument_seghdihr_home_of_the_seg_band_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_verkal_gulan_golden_delve_01 = {
@@ -617,11 +710,12 @@ aov_monument_verkal_gulan_golden_delve_01 = {
 
 	province_modifier = {
 		fort_level = 1
+		monthly_income = 8
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.025
-		tax_mult = 0.075
+		development_growth_factor = 0.1
+		tax_mult = 0.25
 	}
 
 	next_building = aov_monument_verkal_gulan_golden_delve_02
@@ -635,6 +729,7 @@ aov_monument_verkal_gulan_golden_delve_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_verkal_gulan_golden_delve_02 = {
@@ -668,11 +763,12 @@ aov_monument_verkal_gulan_golden_delve_02 = {
 
 	province_modifier = {
 		fort_level = 1
+		monthly_income = 11
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.05
-		tax_mult = 0.15
+		development_growth_factor = 0.15
+		tax_mult = 0.3
 	}
 
 	next_building = aov_monument_verkal_gulan_golden_delve_03
@@ -686,6 +782,7 @@ aov_monument_verkal_gulan_golden_delve_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_verkal_gulan_golden_delve_03 = {
@@ -719,11 +816,12 @@ aov_monument_verkal_gulan_golden_delve_03 = {
 
 	province_modifier = {
 		fort_level = 2
+		monthly_income = 14
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.1
-		tax_mult = 0.25
+		development_growth_factor = 0.2
+		tax_mult = 0.35
 	}
 
 	ai_value = {
@@ -735,4 +833,5 @@ aov_monument_verkal_gulan_golden_delve_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }

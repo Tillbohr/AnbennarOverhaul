@@ -12,12 +12,15 @@ aov_monument_adenica_longlance_knights_academy_01 = {
 	cost_gold = 320
 
 	county_modifier = {
-		development_growth_factor = 0.05
+		development_growth_factor = 0.1
+		tax_mult = 0.1
+		development_growth = 0.1
 	}
 
 	character_modifier = {
 		monthly_martial_lifestyle_xp_gain_mult = 0.005
 		heavy_cavalry_damage_mult = 0.05
+		monthly_lifestyle_xp_gain_mult = 0.05
 	}
 
 	next_building = aov_monument_adenica_longlance_knights_academy_02
@@ -31,6 +34,7 @@ aov_monument_adenica_longlance_knights_academy_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_adenica_longlance_knights_academy_02 = {
@@ -45,12 +49,15 @@ aov_monument_adenica_longlance_knights_academy_02 = {
 	cost_gold = 800
 
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.2
+		tax_mult = 0.15
+		development_growth = 0.2
 	}
 
 	character_modifier = {
 		monthly_martial_lifestyle_xp_gain_mult = 0.015
 		heavy_cavalry_damage_mult = 0.1
+		monthly_lifestyle_xp_gain_mult = 0.1
 	}
 
 	on_complete = {
@@ -68,6 +75,7 @@ aov_monument_adenica_longlance_knights_academy_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_adenica_longlance_knights_academy_03 = {
@@ -82,13 +90,16 @@ aov_monument_adenica_longlance_knights_academy_03 = {
 	cost_gold = 1600
 
 	county_modifier = {
-		development_growth_factor = 0.15
+		development_growth_factor = 0.25
+		tax_mult = 0.2
+		development_growth = 0.25
 	}
 
 	character_modifier = {
 		monthly_martial_lifestyle_xp_gain_mult = 0.025
 		heavy_cavalry_damage_mult = 0.2
 		heavy_cavalry_max_size_add = 1
+		monthly_lifestyle_xp_gain_mult = 0.15
 	}
 
 	ai_value = {
@@ -100,6 +111,7 @@ aov_monument_adenica_longlance_knights_academy_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 # Anbennar Overhaul: Anbennar's calasandur_castle_aelcandar_01 with EU4 tier 2 merged in
@@ -138,6 +150,11 @@ aov_monument_aelcandar_02 = {
 		defender_holding_advantage = normal_building_advantage_tier_3
 		# Anbennar Overhaul: EU4 tier 2 (+2 to good_building_fort_level_tier_3 = 6)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 2
+		garrison_size = 0.35
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -15
 	}
 	county_modifier = {
 		development_growth = 0.2
@@ -152,6 +169,8 @@ aov_monument_aelcandar_02 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 2
+
 	next_building = aov_monument_aelcandar_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
@@ -183,7 +202,8 @@ aov_monument_aelcandar_03 = {
 	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	character_modifier = {
-		monthly_prestige = 0.2
+		# Anbennar Overhaul: core effects tier 3 (stronger of 0.2 and 0.3)
+		monthly_prestige = 0.3
 		# Anbennar Overhaul: EU4 tier 3
 		tyranny_gain_mult = -0.2
 		domain_limit = 1
@@ -194,6 +214,11 @@ aov_monument_aelcandar_03 = {
 		defender_holding_advantage = 8
 		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6, capped at 8; 2 moved to defender_holding_advantage)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 3
+		garrison_size = 0.5
+		stationed_maa_damage_mult = 0.2
+		stationed_maa_toughness_mult = 0.2
+		travel_danger = -20
 	}
 	county_modifier = {
 		development_growth = 0.2
@@ -208,6 +233,8 @@ aov_monument_aelcandar_03 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 3
+
 	type = special
 }
 
@@ -223,12 +250,15 @@ aov_monument_ancardia_escanni_academy_of_war_01 = {
 	cost_gold = 320
 
 	county_modifier = {
-		development_growth_factor = 0.05
+		development_growth_factor = 0.1
+		tax_mult = 0.1
+		development_growth = 0.1
 	}
 
 	character_modifier = {
 		maa_damage_mult = 0.02
 		maa_toughness_mult = 0.03
+		monthly_lifestyle_xp_gain_mult = 0.05
 	}
 
 	next_building = aov_monument_ancardia_escanni_academy_of_war_02
@@ -242,6 +272,7 @@ aov_monument_ancardia_escanni_academy_of_war_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_ancardia_escanni_academy_of_war_02 = {
@@ -256,12 +287,15 @@ aov_monument_ancardia_escanni_academy_of_war_02 = {
 	cost_gold = 800
 
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.2
+		tax_mult = 0.15
+		development_growth = 0.2
 	}
 
 	character_modifier = {
 		maa_damage_mult = 0.06
 		maa_toughness_mult = 0.06
+		monthly_lifestyle_xp_gain_mult = 0.1
 	}
 
 	next_building = aov_monument_ancardia_escanni_academy_of_war_03
@@ -275,6 +309,7 @@ aov_monument_ancardia_escanni_academy_of_war_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_ancardia_escanni_academy_of_war_03 = {
@@ -289,13 +324,16 @@ aov_monument_ancardia_escanni_academy_of_war_03 = {
 	cost_gold = 1600
 
 	county_modifier = {
-		development_growth_factor = 0.15
+		development_growth_factor = 0.25
+		tax_mult = 0.2
+		development_growth = 0.25
 	}
 
 	character_modifier = {
 		maa_damage_mult = 0.1
 		maa_toughness_mult = 0.1
 		knight_limit = 1
+		monthly_lifestyle_xp_gain_mult = 0.15
 	}
 
 	ai_value = {
@@ -307,6 +345,7 @@ aov_monument_ancardia_escanni_academy_of_war_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_ara_temple_01 = {
@@ -338,16 +377,22 @@ aov_monument_ara_temple_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1.5
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.05
-		county_opinion_add = 2
+		development_growth_factor = 0.15
+		county_opinion_add = 3
 		tax_mult = 0.1
+		development_growth = 0.1
 	}
 
 	character_modifier = {
-		monthly_piety = 0.125
+		monthly_piety = 0.5
 		monthly_income_mult = 0.013
 		domain_tax_mult = 0.025
+		monthly_dynasty_prestige_mult = 0.02
 	}
 
 	next_building = aov_monument_ara_temple_02
@@ -362,6 +407,7 @@ aov_monument_ara_temple_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_ara_temple_02 = {
@@ -393,16 +439,22 @@ aov_monument_ara_temple_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.2
 		county_opinion_add = 6
 		tax_mult = 0.165
+		development_growth = 0.2
 	}
 
 	character_modifier = {
-		monthly_piety = 0.25
+		monthly_piety = 0.75
 		monthly_income_mult = 0.025
 		domain_tax_mult = 0.05
+		monthly_dynasty_prestige_mult = 0.03
 	}
 
 	next_building = aov_monument_ara_temple_03
@@ -417,6 +469,7 @@ aov_monument_ara_temple_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_ara_temple_03 = {
@@ -448,16 +501,22 @@ aov_monument_ara_temple_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.15
+		development_growth_factor = 0.25
 		county_opinion_add = 10
 		tax_mult = 0.25
+		development_growth = 0.25
 	}
 
 	character_modifier = {
-		monthly_piety = 0.5
+		monthly_piety = 1
 		monthly_income_mult = 0.05
 		domain_tax_mult = 0.1
+		monthly_dynasty_prestige_mult = 0.05
 	}
 
 	ai_value = {
@@ -470,6 +529,7 @@ aov_monument_ara_temple_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_ascajar_01 = {
@@ -501,8 +561,19 @@ aov_monument_ascajar_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1
+	}
+
 	county_modifier = {
 		monthly_county_control_growth_add = 0.25
+		development_growth_factor = 0.1
+	}
+
+	character_modifier = {
+		monthly_prestige = 0.5
+		vassal_opinion = 5
+		monthly_dynasty_prestige_mult = 0.02
 	}
 
 	next_building = aov_monument_ascajar_02
@@ -516,6 +587,7 @@ aov_monument_ascajar_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 aov_monument_ascajar_02 = {
@@ -547,12 +619,20 @@ aov_monument_ascajar_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 1.5
+	}
+
 	county_modifier = {
 		monthly_county_control_growth_add = 0.25
+		development_growth_factor = 0.15
 	}
 
 	character_modifier = {
 		levy_size = 0.075
+		monthly_prestige = 0.75
+		vassal_opinion = 8
+		monthly_dynasty_prestige_mult = 0.03
 	}
 
 	next_building = aov_monument_ascajar_03
@@ -566,6 +646,7 @@ aov_monument_ascajar_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 aov_monument_ascajar_03 = {
@@ -597,12 +678,20 @@ aov_monument_ascajar_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
 	county_modifier = {
 		monthly_county_control_growth_add = 0.25
+		development_growth_factor = 0.2
 	}
 
 	character_modifier = {
 		levy_size = 0.075
+		monthly_prestige = 1
+		vassal_opinion = 10
+		monthly_dynasty_prestige_mult = 0.05
 	}
 
 	ai_value = {
@@ -614,6 +703,7 @@ aov_monument_ascajar_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 # Anbennar Overhaul: Anbennar's castanorian_citadel_bal_dostan_01 with EU4 tier 2 merged in
@@ -635,7 +725,8 @@ aov_monument_bal_dostan_02 = {
 	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 2 (1000), not below castanorian_citadel_bal_dostan_01
 
 	character_modifier = {
-		monthly_prestige = 0.1
+		# Anbennar Overhaul: core effects tier 2 (stronger of 0.1 and 0.2)
+		monthly_prestige = 0.2
 		# Anbennar Overhaul: EU4 tier 2
 		vassal_tax_contribution_mult = 0.1
 	}
@@ -644,6 +735,11 @@ aov_monument_bal_dostan_02 = {
 		defender_holding_advantage = normal_building_advantage_tier_3
 		# Anbennar Overhaul: EU4 tier 2 (+2 to good_building_fort_level_tier_3 = 6)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 2
+		garrison_size = 0.35
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -15
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -662,6 +758,8 @@ aov_monument_bal_dostan_02 = {
 		# Anbennar Overhaul: EU4 tier 2
 		barony.holder = { add_prestige = 100 }
 	}
+
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 2
 
 	next_building = aov_monument_bal_dostan_03 # Anbennar Overhaul: EU4 tier 2
 
@@ -687,7 +785,8 @@ aov_monument_bal_dostan_03 = {
 	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	character_modifier = {
-		monthly_prestige = 0.1
+		# Anbennar Overhaul: core effects tier 3 (stronger of 0.1 and 0.3)
+		monthly_prestige = 0.3
 		# Anbennar Overhaul: EU4 tier 3
 		vassal_tax_contribution_mult = 0.1
 	}
@@ -696,6 +795,11 @@ aov_monument_bal_dostan_03 = {
 		defender_holding_advantage = normal_building_advantage_tier_3
 		# Anbennar Overhaul: EU4 tier 3 (+2 to good_building_fort_level_tier_3 = 6)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 3
+		garrison_size = 0.5
+		stationed_maa_damage_mult = 0.2
+		stationed_maa_toughness_mult = 0.2
+		travel_danger = -20
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -711,6 +815,8 @@ aov_monument_bal_dostan_03 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 3
+
 	type = special
 }
 
@@ -740,7 +846,8 @@ aov_monument_bal_hyl_02 = {
 	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 2 (1000), not below castanorian_citadel_bal_hyl_01
 
 	character_modifier = {
-		monthly_prestige = 0.1
+		# Anbennar Overhaul: core effects tier 2 (stronger of 0.1 and 0.2)
+		monthly_prestige = 0.2
 		# Anbennar Overhaul: EU4 tier 2
 		owned_scheme_secrecy_add = 3
 		general_opinion = 1
@@ -750,6 +857,11 @@ aov_monument_bal_hyl_02 = {
 		defender_holding_advantage = normal_building_advantage_tier_3
 		# Anbennar Overhaul: EU4 tier 2 (+2 to good_building_fort_level_tier_3 = 6)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 2
+		garrison_size = 0.35
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -15
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -764,6 +876,8 @@ aov_monument_bal_hyl_02 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 2
+
 	next_building = aov_monument_bal_hyl_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
@@ -795,7 +909,8 @@ aov_monument_bal_hyl_03 = {
 	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	character_modifier = {
-		monthly_prestige = 0.1
+		# Anbennar Overhaul: core effects tier 3 (stronger of 0.1 and 0.3)
+		monthly_prestige = 0.3
 		# Anbennar Overhaul: EU4 tier 3
 		owned_scheme_secrecy_add = 5
 		general_opinion = 2
@@ -806,6 +921,11 @@ aov_monument_bal_hyl_03 = {
 		defender_holding_advantage = 8
 		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6, capped at 8; 2 moved to defender_holding_advantage)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 3
+		garrison_size = 0.5
+		stationed_maa_damage_mult = 0.2
+		stationed_maa_toughness_mult = 0.2
+		travel_danger = -20
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -820,6 +940,8 @@ aov_monument_bal_hyl_03 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 3
+
 	type = special
 }
 
@@ -842,7 +964,8 @@ aov_monument_bal_mire_02 = {
 	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 2 (1000), not below castanorian_citadel_bal_mire_02
 
 	character_modifier = {
-		monthly_prestige = 0.1
+		# Anbennar Overhaul: core effects tier 2 (stronger of 0.1 and 0.2)
+		monthly_prestige = 0.2
 		# Anbennar Overhaul: EU4 tier 2
 		supply_limit_mult = 0.2
 		army_maintenance_mult = -0.037
@@ -854,6 +977,11 @@ aov_monument_bal_mire_02 = {
 		fort_level = 8
 		# Anbennar Overhaul: EU4 tier 2
 		hostile_raid_time = 0.25
+		# Anbennar Overhaul: core effects tier 2
+		garrison_size = 0.35
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -15
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -868,6 +996,8 @@ aov_monument_bal_mire_02 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 2
+
 	next_building = aov_monument_bal_mire_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
@@ -892,7 +1022,8 @@ aov_monument_bal_mire_03 = {
 	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	character_modifier = {
-		monthly_prestige = 0.1
+		# Anbennar Overhaul: core effects tier 3 (stronger of 0.1 and 0.3)
+		monthly_prestige = 0.3
 		# Anbennar Overhaul: EU4 tier 3
 		supply_limit_mult = 0.2
 		army_maintenance_mult = -0.037
@@ -904,6 +1035,11 @@ aov_monument_bal_mire_03 = {
 		defender_holding_advantage = 8
 		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6, capped at 8; 2 moved to defender_holding_advantage)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 3
+		garrison_size = 0.5
+		stationed_maa_damage_mult = 0.2
+		stationed_maa_toughness_mult = 0.2
+		travel_danger = -20
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -918,6 +1054,8 @@ aov_monument_bal_mire_03 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 3
+
 	type = special
 }
 
@@ -947,7 +1085,8 @@ aov_monument_bal_ouord_02 = {
 	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 2 (1000), not below castanorian_citadel_bal_ouord_02
 
 	character_modifier = {
-		monthly_prestige = 0.1
+		# Anbennar Overhaul: core effects tier 2 (stronger of 0.1 and 0.2)
+		monthly_prestige = 0.2
 		# Anbennar Overhaul: EU4 tier 2
 		embarkation_cost_mult = -0.15
 		garrison_size = 0.15
@@ -957,6 +1096,11 @@ aov_monument_bal_ouord_02 = {
 		defender_holding_advantage = normal_building_advantage_tier_3
 		# Anbennar Overhaul: EU4 tier 2 (+2 to good_building_fort_level_tier_3 = 6)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 2
+		garrison_size = 0.35
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -15
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -971,6 +1115,8 @@ aov_monument_bal_ouord_02 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 2
+
 	next_building = aov_monument_bal_ouord_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
@@ -1002,7 +1148,8 @@ aov_monument_bal_ouord_03 = {
 	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	character_modifier = {
-		monthly_prestige = 0.1
+		# Anbennar Overhaul: core effects tier 3 (stronger of 0.1 and 0.3)
+		monthly_prestige = 0.3
 		# Anbennar Overhaul: EU4 tier 3
 		embarkation_cost_mult = -0.2
 		garrison_size = 0.25
@@ -1013,6 +1160,11 @@ aov_monument_bal_ouord_03 = {
 		defender_holding_advantage = 8
 		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6, capped at 8; 2 moved to defender_holding_advantage)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 3
+		garrison_size = 0.5
+		stationed_maa_damage_mult = 0.2
+		stationed_maa_toughness_mult = 0.2
+		travel_danger = -20
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -1027,6 +1179,8 @@ aov_monument_bal_ouord_03 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 3
+
 	type = special
 }
 
@@ -1056,7 +1210,8 @@ aov_monument_bal_vertesk_02 = {
 	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 2 (1000), not below castanorian_citadel_bal_vertesk_01
 
 	character_modifier = {
-		monthly_prestige = 0.1
+		# Anbennar Overhaul: core effects tier 2 (stronger of 0.1 and 0.2)
+		monthly_prestige = 0.2
 		# Anbennar Overhaul: EU4 tier 2
 		owned_hostile_scheme_success_chance_add = 5
 	}
@@ -1065,6 +1220,11 @@ aov_monument_bal_vertesk_02 = {
 		defender_holding_advantage = normal_building_advantage_tier_3
 		# Anbennar Overhaul: EU4 tier 2 (+2 to good_building_fort_level_tier_3 = 6)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 2
+		garrison_size = 0.35
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -15
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -1079,6 +1239,8 @@ aov_monument_bal_vertesk_02 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 2
+
 	next_building = aov_monument_bal_vertesk_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
@@ -1110,7 +1272,8 @@ aov_monument_bal_vertesk_03 = {
 	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	character_modifier = {
-		monthly_prestige = 0.1
+		# Anbennar Overhaul: core effects tier 3 (stronger of 0.1 and 0.3)
+		monthly_prestige = 0.3
 		# Anbennar Overhaul: EU4 tier 3
 		owned_hostile_scheme_success_chance_add = 10
 	}
@@ -1120,6 +1283,11 @@ aov_monument_bal_vertesk_03 = {
 		defender_holding_advantage = 8
 		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6, capped at 8; 2 moved to defender_holding_advantage)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 3
+		garrison_size = 0.5
+		stationed_maa_damage_mult = 0.2
+		stationed_maa_toughness_mult = 0.2
+		travel_danger = -20
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -1134,6 +1302,8 @@ aov_monument_bal_vertesk_03 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 3
+
 	type = special
 }
 
@@ -1163,7 +1333,8 @@ aov_monument_bal_vroren_02 = {
 	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 2 (1000), not below castanorian_citadel_bal_vroren_02
 
 	character_modifier = {
-		monthly_prestige = 0.1
+		# Anbennar Overhaul: core effects tier 2 (stronger of 0.1 and 0.2)
+		monthly_prestige = 0.2
 		# Anbennar Overhaul: EU4 tier 2
 		maa_toughness_mult = 0.04
 	}
@@ -1172,6 +1343,11 @@ aov_monument_bal_vroren_02 = {
 		defender_holding_advantage = normal_building_advantage_tier_3
 		# Anbennar Overhaul: EU4 tier 2 (+2 to good_building_fort_level_tier_3 = 6)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 2
+		garrison_size = 0.35
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -15
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -1186,6 +1362,8 @@ aov_monument_bal_vroren_02 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 2
+
 	next_building = aov_monument_bal_vroren_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
@@ -1217,7 +1395,8 @@ aov_monument_bal_vroren_03 = {
 	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	character_modifier = {
-		monthly_prestige = 0.1
+		# Anbennar Overhaul: core effects tier 3 (stronger of 0.1 and 0.3)
+		monthly_prestige = 0.3
 		# Anbennar Overhaul: EU4 tier 3
 		maa_toughness_mult = 0.08
 		monthly_martial_lifestyle_xp_gain_mult = 0.1
@@ -1228,6 +1407,11 @@ aov_monument_bal_vroren_03 = {
 		defender_holding_advantage = 8
 		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6, capped at 8; 2 moved to defender_holding_advantage)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 3
+		garrison_size = 0.5
+		stationed_maa_damage_mult = 0.2
+		stationed_maa_toughness_mult = 0.2
+		travel_danger = -20
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -1242,6 +1426,8 @@ aov_monument_bal_vroren_03 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 3
+
 	type = special
 }
 
@@ -1257,12 +1443,18 @@ aov_monument_baths_of_verinus_01 = {
 	cost_gold = 400
 
 	province_modifier = {
-		monthly_income = 0.5
+		monthly_income = 1
+	}
+
+	county_modifier = {
+		tax_mult = 0.1
+		development_growth_factor = 0.1
 	}
 
 	character_modifier = {
 		life_expectancy = 2
 		vassal_opinion = 2.5
+		monthly_prestige = 0.5
 	}
 
 	next_building = aov_monument_baths_of_verinus_02
@@ -1276,6 +1468,7 @@ aov_monument_baths_of_verinus_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_stress_relief
 }
 
 aov_monument_baths_of_verinus_02 = {
@@ -1289,9 +1482,19 @@ aov_monument_baths_of_verinus_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
+	county_modifier = {
+		tax_mult = 0.12
+		development_growth_factor = 0.15
+	}
+
 	character_modifier = {
 		life_expectancy = 4
 		vassal_opinion = 2.5
+		monthly_prestige = 0.75
 	}
 
 	next_building = aov_monument_baths_of_verinus_03
@@ -1305,6 +1508,7 @@ aov_monument_baths_of_verinus_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_stress_relief
 }
 
 aov_monument_baths_of_verinus_03 = {
@@ -1318,9 +1522,19 @@ aov_monument_baths_of_verinus_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
+	county_modifier = {
+		tax_mult = 0.15
+		development_growth_factor = 0.2
+	}
+
 	character_modifier = {
 		life_expectancy = 6
 		vassal_opinion = 5
+		monthly_prestige = 1
 	}
 
 	ai_value = {
@@ -1332,6 +1546,7 @@ aov_monument_baths_of_verinus_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_stress_relief
 }
 
 aov_monument_bayvic_grandest_city_of_the_reach_01 = {
@@ -1363,9 +1578,13 @@ aov_monument_bayvic_grandest_city_of_the_reach_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 4
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.05
-		tax_mult = 0.05
+		development_growth_factor = 0.1
+		tax_mult = 0.15
 	}
 
 	character_modifier = {
@@ -1384,6 +1603,7 @@ aov_monument_bayvic_grandest_city_of_the_reach_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_bayvic_grandest_city_of_the_reach_02 = {
@@ -1415,9 +1635,13 @@ aov_monument_bayvic_grandest_city_of_the_reach_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 6
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.1
-		tax_mult = 0.075
+		development_growth_factor = 0.15
+		tax_mult = 0.25
 	}
 
 	character_modifier = {
@@ -1436,6 +1660,7 @@ aov_monument_bayvic_grandest_city_of_the_reach_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_bayvic_grandest_city_of_the_reach_03 = {
@@ -1467,9 +1692,13 @@ aov_monument_bayvic_grandest_city_of_the_reach_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 8
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.15
-		tax_mult = 0.125
+		development_growth_factor = 0.2
+		tax_mult = 0.3
 	}
 
 	character_modifier = {
@@ -1487,6 +1716,7 @@ aov_monument_bayvic_grandest_city_of_the_reach_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_beepeck_the_largest_small_city_01 = {
@@ -1518,9 +1748,13 @@ aov_monument_beepeck_the_largest_small_city_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 4
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.05
-		tax_mult = 0.05
+		development_growth_factor = 0.1
+		tax_mult = 0.15
 	}
 
 	character_modifier = {
@@ -1538,6 +1772,7 @@ aov_monument_beepeck_the_largest_small_city_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_beepeck_the_largest_small_city_02 = {
@@ -1570,12 +1805,12 @@ aov_monument_beepeck_the_largest_small_city_02 = {
 	cost_gold = 1000
 
 	province_modifier = {
-		monthly_income = 0.5
+		monthly_income = 6
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.1
-		tax_mult = 0.1
+		development_growth_factor = 0.15
+		tax_mult = 0.25
 	}
 
 	character_modifier = {
@@ -1593,6 +1828,7 @@ aov_monument_beepeck_the_largest_small_city_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_beepeck_the_largest_small_city_03 = {
@@ -1625,12 +1861,12 @@ aov_monument_beepeck_the_largest_small_city_03 = {
 	cost_gold = 2000
 
 	province_modifier = {
-		monthly_income = 1
+		monthly_income = 8
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.15
-		tax_mult = 0.175
+		development_growth_factor = 0.2
+		tax_mult = 0.3
 	}
 
 	character_modifier = {
@@ -1646,6 +1882,7 @@ aov_monument_beepeck_the_largest_small_city_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_bjarnrik_staple_port_of_konungrhavn_01 = {
@@ -1678,11 +1915,12 @@ aov_monument_bjarnrik_staple_port_of_konungrhavn_01 = {
 	cost_gold = 400
 
 	province_modifier = {
-		monthly_income = 0.3
+		monthly_income = 4
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.05
+		development_growth_factor = 0.1
+		tax_mult = 0.15
 	}
 
 	character_modifier = {
@@ -1700,6 +1938,7 @@ aov_monument_bjarnrik_staple_port_of_konungrhavn_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_bjarnrik_staple_port_of_konungrhavn_02 = {
@@ -1732,11 +1971,12 @@ aov_monument_bjarnrik_staple_port_of_konungrhavn_02 = {
 	cost_gold = 1000
 
 	province_modifier = {
-		monthly_income = 0.5
+		monthly_income = 6
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.15
+		tax_mult = 0.25
 	}
 
 	character_modifier = {
@@ -1758,6 +1998,7 @@ aov_monument_bjarnrik_staple_port_of_konungrhavn_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_bjarnrik_staple_port_of_konungrhavn_03 = {
@@ -1790,11 +2031,12 @@ aov_monument_bjarnrik_staple_port_of_konungrhavn_03 = {
 	cost_gold = 2000
 
 	province_modifier = {
-		monthly_income = 1
+		monthly_income = 8
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.15
+		development_growth_factor = 0.2
+		tax_mult = 0.3
 	}
 
 	character_modifier = {
@@ -1810,6 +2052,7 @@ aov_monument_bjarnrik_staple_port_of_konungrhavn_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_black_iron_mine_01 = {
@@ -1841,8 +2084,13 @@ aov_monument_black_iron_mine_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 8
+	}
+
 	county_modifier = {
-		tax_mult = 0.1
+		tax_mult = 0.25
+		development_growth_factor = 0.1
 	}
 
 	character_modifier = {
@@ -1860,6 +2108,7 @@ aov_monument_black_iron_mine_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_black_iron_mine_02 = {
@@ -1891,8 +2140,13 @@ aov_monument_black_iron_mine_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 11
+	}
+
 	county_modifier = {
-		tax_mult = 0.2
+		tax_mult = 0.3
+		development_growth_factor = 0.15
 	}
 
 	character_modifier = {
@@ -1911,6 +2165,7 @@ aov_monument_black_iron_mine_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_black_iron_mine_03 = {
@@ -1942,8 +2197,13 @@ aov_monument_black_iron_mine_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 14
+	}
+
 	county_modifier = {
-		tax_mult = 0.3
+		tax_mult = 0.35
+		development_growth_factor = 0.2
 	}
 
 	character_modifier = {
@@ -1960,6 +2220,7 @@ aov_monument_black_iron_mine_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 # Anbennar Overhaul: Anbennar's castle_bladeskeep_02 with EU4 tier 2 merged in
@@ -1980,6 +2241,8 @@ aov_monument_bladeskeep_monument_02 = {
 		# Anbennar Overhaul: EU4 tier 2
 		monthly_martial_lifestyle_xp_gain_mult = 0.05
 		monthly_prestige_gain_mult = 0.05
+		# Anbennar Overhaul: core effects tier 2
+		monthly_prestige = 0.2
 	}
 	max_garrison = good_building_max_garrison_tier_2
 	province_modifier = {
@@ -1987,6 +2250,9 @@ aov_monument_bladeskeep_monument_02 = {
 		fort_level = normal_building_fort_level_tier_2
 		stationed_maa_damage_mult = high_maa_damage_tier_2
 		stationed_maa_toughness_mult = high_maa_toughness_tier_2
+		# Anbennar Overhaul: core effects tier 2
+		garrison_size = 0.35
+		travel_danger = -15
 	}
 	county_modifier = {
 		tax_mult = 0.05
@@ -2002,6 +2268,8 @@ aov_monument_bladeskeep_monument_02 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 2
+
 	next_building = aov_monument_bladeskeep_monument_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
@@ -2025,13 +2293,19 @@ aov_monument_bladeskeep_monument_03 = {
 		# Anbennar Overhaul: EU4 tier 3
 		monthly_martial_lifestyle_xp_gain_mult = 0.075
 		monthly_prestige_gain_mult = 0.1
+		# Anbennar Overhaul: core effects tier 3
+		monthly_prestige = 0.3
 	}
 	max_garrison = good_building_max_garrison_tier_2
 	province_modifier = {
-		defender_holding_advantage = normal_building_advantage_tier_2
+		# Anbennar Overhaul: core effects tier 3 (stronger of normal_building_advantage_tier_2 and 6)
+		defender_holding_advantage = 6
 		fort_level = normal_building_fort_level_tier_2
 		stationed_maa_damage_mult = high_maa_damage_tier_2
 		stationed_maa_toughness_mult = high_maa_toughness_tier_2
+		# Anbennar Overhaul: core effects tier 3
+		garrison_size = 0.5
+		travel_danger = -20
 	}
 	county_modifier = {
 		tax_mult = 0.05
@@ -2047,6 +2321,8 @@ aov_monument_bladeskeep_monument_03 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 3
+
 	type = special
 }
 
@@ -2061,8 +2337,17 @@ aov_monument_bladeskeep_shaded_monument_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		defender_holding_advantage = 2
+		garrison_size = 0.2
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -10
+	}
+
 	character_modifier = {
 		monthly_magic_lifestyle_xp_gain_mult = 0.125
+		monthly_prestige = 0.1
 	}
 
 	next_building = aov_monument_bladeskeep_shaded_monument_02
@@ -2077,6 +2362,7 @@ aov_monument_bladeskeep_shaded_monument_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_bladeskeep_shaded_monument_02 = {
@@ -2090,9 +2376,18 @@ aov_monument_bladeskeep_shaded_monument_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		defender_holding_advantage = 4
+		garrison_size = 0.35
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -15
+	}
+
 	character_modifier = {
 		monthly_magic_lifestyle_xp_gain_mult = 0.125
 		monthly_lifestyle_xp_gain_mult = 0.05
+		monthly_prestige = 0.2
 	}
 
 	next_building = aov_monument_bladeskeep_shaded_monument_03
@@ -2107,6 +2402,7 @@ aov_monument_bladeskeep_shaded_monument_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_bladeskeep_shaded_monument_03 = {
@@ -2120,9 +2416,18 @@ aov_monument_bladeskeep_shaded_monument_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		defender_holding_advantage = 6
+		garrison_size = 0.5
+		stationed_maa_damage_mult = 0.2
+		stationed_maa_toughness_mult = 0.2
+		travel_danger = -20
+	}
+
 	character_modifier = {
 		monthly_magic_lifestyle_xp_gain_mult = 0.125
 		monthly_lifestyle_xp_gain_mult = 0.1
+		monthly_prestige = 0.3
 	}
 
 	ai_value = {
@@ -2135,6 +2440,7 @@ aov_monument_bladeskeep_shaded_monument_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_blaiddscal_academy_monument_01 = {
@@ -2150,10 +2456,14 @@ aov_monument_blaiddscal_academy_monument_01 = {
 
 	county_modifier = {
 		levy_size = 0.25
+		tax_mult = 0.1
+		development_growth_factor = 0.1
+		development_growth = 0.1
 	}
 
 	character_modifier = {
 		provisions_use_mult = -0.1
+		monthly_lifestyle_xp_gain_mult = 0.05
 	}
 
 	next_building = aov_monument_blaiddscal_academy_monument_02
@@ -2167,6 +2477,7 @@ aov_monument_blaiddscal_academy_monument_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_blaiddscal_academy_monument_02 = {
@@ -2182,11 +2493,15 @@ aov_monument_blaiddscal_academy_monument_02 = {
 
 	county_modifier = {
 		levy_size = 0.375
+		tax_mult = 0.15
+		development_growth_factor = 0.2
+		development_growth = 0.2
 	}
 
 	character_modifier = {
 		provisions_use_mult = -0.1
 		levy_toughness = 3
+		monthly_lifestyle_xp_gain_mult = 0.1
 	}
 
 	next_building = aov_monument_blaiddscal_academy_monument_03
@@ -2200,6 +2515,7 @@ aov_monument_blaiddscal_academy_monument_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_blaiddscal_academy_monument_03 = {
@@ -2215,12 +2531,16 @@ aov_monument_blaiddscal_academy_monument_03 = {
 
 	county_modifier = {
 		levy_size = 0.5
+		tax_mult = 0.2
+		development_growth_factor = 0.25
+		development_growth = 0.25
 	}
 
 	character_modifier = {
 		provisions_use_mult = -0.1
 		levy_toughness = 3
 		advantage = 3
+		monthly_lifestyle_xp_gain_mult = 0.15
 	}
 
 	ai_value = {
@@ -2232,6 +2552,7 @@ aov_monument_blaiddscal_academy_monument_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 # Anbennar Overhaul: Anbennar's calasandur_castle_calascandar_01 with EU4 tier 2 merged in
@@ -2253,10 +2574,14 @@ aov_monument_calascandar_02 = {
 	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 2 (1000), not below calasandur_castle_calascandar_01
 
 	character_modifier = {
-		monthly_prestige = 0.3
+		# Anbennar Overhaul: core effects tier 2 (stronger of 0.3 and 0.75)
+		monthly_prestige = 0.75
 		# Anbennar Overhaul: EU4 tier 2
 		monthly_income_mult = 0.04
 		army_maintenance_mult = -0.037
+		# Anbennar Overhaul: core effects tier 2
+		vassal_opinion = 8
+		monthly_dynasty_prestige_mult = 0.03
 	}
 	max_garrison = good_building_max_garrison_tier_4
 	province_modifier = {
@@ -2264,6 +2589,8 @@ aov_monument_calascandar_02 = {
 		defender_holding_advantage = 10
 		# Anbennar Overhaul: EU4 tier 2 (+2 to good_building_fort_level_tier_4 = 8, capped at 8; 2 moved to defender_holding_advantage)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 2
+		monthly_income = 1.5
 	}
 	county_modifier = {
 		development_growth = 0.2
@@ -2279,6 +2606,8 @@ aov_monument_calascandar_02 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 2
+
 	next_building = aov_monument_calascandar_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
@@ -2303,10 +2632,14 @@ aov_monument_calascandar_03 = {
 	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	character_modifier = {
-		monthly_prestige = 0.3
+		# Anbennar Overhaul: core effects tier 3 (stronger of 0.3 and 1)
+		monthly_prestige = 1
 		# Anbennar Overhaul: EU4 tier 3
 		monthly_income_mult = 0.05
 		army_maintenance_mult = -0.075
+		# Anbennar Overhaul: core effects tier 3
+		vassal_opinion = 10
+		monthly_dynasty_prestige_mult = 0.05
 	}
 	max_garrison = good_building_max_garrison_tier_4
 	province_modifier = {
@@ -2314,6 +2647,8 @@ aov_monument_calascandar_03 = {
 		defender_holding_advantage = 12
 		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_4 = 8, capped at 8; 4 moved to defender_holding_advantage)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 3
+		monthly_income = 2
 	}
 	county_modifier = {
 		development_growth = 0.2
@@ -2331,6 +2666,8 @@ aov_monument_calascandar_03 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 3
+
 	type = special
 }
 
@@ -2364,7 +2701,7 @@ aov_monument_celmaldor_icewind_palace_of_commerce_01 = {
 	cost_gold = 400
 
 	province_modifier = {
-		monthly_income = 0.3
+		monthly_income = 1
 	}
 
 	county_modifier = {
@@ -2374,6 +2711,9 @@ aov_monument_celmaldor_icewind_palace_of_commerce_01 = {
 	character_modifier = {
 		naval_movement_speed_mult = 0.025
 		monthly_income_mult = 0.025
+		monthly_prestige = 0.5
+		vassal_opinion = 5
+		monthly_dynasty_prestige_mult = 0.02
 	}
 
 	next_building = aov_monument_celmaldor_icewind_palace_of_commerce_02
@@ -2387,6 +2727,7 @@ aov_monument_celmaldor_icewind_palace_of_commerce_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 aov_monument_celmaldor_icewind_palace_of_commerce_02 = {
@@ -2419,7 +2760,7 @@ aov_monument_celmaldor_icewind_palace_of_commerce_02 = {
 	cost_gold = 1000
 
 	province_modifier = {
-		monthly_income = 0.5
+		monthly_income = 1.5
 	}
 
 	county_modifier = {
@@ -2429,6 +2770,9 @@ aov_monument_celmaldor_icewind_palace_of_commerce_02 = {
 	character_modifier = {
 		naval_movement_speed_mult = 0.05
 		monthly_income_mult = 0.037
+		monthly_prestige = 0.75
+		vassal_opinion = 8
+		monthly_dynasty_prestige_mult = 0.03
 	}
 
 	on_complete = {
@@ -2446,6 +2790,7 @@ aov_monument_celmaldor_icewind_palace_of_commerce_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 aov_monument_celmaldor_icewind_palace_of_commerce_03 = {
@@ -2478,7 +2823,7 @@ aov_monument_celmaldor_icewind_palace_of_commerce_03 = {
 	cost_gold = 2000
 
 	province_modifier = {
-		monthly_income = 1
+		monthly_income = 2
 		building_slot_add = 1
 	}
 
@@ -2489,6 +2834,9 @@ aov_monument_celmaldor_icewind_palace_of_commerce_03 = {
 	character_modifier = {
 		naval_movement_speed_mult = 0.1
 		monthly_income_mult = 0.05
+		monthly_prestige = 1
+		vassal_opinion = 10
+		monthly_dynasty_prestige_mult = 0.05
 	}
 
 	ai_value = {
@@ -2500,6 +2848,7 @@ aov_monument_celmaldor_icewind_palace_of_commerce_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 aov_monument_damescrown_grand_exchange_01 = {
@@ -2532,11 +2881,12 @@ aov_monument_damescrown_grand_exchange_01 = {
 	cost_gold = 400
 
 	province_modifier = {
-		monthly_income = 0.5
+		monthly_income = 4
 	}
 
 	county_modifier = {
-		tax_mult = 0.05
+		tax_mult = 0.15
+		development_growth_factor = 0.1
 	}
 
 	next_building = aov_monument_damescrown_grand_exchange_02
@@ -2550,6 +2900,7 @@ aov_monument_damescrown_grand_exchange_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_damescrown_grand_exchange_02 = {
@@ -2582,11 +2933,12 @@ aov_monument_damescrown_grand_exchange_02 = {
 	cost_gold = 1000
 
 	province_modifier = {
-		monthly_income = 1
+		monthly_income = 6
 	}
 
 	county_modifier = {
-		tax_mult = 0.1
+		tax_mult = 0.25
+		development_growth_factor = 0.15
 	}
 
 	on_complete = {
@@ -2604,6 +2956,7 @@ aov_monument_damescrown_grand_exchange_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_damescrown_grand_exchange_03 = {
@@ -2636,11 +2989,12 @@ aov_monument_damescrown_grand_exchange_03 = {
 	cost_gold = 2000
 
 	province_modifier = {
-		monthly_income = 1.5
+		monthly_income = 8
 	}
 
 	county_modifier = {
-		tax_mult = 0.165
+		tax_mult = 0.3
+		development_growth_factor = 0.2
 	}
 
 	ai_value = {
@@ -2652,6 +3006,7 @@ aov_monument_damescrown_grand_exchange_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_damish_temple_moonmount_library_01 = {
@@ -2683,8 +3038,16 @@ aov_monument_damish_temple_moonmount_library_01 = {
 
 	cost_gold = 400
 
+	county_modifier = {
+		tax_mult = 0.1
+		development_growth_factor = 0.1
+		development_growth = 0.1
+	}
+
 	character_modifier = {
 		monthly_learning_lifestyle_xp_gain_mult = 0.025
+		monthly_lifestyle_xp_gain_mult = 0.05
+		learning = 1
 	}
 
 	next_building = aov_monument_damish_temple_moonmount_library_02
@@ -2698,6 +3061,7 @@ aov_monument_damish_temple_moonmount_library_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_damish_temple_moonmount_library_02 = {
@@ -2729,8 +3093,16 @@ aov_monument_damish_temple_moonmount_library_02 = {
 
 	cost_gold = 1000
 
+	county_modifier = {
+		tax_mult = 0.15
+		development_growth_factor = 0.2
+		development_growth = 0.2
+	}
+
 	character_modifier = {
 		monthly_learning_lifestyle_xp_gain_mult = 0.05
+		monthly_lifestyle_xp_gain_mult = 0.1
+		learning = 1
 	}
 
 	on_complete = {
@@ -2748,6 +3120,7 @@ aov_monument_damish_temple_moonmount_library_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_damish_temple_moonmount_library_03 = {
@@ -2783,8 +3156,16 @@ aov_monument_damish_temple_moonmount_library_03 = {
 		building_slot_add = 1
 	}
 
+	county_modifier = {
+		tax_mult = 0.2
+		development_growth_factor = 0.25
+		development_growth = 0.25
+	}
+
 	character_modifier = {
 		monthly_learning_lifestyle_xp_gain_mult = 0.1
+		monthly_lifestyle_xp_gain_mult = 0.15
+		learning = 1
 	}
 
 	ai_value = {
@@ -2796,6 +3177,7 @@ aov_monument_damish_temple_moonmount_library_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 # Anbennar Overhaul: Anbennar's temple_highest_moon_01 with EU4 tier 2 merged in
@@ -2857,7 +3239,8 @@ aov_monument_damish_temple_temple_of_the_highest_moon_03 = {
 	type_icon = "icon_structure_sumela_monastery.dds"
 
 	province_modifier = {
-		monthly_income = 2
+		# Anbennar Overhaul: core effects tier 3 (stronger of 2 and 3)
+		monthly_income = 3
 	}
 	county_modifier = {
 		# Anbennar Overhaul: EU4 tier 3 (+0.099 to 0.2 = 0.2)
@@ -2929,11 +3312,16 @@ aov_monument_deranne_westport_gateway_to_aelantir_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 4
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.05
+		development_growth_factor = 0.1
 		levy_size = 0.062
 		build_gold_cost = -0.05
 		levy_reinforcement_rate = 0.062
+		tax_mult = 0.15
 	}
 
 	next_building = aov_monument_deranne_westport_gateway_to_aelantir_02
@@ -2947,6 +3335,7 @@ aov_monument_deranne_westport_gateway_to_aelantir_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_deranne_westport_gateway_to_aelantir_02 = {
@@ -2978,11 +3367,16 @@ aov_monument_deranne_westport_gateway_to_aelantir_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 6
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.15
 		levy_size = 0.125
 		build_gold_cost = -0.1
 		levy_reinforcement_rate = 0.125
+		tax_mult = 0.25
 	}
 
 	on_complete = {
@@ -3000,6 +3394,7 @@ aov_monument_deranne_westport_gateway_to_aelantir_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_deranne_westport_gateway_to_aelantir_03 = {
@@ -3031,11 +3426,16 @@ aov_monument_deranne_westport_gateway_to_aelantir_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 8
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.15
+		development_growth_factor = 0.2
 		levy_size = 0.25
 		build_gold_cost = -0.165
 		levy_reinforcement_rate = 0.25
+		tax_mult = 0.3
 	}
 
 	ai_value = {
@@ -3047,6 +3447,7 @@ aov_monument_deranne_westport_gateway_to_aelantir_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_derilde_s_gateway_01 = {
@@ -3078,8 +3479,17 @@ aov_monument_derilde_s_gateway_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		defender_holding_advantage = 2
+		garrison_size = 0.2
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -10
+	}
+
 	character_modifier = {
 		monthly_income_mult = 0.025
+		monthly_prestige = 0.1
 	}
 
 	next_building = aov_monument_derilde_s_gateway_02
@@ -3094,6 +3504,7 @@ aov_monument_derilde_s_gateway_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_derilde_s_gateway_02 = {
@@ -3125,8 +3536,17 @@ aov_monument_derilde_s_gateway_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		defender_holding_advantage = 4
+		garrison_size = 0.35
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -15
+	}
+
 	character_modifier = {
 		monthly_income_mult = 0.037
+		monthly_prestige = 0.2
 	}
 
 	next_building = aov_monument_derilde_s_gateway_03
@@ -3141,6 +3561,7 @@ aov_monument_derilde_s_gateway_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_derilde_s_gateway_03 = {
@@ -3172,8 +3593,17 @@ aov_monument_derilde_s_gateway_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		defender_holding_advantage = 6
+		garrison_size = 0.5
+		stationed_maa_damage_mult = 0.2
+		stationed_maa_toughness_mult = 0.2
+		travel_danger = -20
+	}
+
 	character_modifier = {
 		monthly_income_mult = 0.05
+		monthly_prestige = 0.3
 	}
 
 	ai_value = {
@@ -3186,6 +3616,7 @@ aov_monument_derilde_s_gateway_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_draculas_throne_01 = {
@@ -3219,6 +3650,17 @@ aov_monument_draculas_throne_01 = {
 
 	province_modifier = {
 		fort_level = 1
+		monthly_income = 1
+	}
+
+	county_modifier = {
+		development_growth_factor = 0.1
+	}
+
+	character_modifier = {
+		monthly_prestige = 0.5
+		vassal_opinion = 5
+		monthly_dynasty_prestige_mult = 0.02
 	}
 
 	next_building = aov_monument_draculas_throne_02
@@ -3232,6 +3674,7 @@ aov_monument_draculas_throne_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 aov_monument_draculas_throne_02 = {
@@ -3263,8 +3706,19 @@ aov_monument_draculas_throne_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 1.5
+	}
+
 	county_modifier = {
 		fort_level = 1
+		development_growth_factor = 0.15
+	}
+
+	character_modifier = {
+		monthly_prestige = 0.75
+		vassal_opinion = 8
+		monthly_dynasty_prestige_mult = 0.03
 	}
 
 	next_building = aov_monument_draculas_throne_03
@@ -3278,6 +3732,7 @@ aov_monument_draculas_throne_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 aov_monument_draculas_throne_03 = {
@@ -3309,8 +3764,19 @@ aov_monument_draculas_throne_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
 	county_modifier = {
 		fort_level = 2
+		development_growth_factor = 0.2
+	}
+
+	character_modifier = {
+		monthly_prestige = 1
+		vassal_opinion = 10
+		monthly_dynasty_prestige_mult = 0.05
 	}
 
 	ai_value = {
@@ -3322,6 +3788,7 @@ aov_monument_draculas_throne_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 aov_monument_eborthil_toref_citadel_01 = {
@@ -3356,11 +3823,20 @@ aov_monument_eborthil_toref_citadel_01 = {
 	province_modifier = {
 		fort_level = 1
 		hostile_raid_time = 0.15
+		defender_holding_advantage = 2
+		garrison_size = 0.2
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -10
 	}
 
 	county_modifier = {
 		levy_size = 0.062
 		defender_holding_advantage = 2
+	}
+
+	character_modifier = {
+		monthly_prestige = 0.1
 	}
 
 	next_building = aov_monument_eborthil_toref_citadel_02
@@ -3375,6 +3851,7 @@ aov_monument_eborthil_toref_citadel_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_eborthil_toref_citadel_02 = {
@@ -3409,11 +3886,20 @@ aov_monument_eborthil_toref_citadel_02 = {
 	province_modifier = {
 		fort_level = 1
 		hostile_raid_time = 0.25
+		defender_holding_advantage = 4
+		garrison_size = 0.35
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -15
 	}
 
 	county_modifier = {
 		levy_size = 0.125
 		defender_holding_advantage = 3
+	}
+
+	character_modifier = {
+		monthly_prestige = 0.2
 	}
 
 	next_building = aov_monument_eborthil_toref_citadel_03
@@ -3428,6 +3914,7 @@ aov_monument_eborthil_toref_citadel_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_eborthil_toref_citadel_03 = {
@@ -3462,12 +3949,21 @@ aov_monument_eborthil_toref_citadel_03 = {
 	province_modifier = {
 		fort_level = 2
 		hostile_raid_time = 0.5
+		defender_holding_advantage = 6
+		garrison_size = 0.5
+		stationed_maa_damage_mult = 0.2
+		stationed_maa_toughness_mult = 0.2
+		travel_danger = -20
 	}
 
 	county_modifier = {
 		levy_size = 0.25
 		defender_holding_advantage = 5
 		building_slot_add = 1
+	}
+
+	character_modifier = {
+		monthly_prestige = 0.3
 	}
 
 	ai_value = {
@@ -3480,6 +3976,7 @@ aov_monument_eborthil_toref_citadel_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_elikhander_orbs_01 = {
@@ -3511,8 +4008,18 @@ aov_monument_elikhander_orbs_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1
+	}
+
+	county_modifier = {
+		tax_mult = 0.1
+		development_growth_factor = 0.1
+	}
+
 	character_modifier = {
 		monthly_lifestyle_xp_gain_mult = 0.02
+		monthly_prestige = 0.5
 	}
 
 	next_building = aov_monument_elikhander_orbs_02
@@ -3526,6 +4033,7 @@ aov_monument_elikhander_orbs_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_elikhander_orbs_02 = {
@@ -3557,9 +4065,19 @@ aov_monument_elikhander_orbs_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
+	county_modifier = {
+		tax_mult = 0.12
+		development_growth_factor = 0.15
+	}
+
 	character_modifier = {
 		monthly_lifestyle_xp_gain_mult = 0.05
 		monthly_learning_lifestyle_xp_gain_mult = 0.05
+		monthly_prestige = 0.75
 	}
 
 	next_building = aov_monument_elikhander_orbs_03
@@ -3573,6 +4091,7 @@ aov_monument_elikhander_orbs_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_elikhander_orbs_03 = {
@@ -3604,9 +4123,19 @@ aov_monument_elikhander_orbs_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
+	county_modifier = {
+		tax_mult = 0.15
+		development_growth_factor = 0.2
+	}
+
 	character_modifier = {
 		monthly_lifestyle_xp_gain_mult = 0.1
 		monthly_learning_lifestyle_xp_gain_mult = 0.1
+		monthly_prestige = 1
 	}
 
 	ai_value = {
@@ -3618,6 +4147,7 @@ aov_monument_elikhander_orbs_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_elikhander_pyramid_01 = {
@@ -3651,6 +4181,16 @@ aov_monument_elikhander_pyramid_01 = {
 
 	province_modifier = {
 		fort_level = 1
+		monthly_income = 1
+	}
+
+	county_modifier = {
+		tax_mult = 0.1
+		development_growth_factor = 0.1
+	}
+
+	character_modifier = {
+		monthly_prestige = 0.5
 	}
 
 	next_building = aov_monument_elikhander_pyramid_02
@@ -3664,6 +4204,7 @@ aov_monument_elikhander_pyramid_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_elikhander_pyramid_02 = {
@@ -3698,6 +4239,16 @@ aov_monument_elikhander_pyramid_02 = {
 	province_modifier = {
 		hostile_raid_time = 0.25
 		fort_level = 2
+		monthly_income = 2
+	}
+
+	county_modifier = {
+		tax_mult = 0.12
+		development_growth_factor = 0.15
+	}
+
+	character_modifier = {
+		monthly_prestige = 0.75
 	}
 
 	next_building = aov_monument_elikhander_pyramid_03
@@ -3711,6 +4262,7 @@ aov_monument_elikhander_pyramid_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_elikhander_pyramid_03 = {
@@ -3745,6 +4297,16 @@ aov_monument_elikhander_pyramid_03 = {
 	province_modifier = {
 		hostile_raid_time = 0.5
 		fort_level = 3
+		monthly_income = 3
+	}
+
+	county_modifier = {
+		tax_mult = 0.15
+		development_growth_factor = 0.2
+	}
+
+	character_modifier = {
+		monthly_prestige = 1
 	}
 
 	ai_value = {
@@ -3756,6 +4318,7 @@ aov_monument_elikhander_pyramid_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_elikhander_sphinx_01 = {
@@ -3787,8 +4350,18 @@ aov_monument_elikhander_sphinx_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1
+	}
+
+	county_modifier = {
+		tax_mult = 0.1
+		development_growth_factor = 0.1
+	}
+
 	character_modifier = {
 		diplomacy = 1
+		monthly_prestige = 0.5
 	}
 
 	next_building = aov_monument_elikhander_sphinx_02
@@ -3802,6 +4375,7 @@ aov_monument_elikhander_sphinx_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_elikhander_sphinx_02 = {
@@ -3833,9 +4407,18 @@ aov_monument_elikhander_sphinx_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
+	county_modifier = {
+		tax_mult = 0.12
+		development_growth_factor = 0.15
+	}
+
 	character_modifier = {
 		diplomacy = 1
-		monthly_prestige = 0.5
+		monthly_prestige = 0.75
 		clergy_opinion = 2.5
 	}
 
@@ -3850,6 +4433,7 @@ aov_monument_elikhander_sphinx_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_elikhander_sphinx_03 = {
@@ -3881,6 +4465,15 @@ aov_monument_elikhander_sphinx_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
+	county_modifier = {
+		tax_mult = 0.15
+		development_growth_factor = 0.2
+	}
+
 	character_modifier = {
 		diplomacy = 2
 		monthly_prestige = 1
@@ -3896,6 +4489,7 @@ aov_monument_elikhander_sphinx_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 # Anbennar Overhaul: Anbennar's calasandur_castle_escandar_01 with EU4 tier 2 merged in
@@ -3926,6 +4520,11 @@ aov_monument_escandar_02 = {
 		defender_holding_advantage = normal_building_advantage_tier_3
 		# Anbennar Overhaul: EU4 tier 2 (+2 to good_building_fort_level_tier_3 = 6)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 2
+		garrison_size = 0.35
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -15
 	}
 	county_modifier = {
 		development_growth = 0.2
@@ -3940,6 +4539,8 @@ aov_monument_escandar_02 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 2
+
 	next_building = aov_monument_escandar_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
@@ -3964,7 +4565,8 @@ aov_monument_escandar_03 = {
 	cost_gold = 2000 # Anbennar Overhaul: EU4 tier 3
 
 	character_modifier = {
-		monthly_prestige = 0.2
+		# Anbennar Overhaul: core effects tier 3 (stronger of 0.2 and 0.3)
+		monthly_prestige = 0.3
 		# Anbennar Overhaul: EU4 tier 3
 		mercenary_hire_cost_mult = -0.2
 	}
@@ -3974,6 +4576,11 @@ aov_monument_escandar_03 = {
 		defender_holding_advantage = 8
 		# Anbennar Overhaul: EU4 tier 3 (+4 to good_building_fort_level_tier_3 = 6, capped at 8; 2 moved to defender_holding_advantage)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 3
+		garrison_size = 0.5
+		stationed_maa_damage_mult = 0.2
+		stationed_maa_toughness_mult = 0.2
+		travel_danger = -20
 	}
 	county_modifier = {
 		development_growth = 0.2
@@ -3988,6 +4595,8 @@ aov_monument_escandar_03 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 3
+
 	type = special
 }
 
@@ -4007,11 +4616,14 @@ aov_monument_esthili_academy_of_magic_01 = {
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.05
+		development_growth_factor = 0.1
+		tax_mult = 0.1
+		development_growth = 0.1
 	}
 
 	character_modifier = {
 		monthly_learning_lifestyle_xp_gain_mult = 0.025
+		monthly_lifestyle_xp_gain_mult = 0.05
 	}
 
 	next_building = aov_monument_esthili_academy_of_magic_02
@@ -4025,6 +4637,7 @@ aov_monument_esthili_academy_of_magic_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_esthili_academy_of_magic_02 = {
@@ -4043,12 +4656,15 @@ aov_monument_esthili_academy_of_magic_02 = {
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.2
+		tax_mult = 0.15
+		development_growth = 0.2
 	}
 
 	character_modifier = {
 		monthly_magic_lifestyle_xp_gain_mult = 0.05
 		monthly_learning_lifestyle_xp_gain_mult = 0.05
+		monthly_lifestyle_xp_gain_mult = 0.1
 	}
 
 	on_complete = {
@@ -4066,6 +4682,7 @@ aov_monument_esthili_academy_of_magic_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_esthili_academy_of_magic_03 = {
@@ -4084,13 +4701,16 @@ aov_monument_esthili_academy_of_magic_03 = {
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.15
+		development_growth_factor = 0.25
+		tax_mult = 0.2
+		development_growth = 0.25
 	}
 
 	character_modifier = {
 		monthly_magic_lifestyle_xp_gain_mult = 0.1
 		monthly_learning_lifestyle_xp_gain_mult = 0.1
 		martial = 1
+		monthly_lifestyle_xp_gain_mult = 0.15
 	}
 
 	ai_value = {
@@ -4102,6 +4722,7 @@ aov_monument_esthili_academy_of_magic_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_freecestir_mustering_grounds_01 = {
@@ -4133,6 +4754,14 @@ aov_monument_freecestir_mustering_grounds_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		defender_holding_advantage = 2
+		garrison_size = 0.2
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -10
+	}
+
 	county_modifier = {
 		tax_mult = 0.03
 		supply_limit_mult = 0.15
@@ -4141,6 +4770,7 @@ aov_monument_freecestir_mustering_grounds_01 = {
 
 	character_modifier = {
 		levy_size = 0.025
+		monthly_prestige = 0.1
 	}
 
 	next_building = aov_monument_freecestir_mustering_grounds_02
@@ -4155,6 +4785,7 @@ aov_monument_freecestir_mustering_grounds_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_freecestir_mustering_grounds_02 = {
@@ -4186,6 +4817,14 @@ aov_monument_freecestir_mustering_grounds_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		defender_holding_advantage = 4
+		garrison_size = 0.35
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -15
+	}
+
 	county_modifier = {
 		tax_mult = 0.06
 		supply_limit_mult = 0.3
@@ -4194,6 +4833,7 @@ aov_monument_freecestir_mustering_grounds_02 = {
 
 	character_modifier = {
 		levy_size = 0.05
+		monthly_prestige = 0.2
 	}
 
 	on_complete = {
@@ -4212,6 +4852,7 @@ aov_monument_freecestir_mustering_grounds_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_freecestir_mustering_grounds_03 = {
@@ -4243,6 +4884,14 @@ aov_monument_freecestir_mustering_grounds_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		defender_holding_advantage = 6
+		garrison_size = 0.5
+		stationed_maa_damage_mult = 0.2
+		stationed_maa_toughness_mult = 0.2
+		travel_danger = -20
+	}
+
 	county_modifier = {
 		tax_mult = 0.099
 		supply_limit_mult = 0.5
@@ -4251,6 +4900,7 @@ aov_monument_freecestir_mustering_grounds_03 = {
 
 	character_modifier = {
 		levy_size = 0.1
+		monthly_prestige = 0.3
 	}
 
 	ai_value = {
@@ -4263,6 +4913,7 @@ aov_monument_freecestir_mustering_grounds_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_gawed_castle_gaweton_01 = {
@@ -4296,14 +4947,19 @@ aov_monument_gawed_castle_gaweton_01 = {
 
 	province_modifier = {
 		fort_level = 1
+		monthly_income = 1
 	}
 
 	county_modifier = {
 		tax_mult = 0.03
+		development_growth_factor = 0.1
 	}
 
 	character_modifier = {
 		monthly_legitimacy_add = 0.062
+		monthly_prestige = 0.5
+		vassal_opinion = 5
+		monthly_dynasty_prestige_mult = 0.02
 	}
 
 	next_building = aov_monument_gawed_castle_gaweton_02
@@ -4318,6 +4974,7 @@ aov_monument_gawed_castle_gaweton_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_gawed_castle_gaweton_02 = {
@@ -4351,14 +5008,19 @@ aov_monument_gawed_castle_gaweton_02 = {
 
 	province_modifier = {
 		fort_level = 1
+		monthly_income = 1.5
 	}
 
 	county_modifier = {
 		tax_mult = 0.06
+		development_growth_factor = 0.15
 	}
 
 	character_modifier = {
 		monthly_legitimacy_add = 0.125
+		monthly_prestige = 0.75
+		vassal_opinion = 8
+		monthly_dynasty_prestige_mult = 0.03
 	}
 
 	on_complete = {
@@ -4377,6 +5039,7 @@ aov_monument_gawed_castle_gaweton_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_gawed_castle_gaweton_03 = {
@@ -4411,14 +5074,19 @@ aov_monument_gawed_castle_gaweton_03 = {
 	province_modifier = {
 		fort_level = 2
 		defender_holding_advantage = 4
+		monthly_income = 2
 	}
 
 	county_modifier = {
 		tax_mult = 0.099
+		development_growth_factor = 0.2
 	}
 
 	character_modifier = {
 		monthly_legitimacy_add = 0.25
+		monthly_prestige = 1
+		vassal_opinion = 10
+		monthly_dynasty_prestige_mult = 0.05
 	}
 
 	ai_value = {
@@ -4431,6 +5099,7 @@ aov_monument_gawed_castle_gaweton_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_giberd_academy_of_engineering_01 = {
@@ -4463,12 +5132,15 @@ aov_monument_giberd_academy_of_engineering_01 = {
 	cost_gold = 400
 
 	county_modifier = {
-		tax_mult = 0.075
+		tax_mult = 0.1
+		development_growth_factor = 0.1
+		development_growth = 0.1
 	}
 
 	character_modifier = {
 		build_gold_cost = -0.025
 		build_speed = -0.05
+		monthly_lifestyle_xp_gain_mult = 0.05
 	}
 
 	next_building = aov_monument_giberd_academy_of_engineering_02
@@ -4482,6 +5154,7 @@ aov_monument_giberd_academy_of_engineering_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_giberd_academy_of_engineering_02 = {
@@ -4515,11 +5188,14 @@ aov_monument_giberd_academy_of_engineering_02 = {
 
 	county_modifier = {
 		tax_mult = 0.15
+		development_growth_factor = 0.2
+		development_growth = 0.2
 	}
 
 	character_modifier = {
 		build_gold_cost = -0.05
 		build_speed = -0.1
+		monthly_lifestyle_xp_gain_mult = 0.1
 	}
 
 	next_building = aov_monument_giberd_academy_of_engineering_03
@@ -4533,6 +5209,7 @@ aov_monument_giberd_academy_of_engineering_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_giberd_academy_of_engineering_03 = {
@@ -4566,11 +5243,14 @@ aov_monument_giberd_academy_of_engineering_03 = {
 
 	county_modifier = {
 		tax_mult = 0.225
+		development_growth_factor = 0.25
+		development_growth = 0.25
 	}
 
 	character_modifier = {
 		build_gold_cost = -0.1
 		build_speed = -0.15
+		monthly_lifestyle_xp_gain_mult = 0.15
 	}
 
 	ai_value = {
@@ -4582,6 +5262,7 @@ aov_monument_giberd_academy_of_engineering_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_grave_forest_of_ilvandet_01 = {
@@ -4598,6 +5279,16 @@ aov_monument_grave_forest_of_ilvandet_01 = {
 	province_modifier = {
 		fort_level = 1
 		hostile_raid_time = 0.2
+		monthly_income = 1
+	}
+
+	county_modifier = {
+		tax_mult = 0.1
+		development_growth_factor = 0.1
+	}
+
+	character_modifier = {
+		monthly_prestige = 0.5
 	}
 
 	next_building = aov_monument_grave_forest_of_ilvandet_02
@@ -4611,6 +5302,7 @@ aov_monument_grave_forest_of_ilvandet_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_natural_feature
 }
 
 aov_monument_grave_forest_of_ilvandet_02 = {
@@ -4627,6 +5319,16 @@ aov_monument_grave_forest_of_ilvandet_02 = {
 	province_modifier = {
 		fort_level = 1
 		hostile_raid_time = 0.2
+		monthly_income = 2
+	}
+
+	county_modifier = {
+		tax_mult = 0.12
+		development_growth_factor = 0.15
+	}
+
+	character_modifier = {
+		monthly_prestige = 0.75
 	}
 
 	next_building = aov_monument_grave_forest_of_ilvandet_03
@@ -4640,6 +5342,7 @@ aov_monument_grave_forest_of_ilvandet_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_natural_feature
 }
 
 aov_monument_grave_forest_of_ilvandet_03 = {
@@ -4656,6 +5359,16 @@ aov_monument_grave_forest_of_ilvandet_03 = {
 	province_modifier = {
 		fort_level = 2
 		hostile_raid_time = 0.4
+		monthly_income = 3
+	}
+
+	county_modifier = {
+		tax_mult = 0.15
+		development_growth_factor = 0.2
+	}
+
+	character_modifier = {
+		monthly_prestige = 1
 	}
 
 	ai_value = {
@@ -4667,6 +5380,7 @@ aov_monument_grave_forest_of_ilvandet_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_natural_feature
 }
 
 aov_monument_hammerhome_artificers_guild_01 = {
@@ -4698,9 +5412,13 @@ aov_monument_hammerhome_artificers_guild_01 = {
 
 	cost_gold = 320
 
+	province_modifier = {
+		monthly_income = 4
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.05
-		tax_mult = 0.05
+		development_growth_factor = 0.1
+		tax_mult = 0.15
 	}
 
 	character_modifier = {
@@ -4719,6 +5437,7 @@ aov_monument_hammerhome_artificers_guild_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_hammerhome_artificers_guild_02 = {
@@ -4750,9 +5469,13 @@ aov_monument_hammerhome_artificers_guild_02 = {
 
 	cost_gold = 800
 
+	province_modifier = {
+		monthly_income = 6
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.1
-		tax_mult = 0.1
+		development_growth_factor = 0.15
+		tax_mult = 0.25
 	}
 
 	character_modifier = {
@@ -4775,6 +5498,7 @@ aov_monument_hammerhome_artificers_guild_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_hammerhome_artificers_guild_03 = {
@@ -4806,9 +5530,13 @@ aov_monument_hammerhome_artificers_guild_03 = {
 
 	cost_gold = 1600
 
+	province_modifier = {
+		monthly_income = 8
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.15
-		tax_mult = 0.175
+		development_growth_factor = 0.2
+		tax_mult = 0.3
 	}
 
 	character_modifier = {
@@ -4825,6 +5553,7 @@ aov_monument_hammerhome_artificers_guild_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_humacs_tomb_01 = {
@@ -4838,13 +5567,19 @@ aov_monument_humacs_tomb_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1
+	}
+
 	county_modifier = {
 		tax_mult = 0.1
+		development_growth_factor = 0.1
 	}
 
 	character_modifier = {
 		vassal_opinion = 1.25
 		monthly_legitimacy_add = 0.25
+		monthly_prestige = 0.5
 	}
 
 	on_complete = {
@@ -4862,6 +5597,7 @@ aov_monument_humacs_tomb_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_humacs_tomb_02 = {
@@ -4875,14 +5611,19 @@ aov_monument_humacs_tomb_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
 	county_modifier = {
 		tax_mult = 0.25
-		development_growth_factor = 0.1
+		development_growth_factor = 0.15
 	}
 
 	character_modifier = {
 		vassal_opinion = 2.5
 		monthly_legitimacy_add = 0.5
+		monthly_prestige = 0.75
 	}
 
 	on_complete = {
@@ -4900,6 +5641,7 @@ aov_monument_humacs_tomb_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_humacs_tomb_03 = {
@@ -4913,14 +5655,19 @@ aov_monument_humacs_tomb_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
 	county_modifier = {
 		tax_mult = 0.3
-		development_growth_factor = 0.1
+		development_growth_factor = 0.2
 	}
 
 	character_modifier = {
 		vassal_opinion = 2.5
 		monthly_legitimacy_add = 0.5
+		monthly_prestige = 1
 	}
 
 	on_complete = {
@@ -4936,6 +5683,7 @@ aov_monument_humacs_tomb_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_ibevar_temple_of_munas_01 = {
@@ -4967,15 +5715,21 @@ aov_monument_ibevar_temple_of_munas_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1.5
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.05
-		county_opinion_add = 2
-		tax_mult = 0.05
+		development_growth_factor = 0.15
+		county_opinion_add = 3
+		tax_mult = 0.1
+		development_growth = 0.1
 	}
 
 	character_modifier = {
 		different_faith_county_opinion_mult = -0.05
-		monthly_piety = 0.125
+		monthly_piety = 0.5
+		monthly_dynasty_prestige_mult = 0.02
 	}
 
 	next_building = aov_monument_ibevar_temple_of_munas_02
@@ -4990,6 +5744,7 @@ aov_monument_ibevar_temple_of_munas_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_ibevar_temple_of_munas_02 = {
@@ -5021,15 +5776,21 @@ aov_monument_ibevar_temple_of_munas_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.2
 		county_opinion_add = 6
-		tax_mult = 0.1
+		tax_mult = 0.15
+		development_growth = 0.2
 	}
 
 	character_modifier = {
 		different_faith_county_opinion_mult = -0.15
-		monthly_piety = 0.25
+		monthly_piety = 0.75
+		monthly_dynasty_prestige_mult = 0.03
 	}
 
 	next_building = aov_monument_ibevar_temple_of_munas_03
@@ -5044,6 +5805,7 @@ aov_monument_ibevar_temple_of_munas_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_ibevar_temple_of_munas_03 = {
@@ -5075,15 +5837,21 @@ aov_monument_ibevar_temple_of_munas_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.15
+		development_growth_factor = 0.25
 		county_opinion_add = 10
-		tax_mult = 0.165
+		tax_mult = 0.2
+		development_growth = 0.25
 	}
 
 	character_modifier = {
 		different_faith_county_opinion_mult = -0.3
-		monthly_piety = 0.5
+		monthly_piety = 1
+		monthly_dynasty_prestige_mult = 0.05
 	}
 
 	ai_value = {
@@ -5096,6 +5864,7 @@ aov_monument_ibevar_temple_of_munas_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 castle_dameris_01 = {
@@ -5109,9 +5878,18 @@ castle_dameris_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1
+	}
+
+	county_modifier = {
+		development_growth_factor = 0.1
+	}
+
 	character_modifier = {
-		monthly_prestige = 0.2
-		vassal_opinion = 4
+		monthly_prestige = 0.5
+		vassal_opinion = 5
+		monthly_dynasty_prestige_mult = 0.02
 	}
 
 	next_building = castle_dameris_02
@@ -5125,6 +5903,7 @@ castle_dameris_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 castle_dameris_02 = {
@@ -5138,10 +5917,19 @@ castle_dameris_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 1.5
+	}
+
+	county_modifier = {
+		development_growth_factor = 0.15
+	}
+
 	character_modifier = {
-		monthly_prestige = 0.5
-		vassal_opinion = 6
+		monthly_prestige = 0.75
+		vassal_opinion = 8
 		diplomacy = 1
+		monthly_dynasty_prestige_mult = 0.03
 	}
 
 	next_building = castle_dameris_03
@@ -5155,6 +5943,7 @@ castle_dameris_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 castle_dameris_03 = {
@@ -5168,10 +5957,19 @@ castle_dameris_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
+	county_modifier = {
+		development_growth_factor = 0.2
+	}
+
 	character_modifier = {
 		monthly_prestige = 1
-		vassal_opinion = 8
+		vassal_opinion = 10
 		diplomacy = 2
+		monthly_dynasty_prestige_mult = 0.05
 	}
 
 	ai_value = {
@@ -5183,6 +5981,7 @@ castle_dameris_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 aov_monument_jag_radash_monument_01 = {
@@ -5198,14 +5997,17 @@ aov_monument_jag_radash_monument_01 = {
 
 	province_modifier = {
 		hostile_raid_time = 0.3
+		monthly_income = 1
 	}
 
 	county_modifier = {
 		development_growth_factor = 0.1
+		tax_mult = 0.1
 	}
 
 	character_modifier = {
 		levy_reinforcement_rate = 0.1
+		monthly_prestige = 0.5
 	}
 
 	next_building = aov_monument_jag_radash_monument_02
@@ -5219,6 +6021,7 @@ aov_monument_jag_radash_monument_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_natural_feature
 }
 
 aov_monument_jag_radash_monument_02 = {
@@ -5234,15 +6037,18 @@ aov_monument_jag_radash_monument_02 = {
 
 	province_modifier = {
 		hostile_raid_time = 0.3
+		monthly_income = 2
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.15
+		tax_mult = 0.12
 	}
 
 	character_modifier = {
 		levy_reinforcement_rate = 0.15
 		monthly_martial_lifestyle_xp_gain_mult = 0.05
+		monthly_prestige = 0.75
 	}
 
 	next_building = aov_monument_jag_radash_monument_03
@@ -5256,6 +6062,7 @@ aov_monument_jag_radash_monument_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_natural_feature
 }
 
 aov_monument_jag_radash_monument_03 = {
@@ -5271,15 +6078,18 @@ aov_monument_jag_radash_monument_03 = {
 
 	province_modifier = {
 		hostile_raid_time = 0.3
+		monthly_income = 3
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.2
+		tax_mult = 0.15
 	}
 
 	character_modifier = {
 		levy_reinforcement_rate = 0.15
 		monthly_martial_lifestyle_xp_gain_mult = 0.1
+		monthly_prestige = 1
 	}
 
 	ai_value = {
@@ -5291,6 +6101,7 @@ aov_monument_jag_radash_monument_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_natural_feature
 }
 
 aov_monument_kazakesh_stingport_01 = {
@@ -5305,11 +6116,16 @@ aov_monument_kazakesh_stingport_01 = {
 	cost_gold = 400
 
 	province_modifier = {
-		monthly_income = 0.25
+		monthly_income = 1
 	}
 
 	county_modifier = {
 		tax_mult = 0.15
+		development_growth_factor = 0.1
+	}
+
+	character_modifier = {
+		monthly_prestige = 0.5
 	}
 
 	next_building = aov_monument_kazakesh_stingport_02
@@ -5323,6 +6139,7 @@ aov_monument_kazakesh_stingport_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_kazakesh_stingport_02 = {
@@ -5337,12 +6154,17 @@ aov_monument_kazakesh_stingport_02 = {
 	cost_gold = 1000
 
 	province_modifier = {
-		monthly_income = 0.5
+		monthly_income = 2
 	}
 
 	county_modifier = {
 		tax_mult = 0.15
 		monthly_county_control_growth_add = 0.125
+		development_growth_factor = 0.15
+	}
+
+	character_modifier = {
+		monthly_prestige = 0.75
 	}
 
 	next_building = aov_monument_kazakesh_stingport_03
@@ -5356,6 +6178,7 @@ aov_monument_kazakesh_stingport_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_kazakesh_stingport_03 = {
@@ -5370,12 +6193,17 @@ aov_monument_kazakesh_stingport_03 = {
 	cost_gold = 2000
 
 	province_modifier = {
-		monthly_income = 0.5
+		monthly_income = 3
 	}
 
 	county_modifier = {
 		tax_mult = 0.15
 		monthly_county_control_growth_add = 0.125
+		development_growth_factor = 0.2
+	}
+
+	character_modifier = {
+		monthly_prestige = 1
 	}
 
 	ai_value = {
@@ -5387,6 +6215,7 @@ aov_monument_kazakesh_stingport_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_kobildzan_kobildzex_guild_of_trapsmiths_01 = {
@@ -5418,9 +6247,13 @@ aov_monument_kobildzan_kobildzex_guild_of_trapsmiths_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 4
+	}
+
 	county_modifier = {
 		development_growth_factor = 0.1
-		tax_mult = 0.075
+		tax_mult = 0.15
 	}
 
 	next_building = aov_monument_kobildzan_kobildzex_guild_of_trapsmiths_02
@@ -5434,6 +6267,7 @@ aov_monument_kobildzan_kobildzex_guild_of_trapsmiths_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_kobildzan_kobildzex_guild_of_trapsmiths_02 = {
@@ -5465,9 +6299,13 @@ aov_monument_kobildzan_kobildzex_guild_of_trapsmiths_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 6
+	}
+
 	county_modifier = {
 		development_growth_factor = 0.2
-		tax_mult = 0.15
+		tax_mult = 0.25
 	}
 
 	next_building = aov_monument_kobildzan_kobildzex_guild_of_trapsmiths_03
@@ -5481,6 +6319,7 @@ aov_monument_kobildzan_kobildzex_guild_of_trapsmiths_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_kobildzan_kobildzex_guild_of_trapsmiths_03 = {
@@ -5512,9 +6351,13 @@ aov_monument_kobildzan_kobildzex_guild_of_trapsmiths_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 8
+	}
+
 	county_modifier = {
 		development_growth_factor = 0.3
-		tax_mult = 0.225
+		tax_mult = 0.3
 	}
 
 	ai_value = {
@@ -5526,6 +6369,7 @@ aov_monument_kobildzan_kobildzex_guild_of_trapsmiths_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_konwell_the_imperial_archives_01 = {
@@ -5557,8 +6401,16 @@ aov_monument_konwell_the_imperial_archives_01 = {
 
 	cost_gold = 400
 
+	county_modifier = {
+		tax_mult = 0.1
+		development_growth_factor = 0.1
+		development_growth = 0.1
+	}
+
 	character_modifier = {
 		monthly_learning_lifestyle_xp_gain_mult = 0.025
+		monthly_lifestyle_xp_gain_mult = 0.05
+		learning = 1
 	}
 
 	next_building = aov_monument_konwell_the_imperial_archives_02
@@ -5572,6 +6424,7 @@ aov_monument_konwell_the_imperial_archives_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_konwell_the_imperial_archives_02 = {
@@ -5603,9 +6456,16 @@ aov_monument_konwell_the_imperial_archives_02 = {
 
 	cost_gold = 1000
 
+	county_modifier = {
+		tax_mult = 0.15
+		development_growth_factor = 0.2
+		development_growth = 0.2
+	}
+
 	character_modifier = {
 		monthly_learning_lifestyle_xp_gain_mult = 0.05
-		monthly_lifestyle_xp_gain_mult = 0.025
+		monthly_lifestyle_xp_gain_mult = 0.1
+		learning = 1
 	}
 
 	next_building = aov_monument_konwell_the_imperial_archives_03
@@ -5619,6 +6479,7 @@ aov_monument_konwell_the_imperial_archives_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_konwell_the_imperial_archives_03 = {
@@ -5650,9 +6511,16 @@ aov_monument_konwell_the_imperial_archives_03 = {
 
 	cost_gold = 2000
 
+	county_modifier = {
+		tax_mult = 0.2
+		development_growth_factor = 0.25
+		development_growth = 0.25
+	}
+
 	character_modifier = {
 		monthly_learning_lifestyle_xp_gain_mult = 0.1
-		monthly_lifestyle_xp_gain_mult = 0.05
+		monthly_lifestyle_xp_gain_mult = 0.15
+		learning = 1
 	}
 
 	ai_value = {
@@ -5664,6 +6532,7 @@ aov_monument_konwell_the_imperial_archives_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 # Anbennar Overhaul: Anbennar's lorenans_rest_01 with EU4 tier 2 merged in
@@ -5673,7 +6542,8 @@ aov_monument_lorenans_rest_02 = {
 	type_icon = "icon_structure_cilician_gates.dds"
 
 	province_modifier = {
-		monthly_income = 0.5
+		# Anbennar Overhaul: core effects tier 2 (stronger of 0.5 and 2)
+		monthly_income = 2
 		# funeral cost -50%
 	}
 	character_modifier = {
@@ -5699,6 +6569,12 @@ aov_monument_lorenans_rest_02 = {
 		}
 	}
 	
+	county_modifier = {
+		# Anbennar Overhaul: core effects tier 2
+		tax_mult = 0.12
+		development_growth_factor = 0.15
+	}
+
 	next_building = aov_monument_lorenans_rest_03 # Anbennar Overhaul: EU4 tier 2
 
 	can_construct = { # Anbennar Overhaul: EU4 culture gate
@@ -5722,7 +6598,8 @@ aov_monument_lorenans_rest_03 = {
 	type_icon = "icon_structure_cilician_gates.dds"
 
 	province_modifier = {
-		monthly_income = 0.5
+		# Anbennar Overhaul: core effects tier 3 (stronger of 0.5 and 3)
+		monthly_income = 3
 		# funeral cost -50%
 	}
 	character_modifier = {
@@ -5748,6 +6625,12 @@ aov_monument_lorenans_rest_03 = {
 		}
 	}
 	
+	county_modifier = {
+		# Anbennar Overhaul: core effects tier 3
+		tax_mult = 0.15
+		development_growth_factor = 0.2
+	}
+
 	can_construct = { # Anbennar Overhaul: EU4 culture gate
 		scope:holder = {
 			custom_tooltip = {
@@ -5792,8 +6675,14 @@ aov_monument_lorent_new_adea_naval_school_01 = {
 	cost_gold = 400
 
 	county_modifier = {
-		development_growth_factor = 0.05
+		development_growth_factor = 0.1
 		levy_size = 0.062
+		tax_mult = 0.1
+		development_growth = 0.1
+	}
+
+	character_modifier = {
+		monthly_lifestyle_xp_gain_mult = 0.05
 	}
 
 	next_building = aov_monument_lorent_new_adea_naval_school_02
@@ -5807,6 +6696,7 @@ aov_monument_lorent_new_adea_naval_school_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_lorent_new_adea_naval_school_02 = {
@@ -5839,8 +6729,14 @@ aov_monument_lorent_new_adea_naval_school_02 = {
 	cost_gold = 1000
 
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.2
 		levy_size = 0.125
+		tax_mult = 0.15
+		development_growth = 0.2
+	}
+
+	character_modifier = {
+		monthly_lifestyle_xp_gain_mult = 0.1
 	}
 
 	next_building = aov_monument_lorent_new_adea_naval_school_03
@@ -5854,6 +6750,7 @@ aov_monument_lorent_new_adea_naval_school_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_lorent_new_adea_naval_school_03 = {
@@ -5886,8 +6783,14 @@ aov_monument_lorent_new_adea_naval_school_03 = {
 	cost_gold = 2000
 
 	county_modifier = {
-		development_growth_factor = 0.15
+		development_growth_factor = 0.25
 		levy_size = 0.25
+		tax_mult = 0.2
+		development_growth = 0.25
+	}
+
+	character_modifier = {
+		monthly_lifestyle_xp_gain_mult = 0.15
 	}
 
 	ai_value = {
@@ -5899,6 +6802,7 @@ aov_monument_lorent_new_adea_naval_school_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_lorentaine_mage_academy_01 = {
@@ -5935,11 +6839,14 @@ aov_monument_lorentaine_mage_academy_01 = {
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.05
+		development_growth_factor = 0.1
+		tax_mult = 0.1
+		development_growth = 0.1
 	}
 
 	character_modifier = {
 		monthly_learning_lifestyle_xp_gain_mult = 0.025
+		monthly_lifestyle_xp_gain_mult = 0.05
 	}
 
 	on_complete = {
@@ -5957,6 +6864,7 @@ aov_monument_lorentaine_mage_academy_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_lorentaine_mage_academy_02 = {
@@ -5993,12 +6901,15 @@ aov_monument_lorentaine_mage_academy_02 = {
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.2
+		tax_mult = 0.15
+		development_growth = 0.2
 	}
 
 	character_modifier = {
 		monthly_magic_lifestyle_xp_gain_mult = 0.05
 		monthly_learning_lifestyle_xp_gain_mult = 0.05
+		monthly_lifestyle_xp_gain_mult = 0.1
 	}
 
 	on_complete = {
@@ -6017,6 +6928,7 @@ barony.holder = { save_scope_as = aov_monument_patron create_character = { emplo
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_lorentaine_mage_academy_03 = {
@@ -6053,13 +6965,15 @@ aov_monument_lorentaine_mage_academy_03 = {
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.15
+		development_growth_factor = 0.25
+		tax_mult = 0.2
+		development_growth = 0.25
 	}
 
 	character_modifier = {
 		monthly_magic_lifestyle_xp_gain_mult = 0.1
 		monthly_learning_lifestyle_xp_gain_mult = 0.1
-		monthly_lifestyle_xp_gain_mult = 0.05
+		monthly_lifestyle_xp_gain_mult = 0.15
 	}
 
 	on_complete = {
@@ -6076,6 +6990,7 @@ barony.holder = { save_scope_as = aov_monument_patron create_character = { emplo
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_marrhold_gate_to_the_serpentspine_01 = {
@@ -6109,6 +7024,11 @@ aov_monument_marrhold_gate_to_the_serpentspine_01 = {
 
 	province_modifier = {
 		fort_level = 1
+		defender_holding_advantage = 2
+		garrison_size = 0.2
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -10
 	}
 
 	county_modifier = {
@@ -6117,6 +7037,7 @@ aov_monument_marrhold_gate_to_the_serpentspine_01 = {
 
 	character_modifier = {
 		accolade_glory_gain_mult = 0.1
+		monthly_prestige = 0.1
 	}
 
 	next_building = aov_monument_marrhold_gate_to_the_serpentspine_02
@@ -6131,6 +7052,7 @@ aov_monument_marrhold_gate_to_the_serpentspine_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_marrhold_gate_to_the_serpentspine_02 = {
@@ -6165,6 +7087,11 @@ aov_monument_marrhold_gate_to_the_serpentspine_02 = {
 	province_modifier = {
 		fort_level = 2
 		hostile_raid_time = 0.125
+		defender_holding_advantage = 4
+		garrison_size = 0.35
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -15
 	}
 
 	county_modifier = {
@@ -6173,6 +7100,7 @@ aov_monument_marrhold_gate_to_the_serpentspine_02 = {
 
 	character_modifier = {
 		accolade_glory_gain_mult = 0.15
+		monthly_prestige = 0.2
 	}
 
 	on_complete = {
@@ -6191,6 +7119,7 @@ aov_monument_marrhold_gate_to_the_serpentspine_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_marrhold_gate_to_the_serpentspine_03 = {
@@ -6225,7 +7154,11 @@ aov_monument_marrhold_gate_to_the_serpentspine_03 = {
 	province_modifier = {
 		fort_level = 2
 		hostile_raid_time = 0.25
-		defender_holding_advantage = 4
+		defender_holding_advantage = 6
+		garrison_size = 0.5
+		stationed_maa_damage_mult = 0.2
+		stationed_maa_toughness_mult = 0.2
+		travel_danger = -20
 	}
 
 	county_modifier = {
@@ -6234,6 +7167,7 @@ aov_monument_marrhold_gate_to_the_serpentspine_03 = {
 
 	character_modifier = {
 		accolade_glory_gain_mult = 0.2
+		monthly_prestige = 0.3
 	}
 
 	on_complete = {
@@ -6250,6 +7184,7 @@ aov_monument_marrhold_gate_to_the_serpentspine_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_marrhold_the_feather_academy_01 = {
@@ -6268,7 +7203,13 @@ aov_monument_marrhold_the_feather_academy_01 = {
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.05
+		development_growth_factor = 0.1
+		tax_mult = 0.1
+		development_growth = 0.1
+	}
+
+	character_modifier = {
+		monthly_lifestyle_xp_gain_mult = 0.05
 	}
 
 	next_building = aov_monument_marrhold_the_feather_academy_02
@@ -6282,6 +7223,7 @@ aov_monument_marrhold_the_feather_academy_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_marrhold_the_feather_academy_02 = {
@@ -6300,12 +7242,15 @@ aov_monument_marrhold_the_feather_academy_02 = {
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.2
+		tax_mult = 0.15
+		development_growth = 0.2
 	}
 
 	character_modifier = {
 		movement_speed = 0.025
 		light_cavalry_pursuit_mult = 0.1
+		monthly_lifestyle_xp_gain_mult = 0.1
 	}
 
 	next_building = aov_monument_marrhold_the_feather_academy_03
@@ -6319,6 +7264,7 @@ aov_monument_marrhold_the_feather_academy_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_marrhold_the_feather_academy_03 = {
@@ -6338,13 +7284,16 @@ aov_monument_marrhold_the_feather_academy_03 = {
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.15
+		development_growth_factor = 0.25
+		tax_mult = 0.2
+		development_growth = 0.25
 	}
 
 	character_modifier = {
 		movement_speed = 0.05
 		light_cavalry_pursuit_mult = 0.2
 		advantage = 2
+		monthly_lifestyle_xp_gain_mult = 0.15
 	}
 
 	ai_value = {
@@ -6356,6 +7305,7 @@ aov_monument_marrhold_the_feather_academy_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_menibor_hall_of_the_gallant_01 = {
@@ -6387,13 +7337,18 @@ aov_monument_menibor_hall_of_the_gallant_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1
+	}
+
 	county_modifier = {
 		tax_mult = 0.165
+		development_growth_factor = 0.1
 	}
 
 	character_modifier = {
 		knight_effectiveness_mult = 0.025
-		monthly_prestige = 0.1
+		monthly_prestige = 0.5
 	}
 
 	on_complete = {
@@ -6411,6 +7366,7 @@ aov_monument_menibor_hall_of_the_gallant_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_menibor_hall_of_the_gallant_02 = {
@@ -6442,8 +7398,13 @@ aov_monument_menibor_hall_of_the_gallant_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
 	county_modifier = {
 		tax_mult = 0.165
+		development_growth_factor = 0.15
 	}
 
 	character_modifier = {
@@ -6466,6 +7427,7 @@ aov_monument_menibor_hall_of_the_gallant_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_menibor_hall_of_the_gallant_03 = {
@@ -6497,6 +7459,15 @@ aov_monument_menibor_hall_of_the_gallant_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
+	county_modifier = {
+		tax_mult = 0.15
+		development_growth_factor = 0.2
+	}
+
 	character_modifier = {
 		knight_effectiveness_mult = 0.15
 		monthly_prestige = 1.5
@@ -6516,6 +7487,7 @@ barony.holder = { add_prestige = 150 }
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_minara_temple_01 = {
@@ -6547,15 +7519,21 @@ aov_monument_minara_temple_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1.5
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.05
+		development_growth_factor = 0.15
 		tax_mult = 0.1
-		county_opinion_add = 2
+		county_opinion_add = 3
+		development_growth = 0.1
 	}
 
 	character_modifier = {
-		monthly_piety = 0.125
+		monthly_piety = 0.5
 		general_opinion = 2
+		monthly_dynasty_prestige_mult = 0.02
 	}
 
 	next_building = aov_monument_minara_temple_02
@@ -6570,6 +7548,7 @@ aov_monument_minara_temple_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_minara_temple_02 = {
@@ -6601,15 +7580,21 @@ aov_monument_minara_temple_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.2
 		tax_mult = 0.165
 		county_opinion_add = 6
+		development_growth = 0.2
 	}
 
 	character_modifier = {
-		monthly_piety = 0.25
+		monthly_piety = 0.75
 		general_opinion = 3
+		monthly_dynasty_prestige_mult = 0.03
 	}
 
 	next_building = aov_monument_minara_temple_03
@@ -6624,6 +7609,7 @@ aov_monument_minara_temple_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_minara_temple_03 = {
@@ -6655,15 +7641,21 @@ aov_monument_minara_temple_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.15
+		development_growth_factor = 0.25
 		tax_mult = 0.25
 		county_opinion_add = 10
+		development_growth = 0.25
 	}
 
 	character_modifier = {
-		monthly_piety = 0.5
+		monthly_piety = 1
 		general_opinion = 5
+		monthly_dynasty_prestige_mult = 0.05
 	}
 
 	ai_value = {
@@ -6676,6 +7668,7 @@ aov_monument_minara_temple_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_moonhaven_port_munas_01 = {
@@ -6707,9 +7700,15 @@ aov_monument_moonhaven_port_munas_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 4
+	}
+
 	county_modifier = {
 		levy_size = 0.062
 		levy_reinforcement_rate = 0.037
+		tax_mult = 0.15
+		development_growth_factor = 0.1
 	}
 
 	character_modifier = {
@@ -6727,6 +7726,7 @@ aov_monument_moonhaven_port_munas_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_moonhaven_port_munas_02 = {
@@ -6758,9 +7758,15 @@ aov_monument_moonhaven_port_munas_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 6
+	}
+
 	county_modifier = {
 		levy_size = 0.125
 		levy_reinforcement_rate = 0.062
+		tax_mult = 0.25
+		development_growth_factor = 0.15
 	}
 
 	character_modifier = {
@@ -6778,6 +7784,7 @@ aov_monument_moonhaven_port_munas_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_moonhaven_port_munas_03 = {
@@ -6809,9 +7816,15 @@ aov_monument_moonhaven_port_munas_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 8
+	}
+
 	county_modifier = {
 		levy_size = 0.25
 		levy_reinforcement_rate = 0.125
+		tax_mult = 0.3
+		development_growth_factor = 0.2
 	}
 
 	character_modifier = {
@@ -6827,6 +7840,7 @@ aov_monument_moonhaven_port_munas_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_nathalaire_city_of_pirates_01 = {
@@ -6859,17 +7873,20 @@ aov_monument_nathalaire_city_of_pirates_01 = {
 	cost_gold = 400
 
 	province_modifier = {
-		monthly_income = 0.5
+		monthly_income = 1
 		build_speed = -0.075
 	}
 
 	county_modifier = {
 		levy_size = 0.062
+		tax_mult = 0.1
+		development_growth_factor = 0.1
 	}
 
 	character_modifier = {
 		owned_hostile_scheme_success_chance_add = 2
 		raid_speed = 0.1
+		monthly_prestige = 0.5
 	}
 
 	next_building = aov_monument_nathalaire_city_of_pirates_02
@@ -6883,6 +7900,7 @@ aov_monument_nathalaire_city_of_pirates_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_nathalaire_city_of_pirates_02 = {
@@ -6915,17 +7933,20 @@ aov_monument_nathalaire_city_of_pirates_02 = {
 	cost_gold = 1000
 
 	province_modifier = {
-		monthly_income = 1
+		monthly_income = 2
 		build_speed = -0.125
 	}
 
 	county_modifier = {
 		levy_size = 0.125
+		tax_mult = 0.12
+		development_growth_factor = 0.15
 	}
 
 	character_modifier = {
 		owned_hostile_scheme_success_chance_add = 3
 		raid_speed = 0.15
+		monthly_prestige = 0.75
 	}
 
 	on_complete = {
@@ -6943,6 +7964,7 @@ aov_monument_nathalaire_city_of_pirates_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_nathalaire_city_of_pirates_03 = {
@@ -6975,17 +7997,20 @@ aov_monument_nathalaire_city_of_pirates_03 = {
 	cost_gold = 2000
 
 	province_modifier = {
-		monthly_income = 1.5
+		monthly_income = 3
 		build_speed = -0.165
 	}
 
 	county_modifier = {
 		levy_size = 0.25
+		tax_mult = 0.15
+		development_growth_factor = 0.2
 	}
 
 	character_modifier = {
 		owned_hostile_scheme_success_chance_add = 5
 		raid_speed = 0.25
+		monthly_prestige = 1
 	}
 
 	ai_value = {
@@ -6997,6 +8022,7 @@ aov_monument_nathalaire_city_of_pirates_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_neckcliffe_the_imperial_dockyard_01 = {
@@ -7030,11 +8056,14 @@ aov_monument_neckcliffe_the_imperial_dockyard_01 = {
 
 	province_modifier = {
 		build_speed = -0.05
+		monthly_income = 4
 	}
 
 	county_modifier = {
 		levy_reinforcement_rate = 0.037
 		levy_size = 0.025
+		tax_mult = 0.15
+		development_growth_factor = 0.1
 	}
 
 	character_modifier = {
@@ -7052,6 +8081,7 @@ aov_monument_neckcliffe_the_imperial_dockyard_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_neckcliffe_the_imperial_dockyard_02 = {
@@ -7085,12 +8115,14 @@ aov_monument_neckcliffe_the_imperial_dockyard_02 = {
 
 	province_modifier = {
 		build_speed = -0.1
-		monthly_income = 0.3
+		monthly_income = 6
 	}
 
 	county_modifier = {
 		levy_reinforcement_rate = 0.062
 		levy_size = 0.05
+		tax_mult = 0.25
+		development_growth_factor = 0.15
 	}
 
 	character_modifier = {
@@ -7108,6 +8140,7 @@ aov_monument_neckcliffe_the_imperial_dockyard_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_neckcliffe_the_imperial_dockyard_03 = {
@@ -7141,12 +8174,14 @@ aov_monument_neckcliffe_the_imperial_dockyard_03 = {
 
 	province_modifier = {
 		build_speed = -0.165
-		monthly_income = 0.5
+		monthly_income = 8
 	}
 
 	county_modifier = {
 		levy_reinforcement_rate = 0.125
 		levy_size = 0.083
+		tax_mult = 0.3
+		development_growth_factor = 0.2
 	}
 
 	character_modifier = {
@@ -7166,6 +8201,7 @@ aov_monument_neckcliffe_the_imperial_dockyard_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_nimscodd_academy_01 = {
@@ -7199,10 +8235,13 @@ aov_monument_nimscodd_academy_01 = {
 
 	county_modifier = {
 		development_growth_factor = 0.15
+		tax_mult = 0.1
+		development_growth = 0.1
 	}
 
 	character_modifier = {
 		monthly_learning_lifestyle_xp_gain_mult = 0.062
+		monthly_lifestyle_xp_gain_mult = 0.05
 	}
 
 	on_complete = {
@@ -7220,6 +8259,7 @@ aov_monument_nimscodd_academy_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_nimscodd_academy_02 = {
@@ -7253,10 +8293,13 @@ aov_monument_nimscodd_academy_02 = {
 
 	county_modifier = {
 		development_growth_factor = 0.25
+		tax_mult = 0.15
+		development_growth = 0.2
 	}
 
 	character_modifier = {
 		monthly_learning_lifestyle_xp_gain_mult = 0.138
+		monthly_lifestyle_xp_gain_mult = 0.1
 	}
 
 	on_complete = {
@@ -7274,6 +8317,7 @@ aov_monument_nimscodd_academy_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_nimscodd_academy_03 = {
@@ -7307,10 +8351,13 @@ aov_monument_nimscodd_academy_03 = {
 
 	county_modifier = {
 		development_growth_factor = 0.35
+		tax_mult = 0.2
+		development_growth = 0.25
 	}
 
 	character_modifier = {
 		monthly_learning_lifestyle_xp_gain_mult = 0.24
+		monthly_lifestyle_xp_gain_mult = 0.15
 	}
 
 	on_complete = {
@@ -7326,6 +8373,7 @@ aov_monument_nimscodd_academy_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_nimsnoms_theatre_01 = {
@@ -7339,9 +8387,19 @@ aov_monument_nimsnoms_theatre_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1
+	}
+
+	county_modifier = {
+		tax_mult = 0.1
+		development_growth_factor = 0.1
+	}
+
 	character_modifier = {
 		owned_hostile_scheme_success_chance_add = 2
 		monthly_prestige_gain_mult = 0.05
+		monthly_prestige = 0.5
 	}
 
 	next_building = aov_monument_nimsnoms_theatre_02
@@ -7355,6 +8413,7 @@ aov_monument_nimsnoms_theatre_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_stress_relief
 }
 
 aov_monument_nimsnoms_theatre_02 = {
@@ -7368,14 +8427,20 @@ aov_monument_nimsnoms_theatre_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.15
+		tax_mult = 0.12
 	}
 
 	character_modifier = {
 		owned_hostile_scheme_success_chance_add = 3
 		monthly_prestige_gain_mult = 0.075
 		enemy_hostile_scheme_success_chance_add = -2.5
+		monthly_prestige = 0.75
 	}
 
 	next_building = aov_monument_nimsnoms_theatre_03
@@ -7389,6 +8454,7 @@ aov_monument_nimsnoms_theatre_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_stress_relief
 }
 
 aov_monument_nimsnoms_theatre_03 = {
@@ -7402,14 +8468,20 @@ aov_monument_nimsnoms_theatre_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.2
+		tax_mult = 0.15
 	}
 
 	character_modifier = {
 		owned_hostile_scheme_success_chance_add = 3
 		monthly_prestige_gain_mult = 0.1
 		enemy_hostile_scheme_success_chance_add = -5
+		monthly_prestige = 1
 	}
 
 	ai_value = {
@@ -7421,6 +8493,7 @@ aov_monument_nimsnoms_theatre_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_stress_relief
 }
 
 aov_monument_oldhaven_memorial_01 = {
@@ -7434,9 +8507,19 @@ aov_monument_oldhaven_memorial_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1
+	}
+
+	county_modifier = {
+		tax_mult = 0.1
+		development_growth_factor = 0.1
+	}
+
 	character_modifier = {
 		county_opinion_add = 3
 		levy_reinforcement_rate = 0.1
+		monthly_prestige = 0.5
 	}
 
 	next_building = aov_monument_oldhaven_memorial_02
@@ -7450,6 +8533,7 @@ aov_monument_oldhaven_memorial_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_oldhaven_memorial_02 = {
@@ -7463,10 +8547,20 @@ aov_monument_oldhaven_memorial_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
+	county_modifier = {
+		tax_mult = 0.12
+		development_growth_factor = 0.15
+	}
+
 	character_modifier = {
 		county_opinion_add = 3
 		levy_reinforcement_rate = 0.1
 		garrison_size = 0.2
+		monthly_prestige = 0.75
 	}
 
 	next_building = aov_monument_oldhaven_memorial_03
@@ -7480,6 +8574,7 @@ aov_monument_oldhaven_memorial_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_oldhaven_memorial_03 = {
@@ -7493,11 +8588,21 @@ aov_monument_oldhaven_memorial_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
+	county_modifier = {
+		tax_mult = 0.15
+		development_growth_factor = 0.2
+	}
+
 	character_modifier = {
 		county_opinion_add = 3
 		levy_reinforcement_rate = 0.15
 		garrison_size = 0.2
 		army_maintenance_mult = -0.019
+		monthly_prestige = 1
 	}
 
 	ai_value = {
@@ -7509,6 +8614,7 @@ aov_monument_oldhaven_memorial_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_palace_of_unity_01 = {
@@ -7522,9 +8628,18 @@ aov_monument_palace_of_unity_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1
+	}
+
+	county_modifier = {
+		development_growth_factor = 0.1
+	}
+
 	character_modifier = {
-		monthly_prestige = 0.2
-		vassal_opinion = 4
+		monthly_prestige = 0.5
+		vassal_opinion = 5
+		monthly_dynasty_prestige_mult = 0.02
 	}
 
 	next_building = aov_monument_palace_of_unity_02
@@ -7538,6 +8653,7 @@ aov_monument_palace_of_unity_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 aov_monument_palace_of_unity_02 = {
@@ -7551,10 +8667,19 @@ aov_monument_palace_of_unity_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 1.5
+	}
+
+	county_modifier = {
+		development_growth_factor = 0.15
+	}
+
 	character_modifier = {
-		monthly_prestige = 0.4
-		vassal_opinion = 6
+		monthly_prestige = 0.75
+		vassal_opinion = 8
 		county_opinion_add = 5
+		monthly_dynasty_prestige_mult = 0.03
 	}
 
 	next_building = aov_monument_palace_of_unity_03
@@ -7568,6 +8693,7 @@ aov_monument_palace_of_unity_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 aov_monument_palace_of_unity_03 = {
@@ -7581,14 +8707,19 @@ aov_monument_palace_of_unity_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.15
+		development_growth_factor = 0.2
 	}
 
 	character_modifier = {
-		monthly_prestige = 0.6
-		vassal_opinion = 8
+		monthly_prestige = 1
+		vassal_opinion = 10
 		county_opinion_add = 10
+		monthly_dynasty_prestige_mult = 0.05
 	}
 
 	ai_value = {
@@ -7600,6 +8731,7 @@ aov_monument_palace_of_unity_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_diplomatic
 }
 
 aov_monument_portnamm_portroy_merchants_guild_01 = {
@@ -7632,11 +8764,12 @@ aov_monument_portnamm_portroy_merchants_guild_01 = {
 	cost_gold = 240
 
 	province_modifier = {
-		monthly_income = 0.5
+		monthly_income = 4
 	}
 
 	county_modifier = {
-		tax_mult = 0.075
+		tax_mult = 0.15
+		development_growth_factor = 0.1
 	}
 
 	character_modifier = {
@@ -7654,6 +8787,7 @@ aov_monument_portnamm_portroy_merchants_guild_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_portnamm_portroy_merchants_guild_02 = {
@@ -7686,11 +8820,12 @@ aov_monument_portnamm_portroy_merchants_guild_02 = {
 	cost_gold = 720
 
 	province_modifier = {
-		monthly_income = 1
+		monthly_income = 6
 	}
 
 	county_modifier = {
-		tax_mult = 0.15
+		tax_mult = 0.25
+		development_growth_factor = 0.15
 	}
 
 	character_modifier = {
@@ -7712,6 +8847,7 @@ aov_monument_portnamm_portroy_merchants_guild_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_portnamm_portroy_merchants_guild_03 = {
@@ -7744,11 +8880,12 @@ aov_monument_portnamm_portroy_merchants_guild_03 = {
 	cost_gold = 1600
 
 	province_modifier = {
-		monthly_income = 1.5
+		monthly_income = 8
 	}
 
 	county_modifier = {
-		tax_mult = 0.225
+		tax_mult = 0.3
+		development_growth_factor = 0.2
 	}
 
 	character_modifier = {
@@ -7764,6 +8901,7 @@ aov_monument_portnamm_portroy_merchants_guild_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_rainbow_hall_north_monument_01 = {
@@ -7795,8 +8933,13 @@ aov_monument_rainbow_hall_north_monument_01 = {
 
 	cost_gold = 200
 
+	province_modifier = {
+		monthly_income = 1
+	}
+
 	county_modifier = {
 		development_growth_factor = 0.1
+		tax_mult = 0.1
 	}
 
 	character_modifier = {
@@ -7814,6 +8957,7 @@ aov_monument_rainbow_hall_north_monument_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_rainbow_hall_north_monument_02 = {
@@ -7845,14 +8989,18 @@ aov_monument_rainbow_hall_north_monument_02 = {
 
 	cost_gold = 500
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
 	county_modifier = {
 		development_growth_factor = 0.2
-		tax_mult = 0.075
+		tax_mult = 0.12
 	}
 
 	character_modifier = {
 		general_opinion = 1
-		monthly_prestige = 0.5
+		monthly_prestige = 0.75
 		vassal_opinion = 1.25
 	}
 
@@ -7867,6 +9015,7 @@ aov_monument_rainbow_hall_north_monument_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_rainbow_hall_north_monument_03 = {
@@ -7898,6 +9047,10 @@ aov_monument_rainbow_hall_north_monument_03 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
 	county_modifier = {
 		development_growth_factor = 0.33
 		tax_mult = 0.15
@@ -7905,7 +9058,7 @@ aov_monument_rainbow_hall_north_monument_03 = {
 
 	character_modifier = {
 		general_opinion = 2
-		monthly_prestige = 0.5
+		monthly_prestige = 1
 		vassal_opinion = 2.5
 	}
 
@@ -7918,6 +9071,7 @@ aov_monument_rainbow_hall_north_monument_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_rainbow_hall_south_monument_01 = {
@@ -7949,8 +9103,13 @@ aov_monument_rainbow_hall_south_monument_01 = {
 
 	cost_gold = 200
 
+	province_modifier = {
+		monthly_income = 1
+	}
+
 	county_modifier = {
 		development_growth_factor = 0.1
+		tax_mult = 0.1
 	}
 
 	character_modifier = {
@@ -7968,6 +9127,7 @@ aov_monument_rainbow_hall_south_monument_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_rainbow_hall_south_monument_02 = {
@@ -7999,14 +9159,18 @@ aov_monument_rainbow_hall_south_monument_02 = {
 
 	cost_gold = 500
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
 	county_modifier = {
 		development_growth_factor = 0.2
-		tax_mult = 0.075
+		tax_mult = 0.12
 	}
 
 	character_modifier = {
 		general_opinion = 1
-		monthly_prestige = 0.5
+		monthly_prestige = 0.75
 		vassal_opinion = 1.25
 	}
 
@@ -8021,6 +9185,7 @@ aov_monument_rainbow_hall_south_monument_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_rainbow_hall_south_monument_03 = {
@@ -8052,6 +9217,10 @@ aov_monument_rainbow_hall_south_monument_03 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
 	county_modifier = {
 		development_growth_factor = 0.33
 		tax_mult = 0.15
@@ -8059,7 +9228,7 @@ aov_monument_rainbow_hall_south_monument_03 = {
 
 	character_modifier = {
 		general_opinion = 2
-		monthly_prestige = 0.5
+		monthly_prestige = 1
 		vassal_opinion = 2.5
 	}
 
@@ -8072,6 +9241,7 @@ aov_monument_rainbow_hall_south_monument_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_ravioli_bastion_01 = {
@@ -8087,6 +9257,11 @@ aov_monument_ravioli_bastion_01 = {
 
 	province_modifier = {
 		fort_level = 2
+		defender_holding_advantage = 2
+		garrison_size = 0.2
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -10
 	}
 
 	county_modifier = {
@@ -8096,6 +9271,7 @@ aov_monument_ravioli_bastion_01 = {
 
 	character_modifier = {
 		domain_limit = 1
+		monthly_prestige = 0.1
 	}
 
 	next_building = aov_monument_ravioli_bastion_02
@@ -8110,6 +9286,7 @@ aov_monument_ravioli_bastion_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_ravioli_bastion_02 = {
@@ -8126,6 +9303,11 @@ aov_monument_ravioli_bastion_02 = {
 	province_modifier = {
 		monthly_income = 2.5
 		fort_level = 2
+		defender_holding_advantage = 4
+		garrison_size = 0.35
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -15
 	}
 
 	county_modifier = {
@@ -8150,6 +9332,7 @@ aov_monument_ravioli_bastion_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_ravioli_bastion_03 = {
@@ -8166,6 +9349,11 @@ aov_monument_ravioli_bastion_03 = {
 	province_modifier = {
 		monthly_income = 5
 		fort_level = 2
+		defender_holding_advantage = 6
+		garrison_size = 0.5
+		stationed_maa_damage_mult = 0.2
+		stationed_maa_toughness_mult = 0.2
+		travel_danger = -20
 	}
 
 	county_modifier = {
@@ -8189,6 +9377,7 @@ aov_monument_ravioli_bastion_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_refuge_of_the_glasslords_01 = {
@@ -8202,8 +9391,13 @@ aov_monument_refuge_of_the_glasslords_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 4
+	}
+
 	county_modifier = {
-		tax_mult = 0.1
+		tax_mult = 0.15
+		development_growth_factor = 0.1
 	}
 
 	character_modifier = {
@@ -8221,6 +9415,7 @@ aov_monument_refuge_of_the_glasslords_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_refuge_of_the_glasslords_02 = {
@@ -8234,8 +9429,13 @@ aov_monument_refuge_of_the_glasslords_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 6
+	}
+
 	county_modifier = {
-		tax_mult = 0.2
+		tax_mult = 0.25
+		development_growth_factor = 0.15
 	}
 
 	character_modifier = {
@@ -8253,6 +9453,7 @@ aov_monument_refuge_of_the_glasslords_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_refuge_of_the_glasslords_03 = {
@@ -8266,8 +9467,13 @@ aov_monument_refuge_of_the_glasslords_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 8
+	}
+
 	county_modifier = {
 		tax_mult = 0.3
+		development_growth_factor = 0.2
 	}
 
 	character_modifier = {
@@ -8283,6 +9489,7 @@ aov_monument_refuge_of_the_glasslords_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_rubyhold_academy_01 = {
@@ -8317,6 +9524,9 @@ aov_monument_rubyhold_academy_01 = {
 	county_modifier = {
 		fort_level = 1
 		hostile_raid_time = 0.125
+		tax_mult = 0.1
+		development_growth_factor = 0.1
+		development_growth = 0.1
 	}
 
 	character_modifier = {
@@ -8335,6 +9545,7 @@ aov_monument_rubyhold_academy_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_rubyhold_academy_02 = {
@@ -8369,11 +9580,14 @@ aov_monument_rubyhold_academy_02 = {
 	county_modifier = {
 		fort_level = 1
 		hostile_raid_time = 0.25
+		tax_mult = 0.15
+		development_growth_factor = 0.2
+		development_growth = 0.2
 	}
 
 	character_modifier = {
 		owned_hostile_scheme_success_chance_add = 4
-		monthly_lifestyle_xp_gain_mult = 0.075
+		monthly_lifestyle_xp_gain_mult = 0.1
 	}
 
 	next_building = aov_monument_rubyhold_academy_03
@@ -8387,6 +9601,7 @@ aov_monument_rubyhold_academy_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_rubyhold_academy_03 = {
@@ -8422,11 +9637,14 @@ aov_monument_rubyhold_academy_03 = {
 		fort_level = 2
 		hostile_raid_time = 0.5
 		defender_holding_advantage = 4
+		tax_mult = 0.2
+		development_growth_factor = 0.25
+		development_growth = 0.25
 	}
 
 	character_modifier = {
 		owned_hostile_scheme_success_chance_add = 5
-		monthly_lifestyle_xp_gain_mult = 0.1
+		monthly_lifestyle_xp_gain_mult = 0.15
 	}
 
 	ai_value = {
@@ -8438,6 +9656,7 @@ aov_monument_rubyhold_academy_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_seinathil_institute_of_song_01 = {
@@ -8470,12 +9689,15 @@ aov_monument_seinathil_institute_of_song_01 = {
 	cost_gold = 400
 
 	county_modifier = {
-		tax_mult = 0.099
+		tax_mult = 0.1
+		development_growth_factor = 0.1
+		development_growth = 0.1
 	}
 
 	character_modifier = {
 		levy_reinforcement_rate = 0.025
 		county_opinion_add = 1
+		monthly_lifestyle_xp_gain_mult = 0.05
 	}
 
 	next_building = aov_monument_seinathil_institute_of_song_02
@@ -8489,6 +9711,7 @@ aov_monument_seinathil_institute_of_song_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_seinathil_institute_of_song_02 = {
@@ -8522,11 +9745,14 @@ aov_monument_seinathil_institute_of_song_02 = {
 
 	county_modifier = {
 		tax_mult = 0.18
+		development_growth_factor = 0.2
+		development_growth = 0.2
 	}
 
 	character_modifier = {
 		levy_reinforcement_rate = 0.05
 		county_opinion_add = 2
+		monthly_lifestyle_xp_gain_mult = 0.1
 	}
 
 	next_building = aov_monument_seinathil_institute_of_song_03
@@ -8540,6 +9766,7 @@ aov_monument_seinathil_institute_of_song_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_seinathil_institute_of_song_03 = {
@@ -8573,11 +9800,14 @@ aov_monument_seinathil_institute_of_song_03 = {
 
 	county_modifier = {
 		tax_mult = 0.3
+		development_growth_factor = 0.25
+		development_growth = 0.25
 	}
 
 	character_modifier = {
 		levy_reinforcement_rate = 0.1
 		county_opinion_add = 3
+		monthly_lifestyle_xp_gain_mult = 0.15
 	}
 
 	ai_value = {
@@ -8589,6 +9819,7 @@ aov_monument_seinathil_institute_of_song_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_silvelar_silver_spires_01 = {
@@ -8620,9 +9851,20 @@ aov_monument_silvelar_silver_spires_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1.5
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.05
-		tax_mult = 0.05
+		development_growth_factor = 0.15
+		tax_mult = 0.1
+		development_growth = 0.1
+		county_opinion_add = 3
+	}
+
+	character_modifier = {
+		monthly_piety = 0.5
+		monthly_dynasty_prestige_mult = 0.02
 	}
 
 	next_building = aov_monument_silvelar_silver_spires_02
@@ -8637,6 +9879,7 @@ aov_monument_silvelar_silver_spires_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_silvelar_silver_spires_02 = {
@@ -8668,9 +9911,20 @@ aov_monument_silvelar_silver_spires_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.1
-		tax_mult = 0.1
+		development_growth_factor = 0.2
+		tax_mult = 0.15
+		development_growth = 0.2
+		county_opinion_add = 4
+	}
+
+	character_modifier = {
+		monthly_piety = 0.75
+		monthly_dynasty_prestige_mult = 0.03
 	}
 
 	on_complete = {
@@ -8689,6 +9943,7 @@ aov_monument_silvelar_silver_spires_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_silvelar_silver_spires_03 = {
@@ -8722,11 +9977,19 @@ aov_monument_silvelar_silver_spires_03 = {
 
 	province_modifier = {
 		building_slot_add = 1
+		monthly_income = 3
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.15
-		tax_mult = 0.15
+		development_growth_factor = 0.25
+		tax_mult = 0.2
+		development_growth = 0.25
+		county_opinion_add = 5
+	}
+
+	character_modifier = {
+		monthly_piety = 1
+		monthly_dynasty_prestige_mult = 0.05
 	}
 
 	ai_value = {
@@ -8739,6 +10002,7 @@ aov_monument_silvelar_silver_spires_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_silverforge_strongbellow_academy_01 = {
@@ -8775,12 +10039,15 @@ aov_monument_silverforge_strongbellow_academy_01 = {
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.05
+		development_growth_factor = 0.1
+		tax_mult = 0.1
+		development_growth = 0.1
 	}
 
 	character_modifier = {
 		men_at_arms_maintenance = -0.05
 		monthly_learning_lifestyle_xp_gain_mult = 0.05
+		monthly_lifestyle_xp_gain_mult = 0.05
 	}
 
 	next_building = aov_monument_silverforge_strongbellow_academy_02
@@ -8794,6 +10061,7 @@ aov_monument_silverforge_strongbellow_academy_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_silverforge_strongbellow_academy_02 = {
@@ -8830,13 +10098,16 @@ aov_monument_silverforge_strongbellow_academy_02 = {
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.2
+		tax_mult = 0.15
+		development_growth = 0.2
 	}
 
 	character_modifier = {
 		men_at_arms_maintenance = -0.075
 		monthly_learning_lifestyle_xp_gain_mult = 0.075
 		knight_limit = 1
+		monthly_lifestyle_xp_gain_mult = 0.1
 	}
 
 	next_building = aov_monument_silverforge_strongbellow_academy_03
@@ -8850,6 +10121,7 @@ aov_monument_silverforge_strongbellow_academy_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_silverforge_strongbellow_academy_03 = {
@@ -8887,13 +10159,16 @@ aov_monument_silverforge_strongbellow_academy_03 = {
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.15
+		development_growth_factor = 0.25
+		tax_mult = 0.2
+		development_growth = 0.25
 	}
 
 	character_modifier = {
 		men_at_arms_maintenance = -0.1
 		monthly_learning_lifestyle_xp_gain_mult = 0.1
 		knight_limit = 2
+		monthly_lifestyle_xp_gain_mult = 0.15
 	}
 
 	on_complete = {
@@ -8909,6 +10184,7 @@ aov_monument_silverforge_strongbellow_academy_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_learning
 }
 
 aov_monument_sorncell_deepwater_harbor_01 = {
@@ -8942,11 +10218,13 @@ aov_monument_sorncell_deepwater_harbor_01 = {
 
 	province_modifier = {
 		build_speed = -0.05
+		monthly_income = 4
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.05
+		development_growth_factor = 0.1
 		levy_size = 0.062
+		tax_mult = 0.15
 	}
 
 	character_modifier = {
@@ -8965,6 +10243,7 @@ aov_monument_sorncell_deepwater_harbor_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_sorncell_deepwater_harbor_02 = {
@@ -8998,11 +10277,13 @@ aov_monument_sorncell_deepwater_harbor_02 = {
 
 	province_modifier = {
 		build_speed = -0.1
+		monthly_income = 6
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.15
 		levy_size = 0.125
+		tax_mult = 0.25
 	}
 
 	character_modifier = {
@@ -9021,6 +10302,7 @@ aov_monument_sorncell_deepwater_harbor_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_sorncell_deepwater_harbor_03 = {
@@ -9054,11 +10336,13 @@ aov_monument_sorncell_deepwater_harbor_03 = {
 
 	province_modifier = {
 		build_speed = -0.165
+		monthly_income = 8
 	}
 
 	county_modifier = {
-		development_growth_factor = 0.15
+		development_growth_factor = 0.2
 		levy_size = 0.25
+		tax_mult = 0.3
 	}
 
 	character_modifier = {
@@ -9075,6 +10359,7 @@ aov_monument_sorncell_deepwater_harbor_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_telgeir_vanbury_steel_foundry_01 = {
@@ -9106,12 +10391,17 @@ aov_monument_telgeir_vanbury_steel_foundry_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
 	county_modifier = {
-		tax_mult = 0.075
+		tax_mult = 0.15
 	}
 
 	character_modifier = {
 		archers_damage_mult = 0.05
+		maa_toughness_mult = 0.05
 	}
 
 	next_building = aov_monument_telgeir_vanbury_steel_foundry_02
@@ -9125,6 +10415,7 @@ aov_monument_telgeir_vanbury_steel_foundry_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_telgeir_vanbury_steel_foundry_02 = {
@@ -9156,13 +10447,17 @@ aov_monument_telgeir_vanbury_steel_foundry_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 4.5
+	}
+
 	county_modifier = {
-		tax_mult = 0.15
+		tax_mult = 0.2
 	}
 
 	character_modifier = {
 		archers_damage_mult = 0.1
-		maa_toughness_mult = 0.025
+		maa_toughness_mult = 0.08
 	}
 
 	next_building = aov_monument_telgeir_vanbury_steel_foundry_03
@@ -9176,6 +10471,7 @@ aov_monument_telgeir_vanbury_steel_foundry_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_telgeir_vanbury_steel_foundry_03 = {
@@ -9207,13 +10503,17 @@ aov_monument_telgeir_vanbury_steel_foundry_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 6
+	}
+
 	county_modifier = {
 		tax_mult = 0.265
 	}
 
 	character_modifier = {
 		archers_damage_mult = 0.15
-		maa_toughness_mult = 0.05
+		maa_toughness_mult = 0.1
 	}
 
 	ai_value = {
@@ -9225,6 +10525,7 @@ aov_monument_telgeir_vanbury_steel_foundry_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_temple_of_ryala_01 = {
@@ -9256,15 +10557,21 @@ aov_monument_temple_of_ryala_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1.5
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.05
-		county_opinion_add = 2
+		development_growth_factor = 0.15
+		county_opinion_add = 3
 		tax_mult = 0.1
+		development_growth = 0.1
 	}
 
 	character_modifier = {
-		monthly_piety = 0.125
+		monthly_piety = 0.5
 		diplomacy = 1
+		monthly_dynasty_prestige_mult = 0.02
 	}
 
 	next_building = aov_monument_temple_of_ryala_02
@@ -9279,6 +10586,7 @@ aov_monument_temple_of_ryala_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_temple_of_ryala_02 = {
@@ -9310,15 +10618,21 @@ aov_monument_temple_of_ryala_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.1
+		development_growth_factor = 0.2
 		county_opinion_add = 6
 		tax_mult = 0.165
+		development_growth = 0.2
 	}
 
 	character_modifier = {
-		monthly_piety = 0.25
+		monthly_piety = 0.75
 		diplomacy = 1
+		monthly_dynasty_prestige_mult = 0.03
 	}
 
 	next_building = aov_monument_temple_of_ryala_03
@@ -9333,6 +10647,7 @@ aov_monument_temple_of_ryala_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_temple_of_ryala_03 = {
@@ -9364,15 +10679,21 @@ aov_monument_temple_of_ryala_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
 	county_modifier = {
-		development_growth_factor = 0.15
+		development_growth_factor = 0.25
 		county_opinion_add = 10
 		tax_mult = 0.25
+		development_growth = 0.25
 	}
 
 	character_modifier = {
-		monthly_piety = 0.5
+		monthly_piety = 1
 		diplomacy = 1
+		monthly_dynasty_prestige_mult = 0.05
 	}
 
 	ai_value = {
@@ -9385,6 +10706,7 @@ aov_monument_temple_of_ryala_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_the_dragonhoard_01 = {
@@ -9416,14 +10738,19 @@ aov_monument_the_dragonhoard_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1
+	}
+
 	county_modifier = {
 		development_growth_factor = 0.1
-		tax_mult = 0.025
+		tax_mult = 0.1
 	}
 
 	character_modifier = {
 		max_loot_mult = 0.083
 		monthly_piety = 0.125
+		monthly_prestige = 0.5
 	}
 
 	next_building = aov_monument_the_dragonhoard_02
@@ -9437,6 +10764,7 @@ aov_monument_the_dragonhoard_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_the_dragonhoard_02 = {
@@ -9468,14 +10796,19 @@ aov_monument_the_dragonhoard_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
 	county_modifier = {
 		development_growth_factor = 0.2
-		tax_mult = 0.05
+		tax_mult = 0.12
 	}
 
 	character_modifier = {
 		max_loot_mult = 0.165
 		monthly_piety = 0.25
+		monthly_prestige = 0.75
 	}
 
 	next_building = aov_monument_the_dragonhoard_03
@@ -9489,6 +10822,7 @@ aov_monument_the_dragonhoard_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_the_dragonhoard_03 = {
@@ -9520,14 +10854,19 @@ aov_monument_the_dragonhoard_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
 	county_modifier = {
 		development_growth_factor = 0.3
-		tax_mult = 0.075
+		tax_mult = 0.15
 	}
 
 	character_modifier = {
 		max_loot_mult = 0.25
 		monthly_piety = 0.5
+		monthly_prestige = 1
 	}
 
 	ai_value = {
@@ -9539,6 +10878,7 @@ aov_monument_the_dragonhoard_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 # Anbennar Overhaul: Anbennar's lake_palace_02 with EU4 tier 3 merged in
@@ -9571,11 +10911,14 @@ aov_monument_the_lake_palace_03 = {
 		# Anbennar Overhaul: EU4 tier 3 (+2 to 1 = 1)
 		fort_level = 3
 		hostile_raid_time = 0.5
+		# Anbennar Overhaul: core effects tier 3
+		monthly_income = 2
 	}
 
 	county_modifier = {
 		monthly_county_control_growth_add = 0.5
-		development_growth_factor = 0.1
+		# Anbennar Overhaul: core effects tier 3 (stronger of 0.1 and 0.2)
+		development_growth_factor = 0.2
 	}
 
 	character_modifier = {
@@ -9589,6 +10932,9 @@ aov_monument_the_lake_palace_03 = {
 		parochial_opinion = 5
 		# Anbennar Overhaul: EU4 tier 3
 		life_expectancy = 3
+		# Anbennar Overhaul: core effects tier 3
+		monthly_prestige = 1
+		vassal_opinion = 10
 	}
 	
 	ai_value = {
@@ -9682,6 +11028,8 @@ aov_monument_the_necropolis_02 = {
 		faith_conversion_piety_cost_mult = -0.2
 		county_opinion_add = 2
 		vassal_tax_contribution_mult = 0.025
+		# Anbennar Overhaul: core effects tier 2
+		monthly_prestige = 0.75
 	}
 	
 	county_modifier = {
@@ -9789,6 +11137,8 @@ aov_monument_the_necropolis_03 = {
 		faith_conversion_piety_cost_mult = -0.25
 		county_opinion_add = 3
 		vassal_tax_contribution_mult = 0.05
+		# Anbennar Overhaul: core effects tier 3
+		monthly_prestige = 1
 	}
 	
 	county_modifier = {
@@ -9853,6 +11203,11 @@ aov_monument_the_north_citadel_02 = {
 		defender_holding_advantage = 9
 		# Anbennar Overhaul: EU4 tier 2 (+1 to good_building_fort_level_tier_4 = 8, capped at 8; 1 moved to defender_holding_advantage)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 2
+		garrison_size = 0.35
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -15
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -9868,6 +11223,8 @@ aov_monument_the_north_citadel_02 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 2
+
 	next_building = aov_monument_the_north_citadel_03 # Anbennar Overhaul: EU4 tier 2
 
 	type = special
@@ -9909,6 +11266,11 @@ aov_monument_the_north_citadel_03 = {
 		defender_holding_advantage = 9
 		# Anbennar Overhaul: EU4 tier 3 (+1 to good_building_fort_level_tier_4 = 8, capped at 8; 1 moved to defender_holding_advantage)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 3
+		garrison_size = 0.5
+		stationed_maa_damage_mult = 0.2
+		stationed_maa_toughness_mult = 0.2
+		travel_danger = -20
 	}
 	county_modifier = {
 		development_growth = 0.1
@@ -9924,6 +11286,8 @@ aov_monument_the_north_citadel_03 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 3
+
 	type = special
 }
 
@@ -9938,8 +11302,17 @@ aov_monument_the_north_citadel_morgurax_monument_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		defender_holding_advantage = 2
+		garrison_size = 0.2
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -10
+	}
+
 	character_modifier = {
 		monthly_county_control_growth_add = 0.5
+		monthly_prestige = 0.1
 	}
 
 	next_building = aov_monument_the_north_citadel_morgurax_monument_02
@@ -9954,6 +11327,7 @@ aov_monument_the_north_citadel_morgurax_monument_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_the_north_citadel_morgurax_monument_02 = {
@@ -9969,10 +11343,16 @@ aov_monument_the_north_citadel_morgurax_monument_02 = {
 
 	province_modifier = {
 		fort_level = 4
+		defender_holding_advantage = 4
+		garrison_size = 0.35
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -15
 	}
 
 	character_modifier = {
 		monthly_county_control_growth_add = 0.5
+		monthly_prestige = 0.2
 	}
 
 	next_building = aov_monument_the_north_citadel_morgurax_monument_03
@@ -9987,6 +11367,7 @@ aov_monument_the_north_citadel_morgurax_monument_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 aov_monument_the_north_citadel_morgurax_monument_03 = {
@@ -10002,11 +11383,16 @@ aov_monument_the_north_citadel_morgurax_monument_03 = {
 
 	province_modifier = {
 		fort_level = 4
-		defender_holding_advantage = 4
+		defender_holding_advantage = 6
+		garrison_size = 0.5
+		stationed_maa_damage_mult = 0.2
+		stationed_maa_toughness_mult = 0.2
+		travel_danger = -20
 	}
 
 	character_modifier = {
 		monthly_county_control_growth_add = 0.5
+		monthly_prestige = 0.3
 	}
 
 	ai_value = {
@@ -10019,6 +11405,7 @@ aov_monument_the_north_citadel_morgurax_monument_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_martial
 }
 
 # Anbennar Overhaul: Anbennar's castanorian_citadel_south_citadel_01 with EU4 tier 2 merged in
@@ -10053,6 +11440,11 @@ aov_monument_the_south_citadel_02 = {
 		defender_holding_advantage = 9
 		# Anbennar Overhaul: EU4 tier 2 (+1 to good_building_fort_level_tier_4 = 8, capped at 8; 1 moved to defender_holding_advantage)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 2
+		garrison_size = 0.35
+		stationed_maa_damage_mult = 0.15
+		stationed_maa_toughness_mult = 0.15
+		travel_danger = -15
 	}
 	county_modifier = {
 		development_growth = 0.2
@@ -10072,6 +11464,8 @@ aov_monument_the_south_citadel_02 = {
 		# Anbennar Overhaul: EU4 tier 2
 		barony.holder = { add_prestige = 100 }
 	}
+
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 2
 
 	next_building = aov_monument_the_south_citadel_03 # Anbennar Overhaul: EU4 tier 2
 
@@ -10110,6 +11504,11 @@ aov_monument_the_south_citadel_03 = {
 		defender_holding_advantage = 9
 		# Anbennar Overhaul: EU4 tier 3 (+1 to good_building_fort_level_tier_4 = 8, capped at 8; 1 moved to defender_holding_advantage)
 		fort_level = 8
+		# Anbennar Overhaul: core effects tier 3
+		garrison_size = 0.5
+		stationed_maa_damage_mult = 0.2
+		stationed_maa_toughness_mult = 0.2
+		travel_danger = -20
 	}
 	county_modifier = {
 		development_growth = 0.2
@@ -10127,6 +11526,8 @@ aov_monument_the_south_citadel_03 = {
 		}
 	}
 	
+	flag = travel_point_of_interest_martial # Anbennar Overhaul: core effects tier 3
+
 	type = special
 }
 
@@ -10159,12 +11560,21 @@ aov_monument_thednakerja_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1.5
+	}
+
 	county_modifier = {
-		tax_mult = 0.075
+		tax_mult = 0.1
+		development_growth_factor = 0.15
+		development_growth = 0.1
+		county_opinion_add = 3
 	}
 
 	character_modifier = {
 		general_opinion = 2
+		monthly_piety = 0.5
+		monthly_dynasty_prestige_mult = 0.02
 	}
 
 	next_building = aov_monument_thednakerja_02
@@ -10179,6 +11589,7 @@ aov_monument_thednakerja_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_thednakerja_02 = {
@@ -10210,13 +11621,22 @@ aov_monument_thednakerja_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
 	county_modifier = {
-		tax_mult = 0.125
+		tax_mult = 0.15
+		development_growth_factor = 0.2
+		development_growth = 0.2
+		county_opinion_add = 4
 	}
 
 	character_modifier = {
 		general_opinion = 4
 		diplomacy = 1
+		monthly_piety = 0.75
+		monthly_dynasty_prestige_mult = 0.03
 	}
 
 	next_building = aov_monument_thednakerja_03
@@ -10231,6 +11651,7 @@ aov_monument_thednakerja_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_thednakerja_03 = {
@@ -10262,13 +11683,22 @@ aov_monument_thednakerja_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
 	county_modifier = {
 		tax_mult = 0.25
+		development_growth_factor = 0.25
+		development_growth = 0.25
+		county_opinion_add = 5
 	}
 
 	character_modifier = {
 		general_opinion = 6
 		diplomacy = 2
+		monthly_piety = 1
+		monthly_dynasty_prestige_mult = 0.05
 	}
 
 	ai_value = {
@@ -10281,6 +11711,7 @@ aov_monument_thednakerja_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_religious
 }
 
 aov_monument_toncodden_lighthouse_01 = {
@@ -10294,8 +11725,18 @@ aov_monument_toncodden_lighthouse_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1
+	}
+
+	county_modifier = {
+		tax_mult = 0.1
+		development_growth_factor = 0.1
+	}
+
 	character_modifier = {
 		naval_movement_speed_mult = 0.05
+		monthly_prestige = 0.5
 	}
 
 	next_building = aov_monument_toncodden_lighthouse_02
@@ -10309,6 +11750,7 @@ aov_monument_toncodden_lighthouse_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_toncodden_lighthouse_02 = {
@@ -10322,8 +11764,18 @@ aov_monument_toncodden_lighthouse_02 = {
 
 	cost_gold = 1000
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
+	county_modifier = {
+		tax_mult = 0.12
+		development_growth_factor = 0.15
+	}
+
 	character_modifier = {
 		naval_movement_speed_mult = 0.125
+		monthly_prestige = 0.75
 	}
 
 	next_building = aov_monument_toncodden_lighthouse_03
@@ -10337,6 +11789,7 @@ aov_monument_toncodden_lighthouse_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_toncodden_lighthouse_03 = {
@@ -10350,8 +11803,18 @@ aov_monument_toncodden_lighthouse_03 = {
 
 	cost_gold = 2000
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
+	county_modifier = {
+		tax_mult = 0.15
+		development_growth_factor = 0.2
+	}
+
 	character_modifier = {
 		naval_movement_speed_mult = 0.2
+		monthly_prestige = 1
 	}
 
 	ai_value = {
@@ -10363,6 +11826,7 @@ aov_monument_toncodden_lighthouse_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_urviksten_ebonsteel_armory_01 = {
@@ -10396,17 +11860,19 @@ aov_monument_urviksten_ebonsteel_armory_01 = {
 
 	province_modifier = {
 		building_slot_add = 1
+		monthly_income = 3
 	}
 
 	county_modifier = {
 		development_growth_factor = 0.15
-		tax_mult = 0.05
+		tax_mult = 0.15
 		supply_limit_mult = 0.125
 	}
 
 	character_modifier = {
 		heavy_infantry_damage_mult = 0.05
 		heavy_infantry_maintenance_mult = -0.025
+		maa_toughness_mult = 0.05
 	}
 
 	next_building = aov_monument_urviksten_ebonsteel_armory_02
@@ -10420,6 +11886,7 @@ aov_monument_urviksten_ebonsteel_armory_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_urviksten_ebonsteel_armory_02 = {
@@ -10453,18 +11920,19 @@ aov_monument_urviksten_ebonsteel_armory_02 = {
 
 	province_modifier = {
 		building_slot_add = 2
+		monthly_income = 4.5
 	}
 
 	county_modifier = {
 		development_growth_factor = 0.3
-		tax_mult = 0.15
+		tax_mult = 0.2
 		supply_limit_mult = 0.25
 	}
 
 	character_modifier = {
 		heavy_infantry_damage_mult = 0.1
 		heavy_infantry_maintenance_mult = -0.05
-		maa_toughness_mult = 0.025
+		maa_toughness_mult = 0.08
 	}
 
 	on_complete = {
@@ -10482,6 +11950,7 @@ aov_monument_urviksten_ebonsteel_armory_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_urviksten_ebonsteel_armory_03 = {
@@ -10515,18 +11984,19 @@ aov_monument_urviksten_ebonsteel_armory_03 = {
 
 	province_modifier = {
 		building_slot_add = 3
+		monthly_income = 6
 	}
 
 	county_modifier = {
 		development_growth_factor = 0.45
-		tax_mult = 0.2
+		tax_mult = 0.25
 		supply_limit_mult = 0.5
 	}
 
 	character_modifier = {
 		heavy_infantry_damage_mult = 0.15
 		heavy_infantry_maintenance_mult = -0.1
-		maa_toughness_mult = 0.05
+		maa_toughness_mult = 0.1
 	}
 
 	ai_value = {
@@ -10538,6 +12008,7 @@ aov_monument_urviksten_ebonsteel_armory_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_economic
 }
 
 aov_monument_well_of_majesty_01 = {
@@ -10551,8 +12022,18 @@ aov_monument_well_of_majesty_01 = {
 
 	cost_gold = 400
 
+	province_modifier = {
+		monthly_income = 1
+	}
+
+	county_modifier = {
+		tax_mult = 0.1
+		development_growth_factor = 0.1
+	}
+
 	character_modifier = {
 		monthly_learning_lifestyle_xp_gain_mult = -0.08
+		monthly_prestige = 0.5
 	}
 
 	next_building = aov_monument_well_of_majesty_02
@@ -10566,6 +12047,7 @@ aov_monument_well_of_majesty_01 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_well_of_majesty_02 = {
@@ -10579,8 +12061,18 @@ aov_monument_well_of_majesty_02 = {
 
 	cost_gold = 600
 
+	province_modifier = {
+		monthly_income = 2
+	}
+
+	county_modifier = {
+		tax_mult = 0.12
+		development_growth_factor = 0.15
+	}
+
 	character_modifier = {
 		monthly_learning_lifestyle_xp_gain_mult = -0.12
+		monthly_prestige = 0.75
 	}
 
 	next_building = aov_monument_well_of_majesty_03
@@ -10594,6 +12086,7 @@ aov_monument_well_of_majesty_02 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }
 
 aov_monument_well_of_majesty_03 = {
@@ -10607,8 +12100,18 @@ aov_monument_well_of_majesty_03 = {
 
 	cost_gold = 800
 
+	province_modifier = {
+		monthly_income = 3
+	}
+
+	county_modifier = {
+		tax_mult = 0.15
+		development_growth_factor = 0.2
+	}
+
 	character_modifier = {
 		monthly_learning_lifestyle_xp_gain_mult = -0.16
+		monthly_prestige = 1
 	}
 
 	ai_value = {
@@ -10620,4 +12123,5 @@ aov_monument_well_of_majesty_03 = {
 	}
 
 	type = special
+	flag = travel_point_of_interest_wonder
 }

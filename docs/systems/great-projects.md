@@ -23,6 +23,18 @@ The county view override also draws the dwarven hold dig bar (see dwarven-holds.
   view). `tools/data/monuments/translation.py` lists the allowed modifier keys (`MODIFIER_KEYS`) and the icons. Dropped modifiers and one-offs are listed per tier
   (`dropped`); 10 gates stay open (EU4 gates on tags/flags/legacies); balance caps on the EU4 tiers: fort_level 4, county tax_mult 0.3; a summed fort_level stops at max(8, Anbennar's value), the rest goes to `defender_holding_advantage`; upgrades cost and take at least what the level they replace did; field `gate_mode: "or"` (Necropolis) makes the EU4 gate an alternative to Anbennar's `can_construct` on upper levels.
   Spec `docs/superpowers/specs/2026-10-09-great-projects-cannor-design.md`.
+- **Core effects (balance):** every level also gets its category's core package from
+  `tools/data/monuments/balance.py` (`CORE`, by tier; `CATEGORY_CORE` maps the 17 categories to 9 packages), so a full
+  chain matches a vanilla special building of about the same cost: mines Rammelsberg levels 2-4 (+14 gold, +35% tax at
+  tier 3), temples Notre Dame/Cologne, fortresses the Citadel of Aleppo, academies and libraries the House of Wisdom;
+  markets, guilds, ports, foundries, palaces and the rest in between. The EU4 effects stay on top as flavor. A key the
+  level already has in the same block (EU4 flavor, or Anbennar's own line on an Anbennar chain) keeps the stronger of
+  the two (`stronger()`: larger for a positive core value, smaller for a negative one such as `travel_danger`); a value of
+  the opposite sign is a penalty and is summed (Eternal Pillars keep their opinion malus). Every level also gets the
+  category's vanilla travel point-of-interest flag (`POI_FLAGS`) unless Anbennar's definition already has one.
+  `CORE_OVERRIDES` (eu4_key -> package, or None) swaps or removes the core for one monument. Costs are unchanged (about
+  3,400 gold for three tiers, like a vanilla special mine); the Dwarven Monuments were lowered from 4,600 to 3,400.
+  The data's own balance guard (`test_balance_guard`, fort level 4, county tax 30%) applies to the EU4 flavor only.
 - **Great projects (Middle Dwarovar):** region `dwarovar` (EU4 west/east Serpentspine superregions) of the same
   framework: 5 Dwarven Monuments holds on the CK3 map (Seghdihr, Verkal Gulan, Hehodovar, Gor Ozumbrog, Khugdihr),
   data `tools/data/monuments/dwarovar.py`, outputs `aov_monuments_dwarovar.*` (no overrides: no
