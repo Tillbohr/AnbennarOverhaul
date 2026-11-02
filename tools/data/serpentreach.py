@@ -24,13 +24,13 @@ BARONY_SUFFIXES = ("Halls", "Deeps", "Vaults")  # names of a county's 2nd, 3rd a
 
 # EU4 area keys of each kingdom, west to east.
 KINGDOMS = {
-    "k_arg_ordstun": ("Arg-Ördstun", ["orlghelovar_area", "south_altar_area", "north_altar_area",
+    "k_arg_ordstun": ("Arg-Ôrdstun", ["orlghelovar_area", "south_altar_area", "north_altar_area",
                                        "argrod_origin_area", "arg_ordstun_area", "shazstundihr_area",
                                        "kings_caverns_area"]),
     "k_ovdal_lodhum": ("Ovdal Lodhum", ["argrod_6_8_area", "stunad_skomdihr_area", "thievesbane_area",
                                         "ovdal_lodhum_area", "argrod_9_11_area", "shroomfissure_area",
                                         "still_caverns_area"]),
-    "k_gor_burad": ("Gor Búrad", ["argrod_junction_area", "zarn_area", "argrod_14_16_area", "buradforge_area",
+    "k_gor_burad": ("Gor Bûrad", ["argrod_junction_area", "zarn_area", "argrod_14_16_area", "buradforge_area",
                                   "gor_burad_area"]),
 }
 EMPIRE = ("e_serpentreach", "Serpentreach")
