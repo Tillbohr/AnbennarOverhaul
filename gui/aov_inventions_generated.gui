@@ -127,6 +127,9 @@ types AovInventions
 					text = "[GetScriptedGui('aov_inv_clockwork_waterwheels_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				}
 				cooltip_paragraph = {
+					text = "aov_invention_clockwork_waterwheels_unlock_tt"
+				}
+				cooltip_paragraph = {
 					visible = "[Not( GetScriptedGui('aov_inv_clockwork_waterwheels_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
 					text = "AOV_INV_LOCKED_TIER_1_TT"
 				}
@@ -272,6 +275,9 @@ types AovInventions
 				}
 				cooltip_paragraph = {
 					text = "[GetScriptedGui('aov_inv_alchemical_distilleries_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				}
+				cooltip_paragraph = {
+					text = "aov_invention_alchemical_distilleries_unlock_tt"
 				}
 				cooltip_paragraph = {
 					visible = "[Not( GetScriptedGui('aov_inv_alchemical_distilleries_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
@@ -517,6 +523,9 @@ types AovInventions
 				}
 				cooltip_paragraph = {
 					text = "[GetScriptedGui('aov_inv_damestear_foundries_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				}
+				cooltip_paragraph = {
+					text = "aov_invention_damestear_foundries_unlock_tt"
 				}
 				cooltip_paragraph = {
 					visible = "[Not( GetScriptedGui('aov_inv_damestear_foundries_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
@@ -813,6 +822,9 @@ types AovInventions
 					text = "[GetScriptedGui('aov_inv_clockwork_repeaters_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				}
 				cooltip_paragraph = {
+					text = "aov_invention_clockwork_repeaters_unlock_tt"
+				}
+				cooltip_paragraph = {
 					visible = "[Not( GetScriptedGui('aov_inv_clockwork_repeaters_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
 					text = "AOV_INV_LOCKED_TIER_1_TT"
 				}
@@ -1107,6 +1119,9 @@ types AovInventions
 					text = "[GetScriptedGui('aov_inv_gnomish_bombards_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				}
 				cooltip_paragraph = {
+					text = "aov_invention_gnomish_bombards_unlock_tt"
+				}
+				cooltip_paragraph = {
 					visible = "[Not( GetScriptedGui('aov_inv_gnomish_bombards_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
 					text = "AOV_INV_LOCKED_TIER_2_TT"
 				}
@@ -1254,6 +1269,9 @@ types AovInventions
 					text = "[GetScriptedGui('aov_inv_war_golems_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				}
 				cooltip_paragraph = {
+					text = "aov_invention_war_golems_unlock_tt"
+				}
+				cooltip_paragraph = {
 					visible = "[Not( GetScriptedGui('aov_inv_war_golems_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
 					text = "AOV_INV_LOCKED_TIER_2_TT"
 				}
@@ -1350,6 +1368,9 @@ types AovInventions
 				}
 				cooltip_paragraph = {
 					text = "[GetScriptedGui('aov_inv_clockwork_plate_harness_effects_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				}
+				cooltip_paragraph = {
+					text = "aov_invention_clockwork_plate_harness_unlock_tt"
 				}
 				cooltip_paragraph = {
 					visible = "[Not( GetScriptedGui('aov_inv_clockwork_plate_harness_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"

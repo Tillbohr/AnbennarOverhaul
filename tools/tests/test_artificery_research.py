@@ -40,10 +40,31 @@ class ResearchTests(unittest.TestCase):
             self.assertIn(f"NOT = {{ has_variable = aov_tech_offers_rolled_{c} }}", b)
             self.assertIn(f"aov_inventions_roll_offers_{c} = yes", b)
 
-    def test_cooldowns_cover_five_slots(self):
+    def test_cooldowns_cover_six_slots(self):
         b = block(read("common/scripted_effects/aov_artificery_research_effects.txt"), "aov_artificery_start_slot_cooldown")
-        for n in range(1, 6):
+        for n in range(1, 7):
             self.assertIn(f"set_variable = {{ name = aov_slot_cd_{n} years = 1 }}", b)
+
+    def test_inherit_copies_six_cooldowns(self):
+        text = read("common/scripted_effects/aov_artificery_research_effects.txt")
+        for n in range(1, 7):
+            self.assertIn(f"scope:aov_predecessor = {{ has_variable = aov_slot_cd_{n} }}", text)
+
+    def test_slots_and_tier_gate_values(self):
+        text = read("common/script_values/aov_artificery_values.txt")
+        slots = block(text, "aov_invention_slots_max")
+        self.assertRegex(slots, r"^\tvalue = 4\n")
+        self.assertIn("value = 5", slots)
+        self.assertIn("value = 6", slots)
+        self.assertIn("has_variable = aov_slot_cd_6", block(text, "aov_invention_slots_cooling"))
+        self.assertRegex(text, r"(?m)^aov_invention_tier_gate_count = 6$")
+
+    def test_tier_lock_loc_shows_progress(self):
+        text = read("localization/english/aov_artificery_l_english.yml")
+        for t, prev in ((2, 1), (3, 2)):
+            line = next(l for l in text.splitlines() if l.startswith(f" AOV_INV_LOCKED_TIER_{t}_TT:"))
+            self.assertIn("ScriptValue('aov_invention_tier_gate_count')", line)
+            self.assertIn(f"ScriptValue('aov_inventions_t{prev}_discovered_count')", line)
 
     def test_on_actions_hook_quarterly_and_death(self):
         text = read("common/on_action/aov_inventions_on_actions.txt")

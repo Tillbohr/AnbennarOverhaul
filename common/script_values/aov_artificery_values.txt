@@ -1,15 +1,15 @@
 ﻿# Artificery inventions: character-scope values. See common/scripted_effects/aov_artificery_research_effects.txt.
 
-# 3 slots, 4 from the High Medieval era, 5 from the Late Medieval era
+# 4 slots, 5 from the High Medieval era, 6 from the Late Medieval era
 aov_invention_slots_max = {
-	value = 3
+	value = 4
 	if = {
 		limit = { culture = { has_cultural_era_or_later = culture_era_high_medieval } }
-		value = 4
+		value = 5
 	}
 	if = {
 		limit = { culture = { has_cultural_era_or_later = culture_era_late_medieval } }
-		value = 5
+		value = 6
 	}
 }
 
@@ -21,7 +21,11 @@ aov_invention_slots_cooling = {
 	if = { limit = { has_variable = aov_slot_cd_3 } add = 1 }
 	if = { limit = { has_variable = aov_slot_cd_4 } add = 1 }
 	if = { limit = { has_variable = aov_slot_cd_5 } add = 1 }
+	if = { limit = { has_variable = aov_slot_cd_6 } add = 1 }
 }
+
+# Tier II/III need this many discoveries of the tier below (with the era)
+aov_invention_tier_gate_count = 6
 
 aov_invention_slots_free = {
 	value = aov_invention_slots_max

@@ -161,7 +161,7 @@ class ScriptOutputTests(unittest.TestCase):
     def test_triggers_per_invention(self):
         names = set(top_level_blocks(bi.triggers(INVENTIONS)))
         for k in KEYS:
-            for suffix in ("visible", "unlocked", "available", "discovered", "active", "discoverable", "activatable", "offered"):
+            for suffix in ("visible", "unlocked", "available", "discovered", "active", "discoverable", "activatable", "offered", "unlock_ready"):
                 self.assertIn(f"aov_invention_{k}_{suffix}", names)
         for c in bi.CATEGORIES:
             self.assertIn(f"aov_inventions_{c}_discoverable", names)
@@ -187,7 +187,7 @@ class ScriptOutputTests(unittest.TestCase):
 
     def test_values(self):
         text = bi.values(INVENTIONS)
-        self.assertEqual(top_level_blocks(text), ["aov_invention_active_count", "aov_invention_newest_order"])
+        self.assertEqual(top_level_blocks(text)[:2], ["aov_invention_active_count", "aov_invention_newest_order"])
         for k in KEYS:
             self.assertIn(f"aov_invention_{k}_active = yes", text)
             self.assertIn(f"min = var:aov_inv_{k}_order", text)
@@ -254,6 +254,43 @@ class ScriptOutputTests(unittest.TestCase):
 
 
 class GuiOutputTests(unittest.TestCase):
+    def test_unlock_ready_per_invention(self):
+        text = bi.triggers(INVENTIONS)
+        for k in KEYS:
+            block = re.search(rf"^aov_invention_{k}_unlock_ready = \{{\n(.*?)\n\}}", text, re.M | re.S).group(1)
+            self.assertEqual(block, f"\taov_invention_{k}_discovered = yes\n\taov_invention_{k}_visible = yes\n"
+                                    "\tNOT = { has_variable = aov_artificery_dormant }")
+
+    def test_unlocked_gates_on_lower_tier_discoveries(self):
+        text = bi.triggers(INVENTIONS)
+        for i in INVENTIONS:
+            block = re.search(rf"^aov_invention_{i['key']}_unlocked = \{{\n(.*?)\n\}}", text, re.M | re.S).group(1)
+            if i["tier"] == 1:
+                self.assertNotIn("discovered_count", block)
+            else:
+                self.assertIn(f"aov_inventions_t{i['tier'] - 1}_discovered_count >= aov_invention_tier_gate_count", block)
+
+    def test_discovered_counts_list_their_tier(self):
+        text = bi.values(INVENTIONS)
+        self.assertEqual(top_level_blocks(text), ["aov_invention_active_count", "aov_invention_newest_order",
+                                                  "aov_inventions_t1_discovered_count", "aov_inventions_t2_discovered_count"])
+        for t in (1, 2):
+            block = re.search(rf"^aov_inventions_t{t}_discovered_count = \{{\n(.*?)\n\}}", text, re.M | re.S).group(1)
+            self.assertEqual(set(re.findall(r"aov_invention_([a-z0-9_]+)_discovered = yes", block)),
+                             {i["key"] for i in INVENTIONS if i["tier"] == t})
+
+    def test_unlock_tooltip_and_loc(self):
+        gui, lc = bi.gui(INVENTIONS), bi.loc(INVENTIONS)
+        for i in INVENTIONS:
+            k = i["key"]
+            tt = gui.split(f"type aov_invention_{k}_tooltip = object_tooltip_pop_out {{")[1].split("\n\t}\n")[0]
+            if i["unlock"]:
+                name = f"building_{i['unlock']}" if i["unlock"] in bi.BUILDING_UNLOCKS else i["unlock"]
+                self.assertIn(f'text = "aov_invention_{k}_unlock_tt"', tt)
+                self.assertIn(f' aov_invention_{k}_unlock_tt: "#P Unlocks#! ${name}$ #weak (permanent once discovered)#!"', lc)
+            else:
+                self.assertNotIn("_unlock_tt", tt)
+
     def test_nine_sguis_per_invention(self):
         names = top_level_blocks(bi.sguis(INVENTIONS))
         self.assertEqual(len(names), 9 * 48)

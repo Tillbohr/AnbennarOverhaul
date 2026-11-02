@@ -105,3 +105,47 @@ aov_invention_newest_order = {
 	if = { limit = { aov_invention_gnomish_spectacles_active = yes has_variable = aov_inv_gnomish_spectacles_order } min = var:aov_inv_gnomish_spectacles_order }
 	if = { limit = { aov_invention_universal_grammarye_active = yes has_variable = aov_inv_universal_grammarye_order } min = var:aov_inv_universal_grammarye_order }
 }
+
+# Character scope: number of discovered tier 1 inventions (gates tier 2)
+aov_inventions_t1_discovered_count = {
+	value = 0
+	if = { limit = { aov_invention_box_of_holding_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_clockwork_abacus_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_clockwork_waterwheels_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_growth_beans_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_self_cleaning_parchment_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_ancestral_golems_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_brass_cuirasses_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_clockwork_ballistae_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_clockwork_repeaters_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_damestear_powder_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_sunbeam_armaments_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_centipedal_chests_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_conversation_calibrator_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_fey_spray_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_mystic_ciphers_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_sending_stones_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_spell_in_a_box_discovered = yes } add = 1 }
+}
+
+# Character scope: number of discovered tier 2 inventions (gates tier 3)
+aov_inventions_t2_discovered_count = {
+	value = 0
+	if = { limit = { aov_invention_alchemical_distilleries_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_arithmatons_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_damestear_lamps_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_subterrenes_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_avatar_supersoldier_serum_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_brass_prosthesis_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_chi_cultivation_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_gnomish_bombards_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_lullaby_cannon_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_vorpal_bullets_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_war_golems_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_clockwork_orrery_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_game_of_khet_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_living_mirrors_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_mirage_detector_3000_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_printing_press_discovered = yes } add = 1 }
+	if = { limit = { aov_invention_remedial_tinctures_discovered = yes } add = 1 }
+}

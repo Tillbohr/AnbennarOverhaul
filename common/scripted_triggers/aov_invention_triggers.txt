@@ -31,6 +31,12 @@ aov_invention_box_of_holding_activatable = {
 aov_invention_box_of_holding_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:box_of_holding } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:box_of_holding } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:box_of_holding } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_box_of_holding_unlock_ready = {
+	aov_invention_box_of_holding_discovered = yes
+	aov_invention_box_of_holding_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_clockwork_abacus_visible = {
 	always = yes
@@ -60,6 +66,12 @@ aov_invention_clockwork_abacus_activatable = {
 }
 aov_invention_clockwork_abacus_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:clockwork_abacus } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:clockwork_abacus } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:clockwork_abacus } }
+}
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_clockwork_abacus_unlock_ready = {
+	aov_invention_clockwork_abacus_discovered = yes
+	aov_invention_clockwork_abacus_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
 }
 
 aov_invention_clockwork_waterwheels_visible = {
@@ -91,6 +103,12 @@ aov_invention_clockwork_waterwheels_activatable = {
 aov_invention_clockwork_waterwheels_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:clockwork_waterwheels } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:clockwork_waterwheels } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:clockwork_waterwheels } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_clockwork_waterwheels_unlock_ready = {
+	aov_invention_clockwork_waterwheels_discovered = yes
+	aov_invention_clockwork_waterwheels_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_growth_beans_visible = {
 	always = yes
@@ -120,6 +138,12 @@ aov_invention_growth_beans_activatable = {
 }
 aov_invention_growth_beans_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:growth_beans } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:growth_beans } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:growth_beans } }
+}
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_growth_beans_unlock_ready = {
+	aov_invention_growth_beans_discovered = yes
+	aov_invention_growth_beans_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
 }
 
 aov_invention_self_cleaning_parchment_visible = {
@@ -151,12 +175,19 @@ aov_invention_self_cleaning_parchment_activatable = {
 aov_invention_self_cleaning_parchment_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:self_cleaning_parchment } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:self_cleaning_parchment } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:self_cleaning_parchment } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_self_cleaning_parchment_unlock_ready = {
+	aov_invention_self_cleaning_parchment_discovered = yes
+	aov_invention_self_cleaning_parchment_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_alchemical_distilleries_visible = {
 	always = yes
 }
 aov_invention_alchemical_distilleries_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
+	aov_inventions_t1_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_alchemical_distilleries_available = {
 	aov_invention_alchemical_distilleries_visible = yes
@@ -181,12 +212,19 @@ aov_invention_alchemical_distilleries_activatable = {
 aov_invention_alchemical_distilleries_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:alchemical_distilleries } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:alchemical_distilleries } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:alchemical_distilleries } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_alchemical_distilleries_unlock_ready = {
+	aov_invention_alchemical_distilleries_discovered = yes
+	aov_invention_alchemical_distilleries_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_arithmatons_visible = {
 	always = yes
 }
 aov_invention_arithmatons_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
+	aov_inventions_t1_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_arithmatons_available = {
 	aov_invention_arithmatons_visible = yes
@@ -211,12 +249,19 @@ aov_invention_arithmatons_activatable = {
 aov_invention_arithmatons_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:arithmatons } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:arithmatons } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:arithmatons } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_arithmatons_unlock_ready = {
+	aov_invention_arithmatons_discovered = yes
+	aov_invention_arithmatons_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_damestear_lamps_visible = {
 	always = yes
 }
 aov_invention_damestear_lamps_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
+	aov_inventions_t1_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_damestear_lamps_available = {
 	aov_invention_damestear_lamps_visible = yes
@@ -241,12 +286,19 @@ aov_invention_damestear_lamps_activatable = {
 aov_invention_damestear_lamps_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:damestear_lamps } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:damestear_lamps } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:damestear_lamps } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_damestear_lamps_unlock_ready = {
+	aov_invention_damestear_lamps_discovered = yes
+	aov_invention_damestear_lamps_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_subterrenes_visible = {
 	always = yes
 }
 aov_invention_subterrenes_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
+	aov_inventions_t1_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_subterrenes_available = {
 	aov_invention_subterrenes_visible = yes
@@ -271,12 +323,19 @@ aov_invention_subterrenes_activatable = {
 aov_invention_subterrenes_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:subterrenes } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:subterrenes } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:subterrenes } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_subterrenes_unlock_ready = {
+	aov_invention_subterrenes_discovered = yes
+	aov_invention_subterrenes_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_automaton_labourers_visible = {
 	culture = { has_cultural_pillar = heritage_gnomish }
 }
 aov_invention_automaton_labourers_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
+	aov_inventions_t2_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_automaton_labourers_available = {
 	aov_invention_automaton_labourers_visible = yes
@@ -301,12 +360,19 @@ aov_invention_automaton_labourers_activatable = {
 aov_invention_automaton_labourers_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:automaton_labourers } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:automaton_labourers } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:automaton_labourers } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_automaton_labourers_unlock_ready = {
+	aov_invention_automaton_labourers_discovered = yes
+	aov_invention_automaton_labourers_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_damestear_foundries_visible = {
 	always = yes
 }
 aov_invention_damestear_foundries_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
+	aov_inventions_t2_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_damestear_foundries_available = {
 	aov_invention_damestear_foundries_visible = yes
@@ -331,12 +397,19 @@ aov_invention_damestear_foundries_activatable = {
 aov_invention_damestear_foundries_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:damestear_foundries } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:damestear_foundries } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:damestear_foundries } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_damestear_foundries_unlock_ready = {
+	aov_invention_damestear_foundries_discovered = yes
+	aov_invention_damestear_foundries_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_pathway_transmutation_visible = {
 	always = yes
 }
 aov_invention_pathway_transmutation_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
+	aov_inventions_t2_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_pathway_transmutation_available = {
 	aov_invention_pathway_transmutation_visible = yes
@@ -361,12 +434,19 @@ aov_invention_pathway_transmutation_activatable = {
 aov_invention_pathway_transmutation_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:pathway_transmutation } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:pathway_transmutation } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:pathway_transmutation } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_pathway_transmutation_unlock_ready = {
+	aov_invention_pathway_transmutation_discovered = yes
+	aov_invention_pathway_transmutation_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_pneumatic_post_visible = {
 	always = yes
 }
 aov_invention_pneumatic_post_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
+	aov_inventions_t2_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_pneumatic_post_available = {
 	aov_invention_pneumatic_post_visible = yes
@@ -390,6 +470,12 @@ aov_invention_pneumatic_post_activatable = {
 }
 aov_invention_pneumatic_post_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:pneumatic_post } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:pneumatic_post } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:pneumatic_post } }
+}
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_pneumatic_post_unlock_ready = {
+	aov_invention_pneumatic_post_discovered = yes
+	aov_invention_pneumatic_post_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
 }
 
 aov_invention_ancestral_golems_visible = {
@@ -421,6 +507,12 @@ aov_invention_ancestral_golems_activatable = {
 aov_invention_ancestral_golems_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:ancestral_golems } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:ancestral_golems } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:ancestral_golems } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_ancestral_golems_unlock_ready = {
+	aov_invention_ancestral_golems_discovered = yes
+	aov_invention_ancestral_golems_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_brass_cuirasses_visible = {
 	always = yes
@@ -450,6 +542,12 @@ aov_invention_brass_cuirasses_activatable = {
 }
 aov_invention_brass_cuirasses_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:brass_cuirasses } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:brass_cuirasses } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:brass_cuirasses } }
+}
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_brass_cuirasses_unlock_ready = {
+	aov_invention_brass_cuirasses_discovered = yes
+	aov_invention_brass_cuirasses_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
 }
 
 aov_invention_clockwork_ballistae_visible = {
@@ -481,6 +579,12 @@ aov_invention_clockwork_ballistae_activatable = {
 aov_invention_clockwork_ballistae_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:clockwork_ballistae } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:clockwork_ballistae } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:clockwork_ballistae } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_clockwork_ballistae_unlock_ready = {
+	aov_invention_clockwork_ballistae_discovered = yes
+	aov_invention_clockwork_ballistae_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_clockwork_repeaters_visible = {
 	always = yes
@@ -510,6 +614,12 @@ aov_invention_clockwork_repeaters_activatable = {
 }
 aov_invention_clockwork_repeaters_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:clockwork_repeaters } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:clockwork_repeaters } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:clockwork_repeaters } }
+}
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_clockwork_repeaters_unlock_ready = {
+	aov_invention_clockwork_repeaters_discovered = yes
+	aov_invention_clockwork_repeaters_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
 }
 
 aov_invention_damestear_powder_visible = {
@@ -541,6 +651,12 @@ aov_invention_damestear_powder_activatable = {
 aov_invention_damestear_powder_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:damestear_powder } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:damestear_powder } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:damestear_powder } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_damestear_powder_unlock_ready = {
+	aov_invention_damestear_powder_discovered = yes
+	aov_invention_damestear_powder_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_sunbeam_armaments_visible = {
 	faith = { religion = religion:bulwari_sun_cults_religion }
@@ -571,12 +687,19 @@ aov_invention_sunbeam_armaments_activatable = {
 aov_invention_sunbeam_armaments_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:sunbeam_armaments } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:sunbeam_armaments } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:sunbeam_armaments } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_sunbeam_armaments_unlock_ready = {
+	aov_invention_sunbeam_armaments_discovered = yes
+	aov_invention_sunbeam_armaments_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_avatar_supersoldier_serum_visible = {
 	faith = { religion = religion:cannorian_pantheon_religion }
 }
 aov_invention_avatar_supersoldier_serum_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
+	aov_inventions_t1_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_avatar_supersoldier_serum_available = {
 	aov_invention_avatar_supersoldier_serum_visible = yes
@@ -601,12 +724,19 @@ aov_invention_avatar_supersoldier_serum_activatable = {
 aov_invention_avatar_supersoldier_serum_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:avatar_supersoldier_serum } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:avatar_supersoldier_serum } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:avatar_supersoldier_serum } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_avatar_supersoldier_serum_unlock_ready = {
+	aov_invention_avatar_supersoldier_serum_discovered = yes
+	aov_invention_avatar_supersoldier_serum_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_brass_prosthesis_visible = {
 	always = yes
 }
 aov_invention_brass_prosthesis_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
+	aov_inventions_t1_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_brass_prosthesis_available = {
 	aov_invention_brass_prosthesis_visible = yes
@@ -631,12 +761,19 @@ aov_invention_brass_prosthesis_activatable = {
 aov_invention_brass_prosthesis_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:brass_prosthesis } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:brass_prosthesis } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:brass_prosthesis } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_brass_prosthesis_unlock_ready = {
+	aov_invention_brass_prosthesis_discovered = yes
+	aov_invention_brass_prosthesis_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_chi_cultivation_visible = {
 	faith = faith:devouring_path
 }
 aov_invention_chi_cultivation_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
+	aov_inventions_t1_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_chi_cultivation_available = {
 	aov_invention_chi_cultivation_visible = yes
@@ -661,12 +798,19 @@ aov_invention_chi_cultivation_activatable = {
 aov_invention_chi_cultivation_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:chi_cultivation } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:chi_cultivation } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:chi_cultivation } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_chi_cultivation_unlock_ready = {
+	aov_invention_chi_cultivation_discovered = yes
+	aov_invention_chi_cultivation_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_gnomish_bombards_visible = {
 	always = yes
 }
 aov_invention_gnomish_bombards_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
+	aov_inventions_t1_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_gnomish_bombards_available = {
 	aov_invention_gnomish_bombards_visible = yes
@@ -691,12 +835,19 @@ aov_invention_gnomish_bombards_activatable = {
 aov_invention_gnomish_bombards_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:gnomish_bombards } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:gnomish_bombards } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:gnomish_bombards } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_gnomish_bombards_unlock_ready = {
+	aov_invention_gnomish_bombards_discovered = yes
+	aov_invention_gnomish_bombards_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_lullaby_cannon_visible = {
 	faith = faith:skaldhyrric_faith
 }
 aov_invention_lullaby_cannon_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
+	aov_inventions_t1_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_lullaby_cannon_available = {
 	aov_invention_lullaby_cannon_visible = yes
@@ -721,12 +872,19 @@ aov_invention_lullaby_cannon_activatable = {
 aov_invention_lullaby_cannon_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:lullaby_cannon } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:lullaby_cannon } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:lullaby_cannon } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_lullaby_cannon_unlock_ready = {
+	aov_invention_lullaby_cannon_discovered = yes
+	aov_invention_lullaby_cannon_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_vorpal_bullets_visible = {
 	always = yes
 }
 aov_invention_vorpal_bullets_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
+	aov_inventions_t1_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_vorpal_bullets_available = {
 	aov_invention_vorpal_bullets_visible = yes
@@ -751,12 +909,19 @@ aov_invention_vorpal_bullets_activatable = {
 aov_invention_vorpal_bullets_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:vorpal_bullets } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:vorpal_bullets } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:vorpal_bullets } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_vorpal_bullets_unlock_ready = {
+	aov_invention_vorpal_bullets_discovered = yes
+	aov_invention_vorpal_bullets_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_war_golems_visible = {
 	always = yes
 }
 aov_invention_war_golems_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
+	aov_inventions_t1_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_war_golems_available = {
 	aov_invention_war_golems_visible = yes
@@ -781,12 +946,19 @@ aov_invention_war_golems_activatable = {
 aov_invention_war_golems_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:war_golems } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:war_golems } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:war_golems } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_war_golems_unlock_ready = {
+	aov_invention_war_golems_discovered = yes
+	aov_invention_war_golems_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_black_damestear_bullets_visible = {
 	always = yes
 }
 aov_invention_black_damestear_bullets_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
+	aov_inventions_t2_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_black_damestear_bullets_available = {
 	aov_invention_black_damestear_bullets_visible = yes
@@ -811,12 +983,19 @@ aov_invention_black_damestear_bullets_activatable = {
 aov_invention_black_damestear_bullets_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:black_damestear_bullets } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:black_damestear_bullets } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:black_damestear_bullets } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_black_damestear_bullets_unlock_ready = {
+	aov_invention_black_damestear_bullets_discovered = yes
+	aov_invention_black_damestear_bullets_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_clockwork_plate_harness_visible = {
 	always = yes
 }
 aov_invention_clockwork_plate_harness_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
+	aov_inventions_t2_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_clockwork_plate_harness_available = {
 	aov_invention_clockwork_plate_harness_visible = yes
@@ -841,12 +1020,19 @@ aov_invention_clockwork_plate_harness_activatable = {
 aov_invention_clockwork_plate_harness_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:clockwork_plate_harness } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:clockwork_plate_harness } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:clockwork_plate_harness } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_clockwork_plate_harness_unlock_ready = {
+	aov_invention_clockwork_plate_harness_discovered = yes
+	aov_invention_clockwork_plate_harness_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_damestear_mortars_visible = {
 	always = yes
 }
 aov_invention_damestear_mortars_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
+	aov_inventions_t2_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_damestear_mortars_available = {
 	aov_invention_damestear_mortars_visible = yes
@@ -871,12 +1057,19 @@ aov_invention_damestear_mortars_activatable = {
 aov_invention_damestear_mortars_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:damestear_mortars } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:damestear_mortars } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:damestear_mortars } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_damestear_mortars_unlock_ready = {
+	aov_invention_damestear_mortars_discovered = yes
+	aov_invention_damestear_mortars_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_demonflame_flamethrowers_visible = {
 	faith = { religion = religion:xhazobkult_religion }
 }
 aov_invention_demonflame_flamethrowers_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
+	aov_inventions_t2_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_demonflame_flamethrowers_available = {
 	aov_invention_demonflame_flamethrowers_visible = yes
@@ -901,12 +1094,19 @@ aov_invention_demonflame_flamethrowers_activatable = {
 aov_invention_demonflame_flamethrowers_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:demonflame_flamethrowers } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:demonflame_flamethrowers } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:demonflame_flamethrowers } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_demonflame_flamethrowers_unlock_ready = {
+	aov_invention_demonflame_flamethrowers_discovered = yes
+	aov_invention_demonflame_flamethrowers_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_observation_balloons_visible = {
 	always = yes
 }
 aov_invention_observation_balloons_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
+	aov_inventions_t2_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_observation_balloons_available = {
 	aov_invention_observation_balloons_visible = yes
@@ -931,12 +1131,19 @@ aov_invention_observation_balloons_activatable = {
 aov_invention_observation_balloons_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:observation_balloons } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:observation_balloons } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:observation_balloons } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_observation_balloons_unlock_ready = {
+	aov_invention_observation_balloons_discovered = yes
+	aov_invention_observation_balloons_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_wandlocks_visible = {
 	always = yes
 }
 aov_invention_wandlocks_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
+	aov_inventions_t2_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_wandlocks_available = {
 	aov_invention_wandlocks_visible = yes
@@ -960,6 +1167,12 @@ aov_invention_wandlocks_activatable = {
 }
 aov_invention_wandlocks_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:wandlocks } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:wandlocks } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:wandlocks } }
+}
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_wandlocks_unlock_ready = {
+	aov_invention_wandlocks_discovered = yes
+	aov_invention_wandlocks_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
 }
 
 aov_invention_centipedal_chests_visible = {
@@ -991,6 +1204,12 @@ aov_invention_centipedal_chests_activatable = {
 aov_invention_centipedal_chests_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:centipedal_chests } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:centipedal_chests } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:centipedal_chests } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_centipedal_chests_unlock_ready = {
+	aov_invention_centipedal_chests_discovered = yes
+	aov_invention_centipedal_chests_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_conversation_calibrator_visible = {
 	culture = { has_cultural_pillar = heritage_gnomish }
@@ -1020,6 +1239,12 @@ aov_invention_conversation_calibrator_activatable = {
 }
 aov_invention_conversation_calibrator_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:conversation_calibrator } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:conversation_calibrator } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:conversation_calibrator } }
+}
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_conversation_calibrator_unlock_ready = {
+	aov_invention_conversation_calibrator_discovered = yes
+	aov_invention_conversation_calibrator_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
 }
 
 aov_invention_fey_spray_visible = {
@@ -1051,6 +1276,12 @@ aov_invention_fey_spray_activatable = {
 aov_invention_fey_spray_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:fey_spray } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:fey_spray } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:fey_spray } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_fey_spray_unlock_ready = {
+	aov_invention_fey_spray_discovered = yes
+	aov_invention_fey_spray_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_mystic_ciphers_visible = {
 	always = yes
@@ -1080,6 +1311,12 @@ aov_invention_mystic_ciphers_activatable = {
 }
 aov_invention_mystic_ciphers_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:mystic_ciphers } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:mystic_ciphers } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:mystic_ciphers } }
+}
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_mystic_ciphers_unlock_ready = {
+	aov_invention_mystic_ciphers_discovered = yes
+	aov_invention_mystic_ciphers_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
 }
 
 aov_invention_sending_stones_visible = {
@@ -1111,6 +1348,12 @@ aov_invention_sending_stones_activatable = {
 aov_invention_sending_stones_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:sending_stones } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:sending_stones } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:sending_stones } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_sending_stones_unlock_ready = {
+	aov_invention_sending_stones_discovered = yes
+	aov_invention_sending_stones_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_spell_in_a_box_visible = {
 	always = yes
@@ -1141,12 +1384,19 @@ aov_invention_spell_in_a_box_activatable = {
 aov_invention_spell_in_a_box_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:spell_in_a_box } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:spell_in_a_box } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:spell_in_a_box } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_spell_in_a_box_unlock_ready = {
+	aov_invention_spell_in_a_box_discovered = yes
+	aov_invention_spell_in_a_box_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_clockwork_orrery_visible = {
 	always = yes
 }
 aov_invention_clockwork_orrery_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
+	aov_inventions_t1_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_clockwork_orrery_available = {
 	aov_invention_clockwork_orrery_visible = yes
@@ -1171,12 +1421,19 @@ aov_invention_clockwork_orrery_activatable = {
 aov_invention_clockwork_orrery_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:clockwork_orrery } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:clockwork_orrery } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:clockwork_orrery } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_clockwork_orrery_unlock_ready = {
+	aov_invention_clockwork_orrery_discovered = yes
+	aov_invention_clockwork_orrery_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_game_of_khet_visible = {
 	faith = { religion = religion:khetism_religion }
 }
 aov_invention_game_of_khet_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
+	aov_inventions_t1_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_game_of_khet_available = {
 	aov_invention_game_of_khet_visible = yes
@@ -1201,12 +1458,19 @@ aov_invention_game_of_khet_activatable = {
 aov_invention_game_of_khet_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:game_of_khet } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:game_of_khet } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:game_of_khet } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_game_of_khet_unlock_ready = {
+	aov_invention_game_of_khet_discovered = yes
+	aov_invention_game_of_khet_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_living_mirrors_visible = {
 	always = yes
 }
 aov_invention_living_mirrors_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
+	aov_inventions_t1_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_living_mirrors_available = {
 	aov_invention_living_mirrors_visible = yes
@@ -1231,12 +1495,19 @@ aov_invention_living_mirrors_activatable = {
 aov_invention_living_mirrors_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:living_mirrors } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:living_mirrors } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:living_mirrors } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_living_mirrors_unlock_ready = {
+	aov_invention_living_mirrors_discovered = yes
+	aov_invention_living_mirrors_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_mirage_detector_3000_visible = {
 	always = yes
 }
 aov_invention_mirage_detector_3000_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
+	aov_inventions_t1_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_mirage_detector_3000_available = {
 	aov_invention_mirage_detector_3000_visible = yes
@@ -1261,12 +1532,19 @@ aov_invention_mirage_detector_3000_activatable = {
 aov_invention_mirage_detector_3000_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:mirage_detector_3000 } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:mirage_detector_3000 } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:mirage_detector_3000 } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_mirage_detector_3000_unlock_ready = {
+	aov_invention_mirage_detector_3000_discovered = yes
+	aov_invention_mirage_detector_3000_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_printing_press_visible = {
 	always = yes
 }
 aov_invention_printing_press_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
+	aov_inventions_t1_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_printing_press_available = {
 	aov_invention_printing_press_visible = yes
@@ -1291,12 +1569,19 @@ aov_invention_printing_press_activatable = {
 aov_invention_printing_press_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:printing_press } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:printing_press } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:printing_press } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_printing_press_unlock_ready = {
+	aov_invention_printing_press_discovered = yes
+	aov_invention_printing_press_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_remedial_tinctures_visible = {
 	always = yes
 }
 aov_invention_remedial_tinctures_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
+	aov_inventions_t1_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_remedial_tinctures_available = {
 	aov_invention_remedial_tinctures_visible = yes
@@ -1321,12 +1606,19 @@ aov_invention_remedial_tinctures_activatable = {
 aov_invention_remedial_tinctures_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:remedial_tinctures } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:remedial_tinctures } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:remedial_tinctures } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_remedial_tinctures_unlock_ready = {
+	aov_invention_remedial_tinctures_discovered = yes
+	aov_invention_remedial_tinctures_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_clerk_automatons_visible = {
 	always = yes
 }
 aov_invention_clerk_automatons_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
+	aov_inventions_t2_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_clerk_automatons_available = {
 	aov_invention_clerk_automatons_visible = yes
@@ -1351,12 +1643,19 @@ aov_invention_clerk_automatons_activatable = {
 aov_invention_clerk_automatons_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:clerk_automatons } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:clerk_automatons } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:clerk_automatons } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_clerk_automatons_unlock_ready = {
+	aov_invention_clerk_automatons_discovered = yes
+	aov_invention_clerk_automatons_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_clockwork_heralds_visible = {
 	always = yes
 }
 aov_invention_clockwork_heralds_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
+	aov_inventions_t2_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_clockwork_heralds_available = {
 	aov_invention_clockwork_heralds_visible = yes
@@ -1381,12 +1680,19 @@ aov_invention_clockwork_heralds_activatable = {
 aov_invention_clockwork_heralds_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:clockwork_heralds } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:clockwork_heralds } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:clockwork_heralds } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_clockwork_heralds_unlock_ready = {
+	aov_invention_clockwork_heralds_discovered = yes
+	aov_invention_clockwork_heralds_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_gnomish_spectacles_visible = {
 	always = yes
 }
 aov_invention_gnomish_spectacles_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
+	aov_inventions_t2_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_gnomish_spectacles_available = {
 	aov_invention_gnomish_spectacles_visible = yes
@@ -1411,12 +1717,19 @@ aov_invention_gnomish_spectacles_activatable = {
 aov_invention_gnomish_spectacles_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:gnomish_spectacles } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:gnomish_spectacles } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:gnomish_spectacles } }
 }
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_gnomish_spectacles_unlock_ready = {
+	aov_invention_gnomish_spectacles_discovered = yes
+	aov_invention_gnomish_spectacles_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
+}
 
 aov_invention_universal_grammarye_visible = {
 	always = yes
 }
 aov_invention_universal_grammarye_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
+	aov_inventions_t2_discovered_count >= aov_invention_tier_gate_count
 }
 aov_invention_universal_grammarye_available = {
 	aov_invention_universal_grammarye_visible = yes
@@ -1440,6 +1753,12 @@ aov_invention_universal_grammarye_activatable = {
 }
 aov_invention_universal_grammarye_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:universal_grammarye } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:universal_grammarye } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:universal_grammarye } }
+}
+# Permanent once discovered: gates the men-at-arms or building this invention unlocks
+aov_invention_universal_grammarye_unlock_ready = {
+	aov_invention_universal_grammarye_discovered = yes
+	aov_invention_universal_grammarye_visible = yes
+	NOT = { has_variable = aov_artificery_dormant }
 }
 
 # Has discovered at least one invention

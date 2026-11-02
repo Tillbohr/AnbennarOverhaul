@@ -123,15 +123,20 @@ def triggers(invs: list) -> str:
             visible.append("culture = { has_cultural_pillar = heritage_gnomish }")
         visible = visible or ["always = yes"]
         vis = "\n".join(f"\t{v}" for v in visible)
+        gate = (f"\taov_inventions_t{i['tier'] - 1}_discovered_count >= aov_invention_tier_gate_count\n"
+                if i["tier"] > 1 else "")
         out.append(
             f"aov_invention_{k}_visible = {{\n{vis}\n}}\n"
-            f"aov_invention_{k}_unlocked = {{\n\tculture = {{ has_cultural_era_or_later = {ERAS[i['tier']]} }}\n}}\n"
+            f"aov_invention_{k}_unlocked = {{\n\tculture = {{ has_cultural_era_or_later = {ERAS[i['tier']]} }}\n{gate}}}\n"
             f"aov_invention_{k}_available = {{\n\taov_invention_{k}_visible = yes\n\taov_invention_{k}_unlocked = yes\n}}\n"
             f"aov_invention_{k}_discovered = {{\n\thas_variable = aov_inv_{k}\n}}\n"
             f"aov_invention_{k}_active = {{\n\thas_variable = aov_inv_{k}\n\tvar:aov_inv_{k} = 2\n}}\n"
             f"aov_invention_{k}_discoverable = {{\n\taov_invention_{k}_available = yes\n\tNOT = {{ has_variable = aov_inv_{k} }}\n}}\n"
             f"aov_invention_{k}_activatable = {{\n\thas_variable = aov_inv_{k}\n\tvar:aov_inv_{k} = 1\n\taov_invention_{k}_available = yes\n}}\n"
             f"aov_invention_{k}_offered = {{\n\tOR = {{ {offered(i)} }}\n}}\n"
+            f"# Permanent once discovered: gates the men-at-arms or building this invention unlocks\n"
+            f"aov_invention_{k}_unlock_ready = {{\n\taov_invention_{k}_discovered = yes\n\taov_invention_{k}_visible = yes\n"
+            f"\tNOT = {{ has_variable = aov_artificery_dormant }}\n}}\n"
         )
     out.append(any_of("aov_inventions_any_discovered", "Has discovered at least one invention", invs,
                       lambda i: f"aov_invention_{i['key']}_discovered = yes"))
@@ -159,10 +164,18 @@ def values(invs: list) -> str:
         f"\tif = {{ limit = {{ aov_invention_{i['key']}_active = yes has_variable = aov_inv_{i['key']}_order }} min = var:aov_inv_{i['key']}_order }}"
         for i in invs
     )
+    counts = "".join(
+        f"\n# Character scope: number of discovered tier {t} inventions (gates tier {t + 1})\n"
+        f"aov_inventions_t{t}_discovered_count = {{\n\tvalue = 0\n"
+        + "\n".join(f"\tif = {{ limit = {{ aov_invention_{i['key']}_discovered = yes }} add = 1 }}" for i in invs if i["tier"] == t)
+        + "\n}\n"
+        for t in (1, 2)
+    )
     return (
         HEADER
         + f"\n# Character scope: number of active inventions\naov_invention_active_count = {{\n\tvalue = 0\n{active}\n}}\n"
         + f"\n# Character scope: highest activation order among active inventions\naov_invention_newest_order = {{\n\tvalue = 0\n{newest}\n}}\n"
+        + counts
     )
 
 
@@ -282,6 +295,9 @@ def loc(invs: list) -> str:
         out.append(f' aov_invention_{k}_desc: "{i["desc"]}"')
         out.append(f' aov_invention_{k}_tt: "#T $aov_invention_{k}$#!\\n#weak $AOV_CATEGORY_{i["category"].upper()}$, $AOV_TIER_{i["tier"]}$#!\\n\\n$aov_invention_{k}_desc$"')
         out.append(f' aov_invention_{k}_subtitle: "$AOV_CATEGORY_{i["category"].upper()}$, $AOV_TIER_{i["tier"]}$"')
+        if i["unlock"]:
+            name = f"building_{i['unlock']}" if i["unlock"] in BUILDING_UNLOCKS else i["unlock"]
+            out.append(f' aov_invention_{k}_unlock_tt: "#P Unlocks#! ${name}$ #weak (permanent once discovered)#!"')
     return "\n".join(out) + "\n"
 
 
@@ -348,6 +364,7 @@ def tooltip_type(i) -> str:
     paras = [
         ("", f"aov_invention_{k}_desc"),
         ("", f"[{sg(k, 'effects')}.BuildTooltip( {ROOT} )]"),
+        *([("", f"aov_invention_{k}_unlock_tt")] if i["unlock"] else []),
         (f"Not( {shown(k, 'unlocked')} )", f"AOV_INV_LOCKED_TIER_{t}_TT"),
         (shown(k, "undiscovered"), "AOV_INV_UNDISCOVERED_TT"),
         (f"And( {shown(k, 'activate')}, {valid(k, 'activate')} )", "AOV_INV_CLICK_ACTIVATE"),

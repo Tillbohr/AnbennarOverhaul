@@ -119,6 +119,10 @@ aov_artificery_start_slot_cooldown = {
 		limit = { NOT = { has_variable = aov_slot_cd_5 } }
 		set_variable = { name = aov_slot_cd_5 years = 1 }
 	}
+	else_if = {
+		limit = { NOT = { has_variable = aov_slot_cd_6 } }
+		set_variable = { name = aov_slot_cd_6 years = 1 }
+	}
 }
 
 aov_artificery_enforce_slot_max = {
@@ -298,6 +302,7 @@ aov_artificery_inherit = {
 	if = { limit = { scope:aov_predecessor = { has_variable = aov_slot_cd_3 } } aov_artificery_start_slot_cooldown = yes }
 	if = { limit = { scope:aov_predecessor = { has_variable = aov_slot_cd_4 } } aov_artificery_start_slot_cooldown = yes }
 	if = { limit = { scope:aov_predecessor = { has_variable = aov_slot_cd_5 } } aov_artificery_start_slot_cooldown = yes }
+	if = { limit = { scope:aov_predecessor = { has_variable = aov_slot_cd_6 } } aov_artificery_start_slot_cooldown = yes }
 	aov_artificery_update_dormancy = yes
 	aov_artificery_enforce_slot_max = yes
 }
