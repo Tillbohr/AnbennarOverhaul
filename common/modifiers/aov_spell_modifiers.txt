@@ -56,19 +56,14 @@ aov_spell_foresight = {
 
 aov_spell_enchanting_envoy = {
 	icon = learning_positive
-	diplomacy = 3
-}
-
-aov_spell_command_animals = {
-	icon = learning_positive
-	movement_speed = 0.15
-	advantage = 2
+	diplomacy = 4
+	general_opinion = 5
 }
 
 aov_spell_enchanting_embassy = {
 	icon = learning_positive
-	vassal_opinion = 15
-	general_opinion = 5
+	vassal_opinion = 25
+	general_opinion = 10
 }
 
 aov_spell_fireball = {

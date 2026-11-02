@@ -466,29 +466,25 @@ aov_spell_heartstring_castable = {
 	}
 }
 
-aov_spell_command_animals_known = {
+aov_spell_enchant_trinket_known = {
 	aov_school_level_at_least = { SCHOOL = enchantment LEVEL = 1 }
 }
-aov_spell_command_animals_ready = {
-	NOT = { has_variable = aov_spell_command_animals_cd }
+aov_spell_enchant_trinket_ready = {
+	NOT = { has_variable = aov_spell_enchant_trinket_cd }
 }
-aov_spell_command_animals_castable = {
+aov_spell_enchant_trinket_castable = {
 	aov_is_mage = yes
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_ENCHANTMENT_1
-		aov_spell_command_animals_known = yes
+		aov_spell_enchant_trinket_known = yes
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_READY
-		aov_spell_command_animals_ready = yes
+		aov_spell_enchant_trinket_ready = yes
 	}
 	custom_tooltip = {
-		text = aov_spell_command_animals_req_mana
-		aov_mana >= aov_spell_command_animals_cost
-	}
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_WAR
-		is_at_war = yes
+		text = aov_spell_enchant_trinket_req_mana
+		aov_mana >= aov_spell_enchant_trinket_cost
 	}
 }
 
@@ -1150,7 +1146,7 @@ aov_magic_ai_any_castable = {
 		aov_spell_augury_castable = yes
 		aov_spell_foresight_castable = yes
 		aov_spell_enchanting_envoy_castable = yes
-		aov_spell_command_animals_castable = yes
+		aov_spell_enchant_trinket_castable = yes
 		aov_spell_enchanting_embassy_castable = yes
 		aov_spell_fireball_castable = yes
 		aov_spell_shock_and_awe_castable = yes

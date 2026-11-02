@@ -657,3 +657,178 @@ aov_magic_ai_quarterly = {
 		}
 	}
 }
+
+##########
+# Enchantment (docs/superpowers/specs/2026-11-01-spell-revision-design.md)
+
+# Thoughtweave landed (caster scope, scope:recipient; the send option flags of aov_thoughtweave_interaction).
+# Lover and rival: the caster picks the other character in aov_magic.43 from up to three candidates
+aov_thoughtweave_apply = {
+	save_scope_as = aov_weaver
+	if = {
+		limit = { scope:aov_tw_friend = yes }
+		scope:recipient = {
+			set_relation_friend = { target = scope:aov_weaver reason = aov_thoughtweave_reason }
+		}
+	}
+	else_if = {
+		limit = { scope:aov_tw_lover = yes }
+		# The caster first, then their courtiers and the target's
+		if = {
+			limit = { scope:recipient = { can_set_relation_lover_trigger = { CHARACTER = scope:aov_weaver } } }
+			add_to_temporary_list = aov_tw_candidates
+		}
+		every_courtier = {
+			limit = {
+				NOT = { this = scope:recipient }
+				scope:recipient = { can_set_relation_lover_trigger = { CHARACTER = prev } }
+			}
+			add_to_temporary_list = aov_tw_candidates
+		}
+		scope:recipient = {
+			every_courtier = {
+				limit = {
+					NOT = { this = scope:aov_weaver }
+					scope:recipient = { can_set_relation_lover_trigger = { CHARACTER = prev } }
+				}
+				add_to_temporary_list = aov_tw_candidates
+			}
+		}
+		aov_thoughtweave_pick_candidates = yes
+		save_scope_value_as = { name = aov_tw_kind value = flag:lover }
+		trigger_event = aov_magic.43
+	}
+	else_if = {
+		limit = { scope:aov_tw_rival = yes }
+		every_courtier = {
+			limit = {
+				NOT = { this = scope:recipient }
+				scope:recipient = { can_set_relation_rival_trigger = { CHARACTER = prev } }
+			}
+			add_to_temporary_list = aov_tw_candidates
+		}
+		scope:recipient = {
+			every_courtier = {
+				limit = {
+					NOT = { this = scope:aov_weaver }
+					scope:recipient = { can_set_relation_rival_trigger = { CHARACTER = prev } }
+				}
+				add_to_temporary_list = aov_tw_candidates
+			}
+		}
+		aov_thoughtweave_pick_candidates = yes
+		save_scope_value_as = { name = aov_tw_kind value = flag:rival }
+		trigger_event = aov_magic.43
+	}
+	else = {
+		add_hook = { type = manipulation_hook target = scope:recipient }
+	}
+}
+
+# Up to three candidates from list aov_tw_candidates, as scope:aov_tw_candidate_1..3
+aov_thoughtweave_pick_candidates = {
+	random_in_list = {
+		list = aov_tw_candidates
+		save_scope_as = aov_tw_candidate_1
+	}
+	random_in_list = {
+		list = aov_tw_candidates
+		limit = { NOT = { this = scope:aov_tw_candidate_1 } }
+		save_scope_as = aov_tw_candidate_2
+	}
+	random_in_list = {
+		list = aov_tw_candidates
+		limit = {
+			NOT = { this = scope:aov_tw_candidate_1 }
+			NOT = { this = scope:aov_tw_candidate_2 }
+		}
+		save_scope_as = aov_tw_candidate_3
+	}
+}
+
+# Dominate landed (caster scope, scope:recipient; the send option flags of aov_dominate_interaction)
+aov_dominate_apply = {
+	save_scope_as = aov_dominator
+	if = {
+		limit = {
+			scope:aov_dom_surrender = yes
+			aov_dominate_surrender_possible = yes
+		}
+		random_character_war = {
+			limit = {
+				primary_attacker = scope:aov_dominator
+				primary_defender = scope:recipient
+			}
+			end_war = attacker
+		}
+		random_character_war = {
+			limit = {
+				primary_attacker = scope:recipient
+				primary_defender = scope:aov_dominator
+			}
+			end_war = defender
+		}
+	}
+	else_if = {
+		limit = {
+			scope:aov_dom_free = yes
+			scope:recipient = { any_prisoner = { always = yes } }
+		}
+		scope:recipient = {
+			ordered_prisoner = {
+				order_by = prowess
+				position = 0
+				save_scope_as = aov_dom_prisoner_1
+			}
+			ordered_prisoner = {
+				order_by = prowess
+				position = 1
+				save_scope_as = aov_dom_prisoner_2
+			}
+			ordered_prisoner = {
+				order_by = prowess
+				position = 2
+				save_scope_as = aov_dom_prisoner_3
+			}
+		}
+		trigger_event = aov_magic.44
+	}
+	else = {
+		# Anbennar's own Dominate result: a strong hook, and the victim's struggle to break free
+		save_scope_as = owner
+		scope:recipient = { save_scope_as = target }
+		dominate_success_effect = yes
+	}
+}
+
+# Enchant Trinket: a minor enchanted trinket with one random bonus; it decays like any artifact
+aov_enchant_trinket = {
+	save_scope_as = owner
+	set_artifact_rarity_common = yes
+	create_artifact = {
+		name = aov_spell_trinket_name
+		description = aov_spell_trinket_desc
+		type = miscellaneous
+		visuals = ring
+		wealth = scope:wealth
+		quality = scope:quality
+		history = {
+			type = created
+			actor = scope:owner
+			recipient = scope:owner
+			location = scope:owner.location
+		}
+		save_scope_as = aov_new_trinket
+		decaying = yes
+	}
+	scope:aov_new_trinket = {
+		random_list = {
+			1 = { add_artifact_modifier = aov_spell_trinket_diplomacy }
+			1 = { add_artifact_modifier = aov_spell_trinket_martial }
+			1 = { add_artifact_modifier = aov_spell_trinket_stewardship }
+			1 = { add_artifact_modifier = aov_spell_trinket_intrigue }
+			1 = { add_artifact_modifier = aov_spell_trinket_learning }
+			1 = { add_artifact_modifier = aov_spell_trinket_prowess }
+		}
+	}
+}

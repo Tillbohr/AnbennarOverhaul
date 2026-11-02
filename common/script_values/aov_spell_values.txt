@@ -305,18 +305,16 @@ aov_spell_heartstring_years = {
 	floor = yes
 }
 
-aov_spell_command_animals_cost = {
+aov_spell_enchant_trinket_cost = {
 	value = 1
 	subtract = aov_cost_cut_enchantment
-	subtract = aov_cost_cut_war
 	min = 0.5
 	multiply = 50
 	add = 0.5
 	floor = yes
 }
-aov_spell_command_animals_years = {
+aov_spell_enchant_trinket_years = {
 	value = 2
-	multiply = aov_years_mult_enchantment
 	add = 0.5
 	floor = yes
 }

@@ -221,18 +221,19 @@ aov_spell_heartstring_cast = {
 		add_magic_lifestyle_xp = 50
 		set_variable = { name = aov_spell_heartstring_cd years = aov_spell_heartstring_years }
 	}
-	scope:recipient = { add_opinion = { target = root modifier = aov_charmed_opinion years = 2 } }
+	save_scope_as = aov_charmer
+	scope:recipient = { add_opinion = { target = scope:aov_charmer modifier = aov_charmed_opinion years = 3 } }
 }
 
-aov_spell_command_animals_cast = {
-	custom_tooltip = aov_spell_command_animals_cost_tt
+aov_spell_enchant_trinket_cast = {
+	custom_tooltip = aov_spell_enchant_trinket_cost_tt
 	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_command_animals_cost }
+		aov_mana_spend = { AMOUNT = aov_spell_enchant_trinket_cost }
 		aov_school_add_progress = { SCHOOL = enchantment AMOUNT = 50 }
 		add_magic_lifestyle_xp = 50
-		set_variable = { name = aov_spell_command_animals_cd years = aov_spell_command_animals_years }
+		set_variable = { name = aov_spell_enchant_trinket_cd years = aov_spell_enchant_trinket_years }
 	}
-	add_character_modifier = { modifier = aov_spell_command_animals years = aov_spell_command_animals_years }
+	aov_enchant_trinket = yes
 }
 
 aov_spell_thoughtweave_cast = {
@@ -242,6 +243,16 @@ aov_spell_thoughtweave_cast = {
 		aov_school_add_progress = { SCHOOL = enchantment AMOUNT = 100 }
 		add_magic_lifestyle_xp = 100
 		set_variable = { name = aov_spell_thoughtweave_cd years = aov_spell_thoughtweave_years }
+	}
+	random_list = {
+		0 = {
+			modifier = { add = aov_spell_land_chance }
+			aov_thoughtweave_apply = yes
+		}
+		0 = {
+			modifier = { add = aov_spell_miss_chance }
+			aov_spell_missed = yes
+		}
 	}
 }
 
@@ -263,6 +274,16 @@ aov_spell_dominate_to_surrender_cast = {
 		aov_school_add_progress = { SCHOOL = enchantment AMOUNT = 200 }
 		add_magic_lifestyle_xp = 200
 		set_variable = { name = aov_spell_dominate_to_surrender_cd years = aov_spell_dominate_to_surrender_years }
+	}
+	random_list = {
+		0 = {
+			modifier = { add = aov_spell_land_chance }
+			aov_dominate_apply = yes
+		}
+		0 = {
+			modifier = { add = aov_spell_miss_chance }
+			aov_spell_missed = yes
+		}
 	}
 }
 
@@ -549,10 +570,6 @@ aov_spell_dispel_war_spells = {
 		remove_character_modifier = aov_spell_mage_armor
 	}
 	if = {
-		limit = { has_character_modifier = aov_spell_command_animals }
-		remove_character_modifier = aov_spell_command_animals
-	}
-	if = {
 		limit = { has_character_modifier = aov_spell_shock_and_awe }
 		remove_character_modifier = aov_spell_shock_and_awe
 	}
@@ -649,9 +666,9 @@ aov_magic_ai_cast_random = {
 			trigger = { aov_spell_enchanting_envoy_castable = yes }
 			aov_spell_enchanting_envoy_cast = yes
 		}
-		30 = {
-			trigger = { aov_spell_command_animals_castable = yes }
-			aov_spell_command_animals_cast = yes
+		10 = {
+			trigger = { aov_spell_enchant_trinket_castable = yes }
+			aov_spell_enchant_trinket_cast = yes
 		}
 		10 = {
 			trigger = { aov_spell_enchanting_embassy_castable = yes }

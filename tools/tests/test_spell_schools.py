@@ -199,5 +199,97 @@ class DivinationTests(unittest.TestCase):
         self.assertNotIn("aov_deposit_divination = {", effects())
 
 
+class EnchantmentTests(unittest.TestCase):
+    def interactions(self):
+        return read("common/character_interactions/aov_magic_interactions.txt")
+
+    def test_keys(self):
+        self.assertEqual(keys_in_slot_order("enchantment"),
+                         ["enchanting_envoy", "heartstring", "enchant_trinket", "thoughtweave", "enchanting_embassy",
+                          "dominate_to_surrender"])
+
+    def test_numbers(self):
+        self.assertEqual(BY["dominate_to_surrender"]["name"], "Dominate")
+        self.assertIn("diplomacy = 4", BY["enchanting_envoy"]["modifier"])
+        self.assertIn("general_opinion = 5", BY["enchanting_envoy"]["modifier"])
+        self.assertIn("vassal_opinion = 25", BY["enchanting_embassy"]["modifier"])
+        self.assertIn("general_opinion = 10", BY["enchanting_embassy"]["modifier"])
+        self.assertIn("years = 3", BY["heartstring"]["effect"])
+        self.assertIn("opinion = 50", block(read("common/opinion_modifiers/aov_magic_opinion_modifiers.txt"), "aov_charmed_opinion"))
+
+    def test_hand_written_hostile_interactions(self):
+        self.assertEqual(BY["thoughtweave"]["interaction"], "aov_thoughtweave_interaction")
+        self.assertEqual(BY["dominate_to_surrender"]["interaction"], "aov_dominate_interaction")
+        for k in ("thoughtweave", "dominate_to_surrender"):
+            self.assertTrue(BY[k]["hostile"], k)
+
+    def test_enchantment_interactions_respect_forbiddance(self):
+        for name, k in (("aov_thoughtweave_interaction", "thoughtweave"), ("aov_dominate_interaction", "dominate_to_surrender")):
+            b = block(self.interactions(), name)
+            self.assertIn("scope:recipient = { aov_spell_target_allowed = yes }", b)
+            self.assertIn(f"scope:actor = {{ aov_spell_{k}_castable = yes }}", b)
+            self.assertIn(f"scope:actor = {{ aov_spell_{k}_cast = yes }}", b)
+            self.assertIn("aov_spell_ai_hostile_target = yes", b)
+            self.assertIn("send_options_exclusive = yes", b)
+
+    def test_thoughtweave(self):
+        b = block(self.interactions(), "aov_thoughtweave_interaction")
+        for flag in ("aov_tw_friend", "aov_tw_lover", "aov_tw_rival", "aov_tw_hook"):
+            self.assertIn(f"flag = {flag}", b)
+        self.assertEqual(BY["thoughtweave"]["effect"].strip(), "aov_thoughtweave_apply = yes")
+        a = block(effects(), "aov_thoughtweave_apply")
+        for s in ("set_relation_friend", "type = manipulation_hook", "trigger_event = aov_magic.43",
+                  "can_set_relation_lover_trigger", "can_set_relation_rival_trigger"):
+            self.assertIn(s, a)
+        e = block(read("events/aov_magic_events.txt"), "aov_magic.43")
+        for s in ("set_relation_lover", "set_relation_rival", "scope:aov_tw_candidate_1", "scope:aov_tw_candidate_3",
+                  "ai_chance"):
+            self.assertIn(s, e)
+
+    def test_dominate(self):
+        b = block(self.interactions(), "aov_dominate_interaction")
+        for flag in ("aov_dom_hook", "aov_dom_surrender", "aov_dom_free"):
+            self.assertIn(f"flag = {flag}", b)
+        self.assertIn("aov_dominate_surrender_possible = yes", b.split("flag = aov_dom_surrender")[0].rsplit("send_option", 1)[1])
+        self.assertIn("any_prisoner", b.split("flag = aov_dom_free")[0].rsplit("send_option", 1)[1])
+        self.assertEqual(BY["dominate_to_surrender"]["effect"].strip(), "aov_dominate_apply = yes")
+        a = block(effects(), "aov_dominate_apply")
+        for s in ("dominate_success_effect = yes", "end_war = attacker", "end_war = defender", "trigger_event = aov_magic.44"):
+            self.assertIn(s, a)
+        e = block(read("events/aov_magic_events.txt"), "aov_magic.44")
+        self.assertIn("release_from_prison = yes", e)
+        self.assertIn("scope:aov_dom_prisoner_3", e)
+
+    def test_dominate_surrender_target_trigger(self):
+        t = block(read("common/scripted_triggers/aov_magic_triggers.txt"), "aov_dominate_surrender_possible")
+        for s in ("any_character_war", "primary_attacker = scope:recipient", "primary_defender = scope:actor",
+                  "primary_attacker = scope:actor", "primary_defender = scope:recipient"):
+            self.assertIn(s, t)
+
+    def test_anbennar_compel_and_dominate_hidden(self):
+        over = read("common/character_interactions/zz_aov_spell_overrides.txt")
+        for name in ("start_compel_interaction", "start_dominate_interaction"):
+            b = block(over, name)
+            self.assertIn("is_shown = { always = no }", b)
+            self.assertNotIn("start_scheme", b)
+
+    def test_enchant_trinket(self):
+        self.assertEqual(BY["enchant_trinket"]["effect"].strip(), "aov_enchant_trinket = yes")
+        b = block(effects(), "aov_enchant_trinket")
+        self.assertIn("create_artifact", b)
+        self.assertIn("type = miscellaneous", b)
+        self.assertIn("decaying = yes", b)
+        for skill in ("diplomacy", "martial", "stewardship", "intrigue", "learning", "prowess"):
+            self.assertIn(f"modifier = aov_spell_trinket_{skill}", b)
+            block(read("common/modifiers/aov_magic_modifiers.txt"), f"aov_spell_trinket_{skill}")
+        loc = read("localization/english/aov_magic_l_english.yml")
+        for k in ("aov_spell_trinket_name", "aov_spell_trinket_desc", "aov_magic.43.t", "aov_magic.44.t",
+                  "aov_thoughtweave_interaction", "aov_dominate_interaction", "aov_tw_lover_option", "aov_dom_free_option"):
+            self.assertIn(f" {k}:", loc)
+
+    def test_removed(self):
+        self.assertNotIn("command_animals", BY)
+
+
 if __name__ == "__main__":
     unittest.main()

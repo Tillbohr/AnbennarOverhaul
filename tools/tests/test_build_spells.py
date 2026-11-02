@@ -67,8 +67,9 @@ class DataTests(unittest.TestCase):
 
     def test_existing_anbennar_spells(self):
         by = {s["key"]: s for s in SPELLS}
-        self.assertEqual(by["thoughtweave"]["interaction"], "start_compel_interaction")
-        self.assertEqual(by["dominate_to_surrender"]["interaction"], "start_dominate_interaction")
+        # Hand-written interactions (send options); Anbennar's Compel and Dominate are hidden
+        self.assertEqual(by["thoughtweave"]["interaction"], "aov_thoughtweave_interaction")
+        self.assertEqual(by["dominate_to_surrender"]["interaction"], "aov_dominate_interaction")
         self.assertNotIn("enhance_ability", by)  # removed from the game (zz_aov_spell_overrides.txt)
 
     def test_types(self):

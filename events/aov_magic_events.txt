@@ -229,3 +229,97 @@ aov_magic.45 = {
 		name = aov_magic.45.a
 	}
 }
+
+# Thoughtweave: whom the target falls for, or turns against (scope:aov_tw_kind = flag:lover or flag:rival;
+# candidates scope:aov_tw_candidate_1..3, saved by aov_thoughtweave_apply)
+aov_magic.43 = {
+	type = character_event
+	title = aov_magic.43.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = scope:aov_tw_candidate_1 } }
+				desc = aov_magic.43.desc.none
+			}
+			triggered_desc = {
+				trigger = { scope:aov_tw_kind = flag:lover }
+				desc = aov_magic.43.desc.lover
+			}
+			desc = aov_magic.43.desc.rival
+		}
+	}
+	theme = seduction
+	left_portrait = root
+	right_portrait = scope:recipient
+
+	option = {
+		trigger = { exists = scope:aov_tw_candidate_1 }
+		name = aov_magic.43.a
+		if = {
+			limit = { scope:aov_tw_kind = flag:lover }
+			scope:recipient = { set_relation_lover = { target = scope:aov_tw_candidate_1 reason = aov_thoughtweave_reason } }
+		}
+		else = {
+			scope:recipient = { set_relation_rival = { target = scope:aov_tw_candidate_1 reason = aov_thoughtweave_reason } }
+		}
+		ai_chance = { base = 10 }
+	}
+	option = {
+		trigger = { exists = scope:aov_tw_candidate_2 }
+		name = aov_magic.43.b
+		if = {
+			limit = { scope:aov_tw_kind = flag:lover }
+			scope:recipient = { set_relation_lover = { target = scope:aov_tw_candidate_2 reason = aov_thoughtweave_reason } }
+		}
+		else = {
+			scope:recipient = { set_relation_rival = { target = scope:aov_tw_candidate_2 reason = aov_thoughtweave_reason } }
+		}
+		ai_chance = { base = 10 }
+	}
+	option = {
+		trigger = { exists = scope:aov_tw_candidate_3 }
+		name = aov_magic.43.c
+		if = {
+			limit = { scope:aov_tw_kind = flag:lover }
+			scope:recipient = { set_relation_lover = { target = scope:aov_tw_candidate_3 reason = aov_thoughtweave_reason } }
+		}
+		else = {
+			scope:recipient = { set_relation_rival = { target = scope:aov_tw_candidate_3 reason = aov_thoughtweave_reason } }
+		}
+		ai_chance = { base = 10 }
+	}
+	option = { # Nobody fits, or the caster thinks better of it: a hook instead
+		name = aov_magic.43.d
+		add_hook = { type = manipulation_hook target = scope:recipient }
+		ai_chance = { base = 1 }
+	}
+}
+
+# Dominate: which prisoner the target frees (scope:aov_dom_prisoner_1..3, saved by aov_dominate_apply)
+aov_magic.44 = {
+	type = character_event
+	title = aov_magic.44.t
+	desc = aov_magic.44.desc
+	theme = intrigue
+	left_portrait = root
+	right_portrait = scope:recipient
+
+	option = {
+		trigger = { exists = scope:aov_dom_prisoner_1 }
+		name = aov_magic.44.a
+		scope:aov_dom_prisoner_1 = { release_from_prison = yes }
+		ai_chance = { base = 10 }
+	}
+	option = {
+		trigger = { exists = scope:aov_dom_prisoner_2 }
+		name = aov_magic.44.b
+		scope:aov_dom_prisoner_2 = { release_from_prison = yes }
+		ai_chance = { base = 10 }
+	}
+	option = {
+		trigger = { exists = scope:aov_dom_prisoner_3 }
+		name = aov_magic.44.c
+		scope:aov_dom_prisoner_3 = { release_from_prison = yes }
+		ai_chance = { base = 10 }
+	}
+}

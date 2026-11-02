@@ -1662,9 +1662,9 @@ types AovMagic
 		}
 
 		widget = {
-			name = "aov_spell_card_command_animals"
+			name = "aov_spell_card_enchant_trinket"
 			size = { 480 88 }
-			tooltip = "aov_spell_command_animals_tt"
+			tooltip = "aov_spell_enchant_trinket_tt"
 
 			icon = {
 				position = { 0 0 }
@@ -1688,27 +1688,27 @@ types AovMagic
 
 			text_single = {
 				position = { 72 8 }
-				text = "aov_spell_command_animals"
+				text = "aov_spell_enchant_trinket"
 				default_format = "#T"
 				max_width = 205
 				align = left|nobaseline
 			}
 			text_single = {
 				position = { 72 38 }
-				text = "aov_spell_command_animals_facts"
+				text = "aov_spell_enchant_trinket_facts"
 				default_format = "#weak"
 				max_width = 280
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_command_animals_cd' ).IsSet )]"
+				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_enchant_trinket_cd' ).IsSet )]"
 				position = { 72 66 }
-				text = "aov_spell_command_animals_desc"
+				text = "aov_spell_enchant_trinket_desc"
 				max_width = 400
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_command_animals_cd' ).IsSet]"
+				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_enchant_trinket_cd' ).IsSet]"
 				position = { 72 66 }
 				text = "AOV_SPELL_ON_COOLDOWN"
 				max_width = 400
@@ -1720,9 +1720,9 @@ types AovMagic
 				position = { -6 16 }
 				size = { 110 32 }
 				text = "AOV_SPELL_CAST"
-				enabled = "[GetScriptedGui('aov_spell_command_animals_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_spell_command_animals_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_spell_command_animals_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				enabled = "[GetScriptedGui('aov_spell_enchant_trinket_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				tooltip = "[GetScriptedGui('aov_spell_enchant_trinket_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				onclick = "[GetScriptedGui('aov_spell_enchant_trinket_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			}
 		}
 

@@ -104,10 +104,10 @@ aov_spell_enchanting_envoy_sgui = {
 	effect = { aov_spell_enchanting_envoy_cast = yes }
 }
 
-aov_spell_command_animals_sgui = {
+aov_spell_enchant_trinket_sgui = {
 	scope = character
-	is_valid = { aov_spell_command_animals_castable = yes }
-	effect = { aov_spell_command_animals_cast = yes }
+	is_valid = { aov_spell_enchant_trinket_castable = yes }
+	effect = { aov_spell_enchant_trinket_cast = yes }
 }
 
 aov_spell_enchanting_embassy_sgui = {

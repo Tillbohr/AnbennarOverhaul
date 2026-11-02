@@ -223,34 +223,34 @@ class AiTests(unittest.TestCase):
         self.assertIn("aov_magic_ai_quarterly = yes", block(read("common/on_action/aov_magic_on_actions.txt"), "aov_magic_quarterly_pulse"))
 
 
-class SpellOverrideTests(unittest.TestCase):
-    OVERRIDES = (
-        ("start_compel_interaction", "anb_spellcasting_infin_spells.txt", "thoughtweave"),
-        ("start_dominate_interaction", "anb_spellcasting_infin_spells.txt", "dominate_to_surrender"),
-    )
+class CompelDominateHiddenTests(unittest.TestCase):
+    """Anbennar's Compel and Dominate are replaced by the Thoughtweave and Dominate spells: never-shown stubs hide
+    their interactions. The base-mod scan fails after an Anbennar update that adds another way to start the schemes."""
+    BASE = MOD.parent / "anbennar-ck3-dev-master"
+    HIDDEN = (("start_compel_interaction", "anb_compel_spell"), ("start_dominate_interaction", "anb_dominate_spell"))
 
-    def over(self):
-        return read("common/character_interactions/zz_aov_spell_overrides.txt")
+    def test_overrides_hide_interactions(self):
+        over = read("common/character_interactions/zz_aov_spell_overrides.txt")
+        for key, _ in self.HIDDEN:
+            b = block(over, key)
+            self.assertIn("is_shown = { always = no }", b)
+            self.assertNotIn("start_scheme", b)
 
-    def test_overrides_keep_anbennar_bodies(self):
-        for name, src, _ in self.OVERRIDES:
-            base = (MOD.parent / "anbennar-ck3-dev-master/common/character_interactions" / src).read_text(encoding="utf-8-sig")
-            ours = block(self.over(), name)
-            for line in block(base, name).splitlines():
-                if line.strip() and not line.strip().startswith("#"):
-                    self.assertIn(line, ours, f"{name}: {line}")
-
-    def test_overrides_need_mana_level_and_cast(self):
-        for name, _, k in self.OVERRIDES:
-            b = block(self.over(), name)
-            self.assertIn(f"scope:actor = {{ aov_spell_{k}_castable = yes }}", b)
-            self.assertIn(f"scope:actor = {{ aov_spell_{k}_cast = yes }}", b)
-
-    def test_interactions_respect_forbiddance(self):
-        for name, _, _ in self.OVERRIDES:
-            self.assertIn("scope:recipient = { aov_spell_target_allowed = yes }", block(self.over(), name))
-        t = block(read("common/scripted_triggers/aov_magic_triggers.txt"), "aov_spell_target_allowed")
-        self.assertIn("has_character_modifier = aov_spell_field_of_forbiddance", t)
+    def test_base_mod_has_no_other_way_in(self):
+        for key, scheme in self.HIDDEN:
+            defined, entry_points = [], []
+            for root in ("common", "events"):
+                for path in (self.BASE / root).rglob("*.txt"):
+                    text = path.read_text(encoding="utf-8-sig", errors="replace")
+                    definition = re.compile(rf"^{key} = \{{\n.*?\n^\}}", re.M | re.S)
+                    if definition.search(text):
+                        defined.append(path.name)
+                        text = definition.sub("", text)
+                    rel = path.relative_to(self.BASE).as_posix()
+                    if key in text or (f"type = {scheme}" in text and "scheme_types" not in rel):
+                        entry_points.append(rel)
+            self.assertTrue(defined, f"Anbennar no longer defines {key}: find its new key and hide that instead")
+            self.assertEqual(entry_points, [], f"new ways into {scheme}: hide them in zz_aov_spell_overrides.txt")
 
 
 class EnhanceAbilityRemovedTests(unittest.TestCase):

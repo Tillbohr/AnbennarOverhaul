@@ -2,7 +2,7 @@
 
 # Heartstring (charm)
 aov_charmed_opinion = {
-	opinion = 30
+	opinion = 50
 }
 
 # A hostile spell aimed at this character missed, and they know who cast it

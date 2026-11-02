@@ -58,3 +58,21 @@ aov_spell_ai_hostile_target = {
 		scope:actor = { is_at_war_with = scope:recipient }
 	}
 }
+
+# Dominate: the caster and the target lead the two sides of a war (interaction scopes)
+aov_dominate_surrender_possible = {
+	scope:actor = {
+		any_character_war = {
+			OR = {
+				AND = {
+					primary_attacker = scope:actor
+					primary_defender = scope:recipient
+				}
+				AND = {
+					primary_attacker = scope:recipient
+					primary_defender = scope:actor
+				}
+			}
+		}
+	}
+}

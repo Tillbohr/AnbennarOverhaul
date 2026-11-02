@@ -11,3 +11,28 @@ aov_spell_steal_vitality_victim = {
 	icon = health_negative
 	health = -1
 }
+
+# Enchant Trinket: one of these on the trinket
+aov_spell_trinket_diplomacy = {
+	diplomacy = 2
+}
+
+aov_spell_trinket_martial = {
+	martial = 2
+}
+
+aov_spell_trinket_stewardship = {
+	stewardship = 2
+}
+
+aov_spell_trinket_intrigue = {
+	intrigue = 2
+}
+
+aov_spell_trinket_learning = {
+	learning = 2
+}
+
+aov_spell_trinket_prowess = {
+	prowess = 4
+}
