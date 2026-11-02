@@ -512,7 +512,7 @@ aov_eye_for_talent = {
 	trigger_event = aov_magic.30
 }
 
-# Extraplanar Contact: the outsider's price
+# Planar Gate: the price of the outsider that slipped through (aov_magic.20)
 aov_extraplanar_price = {
 	random = {
 		chance = 30

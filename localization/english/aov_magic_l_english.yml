@@ -208,3 +208,7 @@
  aov_spell_shape_hawk: "Hawk Form"
  aov_perfect_form_strain: "Strain of Reshaping"
  aov_perfect_form_strain_desc: "The body has not yet forgiven the transmuter's revisions."
+
+ # Anbennar's Compel and Dominate are hidden stubs (zz_aov_spell_overrides.txt); their spells are Thoughtweave and Dominate
+ start_compel_interaction_desc: "Replaced by the Thoughtweave spell."
+ start_dominate_interaction_desc: "Replaced by the Dominate spell."

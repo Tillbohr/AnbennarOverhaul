@@ -89,15 +89,31 @@ were not ported).
   Transmutation) for mages (`has_magical_affinity`, Anbennar). Mana (100 + 50 per affinity level, refilled quarterly at
   3x the monthly rate), per-school knowledge levels 0-3 (300/800/2000 progress) from studying one chosen school and
   from casting; reaching a level stops the study of that school until the mage presses Study again (AI mages re-pick) (choosing a new school with the Study button opens event `aov_magic.2`, the mage reading in a study;
-  AI mages skip it); `magic_mastery` = sum of levels. 48 spells in `tools/data/spells.py` (spec
-  `docs/superpowers/specs/2026-10-08-magic-schools-design.md`): self/realm/war spells cast from the Magic window
+  AI mages skip it); `magic_mastery` = sum of levels. 48 spells in `tools/data/spells.py` (specs
+  `docs/superpowers/specs/2026-10-08-magic-schools-design.md`, revised by `2026-11-01-spell-revision-design.md`), one
+  theme per school: Abjuration defence, Conjuration summoned armies and minions, Divination hidden things and the future,
+  Enchantment minds and enchanted objects, Evocation offensive war magic, Illusion deception, Necromancy disease and
+  death, Transmutation changing the caster and their army. Self/realm/war spells are cast from the Magic window
   (`gui/aov_window_magic.gui`, HUD tab below Artificery, generated pages `gui/aov_magic_generated.gui`), targeted
-  spells as interactions in Anbennar's Spells category (Compel, Dominate overridden to need mana and knowledge;
-  Anbennar's Enhance Ability is removed from the game by a hidden stub override). Necromancy risks Forbidden Magic Practitioner under witchcraft-illegal/shunned faiths. Spells that only touch a domain, capital, levies or vassals (`needs_land` in `tools/data/spells.py`) need `is_landed`.
+  spells are interactions in Anbennar's Spells category (generated, except Thoughtweave and Dominate in
+  `common/character_interactions/aov_magic_interactions.txt`, whose choice is a send option). Anbennar's Compel,
+  Dominate and Enhance Ability interactions are hidden by never-shown stubs (`zz_aov_spell_overrides.txt`).
+  **Hostile spells** (`hostile` in the data) roll `aov_spell_land_chance` (`common/script_values/aov_spell_tuning.txt`:
+  75, +3 per Learning point over the target, -10 per target Abjuration level, -30 if Warded, 10-95); a miss tells the
+  target (opinion `aov_attempted_hostile_magic`, event `aov_magic.50`). A Field of Forbiddance target cannot be chosen
+  (`aov_spell_target_allowed`). Curses (`curse` in the data) are lifted by Purify; Field of Forbiddance dispels the war
+  spells of everyone at war with the caster. Every other spell number that is not a modifier line is in
+  `aov_spell_tuning.txt`. Choice spells (Enhance Ability, Living Steel, Shapechange) open events `aov_magic.40-42`;
+  Thoughtweave's lover or rival and Dominate's freed prisoner are picked in `aov_magic.43`/`.44` from up to three
+  candidates. Necromancy risks Forbidden Magic Practitioner under witchcraft-illegal/shunned faiths. Spells that only touch a domain, capital, levies or vassals (`needs_land` in `tools/data/spells.py`) need `is_landed`.
   **AI and landless adventurers:** `quarterly_playable_pulse` and `yearly_playable_pulse` fire for landless adventurers too, so AI
   adventurer mages study, cast window spells and start advancements like AI rulers; `needs_land` spells and `aov_adv_has_domain`
-  levels keep them off what does nothing without land. Hand-written
-  logic in `aov_magic_*` files; Summon Elementals spawns an army (at the capital, or where a landless caster is) removed after the spell's duration (`aov_spell_summon_elementals_years`, extended by Bound Elementals).
+  levels keep them off what does nothing without land. AI mages cast hostile targeted spells at rivals and war enemies
+  when the chance to land is at least 40. Hand-written
+  logic in `aov_magic_*` files. **Summoned armies** (Summon Beasts, Summon Elementals, Planar Gate, Raise Dead) all go
+  through `aov_spawn_spell_army` (at the capital, or where a landless caster is, bound to one of the caster's wars;
+  event `aov_magic.10` removes the army after `aov_spell_<key>_years`; no war or no place refunds the spell). Bound
+  Champion's knight vanishes through `aov_magic.11`, fired on the champion.
 - **Magic lifestyle:** fills the "Known gaps" magic-lifestyle skeleton listed in the base mod's CLAUDE.md (which cannot be edited). Anbennar's stub `magic_lifestyle` made full: three trees of 9 perks (Arcane Scholar, Battle Mage,
   Mindweaver; `common/lifestyle_perks/aov_magic_*_perks.txt`), each ending in a trait
   (`common/traits/aov_magic_lifestyle_traits.txt`), and three focuses (`common/focuses/zz_aov_magic_focuses.txt`;
@@ -114,7 +130,7 @@ were not ported).
 - **Magic advancements:** one three-level advancement per school, adapted from EU4 Anbennar's magical projects
   (spec `docs/superpowers/specs/2026-10-22-magic-advancements-design.md`): Magical Fortress (wards: county modifiers
   re-laid yearly), Summon Extraplanars (a host's men-at-arms and base-type boosts), Orb of Omniscience (court artifact;
-  boosts Scry, Foresight, Manipulated Fortune), Enchanted Artifact (one weapon/armor/crown/regalia/trinket per mage,
+  boosts Scry, Foresight, Augury), Enchanted Artifact (one weapon/armor/crown/regalia/trinket per mage,
   strengthened each level; the trinket feeds mana and spell cost), Battlemage Academy (building tiers
   `battlemage_academy_01-03`, Recruit Battlemage Commander decision (the recruit is a gender your faith and culture let lead armies, vanilla's `root_soldier_female_chance`), Battlemages men-at-arms), Mirror Image (+1 all
   skills per level, body double on imprisonment), Lichdom (EU4's Pursue Lichdom: The Phylactery, The Transformation

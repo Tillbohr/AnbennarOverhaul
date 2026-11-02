@@ -165,7 +165,7 @@ class SpecialSpellTests(unittest.TestCase):
         for skill in ("diplomacy", "martial", "stewardship", "intrigue", "learning"):
             self.assertIn(f"{skill} = {{ 14 18 }}", block(templates, f"aov_talent_{skill}_template"))
 
-    def test_extraplanar_contact_event(self):
+    def test_planar_gate_bargain_event(self):
         b = block(read("events/aov_magic_events.txt"), "aov_magic.20")
         self.assertEqual(b.count("option = {"), 3)
         self.assertIn("aov_extraplanar_price = yes", b)

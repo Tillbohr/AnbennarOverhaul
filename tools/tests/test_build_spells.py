@@ -199,7 +199,7 @@ class GeneratedTests(unittest.TestCase):
         names = set(top_level_blocks(bs.modifiers(SPELLS)))
         self.assertIn("aov_spell_combat_ward", names)
         self.assertIn("aov_spell_steal_vitality", names)
-        self.assertNotIn("aov_spell_transmute_to_gold", names)  # one-off
+        self.assertNotIn("aov_spell_perfect_form", names)  # one-off
 
     def test_loc_keys(self):
         lc = bs.loc(SPELLS)

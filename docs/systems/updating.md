@@ -15,9 +15,10 @@
    `building_requirement_castle_city_church_temple_citadel_tribe` (`common/scripted_triggers/00_building_requirement_triggers.txt`)
    into `common/scripted_triggers/zz_aov_building_requirement_triggers.txt`, keeping the `# Anbennar Overhaul` dwarven
    hold branch (castle levels 01/02/03/04 = hold levels 1/3/5/8) and Elven Haven branch (Haven levels 1/3/5/7). `BuildingRequirementOverrideTests` fails until they match.
-6. Re-copy Anbennar's `start_compel_interaction` and `start_dominate_interaction` into
-   `common/character_interactions/zz_aov_spell_overrides.txt`, keeping the `# Anbennar Overhaul` lines. Its
-   `anb_enhance_ability_interaction` is a never-shown stub and needs no re-copy.
+6. `common/character_interactions/zz_aov_spell_overrides.txt` holds never-shown stubs for Anbennar's
+   `start_compel_interaction`, `start_dominate_interaction` and `anb_enhance_ability_interaction`; none needs a re-copy.
+   `CompelDominateHiddenTests` and `EnhanceAbilityRemovedTests` fail if Anbennar renames one or adds another way to
+   start its scheme: hide the new entry point the same way.
 7. If `tools/tests/test_racial_armies.py` fails, re-copy the changed Anbennar fields into the racial armies overrides
    (four heritages, three traditions, 15 men-at-arms types; see `racial-armies.md`).
    Likewise for `tools/tests/test_cultural_maa.py`: re-copy the two mage men-at-arms, the tradition and the
