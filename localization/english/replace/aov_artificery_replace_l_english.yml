@@ -1,0 +1,2 @@
+﻿l_english:
+ armored_artificers_flavor: "#F Gnomish footmen in close-fitting plate of tempered steel, joined by clockwork hinges, who carry a handgun into the line.#!\n#help Recruitable once [GetModifier('aov_invention_clockwork_plate_harness').GetName] is discovered.#!"

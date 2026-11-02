@@ -127,10 +127,11 @@ class GnomeMaaTests(unittest.TestCase):
     def test_generic_artificers_disabled_and_otherwise_anbennars(self):
         ours, base = blocks(GNOME_MAA_FILE), base_blocks(BASE_GENERICS_FILE)
         self.assertEqual(set(ours), {"artificers", "armored_artificers"})
-        for key in ours:
-            self.assertEqual(squash(parse_blocks(ours[key]).get("can_recruit", "")), "always = no", key)
-            self.assertEqual(squash(without_blocks(ours[key], ("can_recruit",))),
-                             squash(without_blocks(base[key], ("can_recruit",))), key)
+        self.assertEqual(squash(parse_blocks(ours["artificers"]).get("can_recruit", "")), "always = no")
+        self.assertEqual(squash(without_blocks(ours["artificers"], ("can_recruit",))),
+                         squash(without_blocks(base["artificers"], ("can_recruit",))))
+        # armored_artificers is re-enabled as gunpowder troops (test_artificery_research.py)
+        self.assertNotEqual(squash(parse_blocks(ours["armored_artificers"]).get("can_recruit", "")), "always = no")
 
     def test_handgunners_are_the_artificers(self):
         self.assertRegex(_text(SUBMOD / "localization/english/aov_artificery_l_english.yml"),

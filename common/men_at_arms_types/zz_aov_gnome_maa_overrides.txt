@@ -1,6 +1,7 @@
-﻿# Anbennar Overhaul: Anbennar's generic gnomish Artificers and Armored Artificers, disabled (can_recruit = { always = no };
-# the keys stay for saves and for the culture eras that upgrade them). Gnomes field artificer_handgunners from an
-# Artificer Academy instead (aov_artificer_maa_types.txt). Each block is otherwise Anbennar's.
+﻿# Anbennar Overhaul: Anbennar's generic gnomish Artificers, disabled (can_recruit = { always = no }; the key stays for
+# saves and for the culture eras that upgrade them). Gnomes field artificer_handgunners from an Artificer Academy
+# instead (aov_artificer_maa_types.txt). Armored Artificers come back as gunpowder troops, recruitable once the
+# Clockwork Plate Harness invention is discovered. Each block is otherwise Anbennar's.
 # See docs/systems/artificery.md.
 
 @cultural_maa_extra_ai_score = 80
@@ -32,10 +33,10 @@ artificers = {
 }
 
 armored_artificers = {
-	type = heavy_infantry
+	type = gunpowder
 
-	damage = 12
-	toughness = 15
+	damage = 45
+	toughness = 30
 	pursuit = 0
 	screen = 0
 
@@ -46,7 +47,10 @@ armored_artificers = {
 	winter_bonus = {
 
 	}
-	can_recruit = { always = no }
+	can_recruit = {
+		aov_invention_clockwork_plate_harness_unlock_ready = yes
+		has_enabled_artificer_academy_trigger = yes
+	}
 	
 	buy_cost = { gold = armored_artificers_recruitment_cost }
 	low_maintenance_cost = { gold = armored_artificers_low_maint_cost }

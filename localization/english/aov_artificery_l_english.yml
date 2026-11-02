@@ -99,9 +99,9 @@
  aov_artificery.2.a: "A pity."
 
  # Invention men-at-arms
- aov_prototype_tanks: "Prototype Tanks"
- aov_prototype_tanks_flavor: "#F Lumbering iron war machines that replace a lance with a cannon and a horse with a boiler.#!\n#help Recruitable while [GetModifier('aov_invention_prototype_tanks').GetName] is active.#!"
  aov_war_golems: "War Golems"
- aov_war_golems_flavor: "#F Stone soldiers animated by artifice, as tireless as they are hard to break.#!\n#help Recruitable while [GetModifier('aov_invention_war_golems').GetName] is active.#!"
- aov_damestear_megacannon: "Damestear Megacannon"
- aov_damestear_megacannon_flavor: "#F A mithril barrel insulated with porcelain, channelling damestear into a beam that levels walls.#!\n#help Recruitable while [GetModifier('aov_invention_damestear_reactor_megacannon').GetName] is active.#!"
+ aov_war_golems_flavor: "#F Stone soldiers animated by artifice, as tireless as they are hard to break.#!\n#help Recruitable once [GetModifier('aov_invention_war_golems').GetName] is discovered.#!"
+ aov_clockwork_repeaters: "Clockwork Repeaters"
+ aov_clockwork_repeaters_flavor: "#F Crossbowmen whose spring-wound repeating stocks loose bolt after bolt without a pause to span the bow.#!\n#help Recruitable once [GetModifier('aov_invention_clockwork_repeaters').GetName] is discovered.#!"
+ aov_gnomish_bombards: "Gnomish Bombards"
+ aov_gnomish_bombards_flavor: "#F Squat iron-hooped guns on timber carriages, built to batter walls that no ram could reach.#!\n#help Recruitable once [GetModifier('aov_invention_gnomish_bombards').GetName] is discovered.#!"

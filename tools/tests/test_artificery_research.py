@@ -77,9 +77,39 @@ class ResearchTests(unittest.TestCase):
         self.assertIn("quarterly_playable_pulse = {\n\ton_actions = { aov_artificery_quarterly }", text)
         self.assertIn("on_death = {\n\ton_actions = { aov_artificery_on_death }", text)
 
-    def test_maa_gated_on_active_invention(self):
+    def test_invention_maa_file_and_gates(self):
         text = read("common/men_at_arms_types/aov_invention_maa_types.txt")
-        for maa, inv in (("aov_prototype_tanks", "prototype_tanks"), ("aov_war_golems", "war_golems"),
-                         ("aov_damestear_megacannon", "damestear_reactor_megacannon")):
+        self.assertEqual(re.findall(r"^([a-z_]+) = \{", text, re.M),
+                         ["aov_clockwork_repeaters", "aov_war_golems", "aov_gnomish_bombards"])
+        for maa, inv in (("aov_clockwork_repeaters", "clockwork_repeaters"), ("aov_war_golems", "war_golems"),
+                         ("aov_gnomish_bombards", "gnomish_bombards")):
             b = block(text, maa)
-            self.assertIn(f"aov_invention_{inv}_active = yes", b)
+            self.assertIn(f"aov_invention_{inv}_unlock_ready = yes", b)
+            self.assertIn("has_enabled_artificer_academy_trigger = yes", b)
+        for maa, (dmg, tough) in {"aov_clockwork_repeaters": (55, 23), "aov_war_golems": (45, 31)}.items():
+            b = block(text, maa)
+            self.assertIn(f"\tdamage = {dmg}\n", b)
+            self.assertIn(f"\ttoughness = {tough}\n", b)
+        bomb = block(text, "aov_gnomish_bombards")
+        for line in ("type = siege_weapon", "siege_tier = 4", "siege_value = 0.75", "toughness = 12", "stack = 10"):
+            self.assertIn(line, bomb)
+
+    def test_armored_artificers_reenabled(self):
+        text = read("common/men_at_arms_types/zz_aov_gnome_maa_overrides.txt")
+        b = block(text, "armored_artificers")
+        for line in ("type = gunpowder", "damage = 45", "toughness = 30", "stack = 75",
+                     "aov_invention_clockwork_plate_harness_unlock_ready = yes",
+                     "has_enabled_artificer_academy_trigger = yes"):
+            self.assertIn(line, b)
+        self.assertNotIn("always = no", b)
+        self.assertIn("can_recruit = { always = no }", block(text, "artificers"))
+
+    def test_maa_loc(self):
+        text = read("localization/english/aov_artificery_l_english.yml")
+        self.assertNotIn("aov_prototype_tanks", text)
+        self.assertNotIn("megacannon", text)
+        for k in ("aov_clockwork_repeaters", "aov_gnomish_bombards", "aov_war_golems"):
+            self.assertIn(f" {k}:", text)
+            self.assertIn(f" {k}_flavor:", text)
+        self.assertIn(" armored_artificers_flavor:",
+                      read("localization/english/replace/aov_artificery_replace_l_english.yml"))
