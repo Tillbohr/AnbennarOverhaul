@@ -47,6 +47,26 @@ frames), cropped, Lanczos 2x and resized to 100 px with `eu4_import.py`'s helper
 To change an icon, copy a new 100x100 DDS over `aov_<faith>.dds` (or point the data at another file) and rerun the
 generator.
 
+## Doctrine and tenet icons
+
+CK3 draws a doctrine's icon from `gfx/interface/icons/faith_doctrines/<icon>.dds` (`<icon>` is the doctrine's `icon`
+field, else its key). Anbennar ships no such folder, so 28 doctrines that the faith window draws with their own icon
+(main-group doctrines and tenets) showed the pink placeholder. The overhaul adds the files under the exact names
+Anbennar looks up (an `aov_` name would need the doctrines overridden). They were made once and are committed;
+`tools/data/doctrine_icons.py` records each source:
+
+| Doctrines | Icon source |
+|---|---|
+| 13 single Cannorian patron deities, Wip | EU4 Anbennar personal-deity icons (`hindu_deities_strip.dds`, the god's `sprite`), Lanczos 2x, 120 px |
+| 8 doctrines naming two or three gods (e.g. The Dame and Munas) | the same icons, combined on one 120 px canvas |
+| Uelos; Concealed and Open Infernalist; Khetist (`khetarchy`) | EU4 religion icons (`icon_religion.dds`): Uelos Cult, Shadow Pact, Infernal Court, Elikhetism |
+| Castellosi Monolatrism | the Southern Cult of Castellos faith icon (PoD Via Regalis crown) |
+| Dwarven Syncretism tenet (`anb_tenet_dwarven_reverence`) | RiE `tenet_dwarf_statue.dds`, unchanged (260x400) |
+
+`tools/tests/test_doctrine_icons.py` fails when a doctrine the faith window draws has no icon file in the game,
+Anbennar or the overhaul (rerun it after an Anbennar update), when Anbennar starts shipping a file of the same name
+(then delete ours and its entry), and on a stray or wrongly sized file.
+
 ## Generated files
 
 | File | Generator | Why |
@@ -76,3 +96,5 @@ The copies carry Anbennar's own tiger reports (604 in all, none on a changed lin
 5. The religion view and faith map mode show the new icon for each of the 31 faiths, e.g. Cult of Ryala (lotus),
    Luna Damish (moon), the seven infernal cults (Daedric emblems); no faith still shows the teal moon disc.
 6. Faith creation and reformation of a pagan faith (e.g. Ansuwir) shows the new icon for the reformed faith.
+7. The faith window of a Cannorian faith shows its patron deity's emblem (e.g. The Dame's moon disc) instead of the
+   pink checkerboard; an infernal faith, Kheterata and a faith with Dwarven Syncretism show theirs too.
