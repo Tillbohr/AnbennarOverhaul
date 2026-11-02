@@ -118,7 +118,17 @@ aov_magic.10 = {
 	}
 }
 
-# Extraplanar Contact
+# Bound Champion: the binding frays (champion scope)
+aov_magic.11 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		death = { death_reason = death_vanished }
+	}
+}
+
+# Extraplanar bargain (Planar Gate: a demon slips through)
 aov_magic.20 = {
 	type = character_event
 	title = aov_magic.20.t

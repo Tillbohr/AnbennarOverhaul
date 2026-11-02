@@ -80,26 +80,26 @@ aov_spell_summon_familiars_cast = {
 	add_character_modifier = { modifier = aov_spell_summon_familiars years = aov_spell_summon_familiars_years }
 }
 
-aov_spell_summon_animals_cast = {
-	custom_tooltip = aov_spell_summon_animals_cost_tt
+aov_spell_summon_beasts_cast = {
+	custom_tooltip = aov_spell_summon_beasts_cost_tt
 	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_summon_animals_cost }
+		aov_mana_spend = { AMOUNT = aov_spell_summon_beasts_cost }
 		aov_school_add_progress = { SCHOOL = conjuration AMOUNT = 50 }
 		add_magic_lifestyle_xp = 50
-		set_variable = { name = aov_spell_summon_animals_cd years = aov_spell_summon_animals_years }
+		set_variable = { name = aov_spell_summon_beasts_cd years = aov_spell_summon_beasts_years }
 	}
-	add_character_modifier = { modifier = aov_spell_summon_animals years = aov_spell_summon_animals_years }
+	aov_summon_beasts = yes
 }
 
-aov_spell_conjure_supplies_cast = {
-	custom_tooltip = aov_spell_conjure_supplies_cost_tt
+aov_spell_bound_champion_cast = {
+	custom_tooltip = aov_spell_bound_champion_cost_tt
 	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_conjure_supplies_cost }
+		aov_mana_spend = { AMOUNT = aov_spell_bound_champion_cost }
 		aov_school_add_progress = { SCHOOL = conjuration AMOUNT = 50 }
 		add_magic_lifestyle_xp = 50
-		set_variable = { name = aov_spell_conjure_supplies_cd years = aov_spell_conjure_supplies_years }
+		set_variable = { name = aov_spell_bound_champion_cd years = aov_spell_bound_champion_years }
 	}
-	add_character_modifier = { modifier = aov_spell_conjure_supplies years = aov_spell_conjure_supplies_years }
+	aov_bound_champion = yes
 }
 
 aov_spell_summon_elementals_cast = {
@@ -124,15 +124,15 @@ aov_spell_aid_construction_cast = {
 	add_character_modifier = { modifier = aov_spell_aid_construction years = aov_spell_aid_construction_years }
 }
 
-aov_spell_extraplanar_contact_cast = {
-	custom_tooltip = aov_spell_extraplanar_contact_cost_tt
+aov_spell_planar_gate_cast = {
+	custom_tooltip = aov_spell_planar_gate_cost_tt
 	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_extraplanar_contact_cost }
+		aov_mana_spend = { AMOUNT = aov_spell_planar_gate_cost }
 		aov_school_add_progress = { SCHOOL = conjuration AMOUNT = 200 }
 		add_magic_lifestyle_xp = 200
-		set_variable = { name = aov_spell_extraplanar_contact_cd years = aov_spell_extraplanar_contact_years }
+		set_variable = { name = aov_spell_planar_gate_cd years = aov_spell_planar_gate_years }
 	}
-	trigger_event = aov_magic.20
+	aov_planar_gate = yes
 }
 
 aov_spell_guidance_cast = {
@@ -549,14 +549,6 @@ aov_spell_dispel_war_spells = {
 		remove_character_modifier = aov_spell_mage_armor
 	}
 	if = {
-		limit = { has_character_modifier = aov_spell_summon_animals }
-		remove_character_modifier = aov_spell_summon_animals
-	}
-	if = {
-		limit = { has_character_modifier = aov_spell_conjure_supplies }
-		remove_character_modifier = aov_spell_conjure_supplies
-	}
-	if = {
 		limit = { has_character_modifier = aov_spell_command_animals }
 		remove_character_modifier = aov_spell_command_animals
 	}
@@ -614,12 +606,12 @@ aov_magic_ai_cast_random = {
 			aov_spell_summon_familiars_cast = yes
 		}
 		30 = {
-			trigger = { aov_spell_summon_animals_castable = yes }
-			aov_spell_summon_animals_cast = yes
+			trigger = { aov_spell_summon_beasts_castable = yes }
+			aov_spell_summon_beasts_cast = yes
 		}
-		30 = {
-			trigger = { aov_spell_conjure_supplies_castable = yes }
-			aov_spell_conjure_supplies_cast = yes
+		10 = {
+			trigger = { aov_spell_bound_champion_castable = yes }
+			aov_spell_bound_champion_cast = yes
 		}
 		30 = {
 			trigger = { aov_spell_summon_elementals_castable = yes }
@@ -629,9 +621,9 @@ aov_magic_ai_cast_random = {
 			trigger = { aov_spell_aid_construction_castable = yes }
 			aov_spell_aid_construction_cast = yes
 		}
-		10 = {
-			trigger = { aov_spell_extraplanar_contact_castable = yes }
-			aov_spell_extraplanar_contact_cast = yes
+		30 = {
+			trigger = { aov_spell_planar_gate_castable = yes }
+			aov_spell_planar_gate_cast = yes
 		}
 		10 = {
 			trigger = { aov_spell_guidance_castable = yes }

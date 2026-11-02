@@ -79,3 +79,15 @@ aov_talent_learning_template = {
 	}
 	dynasty = none
 }
+
+# Bound Champion (Conjuration): an outsider knight
+aov_bound_champion_template = {
+	age = { 25 35 }
+	gender_female_chance = 50
+	random_traits = no
+	prowess = { 23 27 }
+	martial = { 8 12 }
+	trait = lifestyle_blademaster
+	trait = brave
+	dynasty = none
+}

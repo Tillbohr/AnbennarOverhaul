@@ -164,59 +164,51 @@ aov_spell_summon_familiars_castable = {
 	}
 }
 
-aov_spell_summon_animals_known = {
+aov_spell_summon_beasts_known = {
 	aov_school_level_at_least = { SCHOOL = conjuration LEVEL = 1 }
 }
-aov_spell_summon_animals_ready = {
-	NOT = { has_variable = aov_spell_summon_animals_cd }
+aov_spell_summon_beasts_ready = {
+	NOT = { has_variable = aov_spell_summon_beasts_cd }
 }
-aov_spell_summon_animals_castable = {
+aov_spell_summon_beasts_castable = {
 	aov_is_mage = yes
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_CONJURATION_1
-		aov_spell_summon_animals_known = yes
+		aov_spell_summon_beasts_known = yes
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_READY
-		aov_spell_summon_animals_ready = yes
+		aov_spell_summon_beasts_ready = yes
 	}
 	custom_tooltip = {
-		text = aov_spell_summon_animals_req_mana
-		aov_mana >= aov_spell_summon_animals_cost
+		text = aov_spell_summon_beasts_req_mana
+		aov_mana >= aov_spell_summon_beasts_cost
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_WAR
 		is_at_war = yes
-	}
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_LANDED
-		is_landed = yes
 	}
 }
 
-aov_spell_conjure_supplies_known = {
+aov_spell_bound_champion_known = {
 	aov_school_level_at_least = { SCHOOL = conjuration LEVEL = 1 }
 }
-aov_spell_conjure_supplies_ready = {
-	NOT = { has_variable = aov_spell_conjure_supplies_cd }
+aov_spell_bound_champion_ready = {
+	NOT = { has_variable = aov_spell_bound_champion_cd }
 }
-aov_spell_conjure_supplies_castable = {
+aov_spell_bound_champion_castable = {
 	aov_is_mage = yes
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_CONJURATION_1
-		aov_spell_conjure_supplies_known = yes
+		aov_spell_bound_champion_known = yes
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_READY
-		aov_spell_conjure_supplies_ready = yes
+		aov_spell_bound_champion_ready = yes
 	}
 	custom_tooltip = {
-		text = aov_spell_conjure_supplies_req_mana
-		aov_mana >= aov_spell_conjure_supplies_cost
-	}
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_WAR
-		is_at_war = yes
+		text = aov_spell_bound_champion_req_mana
+		aov_mana >= aov_spell_bound_champion_cost
 	}
 }
 
@@ -272,25 +264,29 @@ aov_spell_aid_construction_castable = {
 	}
 }
 
-aov_spell_extraplanar_contact_known = {
+aov_spell_planar_gate_known = {
 	aov_school_level_at_least = { SCHOOL = conjuration LEVEL = 3 }
 }
-aov_spell_extraplanar_contact_ready = {
-	NOT = { has_variable = aov_spell_extraplanar_contact_cd }
+aov_spell_planar_gate_ready = {
+	NOT = { has_variable = aov_spell_planar_gate_cd }
 }
-aov_spell_extraplanar_contact_castable = {
+aov_spell_planar_gate_castable = {
 	aov_is_mage = yes
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_CONJURATION_3
-		aov_spell_extraplanar_contact_known = yes
+		aov_spell_planar_gate_known = yes
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_READY
-		aov_spell_extraplanar_contact_ready = yes
+		aov_spell_planar_gate_ready = yes
 	}
 	custom_tooltip = {
-		text = aov_spell_extraplanar_contact_req_mana
-		aov_mana >= aov_spell_extraplanar_contact_cost
+		text = aov_spell_planar_gate_req_mana
+		aov_mana >= aov_spell_planar_gate_cost
+	}
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_WAR
+		is_at_war = yes
 	}
 }
 
@@ -1147,11 +1143,11 @@ aov_magic_ai_any_castable = {
 		aov_spell_mage_armor_castable = yes
 		aov_spell_field_of_forbiddance_castable = yes
 		aov_spell_summon_familiars_castable = yes
-		aov_spell_summon_animals_castable = yes
-		aov_spell_conjure_supplies_castable = yes
+		aov_spell_summon_beasts_castable = yes
+		aov_spell_bound_champion_castable = yes
 		aov_spell_summon_elementals_castable = yes
 		aov_spell_aid_construction_castable = yes
-		aov_spell_extraplanar_contact_castable = yes
+		aov_spell_planar_gate_castable = yes
 		aov_spell_guidance_castable = yes
 		aov_spell_eye_for_talent_castable = yes
 		aov_spell_deposit_divination_castable = yes

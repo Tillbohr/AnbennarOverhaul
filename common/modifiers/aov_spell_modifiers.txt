@@ -25,25 +25,14 @@ aov_spell_field_of_forbiddance = {
 
 aov_spell_summon_familiars = {
 	icon = learning_positive
-	intrigue = 2
-	learning = 2
-}
-
-aov_spell_summon_animals = {
-	icon = learning_positive
-	levy_size = 0.1
-}
-
-aov_spell_conjure_supplies = {
-	icon = learning_positive
-	supply_limit_mult = 0.25
-	army_maintenance_mult = -0.1
+	intrigue = 3
+	learning = 3
 }
 
 aov_spell_aid_construction = {
 	icon = learning_positive
-	build_speed = -0.3
-	build_gold_cost = -0.2
+	build_speed = -0.4
+	build_gold_cost = -0.25
 }
 
 aov_spell_guidance = {

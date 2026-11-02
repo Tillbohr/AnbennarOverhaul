@@ -46,6 +46,10 @@
 
  # Special spells
  aov_summon_elementals_army_name: "Conjured Elementals"
+ aov_summon_beasts_army_name: "Conjured Beasts"
+ aov_planar_gate_army_name: "Host of the Gate"
+ aov_conjured_beasts: "Conjured Beasts"
+ aov_conjured_beasts_flavor: "#F Wolves and bears called from the wild places, bound to their summoner until the spell runs out.#!"
  aov_conjured_elementals: "Conjured Elementals"
  aov_conjured_elementals_flavor: "#F Stone and flame given shape, bound to their summoner until the spell runs out.#!"
  aov_magic.20.t: "Beyond the Veil"

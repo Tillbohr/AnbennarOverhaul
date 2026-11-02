@@ -107,7 +107,7 @@ aov_spell_summon_familiars_years = {
 	floor = yes
 }
 
-aov_spell_summon_animals_cost = {
+aov_spell_summon_beasts_cost = {
 	value = 1
 	subtract = aov_cost_cut_conjuration
 	subtract = aov_cost_cut_war
@@ -116,23 +116,22 @@ aov_spell_summon_animals_cost = {
 	add = 0.5
 	floor = yes
 }
-aov_spell_summon_animals_years = {
+aov_spell_summon_beasts_years = {
 	value = 2
 	multiply = aov_years_mult_conjuration
 	add = 0.5
 	floor = yes
 }
 
-aov_spell_conjure_supplies_cost = {
+aov_spell_bound_champion_cost = {
 	value = 1
 	subtract = aov_cost_cut_conjuration
-	subtract = aov_cost_cut_war
 	min = 0.5
 	multiply = 50
 	add = 0.5
 	floor = yes
 }
-aov_spell_conjure_supplies_years = {
+aov_spell_bound_champion_years = {
 	value = 2
 	multiply = aov_years_mult_conjuration
 	add = 0.5
@@ -170,16 +169,18 @@ aov_spell_aid_construction_years = {
 	floor = yes
 }
 
-aov_spell_extraplanar_contact_cost = {
+aov_spell_planar_gate_cost = {
 	value = 1
 	subtract = aov_cost_cut_conjuration
+	subtract = aov_cost_cut_war
 	min = 0.5
 	multiply = 200
 	add = 0.5
 	floor = yes
 }
-aov_spell_extraplanar_contact_years = {
+aov_spell_planar_gate_years = {
 	value = 5
+	multiply = aov_years_mult_conjuration
 	add = 0.5
 	floor = yes
 }

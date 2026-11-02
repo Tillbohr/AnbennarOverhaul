@@ -25,3 +25,8 @@ aov_spell_miss_chance = {
 	value = 100
 	subtract = aov_spell_land_chance
 }
+
+# Planar Gate: chance a demon slips through the gate (the Extraplanar bargain, aov_magic.20)
+aov_planar_gate_demon_chance = {
+	value = 10
+}

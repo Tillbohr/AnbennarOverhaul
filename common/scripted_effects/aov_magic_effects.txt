@@ -349,10 +349,70 @@ aov_assimilation_program = {
 aov_summon_elementals = {
 	if = {
 		limit = { aov_spell_army_possible = yes }
-		aov_spawn_spell_army = { SPELL = summon_elementals TYPE = aov_conjured_elementals STACKS = 4 }
+		aov_spawn_spell_army = { SPELL = summon_elementals TYPE = aov_conjured_elementals STACKS = 6 }
 	}
 	else = {
 		aov_spell_army_fizzle = { SPELL = summon_elementals }
+	}
+}
+
+# Summon Beasts: a pack of conjured wolves and bears
+aov_summon_beasts = {
+	if = {
+		limit = { aov_spell_army_possible = yes }
+		aov_spawn_spell_army = { SPELL = summon_beasts TYPE = aov_conjured_beasts STACKS = 2 }
+	}
+	else = {
+		aov_spell_army_fizzle = { SPELL = summon_beasts }
+	}
+}
+
+# Planar Gate: the Summon Extraplanars host if the caster bound one, else elementals; a demon may follow
+aov_planar_gate = {
+	if = {
+		limit = { aov_spell_army_possible = yes }
+		if = {
+			limit = { has_variable = aov_adv_host var:aov_adv_host = flag:angels }
+			aov_spawn_spell_army = { SPELL = planar_gate TYPE = aov_host_angels STACKS = 10 }
+		}
+		else_if = {
+			limit = { has_variable = aov_adv_host var:aov_adv_host = flag:eldritch }
+			aov_spawn_spell_army = { SPELL = planar_gate TYPE = aov_host_eldritch STACKS = 10 }
+		}
+		else_if = {
+			limit = { has_variable = aov_adv_host var:aov_adv_host = flag:devils }
+			aov_spawn_spell_army = { SPELL = planar_gate TYPE = aov_host_devils STACKS = 10 }
+		}
+		else = {
+			aov_spawn_spell_army = { SPELL = planar_gate TYPE = aov_conjured_elementals STACKS = 10 }
+		}
+		random = {
+			chance = aov_planar_gate_demon_chance
+			trigger_event = aov_magic.20
+		}
+	}
+	else = {
+		aov_spell_army_fizzle = { SPELL = planar_gate }
+	}
+}
+
+# Bound Champion: an outsider knight at court until the spell ends. The vanish event runs on the champion, so it
+# fires even if the caster dies first
+aov_bound_champion = {
+	save_scope_as = aov_champion_master
+	save_scope_value_as = { name = aov_champion_years value = aov_spell_bound_champion_years }
+	create_character = {
+		template = aov_bound_champion_template
+		location = scope:aov_champion_master.location
+		culture = scope:aov_champion_master.culture
+		faith = scope:aov_champion_master.faith
+		save_scope_as = aov_champion
+	}
+	add_courtier = scope:aov_champion
+	scope:aov_champion = {
+		add_character_flag = aov_bound_outsider
+		set_knight_status = force
+		trigger_event = { id = aov_magic.11 years = scope:aov_champion_years }
 	}
 }
 

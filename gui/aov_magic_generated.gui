@@ -637,9 +637,9 @@ types AovMagic
 		}
 
 		widget = {
-			name = "aov_spell_card_summon_animals"
+			name = "aov_spell_card_summon_beasts"
 			size = { 480 88 }
-			tooltip = "aov_spell_summon_animals_tt"
+			tooltip = "aov_spell_summon_beasts_tt"
 
 			icon = {
 				position = { 0 0 }
@@ -663,27 +663,27 @@ types AovMagic
 
 			text_single = {
 				position = { 72 8 }
-				text = "aov_spell_summon_animals"
+				text = "aov_spell_summon_beasts"
 				default_format = "#T"
 				max_width = 205
 				align = left|nobaseline
 			}
 			text_single = {
 				position = { 72 38 }
-				text = "aov_spell_summon_animals_facts"
+				text = "aov_spell_summon_beasts_facts"
 				default_format = "#weak"
 				max_width = 280
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_summon_animals_cd' ).IsSet )]"
+				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_summon_beasts_cd' ).IsSet )]"
 				position = { 72 66 }
-				text = "aov_spell_summon_animals_desc"
+				text = "aov_spell_summon_beasts_desc"
 				max_width = 400
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_summon_animals_cd' ).IsSet]"
+				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_summon_beasts_cd' ).IsSet]"
 				position = { 72 66 }
 				text = "AOV_SPELL_ON_COOLDOWN"
 				max_width = 400
@@ -695,16 +695,16 @@ types AovMagic
 				position = { -6 16 }
 				size = { 110 32 }
 				text = "AOV_SPELL_CAST"
-				enabled = "[GetScriptedGui('aov_spell_summon_animals_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_spell_summon_animals_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_spell_summon_animals_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				enabled = "[GetScriptedGui('aov_spell_summon_beasts_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				tooltip = "[GetScriptedGui('aov_spell_summon_beasts_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				onclick = "[GetScriptedGui('aov_spell_summon_beasts_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			}
 		}
 
 		widget = {
-			name = "aov_spell_card_conjure_supplies"
+			name = "aov_spell_card_bound_champion"
 			size = { 480 88 }
-			tooltip = "aov_spell_conjure_supplies_tt"
+			tooltip = "aov_spell_bound_champion_tt"
 
 			icon = {
 				position = { 0 0 }
@@ -728,27 +728,27 @@ types AovMagic
 
 			text_single = {
 				position = { 72 8 }
-				text = "aov_spell_conjure_supplies"
+				text = "aov_spell_bound_champion"
 				default_format = "#T"
 				max_width = 205
 				align = left|nobaseline
 			}
 			text_single = {
 				position = { 72 38 }
-				text = "aov_spell_conjure_supplies_facts"
+				text = "aov_spell_bound_champion_facts"
 				default_format = "#weak"
 				max_width = 280
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_conjure_supplies_cd' ).IsSet )]"
+				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_bound_champion_cd' ).IsSet )]"
 				position = { 72 66 }
-				text = "aov_spell_conjure_supplies_desc"
+				text = "aov_spell_bound_champion_desc"
 				max_width = 400
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_conjure_supplies_cd' ).IsSet]"
+				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_bound_champion_cd' ).IsSet]"
 				position = { 72 66 }
 				text = "AOV_SPELL_ON_COOLDOWN"
 				max_width = 400
@@ -760,9 +760,9 @@ types AovMagic
 				position = { -6 16 }
 				size = { 110 32 }
 				text = "AOV_SPELL_CAST"
-				enabled = "[GetScriptedGui('aov_spell_conjure_supplies_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_spell_conjure_supplies_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_spell_conjure_supplies_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				enabled = "[GetScriptedGui('aov_spell_bound_champion_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				tooltip = "[GetScriptedGui('aov_spell_bound_champion_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				onclick = "[GetScriptedGui('aov_spell_bound_champion_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			}
 		}
 
@@ -897,9 +897,9 @@ types AovMagic
 		}
 
 		widget = {
-			name = "aov_spell_card_extraplanar_contact"
+			name = "aov_spell_card_planar_gate"
 			size = { 480 88 }
-			tooltip = "aov_spell_extraplanar_contact_tt"
+			tooltip = "aov_spell_planar_gate_tt"
 
 			icon = {
 				position = { 0 0 }
@@ -923,27 +923,27 @@ types AovMagic
 
 			text_single = {
 				position = { 72 8 }
-				text = "aov_spell_extraplanar_contact"
+				text = "aov_spell_planar_gate"
 				default_format = "#T"
 				max_width = 205
 				align = left|nobaseline
 			}
 			text_single = {
 				position = { 72 38 }
-				text = "aov_spell_extraplanar_contact_facts"
+				text = "aov_spell_planar_gate_facts"
 				default_format = "#weak"
 				max_width = 280
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_extraplanar_contact_cd' ).IsSet )]"
+				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_planar_gate_cd' ).IsSet )]"
 				position = { 72 66 }
-				text = "aov_spell_extraplanar_contact_desc"
+				text = "aov_spell_planar_gate_desc"
 				max_width = 400
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_extraplanar_contact_cd' ).IsSet]"
+				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_planar_gate_cd' ).IsSet]"
 				position = { 72 66 }
 				text = "AOV_SPELL_ON_COOLDOWN"
 				max_width = 400
@@ -955,9 +955,9 @@ types AovMagic
 				position = { -6 16 }
 				size = { 110 32 }
 				text = "AOV_SPELL_CAST"
-				enabled = "[GetScriptedGui('aov_spell_extraplanar_contact_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_spell_extraplanar_contact_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_spell_extraplanar_contact_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				enabled = "[GetScriptedGui('aov_spell_planar_gate_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				tooltip = "[GetScriptedGui('aov_spell_planar_gate_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				onclick = "[GetScriptedGui('aov_spell_planar_gate_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			}
 		}
 	}

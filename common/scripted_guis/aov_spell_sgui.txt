@@ -38,16 +38,16 @@ aov_spell_summon_familiars_sgui = {
 	effect = { aov_spell_summon_familiars_cast = yes }
 }
 
-aov_spell_summon_animals_sgui = {
+aov_spell_summon_beasts_sgui = {
 	scope = character
-	is_valid = { aov_spell_summon_animals_castable = yes }
-	effect = { aov_spell_summon_animals_cast = yes }
+	is_valid = { aov_spell_summon_beasts_castable = yes }
+	effect = { aov_spell_summon_beasts_cast = yes }
 }
 
-aov_spell_conjure_supplies_sgui = {
+aov_spell_bound_champion_sgui = {
 	scope = character
-	is_valid = { aov_spell_conjure_supplies_castable = yes }
-	effect = { aov_spell_conjure_supplies_cast = yes }
+	is_valid = { aov_spell_bound_champion_castable = yes }
+	effect = { aov_spell_bound_champion_cast = yes }
 }
 
 aov_spell_summon_elementals_sgui = {
@@ -62,10 +62,10 @@ aov_spell_aid_construction_sgui = {
 	effect = { aov_spell_aid_construction_cast = yes }
 }
 
-aov_spell_extraplanar_contact_sgui = {
+aov_spell_planar_gate_sgui = {
 	scope = character
-	is_valid = { aov_spell_extraplanar_contact_castable = yes }
-	effect = { aov_spell_extraplanar_contact_cast = yes }
+	is_valid = { aov_spell_planar_gate_castable = yes }
+	effect = { aov_spell_planar_gate_cast = yes }
 }
 
 aov_spell_guidance_sgui = {

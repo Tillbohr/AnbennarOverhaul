@@ -87,5 +87,68 @@ class AbjurationTests(unittest.TestCase):
         self.assertNotIn("protected_journey", BY)
 
 
+class ConjurationTests(unittest.TestCase):
+    def test_keys(self):
+        self.assertEqual(keys_in_slot_order("conjuration"),
+                         ["summon_familiars", "summon_beasts", "bound_champion", "summon_elementals", "aid_construction",
+                          "planar_gate"])
+
+    def test_numbers(self):
+        self.assertEqual(BY["aid_construction"]["name"], "Unseen Servants")
+        self.assertIn("build_speed = -0.4", BY["aid_construction"]["modifier"])
+        self.assertIn("build_gold_cost = -0.25", BY["aid_construction"]["modifier"])
+        self.assertIn("intrigue = 3", BY["summon_familiars"]["modifier"])
+        self.assertIn("learning = 3", BY["summon_familiars"]["modifier"])
+        for k in ("summon_beasts", "summon_elementals", "planar_gate"):
+            self.assertEqual(BY[k]["type"], "war", k)
+            self.assertTrue(BY[k]["scales_duration"], k)
+        self.assertTrue(BY["bound_champion"]["scales_duration"])
+
+    def test_army_spells_use_the_helper(self):
+        for eff, typ, stacks in (("aov_summon_beasts", "aov_conjured_beasts", 2),
+                                 ("aov_summon_elementals", "aov_conjured_elementals", 6)):
+            b = block(effects(), eff)
+            spell_key = eff[len("aov_"):]
+            self.assertIn(f"aov_spawn_spell_army = {{ SPELL = {spell_key} TYPE = {typ} STACKS = {stacks} }}", b)
+            self.assertIn(f"aov_spell_army_fizzle = {{ SPELL = {spell_key} }}", b)
+            self.assertIn("aov_spell_army_possible = yes", b)
+
+    def test_planar_gate(self):
+        b = block(effects(), "aov_planar_gate")
+        for host in ("angels", "eldritch", "devils"):
+            self.assertIn(f"var:aov_adv_host = flag:{host}", b)
+            self.assertIn(f"TYPE = aov_host_{host} STACKS = 10", b)
+        self.assertIn("TYPE = aov_conjured_elementals STACKS = 10", b)
+        self.assertIn("aov_spell_army_fizzle = { SPELL = planar_gate }", b)
+        self.assertIn("chance = aov_planar_gate_demon_chance", b)
+        self.assertIn("trigger_event = aov_magic.20", b)
+        self.assertIn("value = 10", block(tuning(), "aov_planar_gate_demon_chance"))
+        loc = read("localization/english/aov_magic_l_english.yml")
+        for k in ("summon_beasts", "planar_gate"):
+            self.assertIn(f" aov_{k}_army_name:", loc)
+
+    def test_beasts_never_recruitable(self):
+        b = block(read("common/men_at_arms_types/aov_magic_maa_types.txt"), "aov_conjured_beasts")
+        self.assertIn("type = light_cavalry", b)
+        self.assertIn("always = no", b)
+        self.assertIn(" aov_conjured_beasts:", read("localization/english/aov_magic_l_english.yml"))
+
+    def test_champion_vanishes_on_their_own(self):
+        b = block(effects(), "aov_bound_champion")
+        for s in ("create_character", "template = aov_bound_champion_template", "add_courtier = scope:aov_champion",
+                  "set_knight_status = force", "add_character_flag = aov_bound_outsider"):
+            self.assertIn(s, b)
+        champion = b.split("scope:aov_champion = {", 1)[1]
+        self.assertIn("trigger_event = { id = aov_magic.11 years = scope:aov_champion_years }", champion)
+        self.assertIn("death = { death_reason = death_vanished }", block(read("events/aov_magic_events.txt"), "aov_magic.11"))
+        tpl = block(read("common/scripted_character_templates/aov_magic_templates.txt"), "aov_bound_champion_template")
+        self.assertIn("prowess = { 23 27 }", tpl)
+        self.assertIn("lifestyle_blademaster", tpl)
+
+    def test_removed(self):
+        for k in ("extraplanar_contact", "summon_animals", "conjure_supplies"):
+            self.assertNotIn(k, BY)
+
+
 if __name__ == "__main__":
     unittest.main()
