@@ -57,6 +57,7 @@ Rerun `python -I tools/build_holding_models.py` too after a CK3 patch (`city_01.
 Rerun `python -I tools/build_portraits.py` too after a CK3 patch (it skips files and names the game already has) and after a Realms in Exile update (its portrait entries, templates, accessories and models are the source).
 Rerun `python -I tools/build_knight_icons.py` too after a CK3 patch (the military, knights, army and battle summary windows are the game's).
 Rerun `python -I tools/build_racial_levies.py` too after a CK3 patch (the game's buildings, traditions and doctrines are levy sources).
+Rerun `python -I tools/build_rie_elves.py` and `python -I tools/build_racial_levies.py` (in generator order) whenever `ADDITIONS` in `build_holdings_override.py` change (the Haven conversion removal list and the levy count read those buildings).
 Rerun `python -I tools/build_race_relations.py` too after a CK3 patch (the alliance interactions are the game's, shipped in Anbennar's `00_alliance.txt`).
 Rerun `python -I tools/build_rie_courts.py` too after a CK3 patch (the grandeur levels file is the game's) and after a Realms in Exile update.
 Rerun `python -I tools/build_rie_dwarves.py`, then `build_holds.py` and `build_holdings_override.py`, after a Realms in Exile update (its dwarf buildings, ore modifiers, `dwarven_depths` levels and pictures are the source) and after a CK3 patch (it skips icons and names the game already has).

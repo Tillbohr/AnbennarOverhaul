@@ -14,18 +14,27 @@ The HUD override also carries the Magic tab (see magic.md).
 - **Gnomish artificery:** `tradition_gnomish_ingenuity` (gnomish heritage only; added to all gnomish cultures on
   game start; stripped from non-gnomes on culture creation/tradition add) → `artificer_academy_01` (regular
   castle/city building, university icon and modifiers, one per ruler's domain, all of a ruler's academies disabled
-  if they hold 2+) → `artificer_handgunners` MaA (shown as Artificers; Anbennar's generic `artificers` and `armored_artificers` are disabled in `zz_aov_gnome_maa_overrides.txt`; handgunner stats, needs the tradition and an enabled academy in
-  the recruiter's domain).
+  if they hold 2+) → `artificer_handgunners` MaA (shown as Artificers; Anbennar's generic `artificers` is disabled in `zz_aov_gnome_maa_overrides.txt`; handgunner stats, needs the tradition and an enabled academy in
+  the recruiter's domain). Anbennar's `armored_artificers` is re-enabled there as a `gunpowder` unit (Prototype Tanks and Damestear Megacannon removed); see Unlocks.
 - **Artificery tab:** HUD main tab below Situations (`gui/hud.gui`, generated) shown when the player passes
   `can_use_artificery_trigger` (gnome race, Gnomish Ingenuity culture, exactly one academy) via scripted GUI
   `aov_artificery_available`. Opens `gui/aov_window_artificery.gui` (scripted widget, variable
   `aov_artificery_window`) with Factions/Inventions tabs (variable `aov_artificery_tab`, unset = Factions).
-- **Artificery inventions:** 60 inventions in `tools/data/inventions.py` (EU4 Anbennar mapping in
-  `docs/research/2026-10-08-eu4-artificer-inventions.md`). Research sponsored by Brillites (5 y, random),
+- **Artificery inventions:** 48 period inventions in `tools/data/inventions.py`, the overhaul's own roster (the EU4
+  mapping in `docs/research/2026-10-08-eu4-artificer-inventions.md` is history). Research sponsored by Brillites (5 y, random),
   Mechanists (10 y, chosen field) or Technomancers (15 y, chosen invention); cost and time set by that faction's
-  influence (below); tiers gated by culture
-  era; 3/4/5 slots with a 1-year cooldown; state in ruler variables, inherited by the heir; dormant while
+  influence (below); Tier II/III need the culture
+  era plus `aov_invention_tier_gate_count` (6) discoveries of the tier below; 4/5/6 slots with six cooldowns; state in ruler variables, inherited by the heir; dormant while
   ineligible. Logic in `aov_artificery_research_*` files and `common/on_action/aov_inventions_on_actions.txt`.
+- **Unlocks (hybrid):** modifiers need an active slot; unlocks do not. Generated trigger
+  `aov_invention_<key>_unlock_ready` (discovered, visible, not dormant) makes an unlock permanent once discovered and
+  off while the ruler is dormant. It gates men-at-arms and buildings. Men-at-arms in
+  `common/men_at_arms_types/aov_invention_maa_types.txt`: `aov_clockwork_repeaters`, `aov_war_golems`,
+  `aov_gnomish_bombards`; Armored Artificers (above) is gated the same way. Buildings in
+  `common/buildings/aov_invention_buildings.txt`: `aov_clockwork_mill_01`, `aov_alchemical_distillery_01`,
+  `aov_damestear_foundry_01` (Foundry `levy_size` counted by `build_racial_levies.py`), added to the castle and city
+  lists by `ADDITIONS` in `build_holdings_override.py` and removed on Elven Haven conversion by `build_rie_elves.py`.
+  Saves from before this change: start a new campaign.
 - **Inventions tab UI:** EU4-style. Tier I/II/III tabs (variable `aov_inventions_tier`, unset = I), each with
   Society/Economic/Military sections of invention boxes (generated types `aov_inventions_tier_<n>`), drawn with EU4
   Anbennar's inventions-menu buttons (`aov_invention_button_<category>.dds`, frames: locked/undiscovered, discovered,
