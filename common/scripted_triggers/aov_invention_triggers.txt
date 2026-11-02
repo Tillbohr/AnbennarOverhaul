@@ -2,124 +2,124 @@
 
 # All triggers are character scope (the ruler).
 
-aov_invention_arcane_battery_capital_complex_visible = {
+aov_invention_box_of_holding_visible = {
 	always = yes
 }
-aov_invention_arcane_battery_capital_complex_unlocked = {
+aov_invention_box_of_holding_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_early_medieval }
 }
-aov_invention_arcane_battery_capital_complex_available = {
-	aov_invention_arcane_battery_capital_complex_visible = yes
-	aov_invention_arcane_battery_capital_complex_unlocked = yes
+aov_invention_box_of_holding_available = {
+	aov_invention_box_of_holding_visible = yes
+	aov_invention_box_of_holding_unlocked = yes
 }
-aov_invention_arcane_battery_capital_complex_discovered = {
-	has_variable = aov_inv_arcane_battery_capital_complex
+aov_invention_box_of_holding_discovered = {
+	has_variable = aov_inv_box_of_holding
 }
-aov_invention_arcane_battery_capital_complex_active = {
-	has_variable = aov_inv_arcane_battery_capital_complex
-	var:aov_inv_arcane_battery_capital_complex = 2
+aov_invention_box_of_holding_active = {
+	has_variable = aov_inv_box_of_holding
+	var:aov_inv_box_of_holding = 2
 }
-aov_invention_arcane_battery_capital_complex_discoverable = {
-	aov_invention_arcane_battery_capital_complex_available = yes
-	NOT = { has_variable = aov_inv_arcane_battery_capital_complex }
+aov_invention_box_of_holding_discoverable = {
+	aov_invention_box_of_holding_available = yes
+	NOT = { has_variable = aov_inv_box_of_holding }
 }
-aov_invention_arcane_battery_capital_complex_activatable = {
-	has_variable = aov_inv_arcane_battery_capital_complex
-	var:aov_inv_arcane_battery_capital_complex = 1
-	aov_invention_arcane_battery_capital_complex_available = yes
+aov_invention_box_of_holding_activatable = {
+	has_variable = aov_inv_box_of_holding
+	var:aov_inv_box_of_holding = 1
+	aov_invention_box_of_holding_available = yes
 }
-aov_invention_arcane_battery_capital_complex_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:arcane_battery_capital_complex } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:arcane_battery_capital_complex } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:arcane_battery_capital_complex } }
+aov_invention_box_of_holding_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:box_of_holding } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:box_of_holding } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:box_of_holding } }
 }
 
-aov_invention_automated_translator_visible = {
+aov_invention_clockwork_abacus_visible = {
 	always = yes
 }
-aov_invention_automated_translator_unlocked = {
+aov_invention_clockwork_abacus_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_early_medieval }
 }
-aov_invention_automated_translator_available = {
-	aov_invention_automated_translator_visible = yes
-	aov_invention_automated_translator_unlocked = yes
+aov_invention_clockwork_abacus_available = {
+	aov_invention_clockwork_abacus_visible = yes
+	aov_invention_clockwork_abacus_unlocked = yes
 }
-aov_invention_automated_translator_discovered = {
-	has_variable = aov_inv_automated_translator
+aov_invention_clockwork_abacus_discovered = {
+	has_variable = aov_inv_clockwork_abacus
 }
-aov_invention_automated_translator_active = {
-	has_variable = aov_inv_automated_translator
-	var:aov_inv_automated_translator = 2
+aov_invention_clockwork_abacus_active = {
+	has_variable = aov_inv_clockwork_abacus
+	var:aov_inv_clockwork_abacus = 2
 }
-aov_invention_automated_translator_discoverable = {
-	aov_invention_automated_translator_available = yes
-	NOT = { has_variable = aov_inv_automated_translator }
+aov_invention_clockwork_abacus_discoverable = {
+	aov_invention_clockwork_abacus_available = yes
+	NOT = { has_variable = aov_inv_clockwork_abacus }
 }
-aov_invention_automated_translator_activatable = {
-	has_variable = aov_inv_automated_translator
-	var:aov_inv_automated_translator = 1
-	aov_invention_automated_translator_available = yes
+aov_invention_clockwork_abacus_activatable = {
+	has_variable = aov_inv_clockwork_abacus
+	var:aov_inv_clockwork_abacus = 1
+	aov_invention_clockwork_abacus_available = yes
 }
-aov_invention_automated_translator_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:automated_translator } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:automated_translator } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:automated_translator } }
+aov_invention_clockwork_abacus_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:clockwork_abacus } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:clockwork_abacus } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:clockwork_abacus } }
 }
 
-aov_invention_market_mender_visible = {
+aov_invention_clockwork_waterwheels_visible = {
 	always = yes
 }
-aov_invention_market_mender_unlocked = {
+aov_invention_clockwork_waterwheels_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_early_medieval }
 }
-aov_invention_market_mender_available = {
-	aov_invention_market_mender_visible = yes
-	aov_invention_market_mender_unlocked = yes
+aov_invention_clockwork_waterwheels_available = {
+	aov_invention_clockwork_waterwheels_visible = yes
+	aov_invention_clockwork_waterwheels_unlocked = yes
 }
-aov_invention_market_mender_discovered = {
-	has_variable = aov_inv_market_mender
+aov_invention_clockwork_waterwheels_discovered = {
+	has_variable = aov_inv_clockwork_waterwheels
 }
-aov_invention_market_mender_active = {
-	has_variable = aov_inv_market_mender
-	var:aov_inv_market_mender = 2
+aov_invention_clockwork_waterwheels_active = {
+	has_variable = aov_inv_clockwork_waterwheels
+	var:aov_inv_clockwork_waterwheels = 2
 }
-aov_invention_market_mender_discoverable = {
-	aov_invention_market_mender_available = yes
-	NOT = { has_variable = aov_inv_market_mender }
+aov_invention_clockwork_waterwheels_discoverable = {
+	aov_invention_clockwork_waterwheels_available = yes
+	NOT = { has_variable = aov_inv_clockwork_waterwheels }
 }
-aov_invention_market_mender_activatable = {
-	has_variable = aov_inv_market_mender
-	var:aov_inv_market_mender = 1
-	aov_invention_market_mender_available = yes
+aov_invention_clockwork_waterwheels_activatable = {
+	has_variable = aov_inv_clockwork_waterwheels
+	var:aov_inv_clockwork_waterwheels = 1
+	aov_invention_clockwork_waterwheels_available = yes
 }
-aov_invention_market_mender_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:market_mender } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:market_mender } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:market_mender } }
+aov_invention_clockwork_waterwheels_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:clockwork_waterwheels } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:clockwork_waterwheels } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:clockwork_waterwheels } }
 }
 
-aov_invention_plane_of_water_teleporter_visible = {
+aov_invention_growth_beans_visible = {
 	always = yes
 }
-aov_invention_plane_of_water_teleporter_unlocked = {
+aov_invention_growth_beans_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_early_medieval }
 }
-aov_invention_plane_of_water_teleporter_available = {
-	aov_invention_plane_of_water_teleporter_visible = yes
-	aov_invention_plane_of_water_teleporter_unlocked = yes
+aov_invention_growth_beans_available = {
+	aov_invention_growth_beans_visible = yes
+	aov_invention_growth_beans_unlocked = yes
 }
-aov_invention_plane_of_water_teleporter_discovered = {
-	has_variable = aov_inv_plane_of_water_teleporter
+aov_invention_growth_beans_discovered = {
+	has_variable = aov_inv_growth_beans
 }
-aov_invention_plane_of_water_teleporter_active = {
-	has_variable = aov_inv_plane_of_water_teleporter
-	var:aov_inv_plane_of_water_teleporter = 2
+aov_invention_growth_beans_active = {
+	has_variable = aov_inv_growth_beans
+	var:aov_inv_growth_beans = 2
 }
-aov_invention_plane_of_water_teleporter_discoverable = {
-	aov_invention_plane_of_water_teleporter_available = yes
-	NOT = { has_variable = aov_inv_plane_of_water_teleporter }
+aov_invention_growth_beans_discoverable = {
+	aov_invention_growth_beans_available = yes
+	NOT = { has_variable = aov_inv_growth_beans }
 }
-aov_invention_plane_of_water_teleporter_activatable = {
-	has_variable = aov_inv_plane_of_water_teleporter
-	var:aov_inv_plane_of_water_teleporter = 1
-	aov_invention_plane_of_water_teleporter_available = yes
+aov_invention_growth_beans_activatable = {
+	has_variable = aov_inv_growth_beans
+	var:aov_inv_growth_beans = 1
+	aov_invention_growth_beans_available = yes
 }
-aov_invention_plane_of_water_teleporter_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:plane_of_water_teleporter } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:plane_of_water_teleporter } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:plane_of_water_teleporter } }
+aov_invention_growth_beans_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:growth_beans } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:growth_beans } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:growth_beans } }
 }
 
 aov_invention_self_cleaning_parchment_visible = {
@@ -152,154 +152,94 @@ aov_invention_self_cleaning_parchment_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:self_cleaning_parchment } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:self_cleaning_parchment } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:self_cleaning_parchment } }
 }
 
-aov_invention_spell_in_a_box_visible = {
+aov_invention_alchemical_distilleries_visible = {
 	always = yes
 }
-aov_invention_spell_in_a_box_unlocked = {
-	culture = { has_cultural_era_or_later = culture_era_early_medieval }
+aov_invention_alchemical_distilleries_unlocked = {
+	culture = { has_cultural_era_or_later = culture_era_high_medieval }
 }
-aov_invention_spell_in_a_box_available = {
-	aov_invention_spell_in_a_box_visible = yes
-	aov_invention_spell_in_a_box_unlocked = yes
+aov_invention_alchemical_distilleries_available = {
+	aov_invention_alchemical_distilleries_visible = yes
+	aov_invention_alchemical_distilleries_unlocked = yes
 }
-aov_invention_spell_in_a_box_discovered = {
-	has_variable = aov_inv_spell_in_a_box
+aov_invention_alchemical_distilleries_discovered = {
+	has_variable = aov_inv_alchemical_distilleries
 }
-aov_invention_spell_in_a_box_active = {
-	has_variable = aov_inv_spell_in_a_box
-	var:aov_inv_spell_in_a_box = 2
+aov_invention_alchemical_distilleries_active = {
+	has_variable = aov_inv_alchemical_distilleries
+	var:aov_inv_alchemical_distilleries = 2
 }
-aov_invention_spell_in_a_box_discoverable = {
-	aov_invention_spell_in_a_box_available = yes
-	NOT = { has_variable = aov_inv_spell_in_a_box }
+aov_invention_alchemical_distilleries_discoverable = {
+	aov_invention_alchemical_distilleries_available = yes
+	NOT = { has_variable = aov_inv_alchemical_distilleries }
 }
-aov_invention_spell_in_a_box_activatable = {
-	has_variable = aov_inv_spell_in_a_box
-	var:aov_inv_spell_in_a_box = 1
-	aov_invention_spell_in_a_box_available = yes
+aov_invention_alchemical_distilleries_activatable = {
+	has_variable = aov_inv_alchemical_distilleries
+	var:aov_inv_alchemical_distilleries = 1
+	aov_invention_alchemical_distilleries_available = yes
 }
-aov_invention_spell_in_a_box_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:spell_in_a_box } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:spell_in_a_box } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:spell_in_a_box } }
+aov_invention_alchemical_distilleries_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:alchemical_distilleries } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:alchemical_distilleries } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:alchemical_distilleries } }
 }
 
-aov_invention_brass_prosthesis_visible = {
+aov_invention_arithmatons_visible = {
 	always = yes
 }
-aov_invention_brass_prosthesis_unlocked = {
+aov_invention_arithmatons_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
 }
-aov_invention_brass_prosthesis_available = {
-	aov_invention_brass_prosthesis_visible = yes
-	aov_invention_brass_prosthesis_unlocked = yes
+aov_invention_arithmatons_available = {
+	aov_invention_arithmatons_visible = yes
+	aov_invention_arithmatons_unlocked = yes
 }
-aov_invention_brass_prosthesis_discovered = {
-	has_variable = aov_inv_brass_prosthesis
+aov_invention_arithmatons_discovered = {
+	has_variable = aov_inv_arithmatons
 }
-aov_invention_brass_prosthesis_active = {
-	has_variable = aov_inv_brass_prosthesis
-	var:aov_inv_brass_prosthesis = 2
+aov_invention_arithmatons_active = {
+	has_variable = aov_inv_arithmatons
+	var:aov_inv_arithmatons = 2
 }
-aov_invention_brass_prosthesis_discoverable = {
-	aov_invention_brass_prosthesis_available = yes
-	NOT = { has_variable = aov_inv_brass_prosthesis }
+aov_invention_arithmatons_discoverable = {
+	aov_invention_arithmatons_available = yes
+	NOT = { has_variable = aov_inv_arithmatons }
 }
-aov_invention_brass_prosthesis_activatable = {
-	has_variable = aov_inv_brass_prosthesis
-	var:aov_inv_brass_prosthesis = 1
-	aov_invention_brass_prosthesis_available = yes
+aov_invention_arithmatons_activatable = {
+	has_variable = aov_inv_arithmatons
+	var:aov_inv_arithmatons = 1
+	aov_invention_arithmatons_available = yes
 }
-aov_invention_brass_prosthesis_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:brass_prosthesis } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:brass_prosthesis } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:brass_prosthesis } }
-}
-
-aov_invention_chi_cultivation_visible = {
-	faith = faith:devouring_path
-}
-aov_invention_chi_cultivation_unlocked = {
-	culture = { has_cultural_era_or_later = culture_era_high_medieval }
-}
-aov_invention_chi_cultivation_available = {
-	aov_invention_chi_cultivation_visible = yes
-	aov_invention_chi_cultivation_unlocked = yes
-}
-aov_invention_chi_cultivation_discovered = {
-	has_variable = aov_inv_chi_cultivation
-}
-aov_invention_chi_cultivation_active = {
-	has_variable = aov_inv_chi_cultivation
-	var:aov_inv_chi_cultivation = 2
-}
-aov_invention_chi_cultivation_discoverable = {
-	aov_invention_chi_cultivation_available = yes
-	NOT = { has_variable = aov_inv_chi_cultivation }
-}
-aov_invention_chi_cultivation_activatable = {
-	has_variable = aov_inv_chi_cultivation
-	var:aov_inv_chi_cultivation = 1
-	aov_invention_chi_cultivation_available = yes
-}
-aov_invention_chi_cultivation_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:chi_cultivation } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:chi_cultivation } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:chi_cultivation } }
+aov_invention_arithmatons_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:arithmatons } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:arithmatons } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:arithmatons } }
 }
 
-aov_invention_gene_food_cultivation_visible = {
+aov_invention_damestear_lamps_visible = {
 	always = yes
 }
-aov_invention_gene_food_cultivation_unlocked = {
+aov_invention_damestear_lamps_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
 }
-aov_invention_gene_food_cultivation_available = {
-	aov_invention_gene_food_cultivation_visible = yes
-	aov_invention_gene_food_cultivation_unlocked = yes
+aov_invention_damestear_lamps_available = {
+	aov_invention_damestear_lamps_visible = yes
+	aov_invention_damestear_lamps_unlocked = yes
 }
-aov_invention_gene_food_cultivation_discovered = {
-	has_variable = aov_inv_gene_food_cultivation
+aov_invention_damestear_lamps_discovered = {
+	has_variable = aov_inv_damestear_lamps
 }
-aov_invention_gene_food_cultivation_active = {
-	has_variable = aov_inv_gene_food_cultivation
-	var:aov_inv_gene_food_cultivation = 2
+aov_invention_damestear_lamps_active = {
+	has_variable = aov_inv_damestear_lamps
+	var:aov_inv_damestear_lamps = 2
 }
-aov_invention_gene_food_cultivation_discoverable = {
-	aov_invention_gene_food_cultivation_available = yes
-	NOT = { has_variable = aov_inv_gene_food_cultivation }
+aov_invention_damestear_lamps_discoverable = {
+	aov_invention_damestear_lamps_available = yes
+	NOT = { has_variable = aov_inv_damestear_lamps }
 }
-aov_invention_gene_food_cultivation_activatable = {
-	has_variable = aov_inv_gene_food_cultivation
-	var:aov_inv_gene_food_cultivation = 1
-	aov_invention_gene_food_cultivation_available = yes
+aov_invention_damestear_lamps_activatable = {
+	has_variable = aov_inv_damestear_lamps
+	var:aov_inv_damestear_lamps = 1
+	aov_invention_damestear_lamps_available = yes
 }
-aov_invention_gene_food_cultivation_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:gene_food_cultivation } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:gene_food_cultivation } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:gene_food_cultivation } }
-}
-
-aov_invention_growth_beans_visible = {
-	always = yes
-}
-aov_invention_growth_beans_unlocked = {
-	culture = { has_cultural_era_or_later = culture_era_high_medieval }
-}
-aov_invention_growth_beans_available = {
-	aov_invention_growth_beans_visible = yes
-	aov_invention_growth_beans_unlocked = yes
-}
-aov_invention_growth_beans_discovered = {
-	has_variable = aov_inv_growth_beans
-}
-aov_invention_growth_beans_active = {
-	has_variable = aov_inv_growth_beans
-	var:aov_inv_growth_beans = 2
-}
-aov_invention_growth_beans_discoverable = {
-	aov_invention_growth_beans_available = yes
-	NOT = { has_variable = aov_inv_growth_beans }
-}
-aov_invention_growth_beans_activatable = {
-	has_variable = aov_inv_growth_beans
-	var:aov_inv_growth_beans = 1
-	aov_invention_growth_beans_available = yes
-}
-aov_invention_growth_beans_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:growth_beans } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:growth_beans } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:growth_beans } }
+aov_invention_damestear_lamps_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:damestear_lamps } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:damestear_lamps } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:damestear_lamps } }
 }
 
 aov_invention_subterrenes_visible = {
@@ -332,64 +272,64 @@ aov_invention_subterrenes_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:subterrenes } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:subterrenes } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:subterrenes } }
 }
 
-aov_invention_vendorless_stall_visible = {
-	always = yes
+aov_invention_automaton_labourers_visible = {
+	culture = { has_cultural_pillar = heritage_gnomish }
 }
-aov_invention_vendorless_stall_unlocked = {
-	culture = { has_cultural_era_or_later = culture_era_high_medieval }
-}
-aov_invention_vendorless_stall_available = {
-	aov_invention_vendorless_stall_visible = yes
-	aov_invention_vendorless_stall_unlocked = yes
-}
-aov_invention_vendorless_stall_discovered = {
-	has_variable = aov_inv_vendorless_stall
-}
-aov_invention_vendorless_stall_active = {
-	has_variable = aov_inv_vendorless_stall
-	var:aov_inv_vendorless_stall = 2
-}
-aov_invention_vendorless_stall_discoverable = {
-	aov_invention_vendorless_stall_available = yes
-	NOT = { has_variable = aov_inv_vendorless_stall }
-}
-aov_invention_vendorless_stall_activatable = {
-	has_variable = aov_inv_vendorless_stall
-	var:aov_inv_vendorless_stall = 1
-	aov_invention_vendorless_stall_available = yes
-}
-aov_invention_vendorless_stall_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:vendorless_stall } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:vendorless_stall } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:vendorless_stall } }
-}
-
-aov_invention_elemental_locomotives_visible = {
-	always = yes
-}
-aov_invention_elemental_locomotives_unlocked = {
+aov_invention_automaton_labourers_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
 }
-aov_invention_elemental_locomotives_available = {
-	aov_invention_elemental_locomotives_visible = yes
-	aov_invention_elemental_locomotives_unlocked = yes
+aov_invention_automaton_labourers_available = {
+	aov_invention_automaton_labourers_visible = yes
+	aov_invention_automaton_labourers_unlocked = yes
 }
-aov_invention_elemental_locomotives_discovered = {
-	has_variable = aov_inv_elemental_locomotives
+aov_invention_automaton_labourers_discovered = {
+	has_variable = aov_inv_automaton_labourers
 }
-aov_invention_elemental_locomotives_active = {
-	has_variable = aov_inv_elemental_locomotives
-	var:aov_inv_elemental_locomotives = 2
+aov_invention_automaton_labourers_active = {
+	has_variable = aov_inv_automaton_labourers
+	var:aov_inv_automaton_labourers = 2
 }
-aov_invention_elemental_locomotives_discoverable = {
-	aov_invention_elemental_locomotives_available = yes
-	NOT = { has_variable = aov_inv_elemental_locomotives }
+aov_invention_automaton_labourers_discoverable = {
+	aov_invention_automaton_labourers_available = yes
+	NOT = { has_variable = aov_inv_automaton_labourers }
 }
-aov_invention_elemental_locomotives_activatable = {
-	has_variable = aov_inv_elemental_locomotives
-	var:aov_inv_elemental_locomotives = 1
-	aov_invention_elemental_locomotives_available = yes
+aov_invention_automaton_labourers_activatable = {
+	has_variable = aov_inv_automaton_labourers
+	var:aov_inv_automaton_labourers = 1
+	aov_invention_automaton_labourers_available = yes
 }
-aov_invention_elemental_locomotives_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:elemental_locomotives } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:elemental_locomotives } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:elemental_locomotives } }
+aov_invention_automaton_labourers_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:automaton_labourers } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:automaton_labourers } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:automaton_labourers } }
+}
+
+aov_invention_damestear_foundries_visible = {
+	always = yes
+}
+aov_invention_damestear_foundries_unlocked = {
+	culture = { has_cultural_era_or_later = culture_era_late_medieval }
+}
+aov_invention_damestear_foundries_available = {
+	aov_invention_damestear_foundries_visible = yes
+	aov_invention_damestear_foundries_unlocked = yes
+}
+aov_invention_damestear_foundries_discovered = {
+	has_variable = aov_inv_damestear_foundries
+}
+aov_invention_damestear_foundries_active = {
+	has_variable = aov_inv_damestear_foundries
+	var:aov_inv_damestear_foundries = 2
+}
+aov_invention_damestear_foundries_discoverable = {
+	aov_invention_damestear_foundries_available = yes
+	NOT = { has_variable = aov_inv_damestear_foundries }
+}
+aov_invention_damestear_foundries_activatable = {
+	has_variable = aov_inv_damestear_foundries
+	var:aov_inv_damestear_foundries = 1
+	aov_invention_damestear_foundries_available = yes
+}
+aov_invention_damestear_foundries_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:damestear_foundries } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:damestear_foundries } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:damestear_foundries } }
 }
 
 aov_invention_pathway_transmutation_visible = {
@@ -422,64 +362,34 @@ aov_invention_pathway_transmutation_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:pathway_transmutation } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:pathway_transmutation } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:pathway_transmutation } }
 }
 
-aov_invention_prefabricated_city_constructors_visible = {
-	culture = { has_cultural_pillar = heritage_gnomish }
-}
-aov_invention_prefabricated_city_constructors_unlocked = {
-	culture = { has_cultural_era_or_later = culture_era_late_medieval }
-}
-aov_invention_prefabricated_city_constructors_available = {
-	aov_invention_prefabricated_city_constructors_visible = yes
-	aov_invention_prefabricated_city_constructors_unlocked = yes
-}
-aov_invention_prefabricated_city_constructors_discovered = {
-	has_variable = aov_inv_prefabricated_city_constructors
-}
-aov_invention_prefabricated_city_constructors_active = {
-	has_variable = aov_inv_prefabricated_city_constructors
-	var:aov_inv_prefabricated_city_constructors = 2
-}
-aov_invention_prefabricated_city_constructors_discoverable = {
-	aov_invention_prefabricated_city_constructors_available = yes
-	NOT = { has_variable = aov_inv_prefabricated_city_constructors }
-}
-aov_invention_prefabricated_city_constructors_activatable = {
-	has_variable = aov_inv_prefabricated_city_constructors
-	var:aov_inv_prefabricated_city_constructors = 1
-	aov_invention_prefabricated_city_constructors_available = yes
-}
-aov_invention_prefabricated_city_constructors_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:prefabricated_city_constructors } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:prefabricated_city_constructors } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:prefabricated_city_constructors } }
-}
-
-aov_invention_t_wave_transceivers_visible = {
+aov_invention_pneumatic_post_visible = {
 	always = yes
 }
-aov_invention_t_wave_transceivers_unlocked = {
+aov_invention_pneumatic_post_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
 }
-aov_invention_t_wave_transceivers_available = {
-	aov_invention_t_wave_transceivers_visible = yes
-	aov_invention_t_wave_transceivers_unlocked = yes
+aov_invention_pneumatic_post_available = {
+	aov_invention_pneumatic_post_visible = yes
+	aov_invention_pneumatic_post_unlocked = yes
 }
-aov_invention_t_wave_transceivers_discovered = {
-	has_variable = aov_inv_t_wave_transceivers
+aov_invention_pneumatic_post_discovered = {
+	has_variable = aov_inv_pneumatic_post
 }
-aov_invention_t_wave_transceivers_active = {
-	has_variable = aov_inv_t_wave_transceivers
-	var:aov_inv_t_wave_transceivers = 2
+aov_invention_pneumatic_post_active = {
+	has_variable = aov_inv_pneumatic_post
+	var:aov_inv_pneumatic_post = 2
 }
-aov_invention_t_wave_transceivers_discoverable = {
-	aov_invention_t_wave_transceivers_available = yes
-	NOT = { has_variable = aov_inv_t_wave_transceivers }
+aov_invention_pneumatic_post_discoverable = {
+	aov_invention_pneumatic_post_available = yes
+	NOT = { has_variable = aov_inv_pneumatic_post }
 }
-aov_invention_t_wave_transceivers_activatable = {
-	has_variable = aov_inv_t_wave_transceivers
-	var:aov_inv_t_wave_transceivers = 1
-	aov_invention_t_wave_transceivers_available = yes
+aov_invention_pneumatic_post_activatable = {
+	has_variable = aov_inv_pneumatic_post
+	var:aov_inv_pneumatic_post = 1
+	aov_invention_pneumatic_post_available = yes
 }
-aov_invention_t_wave_transceivers_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:t_wave_transceivers } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:t_wave_transceivers } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:t_wave_transceivers } }
+aov_invention_pneumatic_post_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_economic_1 var:aov_tech_offer_economic_1 = flag:pneumatic_post } AND = { has_variable = aov_tech_offer_economic_2 var:aov_tech_offer_economic_2 = flag:pneumatic_post } AND = { has_variable = aov_tech_offer_economic_3 var:aov_tech_offer_economic_3 = flag:pneumatic_post } }
 }
 
 aov_invention_ancestral_golems_visible = {
@@ -512,184 +422,124 @@ aov_invention_ancestral_golems_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:ancestral_golems } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:ancestral_golems } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:ancestral_golems } }
 }
 
-aov_invention_artificer_exo_arms_visible = {
+aov_invention_brass_cuirasses_visible = {
 	always = yes
 }
-aov_invention_artificer_exo_arms_unlocked = {
+aov_invention_brass_cuirasses_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_early_medieval }
 }
-aov_invention_artificer_exo_arms_available = {
-	aov_invention_artificer_exo_arms_visible = yes
-	aov_invention_artificer_exo_arms_unlocked = yes
+aov_invention_brass_cuirasses_available = {
+	aov_invention_brass_cuirasses_visible = yes
+	aov_invention_brass_cuirasses_unlocked = yes
 }
-aov_invention_artificer_exo_arms_discovered = {
-	has_variable = aov_inv_artificer_exo_arms
+aov_invention_brass_cuirasses_discovered = {
+	has_variable = aov_inv_brass_cuirasses
 }
-aov_invention_artificer_exo_arms_active = {
-	has_variable = aov_inv_artificer_exo_arms
-	var:aov_inv_artificer_exo_arms = 2
+aov_invention_brass_cuirasses_active = {
+	has_variable = aov_inv_brass_cuirasses
+	var:aov_inv_brass_cuirasses = 2
 }
-aov_invention_artificer_exo_arms_discoverable = {
-	aov_invention_artificer_exo_arms_available = yes
-	NOT = { has_variable = aov_inv_artificer_exo_arms }
+aov_invention_brass_cuirasses_discoverable = {
+	aov_invention_brass_cuirasses_available = yes
+	NOT = { has_variable = aov_inv_brass_cuirasses }
 }
-aov_invention_artificer_exo_arms_activatable = {
-	has_variable = aov_inv_artificer_exo_arms
-	var:aov_inv_artificer_exo_arms = 1
-	aov_invention_artificer_exo_arms_available = yes
+aov_invention_brass_cuirasses_activatable = {
+	has_variable = aov_inv_brass_cuirasses
+	var:aov_inv_brass_cuirasses = 1
+	aov_invention_brass_cuirasses_available = yes
 }
-aov_invention_artificer_exo_arms_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:artificer_exo_arms } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:artificer_exo_arms } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:artificer_exo_arms } }
+aov_invention_brass_cuirasses_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:brass_cuirasses } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:brass_cuirasses } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:brass_cuirasses } }
 }
 
-aov_invention_box_of_holding_visible = {
+aov_invention_clockwork_ballistae_visible = {
 	always = yes
 }
-aov_invention_box_of_holding_unlocked = {
+aov_invention_clockwork_ballistae_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_early_medieval }
 }
-aov_invention_box_of_holding_available = {
-	aov_invention_box_of_holding_visible = yes
-	aov_invention_box_of_holding_unlocked = yes
+aov_invention_clockwork_ballistae_available = {
+	aov_invention_clockwork_ballistae_visible = yes
+	aov_invention_clockwork_ballistae_unlocked = yes
 }
-aov_invention_box_of_holding_discovered = {
-	has_variable = aov_inv_box_of_holding
+aov_invention_clockwork_ballistae_discovered = {
+	has_variable = aov_inv_clockwork_ballistae
 }
-aov_invention_box_of_holding_active = {
-	has_variable = aov_inv_box_of_holding
-	var:aov_inv_box_of_holding = 2
+aov_invention_clockwork_ballistae_active = {
+	has_variable = aov_inv_clockwork_ballistae
+	var:aov_inv_clockwork_ballistae = 2
 }
-aov_invention_box_of_holding_discoverable = {
-	aov_invention_box_of_holding_available = yes
-	NOT = { has_variable = aov_inv_box_of_holding }
+aov_invention_clockwork_ballistae_discoverable = {
+	aov_invention_clockwork_ballistae_available = yes
+	NOT = { has_variable = aov_inv_clockwork_ballistae }
 }
-aov_invention_box_of_holding_activatable = {
-	has_variable = aov_inv_box_of_holding
-	var:aov_inv_box_of_holding = 1
-	aov_invention_box_of_holding_available = yes
+aov_invention_clockwork_ballistae_activatable = {
+	has_variable = aov_inv_clockwork_ballistae
+	var:aov_inv_clockwork_ballistae = 1
+	aov_invention_clockwork_ballistae_available = yes
 }
-aov_invention_box_of_holding_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:box_of_holding } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:box_of_holding } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:box_of_holding } }
+aov_invention_clockwork_ballistae_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:clockwork_ballistae } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:clockwork_ballistae } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:clockwork_ballistae } }
 }
 
-aov_invention_commercial_sky_galleons_visible = {
+aov_invention_clockwork_repeaters_visible = {
 	always = yes
 }
-aov_invention_commercial_sky_galleons_unlocked = {
+aov_invention_clockwork_repeaters_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_early_medieval }
 }
-aov_invention_commercial_sky_galleons_available = {
-	aov_invention_commercial_sky_galleons_visible = yes
-	aov_invention_commercial_sky_galleons_unlocked = yes
+aov_invention_clockwork_repeaters_available = {
+	aov_invention_clockwork_repeaters_visible = yes
+	aov_invention_clockwork_repeaters_unlocked = yes
 }
-aov_invention_commercial_sky_galleons_discovered = {
-	has_variable = aov_inv_commercial_sky_galleons
+aov_invention_clockwork_repeaters_discovered = {
+	has_variable = aov_inv_clockwork_repeaters
 }
-aov_invention_commercial_sky_galleons_active = {
-	has_variable = aov_inv_commercial_sky_galleons
-	var:aov_inv_commercial_sky_galleons = 2
+aov_invention_clockwork_repeaters_active = {
+	has_variable = aov_inv_clockwork_repeaters
+	var:aov_inv_clockwork_repeaters = 2
 }
-aov_invention_commercial_sky_galleons_discoverable = {
-	aov_invention_commercial_sky_galleons_available = yes
-	NOT = { has_variable = aov_inv_commercial_sky_galleons }
+aov_invention_clockwork_repeaters_discoverable = {
+	aov_invention_clockwork_repeaters_available = yes
+	NOT = { has_variable = aov_inv_clockwork_repeaters }
 }
-aov_invention_commercial_sky_galleons_activatable = {
-	has_variable = aov_inv_commercial_sky_galleons
-	var:aov_inv_commercial_sky_galleons = 1
-	aov_invention_commercial_sky_galleons_available = yes
+aov_invention_clockwork_repeaters_activatable = {
+	has_variable = aov_inv_clockwork_repeaters
+	var:aov_inv_clockwork_repeaters = 1
+	aov_invention_clockwork_repeaters_available = yes
 }
-aov_invention_commercial_sky_galleons_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:commercial_sky_galleons } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:commercial_sky_galleons } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:commercial_sky_galleons } }
+aov_invention_clockwork_repeaters_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:clockwork_repeaters } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:clockwork_repeaters } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:clockwork_repeaters } }
 }
 
-aov_invention_magic_missile_deployer_visible = {
+aov_invention_damestear_powder_visible = {
 	always = yes
 }
-aov_invention_magic_missile_deployer_unlocked = {
+aov_invention_damestear_powder_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_early_medieval }
 }
-aov_invention_magic_missile_deployer_available = {
-	aov_invention_magic_missile_deployer_visible = yes
-	aov_invention_magic_missile_deployer_unlocked = yes
+aov_invention_damestear_powder_available = {
+	aov_invention_damestear_powder_visible = yes
+	aov_invention_damestear_powder_unlocked = yes
 }
-aov_invention_magic_missile_deployer_discovered = {
-	has_variable = aov_inv_magic_missile_deployer
+aov_invention_damestear_powder_discovered = {
+	has_variable = aov_inv_damestear_powder
 }
-aov_invention_magic_missile_deployer_active = {
-	has_variable = aov_inv_magic_missile_deployer
-	var:aov_inv_magic_missile_deployer = 2
+aov_invention_damestear_powder_active = {
+	has_variable = aov_inv_damestear_powder
+	var:aov_inv_damestear_powder = 2
 }
-aov_invention_magic_missile_deployer_discoverable = {
-	aov_invention_magic_missile_deployer_available = yes
-	NOT = { has_variable = aov_inv_magic_missile_deployer }
+aov_invention_damestear_powder_discoverable = {
+	aov_invention_damestear_powder_available = yes
+	NOT = { has_variable = aov_inv_damestear_powder }
 }
-aov_invention_magic_missile_deployer_activatable = {
-	has_variable = aov_inv_magic_missile_deployer
-	var:aov_inv_magic_missile_deployer = 1
-	aov_invention_magic_missile_deployer_available = yes
+aov_invention_damestear_powder_activatable = {
+	has_variable = aov_inv_damestear_powder
+	var:aov_inv_damestear_powder = 1
+	aov_invention_damestear_powder_available = yes
 }
-aov_invention_magic_missile_deployer_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:magic_missile_deployer } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:magic_missile_deployer } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:magic_missile_deployer } }
-}
-
-aov_invention_portable_turrets_visible = {
-	always = yes
-}
-aov_invention_portable_turrets_unlocked = {
-	culture = { has_cultural_era_or_later = culture_era_early_medieval }
-}
-aov_invention_portable_turrets_available = {
-	aov_invention_portable_turrets_visible = yes
-	aov_invention_portable_turrets_unlocked = yes
-}
-aov_invention_portable_turrets_discovered = {
-	has_variable = aov_inv_portable_turrets
-}
-aov_invention_portable_turrets_active = {
-	has_variable = aov_inv_portable_turrets
-	var:aov_inv_portable_turrets = 2
-}
-aov_invention_portable_turrets_discoverable = {
-	aov_invention_portable_turrets_available = yes
-	NOT = { has_variable = aov_inv_portable_turrets }
-}
-aov_invention_portable_turrets_activatable = {
-	has_variable = aov_inv_portable_turrets
-	var:aov_inv_portable_turrets = 1
-	aov_invention_portable_turrets_available = yes
-}
-aov_invention_portable_turrets_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:portable_turrets } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:portable_turrets } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:portable_turrets } }
-}
-
-aov_invention_sparkdrive_rifles_visible = {
-	always = yes
-}
-aov_invention_sparkdrive_rifles_unlocked = {
-	culture = { has_cultural_era_or_later = culture_era_early_medieval }
-}
-aov_invention_sparkdrive_rifles_available = {
-	aov_invention_sparkdrive_rifles_visible = yes
-	aov_invention_sparkdrive_rifles_unlocked = yes
-}
-aov_invention_sparkdrive_rifles_discovered = {
-	has_variable = aov_inv_sparkdrive_rifles
-}
-aov_invention_sparkdrive_rifles_active = {
-	has_variable = aov_inv_sparkdrive_rifles
-	var:aov_inv_sparkdrive_rifles = 2
-}
-aov_invention_sparkdrive_rifles_discoverable = {
-	aov_invention_sparkdrive_rifles_available = yes
-	NOT = { has_variable = aov_inv_sparkdrive_rifles }
-}
-aov_invention_sparkdrive_rifles_activatable = {
-	has_variable = aov_inv_sparkdrive_rifles
-	var:aov_inv_sparkdrive_rifles = 1
-	aov_invention_sparkdrive_rifles_available = yes
-}
-aov_invention_sparkdrive_rifles_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:sparkdrive_rifles } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:sparkdrive_rifles } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:sparkdrive_rifles } }
+aov_invention_damestear_powder_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:damestear_powder } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:damestear_powder } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:damestear_powder } }
 }
 
 aov_invention_sunbeam_armaments_visible = {
@@ -722,66 +572,6 @@ aov_invention_sunbeam_armaments_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:sunbeam_armaments } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:sunbeam_armaments } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:sunbeam_armaments } }
 }
 
-aov_invention_vorpal_bullets_visible = {
-	always = yes
-}
-aov_invention_vorpal_bullets_unlocked = {
-	culture = { has_cultural_era_or_later = culture_era_early_medieval }
-}
-aov_invention_vorpal_bullets_available = {
-	aov_invention_vorpal_bullets_visible = yes
-	aov_invention_vorpal_bullets_unlocked = yes
-}
-aov_invention_vorpal_bullets_discovered = {
-	has_variable = aov_inv_vorpal_bullets
-}
-aov_invention_vorpal_bullets_active = {
-	has_variable = aov_inv_vorpal_bullets
-	var:aov_inv_vorpal_bullets = 2
-}
-aov_invention_vorpal_bullets_discoverable = {
-	aov_invention_vorpal_bullets_available = yes
-	NOT = { has_variable = aov_inv_vorpal_bullets }
-}
-aov_invention_vorpal_bullets_activatable = {
-	has_variable = aov_inv_vorpal_bullets
-	var:aov_inv_vorpal_bullets = 1
-	aov_invention_vorpal_bullets_available = yes
-}
-aov_invention_vorpal_bullets_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:vorpal_bullets } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:vorpal_bullets } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:vorpal_bullets } }
-}
-
-aov_invention_arcane_blaster_visible = {
-	always = yes
-}
-aov_invention_arcane_blaster_unlocked = {
-	culture = { has_cultural_era_or_later = culture_era_high_medieval }
-}
-aov_invention_arcane_blaster_available = {
-	aov_invention_arcane_blaster_visible = yes
-	aov_invention_arcane_blaster_unlocked = yes
-}
-aov_invention_arcane_blaster_discovered = {
-	has_variable = aov_inv_arcane_blaster
-}
-aov_invention_arcane_blaster_active = {
-	has_variable = aov_inv_arcane_blaster
-	var:aov_inv_arcane_blaster = 2
-}
-aov_invention_arcane_blaster_discoverable = {
-	aov_invention_arcane_blaster_available = yes
-	NOT = { has_variable = aov_inv_arcane_blaster }
-}
-aov_invention_arcane_blaster_activatable = {
-	has_variable = aov_inv_arcane_blaster
-	var:aov_inv_arcane_blaster = 1
-	aov_invention_arcane_blaster_available = yes
-}
-aov_invention_arcane_blaster_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:arcane_blaster } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:arcane_blaster } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:arcane_blaster } }
-}
-
 aov_invention_avatar_supersoldier_serum_visible = {
 	faith = { religion = religion:cannorian_pantheon_religion }
 }
@@ -812,94 +602,94 @@ aov_invention_avatar_supersoldier_serum_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:avatar_supersoldier_serum } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:avatar_supersoldier_serum } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:avatar_supersoldier_serum } }
 }
 
-aov_invention_balloonboost_packs_visible = {
+aov_invention_brass_prosthesis_visible = {
 	always = yes
 }
-aov_invention_balloonboost_packs_unlocked = {
+aov_invention_brass_prosthesis_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
 }
-aov_invention_balloonboost_packs_available = {
-	aov_invention_balloonboost_packs_visible = yes
-	aov_invention_balloonboost_packs_unlocked = yes
+aov_invention_brass_prosthesis_available = {
+	aov_invention_brass_prosthesis_visible = yes
+	aov_invention_brass_prosthesis_unlocked = yes
 }
-aov_invention_balloonboost_packs_discovered = {
-	has_variable = aov_inv_balloonboost_packs
+aov_invention_brass_prosthesis_discovered = {
+	has_variable = aov_inv_brass_prosthesis
 }
-aov_invention_balloonboost_packs_active = {
-	has_variable = aov_inv_balloonboost_packs
-	var:aov_inv_balloonboost_packs = 2
+aov_invention_brass_prosthesis_active = {
+	has_variable = aov_inv_brass_prosthesis
+	var:aov_inv_brass_prosthesis = 2
 }
-aov_invention_balloonboost_packs_discoverable = {
-	aov_invention_balloonboost_packs_available = yes
-	NOT = { has_variable = aov_inv_balloonboost_packs }
+aov_invention_brass_prosthesis_discoverable = {
+	aov_invention_brass_prosthesis_available = yes
+	NOT = { has_variable = aov_inv_brass_prosthesis }
 }
-aov_invention_balloonboost_packs_activatable = {
-	has_variable = aov_inv_balloonboost_packs
-	var:aov_inv_balloonboost_packs = 1
-	aov_invention_balloonboost_packs_available = yes
+aov_invention_brass_prosthesis_activatable = {
+	has_variable = aov_inv_brass_prosthesis
+	var:aov_inv_brass_prosthesis = 1
+	aov_invention_brass_prosthesis_available = yes
 }
-aov_invention_balloonboost_packs_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:balloonboost_packs } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:balloonboost_packs } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:balloonboost_packs } }
+aov_invention_brass_prosthesis_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:brass_prosthesis } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:brass_prosthesis } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:brass_prosthesis } }
 }
 
-aov_invention_coddorran_powered_exosuit_visible = {
-	culture = { has_cultural_pillar = heritage_gnomish }
+aov_invention_chi_cultivation_visible = {
+	faith = faith:devouring_path
 }
-aov_invention_coddorran_powered_exosuit_unlocked = {
+aov_invention_chi_cultivation_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
 }
-aov_invention_coddorran_powered_exosuit_available = {
-	aov_invention_coddorran_powered_exosuit_visible = yes
-	aov_invention_coddorran_powered_exosuit_unlocked = yes
+aov_invention_chi_cultivation_available = {
+	aov_invention_chi_cultivation_visible = yes
+	aov_invention_chi_cultivation_unlocked = yes
 }
-aov_invention_coddorran_powered_exosuit_discovered = {
-	has_variable = aov_inv_coddorran_powered_exosuit
+aov_invention_chi_cultivation_discovered = {
+	has_variable = aov_inv_chi_cultivation
 }
-aov_invention_coddorran_powered_exosuit_active = {
-	has_variable = aov_inv_coddorran_powered_exosuit
-	var:aov_inv_coddorran_powered_exosuit = 2
+aov_invention_chi_cultivation_active = {
+	has_variable = aov_inv_chi_cultivation
+	var:aov_inv_chi_cultivation = 2
 }
-aov_invention_coddorran_powered_exosuit_discoverable = {
-	aov_invention_coddorran_powered_exosuit_available = yes
-	NOT = { has_variable = aov_inv_coddorran_powered_exosuit }
+aov_invention_chi_cultivation_discoverable = {
+	aov_invention_chi_cultivation_available = yes
+	NOT = { has_variable = aov_inv_chi_cultivation }
 }
-aov_invention_coddorran_powered_exosuit_activatable = {
-	has_variable = aov_inv_coddorran_powered_exosuit
-	var:aov_inv_coddorran_powered_exosuit = 1
-	aov_invention_coddorran_powered_exosuit_available = yes
+aov_invention_chi_cultivation_activatable = {
+	has_variable = aov_inv_chi_cultivation
+	var:aov_inv_chi_cultivation = 1
+	aov_invention_chi_cultivation_available = yes
 }
-aov_invention_coddorran_powered_exosuit_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:coddorran_powered_exosuit } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:coddorran_powered_exosuit } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:coddorran_powered_exosuit } }
+aov_invention_chi_cultivation_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:chi_cultivation } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:chi_cultivation } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:chi_cultivation } }
 }
 
-aov_invention_gu_boats_visible = {
-	culture = { has_cultural_pillar = heritage_gnomish }
+aov_invention_gnomish_bombards_visible = {
+	always = yes
 }
-aov_invention_gu_boats_unlocked = {
+aov_invention_gnomish_bombards_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
 }
-aov_invention_gu_boats_available = {
-	aov_invention_gu_boats_visible = yes
-	aov_invention_gu_boats_unlocked = yes
+aov_invention_gnomish_bombards_available = {
+	aov_invention_gnomish_bombards_visible = yes
+	aov_invention_gnomish_bombards_unlocked = yes
 }
-aov_invention_gu_boats_discovered = {
-	has_variable = aov_inv_gu_boats
+aov_invention_gnomish_bombards_discovered = {
+	has_variable = aov_inv_gnomish_bombards
 }
-aov_invention_gu_boats_active = {
-	has_variable = aov_inv_gu_boats
-	var:aov_inv_gu_boats = 2
+aov_invention_gnomish_bombards_active = {
+	has_variable = aov_inv_gnomish_bombards
+	var:aov_inv_gnomish_bombards = 2
 }
-aov_invention_gu_boats_discoverable = {
-	aov_invention_gu_boats_available = yes
-	NOT = { has_variable = aov_inv_gu_boats }
+aov_invention_gnomish_bombards_discoverable = {
+	aov_invention_gnomish_bombards_available = yes
+	NOT = { has_variable = aov_inv_gnomish_bombards }
 }
-aov_invention_gu_boats_activatable = {
-	has_variable = aov_inv_gu_boats
-	var:aov_inv_gu_boats = 1
-	aov_invention_gu_boats_available = yes
+aov_invention_gnomish_bombards_activatable = {
+	has_variable = aov_inv_gnomish_bombards
+	var:aov_inv_gnomish_bombards = 1
+	aov_invention_gnomish_bombards_available = yes
 }
-aov_invention_gu_boats_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:gu_boats } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:gu_boats } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:gu_boats } }
+aov_invention_gnomish_bombards_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:gnomish_bombards } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:gnomish_bombards } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:gnomish_bombards } }
 }
 
 aov_invention_lullaby_cannon_visible = {
@@ -932,64 +722,34 @@ aov_invention_lullaby_cannon_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:lullaby_cannon } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:lullaby_cannon } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:lullaby_cannon } }
 }
 
-aov_invention_prototype_tanks_visible = {
+aov_invention_vorpal_bullets_visible = {
 	always = yes
 }
-aov_invention_prototype_tanks_unlocked = {
+aov_invention_vorpal_bullets_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
 }
-aov_invention_prototype_tanks_available = {
-	aov_invention_prototype_tanks_visible = yes
-	aov_invention_prototype_tanks_unlocked = yes
+aov_invention_vorpal_bullets_available = {
+	aov_invention_vorpal_bullets_visible = yes
+	aov_invention_vorpal_bullets_unlocked = yes
 }
-aov_invention_prototype_tanks_discovered = {
-	has_variable = aov_inv_prototype_tanks
+aov_invention_vorpal_bullets_discovered = {
+	has_variable = aov_inv_vorpal_bullets
 }
-aov_invention_prototype_tanks_active = {
-	has_variable = aov_inv_prototype_tanks
-	var:aov_inv_prototype_tanks = 2
+aov_invention_vorpal_bullets_active = {
+	has_variable = aov_inv_vorpal_bullets
+	var:aov_inv_vorpal_bullets = 2
 }
-aov_invention_prototype_tanks_discoverable = {
-	aov_invention_prototype_tanks_available = yes
-	NOT = { has_variable = aov_inv_prototype_tanks }
+aov_invention_vorpal_bullets_discoverable = {
+	aov_invention_vorpal_bullets_available = yes
+	NOT = { has_variable = aov_inv_vorpal_bullets }
 }
-aov_invention_prototype_tanks_activatable = {
-	has_variable = aov_inv_prototype_tanks
-	var:aov_inv_prototype_tanks = 1
-	aov_invention_prototype_tanks_available = yes
+aov_invention_vorpal_bullets_activatable = {
+	has_variable = aov_inv_vorpal_bullets
+	var:aov_inv_vorpal_bullets = 1
+	aov_invention_vorpal_bullets_available = yes
 }
-aov_invention_prototype_tanks_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:prototype_tanks } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:prototype_tanks } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:prototype_tanks } }
-}
-
-aov_invention_wandlocks_visible = {
-	always = yes
-}
-aov_invention_wandlocks_unlocked = {
-	culture = { has_cultural_era_or_later = culture_era_high_medieval }
-}
-aov_invention_wandlocks_available = {
-	aov_invention_wandlocks_visible = yes
-	aov_invention_wandlocks_unlocked = yes
-}
-aov_invention_wandlocks_discovered = {
-	has_variable = aov_inv_wandlocks
-}
-aov_invention_wandlocks_active = {
-	has_variable = aov_inv_wandlocks
-	var:aov_inv_wandlocks = 2
-}
-aov_invention_wandlocks_discoverable = {
-	aov_invention_wandlocks_available = yes
-	NOT = { has_variable = aov_inv_wandlocks }
-}
-aov_invention_wandlocks_activatable = {
-	has_variable = aov_inv_wandlocks
-	var:aov_inv_wandlocks = 1
-	aov_invention_wandlocks_available = yes
-}
-aov_invention_wandlocks_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:wandlocks } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:wandlocks } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:wandlocks } }
+aov_invention_vorpal_bullets_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:vorpal_bullets } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:vorpal_bullets } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:vorpal_bullets } }
 }
 
 aov_invention_war_golems_visible = {
@@ -1022,66 +782,6 @@ aov_invention_war_golems_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:war_golems } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:war_golems } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:war_golems } }
 }
 
-aov_invention_artillery_autoloader_visible = {
-	always = yes
-}
-aov_invention_artillery_autoloader_unlocked = {
-	culture = { has_cultural_era_or_later = culture_era_late_medieval }
-}
-aov_invention_artillery_autoloader_available = {
-	aov_invention_artillery_autoloader_visible = yes
-	aov_invention_artillery_autoloader_unlocked = yes
-}
-aov_invention_artillery_autoloader_discovered = {
-	has_variable = aov_inv_artillery_autoloader
-}
-aov_invention_artillery_autoloader_active = {
-	has_variable = aov_inv_artillery_autoloader
-	var:aov_inv_artillery_autoloader = 2
-}
-aov_invention_artillery_autoloader_discoverable = {
-	aov_invention_artillery_autoloader_available = yes
-	NOT = { has_variable = aov_inv_artillery_autoloader }
-}
-aov_invention_artillery_autoloader_activatable = {
-	has_variable = aov_inv_artillery_autoloader
-	var:aov_inv_artillery_autoloader = 1
-	aov_invention_artillery_autoloader_available = yes
-}
-aov_invention_artillery_autoloader_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:artillery_autoloader } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:artillery_autoloader } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:artillery_autoloader } }
-}
-
-aov_invention_bioartificed_ascension_visible = {
-	always = yes
-}
-aov_invention_bioartificed_ascension_unlocked = {
-	culture = { has_cultural_era_or_later = culture_era_late_medieval }
-}
-aov_invention_bioartificed_ascension_available = {
-	aov_invention_bioartificed_ascension_visible = yes
-	aov_invention_bioartificed_ascension_unlocked = yes
-}
-aov_invention_bioartificed_ascension_discovered = {
-	has_variable = aov_inv_bioartificed_ascension
-}
-aov_invention_bioartificed_ascension_active = {
-	has_variable = aov_inv_bioartificed_ascension
-	var:aov_inv_bioartificed_ascension = 2
-}
-aov_invention_bioartificed_ascension_discoverable = {
-	aov_invention_bioartificed_ascension_available = yes
-	NOT = { has_variable = aov_inv_bioartificed_ascension }
-}
-aov_invention_bioartificed_ascension_activatable = {
-	has_variable = aov_inv_bioartificed_ascension
-	var:aov_inv_bioartificed_ascension = 1
-	aov_invention_bioartificed_ascension_available = yes
-}
-aov_invention_bioartificed_ascension_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:bioartificed_ascension } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:bioartificed_ascension } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:bioartificed_ascension } }
-}
-
 aov_invention_black_damestear_bullets_visible = {
 	always = yes
 }
@@ -1112,34 +812,64 @@ aov_invention_black_damestear_bullets_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:black_damestear_bullets } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:black_damestear_bullets } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:black_damestear_bullets } }
 }
 
-aov_invention_damestear_reactor_megacannon_visible = {
+aov_invention_clockwork_plate_harness_visible = {
 	always = yes
 }
-aov_invention_damestear_reactor_megacannon_unlocked = {
+aov_invention_clockwork_plate_harness_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
 }
-aov_invention_damestear_reactor_megacannon_available = {
-	aov_invention_damestear_reactor_megacannon_visible = yes
-	aov_invention_damestear_reactor_megacannon_unlocked = yes
+aov_invention_clockwork_plate_harness_available = {
+	aov_invention_clockwork_plate_harness_visible = yes
+	aov_invention_clockwork_plate_harness_unlocked = yes
 }
-aov_invention_damestear_reactor_megacannon_discovered = {
-	has_variable = aov_inv_damestear_reactor_megacannon
+aov_invention_clockwork_plate_harness_discovered = {
+	has_variable = aov_inv_clockwork_plate_harness
 }
-aov_invention_damestear_reactor_megacannon_active = {
-	has_variable = aov_inv_damestear_reactor_megacannon
-	var:aov_inv_damestear_reactor_megacannon = 2
+aov_invention_clockwork_plate_harness_active = {
+	has_variable = aov_inv_clockwork_plate_harness
+	var:aov_inv_clockwork_plate_harness = 2
 }
-aov_invention_damestear_reactor_megacannon_discoverable = {
-	aov_invention_damestear_reactor_megacannon_available = yes
-	NOT = { has_variable = aov_inv_damestear_reactor_megacannon }
+aov_invention_clockwork_plate_harness_discoverable = {
+	aov_invention_clockwork_plate_harness_available = yes
+	NOT = { has_variable = aov_inv_clockwork_plate_harness }
 }
-aov_invention_damestear_reactor_megacannon_activatable = {
-	has_variable = aov_inv_damestear_reactor_megacannon
-	var:aov_inv_damestear_reactor_megacannon = 1
-	aov_invention_damestear_reactor_megacannon_available = yes
+aov_invention_clockwork_plate_harness_activatable = {
+	has_variable = aov_inv_clockwork_plate_harness
+	var:aov_inv_clockwork_plate_harness = 1
+	aov_invention_clockwork_plate_harness_available = yes
 }
-aov_invention_damestear_reactor_megacannon_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:damestear_reactor_megacannon } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:damestear_reactor_megacannon } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:damestear_reactor_megacannon } }
+aov_invention_clockwork_plate_harness_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:clockwork_plate_harness } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:clockwork_plate_harness } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:clockwork_plate_harness } }
+}
+
+aov_invention_damestear_mortars_visible = {
+	always = yes
+}
+aov_invention_damestear_mortars_unlocked = {
+	culture = { has_cultural_era_or_later = culture_era_late_medieval }
+}
+aov_invention_damestear_mortars_available = {
+	aov_invention_damestear_mortars_visible = yes
+	aov_invention_damestear_mortars_unlocked = yes
+}
+aov_invention_damestear_mortars_discovered = {
+	has_variable = aov_inv_damestear_mortars
+}
+aov_invention_damestear_mortars_active = {
+	has_variable = aov_inv_damestear_mortars
+	var:aov_inv_damestear_mortars = 2
+}
+aov_invention_damestear_mortars_discoverable = {
+	aov_invention_damestear_mortars_available = yes
+	NOT = { has_variable = aov_inv_damestear_mortars }
+}
+aov_invention_damestear_mortars_activatable = {
+	has_variable = aov_inv_damestear_mortars
+	var:aov_inv_damestear_mortars = 1
+	aov_invention_damestear_mortars_available = yes
+}
+aov_invention_damestear_mortars_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:damestear_mortars } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:damestear_mortars } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:damestear_mortars } }
 }
 
 aov_invention_demonflame_flamethrowers_visible = {
@@ -1172,124 +902,64 @@ aov_invention_demonflame_flamethrowers_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:demonflame_flamethrowers } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:demonflame_flamethrowers } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:demonflame_flamethrowers } }
 }
 
-aov_invention_military_sky_galleons_visible = {
+aov_invention_observation_balloons_visible = {
 	always = yes
 }
-aov_invention_military_sky_galleons_unlocked = {
+aov_invention_observation_balloons_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
 }
-aov_invention_military_sky_galleons_available = {
-	aov_invention_military_sky_galleons_visible = yes
-	aov_invention_military_sky_galleons_unlocked = yes
+aov_invention_observation_balloons_available = {
+	aov_invention_observation_balloons_visible = yes
+	aov_invention_observation_balloons_unlocked = yes
 }
-aov_invention_military_sky_galleons_discovered = {
-	has_variable = aov_inv_military_sky_galleons
+aov_invention_observation_balloons_discovered = {
+	has_variable = aov_inv_observation_balloons
 }
-aov_invention_military_sky_galleons_active = {
-	has_variable = aov_inv_military_sky_galleons
-	var:aov_inv_military_sky_galleons = 2
+aov_invention_observation_balloons_active = {
+	has_variable = aov_inv_observation_balloons
+	var:aov_inv_observation_balloons = 2
 }
-aov_invention_military_sky_galleons_discoverable = {
-	aov_invention_military_sky_galleons_available = yes
-	NOT = { has_variable = aov_inv_military_sky_galleons }
+aov_invention_observation_balloons_discoverable = {
+	aov_invention_observation_balloons_available = yes
+	NOT = { has_variable = aov_inv_observation_balloons }
 }
-aov_invention_military_sky_galleons_activatable = {
-	has_variable = aov_inv_military_sky_galleons
-	var:aov_inv_military_sky_galleons = 1
-	aov_invention_military_sky_galleons_available = yes
+aov_invention_observation_balloons_activatable = {
+	has_variable = aov_inv_observation_balloons
+	var:aov_inv_observation_balloons = 1
+	aov_invention_observation_balloons_available = yes
 }
-aov_invention_military_sky_galleons_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:military_sky_galleons } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:military_sky_galleons } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:military_sky_galleons } }
+aov_invention_observation_balloons_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:observation_balloons } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:observation_balloons } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:observation_balloons } }
 }
 
-aov_invention_naval_mageshields_visible = {
+aov_invention_wandlocks_visible = {
 	always = yes
 }
-aov_invention_naval_mageshields_unlocked = {
+aov_invention_wandlocks_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
 }
-aov_invention_naval_mageshields_available = {
-	aov_invention_naval_mageshields_visible = yes
-	aov_invention_naval_mageshields_unlocked = yes
+aov_invention_wandlocks_available = {
+	aov_invention_wandlocks_visible = yes
+	aov_invention_wandlocks_unlocked = yes
 }
-aov_invention_naval_mageshields_discovered = {
-	has_variable = aov_inv_naval_mageshields
+aov_invention_wandlocks_discovered = {
+	has_variable = aov_inv_wandlocks
 }
-aov_invention_naval_mageshields_active = {
-	has_variable = aov_inv_naval_mageshields
-	var:aov_inv_naval_mageshields = 2
+aov_invention_wandlocks_active = {
+	has_variable = aov_inv_wandlocks
+	var:aov_inv_wandlocks = 2
 }
-aov_invention_naval_mageshields_discoverable = {
-	aov_invention_naval_mageshields_available = yes
-	NOT = { has_variable = aov_inv_naval_mageshields }
+aov_invention_wandlocks_discoverable = {
+	aov_invention_wandlocks_available = yes
+	NOT = { has_variable = aov_inv_wandlocks }
 }
-aov_invention_naval_mageshields_activatable = {
-	has_variable = aov_inv_naval_mageshields
-	var:aov_inv_naval_mageshields = 1
-	aov_invention_naval_mageshields_available = yes
+aov_invention_wandlocks_activatable = {
+	has_variable = aov_inv_wandlocks
+	var:aov_inv_wandlocks = 1
+	aov_invention_wandlocks_available = yes
 }
-aov_invention_naval_mageshields_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:naval_mageshields } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:naval_mageshields } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:naval_mageshields } }
-}
-
-aov_invention_personal_mageshields_visible = {
-	always = yes
-}
-aov_invention_personal_mageshields_unlocked = {
-	culture = { has_cultural_era_or_later = culture_era_late_medieval }
-}
-aov_invention_personal_mageshields_available = {
-	aov_invention_personal_mageshields_visible = yes
-	aov_invention_personal_mageshields_unlocked = yes
-}
-aov_invention_personal_mageshields_discovered = {
-	has_variable = aov_inv_personal_mageshields
-}
-aov_invention_personal_mageshields_active = {
-	has_variable = aov_inv_personal_mageshields
-	var:aov_inv_personal_mageshields = 2
-}
-aov_invention_personal_mageshields_discoverable = {
-	aov_invention_personal_mageshields_available = yes
-	NOT = { has_variable = aov_inv_personal_mageshields }
-}
-aov_invention_personal_mageshields_activatable = {
-	has_variable = aov_inv_personal_mageshields
-	var:aov_inv_personal_mageshields = 1
-	aov_invention_personal_mageshields_available = yes
-}
-aov_invention_personal_mageshields_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:personal_mageshields } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:personal_mageshields } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:personal_mageshields } }
-}
-
-aov_invention_apparitional_communicator_visible = {
-	always = yes
-}
-aov_invention_apparitional_communicator_unlocked = {
-	culture = { has_cultural_era_or_later = culture_era_early_medieval }
-}
-aov_invention_apparitional_communicator_available = {
-	aov_invention_apparitional_communicator_visible = yes
-	aov_invention_apparitional_communicator_unlocked = yes
-}
-aov_invention_apparitional_communicator_discovered = {
-	has_variable = aov_inv_apparitional_communicator
-}
-aov_invention_apparitional_communicator_active = {
-	has_variable = aov_inv_apparitional_communicator
-	var:aov_inv_apparitional_communicator = 2
-}
-aov_invention_apparitional_communicator_discoverable = {
-	aov_invention_apparitional_communicator_available = yes
-	NOT = { has_variable = aov_inv_apparitional_communicator }
-}
-aov_invention_apparitional_communicator_activatable = {
-	has_variable = aov_inv_apparitional_communicator
-	var:aov_inv_apparitional_communicator = 1
-	aov_invention_apparitional_communicator_available = yes
-}
-aov_invention_apparitional_communicator_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:apparitional_communicator } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:apparitional_communicator } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:apparitional_communicator } }
+aov_invention_wandlocks_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_military_1 var:aov_tech_offer_military_1 = flag:wandlocks } AND = { has_variable = aov_tech_offer_military_2 var:aov_tech_offer_military_2 = flag:wandlocks } AND = { has_variable = aov_tech_offer_military_3 var:aov_tech_offer_military_3 = flag:wandlocks } }
 }
 
 aov_invention_centipedal_chests_visible = {
@@ -1382,36 +1052,6 @@ aov_invention_fey_spray_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:fey_spray } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:fey_spray } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:fey_spray } }
 }
 
-aov_invention_living_mirrors_visible = {
-	always = yes
-}
-aov_invention_living_mirrors_unlocked = {
-	culture = { has_cultural_era_or_later = culture_era_early_medieval }
-}
-aov_invention_living_mirrors_available = {
-	aov_invention_living_mirrors_visible = yes
-	aov_invention_living_mirrors_unlocked = yes
-}
-aov_invention_living_mirrors_discovered = {
-	has_variable = aov_inv_living_mirrors
-}
-aov_invention_living_mirrors_active = {
-	has_variable = aov_inv_living_mirrors
-	var:aov_inv_living_mirrors = 2
-}
-aov_invention_living_mirrors_discoverable = {
-	aov_invention_living_mirrors_available = yes
-	NOT = { has_variable = aov_inv_living_mirrors }
-}
-aov_invention_living_mirrors_activatable = {
-	has_variable = aov_inv_living_mirrors
-	var:aov_inv_living_mirrors = 1
-	aov_invention_living_mirrors_available = yes
-}
-aov_invention_living_mirrors_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:living_mirrors } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:living_mirrors } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:living_mirrors } }
-}
-
 aov_invention_mystic_ciphers_visible = {
 	always = yes
 }
@@ -1472,94 +1112,64 @@ aov_invention_sending_stones_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:sending_stones } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:sending_stones } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:sending_stones } }
 }
 
-aov_invention_viewcatcher_visible = {
+aov_invention_spell_in_a_box_visible = {
 	always = yes
 }
-aov_invention_viewcatcher_unlocked = {
+aov_invention_spell_in_a_box_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_early_medieval }
 }
-aov_invention_viewcatcher_available = {
-	aov_invention_viewcatcher_visible = yes
-	aov_invention_viewcatcher_unlocked = yes
+aov_invention_spell_in_a_box_available = {
+	aov_invention_spell_in_a_box_visible = yes
+	aov_invention_spell_in_a_box_unlocked = yes
 }
-aov_invention_viewcatcher_discovered = {
-	has_variable = aov_inv_viewcatcher
+aov_invention_spell_in_a_box_discovered = {
+	has_variable = aov_inv_spell_in_a_box
 }
-aov_invention_viewcatcher_active = {
-	has_variable = aov_inv_viewcatcher
-	var:aov_inv_viewcatcher = 2
+aov_invention_spell_in_a_box_active = {
+	has_variable = aov_inv_spell_in_a_box
+	var:aov_inv_spell_in_a_box = 2
 }
-aov_invention_viewcatcher_discoverable = {
-	aov_invention_viewcatcher_available = yes
-	NOT = { has_variable = aov_inv_viewcatcher }
+aov_invention_spell_in_a_box_discoverable = {
+	aov_invention_spell_in_a_box_available = yes
+	NOT = { has_variable = aov_inv_spell_in_a_box }
 }
-aov_invention_viewcatcher_activatable = {
-	has_variable = aov_inv_viewcatcher
-	var:aov_inv_viewcatcher = 1
-	aov_invention_viewcatcher_available = yes
+aov_invention_spell_in_a_box_activatable = {
+	has_variable = aov_inv_spell_in_a_box
+	var:aov_inv_spell_in_a_box = 1
+	aov_invention_spell_in_a_box_available = yes
 }
-aov_invention_viewcatcher_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:viewcatcher } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:viewcatcher } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:viewcatcher } }
-}
-
-aov_invention_arithmatons_visible = {
-	always = yes
-}
-aov_invention_arithmatons_unlocked = {
-	culture = { has_cultural_era_or_later = culture_era_high_medieval }
-}
-aov_invention_arithmatons_available = {
-	aov_invention_arithmatons_visible = yes
-	aov_invention_arithmatons_unlocked = yes
-}
-aov_invention_arithmatons_discovered = {
-	has_variable = aov_inv_arithmatons
-}
-aov_invention_arithmatons_active = {
-	has_variable = aov_inv_arithmatons
-	var:aov_inv_arithmatons = 2
-}
-aov_invention_arithmatons_discoverable = {
-	aov_invention_arithmatons_available = yes
-	NOT = { has_variable = aov_inv_arithmatons }
-}
-aov_invention_arithmatons_activatable = {
-	has_variable = aov_inv_arithmatons
-	var:aov_inv_arithmatons = 1
-	aov_invention_arithmatons_available = yes
-}
-aov_invention_arithmatons_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:arithmatons } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:arithmatons } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:arithmatons } }
+aov_invention_spell_in_a_box_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:spell_in_a_box } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:spell_in_a_box } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:spell_in_a_box } }
 }
 
-aov_invention_empire_engine_visible = {
+aov_invention_clockwork_orrery_visible = {
 	always = yes
 }
-aov_invention_empire_engine_unlocked = {
+aov_invention_clockwork_orrery_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_high_medieval }
 }
-aov_invention_empire_engine_available = {
-	aov_invention_empire_engine_visible = yes
-	aov_invention_empire_engine_unlocked = yes
+aov_invention_clockwork_orrery_available = {
+	aov_invention_clockwork_orrery_visible = yes
+	aov_invention_clockwork_orrery_unlocked = yes
 }
-aov_invention_empire_engine_discovered = {
-	has_variable = aov_inv_empire_engine
+aov_invention_clockwork_orrery_discovered = {
+	has_variable = aov_inv_clockwork_orrery
 }
-aov_invention_empire_engine_active = {
-	has_variable = aov_inv_empire_engine
-	var:aov_inv_empire_engine = 2
+aov_invention_clockwork_orrery_active = {
+	has_variable = aov_inv_clockwork_orrery
+	var:aov_inv_clockwork_orrery = 2
 }
-aov_invention_empire_engine_discoverable = {
-	aov_invention_empire_engine_available = yes
-	NOT = { has_variable = aov_inv_empire_engine }
+aov_invention_clockwork_orrery_discoverable = {
+	aov_invention_clockwork_orrery_available = yes
+	NOT = { has_variable = aov_inv_clockwork_orrery }
 }
-aov_invention_empire_engine_activatable = {
-	has_variable = aov_inv_empire_engine
-	var:aov_inv_empire_engine = 1
-	aov_invention_empire_engine_available = yes
+aov_invention_clockwork_orrery_activatable = {
+	has_variable = aov_inv_clockwork_orrery
+	var:aov_inv_clockwork_orrery = 1
+	aov_invention_clockwork_orrery_available = yes
 }
-aov_invention_empire_engine_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:empire_engine } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:empire_engine } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:empire_engine } }
+aov_invention_clockwork_orrery_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:clockwork_orrery } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:clockwork_orrery } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:clockwork_orrery } }
 }
 
 aov_invention_game_of_khet_visible = {
@@ -1592,6 +1202,36 @@ aov_invention_game_of_khet_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:game_of_khet } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:game_of_khet } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:game_of_khet } }
 }
 
+aov_invention_living_mirrors_visible = {
+	always = yes
+}
+aov_invention_living_mirrors_unlocked = {
+	culture = { has_cultural_era_or_later = culture_era_high_medieval }
+}
+aov_invention_living_mirrors_available = {
+	aov_invention_living_mirrors_visible = yes
+	aov_invention_living_mirrors_unlocked = yes
+}
+aov_invention_living_mirrors_discovered = {
+	has_variable = aov_inv_living_mirrors
+}
+aov_invention_living_mirrors_active = {
+	has_variable = aov_inv_living_mirrors
+	var:aov_inv_living_mirrors = 2
+}
+aov_invention_living_mirrors_discoverable = {
+	aov_invention_living_mirrors_available = yes
+	NOT = { has_variable = aov_inv_living_mirrors }
+}
+aov_invention_living_mirrors_activatable = {
+	has_variable = aov_inv_living_mirrors
+	var:aov_inv_living_mirrors = 1
+	aov_invention_living_mirrors_available = yes
+}
+aov_invention_living_mirrors_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:living_mirrors } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:living_mirrors } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:living_mirrors } }
+}
+
 aov_invention_mirage_detector_3000_visible = {
 	always = yes
 }
@@ -1620,6 +1260,36 @@ aov_invention_mirage_detector_3000_activatable = {
 }
 aov_invention_mirage_detector_3000_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:mirage_detector_3000 } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:mirage_detector_3000 } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:mirage_detector_3000 } }
+}
+
+aov_invention_printing_press_visible = {
+	always = yes
+}
+aov_invention_printing_press_unlocked = {
+	culture = { has_cultural_era_or_later = culture_era_high_medieval }
+}
+aov_invention_printing_press_available = {
+	aov_invention_printing_press_visible = yes
+	aov_invention_printing_press_unlocked = yes
+}
+aov_invention_printing_press_discovered = {
+	has_variable = aov_inv_printing_press
+}
+aov_invention_printing_press_active = {
+	has_variable = aov_inv_printing_press
+	var:aov_inv_printing_press = 2
+}
+aov_invention_printing_press_discoverable = {
+	aov_invention_printing_press_available = yes
+	NOT = { has_variable = aov_inv_printing_press }
+}
+aov_invention_printing_press_activatable = {
+	has_variable = aov_inv_printing_press
+	var:aov_inv_printing_press = 1
+	aov_invention_printing_press_available = yes
+}
+aov_invention_printing_press_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:printing_press } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:printing_press } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:printing_press } }
 }
 
 aov_invention_remedial_tinctures_visible = {
@@ -1652,219 +1322,177 @@ aov_invention_remedial_tinctures_offered = {
 	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:remedial_tinctures } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:remedial_tinctures } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:remedial_tinctures } }
 }
 
-aov_invention_think_thought_transmitters_visible = {
+aov_invention_clerk_automatons_visible = {
 	always = yes
 }
-aov_invention_think_thought_transmitters_unlocked = {
-	culture = { has_cultural_era_or_later = culture_era_high_medieval }
-}
-aov_invention_think_thought_transmitters_available = {
-	aov_invention_think_thought_transmitters_visible = yes
-	aov_invention_think_thought_transmitters_unlocked = yes
-}
-aov_invention_think_thought_transmitters_discovered = {
-	has_variable = aov_inv_think_thought_transmitters
-}
-aov_invention_think_thought_transmitters_active = {
-	has_variable = aov_inv_think_thought_transmitters
-	var:aov_inv_think_thought_transmitters = 2
-}
-aov_invention_think_thought_transmitters_discoverable = {
-	aov_invention_think_thought_transmitters_available = yes
-	NOT = { has_variable = aov_inv_think_thought_transmitters }
-}
-aov_invention_think_thought_transmitters_activatable = {
-	has_variable = aov_inv_think_thought_transmitters
-	var:aov_inv_think_thought_transmitters = 1
-	aov_invention_think_thought_transmitters_available = yes
-}
-aov_invention_think_thought_transmitters_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:think_thought_transmitters } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:think_thought_transmitters } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:think_thought_transmitters } }
-}
-
-aov_invention_bureaucratizer_visible = {
-	always = yes
-}
-aov_invention_bureaucratizer_unlocked = {
+aov_invention_clerk_automatons_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
 }
-aov_invention_bureaucratizer_available = {
-	aov_invention_bureaucratizer_visible = yes
-	aov_invention_bureaucratizer_unlocked = yes
+aov_invention_clerk_automatons_available = {
+	aov_invention_clerk_automatons_visible = yes
+	aov_invention_clerk_automatons_unlocked = yes
 }
-aov_invention_bureaucratizer_discovered = {
-	has_variable = aov_inv_bureaucratizer
+aov_invention_clerk_automatons_discovered = {
+	has_variable = aov_inv_clerk_automatons
 }
-aov_invention_bureaucratizer_active = {
-	has_variable = aov_inv_bureaucratizer
-	var:aov_inv_bureaucratizer = 2
+aov_invention_clerk_automatons_active = {
+	has_variable = aov_inv_clerk_automatons
+	var:aov_inv_clerk_automatons = 2
 }
-aov_invention_bureaucratizer_discoverable = {
-	aov_invention_bureaucratizer_available = yes
-	NOT = { has_variable = aov_inv_bureaucratizer }
+aov_invention_clerk_automatons_discoverable = {
+	aov_invention_clerk_automatons_available = yes
+	NOT = { has_variable = aov_inv_clerk_automatons }
 }
-aov_invention_bureaucratizer_activatable = {
-	has_variable = aov_inv_bureaucratizer
-	var:aov_inv_bureaucratizer = 1
-	aov_invention_bureaucratizer_available = yes
+aov_invention_clerk_automatons_activatable = {
+	has_variable = aov_inv_clerk_automatons
+	var:aov_inv_clerk_automatons = 1
+	aov_invention_clerk_automatons_available = yes
 }
-aov_invention_bureaucratizer_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:bureaucratizer } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:bureaucratizer } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:bureaucratizer } }
-}
-
-aov_invention_crierless_crier_device_visible = {
-	always = yes
-}
-aov_invention_crierless_crier_device_unlocked = {
-	culture = { has_cultural_era_or_later = culture_era_late_medieval }
-}
-aov_invention_crierless_crier_device_available = {
-	aov_invention_crierless_crier_device_visible = yes
-	aov_invention_crierless_crier_device_unlocked = yes
-}
-aov_invention_crierless_crier_device_discovered = {
-	has_variable = aov_inv_crierless_crier_device
-}
-aov_invention_crierless_crier_device_active = {
-	has_variable = aov_inv_crierless_crier_device
-	var:aov_inv_crierless_crier_device = 2
-}
-aov_invention_crierless_crier_device_discoverable = {
-	aov_invention_crierless_crier_device_available = yes
-	NOT = { has_variable = aov_inv_crierless_crier_device }
-}
-aov_invention_crierless_crier_device_activatable = {
-	has_variable = aov_inv_crierless_crier_device
-	var:aov_inv_crierless_crier_device = 1
-	aov_invention_crierless_crier_device_available = yes
-}
-aov_invention_crierless_crier_device_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:crierless_crier_device } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:crierless_crier_device } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:crierless_crier_device } }
+aov_invention_clerk_automatons_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:clerk_automatons } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:clerk_automatons } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:clerk_automatons } }
 }
 
-aov_invention_negotiation_nexus_visible = {
+aov_invention_clockwork_heralds_visible = {
 	always = yes
 }
-aov_invention_negotiation_nexus_unlocked = {
+aov_invention_clockwork_heralds_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
 }
-aov_invention_negotiation_nexus_available = {
-	aov_invention_negotiation_nexus_visible = yes
-	aov_invention_negotiation_nexus_unlocked = yes
+aov_invention_clockwork_heralds_available = {
+	aov_invention_clockwork_heralds_visible = yes
+	aov_invention_clockwork_heralds_unlocked = yes
 }
-aov_invention_negotiation_nexus_discovered = {
-	has_variable = aov_inv_negotiation_nexus
+aov_invention_clockwork_heralds_discovered = {
+	has_variable = aov_inv_clockwork_heralds
 }
-aov_invention_negotiation_nexus_active = {
-	has_variable = aov_inv_negotiation_nexus
-	var:aov_inv_negotiation_nexus = 2
+aov_invention_clockwork_heralds_active = {
+	has_variable = aov_inv_clockwork_heralds
+	var:aov_inv_clockwork_heralds = 2
 }
-aov_invention_negotiation_nexus_discoverable = {
-	aov_invention_negotiation_nexus_available = yes
-	NOT = { has_variable = aov_inv_negotiation_nexus }
+aov_invention_clockwork_heralds_discoverable = {
+	aov_invention_clockwork_heralds_available = yes
+	NOT = { has_variable = aov_inv_clockwork_heralds }
 }
-aov_invention_negotiation_nexus_activatable = {
-	has_variable = aov_inv_negotiation_nexus
-	var:aov_inv_negotiation_nexus = 1
-	aov_invention_negotiation_nexus_available = yes
+aov_invention_clockwork_heralds_activatable = {
+	has_variable = aov_inv_clockwork_heralds
+	var:aov_inv_clockwork_heralds = 1
+	aov_invention_clockwork_heralds_available = yes
 }
-aov_invention_negotiation_nexus_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:negotiation_nexus } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:negotiation_nexus } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:negotiation_nexus } }
+aov_invention_clockwork_heralds_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:clockwork_heralds } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:clockwork_heralds } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:clockwork_heralds } }
 }
 
-aov_invention_runethought_network_visible = {
+aov_invention_gnomish_spectacles_visible = {
 	always = yes
 }
-aov_invention_runethought_network_unlocked = {
+aov_invention_gnomish_spectacles_unlocked = {
 	culture = { has_cultural_era_or_later = culture_era_late_medieval }
 }
-aov_invention_runethought_network_available = {
-	aov_invention_runethought_network_visible = yes
-	aov_invention_runethought_network_unlocked = yes
+aov_invention_gnomish_spectacles_available = {
+	aov_invention_gnomish_spectacles_visible = yes
+	aov_invention_gnomish_spectacles_unlocked = yes
 }
-aov_invention_runethought_network_discovered = {
-	has_variable = aov_inv_runethought_network
+aov_invention_gnomish_spectacles_discovered = {
+	has_variable = aov_inv_gnomish_spectacles
 }
-aov_invention_runethought_network_active = {
-	has_variable = aov_inv_runethought_network
-	var:aov_inv_runethought_network = 2
+aov_invention_gnomish_spectacles_active = {
+	has_variable = aov_inv_gnomish_spectacles
+	var:aov_inv_gnomish_spectacles = 2
 }
-aov_invention_runethought_network_discoverable = {
-	aov_invention_runethought_network_available = yes
-	NOT = { has_variable = aov_inv_runethought_network }
+aov_invention_gnomish_spectacles_discoverable = {
+	aov_invention_gnomish_spectacles_available = yes
+	NOT = { has_variable = aov_inv_gnomish_spectacles }
 }
-aov_invention_runethought_network_activatable = {
-	has_variable = aov_inv_runethought_network
-	var:aov_inv_runethought_network = 1
-	aov_invention_runethought_network_available = yes
+aov_invention_gnomish_spectacles_activatable = {
+	has_variable = aov_inv_gnomish_spectacles
+	var:aov_inv_gnomish_spectacles = 1
+	aov_invention_gnomish_spectacles_available = yes
 }
-aov_invention_runethought_network_offered = {
-	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:runethought_network } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:runethought_network } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:runethought_network } }
+aov_invention_gnomish_spectacles_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:gnomish_spectacles } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:gnomish_spectacles } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:gnomish_spectacles } }
+}
+
+aov_invention_universal_grammarye_visible = {
+	always = yes
+}
+aov_invention_universal_grammarye_unlocked = {
+	culture = { has_cultural_era_or_later = culture_era_late_medieval }
+}
+aov_invention_universal_grammarye_available = {
+	aov_invention_universal_grammarye_visible = yes
+	aov_invention_universal_grammarye_unlocked = yes
+}
+aov_invention_universal_grammarye_discovered = {
+	has_variable = aov_inv_universal_grammarye
+}
+aov_invention_universal_grammarye_active = {
+	has_variable = aov_inv_universal_grammarye
+	var:aov_inv_universal_grammarye = 2
+}
+aov_invention_universal_grammarye_discoverable = {
+	aov_invention_universal_grammarye_available = yes
+	NOT = { has_variable = aov_inv_universal_grammarye }
+}
+aov_invention_universal_grammarye_activatable = {
+	has_variable = aov_inv_universal_grammarye
+	var:aov_inv_universal_grammarye = 1
+	aov_invention_universal_grammarye_available = yes
+}
+aov_invention_universal_grammarye_offered = {
+	OR = { AND = { has_variable = aov_tech_offer_society_1 var:aov_tech_offer_society_1 = flag:universal_grammarye } AND = { has_variable = aov_tech_offer_society_2 var:aov_tech_offer_society_2 = flag:universal_grammarye } AND = { has_variable = aov_tech_offer_society_3 var:aov_tech_offer_society_3 = flag:universal_grammarye } }
 }
 
 # Has discovered at least one invention
 aov_inventions_any_discovered = {
 	OR = {
-		aov_invention_arcane_battery_capital_complex_discovered = yes
-		aov_invention_automated_translator_discovered = yes
-		aov_invention_market_mender_discovered = yes
-		aov_invention_plane_of_water_teleporter_discovered = yes
+		aov_invention_box_of_holding_discovered = yes
+		aov_invention_clockwork_abacus_discovered = yes
+		aov_invention_clockwork_waterwheels_discovered = yes
+		aov_invention_growth_beans_discovered = yes
 		aov_invention_self_cleaning_parchment_discovered = yes
-		aov_invention_spell_in_a_box_discovered = yes
+		aov_invention_alchemical_distilleries_discovered = yes
+		aov_invention_arithmatons_discovered = yes
+		aov_invention_damestear_lamps_discovered = yes
+		aov_invention_subterrenes_discovered = yes
+		aov_invention_automaton_labourers_discovered = yes
+		aov_invention_damestear_foundries_discovered = yes
+		aov_invention_pathway_transmutation_discovered = yes
+		aov_invention_pneumatic_post_discovered = yes
+		aov_invention_ancestral_golems_discovered = yes
+		aov_invention_brass_cuirasses_discovered = yes
+		aov_invention_clockwork_ballistae_discovered = yes
+		aov_invention_clockwork_repeaters_discovered = yes
+		aov_invention_damestear_powder_discovered = yes
+		aov_invention_sunbeam_armaments_discovered = yes
+		aov_invention_avatar_supersoldier_serum_discovered = yes
 		aov_invention_brass_prosthesis_discovered = yes
 		aov_invention_chi_cultivation_discovered = yes
-		aov_invention_gene_food_cultivation_discovered = yes
-		aov_invention_growth_beans_discovered = yes
-		aov_invention_subterrenes_discovered = yes
-		aov_invention_vendorless_stall_discovered = yes
-		aov_invention_elemental_locomotives_discovered = yes
-		aov_invention_pathway_transmutation_discovered = yes
-		aov_invention_prefabricated_city_constructors_discovered = yes
-		aov_invention_t_wave_transceivers_discovered = yes
-		aov_invention_ancestral_golems_discovered = yes
-		aov_invention_artificer_exo_arms_discovered = yes
-		aov_invention_box_of_holding_discovered = yes
-		aov_invention_commercial_sky_galleons_discovered = yes
-		aov_invention_magic_missile_deployer_discovered = yes
-		aov_invention_portable_turrets_discovered = yes
-		aov_invention_sparkdrive_rifles_discovered = yes
-		aov_invention_sunbeam_armaments_discovered = yes
-		aov_invention_vorpal_bullets_discovered = yes
-		aov_invention_arcane_blaster_discovered = yes
-		aov_invention_avatar_supersoldier_serum_discovered = yes
-		aov_invention_balloonboost_packs_discovered = yes
-		aov_invention_coddorran_powered_exosuit_discovered = yes
-		aov_invention_gu_boats_discovered = yes
+		aov_invention_gnomish_bombards_discovered = yes
 		aov_invention_lullaby_cannon_discovered = yes
-		aov_invention_prototype_tanks_discovered = yes
-		aov_invention_wandlocks_discovered = yes
+		aov_invention_vorpal_bullets_discovered = yes
 		aov_invention_war_golems_discovered = yes
-		aov_invention_artillery_autoloader_discovered = yes
-		aov_invention_bioartificed_ascension_discovered = yes
 		aov_invention_black_damestear_bullets_discovered = yes
-		aov_invention_damestear_reactor_megacannon_discovered = yes
+		aov_invention_clockwork_plate_harness_discovered = yes
+		aov_invention_damestear_mortars_discovered = yes
 		aov_invention_demonflame_flamethrowers_discovered = yes
-		aov_invention_military_sky_galleons_discovered = yes
-		aov_invention_naval_mageshields_discovered = yes
-		aov_invention_personal_mageshields_discovered = yes
-		aov_invention_apparitional_communicator_discovered = yes
+		aov_invention_observation_balloons_discovered = yes
+		aov_invention_wandlocks_discovered = yes
 		aov_invention_centipedal_chests_discovered = yes
 		aov_invention_conversation_calibrator_discovered = yes
 		aov_invention_fey_spray_discovered = yes
-		aov_invention_living_mirrors_discovered = yes
 		aov_invention_mystic_ciphers_discovered = yes
 		aov_invention_sending_stones_discovered = yes
-		aov_invention_viewcatcher_discovered = yes
-		aov_invention_arithmatons_discovered = yes
-		aov_invention_empire_engine_discovered = yes
+		aov_invention_spell_in_a_box_discovered = yes
+		aov_invention_clockwork_orrery_discovered = yes
 		aov_invention_game_of_khet_discovered = yes
+		aov_invention_living_mirrors_discovered = yes
 		aov_invention_mirage_detector_3000_discovered = yes
+		aov_invention_printing_press_discovered = yes
 		aov_invention_remedial_tinctures_discovered = yes
-		aov_invention_think_thought_transmitters_discovered = yes
-		aov_invention_bureaucratizer_discovered = yes
-		aov_invention_crierless_crier_device_discovered = yes
-		aov_invention_negotiation_nexus_discovered = yes
-		aov_invention_runethought_network_discovered = yes
+		aov_invention_clerk_automatons_discovered = yes
+		aov_invention_clockwork_heralds_discovered = yes
+		aov_invention_gnomish_spectacles_discovered = yes
+		aov_invention_universal_grammarye_discovered = yes
 	}
 }
 
@@ -1880,44 +1508,38 @@ aov_inventions_any_discoverable = {
 # Something economic is left to discover
 aov_inventions_economic_discoverable = {
 	OR = {
-		aov_invention_arcane_battery_capital_complex_discoverable = yes
-		aov_invention_automated_translator_discoverable = yes
-		aov_invention_market_mender_discoverable = yes
-		aov_invention_plane_of_water_teleporter_discoverable = yes
-		aov_invention_self_cleaning_parchment_discoverable = yes
-		aov_invention_spell_in_a_box_discoverable = yes
-		aov_invention_brass_prosthesis_discoverable = yes
-		aov_invention_chi_cultivation_discoverable = yes
-		aov_invention_gene_food_cultivation_discoverable = yes
+		aov_invention_box_of_holding_discoverable = yes
+		aov_invention_clockwork_abacus_discoverable = yes
+		aov_invention_clockwork_waterwheels_discoverable = yes
 		aov_invention_growth_beans_discoverable = yes
+		aov_invention_self_cleaning_parchment_discoverable = yes
+		aov_invention_alchemical_distilleries_discoverable = yes
+		aov_invention_arithmatons_discoverable = yes
+		aov_invention_damestear_lamps_discoverable = yes
 		aov_invention_subterrenes_discoverable = yes
-		aov_invention_vendorless_stall_discoverable = yes
-		aov_invention_elemental_locomotives_discoverable = yes
+		aov_invention_automaton_labourers_discoverable = yes
+		aov_invention_damestear_foundries_discoverable = yes
 		aov_invention_pathway_transmutation_discoverable = yes
-		aov_invention_prefabricated_city_constructors_discoverable = yes
-		aov_invention_t_wave_transceivers_discoverable = yes
+		aov_invention_pneumatic_post_discoverable = yes
 	}
 }
 
 # A economic invention could still be offered
 aov_inventions_economic_unoffered_discoverable = {
 	OR = {
-		AND = { aov_invention_arcane_battery_capital_complex_discoverable = yes NOT = { aov_invention_arcane_battery_capital_complex_offered = yes } }
-		AND = { aov_invention_automated_translator_discoverable = yes NOT = { aov_invention_automated_translator_offered = yes } }
-		AND = { aov_invention_market_mender_discoverable = yes NOT = { aov_invention_market_mender_offered = yes } }
-		AND = { aov_invention_plane_of_water_teleporter_discoverable = yes NOT = { aov_invention_plane_of_water_teleporter_offered = yes } }
-		AND = { aov_invention_self_cleaning_parchment_discoverable = yes NOT = { aov_invention_self_cleaning_parchment_offered = yes } }
-		AND = { aov_invention_spell_in_a_box_discoverable = yes NOT = { aov_invention_spell_in_a_box_offered = yes } }
-		AND = { aov_invention_brass_prosthesis_discoverable = yes NOT = { aov_invention_brass_prosthesis_offered = yes } }
-		AND = { aov_invention_chi_cultivation_discoverable = yes NOT = { aov_invention_chi_cultivation_offered = yes } }
-		AND = { aov_invention_gene_food_cultivation_discoverable = yes NOT = { aov_invention_gene_food_cultivation_offered = yes } }
+		AND = { aov_invention_box_of_holding_discoverable = yes NOT = { aov_invention_box_of_holding_offered = yes } }
+		AND = { aov_invention_clockwork_abacus_discoverable = yes NOT = { aov_invention_clockwork_abacus_offered = yes } }
+		AND = { aov_invention_clockwork_waterwheels_discoverable = yes NOT = { aov_invention_clockwork_waterwheels_offered = yes } }
 		AND = { aov_invention_growth_beans_discoverable = yes NOT = { aov_invention_growth_beans_offered = yes } }
+		AND = { aov_invention_self_cleaning_parchment_discoverable = yes NOT = { aov_invention_self_cleaning_parchment_offered = yes } }
+		AND = { aov_invention_alchemical_distilleries_discoverable = yes NOT = { aov_invention_alchemical_distilleries_offered = yes } }
+		AND = { aov_invention_arithmatons_discoverable = yes NOT = { aov_invention_arithmatons_offered = yes } }
+		AND = { aov_invention_damestear_lamps_discoverable = yes NOT = { aov_invention_damestear_lamps_offered = yes } }
 		AND = { aov_invention_subterrenes_discoverable = yes NOT = { aov_invention_subterrenes_offered = yes } }
-		AND = { aov_invention_vendorless_stall_discoverable = yes NOT = { aov_invention_vendorless_stall_offered = yes } }
-		AND = { aov_invention_elemental_locomotives_discoverable = yes NOT = { aov_invention_elemental_locomotives_offered = yes } }
+		AND = { aov_invention_automaton_labourers_discoverable = yes NOT = { aov_invention_automaton_labourers_offered = yes } }
+		AND = { aov_invention_damestear_foundries_discoverable = yes NOT = { aov_invention_damestear_foundries_offered = yes } }
 		AND = { aov_invention_pathway_transmutation_discoverable = yes NOT = { aov_invention_pathway_transmutation_offered = yes } }
-		AND = { aov_invention_prefabricated_city_constructors_discoverable = yes NOT = { aov_invention_prefabricated_city_constructors_offered = yes } }
-		AND = { aov_invention_t_wave_transceivers_discoverable = yes NOT = { aov_invention_t_wave_transceivers_offered = yes } }
+		AND = { aov_invention_pneumatic_post_discoverable = yes NOT = { aov_invention_pneumatic_post_offered = yes } }
 	}
 }
 
@@ -1925,31 +1547,24 @@ aov_inventions_economic_unoffered_discoverable = {
 aov_inventions_military_discoverable = {
 	OR = {
 		aov_invention_ancestral_golems_discoverable = yes
-		aov_invention_artificer_exo_arms_discoverable = yes
-		aov_invention_box_of_holding_discoverable = yes
-		aov_invention_commercial_sky_galleons_discoverable = yes
-		aov_invention_magic_missile_deployer_discoverable = yes
-		aov_invention_portable_turrets_discoverable = yes
-		aov_invention_sparkdrive_rifles_discoverable = yes
+		aov_invention_brass_cuirasses_discoverable = yes
+		aov_invention_clockwork_ballistae_discoverable = yes
+		aov_invention_clockwork_repeaters_discoverable = yes
+		aov_invention_damestear_powder_discoverable = yes
 		aov_invention_sunbeam_armaments_discoverable = yes
-		aov_invention_vorpal_bullets_discoverable = yes
-		aov_invention_arcane_blaster_discoverable = yes
 		aov_invention_avatar_supersoldier_serum_discoverable = yes
-		aov_invention_balloonboost_packs_discoverable = yes
-		aov_invention_coddorran_powered_exosuit_discoverable = yes
-		aov_invention_gu_boats_discoverable = yes
+		aov_invention_brass_prosthesis_discoverable = yes
+		aov_invention_chi_cultivation_discoverable = yes
+		aov_invention_gnomish_bombards_discoverable = yes
 		aov_invention_lullaby_cannon_discoverable = yes
-		aov_invention_prototype_tanks_discoverable = yes
-		aov_invention_wandlocks_discoverable = yes
+		aov_invention_vorpal_bullets_discoverable = yes
 		aov_invention_war_golems_discoverable = yes
-		aov_invention_artillery_autoloader_discoverable = yes
-		aov_invention_bioartificed_ascension_discoverable = yes
 		aov_invention_black_damestear_bullets_discoverable = yes
-		aov_invention_damestear_reactor_megacannon_discoverable = yes
+		aov_invention_clockwork_plate_harness_discoverable = yes
+		aov_invention_damestear_mortars_discoverable = yes
 		aov_invention_demonflame_flamethrowers_discoverable = yes
-		aov_invention_military_sky_galleons_discoverable = yes
-		aov_invention_naval_mageshields_discoverable = yes
-		aov_invention_personal_mageshields_discoverable = yes
+		aov_invention_observation_balloons_discoverable = yes
+		aov_invention_wandlocks_discoverable = yes
 	}
 }
 
@@ -1957,186 +1572,156 @@ aov_inventions_military_discoverable = {
 aov_inventions_military_unoffered_discoverable = {
 	OR = {
 		AND = { aov_invention_ancestral_golems_discoverable = yes NOT = { aov_invention_ancestral_golems_offered = yes } }
-		AND = { aov_invention_artificer_exo_arms_discoverable = yes NOT = { aov_invention_artificer_exo_arms_offered = yes } }
-		AND = { aov_invention_box_of_holding_discoverable = yes NOT = { aov_invention_box_of_holding_offered = yes } }
-		AND = { aov_invention_commercial_sky_galleons_discoverable = yes NOT = { aov_invention_commercial_sky_galleons_offered = yes } }
-		AND = { aov_invention_magic_missile_deployer_discoverable = yes NOT = { aov_invention_magic_missile_deployer_offered = yes } }
-		AND = { aov_invention_portable_turrets_discoverable = yes NOT = { aov_invention_portable_turrets_offered = yes } }
-		AND = { aov_invention_sparkdrive_rifles_discoverable = yes NOT = { aov_invention_sparkdrive_rifles_offered = yes } }
+		AND = { aov_invention_brass_cuirasses_discoverable = yes NOT = { aov_invention_brass_cuirasses_offered = yes } }
+		AND = { aov_invention_clockwork_ballistae_discoverable = yes NOT = { aov_invention_clockwork_ballistae_offered = yes } }
+		AND = { aov_invention_clockwork_repeaters_discoverable = yes NOT = { aov_invention_clockwork_repeaters_offered = yes } }
+		AND = { aov_invention_damestear_powder_discoverable = yes NOT = { aov_invention_damestear_powder_offered = yes } }
 		AND = { aov_invention_sunbeam_armaments_discoverable = yes NOT = { aov_invention_sunbeam_armaments_offered = yes } }
-		AND = { aov_invention_vorpal_bullets_discoverable = yes NOT = { aov_invention_vorpal_bullets_offered = yes } }
-		AND = { aov_invention_arcane_blaster_discoverable = yes NOT = { aov_invention_arcane_blaster_offered = yes } }
 		AND = { aov_invention_avatar_supersoldier_serum_discoverable = yes NOT = { aov_invention_avatar_supersoldier_serum_offered = yes } }
-		AND = { aov_invention_balloonboost_packs_discoverable = yes NOT = { aov_invention_balloonboost_packs_offered = yes } }
-		AND = { aov_invention_coddorran_powered_exosuit_discoverable = yes NOT = { aov_invention_coddorran_powered_exosuit_offered = yes } }
-		AND = { aov_invention_gu_boats_discoverable = yes NOT = { aov_invention_gu_boats_offered = yes } }
+		AND = { aov_invention_brass_prosthesis_discoverable = yes NOT = { aov_invention_brass_prosthesis_offered = yes } }
+		AND = { aov_invention_chi_cultivation_discoverable = yes NOT = { aov_invention_chi_cultivation_offered = yes } }
+		AND = { aov_invention_gnomish_bombards_discoverable = yes NOT = { aov_invention_gnomish_bombards_offered = yes } }
 		AND = { aov_invention_lullaby_cannon_discoverable = yes NOT = { aov_invention_lullaby_cannon_offered = yes } }
-		AND = { aov_invention_prototype_tanks_discoverable = yes NOT = { aov_invention_prototype_tanks_offered = yes } }
-		AND = { aov_invention_wandlocks_discoverable = yes NOT = { aov_invention_wandlocks_offered = yes } }
+		AND = { aov_invention_vorpal_bullets_discoverable = yes NOT = { aov_invention_vorpal_bullets_offered = yes } }
 		AND = { aov_invention_war_golems_discoverable = yes NOT = { aov_invention_war_golems_offered = yes } }
-		AND = { aov_invention_artillery_autoloader_discoverable = yes NOT = { aov_invention_artillery_autoloader_offered = yes } }
-		AND = { aov_invention_bioartificed_ascension_discoverable = yes NOT = { aov_invention_bioartificed_ascension_offered = yes } }
 		AND = { aov_invention_black_damestear_bullets_discoverable = yes NOT = { aov_invention_black_damestear_bullets_offered = yes } }
-		AND = { aov_invention_damestear_reactor_megacannon_discoverable = yes NOT = { aov_invention_damestear_reactor_megacannon_offered = yes } }
+		AND = { aov_invention_clockwork_plate_harness_discoverable = yes NOT = { aov_invention_clockwork_plate_harness_offered = yes } }
+		AND = { aov_invention_damestear_mortars_discoverable = yes NOT = { aov_invention_damestear_mortars_offered = yes } }
 		AND = { aov_invention_demonflame_flamethrowers_discoverable = yes NOT = { aov_invention_demonflame_flamethrowers_offered = yes } }
-		AND = { aov_invention_military_sky_galleons_discoverable = yes NOT = { aov_invention_military_sky_galleons_offered = yes } }
-		AND = { aov_invention_naval_mageshields_discoverable = yes NOT = { aov_invention_naval_mageshields_offered = yes } }
-		AND = { aov_invention_personal_mageshields_discoverable = yes NOT = { aov_invention_personal_mageshields_offered = yes } }
+		AND = { aov_invention_observation_balloons_discoverable = yes NOT = { aov_invention_observation_balloons_offered = yes } }
+		AND = { aov_invention_wandlocks_discoverable = yes NOT = { aov_invention_wandlocks_offered = yes } }
 	}
 }
 
 # Something society is left to discover
 aov_inventions_society_discoverable = {
 	OR = {
-		aov_invention_apparitional_communicator_discoverable = yes
 		aov_invention_centipedal_chests_discoverable = yes
 		aov_invention_conversation_calibrator_discoverable = yes
 		aov_invention_fey_spray_discoverable = yes
-		aov_invention_living_mirrors_discoverable = yes
 		aov_invention_mystic_ciphers_discoverable = yes
 		aov_invention_sending_stones_discoverable = yes
-		aov_invention_viewcatcher_discoverable = yes
-		aov_invention_arithmatons_discoverable = yes
-		aov_invention_empire_engine_discoverable = yes
+		aov_invention_spell_in_a_box_discoverable = yes
+		aov_invention_clockwork_orrery_discoverable = yes
 		aov_invention_game_of_khet_discoverable = yes
+		aov_invention_living_mirrors_discoverable = yes
 		aov_invention_mirage_detector_3000_discoverable = yes
+		aov_invention_printing_press_discoverable = yes
 		aov_invention_remedial_tinctures_discoverable = yes
-		aov_invention_think_thought_transmitters_discoverable = yes
-		aov_invention_bureaucratizer_discoverable = yes
-		aov_invention_crierless_crier_device_discoverable = yes
-		aov_invention_negotiation_nexus_discoverable = yes
-		aov_invention_runethought_network_discoverable = yes
+		aov_invention_clerk_automatons_discoverable = yes
+		aov_invention_clockwork_heralds_discoverable = yes
+		aov_invention_gnomish_spectacles_discoverable = yes
+		aov_invention_universal_grammarye_discoverable = yes
 	}
 }
 
 # A society invention could still be offered
 aov_inventions_society_unoffered_discoverable = {
 	OR = {
-		AND = { aov_invention_apparitional_communicator_discoverable = yes NOT = { aov_invention_apparitional_communicator_offered = yes } }
 		AND = { aov_invention_centipedal_chests_discoverable = yes NOT = { aov_invention_centipedal_chests_offered = yes } }
 		AND = { aov_invention_conversation_calibrator_discoverable = yes NOT = { aov_invention_conversation_calibrator_offered = yes } }
 		AND = { aov_invention_fey_spray_discoverable = yes NOT = { aov_invention_fey_spray_offered = yes } }
-		AND = { aov_invention_living_mirrors_discoverable = yes NOT = { aov_invention_living_mirrors_offered = yes } }
 		AND = { aov_invention_mystic_ciphers_discoverable = yes NOT = { aov_invention_mystic_ciphers_offered = yes } }
 		AND = { aov_invention_sending_stones_discoverable = yes NOT = { aov_invention_sending_stones_offered = yes } }
-		AND = { aov_invention_viewcatcher_discoverable = yes NOT = { aov_invention_viewcatcher_offered = yes } }
-		AND = { aov_invention_arithmatons_discoverable = yes NOT = { aov_invention_arithmatons_offered = yes } }
-		AND = { aov_invention_empire_engine_discoverable = yes NOT = { aov_invention_empire_engine_offered = yes } }
+		AND = { aov_invention_spell_in_a_box_discoverable = yes NOT = { aov_invention_spell_in_a_box_offered = yes } }
+		AND = { aov_invention_clockwork_orrery_discoverable = yes NOT = { aov_invention_clockwork_orrery_offered = yes } }
 		AND = { aov_invention_game_of_khet_discoverable = yes NOT = { aov_invention_game_of_khet_offered = yes } }
+		AND = { aov_invention_living_mirrors_discoverable = yes NOT = { aov_invention_living_mirrors_offered = yes } }
 		AND = { aov_invention_mirage_detector_3000_discoverable = yes NOT = { aov_invention_mirage_detector_3000_offered = yes } }
+		AND = { aov_invention_printing_press_discoverable = yes NOT = { aov_invention_printing_press_offered = yes } }
 		AND = { aov_invention_remedial_tinctures_discoverable = yes NOT = { aov_invention_remedial_tinctures_offered = yes } }
-		AND = { aov_invention_think_thought_transmitters_discoverable = yes NOT = { aov_invention_think_thought_transmitters_offered = yes } }
-		AND = { aov_invention_bureaucratizer_discoverable = yes NOT = { aov_invention_bureaucratizer_offered = yes } }
-		AND = { aov_invention_crierless_crier_device_discoverable = yes NOT = { aov_invention_crierless_crier_device_offered = yes } }
-		AND = { aov_invention_negotiation_nexus_discoverable = yes NOT = { aov_invention_negotiation_nexus_offered = yes } }
-		AND = { aov_invention_runethought_network_discoverable = yes NOT = { aov_invention_runethought_network_offered = yes } }
+		AND = { aov_invention_clerk_automatons_discoverable = yes NOT = { aov_invention_clerk_automatons_offered = yes } }
+		AND = { aov_invention_clockwork_heralds_discoverable = yes NOT = { aov_invention_clockwork_heralds_offered = yes } }
+		AND = { aov_invention_gnomish_spectacles_discoverable = yes NOT = { aov_invention_gnomish_spectacles_offered = yes } }
+		AND = { aov_invention_universal_grammarye_discoverable = yes NOT = { aov_invention_universal_grammarye_offered = yes } }
 	}
 }
 
 # A discovered invention could be activated
 aov_inventions_any_activatable = {
 	OR = {
-		aov_invention_arcane_battery_capital_complex_activatable = yes
-		aov_invention_automated_translator_activatable = yes
-		aov_invention_market_mender_activatable = yes
-		aov_invention_plane_of_water_teleporter_activatable = yes
+		aov_invention_box_of_holding_activatable = yes
+		aov_invention_clockwork_abacus_activatable = yes
+		aov_invention_clockwork_waterwheels_activatable = yes
+		aov_invention_growth_beans_activatable = yes
 		aov_invention_self_cleaning_parchment_activatable = yes
-		aov_invention_spell_in_a_box_activatable = yes
+		aov_invention_alchemical_distilleries_activatable = yes
+		aov_invention_arithmatons_activatable = yes
+		aov_invention_damestear_lamps_activatable = yes
+		aov_invention_subterrenes_activatable = yes
+		aov_invention_automaton_labourers_activatable = yes
+		aov_invention_damestear_foundries_activatable = yes
+		aov_invention_pathway_transmutation_activatable = yes
+		aov_invention_pneumatic_post_activatable = yes
+		aov_invention_ancestral_golems_activatable = yes
+		aov_invention_brass_cuirasses_activatable = yes
+		aov_invention_clockwork_ballistae_activatable = yes
+		aov_invention_clockwork_repeaters_activatable = yes
+		aov_invention_damestear_powder_activatable = yes
+		aov_invention_sunbeam_armaments_activatable = yes
+		aov_invention_avatar_supersoldier_serum_activatable = yes
 		aov_invention_brass_prosthesis_activatable = yes
 		aov_invention_chi_cultivation_activatable = yes
-		aov_invention_gene_food_cultivation_activatable = yes
-		aov_invention_growth_beans_activatable = yes
-		aov_invention_subterrenes_activatable = yes
-		aov_invention_vendorless_stall_activatable = yes
-		aov_invention_elemental_locomotives_activatable = yes
-		aov_invention_pathway_transmutation_activatable = yes
-		aov_invention_prefabricated_city_constructors_activatable = yes
-		aov_invention_t_wave_transceivers_activatable = yes
-		aov_invention_ancestral_golems_activatable = yes
-		aov_invention_artificer_exo_arms_activatable = yes
-		aov_invention_box_of_holding_activatable = yes
-		aov_invention_commercial_sky_galleons_activatable = yes
-		aov_invention_magic_missile_deployer_activatable = yes
-		aov_invention_portable_turrets_activatable = yes
-		aov_invention_sparkdrive_rifles_activatable = yes
-		aov_invention_sunbeam_armaments_activatable = yes
-		aov_invention_vorpal_bullets_activatable = yes
-		aov_invention_arcane_blaster_activatable = yes
-		aov_invention_avatar_supersoldier_serum_activatable = yes
-		aov_invention_balloonboost_packs_activatable = yes
-		aov_invention_coddorran_powered_exosuit_activatable = yes
-		aov_invention_gu_boats_activatable = yes
+		aov_invention_gnomish_bombards_activatable = yes
 		aov_invention_lullaby_cannon_activatable = yes
-		aov_invention_prototype_tanks_activatable = yes
-		aov_invention_wandlocks_activatable = yes
+		aov_invention_vorpal_bullets_activatable = yes
 		aov_invention_war_golems_activatable = yes
-		aov_invention_artillery_autoloader_activatable = yes
-		aov_invention_bioartificed_ascension_activatable = yes
 		aov_invention_black_damestear_bullets_activatable = yes
-		aov_invention_damestear_reactor_megacannon_activatable = yes
+		aov_invention_clockwork_plate_harness_activatable = yes
+		aov_invention_damestear_mortars_activatable = yes
 		aov_invention_demonflame_flamethrowers_activatable = yes
-		aov_invention_military_sky_galleons_activatable = yes
-		aov_invention_naval_mageshields_activatable = yes
-		aov_invention_personal_mageshields_activatable = yes
-		aov_invention_apparitional_communicator_activatable = yes
+		aov_invention_observation_balloons_activatable = yes
+		aov_invention_wandlocks_activatable = yes
 		aov_invention_centipedal_chests_activatable = yes
 		aov_invention_conversation_calibrator_activatable = yes
 		aov_invention_fey_spray_activatable = yes
-		aov_invention_living_mirrors_activatable = yes
 		aov_invention_mystic_ciphers_activatable = yes
 		aov_invention_sending_stones_activatable = yes
-		aov_invention_viewcatcher_activatable = yes
-		aov_invention_arithmatons_activatable = yes
-		aov_invention_empire_engine_activatable = yes
+		aov_invention_spell_in_a_box_activatable = yes
+		aov_invention_clockwork_orrery_activatable = yes
 		aov_invention_game_of_khet_activatable = yes
+		aov_invention_living_mirrors_activatable = yes
 		aov_invention_mirage_detector_3000_activatable = yes
+		aov_invention_printing_press_activatable = yes
 		aov_invention_remedial_tinctures_activatable = yes
-		aov_invention_think_thought_transmitters_activatable = yes
-		aov_invention_bureaucratizer_activatable = yes
-		aov_invention_crierless_crier_device_activatable = yes
-		aov_invention_negotiation_nexus_activatable = yes
-		aov_invention_runethought_network_activatable = yes
+		aov_invention_clerk_automatons_activatable = yes
+		aov_invention_clockwork_heralds_activatable = yes
+		aov_invention_gnomish_spectacles_activatable = yes
+		aov_invention_universal_grammarye_activatable = yes
 	}
 }
 
 # A tier 1 invention could be activated
 aov_inventions_t1_activatable = {
 	OR = {
-		aov_invention_arcane_battery_capital_complex_activatable = yes
-		aov_invention_automated_translator_activatable = yes
-		aov_invention_market_mender_activatable = yes
-		aov_invention_plane_of_water_teleporter_activatable = yes
-		aov_invention_self_cleaning_parchment_activatable = yes
-		aov_invention_spell_in_a_box_activatable = yes
-		aov_invention_ancestral_golems_activatable = yes
-		aov_invention_artificer_exo_arms_activatable = yes
 		aov_invention_box_of_holding_activatable = yes
-		aov_invention_commercial_sky_galleons_activatable = yes
-		aov_invention_magic_missile_deployer_activatable = yes
-		aov_invention_portable_turrets_activatable = yes
-		aov_invention_sparkdrive_rifles_activatable = yes
+		aov_invention_clockwork_abacus_activatable = yes
+		aov_invention_clockwork_waterwheels_activatable = yes
+		aov_invention_growth_beans_activatable = yes
+		aov_invention_self_cleaning_parchment_activatable = yes
+		aov_invention_ancestral_golems_activatable = yes
+		aov_invention_brass_cuirasses_activatable = yes
+		aov_invention_clockwork_ballistae_activatable = yes
+		aov_invention_clockwork_repeaters_activatable = yes
+		aov_invention_damestear_powder_activatable = yes
 		aov_invention_sunbeam_armaments_activatable = yes
-		aov_invention_vorpal_bullets_activatable = yes
-		aov_invention_apparitional_communicator_activatable = yes
 		aov_invention_centipedal_chests_activatable = yes
 		aov_invention_conversation_calibrator_activatable = yes
 		aov_invention_fey_spray_activatable = yes
-		aov_invention_living_mirrors_activatable = yes
 		aov_invention_mystic_ciphers_activatable = yes
 		aov_invention_sending_stones_activatable = yes
-		aov_invention_viewcatcher_activatable = yes
+		aov_invention_spell_in_a_box_activatable = yes
 	}
 }
 
 # A tier 1 economic invention could be activated
 aov_inventions_t1_economic_activatable = {
 	OR = {
-		aov_invention_arcane_battery_capital_complex_activatable = yes
-		aov_invention_automated_translator_activatable = yes
-		aov_invention_market_mender_activatable = yes
-		aov_invention_plane_of_water_teleporter_activatable = yes
+		aov_invention_box_of_holding_activatable = yes
+		aov_invention_clockwork_abacus_activatable = yes
+		aov_invention_clockwork_waterwheels_activatable = yes
+		aov_invention_growth_beans_activatable = yes
 		aov_invention_self_cleaning_parchment_activatable = yes
-		aov_invention_spell_in_a_box_activatable = yes
 	}
 }
 
@@ -2144,81 +1729,68 @@ aov_inventions_t1_economic_activatable = {
 aov_inventions_t1_military_activatable = {
 	OR = {
 		aov_invention_ancestral_golems_activatable = yes
-		aov_invention_artificer_exo_arms_activatable = yes
-		aov_invention_box_of_holding_activatable = yes
-		aov_invention_commercial_sky_galleons_activatable = yes
-		aov_invention_magic_missile_deployer_activatable = yes
-		aov_invention_portable_turrets_activatable = yes
-		aov_invention_sparkdrive_rifles_activatable = yes
+		aov_invention_brass_cuirasses_activatable = yes
+		aov_invention_clockwork_ballistae_activatable = yes
+		aov_invention_clockwork_repeaters_activatable = yes
+		aov_invention_damestear_powder_activatable = yes
 		aov_invention_sunbeam_armaments_activatable = yes
-		aov_invention_vorpal_bullets_activatable = yes
 	}
 }
 
 # A tier 1 society invention could be activated
 aov_inventions_t1_society_activatable = {
 	OR = {
-		aov_invention_apparitional_communicator_activatable = yes
 		aov_invention_centipedal_chests_activatable = yes
 		aov_invention_conversation_calibrator_activatable = yes
 		aov_invention_fey_spray_activatable = yes
-		aov_invention_living_mirrors_activatable = yes
 		aov_invention_mystic_ciphers_activatable = yes
 		aov_invention_sending_stones_activatable = yes
-		aov_invention_viewcatcher_activatable = yes
+		aov_invention_spell_in_a_box_activatable = yes
 	}
 }
 
 # A tier 2 invention could be activated
 aov_inventions_t2_activatable = {
 	OR = {
+		aov_invention_alchemical_distilleries_activatable = yes
+		aov_invention_arithmatons_activatable = yes
+		aov_invention_damestear_lamps_activatable = yes
+		aov_invention_subterrenes_activatable = yes
+		aov_invention_avatar_supersoldier_serum_activatable = yes
 		aov_invention_brass_prosthesis_activatable = yes
 		aov_invention_chi_cultivation_activatable = yes
-		aov_invention_gene_food_cultivation_activatable = yes
-		aov_invention_growth_beans_activatable = yes
-		aov_invention_subterrenes_activatable = yes
-		aov_invention_vendorless_stall_activatable = yes
-		aov_invention_arcane_blaster_activatable = yes
-		aov_invention_avatar_supersoldier_serum_activatable = yes
-		aov_invention_balloonboost_packs_activatable = yes
-		aov_invention_coddorran_powered_exosuit_activatable = yes
-		aov_invention_gu_boats_activatable = yes
+		aov_invention_gnomish_bombards_activatable = yes
 		aov_invention_lullaby_cannon_activatable = yes
-		aov_invention_prototype_tanks_activatable = yes
-		aov_invention_wandlocks_activatable = yes
+		aov_invention_vorpal_bullets_activatable = yes
 		aov_invention_war_golems_activatable = yes
-		aov_invention_arithmatons_activatable = yes
-		aov_invention_empire_engine_activatable = yes
+		aov_invention_clockwork_orrery_activatable = yes
 		aov_invention_game_of_khet_activatable = yes
+		aov_invention_living_mirrors_activatable = yes
 		aov_invention_mirage_detector_3000_activatable = yes
+		aov_invention_printing_press_activatable = yes
 		aov_invention_remedial_tinctures_activatable = yes
-		aov_invention_think_thought_transmitters_activatable = yes
 	}
 }
 
 # A tier 2 economic invention could be activated
 aov_inventions_t2_economic_activatable = {
 	OR = {
-		aov_invention_brass_prosthesis_activatable = yes
-		aov_invention_chi_cultivation_activatable = yes
-		aov_invention_gene_food_cultivation_activatable = yes
-		aov_invention_growth_beans_activatable = yes
+		aov_invention_alchemical_distilleries_activatable = yes
+		aov_invention_arithmatons_activatable = yes
+		aov_invention_damestear_lamps_activatable = yes
 		aov_invention_subterrenes_activatable = yes
-		aov_invention_vendorless_stall_activatable = yes
 	}
 }
 
 # A tier 2 military invention could be activated
 aov_inventions_t2_military_activatable = {
 	OR = {
-		aov_invention_arcane_blaster_activatable = yes
 		aov_invention_avatar_supersoldier_serum_activatable = yes
-		aov_invention_balloonboost_packs_activatable = yes
-		aov_invention_coddorran_powered_exosuit_activatable = yes
-		aov_invention_gu_boats_activatable = yes
+		aov_invention_brass_prosthesis_activatable = yes
+		aov_invention_chi_cultivation_activatable = yes
+		aov_invention_gnomish_bombards_activatable = yes
 		aov_invention_lullaby_cannon_activatable = yes
-		aov_invention_prototype_tanks_activatable = yes
-		aov_invention_wandlocks_activatable = yes
+		aov_invention_vorpal_bullets_activatable = yes
 		aov_invention_war_golems_activatable = yes
 	}
 }
@@ -2226,67 +1798,63 @@ aov_inventions_t2_military_activatable = {
 # A tier 2 society invention could be activated
 aov_inventions_t2_society_activatable = {
 	OR = {
-		aov_invention_arithmatons_activatable = yes
-		aov_invention_empire_engine_activatable = yes
+		aov_invention_clockwork_orrery_activatable = yes
 		aov_invention_game_of_khet_activatable = yes
+		aov_invention_living_mirrors_activatable = yes
 		aov_invention_mirage_detector_3000_activatable = yes
+		aov_invention_printing_press_activatable = yes
 		aov_invention_remedial_tinctures_activatable = yes
-		aov_invention_think_thought_transmitters_activatable = yes
 	}
 }
 
 # A tier 3 invention could be activated
 aov_inventions_t3_activatable = {
 	OR = {
-		aov_invention_elemental_locomotives_activatable = yes
+		aov_invention_automaton_labourers_activatable = yes
+		aov_invention_damestear_foundries_activatable = yes
 		aov_invention_pathway_transmutation_activatable = yes
-		aov_invention_prefabricated_city_constructors_activatable = yes
-		aov_invention_t_wave_transceivers_activatable = yes
-		aov_invention_artillery_autoloader_activatable = yes
-		aov_invention_bioartificed_ascension_activatable = yes
+		aov_invention_pneumatic_post_activatable = yes
 		aov_invention_black_damestear_bullets_activatable = yes
-		aov_invention_damestear_reactor_megacannon_activatable = yes
+		aov_invention_clockwork_plate_harness_activatable = yes
+		aov_invention_damestear_mortars_activatable = yes
 		aov_invention_demonflame_flamethrowers_activatable = yes
-		aov_invention_military_sky_galleons_activatable = yes
-		aov_invention_naval_mageshields_activatable = yes
-		aov_invention_personal_mageshields_activatable = yes
-		aov_invention_bureaucratizer_activatable = yes
-		aov_invention_crierless_crier_device_activatable = yes
-		aov_invention_negotiation_nexus_activatable = yes
-		aov_invention_runethought_network_activatable = yes
+		aov_invention_observation_balloons_activatable = yes
+		aov_invention_wandlocks_activatable = yes
+		aov_invention_clerk_automatons_activatable = yes
+		aov_invention_clockwork_heralds_activatable = yes
+		aov_invention_gnomish_spectacles_activatable = yes
+		aov_invention_universal_grammarye_activatable = yes
 	}
 }
 
 # A tier 3 economic invention could be activated
 aov_inventions_t3_economic_activatable = {
 	OR = {
-		aov_invention_elemental_locomotives_activatable = yes
+		aov_invention_automaton_labourers_activatable = yes
+		aov_invention_damestear_foundries_activatable = yes
 		aov_invention_pathway_transmutation_activatable = yes
-		aov_invention_prefabricated_city_constructors_activatable = yes
-		aov_invention_t_wave_transceivers_activatable = yes
+		aov_invention_pneumatic_post_activatable = yes
 	}
 }
 
 # A tier 3 military invention could be activated
 aov_inventions_t3_military_activatable = {
 	OR = {
-		aov_invention_artillery_autoloader_activatable = yes
-		aov_invention_bioartificed_ascension_activatable = yes
 		aov_invention_black_damestear_bullets_activatable = yes
-		aov_invention_damestear_reactor_megacannon_activatable = yes
+		aov_invention_clockwork_plate_harness_activatable = yes
+		aov_invention_damestear_mortars_activatable = yes
 		aov_invention_demonflame_flamethrowers_activatable = yes
-		aov_invention_military_sky_galleons_activatable = yes
-		aov_invention_naval_mageshields_activatable = yes
-		aov_invention_personal_mageshields_activatable = yes
+		aov_invention_observation_balloons_activatable = yes
+		aov_invention_wandlocks_activatable = yes
 	}
 }
 
 # A tier 3 society invention could be activated
 aov_inventions_t3_society_activatable = {
 	OR = {
-		aov_invention_bureaucratizer_activatable = yes
-		aov_invention_crierless_crier_device_activatable = yes
-		aov_invention_negotiation_nexus_activatable = yes
-		aov_invention_runethought_network_activatable = yes
+		aov_invention_clerk_automatons_activatable = yes
+		aov_invention_clockwork_heralds_activatable = yes
+		aov_invention_gnomish_spectacles_activatable = yes
+		aov_invention_universal_grammarye_activatable = yes
 	}
 }

@@ -33,7 +33,8 @@ FAITHS = {
     "faith = { religion = religion:khetism_religion }",
     "faith = { religion = religion:xhazobkult_religion }",
 }
-MAA_KEYS = {"aov_prototype_tanks", "aov_war_golems", "aov_damestear_megacannon"}
+MAA_UNLOCKS = {"aov_clockwork_repeaters", "aov_war_golems", "aov_gnomish_bombards", "armored_artificers"}
+BUILDING_UNLOCKS = {"aov_clockwork_mill_01", "aov_alchemical_distillery_01", "aov_damestear_foundry_01"}
 OFFERS = 3
 
 
@@ -62,14 +63,17 @@ def validate(invs: list) -> None:
             raise GeneratorError(f"{k}: bad tier {i['tier']}")
         if i["faith"] is not None and i["faith"] not in FAITHS:
             raise GeneratorError(f"{k}: faith trigger not in allow-list: {i['faith']}")
-        if i["maa"] is not None and i["maa"] not in MAA_KEYS:
-            raise GeneratorError(f"{k}: unknown MaA {i['maa']}")
+        if i["unlock"] is not None and i["unlock"] not in MAA_UNLOCKS | BUILDING_UNLOCKS:
+            raise GeneratorError(f"{k}: unknown unlock {i['unlock']}")
         if not re.fullmatch(r"Artf_\w+\.dds", i["icon"]):
             raise GeneratorError(f"{k}: bad icon {i['icon']}")
         if not i["modifier"].strip() or not i["name"] or not i["desc"]:
             raise GeneratorError(f"{k}: empty modifier, name or desc")
         if '"' in i["name"] + i["desc"]:
             raise GeneratorError(f"{k}: double quote in name or desc")
+    unlocks = [i["unlock"] for i in invs if i["unlock"] is not None]
+    if len(set(unlocks)) != len(unlocks):
+        raise GeneratorError("an unlock is used by more than one invention")
 
 
 def of(invs, category=None, tier=None):

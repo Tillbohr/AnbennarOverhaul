@@ -24,16 +24,29 @@ def load_data():
 
 INVENTIONS = load_data()
 KEYS = [i["key"] for i in INVENTIONS]
+REMOVED = {"arcane_battery_capital_complex", "automated_translator", "market_mender", "plane_of_water_teleporter",
+           "gene_food_cultivation", "vendorless_stall", "elemental_locomotives", "prefabricated_city_constructors",
+           "t_wave_transceivers", "artificer_exo_arms", "commercial_sky_galleons", "magic_missile_deployer",
+           "portable_turrets", "sparkdrive_rifles", "arcane_blaster", "balloonboost_packs", "coddorran_powered_exosuit",
+           "gu_boats", "prototype_tanks", "artillery_autoloader", "bioartificed_ascension", "damestear_reactor_megacannon",
+           "military_sky_galleons", "naval_mageshields", "personal_mageshields", "apparitional_communicator", "viewcatcher",
+           "empire_engine", "think_thought_transmitters", "bureaucratizer", "crierless_crier_device", "negotiation_nexus",
+           "runethought_network"}
 
 
 class DataTests(unittest.TestCase):
-    def test_sixty_unique_inventions(self):
-        self.assertEqual(len(INVENTIONS), 60)
-        self.assertEqual(len(set(KEYS)), 60)
+    def test_forty_eight_unique_inventions(self):
+        self.assertEqual(len(INVENTIONS), 48)
+        self.assertEqual(len(set(KEYS)), 48)
 
-    def test_category_counts_match_research_doc(self):
-        counts = collections.Counter(i["category"] for i in INVENTIONS)
-        self.assertEqual(counts, {"economic": 16, "military": 26, "society": 18})
+    def test_category_tier_counts(self):
+        counts = collections.Counter((i["category"], i["tier"]) for i in INVENTIONS)
+        self.assertEqual(counts, {("economic", 1): 5, ("economic", 2): 4, ("economic", 3): 4,
+                                  ("military", 1): 6, ("military", 2): 7, ("military", 3): 6,
+                                  ("society", 1): 6, ("society", 2): 6, ("society", 3): 4})
+
+    def test_removed_keys_are_gone(self):
+        self.assertFalse(REMOVED & set(KEYS))
 
     def test_every_category_tier_pair_is_populated(self):
         pairs = {(i["category"], i["tier"]) for i in INVENTIONS}
@@ -49,18 +62,31 @@ class DataTests(unittest.TestCase):
                 self.assertTrue(i["name"] and i["desc"])
                 self.assertNotIn('"', i["name"] + i["desc"])
 
-    def test_maa_unlocks(self):
-        maa = {i["key"]: i["maa"] for i in INVENTIONS if i["maa"]}
-        self.assertEqual(maa, {
-            "prototype_tanks": "aov_prototype_tanks",
-            "war_golems": "aov_war_golems",
-            "damestear_reactor_megacannon": "aov_damestear_megacannon",
-        })
+    def test_unlocks(self):
+        self.assertEqual({i["key"]: i["unlock"] for i in INVENTIONS if i["unlock"]}, {
+            "clockwork_waterwheels": "aov_clockwork_mill_01", "alchemical_distilleries": "aov_alchemical_distillery_01",
+            "damestear_foundries": "aov_damestear_foundry_01", "clockwork_repeaters": "aov_clockwork_repeaters",
+            "war_golems": "aov_war_golems", "gnomish_bombards": "aov_gnomish_bombards",
+            "clockwork_plate_harness": "armored_artificers"})
+        self.assertTrue(all("maa" not in i for i in INVENTIONS))
 
     def test_locks(self):
         self.assertEqual(sum(1 for i in INVENTIONS if i["faith"]), 8)
-        self.assertEqual({i["key"] for i in INVENTIONS if i["gnome_only"]},
-                         {"conversation_calibrator", "coddorran_powered_exosuit", "gu_boats", "prefabricated_city_constructors"})
+        self.assertEqual({i["key"] for i in INVENTIONS if i["gnome_only"]}, {"conversation_calibrator", "automaton_labourers"})
+
+    def test_icon_matches_category_and_tier(self):
+        code = {"economic": "Ec", "military": "Mi", "society": "So"}
+        for i in INVENTIONS:
+            with self.subTest(i["key"]):
+                self.assertRegex(i["icon"], rf"^Artf_(Br|Ma|Te){code[i['category']]}{i['tier']}\.dds$")
+
+    def test_spot_check_modifiers(self):
+        by = {i["key"]: i["modifier"] for i in INVENTIONS}
+        self.assertEqual(by["damestear_powder"], "gunpowder_damage_mult = 0.25")
+        self.assertEqual(by["gnomish_spectacles"].split("\n"),
+                         ["diplomacy = 1", "martial = 1", "stewardship = 1", "intrigue = 1", "learning = 1", "prowess = 1"])
+        self.assertEqual(by["universal_grammarye"], "different_culture_opinion = 25\ndiplomacy = 2")
+        self.assertEqual(by["clerk_automatons"], "domain_limit = 1\nvassal_limit = 20")
 
     def test_no_keys_tiger_rejects_in_character_modifiers(self):
         # travel_speed is a travel-plan modifier and cultural_acceptance_gain_mult a culture modifier
@@ -108,6 +134,16 @@ class ValidateTests(unittest.TestCase):
         with self.assertRaises(bi.GeneratorError):
             bi.validate([dict(INVENTIONS[0], category="magic")])
 
+    def test_rejects_unknown_unlock(self):
+        with self.assertRaises(bi.GeneratorError):
+            bi.validate([dict(INVENTIONS[0], unlock="aov_made_up")])
+
+    def test_rejects_duplicate_unlock(self):
+        a = dict(INVENTIONS[0], key="a", unlock="aov_war_golems")
+        b = dict(INVENTIONS[0], key="b", unlock="aov_war_golems")
+        with self.assertRaises(bi.GeneratorError):
+            bi.validate([a, b])
+
 
 class ScriptOutputTests(unittest.TestCase):
     def test_all_script_outputs_balanced_and_headed(self):
@@ -120,7 +156,7 @@ class ScriptOutputTests(unittest.TestCase):
     def test_modifier_per_invention_with_category_icon(self):
         text = bi.modifiers(INVENTIONS)
         self.assertEqual(top_level_blocks(text), [f"aov_invention_{k}" for k in KEYS])
-        self.assertIn("aov_invention_sparkdrive_rifles = {\n\ticon = martial_positive\n\tgunpowder_damage_mult = 0.15\n}", text)
+        self.assertIn("aov_invention_damestear_powder = {\n\ticon = martial_positive\n\tgunpowder_damage_mult = 0.25\n}", text)
 
     def test_triggers_per_invention(self):
         names = set(top_level_blocks(bi.triggers(INVENTIONS)))
@@ -182,13 +218,13 @@ class ScriptOutputTests(unittest.TestCase):
             self.assertIn(f"add_character_modifier = {{ modifier = aov_invention_{k} }}", resume)
 
     def test_activate_respects_dormancy(self):
-        block = self.effect_block("aov_invention_sparkdrive_rifles_activate")
+        block = self.effect_block("aov_invention_damestear_powder_activate")
         self.assertIn("NOT = { has_variable = aov_artificery_dormant }", block)
 
     def test_deactivate_newest_is_a_single_chain(self):
         block = self.effect_block("aov_inventions_deactivate_newest")
         self.assertEqual(block.count("\tif = {"), 1)
-        self.assertEqual(block.count("\telse_if = {"), 59)
+        self.assertEqual(block.count("\telse_if = {"), 47)
 
     def test_random_draw_per_category_only_lists_its_category(self):
         for c in bi.CATEGORIES:
@@ -220,7 +256,7 @@ class ScriptOutputTests(unittest.TestCase):
 class GuiOutputTests(unittest.TestCase):
     def test_nine_sguis_per_invention(self):
         names = top_level_blocks(bi.sguis(INVENTIONS))
-        self.assertEqual(len(names), 9 * 60)
+        self.assertEqual(len(names), 9 * 48)
         for k in KEYS:
             for s in ("visible", "unlocked", "undiscovered", "activate", "deactivate", "toggle", "offered", "research", "effects"):
                 self.assertIn(f"aov_inv_{k}_{s}_sgui", names)
@@ -229,15 +265,15 @@ class GuiOutputTests(unittest.TestCase):
         return re.search(rf"^{name} = \{{\n(.*?)\n\}}", bi.sguis(INVENTIONS), re.M | re.S).group(1)
 
     def test_deactivate_starts_cooldown(self):
-        self.assertIn("aov_artificery_start_slot_cooldown = yes", self.sgui_block("aov_inv_sparkdrive_rifles_deactivate_sgui"))
+        self.assertIn("aov_artificery_start_slot_cooldown = yes", self.sgui_block("aov_inv_damestear_powder_deactivate_sgui"))
 
     def test_toggle_activates_or_deactivates_with_cooldown(self):
-        block = self.sgui_block("aov_inv_sparkdrive_rifles_toggle_sgui")
-        self.assertIn("aov_invention_sparkdrive_rifles_discovered = yes", block)
-        self.assertRegex(block, r"trigger_if = \{\s*limit = \{ NOT = \{ aov_invention_sparkdrive_rifles_active = yes \} \}"
-                                r"\s*aov_invention_sparkdrive_rifles_available = yes\s*aov_artificery_has_free_slot = yes")
-        self.assertRegex(block, r"aov_invention_sparkdrive_rifles_deactivate = yes\s*aov_artificery_start_slot_cooldown = yes")
-        self.assertIn("else = { aov_invention_sparkdrive_rifles_activate = yes }", block)
+        block = self.sgui_block("aov_inv_damestear_powder_toggle_sgui")
+        self.assertIn("aov_invention_damestear_powder_discovered = yes", block)
+        self.assertRegex(block, r"trigger_if = \{\s*limit = \{ NOT = \{ aov_invention_damestear_powder_active = yes \} \}"
+                                r"\s*aov_invention_damestear_powder_available = yes\s*aov_artificery_has_free_slot = yes")
+        self.assertRegex(block, r"aov_invention_damestear_powder_deactivate = yes\s*aov_artificery_start_slot_cooldown = yes")
+        self.assertIn("else = { aov_invention_damestear_powder_activate = yes }", block)
 
     def test_gui_balanced_with_types(self):
         text = bi.gui(INVENTIONS)
@@ -327,7 +363,7 @@ class GuiOutputTests(unittest.TestCase):
 
     def test_subtitle_loc(self):
         lc = bi.loc(INVENTIONS)
-        self.assertIn(' aov_invention_sparkdrive_rifles_subtitle: "$AOV_CATEGORY_MILITARY$, $AOV_TIER_1$"', lc)
+        self.assertIn(' aov_invention_damestear_powder_subtitle: "$AOV_CATEGORY_MILITARY$, $AOV_TIER_1$"', lc)
 
     def test_render_all_paths(self):
         files = bi.render_all(INVENTIONS)

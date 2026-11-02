@@ -114,7 +114,7 @@ class ResearchCostTests(unittest.TestCase):
             self.assertIn("FACTION = mechanists", block(text, f"aov_research_mechanists_{c}_sgui"))
             self.assertIn("FACTION = technomancers", block(text, f"aov_research_technomancers_{c}_sgui"))
         gen = read("common/scripted_guis/aov_invention_sgui.txt")
-        self.assertIn("aov_artificery_can_sponsor = { FACTION = technomancers }", block(gen, "aov_inv_sparkdrive_rifles_research_sgui"))
+        self.assertIn("aov_artificery_can_sponsor = { FACTION = technomancers }", block(gen, "aov_inv_damestear_powder_research_sgui"))
 
 
 class DriftTests(unittest.TestCase):
