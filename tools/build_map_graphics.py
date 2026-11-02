@@ -24,9 +24,12 @@ import dwarven_mountains as dm  # noqa: E402
 import gate_transplant as gt  # noqa: E402
 import heightpack as hp  # noqa: E402
 import pngio  # noqa: E402
+import serpentreach_layout as sl  # noqa: E402
 import terrain_fill as tfill  # noqa: E402
 from data import map_graphics as data  # noqa: E402
 from data.holds import HOLDS  # noqa: E402
+from data import serpentreach as sr_data  # noqa: E402
+from eu4_import import EU4_ROOTS  # noqa: E402
 
 MARKER = "# Anbennar Overhaul"
 
@@ -48,6 +51,7 @@ class Roots:
     rie: Path
     anbennar: Path
     game: Path  # the install folder holding game/, jomini/ and clausewitz/
+    eu4: Path = EU4_ROOTS["anbennar"]  # EU4 Anbennar, traced for Serpentreach (tools/serpentreach_layout.py)
 
     @classmethod
     def default(cls):
@@ -930,11 +934,36 @@ DETAIL_INTENSITY_REL = f"{TERRAIN}/detail_intensity.tga"
 
 def terrain_fill_index(anb_materials_text: str) -> int:
     """Terrain texture-array index of TERRAIN_FILL_MATERIAL: its position in Anbennar's material list."""
+    return material_index(anb_materials_text, data.TERRAIN_FILL_MATERIAL)
+
+
+def material_index(anb_materials_text: str, material: str) -> int:
+    """Terrain texture-array index of a material id: its position in Anbennar's material list."""
     ids = [m["id"] for m in parse_materials(anb_materials_text)]
-    if data.TERRAIN_FILL_MATERIAL not in ids:
-        raise GeneratorError(f"terrain fill material {data.TERRAIN_FILL_MATERIAL} is not in Anbennar's "
-                             f"{MATERIALS_REL}")
-    return ids.index(data.TERRAIN_FILL_MATERIAL)
+    if material not in ids:
+        raise GeneratorError(f"terrain material {material} is not in Anbennar's {MATERIALS_REL}")
+    return ids.index(material)
+
+
+_SERPENTREACH = {}  # (anbennar, eu4) -> (layout, Anbennar's province map), one trace per build
+
+
+def _layout_key(roots: Roots) -> tuple:
+    return (str(roots.anbennar), str(roots.eu4))
+
+
+def serpentreach_layout(roots: Roots, ck3: tuple = None) -> "sl.Layout":
+    """The Serpentreach layout (tools/serpentreach_layout.py), traced once per build. `ck3` is (province map,
+    water, impassable) when already loaded."""
+    key = _layout_key(roots)
+    if key not in _SERPENTREACH:
+        if ck3 is None:
+            loaded = sl.load_ck3(roots.anbennar)
+        else:
+            definition = (roots.anbennar / MAP_DATA / "definition.csv").read_bytes().decode("utf-8", errors="replace")
+            loaded = (ck3[0], definition, ck3[1], ck3[2])
+        _SERPENTREACH[key] = (sl.layout(roots.anbennar, roots.eu4, loaded), loaded[0])
+    return _SERPENTREACH[key][0]
 
 
 def build_terrain_fill(roots: Roots, notes: list = None) -> dict:
@@ -948,6 +977,10 @@ def build_terrain_fill(roots: Roots, notes: list = None) -> dict:
     index, intensity, report = tfill.fill_unpainted(tfill.read_tga(paths[0].read_bytes()),
                                                     tfill.read_tga(paths[1].read_bytes()),
                                                     fill_material=material, large=data.TERRAIN_FILL_LARGE)
+    lay = serpentreach_layout(roots)
+    floor, wall = (material_index(_read_text(roots.anbennar / MATERIALS_REL), m)
+                   for m in (sr_data.FLOOR_MATERIAL, sr_data.WALL_MATERIAL))
+    index, intensity = sl.paint(index, intensity, lay, floor, wall, _SERPENTREACH[_layout_key(roots)][1])
     if notes is not None:
         notes.append(f"terrain gaps filled: {report['small_pixels']} px in {report['small_groups']} small gaps "
                      f"(copied from neighbours), {report['large_pixels']} px in {report['large_groups']} large "
@@ -984,8 +1017,12 @@ def build_heightmap(roots: Roots, notes: list = None) -> dict:
     comp = gt.load_composition(roots.rie)
     new, plans = gt.transplant(lifted, pm, water, placed, comp, data.TRANSPLANT_OVERRIDES,
                                ranges=set(dwarven) | set(impassable), piece_bounds=piece_bounds(roots.rie, comp))
+    lay = serpentreach_layout(roots, (pm, water, impassable))
+    new, carved = sl.carve(new, lay, pm, water)
     if notes is not None:
         notes.extend(_height_notes(report, plans))
+        notes.append(f"serpentreach carved: ground {carved['base']}, {carved['floor_px']} floor px, "
+                     f"{carved['wall_px']} wall px")
 
     changed = hp.changed_blocks(old, new)
     blocks = {}

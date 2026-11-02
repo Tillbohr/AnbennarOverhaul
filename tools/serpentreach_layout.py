@@ -584,6 +584,106 @@ def _province_pixels_near(ck, pid, cx, cy, radius):
             if ck(x, y) == pid]
 
 
+# --- carving ------------------------------------------------------------------------------------------------------
+
+def _box_around(pixels, margin, width, height):
+    xs = [p[0] for p in pixels]
+    ys = [p[1] for p in pixels]
+    return (max(min(xs) - margin, 0), max(min(ys) - margin, 0),
+            min(max(xs) + margin + 1, width), min(max(ys) + margin + 1, height))
+
+
+def _spread(heights, box, limit):
+    """Chessboard distance and source height from the pixels of `heights` to every pixel within `limit` inside
+    `box`: {(x, y): (d, h)}; a pixel reached from several sources at once takes the highest."""
+    x0, y0, x1, y1 = box
+    out = {p: (0, h) for p, h in heights.items()}
+    frontier = sorted(heights, key=_key)
+    for d in range(1, limit + 1):
+        reached = {}
+        for x, y in frontier:
+            h = out[(x, y)][1]
+            for dx, dy in N8:
+                n = (x + dx, y + dy)
+                if n not in out and x0 <= n[0] < x1 and y0 <= n[1] < y1:
+                    reached[n] = max(reached.get(n, h), h)
+        for n, h in reached.items():
+            out[n] = (d, h)
+        frontier = sorted(reached, key=_key)
+    return out
+
+
+def floor_heights(lay, base, grid):
+    """Height of every floor pixel: base + TERRACE[type] x TERRACE_STEP, opening corridors ramping from the floor
+    to the ground at their mouth."""
+    county = {c.key: c for c in lay.counties}
+    out = {p: base + data.TERRACE[county[lay.provinces[pid].county].type] * data.TERRACE_STEP
+           for p, pid in lay.owner.items()}
+    for op in lay.openings:
+        outside = grid.get(*op.mouth)
+        far = max(math.dist(p, op.mouth) for p in op.pixels) or 1.0
+        fh = base + data.TERRACE[county[op.county].type] * data.TERRACE_STEP
+        for p in op.pixels:
+            out[p] = round(outside + (fh - outside) * math.dist(p, op.mouth) / far)
+    return out
+
+
+def carve(grid, lay, pm, water):
+    """(new grid, report) with the Serpentreach floor carved into the mountain (spec §2): floors flat, walls
+    rising to at least MIN_WALL above the floor within WALL_WIDTH, then fading into the mountain over WALL_FADE.
+    Only floor and province-2426 rock pixels change; rock is never lowered."""
+    import heightpack as hp
+    W, H = pm.width, pm.height
+    src = data.SOURCE_PROVINCE
+    floor = list(lay.owner)
+    near = chamfer(floor, _box_around(floor, data.CARVE_GROUND_RADIUS, W, H), data.CARVE_GROUND_RADIUS)
+    ground = sorted(grid.get(x, y) for (x, y) in near
+                    if pm.ids[y * W + x] not in (0, src) and pm.ids[y * W + x] not in water and (x, y) not in lay.owner)
+    if not ground:
+        raise GeneratorError(f"no land within {data.CARVE_GROUND_RADIUS} px of the Serpentreach floor")
+    base = ground[len(ground) // 2]
+    values = grid.values[:]
+    fh = floor_heights(lay, base, grid)
+    for (x, y), h in fh.items():
+        values[y * W + x] = max(0, min(65535, h))
+    limit = data.WALL_WIDTH + data.WALL_FADE
+    walls = 0
+    for (x, y), (d, h) in _spread(fh, _box_around(floor, limit, W, H), limit).items():
+        i = y * W + x
+        if d == 0 or pm.ids[i] != src or (x, y) in lay.owner:
+            continue
+        orig = grid.values[i]
+        rim = h + data.MIN_WALL
+        if d <= data.WALL_WIDTH:
+            t = d / data.WALL_WIDTH
+            target = h + data.MIN_WALL * (t * t * (3 - 2 * t))
+        else:
+            target = rim + (orig - rim) * (d - data.WALL_WIDTH) / data.WALL_FADE
+        new = max(orig, min(65535, round(target)))
+        if new != orig:
+            values[i] = new
+            walls += 1
+    return hp.Grid(W, H, values), {"base": base, "floor_px": len(fh), "wall_px": walls}
+
+
+def paint(index, intensity, lay, floor_index, wall_index, pm=None):
+    """Copies of the blend maps (terrain_fill.Tga) with floor pixels set to `floor_index` and wall pixels (within
+    WALL_WIDTH of the floor; province-2426 rock only when `pm` is given) to `wall_index`, both at full weight."""
+    import terrain_fill as tf
+    W, H = index.width, index.height
+    idx = bytearray(index.pixels)
+    wgt = bytearray(intensity.pixels)
+    full = bytes((255, 0, 0, 0))
+    floor = list(lay.owner)
+    for (x, y), d in chamfer(floor, _box_around(floor, data.WALL_WIDTH, W, H), data.WALL_WIDTH).items():
+        if d and pm is not None and pm.ids[y * W + x] != data.SOURCE_PROVINCE:
+            continue
+        k = (y * W + x) * 4
+        idx[k:k + 4] = bytes((floor_index if d == 0 else wall_index, 0, 0, 0))
+        wgt[k:k + 4] = full
+    return (tf.Tga(W, H, index.header, idx, index.footer), tf.Tga(W, H, intensity.header, wgt, intensity.footer))
+
+
 OPENING_REACH = 120  # px: farthest a corridor may run from the floor to its target
 OPENING_TRIES = 400
 

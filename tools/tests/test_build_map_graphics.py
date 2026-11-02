@@ -950,8 +950,11 @@ class ConeRealTests(unittest.TestCase):
         return gt.frame(math.atan2(site.inward[0] + 0.0, site.inward[1] + 0.0) + plan.turn)
 
     def test_the_build_uses_this_stamp(self):
+        """The build's heightmap is this stamp with Serpentreach carved into it last."""
+        import serpentreach_layout as sl
         files = real_build()[0]
-        self.assertEqual(pngio.write_png(self.new.to_png()), files["map_data/heightmap.png"])
+        carved, _ = sl.carve(self.new, bmg.serpentreach_layout(ROOTS), self.pm, self.water)
+        self.assertEqual(pngio.write_png(carved.to_png()), files["map_data/heightmap.png"])
 
     def test_changes_stay_near_a_gate_and_nothing_is_lowered(self):
         """Every changed pixel is in a cone, or in a gate's range-join region (behind its face, within the join
@@ -1173,6 +1176,21 @@ class HeightOutputsTests(unittest.TestCase):
         self.assertTrue(names)
         for name in names:
             self.assertIn(folder + name, self.files)
+
+    def test_serpentreach_floor_is_flat_in_the_build(self):
+        from data import serpentreach as sr
+        lay = bmg.serpentreach_layout(ROOTS)
+        self.assertTrue(any(n.startswith("serpentreach carved:") for n in self.notes))
+        county = {c.key: c for c in lay.counties}
+        opened = {p for op in lay.openings for p in op.pixels}
+        heights = {}
+        for p, pid in lay.owner.items():
+            if p not in opened:
+                heights.setdefault(county[lay.provinces[pid].county].type, set()).add(self.new_height.get(*p))
+        for kind, hs in heights.items():
+            self.assertEqual(len(hs), 1, kind)
+        self.assertEqual(max(min(h) for h in heights.values()) - min(min(h) for h in heights.values()),
+                         2 * sr.TERRACE_STEP)
 
     def test_notes_cover_ranges_and_sites(self):
         self.assertEqual(sum(note.startswith("range ") for note in self.notes), 9)

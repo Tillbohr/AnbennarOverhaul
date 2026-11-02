@@ -66,6 +66,64 @@ class GeometryTests(unittest.TestCase):
         self.assertNotIn((9, 5), d)  # beyond the limit
 
 
+def synthetic(width=60, height=30):
+    """A 2426 mountain (20000) over land province 1 (5000, rows y < 5) with a 10x4 cavern floor at x 20-29,
+    y 12-15 (province 100), as (grid, layout, province map)."""
+    from array import array
+    import dwarven_mountains as dm
+    import heightpack as hp
+    ids = array("H", [1 if y < 5 else 2426 for y in range(height) for x in range(width)])
+    vals = array("H", [5000 if y < 5 else 20000 for y in range(height) for x in range(width)])
+    floor = sorted(((x, y) for x in range(20, 30) for y in range(12, 16)), key=lambda p: (p[1], p[0]))
+    county = sl.County("c_a", 1, "A", "a_area", "cavern", [100])
+    prov = sl.Province(100, (1, 2, 3), "c_a", 0, floor, (24, 13))
+    lay = sl.Layout(width, height, [county], {100: prov}, {p: 100 for p in floor}, [], {"a_area": "A"}, [])
+    return hp.Grid(width, height, vals), lay, dm.ProvinceMap(width, height, ids)
+
+
+class CarveTests(unittest.TestCase):
+    def test_carve_profile(self):
+        from data import serpentreach as data
+        grid, lay, pm = synthetic()
+        new, report = sl.carve(grid, lay, pm, water=set())
+        base = 5000
+        self.assertEqual(report["base"], base)
+        floor_h = base + data.TERRACE["cavern"] * data.TERRACE_STEP
+        for p in lay.owner:
+            self.assertEqual(new.get(*p), floor_h)
+        for y in range(pm.height):
+            for x in range(pm.width):
+                if (x, y) not in lay.owner:
+                    self.assertGreaterEqual(new.get(x, y), grid.get(x, y), (x, y))
+        row = [new.get(x, 13) for x in range(29, 29 + data.WALL_WIDTH + 1)]
+        self.assertEqual(row, sorted(row))  # walls rise away from the floor
+        far = 29 + data.WALL_WIDTH + data.WALL_FADE + 1
+        self.assertEqual(new.get(far, 13), grid.get(far, 13))
+        self.assertEqual(new.get(10, 2), 5000)  # land untouched
+
+    def test_carve_raises_low_rock_to_the_rim(self):
+        from data import serpentreach as data
+        grid, lay, pm = synthetic()
+        for i in range(len(grid.values)):
+            if pm.ids[i] == 2426:
+                grid.values[i] = 4500  # rock lower than the rim
+        new, _ = sl.carve(grid, lay, pm, water=set())
+        floor_h = 5000 + data.TERRACE["cavern"] * data.TERRACE_STEP
+        self.assertEqual(new.get(29 + data.WALL_WIDTH, 13), floor_h + data.MIN_WALL)
+
+    def test_paint(self):
+        import terrain_fill as tf
+        _, lay, _ = synthetic()
+        w, h = 60, 30
+        blank = tf.Tga(w, h, b"\0" * 18, bytearray(w * h * 4), b"")
+        index, intensity = sl.paint(blank, blank, lay, floor_index=7, wall_index=9)
+        self.assertEqual(bytes(index.pixels[(13 * w + 24) * 4:(13 * w + 24) * 4 + 4]), bytes((7, 0, 0, 0)))
+        self.assertEqual(bytes(intensity.pixels[(13 * w + 24) * 4:(13 * w + 24) * 4 + 4]), bytes((255, 0, 0, 0)))
+        self.assertEqual(bytes(index.pixels[(13 * w + 31) * 4:(13 * w + 31) * 4 + 4]), bytes((9, 0, 0, 0)))
+        self.assertEqual(bytes(index.pixels[(13 * w + 45) * 4:(13 * w + 45) * 4 + 4]), bytes(4))  # untouched
+        self.assertEqual(bytes(blank.pixels), bytes(w * h * 4))  # inputs not modified
+
+
 LOCATORS = """\ufeffgame_object_locator={
 \tname="buildings"
 \tinstances={
