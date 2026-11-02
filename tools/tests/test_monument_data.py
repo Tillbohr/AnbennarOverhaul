@@ -88,7 +88,7 @@ class CannorMonumentTests(unittest.TestCase):
 class RegionMonumentTests(unittest.TestCase):
     """The same data checks as Cannor, for the regions after it (no Anbennar chains there)."""
 
-    COUNTS = {"dwarovar": 5, "bulwar": 12, "salahad": 10, "deepwoods": 6}
+    COUNTS = {"dwarovar": 5, "bulwar": 12, "salahad": 10, "deepwoods": 2}
 
     def test_complete_clean_and_translated(self):
         for region, count in self.COUNTS.items():

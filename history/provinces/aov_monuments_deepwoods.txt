@@ -7,30 +7,6 @@
 	}
 }
 
-6799 = {
-	1000.1.1 = {
-		special_building_slot = aov_monument_eternal_pillar_1_01
-	}
-}
-
-6787 = {
-	1000.1.1 = {
-		special_building_slot = aov_monument_eternal_pillar_2_01
-	}
-}
-
-6869 = {
-	1000.1.1 = {
-		special_building_slot = aov_monument_eternal_pillar_5_01
-	}
-}
-
-6852 = {
-	1000.1.1 = {
-		special_building_slot = aov_monument_eternal_pillar_6_01
-	}
-}
-
 6886 = {
 	1000.1.1 = {
 		special_building_slot = aov_monument_mines_of_yfelorr_01

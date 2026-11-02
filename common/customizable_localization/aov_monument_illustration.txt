@@ -481,34 +481,6 @@ AovMonumentIllustration = {
 
 	text = {
 		trigger = {
-			has_building_or_higher = aov_monument_eternal_pillar_1_01
-		}
-		localization_key = aov_monument_art_eternal_pillar_1
-	}
-
-	text = {
-		trigger = {
-			has_building_or_higher = aov_monument_eternal_pillar_2_01
-		}
-		localization_key = aov_monument_art_eternal_pillar_2
-	}
-
-	text = {
-		trigger = {
-			has_building_or_higher = aov_monument_eternal_pillar_5_01
-		}
-		localization_key = aov_monument_art_eternal_pillar_5
-	}
-
-	text = {
-		trigger = {
-			has_building_or_higher = aov_monument_eternal_pillar_6_01
-		}
-		localization_key = aov_monument_art_eternal_pillar_6
-	}
-
-	text = {
-		trigger = {
 			aov_hold_is_ruined = yes
 		}
 		localization_key = aov_monument_art_ruined_hold

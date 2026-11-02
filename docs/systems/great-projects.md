@@ -30,7 +30,7 @@ The county view override also draws the dwarven hold dig bar (see dwarven-holds.
   markets, guilds, ports, foundries, palaces and the rest in between. The EU4 effects stay on top as flavor. A key the
   level already has in the same block (EU4 flavor, or Anbennar's own line on an Anbennar chain) keeps the stronger of
   the two (`stronger()`: larger for a positive core value, smaller for a negative one such as `travel_danger`); a value of
-  the opposite sign is a penalty and is summed (Eternal Pillars keep their opinion malus). Every level also gets the
+  the opposite sign is a penalty and is summed (an EU4 opinion malus is kept). Every level also gets the
   category's vanilla travel point-of-interest flag (`POI_FLAGS`) unless Anbennar's definition already has one.
   `CORE_OVERRIDES` (eu4_key -> package, or None) swaps or removes the core for one monument. Costs are unchanged (about
   3,400 gold for three tiers, like a vanilla special mine); the Dwarven Monuments were lowered from 4,600 to 3,400.
@@ -43,11 +43,12 @@ The county view override also draws the dwarven hold dig bar (see dwarven-holds.
   tunnel canals. Dwarven Monuments gates expand its `dwarven_monuments_has_acceptable_culture_or_race` trigger
   to Dwarven/Kobold; its dig-level requirement waits for hold digging.
 - **Great projects (rest of the map):** regions `bulwar` (12 built), `salahad` (10: North Salahad with Akasik and
-  Kheterata, South Salahad's Krahgradir) and `deepwoods` (6) of the same framework, each with `<region>.py`; all new monuments, no Anbennar chains. EU4 puts the Dragon Coast in western Cannor, so its 6
-  projects were built with Cannor. Excluded with a reason: projects whose EU4 province has no CK3 title (5 of the 9
-  Black Demesne Eternal Pillars, Djinnakah, Esuvrem), dungeons (Hero's Gate, Jorkad Dam, the Skewered Drake), canals
+  Kheterata, South Salahad's Krahgradir) and `deepwoods` (2: the Shimmering City, the Mines of Yfelorr) of the same framework, each with `<region>.py`; all new monuments, no Anbennar chains. EU4 puts the Dragon Coast in western Cannor, so its 6
+  projects were built with Cannor. Excluded with a reason: all 9 Black Demesne Pillars of Eternity (the Black
+  Demesne rises long after the CK3 start dates; 5 also have no CK3 title), projects whose EU4 province has no CK3 title
+  (Djinnakah, Esuvrem), dungeons (Hero's Gate, Jorkad Dam, the Skewered Drake), canals
   (the Fey Portal, the Great Merfolk Canal) and EU4 event variants (`VARIANTS`: Befouled Aur-Kes-Akasik). Hand
   fixes: icon categories, balance caps (Ash Palace domain limit, Ebbusubtu piety, Oasis of Water Dreams, Anzarzax
-  supply, Pillars' tax), the Grand Library keeps one-barony Koroshesh and the Grain Port goes to Kaashesh (same
-  duchy), a written Pillar of Eternity description. The importer cleaned EU4 text (Sarhal dashes, literal newlines, typographic quotes);
+  supply), the Grand Library keeps one-barony Koroshesh and the Grain Port goes to Kaashesh (same
+  duchy). The importer cleaned EU4 text (Sarhal dashes, literal newlines, typographic quotes);
   `test_monument_data.py` keeps the data clean.
