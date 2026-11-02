@@ -1,5 +1,6 @@
-"""Generate holy sites for Anbennar faiths that have none (Devouring Path, Silk Turban), and real icons for the
-faiths Anbennar ships with the placeholder icon (and for Jaherian Cults, which shares the generic Sun Cult icon).
+"""Generate holy sites for Anbennar faiths that have none (Devouring Path, Silk Turban), real icons for the
+faiths Anbennar ships with the placeholder icon (and for Jaherian Cults, which shares the generic Sun Cult icon), and
+the `icon` lines that make the game draw the doctrine icons of tools/data/doctrine_icons.py.
 
 A faith's holy sites and icon can only be set inside its religion's definition, and religions can only be overridden
 as whole files, so this script writes full copies of the Anbennar religion files involved, each faith gaining a
@@ -8,12 +9,18 @@ are imported once and committed under gfx/interface/icons/faith/). It also write
 
     common/religion/holy_site_types/aov_holy_sites.txt     the new holy sites
     common/religion/religion_types/<anbennar file>.txt     whole-file copies with holy_site and icon lines changed
+    common/religion/doctrine_types/<anbennar file>.txt     whole-file copies with an icon line added per doctrine
     localization/english/aov_holy_sites_l_english.yml      holy site and modifier names
 
     python -I tools/build_holy_sites.py [--anbennar PATH]
 
 Rerun after an Anbennar update (see docs/systems/holy-sites.md). It stops if a faith is missing, already has
-holy sites of its own, no longer has the icon it replaces, or a site's county or barony or an icon file is missing.
+holy sites of its own, no longer has the icon it replaces, or a site's county or barony or an icon file is missing,
+and when a doctrine icon is neither the key of a doctrine without an `icon` line nor an icon some doctrine names.
+
+CK3 1.19 does not fall back to a doctrine's key when it has no `icon` line, although _doctrine_types.info says it
+does: the faith window draws the pink placeholder and logs nothing. So each doctrine with an icon of ours gets an
+explicit `icon = "<key>"`. The doctrine files are copied whole because overriding one doctrine by key is untested.
 """
 
 import argparse
@@ -25,12 +32,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))  # python -I does not a
 
 from build_hud_override import GeneratorError  # noqa: E402
 from pdx_script import ANBENNAR_CK3, _balanced, ck3_titles, parse_blocks, strip_comments  # noqa: E402
+from data.doctrine_icons import DOCTRINE_ICONS  # noqa: E402
 from data.faith_icons import FAITH_ICONS, PLACEHOLDER  # noqa: E402
 from data.holy_sites import HOLY_SITES  # noqa: E402
 
 SUBMOD = Path(__file__).resolve().parent.parent
 RELIGION_DIR = "common/religion/religion_types"
 HOLY_SITE_DIR = "common/religion/holy_site_types"
+DOCTRINE_DIR = "common/religion/doctrine_types"
 ICON_DIR = "gfx/interface/icons/faith"
 SITES_FILE = f"{HOLY_SITE_DIR}/aov_holy_sites.txt"
 LOC_FILE = "localization/english/aov_holy_sites_l_english.yml"
@@ -148,16 +157,60 @@ def add_holy_sites(text: str, faith_sites: dict) -> str:
     return "\n".join(lines)
 
 
-def religion_file(anbennar: Path, name: str, faith_sites: dict, faith_icons: dict, replaces: dict = None) -> bytes:
-    raw = (anbennar / RELIGION_DIR / name).read_bytes()
+def doctrines_needing_icons(anbennar: Path) -> dict:
+    """Anbennar doctrine file name -> its doctrines that have an icon of ours but no `icon` line."""
+    out, named = {}, set()
+    for path in sorted((anbennar / DOCTRINE_DIR).glob("*.txt")):
+        for key, body in parse_blocks(_read(path)).items():
+            m = re.search(r'(?m)^\s*icon\s*=\s*"?(\w+)"?', body)
+            if m:
+                named.add(m.group(1))
+            elif key in DOCTRINE_ICONS:
+                out.setdefault(path.name, []).append(key)
+    found = named | {key for keys in out.values() for key in keys}
+    for icon in DOCTRINE_ICONS:
+        if icon not in found:
+            raise GeneratorError(f"doctrine icon {icon} is used by no Anbennar doctrine; drop it from "
+                                 "tools/data/doctrine_icons.py")
+    return out
+
+
+def add_doctrine_icons(text: str, keys: list) -> str:
+    """Insert a marked `icon = "<key>"` line right after each doctrine's opening line."""
+    lines = text.split("\n")
+    for key in keys:
+        hits = [i for i, l in enumerate(lines) if re.match(rf"^\s*{re.escape(key)}\s*=\s*\{{", l.split("#", 1)[0])]
+        if len(hits) != 1:
+            raise GeneratorError(f"doctrine {key}: expected one opening line, found {len(hits)}")
+        i = hits[0]
+        indent = re.match(r"^(\s*)", lines[i]).group(1) + "\t"
+        lines.insert(i + 1, f'{indent}icon = "{key}" {MARKER}')
+    return "\n".join(lines)
+
+
+def copy_with_marker(anbennar: Path, rel: str, change, data: str) -> bytes:
+    """A whole-file copy of Anbennar's `rel` with `change` applied to its text, headed by the generated-file marker
+    naming the `data` files to edit instead."""
+    raw = (anbennar / rel).read_bytes()
     text = raw.decode("utf-8-sig")
     crlf = "\r\n" in text
-    text = add_holy_sites(set_icons(text.replace("\r\n", "\n"), faith_icons, replaces), faith_sites)
-    text = (f"{MARKER}: generated by tools/build_holy_sites.py from Anbennar's {RELIGION_DIR}/{name}.\n"
-            f"{MARKER}: do not edit by hand; edit tools/data/holy_sites.py or faith_icons.py and rerun it.\n") + text
+    text = change(text.replace("\r\n", "\n"))
+    text = (f"{MARKER}: generated by tools/build_holy_sites.py from Anbennar's {rel}.\n"
+            f"{MARKER}: do not edit by hand; edit {data} and rerun it.\n") + text
     if crlf:
         text = text.replace("\n", "\r\n")
     return (BOM if raw.startswith(BOM) else b"") + text.encode("utf-8")
+
+
+def religion_file(anbennar: Path, name: str, faith_sites: dict, faith_icons: dict, replaces: dict = None) -> bytes:
+    return copy_with_marker(anbennar, f"{RELIGION_DIR}/{name}",
+                            lambda text: add_holy_sites(set_icons(text, faith_icons, replaces), faith_sites),
+                            "tools/data/holy_sites.py or faith_icons.py")
+
+
+def doctrine_file(anbennar: Path, name: str, keys: list) -> bytes:
+    return copy_with_marker(anbennar, f"{DOCTRINE_DIR}/{name}", lambda text: add_doctrine_icons(text, keys),
+                            "tools/data/doctrine_icons.py")
 
 
 def sites_file() -> bytes:
@@ -195,6 +248,8 @@ def build_all(anbennar: Path = ANBENNAR_CK3) -> dict:
     for name in sorted(set(sites) | set(icons)):
         files[f"{RELIGION_DIR}/{name}"] = religion_file(anbennar, name, sites.get(name, {}), icons.get(name, {}),
                                                         replaces)
+    for name, keys in doctrines_needing_icons(anbennar).items():
+        files[f"{DOCTRINE_DIR}/{name}"] = doctrine_file(anbennar, name, keys)
     return files
 
 
@@ -212,9 +267,10 @@ def main() -> int:
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(content)
         print(f"wrote {rel}")
-    stale = [p.name for p in (SUBMOD / RELIGION_DIR).glob("*.txt") if f"{RELIGION_DIR}/{p.name}" not in files]
+    stale = [f"{d}/{p.name}" for d in (RELIGION_DIR, DOCTRINE_DIR) for p in (SUBMOD / d).glob("*.txt")
+             if f"{d}/{p.name}" not in files]
     if stale:
-        print(f"note: delete religion overrides no longer generated: {', '.join(stale)}")
+        print(f"note: delete overrides no longer generated: {', '.join(stale)}")
     return 0
 
 

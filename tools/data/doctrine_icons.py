@@ -1,10 +1,12 @@
 """Icons for Anbennar doctrines and tenets that ship without a picture (the faith window showed the pink placeholder).
 
 CK3 draws a doctrine's icon from gfx/interface/icons/faith_doctrines/<icon>.dds, where <icon> is the doctrine's `icon`
-field or else its key. Anbennar has no such folder, so these files carry the exact names Anbennar's doctrines look up
-(no aov_ prefix is possible without overriding the doctrines). The pictures were made once and are committed; this
-module records where each came from, and tools/tests/test_doctrine_icons.py checks that every doctrine the faith
-window draws an icon for has one, and that Anbennar has not started shipping its own file of the same name.
+field. Anbennar has no such folder, and its patron deity and infernalist doctrines have no `icon` field (CK3 1.19 does
+not fall back to the key), so the files carry the doctrine keys and tools/build_holy_sites.py copies those doctrine
+files with an `icon = "<key>"` line added. Khetist and Dwarven Syncretism already name their icon. The pictures were
+made once and are committed; this module records where each came from, and tools/tests/test_doctrine_icons.py checks
+that every doctrine the faith window draws names an icon that exists, and that Anbennar has not started shipping its
+own file of the same name.
 
 Sources:
 - ("deity", [frames]): EU4 Anbennar gfx/interface/hindu_deities_strip.dds, the personal-deity icons (42 px frames,

@@ -63,9 +63,16 @@ Anbennar looks up (an `aov_` name would need the doctrines overridden). They wer
 | Castellosi Monolatrism | the Southern Cult of Castellos faith icon (PoD Via Regalis crown) |
 | Dwarven Syncretism tenet (`anb_tenet_dwarven_reverence`) | RiE `tenet_dwarf_statue.dds`, unchanged (260x400) |
 
-`tools/tests/test_doctrine_icons.py` fails when a doctrine the faith window draws has no icon file in the game,
-Anbennar or the overhaul (rerun it after an Anbennar update), when Anbennar starts shipping a file of the same name
-(then delete ours and its entry), and on a stray or wrongly sized file.
+A file named after the doctrine is not enough. `_doctrine_types.info` says a doctrine without an `icon` line falls
+back to its key, but CK3 1.19 does not: the faith window draws the pink placeholder and logs nothing (seen on the
+Eightborn Doctrine with its file in place). Vanilla gives every doctrine an explicit `icon`. So `build_holy_sites.py`
+also copies Anbennar's `anb_doctrines_deities.txt` (24 patron deities) and `anb_doctrines_infernalist.txt` (2) with a
+marked `icon = "<key>"` line added to each doctrine that has an icon of ours. Khetist and Dwarven Syncretism already
+name their icon. Whole files are copied because overriding a single doctrine by key is untested.
+
+`tools/tests/test_doctrine_icons.py` fails when a doctrine the faith window draws has no `icon` line or no icon file
+in the game, Anbennar or the overhaul (rerun it after an Anbennar update), when Anbennar starts shipping a file of
+the same name (then delete ours and its entry), and on a stray or wrongly sized file.
 
 ## Generated files
 
@@ -74,9 +81,10 @@ Anbennar or the overhaul (rerun it after an Anbennar update), when Anbennar star
 | `common/religion/holy_site_types/aov_holy_sites.txt` | `build_holy_sites.py` | the eight holy sites |
 | `localization/english/aov_holy_sites_l_english.yml` | `build_holy_sites.py` | site and modifier names |
 | `common/religion/religion_types/anb_*.txt` (14 files: `akasi`, `alenic`, `bulwari_sun_cults`, `businori`, `cannorian_pantheon`, `dragon_cult`, `fey`, `gerudian`, `halessi`, `high_philosophy`, `infernal_court`, `lencori`, `milcori`, `tyvorkan`) | `build_holy_sites.py` | a faith's holy sites and icon can only be set in its religion, and religions are whole-file overrides; these are Anbennar's files with marked `holy_site` lines added and marked `icon`/`reformed_icon` lines (`# Anbennar Overhaul, was <old icon>`) changed |
+| `common/religion/doctrine_types/anb_doctrines_deities.txt`, `anb_doctrines_infernalist.txt` | `build_holy_sites.py` | the game ignores a doctrine's key as its icon; these are Anbennar's files with a marked `icon = "<key>"` line added to each doctrine in `tools/data/doctrine_icons.py` |
 
-The data is in `tools/data/holy_sites.py` and `tools/data/faith_icons.py`; the icon pictures in
-`gfx/interface/icons/faith/aov_*.dds` are committed by hand. Rerun `python -I tools/build_holy_sites.py` after every
+The data is in `tools/data/holy_sites.py`, `tools/data/faith_icons.py` and `tools/data/doctrine_icons.py`; the icon
+pictures in `gfx/interface/icons/faith/aov_*.dds` and `gfx/interface/icons/faith_doctrines/` are committed by hand. Rerun `python -I tools/build_holy_sites.py` after every
 Anbennar update, or Anbennar's later changes to these religions are hidden by the stale copies.
 `tools/tests/test_build_holy_sites.py` fails when the copies are stale, and the generator stops when a county or
 barony is gone, a faith is renamed, a faith gains holy sites of its own in Anbennar, or a faith no longer has the

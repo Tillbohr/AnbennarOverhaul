@@ -27,7 +27,27 @@ RELIGION_FIXTURE = """test_religion = {
 }
 """
 
+DOCTRINE_FIXTURE = """doctrine_a = {
+\tpiety_cost = 1
+}
+
+doctrine_b = { # comment
+\ticon = "named"
+}
+"""
+
 HAVE_REAL = (bhs.ANBENNAR_CK3 / bhs.RELIGION_DIR).is_dir()
+
+
+class AddDoctrineIconsTests(unittest.TestCase):
+    def test_icon_line_added_first_and_marked(self):
+        out = bhs.add_doctrine_icons(DOCTRINE_FIXTURE, ["doctrine_a"])
+        self.assertEqual(out.split("\n")[1], f'\ticon = "doctrine_a" {bhs.MARKER}')
+        self.assertEqual(parse_blocks(out)["doctrine_b"], 'icon = "named"')
+
+    def test_missing_doctrine_stops(self):
+        with self.assertRaises(GeneratorError):
+            bhs.add_doctrine_icons(DOCTRINE_FIXTURE, ["doctrine_c"])
 
 
 class AddHolySitesTests(unittest.TestCase):
@@ -127,13 +147,13 @@ class FreshnessTests(unittest.TestCase):
                  if not (bhs.SUBMOD / rel).is_file() or (bhs.SUBMOD / rel).read_bytes() != content]
         self.assertEqual(stale, [], "stale: rerun python -I tools/build_holy_sites.py")
 
-    def test_no_leftover_religion_overrides(self):
-        ours = {f"{bhs.RELIGION_DIR}/{p.name}" for p in (bhs.SUBMOD / bhs.RELIGION_DIR).glob("*.txt")}
+    def test_no_leftover_overrides(self):
+        ours = {f"{d}/{p.name}" for d in (bhs.RELIGION_DIR, bhs.DOCTRINE_DIR) for p in (bhs.SUBMOD / d).glob("*.txt")}
         self.assertEqual(ours - set(self.files), set())
 
-    def test_religion_copies_differ_only_by_marked_lines(self):
+    def test_copies_differ_only_by_marked_lines(self):
         for rel, content in self.files.items():
-            if not rel.startswith(bhs.RELIGION_DIR):
+            if not rel.startswith((bhs.RELIGION_DIR, bhs.DOCTRINE_DIR)):
                 continue
             src = (bhs.ANBENNAR_CK3 / rel).read_bytes().decode("utf-8-sig").replace("\r\n", "\n")
             lines = content.decode("utf-8-sig").replace("\r\n", "\n").split("\n")
@@ -141,6 +161,16 @@ class FreshnessTests(unittest.TestCase):
             rest = [re.sub(rf"^(\s*\w+) = \w+ {bhs.MARKER}, was (\w+)$", r"\1 = \2", l)
                     for l in lines[2:] if not l.endswith(" " + bhs.MARKER)]
             self.assertEqual("\n".join(rest), src, rel)
+
+    def test_every_doctrine_icon_is_named_explicitly(self):
+        """The game ignores a doctrine's key as its icon, so every icon of ours must be some doctrine's `icon`."""
+        named = set()
+        for rel, content in self.files.items():
+            if rel.startswith(bhs.DOCTRINE_DIR):
+                named |= set(re.findall(r'(?m)^\s*icon = "?(\w+)"?', content.decode("utf-8-sig")))
+        for path in (bhs.ANBENNAR_CK3 / bhs.DOCTRINE_DIR).glob("*.txt"):
+            named |= set(re.findall(r'(?m)^\s*icon\s*=\s*"?(\w+)"?', path.read_bytes().decode("utf-8-sig")))
+        self.assertEqual(set(bhs.DOCTRINE_ICONS) - named, set())
 
     def test_every_site_named(self):
         loc = self.files[bhs.LOC_FILE].decode("utf-8-sig")

@@ -35,9 +35,11 @@ def database(folder: str) -> dict:
     return out
 
 
-def icon_of(key: str, body: str) -> str:
+def icon_of(body: str):
+    """The doctrine's `icon` field, or None: CK3 1.19 draws the placeholder for a doctrine without one, although
+    _doctrine_types.info says it falls back to the key."""
     m = re.search(r'^\s*icon\s*=\s*"?(\w+)"?', body, re.M)
-    return m.group(1) if m else key
+    return m.group(1) if m else None
 
 
 def dds_size(path: Path) -> tuple:
@@ -63,11 +65,12 @@ class DoctrineIconTests(unittest.TestCase):
         for key, group in self.shown.items():
             if key not in self.doctrines:
                 continue  # listed in a group but defined nowhere: the engine skips it
-            icon = icon_of(key, self.doctrines[key])
+            icon = icon_of(self.doctrines[key])
+            self.assertIsNotNone(icon, f"{group} {key}: no icon line")
             self.assertTrue(any((r / ICON_DIR / f"{icon}.dds").is_file() for r in ROOTS), f"{group} {key}: {icon}")
 
     def test_every_icon_is_used_by_a_doctrine(self):
-        used = {icon_of(k, b) for k, b in self.doctrines.items()}
+        used = {icon_of(b) for b in self.doctrines.values()}
         for name in DOCTRINE_ICONS:
             self.assertIn(name, used)
 
