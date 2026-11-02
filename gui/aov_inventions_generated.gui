@@ -2494,51 +2494,6 @@ types AovInventions
 				}
 
 				widget = {
-					name = "aov_inv_box_fey_spray"
-					visible = "[GetScriptedGui('aov_inv_fey_spray_visible_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					size = { 72 72 }
-
-					button = {
-						size = { 100% 100% }
-						onclick = "[GetScriptedGui('aov_inv_fey_spray_toggle_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-						clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
-
-						tooltipwidget = {
-							aov_invention_fey_spray_tooltip = {}
-						}
-
-						# Locked or undiscovered
-						highlight_icon = {
-							visible = "[Not( Or( GetScriptedGui('aov_inv_fey_spray_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), GetScriptedGui('aov_inv_fey_spray_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ) )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_society.dds"
-							framesize = { 78 78 }
-							effectname = "GreyedOut"
-							alpha = "[Select_float( GetScriptedGui('aov_inv_fey_spray_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), '(float)1', '(float)0.45' )]"
-							frame = 1
-						}
-
-						# Discovered
-						highlight_icon = {
-							visible = "[GetScriptedGui('aov_inv_fey_spray_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_society.dds"
-							framesize = { 78 78 }
-							frame = 2
-						}
-
-						# Active
-						highlight_icon = {
-							visible = "[GetScriptedGui('aov_inv_fey_spray_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_society.dds"
-							framesize = { 78 78 }
-							frame = 3
-						}
-					}
-				}
-
-				widget = {
 					name = "aov_inv_box_mystic_ciphers"
 					visible = "[GetScriptedGui('aov_inv_mystic_ciphers_visible_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					size = { 72 72 }
@@ -2627,10 +2582,6 @@ types AovInventions
 						}
 					}
 				}
-			}
-
-			hbox = {
-				spacing = 6
 
 				widget = {
 					name = "aov_inv_box_spell_in_a_box"
@@ -2669,6 +2620,55 @@ types AovInventions
 						# Active
 						highlight_icon = {
 							visible = "[GetScriptedGui('aov_inv_spell_in_a_box_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_society.dds"
+							framesize = { 78 78 }
+							frame = 3
+						}
+					}
+				}
+			}
+
+			hbox = {
+				spacing = 6
+
+				widget = {
+					name = "aov_inv_box_fey_spray"
+					visible = "[GetScriptedGui('aov_inv_fey_spray_visible_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					size = { 72 72 }
+
+					button = {
+						size = { 100% 100% }
+						onclick = "[GetScriptedGui('aov_inv_fey_spray_toggle_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
+
+						tooltipwidget = {
+							aov_invention_fey_spray_tooltip = {}
+						}
+
+						# Locked or undiscovered
+						highlight_icon = {
+							visible = "[Not( Or( GetScriptedGui('aov_inv_fey_spray_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), GetScriptedGui('aov_inv_fey_spray_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ) )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_society.dds"
+							framesize = { 78 78 }
+							effectname = "GreyedOut"
+							alpha = "[Select_float( GetScriptedGui('aov_inv_fey_spray_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), '(float)1', '(float)0.45' )]"
+							frame = 1
+						}
+
+						# Discovered
+						highlight_icon = {
+							visible = "[GetScriptedGui('aov_inv_fey_spray_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_society.dds"
+							framesize = { 78 78 }
+							frame = 2
+						}
+
+						# Active
+						highlight_icon = {
+							visible = "[GetScriptedGui('aov_inv_fey_spray_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 							size = { 100% 100% }
 							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_society.dds"
 							framesize = { 78 78 }
@@ -2953,51 +2953,6 @@ types AovInventions
 				spacing = 6
 
 				widget = {
-					name = "aov_inv_box_ancestral_golems"
-					visible = "[GetScriptedGui('aov_inv_ancestral_golems_visible_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					size = { 72 72 }
-
-					button = {
-						size = { 100% 100% }
-						onclick = "[GetScriptedGui('aov_inv_ancestral_golems_toggle_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-						clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
-
-						tooltipwidget = {
-							aov_invention_ancestral_golems_tooltip = {}
-						}
-
-						# Locked or undiscovered
-						highlight_icon = {
-							visible = "[Not( Or( GetScriptedGui('aov_inv_ancestral_golems_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), GetScriptedGui('aov_inv_ancestral_golems_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ) )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
-							framesize = { 78 78 }
-							effectname = "GreyedOut"
-							alpha = "[Select_float( GetScriptedGui('aov_inv_ancestral_golems_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), '(float)1', '(float)0.45' )]"
-							frame = 1
-						}
-
-						# Discovered
-						highlight_icon = {
-							visible = "[GetScriptedGui('aov_inv_ancestral_golems_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
-							framesize = { 78 78 }
-							frame = 2
-						}
-
-						# Active
-						highlight_icon = {
-							visible = "[GetScriptedGui('aov_inv_ancestral_golems_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
-							framesize = { 78 78 }
-							frame = 3
-						}
-					}
-				}
-
-				widget = {
 					name = "aov_inv_box_brass_cuirasses"
 					visible = "[GetScriptedGui('aov_inv_brass_cuirasses_visible_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					size = { 72 72 }
@@ -3176,6 +3131,51 @@ types AovInventions
 						}
 					}
 				}
+
+				widget = {
+					name = "aov_inv_box_ancestral_golems"
+					visible = "[GetScriptedGui('aov_inv_ancestral_golems_visible_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					size = { 72 72 }
+
+					button = {
+						size = { 100% 100% }
+						onclick = "[GetScriptedGui('aov_inv_ancestral_golems_toggle_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
+
+						tooltipwidget = {
+							aov_invention_ancestral_golems_tooltip = {}
+						}
+
+						# Locked or undiscovered
+						highlight_icon = {
+							visible = "[Not( Or( GetScriptedGui('aov_inv_ancestral_golems_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), GetScriptedGui('aov_inv_ancestral_golems_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ) )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
+							framesize = { 78 78 }
+							effectname = "GreyedOut"
+							alpha = "[Select_float( GetScriptedGui('aov_inv_ancestral_golems_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), '(float)1', '(float)0.45' )]"
+							frame = 1
+						}
+
+						# Discovered
+						highlight_icon = {
+							visible = "[GetScriptedGui('aov_inv_ancestral_golems_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
+							framesize = { 78 78 }
+							frame = 2
+						}
+
+						# Active
+						highlight_icon = {
+							visible = "[GetScriptedGui('aov_inv_ancestral_golems_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
+							framesize = { 78 78 }
+							frame = 3
+						}
+					}
+				}
 			}
 
 			hbox = {
@@ -3293,51 +3293,6 @@ types AovInventions
 						# Active
 						highlight_icon = {
 							visible = "[GetScriptedGui('aov_inv_clockwork_orrery_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_society.dds"
-							framesize = { 78 78 }
-							frame = 3
-						}
-					}
-				}
-
-				widget = {
-					name = "aov_inv_box_game_of_khet"
-					visible = "[GetScriptedGui('aov_inv_game_of_khet_visible_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					size = { 72 72 }
-
-					button = {
-						size = { 100% 100% }
-						onclick = "[GetScriptedGui('aov_inv_game_of_khet_toggle_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-						clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
-
-						tooltipwidget = {
-							aov_invention_game_of_khet_tooltip = {}
-						}
-
-						# Locked or undiscovered
-						highlight_icon = {
-							visible = "[Not( Or( GetScriptedGui('aov_inv_game_of_khet_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), GetScriptedGui('aov_inv_game_of_khet_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ) )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_society.dds"
-							framesize = { 78 78 }
-							effectname = "GreyedOut"
-							alpha = "[Select_float( GetScriptedGui('aov_inv_game_of_khet_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), '(float)1', '(float)0.45' )]"
-							frame = 1
-						}
-
-						# Discovered
-						highlight_icon = {
-							visible = "[GetScriptedGui('aov_inv_game_of_khet_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_society.dds"
-							framesize = { 78 78 }
-							frame = 2
-						}
-
-						# Active
-						highlight_icon = {
-							visible = "[GetScriptedGui('aov_inv_game_of_khet_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 							size = { 100% 100% }
 							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_society.dds"
 							framesize = { 78 78 }
@@ -3480,10 +3435,6 @@ types AovInventions
 						}
 					}
 				}
-			}
-
-			hbox = {
-				spacing = 6
 
 				widget = {
 					name = "aov_inv_box_remedial_tinctures"
@@ -3522,6 +3473,55 @@ types AovInventions
 						# Active
 						highlight_icon = {
 							visible = "[GetScriptedGui('aov_inv_remedial_tinctures_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_society.dds"
+							framesize = { 78 78 }
+							frame = 3
+						}
+					}
+				}
+			}
+
+			hbox = {
+				spacing = 6
+
+				widget = {
+					name = "aov_inv_box_game_of_khet"
+					visible = "[GetScriptedGui('aov_inv_game_of_khet_visible_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					size = { 72 72 }
+
+					button = {
+						size = { 100% 100% }
+						onclick = "[GetScriptedGui('aov_inv_game_of_khet_toggle_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
+
+						tooltipwidget = {
+							aov_invention_game_of_khet_tooltip = {}
+						}
+
+						# Locked or undiscovered
+						highlight_icon = {
+							visible = "[Not( Or( GetScriptedGui('aov_inv_game_of_khet_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), GetScriptedGui('aov_inv_game_of_khet_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ) )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_society.dds"
+							framesize = { 78 78 }
+							effectname = "GreyedOut"
+							alpha = "[Select_float( GetScriptedGui('aov_inv_game_of_khet_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), '(float)1', '(float)0.45' )]"
+							frame = 1
+						}
+
+						# Discovered
+						highlight_icon = {
+							visible = "[GetScriptedGui('aov_inv_game_of_khet_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_society.dds"
+							framesize = { 78 78 }
+							frame = 2
+						}
+
+						# Active
+						highlight_icon = {
+							visible = "[GetScriptedGui('aov_inv_game_of_khet_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 							size = { 100% 100% }
 							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_society.dds"
 							framesize = { 78 78 }
@@ -3761,51 +3761,6 @@ types AovInventions
 				spacing = 6
 
 				widget = {
-					name = "aov_inv_box_avatar_supersoldier_serum"
-					visible = "[GetScriptedGui('aov_inv_avatar_supersoldier_serum_visible_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					size = { 72 72 }
-
-					button = {
-						size = { 100% 100% }
-						onclick = "[GetScriptedGui('aov_inv_avatar_supersoldier_serum_toggle_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-						clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
-
-						tooltipwidget = {
-							aov_invention_avatar_supersoldier_serum_tooltip = {}
-						}
-
-						# Locked or undiscovered
-						highlight_icon = {
-							visible = "[Not( Or( GetScriptedGui('aov_inv_avatar_supersoldier_serum_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), GetScriptedGui('aov_inv_avatar_supersoldier_serum_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ) )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
-							framesize = { 78 78 }
-							effectname = "GreyedOut"
-							alpha = "[Select_float( GetScriptedGui('aov_inv_avatar_supersoldier_serum_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), '(float)1', '(float)0.45' )]"
-							frame = 1
-						}
-
-						# Discovered
-						highlight_icon = {
-							visible = "[GetScriptedGui('aov_inv_avatar_supersoldier_serum_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
-							framesize = { 78 78 }
-							frame = 2
-						}
-
-						# Active
-						highlight_icon = {
-							visible = "[GetScriptedGui('aov_inv_avatar_supersoldier_serum_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
-							framesize = { 78 78 }
-							frame = 3
-						}
-					}
-				}
-
-				widget = {
 					name = "aov_inv_box_brass_prosthesis"
 					visible = "[GetScriptedGui('aov_inv_brass_prosthesis_visible_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					size = { 72 72 }
@@ -3842,51 +3797,6 @@ types AovInventions
 						# Active
 						highlight_icon = {
 							visible = "[GetScriptedGui('aov_inv_brass_prosthesis_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
-							framesize = { 78 78 }
-							frame = 3
-						}
-					}
-				}
-
-				widget = {
-					name = "aov_inv_box_chi_cultivation"
-					visible = "[GetScriptedGui('aov_inv_chi_cultivation_visible_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					size = { 72 72 }
-
-					button = {
-						size = { 100% 100% }
-						onclick = "[GetScriptedGui('aov_inv_chi_cultivation_toggle_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-						clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
-
-						tooltipwidget = {
-							aov_invention_chi_cultivation_tooltip = {}
-						}
-
-						# Locked or undiscovered
-						highlight_icon = {
-							visible = "[Not( Or( GetScriptedGui('aov_inv_chi_cultivation_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), GetScriptedGui('aov_inv_chi_cultivation_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ) )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
-							framesize = { 78 78 }
-							effectname = "GreyedOut"
-							alpha = "[Select_float( GetScriptedGui('aov_inv_chi_cultivation_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), '(float)1', '(float)0.45' )]"
-							frame = 1
-						}
-
-						# Discovered
-						highlight_icon = {
-							visible = "[GetScriptedGui('aov_inv_chi_cultivation_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
-							framesize = { 78 78 }
-							frame = 2
-						}
-
-						# Active
-						highlight_icon = {
-							visible = "[GetScriptedGui('aov_inv_chi_cultivation_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 							size = { 100% 100% }
 							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
 							framesize = { 78 78 }
@@ -3939,55 +3849,6 @@ types AovInventions
 						}
 					}
 				}
-
-				widget = {
-					name = "aov_inv_box_lullaby_cannon"
-					visible = "[GetScriptedGui('aov_inv_lullaby_cannon_visible_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					size = { 72 72 }
-
-					button = {
-						size = { 100% 100% }
-						onclick = "[GetScriptedGui('aov_inv_lullaby_cannon_toggle_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-						clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
-
-						tooltipwidget = {
-							aov_invention_lullaby_cannon_tooltip = {}
-						}
-
-						# Locked or undiscovered
-						highlight_icon = {
-							visible = "[Not( Or( GetScriptedGui('aov_inv_lullaby_cannon_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), GetScriptedGui('aov_inv_lullaby_cannon_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ) )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
-							framesize = { 78 78 }
-							effectname = "GreyedOut"
-							alpha = "[Select_float( GetScriptedGui('aov_inv_lullaby_cannon_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), '(float)1', '(float)0.45' )]"
-							frame = 1
-						}
-
-						# Discovered
-						highlight_icon = {
-							visible = "[GetScriptedGui('aov_inv_lullaby_cannon_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
-							framesize = { 78 78 }
-							frame = 2
-						}
-
-						# Active
-						highlight_icon = {
-							visible = "[GetScriptedGui('aov_inv_lullaby_cannon_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
-							framesize = { 78 78 }
-							frame = 3
-						}
-					}
-				}
-			}
-
-			hbox = {
-				spacing = 6
 
 				widget = {
 					name = "aov_inv_box_vorpal_bullets"
@@ -4071,6 +3932,145 @@ types AovInventions
 						# Active
 						highlight_icon = {
 							visible = "[GetScriptedGui('aov_inv_war_golems_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
+							framesize = { 78 78 }
+							frame = 3
+						}
+					}
+				}
+
+				widget = {
+					name = "aov_inv_box_avatar_supersoldier_serum"
+					visible = "[GetScriptedGui('aov_inv_avatar_supersoldier_serum_visible_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					size = { 72 72 }
+
+					button = {
+						size = { 100% 100% }
+						onclick = "[GetScriptedGui('aov_inv_avatar_supersoldier_serum_toggle_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
+
+						tooltipwidget = {
+							aov_invention_avatar_supersoldier_serum_tooltip = {}
+						}
+
+						# Locked or undiscovered
+						highlight_icon = {
+							visible = "[Not( Or( GetScriptedGui('aov_inv_avatar_supersoldier_serum_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), GetScriptedGui('aov_inv_avatar_supersoldier_serum_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ) )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
+							framesize = { 78 78 }
+							effectname = "GreyedOut"
+							alpha = "[Select_float( GetScriptedGui('aov_inv_avatar_supersoldier_serum_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), '(float)1', '(float)0.45' )]"
+							frame = 1
+						}
+
+						# Discovered
+						highlight_icon = {
+							visible = "[GetScriptedGui('aov_inv_avatar_supersoldier_serum_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
+							framesize = { 78 78 }
+							frame = 2
+						}
+
+						# Active
+						highlight_icon = {
+							visible = "[GetScriptedGui('aov_inv_avatar_supersoldier_serum_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
+							framesize = { 78 78 }
+							frame = 3
+						}
+					}
+				}
+			}
+
+			hbox = {
+				spacing = 6
+
+				widget = {
+					name = "aov_inv_box_chi_cultivation"
+					visible = "[GetScriptedGui('aov_inv_chi_cultivation_visible_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					size = { 72 72 }
+
+					button = {
+						size = { 100% 100% }
+						onclick = "[GetScriptedGui('aov_inv_chi_cultivation_toggle_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
+
+						tooltipwidget = {
+							aov_invention_chi_cultivation_tooltip = {}
+						}
+
+						# Locked or undiscovered
+						highlight_icon = {
+							visible = "[Not( Or( GetScriptedGui('aov_inv_chi_cultivation_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), GetScriptedGui('aov_inv_chi_cultivation_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ) )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
+							framesize = { 78 78 }
+							effectname = "GreyedOut"
+							alpha = "[Select_float( GetScriptedGui('aov_inv_chi_cultivation_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), '(float)1', '(float)0.45' )]"
+							frame = 1
+						}
+
+						# Discovered
+						highlight_icon = {
+							visible = "[GetScriptedGui('aov_inv_chi_cultivation_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
+							framesize = { 78 78 }
+							frame = 2
+						}
+
+						# Active
+						highlight_icon = {
+							visible = "[GetScriptedGui('aov_inv_chi_cultivation_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
+							framesize = { 78 78 }
+							frame = 3
+						}
+					}
+				}
+
+				widget = {
+					name = "aov_inv_box_lullaby_cannon"
+					visible = "[GetScriptedGui('aov_inv_lullaby_cannon_visible_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					size = { 72 72 }
+
+					button = {
+						size = { 100% 100% }
+						onclick = "[GetScriptedGui('aov_inv_lullaby_cannon_toggle_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
+
+						tooltipwidget = {
+							aov_invention_lullaby_cannon_tooltip = {}
+						}
+
+						# Locked or undiscovered
+						highlight_icon = {
+							visible = "[Not( Or( GetScriptedGui('aov_inv_lullaby_cannon_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), GetScriptedGui('aov_inv_lullaby_cannon_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ) )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
+							framesize = { 78 78 }
+							effectname = "GreyedOut"
+							alpha = "[Select_float( GetScriptedGui('aov_inv_lullaby_cannon_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), '(float)1', '(float)0.45' )]"
+							frame = 1
+						}
+
+						# Discovered
+						highlight_icon = {
+							visible = "[GetScriptedGui('aov_inv_lullaby_cannon_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
+							framesize = { 78 78 }
+							frame = 2
+						}
+
+						# Active
+						highlight_icon = {
+							visible = "[GetScriptedGui('aov_inv_lullaby_cannon_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 							size = { 100% 100% }
 							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
 							framesize = { 78 78 }
@@ -4655,51 +4655,6 @@ types AovInventions
 				}
 
 				widget = {
-					name = "aov_inv_box_demonflame_flamethrowers"
-					visible = "[GetScriptedGui('aov_inv_demonflame_flamethrowers_visible_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					size = { 72 72 }
-
-					button = {
-						size = { 100% 100% }
-						onclick = "[GetScriptedGui('aov_inv_demonflame_flamethrowers_toggle_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-						clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
-
-						tooltipwidget = {
-							aov_invention_demonflame_flamethrowers_tooltip = {}
-						}
-
-						# Locked or undiscovered
-						highlight_icon = {
-							visible = "[Not( Or( GetScriptedGui('aov_inv_demonflame_flamethrowers_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), GetScriptedGui('aov_inv_demonflame_flamethrowers_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ) )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
-							framesize = { 78 78 }
-							effectname = "GreyedOut"
-							alpha = "[Select_float( GetScriptedGui('aov_inv_demonflame_flamethrowers_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), '(float)1', '(float)0.45' )]"
-							frame = 1
-						}
-
-						# Discovered
-						highlight_icon = {
-							visible = "[GetScriptedGui('aov_inv_demonflame_flamethrowers_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
-							framesize = { 78 78 }
-							frame = 2
-						}
-
-						# Active
-						highlight_icon = {
-							visible = "[GetScriptedGui('aov_inv_demonflame_flamethrowers_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-							size = { 100% 100% }
-							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
-							framesize = { 78 78 }
-							frame = 3
-						}
-					}
-				}
-
-				widget = {
 					name = "aov_inv_box_observation_balloons"
 					visible = "[GetScriptedGui('aov_inv_observation_balloons_visible_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					size = { 72 72 }
@@ -4743,10 +4698,6 @@ types AovInventions
 						}
 					}
 				}
-			}
-
-			hbox = {
-				spacing = 6
 
 				widget = {
 					name = "aov_inv_box_wandlocks"
@@ -4785,6 +4736,55 @@ types AovInventions
 						# Active
 						highlight_icon = {
 							visible = "[GetScriptedGui('aov_inv_wandlocks_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
+							framesize = { 78 78 }
+							frame = 3
+						}
+					}
+				}
+			}
+
+			hbox = {
+				spacing = 6
+
+				widget = {
+					name = "aov_inv_box_demonflame_flamethrowers"
+					visible = "[GetScriptedGui('aov_inv_demonflame_flamethrowers_visible_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					size = { 72 72 }
+
+					button = {
+						size = { 100% 100% }
+						onclick = "[GetScriptedGui('aov_inv_demonflame_flamethrowers_toggle_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
+
+						tooltipwidget = {
+							aov_invention_demonflame_flamethrowers_tooltip = {}
+						}
+
+						# Locked or undiscovered
+						highlight_icon = {
+							visible = "[Not( Or( GetScriptedGui('aov_inv_demonflame_flamethrowers_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), GetScriptedGui('aov_inv_demonflame_flamethrowers_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) ) )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
+							framesize = { 78 78 }
+							effectname = "GreyedOut"
+							alpha = "[Select_float( GetScriptedGui('aov_inv_demonflame_flamethrowers_unlocked_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), '(float)1', '(float)0.45' )]"
+							frame = 1
+						}
+
+						# Discovered
+						highlight_icon = {
+							visible = "[GetScriptedGui('aov_inv_demonflame_flamethrowers_activate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							size = { 100% 100% }
+							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
+							framesize = { 78 78 }
+							frame = 2
+						}
+
+						# Active
+						highlight_icon = {
+							visible = "[GetScriptedGui('aov_inv_demonflame_flamethrowers_deactivate_sgui').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 							size = { 100% 100% }
 							texture = "gfx/interface/icons/aov_inventions/aov_invention_button_military.dds"
 							framesize = { 78 78 }

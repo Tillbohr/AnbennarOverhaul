@@ -24,7 +24,7 @@ The HUD override also carries the Magic tab (see magic.md).
   mapping in `docs/research/2026-10-08-eu4-artificer-inventions.md` is history). Research sponsored by Brillites (5 y, random),
   Mechanists (10 y, chosen field) or Technomancers (15 y, chosen invention); cost and time set by that faction's
   influence (below); Tier II/III need the culture
-  era plus `aov_invention_tier_gate_count` (6) discoveries of the tier below; 4/5/6 slots with six cooldowns; state in ruler variables, inherited by the heir; dormant while
+  era plus `aov_invention_tier_gate_count` (6) discoveries of the tier below; 4/5/6 slots (a slot that is emptied cannot be refilled for 1 year); state in ruler variables, inherited by the heir; dormant while
   ineligible. Logic in `aov_artificery_research_*` files and `common/on_action/aov_inventions_on_actions.txt`.
 - **Unlocks (hybrid):** modifiers need an active slot; unlocks do not. Generated trigger
   `aov_invention_<key>_unlock_ready` (discovered, visible, not dormant) makes an unlock permanent once discovered and

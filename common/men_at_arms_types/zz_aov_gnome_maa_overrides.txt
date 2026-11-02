@@ -35,8 +35,10 @@ artificers = {
 armored_artificers = {
 	type = gunpowder
 
-	damage = 45
-	toughness = 30
+	# Anbennar's culture eras add +26 damage / +35 toughness by the Late Medieval era (which this unit
+	# requires): 45 / 50 effective.
+	damage = 19
+	toughness = 15
 	pursuit = 0
 	screen = 0
 

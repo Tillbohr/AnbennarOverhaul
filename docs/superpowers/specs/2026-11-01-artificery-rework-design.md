@@ -138,7 +138,7 @@ already does for modifiers.
 | `aov_clockwork_repeaters` (new) | Clockwork Repeaters | `archers` | vanilla `crossbowmen` (42/18) +30 %: damage 55, toughness 23; same counters and terrain, stack 100 |
 | `aov_war_golems` (kept) | War Golems | `heavy_infantry` | vanilla `armored_footmen` (32/22) +40 % (was +25 %): damage 45, toughness 31 |
 | `aov_gnomish_bombards` (new) | Gnomish Bombards | `siege_weapon` | vanilla `bombard` (tier 4, siege value 0.6, toughness 12): siege value 0.75; stack 10 |
-| `armored_artificers` (Anbennar's, re-enabled) | Clockwork Plate Harness | `gunpowder` (was `heavy_infantry`) | damage 45, toughness 30, stack 75; Anbennar's culture-era upgrades keep applying |
+| `armored_artificers` (Anbennar's, re-enabled) | Clockwork Plate Harness | `gunpowder` (was `heavy_infantry`) | damage 19, toughness 15 (45/50 in the Late Medieval era after Anbennar's culture-era upgrades), stack 75 |
 
 `can_recruit` is `aov_invention_<key>_unlock_ready = yes` (each MaA also keeps `has_enabled_artificer_academy_trigger`
 for parity with `artificer_handgunners`). `armored_artificers` stays a single-object override in

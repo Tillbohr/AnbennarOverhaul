@@ -5,7 +5,7 @@
 # Artificery inventions: men-at-arms recruitable once their invention is discovered
 # (permanent; off while artificery is dormant).
 # Stats: Clockwork Repeaters are vanilla crossbowmen (42/18) +30 % damage, +25 % toughness;
-# War Golems are vanilla heavy infantry (armored footmen) +25 % damage and toughness; Gnomish Bombards
+# War Golems are vanilla heavy infantry (armored footmen, 32/22) +40 % damage and toughness (45/31); Gnomish Bombards
 # are the vanilla bombard (siege value 0.6) x1.25. Armored Artificers: zz_aov_gnome_maa_overrides.txt.
 
 aov_clockwork_repeaters = {

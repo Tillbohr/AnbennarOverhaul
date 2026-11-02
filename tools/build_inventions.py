@@ -432,6 +432,8 @@ def box(i) -> str:
 def section(invs: list, tier: int, category: str) -> str:
     """A framed group of boxes with a header, like EU4's Society/Economic/Military Inventions."""
     members = of(invs, category, tier)
+    # Faith-locked boxes are hidden for most rulers: put them last so rows do not get gaps
+    members = [i for i in members if not i["faith"]] + [i for i in members if i["faith"]]
     rows = []
     for n in range(0, len(members), PER_ROW):
         rows.append("hbox = {\n\tspacing = 6\n\n" + ind("\n".join(box(i) for i in members[n:n + PER_ROW]), 1) + "}\n")

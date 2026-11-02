@@ -333,7 +333,19 @@ class GuiOutputTests(unittest.TestCase):
             for c in bi.CATEGORIES:
                 section = body.split(f'name = "aov_inventions_t{t}_{c}"')[1].split('name = "aov_inventions_t')[0]
                 listed = re.findall(r'name = "aov_inv_box_([a-z0-9_]+)"', section)
-                self.assertEqual(listed, [i["key"] for i in INVENTIONS if i["category"] == c and i["tier"] == t])
+                members = [i for i in INVENTIONS if i["category"] == c and i["tier"] == t]
+                expected = [i["key"] for i in members if not i["faith"]] + [i["key"] for i in members if i["faith"]]
+                self.assertEqual(listed, expected)
+
+    def test_faith_locked_boxes_come_last_in_each_section(self):
+        by = {i["key"]: i for i in INVENTIONS}
+        for t in (1, 2, 3):
+            body = self.tier_body(t)
+            for c in bi.CATEGORIES:
+                section = body.split(f'name = "aov_inventions_t{t}_{c}"')[1].split('name = "aov_inventions_t')[0]
+                listed = re.findall(r'name = "aov_inv_box_([a-z0-9_]+)"', section)
+                flags = [bool(by[k]["faith"]) for k in listed]
+                self.assertEqual(flags, sorted(flags), f"t{t} {c}")
 
     def test_rows_hold_at_most_five_boxes(self):
         for t in (1, 2, 3):

@@ -97,6 +97,19 @@ class ResearchTests(unittest.TestCase):
             self.assertIn("ScriptValue('aov_invention_tier_gate_count')", line)
             self.assertIn(f"ScriptValue('aov_inventions_t{prev}_discovered_count')", line)
 
+    def test_tier_banner_requires_discovery_gate(self):
+        text = read("common/scripted_guis/aov_artificery_research_sgui.txt")
+        for t, prev in ((2, 1), (3, 2)):
+            b = block(text, f"aov_inventions_tier_{t}_unlocked_sgui")
+            self.assertIn(f"aov_inventions_t{prev}_discovered_count >= aov_invention_tier_gate_count", b)
+
+    def test_tier_banner_loc_shows_both_requirements(self):
+        text = read("localization/english/aov_artificery_l_english.yml")
+        for t, prev in ((2, 1), (3, 2)):
+            line = next(l for l in text.splitlines() if l.startswith(f" AOV_INVENTIONS_TIER_LOCKED_{t}:"))
+            self.assertIn("ScriptValue('aov_invention_tier_gate_count')", line)
+            self.assertIn(f"ScriptValue('aov_inventions_t{prev}_discovered_count')", line)
+
     def test_slots_tooltip_says_four_five_six(self):
         text = read("localization/english/aov_artificery_l_english.yml")
         line = next(l for l in text.splitlines() if l.startswith(" AOV_INVENTIONS_SLOTS_TT:"))
@@ -128,7 +141,7 @@ class ResearchTests(unittest.TestCase):
     def test_armored_artificers_reenabled(self):
         text = read("common/men_at_arms_types/zz_aov_gnome_maa_overrides.txt")
         b = block(text, "armored_artificers")
-        for line in ("type = gunpowder", "damage = 45", "toughness = 30", "stack = 75",
+        for line in ("type = gunpowder", "damage = 19", "toughness = 15", "stack = 75",
                      "aov_invention_clockwork_plate_harness_unlock_ready = yes",
                      "has_enabled_artificer_academy_trigger = yes"):
             self.assertIn(line, b)
