@@ -66,6 +66,12 @@ class ResearchTests(unittest.TestCase):
             self.assertIn("ScriptValue('aov_invention_tier_gate_count')", line)
             self.assertIn(f"ScriptValue('aov_inventions_t{prev}_discovered_count')", line)
 
+    def test_slots_tooltip_says_four_five_six(self):
+        text = read("localization/english/aov_artificery_l_english.yml")
+        line = next(l for l in text.splitlines() if l.startswith(" AOV_INVENTIONS_SLOTS_TT:"))
+        self.assertIn("4 slots in the Early Medieval era, 5 in the High Medieval era and 6 in the Late Medieval era", line)
+        self.assertNotIn("3 slots", line)
+
     def test_on_actions_hook_quarterly_and_death(self):
         text = read("common/on_action/aov_inventions_on_actions.txt")
         self.assertIn("quarterly_playable_pulse = {\n\ton_actions = { aov_artificery_quarterly }", text)

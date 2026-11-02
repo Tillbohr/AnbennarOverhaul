@@ -52,7 +52,7 @@
  AOV_INV_NO_FREE_SLOT: "#N Every invention slot is in use or cooling down.#!"
  AOV_INV_CLICK_DEACTIVATE: "#P Active.#! #I Click to deactivate it#!; the emptied slot cannot be refilled for 1 year."
  AOV_INVENTIONS_SLOTS: "Invention slots: [GetPlayer.MakeScope.ScriptValue('aov_invention_active_count')|0] / [GetPlayer.MakeScope.ScriptValue('aov_invention_slots_max')|0]"
- AOV_INVENTIONS_SLOTS_TT: "3 slots in the Early Medieval era, 4 in the High Medieval era and 5 in the Late Medieval era. A slot that is emptied cannot be refilled for 1 year."
+ AOV_INVENTIONS_SLOTS_TT: "4 slots in the Early Medieval era, 5 in the High Medieval era and 6 in the Late Medieval era. A slot that is emptied cannot be refilled for 1 year."
  AOV_INVENTIONS_COOLING: "#weak ([GetPlayer.MakeScope.ScriptValue('aov_invention_slots_cooling')|0] cooling down)#!"
  AOV_RESEARCH_BUTTON: "Research"
  AOV_RESEARCH_RUNNING: "The [GetPlayer.Custom('AovResearchSponsorName')] are at work: [GetPlayer.MakeScope.ScriptValue('aov_research_years_left')|1] years left"
