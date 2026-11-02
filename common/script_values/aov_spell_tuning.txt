@@ -1,0 +1,27 @@
+﻿# Anbennar Overhaul: spell balance numbers (docs/superpowers/specs/2026-11-01-spell-revision-design.md).
+# Every chance and amount of the hand-written spell effects that is not a modifier line lives here.
+
+# Hostile spells: chance to land. Caster scope; scope:recipient is the target.
+aov_spell_land_chance = {
+	value = 75
+	add = {
+		value = learning
+		subtract = scope:recipient.learning
+		multiply = 3
+	}
+	subtract = {
+		value = scope:recipient.aov_school_abjuration_level
+		multiply = 10
+	}
+	if = {
+		limit = { scope:recipient = { has_character_modifier = aov_spell_ward_target } }
+		subtract = 30
+	}
+	min = 10
+	max = 95
+}
+
+aov_spell_miss_chance = {
+	value = 100
+	subtract = aov_spell_land_chance
+}

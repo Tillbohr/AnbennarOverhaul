@@ -4,3 +4,8 @@
 aov_charmed_opinion = {
 	opinion = 30
 }
+
+# A hostile spell aimed at this character missed, and they know who cast it
+aov_attempted_hostile_magic = {
+	opinion = -30
+}

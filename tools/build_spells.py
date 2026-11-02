@@ -57,14 +57,20 @@ def validate(spells: list) -> None:
             raise GeneratorError(f"{k}: bad level {s['level']}")
         if LEVEL_OF_SLOT.get(s["slot"]) != s["level"]:
             raise GeneratorError(f"{k}: slot {s['slot']} does not match level {s['level']}")
-        if s["scales_duration"] and not (s["modifier"].strip() or k == "summon_elementals"):
+        if s["scales_duration"] and not (s["modifier"].strip() or s["effect"].strip()):
             raise GeneratorError(f"{k}: scales_duration without a lasting effect")
         if s["type"] == "targeted" and not s["interaction"]:
             raise GeneratorError(f"{k}: targeted spell without interaction")
+        if s.get("hostile") and s["type"] != "targeted":
+            raise GeneratorError(f"{k}: only targeted spells can be hostile")
+        if s.get("target_trigger") and s["type"] != "targeted":
+            raise GeneratorError(f"{k}: target_trigger on a window spell")
+        if bool(s.get("requires")) != bool(s.get("requires_text")):
+            raise GeneratorError(f"{k}: requires and requires_text go together")
         if s["type"] != "targeted" and not (s["modifier"].strip() or s["effect"].strip()):
             raise GeneratorError(f"{k}: no modifier and no effect")
-        if '"' in s["name"] + s["desc"] + s["flavour"]:
-            raise GeneratorError(f"{k}: double quote in name, desc or flavour")
+        if '"' in s["name"] + s["desc"] + s["flavour"] + s.get("requires_text", ""):
+            raise GeneratorError(f"{k}: double quote in name, desc, flavour or requires_text")
 
 
 def check_art(root: Path) -> None:
@@ -123,6 +129,8 @@ def triggers(spells: list) -> str:
         # Spells that only touch a domain, capital, levies or vassals: not for landless adventurers
         war += (f"\tcustom_tooltip = {{\n\t\ttext = AOV_SPELL_REQ_LANDED\n\t\tis_landed = yes\n\t}}\n"
                 if s.get("needs_land") else "")
+        war += (f"\tcustom_tooltip = {{\n\t\ttext = aov_spell_{k}_req\n\t\t{s['requires']} = yes\n\t}}\n"
+                if s.get("requires") else "")
         out.append(
             f"aov_spell_{k}_known = {{\n\taov_school_level_at_least = {{ SCHOOL = {c} LEVEL = {lvl} }}\n}}\n"
             f"aov_spell_{k}_ready = {{\n\tNOT = {{ has_variable = aov_spell_{k}_cd }}\n}}\n"
@@ -152,13 +160,31 @@ def effects(spells: list) -> str:
             f"\t\tset_variable = {{ name = aov_spell_{k}_cd years = aov_spell_{k}_years }}",
             f"\t}}",
         ]
+        hit = []
         if lasting(s):
-            lines.append(f"\tadd_character_modifier = {{ modifier = aov_spell_{k} years = aov_spell_{k}_years }}")
+            hit.append(f"add_character_modifier = {{ modifier = aov_spell_{k} years = aov_spell_{k}_years }}")
         if s["effect"].strip():
-            lines.append(body(s["effect"], 1))
+            hit.append(s["effect"])
+        if s.get("hostile"):
+            # A hostile spell must land (chance in aov_spell_tuning.txt); a miss tells the target who tried.
+            # Vanilla weights random_list entries by script value as 0 = { modifier = { add = <value> } }
+            lines += ["\trandom_list = {", "\t\t0 = {", "\t\t\tmodifier = { add = aov_spell_land_chance }",
+                      body("\n".join(hit), 3), "\t\t}", "\t\t0 = {", "\t\t\tmodifier = { add = aov_spell_miss_chance }",
+                      "\t\t\taov_spell_missed = yes", "\t\t}", "\t}"]
+        elif hit:
+            lines.append(body("\n".join(hit), 1))
         if c == "necromancy":
             lines.append("\taov_dark_magic_roll = yes")
         out.append(f"aov_spell_{k}_cast = {{\n" + "\n".join(lines) + "\n}\n")
+    def remove_all(mods):
+        return "".join(f"\tif = {{\n\t\tlimit = {{ has_character_modifier = {m} }}\n\t\tremove_character_modifier = {m}\n\t}}\n"
+                       for m in mods)
+    curses = [s["curse"] for s in spells if s.get("curse")]
+    out.append("# Purify: remove every hostile spell's modifier from this character\n"
+               f"aov_spell_remove_curses = {{\n{remove_all(curses)}}}\n")
+    war = [f"aov_spell_{s['key']}" for s in spells if s["type"] == "war" and lasting(s)]
+    out.append("# Field of Forbiddance: dispel this character's war spells\n"
+               f"aov_spell_dispel_war_spells = {{\n{remove_all(war)}}}\n")
     options = "\n".join(
         # The AI keeps clear of Forbidden Magic Practitioner: no Necromancy where magic is illegal or shunned
         f"\t\t{30 if s['type'] == 'war' else 10} = {{\n\t\t\ttrigger = {{ "
@@ -188,14 +214,24 @@ def sguis(spells: list) -> str:
     return "\n".join(out)
 
 
+# AI for hostile targeted spells; the hand-written Thoughtweave and Dominate interactions copy it
+HOSTILE_AI = ("\tai_targets = {\n\t\tai_recipients = scripted_relations\n\t\tai_recipients = primary_war_enemies\n\t}\n"
+              "\tai_frequency = 12\n\n"
+              "\tai_will_do = {\n\t\tbase = 0\n"
+              "\t\tmodifier = {\n\t\t\tadd = 60\n\t\t\taov_spell_ai_hostile_target = yes\n\t\t}\n"
+              "\t\tmodifier = {\n\t\t\tfactor = 0\n\t\t\tscope:actor = { aov_spell_land_chance < 40 }\n\t\t}\n\t}\n")
+
+
 def interactions(spells: list) -> str:
-    """Targeted spells without an Anbennar interaction. Magic cannot be refused: auto-accepted.
-    AI does not use them (ai_will_do 0); it casts window spells (aov_magic_ai_quarterly)."""
+    """Targeted spells without a hand-written interaction. Magic cannot be refused: auto-accepted.
+    The AI casts hostile ones at rivals and war enemies when likely to land, never friendly ones (it casts window
+    spells in aov_magic_ai_quarterly)."""
     out = [HEADER]
     for s in spells:
         if s["type"] != "targeted" or s["interaction"] != f"aov_spell_{s['key']}_interaction":
             continue
         k = s["key"]
+        target = f"\t\t{s['target_trigger']} = yes\n" if s.get("target_trigger") else ""
         out.append(
             f"aov_spell_{k}_interaction = {{\n"
             f"\tcategory = interaction_category_spells\n"
@@ -204,11 +240,11 @@ def interactions(spells: list) -> str:
             f"\tis_shown = {{\n\t\tscope:actor = {{ aov_is_mage = yes }}\n\t\tNOT = {{ scope:recipient = scope:actor }}\n\t}}\n\n"
             f"\tis_valid_showing_failures_only = {{\n"
             f"\t\tscope:actor = {{ aov_spell_{k}_castable = yes }}\n"
-            f"\t\tscope:recipient = {{ aov_spell_target_allowed = yes }}\n\t}}\n\n"
+            f"\t\tscope:recipient = {{ aov_spell_target_allowed = yes }}\n{target}\t}}\n\n"
             f"\ton_accept = {{\n\t\tscope:actor = {{ aov_spell_{k}_cast = yes }}\n\t}}\n\n"
             f"\tauto_accept = yes\n\n"
-            f"\tai_will_do = {{\n\t\tbase = 0\n\t}}\n"
-            f"}}\n"
+            + (HOSTILE_AI if s.get("hostile") else "\tai_will_do = {\n\t\tbase = 0\n\t}\n")
+            + "}\n"
         )
     return "\n".join(out)
 
@@ -324,6 +360,8 @@ def loc(spells: list) -> str:
         out.append(f' aov_spell_{k}_facts: "Level {s["level"]} · {cost} mana · {TYPE_LABEL[s["type"]]} · {years} yr"')
         out.append(f' aov_spell_{k}_req_mana: "Has at least {cost} mana"')
         out.append(f' aov_spell_{k}_cost_tt: "Costs {cost} mana"')
+        if s.get("requires_text"):
+            out.append(f' aov_spell_{k}_req: "{s["requires_text"]}"')
         if s["interaction"] == f"aov_spell_{k}_interaction":
             out.append(f' aov_spell_{k}_interaction: "Cast {s["name"]}"')
             out.append(f' aov_spell_{k}_interaction_desc: "{s["desc"]}"')

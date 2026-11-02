@@ -334,40 +334,57 @@ aov_assimilation_program = {
 # war, removed when the spell's duration ends (aov_magic.10)
 aov_summon_elementals = {
 	if = {
-		limit = {
-			OR = {
-				exists = capital_province
-				exists = location
-			}
-			any_character_war = { always = yes }
-		}
-		random_character_war = { save_scope_as = aov_elemental_war }
-		if = {
-			limit = { exists = capital_province }
-			capital_province = { save_scope_as = aov_elemental_site }
-		}
-		else = {
-			location = { save_scope_as = aov_elemental_site }
-		}
-		spawn_army = {
-			name = aov_elemental_army_name
-			men_at_arms = {
-				type = aov_conjured_elementals
-				stacks = 4
-			}
-			location = scope:aov_elemental_site
-			war = scope:aov_elemental_war
-			inheritable = no
-			uses_supply = no
-			save_scope_as = aov_new_elementals
-		}
-		set_variable = { name = aov_elemental_army value = scope:aov_new_elementals }
-		trigger_event = { id = aov_magic.10 years = aov_spell_summon_elementals_years }
+		limit = { aov_spell_army_possible = yes }
+		aov_spawn_spell_army = { SPELL = summon_elementals TYPE = aov_conjured_elementals STACKS = 4 }
 	}
 	else = {
-		# Nowhere to summon or no war: the spell fizzles and costs nothing
-		aov_mana_change = { AMOUNT = aov_spell_summon_elementals_cost }
-		remove_variable = aov_spell_summon_elementals_cd
+		aov_spell_army_fizzle = { SPELL = summon_elementals }
+	}
+}
+
+# A summoned army for an army spell: at the capital, else where the caster is, bound to one of the caster's wars;
+# aov_magic.10 removes it when the spell runs out. Call only when aov_spell_army_possible = yes.
+# SPELL: the spell key (army name aov_<SPELL>_army_name, duration aov_spell_<SPELL>_years). TYPE, STACKS: men-at-arms.
+aov_spawn_spell_army = {
+	random_character_war = { save_scope_as = aov_spell_army_war }
+	if = {
+		limit = { exists = capital_province }
+		capital_province = { save_scope_as = aov_spell_army_site }
+	}
+	else = {
+		location = { save_scope_as = aov_spell_army_site }
+	}
+	spawn_army = {
+		name = aov_$SPELL$_army_name
+		men_at_arms = {
+			type = $TYPE$
+			stacks = $STACKS$
+		}
+		location = scope:aov_spell_army_site
+		war = scope:aov_spell_army_war
+		inheritable = no
+		uses_supply = no
+		save_scope_as = aov_spell_army
+	}
+	trigger_event = { id = aov_magic.10 years = aov_spell_$SPELL$_years }
+}
+
+# Nowhere to summon or no war: the spell fizzles and costs nothing
+aov_spell_army_fizzle = {
+	aov_mana_change = { AMOUNT = aov_spell_$SPELL$_cost }
+	remove_variable = aov_spell_$SPELL$_cd
+}
+
+# A hostile spell missed (scope:recipient): the target learns who tried. Character scope (the caster)
+aov_spell_missed = {
+	save_scope_as = aov_spell_caster
+	scope:recipient = {
+		add_opinion = {
+			target = scope:aov_spell_caster
+			modifier = aov_attempted_hostile_magic
+			years = 5
+		}
+		trigger_event = aov_magic.50
 	}
 }
 

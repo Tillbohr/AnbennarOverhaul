@@ -41,3 +41,20 @@ aov_has_focus_magic = {
 		has_focus = magic_mindweaving_focus
 	}
 }
+
+# An army spell has somewhere to summon and a war to fight (aov_spawn_spell_army)
+aov_spell_army_possible = {
+	OR = {
+		exists = capital_province
+		exists = location
+	}
+	any_character_war = { always = yes }
+}
+
+# AI: a worthy target for a hostile spell (interaction scopes)
+aov_spell_ai_hostile_target = {
+	OR = {
+		scope:actor = { has_relation_rival = scope:recipient }
+		scope:actor = { is_at_war_with = scope:recipient }
+	}
+}

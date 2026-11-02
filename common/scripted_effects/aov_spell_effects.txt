@@ -537,6 +537,54 @@ aov_spell_rite_of_conception_cast = {
 	add_character_modifier = { modifier = aov_spell_rite_of_conception years = aov_spell_rite_of_conception_years }
 }
 
+# Purify: remove every hostile spell's modifier from this character
+aov_spell_remove_curses = {
+}
+
+# Field of Forbiddance: dispel this character's war spells
+aov_spell_dispel_war_spells = {
+	if = {
+		limit = { has_character_modifier = aov_spell_mage_armor }
+		remove_character_modifier = aov_spell_mage_armor
+	}
+	if = {
+		limit = { has_character_modifier = aov_spell_summon_animals }
+		remove_character_modifier = aov_spell_summon_animals
+	}
+	if = {
+		limit = { has_character_modifier = aov_spell_conjure_supplies }
+		remove_character_modifier = aov_spell_conjure_supplies
+	}
+	if = {
+		limit = { has_character_modifier = aov_spell_command_animals }
+		remove_character_modifier = aov_spell_command_animals
+	}
+	if = {
+		limit = { has_character_modifier = aov_spell_shock_and_awe }
+		remove_character_modifier = aov_spell_shock_and_awe
+	}
+	if = {
+		limit = { has_character_modifier = aov_spell_flaming_munitions }
+		remove_character_modifier = aov_spell_flaming_munitions
+	}
+	if = {
+		limit = { has_character_modifier = aov_spell_meteor_swarm }
+		remove_character_modifier = aov_spell_meteor_swarm
+	}
+	if = {
+		limit = { has_character_modifier = aov_spell_tearfall }
+		remove_character_modifier = aov_spell_tearfall
+	}
+	if = {
+		limit = { has_character_modifier = aov_spell_elemental_fury }
+		remove_character_modifier = aov_spell_elemental_fury
+	}
+	if = {
+		limit = { has_character_modifier = aov_spell_mass_enlarge }
+		remove_character_modifier = aov_spell_mass_enlarge
+	}
+}
+
 # AI (aov_magic_ai_quarterly): one castable window spell; war spells weigh more
 aov_magic_ai_cast_random = {
 	random_list = {

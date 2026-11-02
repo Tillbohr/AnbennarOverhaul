@@ -99,17 +99,60 @@ class ManaStudyTests(unittest.TestCase):
 
 
 class SpecialSpellTests(unittest.TestCase):
-    def test_elementals_spawn_bound_to_war(self):
-        b = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_summon_elementals")
-        for s in ("spawn_army", "type = aov_conjured_elementals", "inheritable = no", "save_scope_as = aov_new_elementals",
-                  "name = aov_elemental_army", "id = aov_magic.10", "war = scope:aov_elemental_war"):
+    def test_spell_army_helper(self):
+        """Every army spell spawns through one helper, bound to a war and removed when the spell runs out."""
+        b = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_spawn_spell_army")
+        for s in ("spawn_army", "name = aov_$SPELL$_army_name", "type = $TYPE$", "stacks = $STACKS$", "inheritable = no",
+                  "uses_supply = no", "war = scope:aov_spell_army_war", "save_scope_as = aov_spell_army",
+                  "trigger_event = { id = aov_magic.10 years = aov_spell_$SPELL$_years }"):
             self.assertIn(s, b)
 
-    def test_elementals_depletion_guarded(self):
+    def test_spell_army_possible(self):
+        t = block(read("common/scripted_triggers/aov_magic_triggers.txt"), "aov_spell_army_possible")
+        for s in ("exists = capital_province", "exists = location", "any_character_war"):
+            self.assertIn(s, t)
+
+    def test_spell_army_removal_guarded(self):
         b = block(read("events/aov_magic_events.txt"), "aov_magic.10")
         # The army this event was scheduled for (a recast army is a different scope), guarded if already gone
-        self.assertIn("exists = scope:aov_new_elementals", b)
-        self.assertIn("scope:aov_new_elementals = { deplete_army_by_percentage = 1 }", b)  # 0-1 fraction
+        self.assertIn("exists = scope:aov_spell_army", b)
+        self.assertIn("scope:aov_spell_army = { deplete_army_by_percentage = 1 }", b)  # 0-1 fraction
+
+    def test_spell_army_fizzle_refunds(self):
+        b = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_spell_army_fizzle")
+        self.assertIn("aov_mana_change = { AMOUNT = aov_spell_$SPELL$_cost }", b)
+        self.assertIn("remove_variable = aov_spell_$SPELL$_cd", b)
+
+    def test_elementals_use_the_helper(self):
+        b = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_summon_elementals")
+        self.assertIn("aov_spell_army_possible = yes", b)
+        self.assertIn("aov_spawn_spell_army = { SPELL = summon_elementals TYPE = aov_conjured_elementals STACKS =", b)
+        self.assertIn("aov_spell_army_fizzle = { SPELL = summon_elementals }", b)
+        self.assertIn(" aov_summon_elementals_army_name:", read("localization/english/aov_magic_l_english.yml"))
+
+    def test_land_chance_terms(self):
+        v = block(read("common/script_values/aov_spell_tuning.txt"), "aov_spell_land_chance")
+        for s in ("value = 75", "multiply = 3", "scope:recipient", "aov_school_abjuration_level", "multiply = 10",
+                  "has_character_modifier = aov_spell_ward_target", "subtract = 30", "min = 10", "max = 95"):
+            self.assertIn(s, v)
+        m = block(read("common/script_values/aov_spell_tuning.txt"), "aov_spell_miss_chance")
+        self.assertIn("value = 100", m)
+        self.assertIn("subtract = aov_spell_land_chance", m)
+
+    def test_missed_spell_tells_target(self):
+        b = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_spell_missed")
+        for s in ("modifier = aov_attempted_hostile_magic", "years = 5", "trigger_event = aov_magic.50"):
+            self.assertIn(s, b)
+        self.assertIn("opinion = -30", block(read("common/opinion_modifiers/aov_magic_opinion_modifiers.txt"),
+                                             "aov_attempted_hostile_magic"))
+        loc = read("localization/english/aov_magic_l_english.yml")
+        for k in ("aov_attempted_hostile_magic", "aov_magic.50.t", "aov_magic.50.desc", "aov_magic.50.a"):
+            self.assertIn(f" {k}:", loc)
+
+    def test_ai_hostile_target_trigger(self):
+        t = block(read("common/scripted_triggers/aov_magic_triggers.txt"), "aov_spell_ai_hostile_target")
+        self.assertIn("has_relation_rival = scope:recipient", t)
+        self.assertIn("is_at_war_with = scope:recipient", t)
 
     def test_elementals_never_recruitable(self):
         self.assertIn("always = no", block(read("common/men_at_arms_types/aov_magic_maa_types.txt"), "aov_conjured_elementals"))
@@ -142,11 +185,6 @@ class ReviewFixTests(unittest.TestCase):
         self.assertIn("value = aov_mana_max", v)
         e = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_mana_change")
         self.assertIn("set_variable = { name = aov_mana value = aov_mana_max }", e)
-
-    def test_elementals_refund_without_capital(self):
-        b = block(read("common/scripted_effects/aov_magic_effects.txt"), "aov_summon_elementals")
-        self.assertIn("aov_mana_change = { AMOUNT = aov_spell_summon_elementals_cost }", b)
-        self.assertIn("remove_variable = aov_spell_summon_elementals_cd", b)
 
 
 class StudyEventTests(unittest.TestCase):

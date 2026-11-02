@@ -20,10 +20,11 @@ def load_data():
     spec = importlib.util.spec_from_file_location("aov_spells_data", TOOLS / "data" / "spells.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    return module.SPELLS
+    return module
 
 
-SPELLS = load_data()
+DATA = load_data()
+SPELLS = DATA.SPELLS
 
 import build_spells as bs  # noqa: E402
 import build_hud_override  # noqa: E402  (brace_delta)
@@ -147,11 +148,6 @@ class ValueTests(unittest.TestCase):
         loc = self.files["localization/english/aov_spells_l_english.yml"]
         self.assertIn("ScriptValue('aov_spell_fireball_cost')", loc)
         self.assertIn("ScriptValue('aov_spell_fireball_years')", loc)
-
-    def test_elementals_follow_spell_years(self):
-        eff = (MOD / "common/scripted_effects/aov_magic_effects.txt").read_text(encoding="utf-8-sig")
-        self.assertIn("trigger_event = { id = aov_magic.10 years = aov_spell_summon_elementals_years }", eff)
-        self.assertNotIn("years = 3", block(eff, "aov_summon_elementals"))
 
 
 class GeneratedTests(unittest.TestCase):
@@ -316,6 +312,96 @@ class GeneratedTests(unittest.TestCase):
             "common/scripted_guis/aov_spell_sgui.txt",
             "localization/english/aov_spells_l_english.yml",
         })
+
+
+class HostileSpellTests(unittest.TestCase):
+    """Generator support for hostile targeted spells, curses, dispel, target triggers and cast requirements.
+    Built on a small list so the tests do not depend on the real spell data."""
+
+    def setUp(self):
+        sp = DATA.spell
+        self.hostile = sp("x", "evocation", 1, 2, "targeted", "X", "d", "f", modifier="prowess = 1", effect="foo = yes",
+                          hostile=True, target_trigger="foo_target", curse="aov_x_curse")
+        self.friendly = sp("y", "evocation", 1, 3, "targeted", "Y", "d", "f", effect="bar = yes")
+        self.war = sp("w", "evocation", 2, 4, "war", "W", "d", "f", modifier="advantage = 1")
+        self.realm = sp("r", "evocation", 2, 5, "realm", "R", "d", "f", modifier="advantage = 1")
+        self.necro = sp("n", "necromancy", 1, 2, "targeted", "N", "d", "f", effect="baz = yes", hostile=True)
+        self.req = sp("q", "evocation", 0, 1, "self", "Q", "d", "f", modifier="prowess = 1",
+                      requires="foo_possible", requires_text="Has something")
+        self.L = [self.hostile, self.friendly, self.war, self.realm, self.necro, self.req]
+
+    def test_hostile_cast_rolls_to_land(self):
+        b = block(bs.effects(self.L), "aov_spell_x_cast")
+        # Vanilla weights random_list entries by script value as 0 = { modifier = { add = <value> } ... }
+        for s in ("random_list = {", "modifier = { add = aov_spell_land_chance }",
+                  "modifier = { add = aov_spell_miss_chance }", "aov_spell_missed = yes"):
+            self.assertIn(s, b)
+        hit = b.split("add = aov_spell_land_chance }", 1)[1].split("add = aov_spell_miss_chance }")[0]
+        self.assertIn("add_character_modifier = { modifier = aov_spell_x", hit)
+        self.assertIn("foo = yes", hit)
+        self.assertTrue(balanced(b))
+
+    def test_friendly_cast_does_not_roll(self):
+        self.assertNotIn("random_list", block(bs.effects(self.L), "aov_spell_y_cast"))
+
+    def test_necromancy_roll_outside_land_roll(self):
+        b = block(bs.effects(self.L), "aov_spell_n_cast")
+        rl = b.index("random_list = {")
+        depth, end = 0, None
+        for i in range(rl, len(b)):
+            depth += {"{": 1, "}": -1}.get(b[i], 0)
+            if b[i] == "}" and depth == 0:
+                end = i
+                break
+        self.assertIn("aov_dark_magic_roll = yes", b[end:])
+
+    def test_validate_rejects_hostile_window_spell(self):
+        with self.assertRaises(bs.GeneratorError):
+            bs.validate([dict(self.war, hostile=True)])
+
+    def test_validate_rejects_target_trigger_on_window_spell(self):
+        with self.assertRaises(bs.GeneratorError):
+            bs.validate([dict(self.war, target_trigger="foo_target")])
+
+    def test_validate_rejects_requires_without_text(self):
+        with self.assertRaises(bs.GeneratorError):
+            bs.validate([dict(self.req, requires_text="")])
+
+    def test_target_trigger_in_interaction(self):
+        b = block(bs.interactions(self.L), "aov_spell_x_interaction")
+        valid = b.split("is_valid_showing_failures_only = {", 1)[1].split("on_accept")[0]
+        self.assertIn("foo_target = yes", valid)
+        self.assertNotIn("_target = yes", block(bs.interactions(self.L), "aov_spell_y_interaction"))
+
+    def test_requires_in_castable(self):
+        b = block(bs.triggers(self.L), "aov_spell_q_castable")
+        self.assertIn("text = aov_spell_q_req", b)
+        self.assertIn("foo_possible = yes", b)
+        self.assertIn(' aov_spell_q_req: "Has something"', bs.loc(self.L))
+
+    def test_remove_curses_and_dispel_lists(self):
+        t = bs.effects(self.L)
+        curses = block(t, "aov_spell_remove_curses")
+        self.assertIn("has_character_modifier = aov_x_curse", curses)
+        self.assertIn("remove_character_modifier = aov_x_curse", curses)
+        dispel = block(t, "aov_spell_dispel_war_spells")
+        self.assertIn("remove_character_modifier = aov_spell_w", dispel)
+        self.assertNotIn("aov_spell_r", dispel)
+        self.assertNotIn("aov_spell_x", dispel)
+
+    def test_hostile_ai_weights(self):
+        text = bs.interactions(self.L)
+        h = block(text, "aov_spell_x_interaction")
+        self.assertIn("aov_spell_ai_hostile_target = yes", h)
+        self.assertIn("ai_targets = {", h)
+        self.assertIn("ai_frequency = ", h)
+        self.assertIn("aov_spell_land_chance < 40", h)
+        f = block(text, "aov_spell_y_interaction")
+        self.assertNotIn("ai_targets", f)
+        self.assertIn("ai_will_do = {\n\t\tbase = 0\n\t}", f)
+
+    def test_scales_duration_with_effect_only(self):
+        bs.validate([DATA.spell("z", "conjuration", 2, 4, "war", "Z", "d", "f", effect="zz = yes", scales_duration=True)])
 
 
 if __name__ == "__main__":

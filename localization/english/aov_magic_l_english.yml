@@ -45,7 +45,7 @@
  aov_charmed_opinion: "Charmed"
 
  # Special spells
- aov_elemental_army_name: "Conjured Elementals"
+ aov_summon_elementals_army_name: "Conjured Elementals"
  aov_conjured_elementals: "Conjured Elementals"
  aov_conjured_elementals_flavor: "#F Stone and flame given shape, bound to their summoner until the spell runs out.#!"
  aov_magic.20.t: "Beyond the Veil"
@@ -96,3 +96,9 @@
  AOV_SCHOOL_NECROMANCY_PROGRESS_TT: "Progress toward the next level of Necromancy (levels at 300, 800 and 2000)"
  AOV_SCHOOL_TRANSMUTATION_PROGRESS: "[GetPlayer.MakeScope.ScriptValue('aov_school_transmutation_progress')|0] / [GetPlayer.MakeScope.ScriptValue('aov_school_transmutation_next')|0]"
  AOV_SCHOOL_TRANSMUTATION_PROGRESS_TT: "Progress toward the next level of Transmutation (levels at 300, 800 and 2000)"
+
+ # Hostile spells
+ aov_attempted_hostile_magic: "Attempted Hostile Magic"
+ aov_magic.50.t: "A Spell Turned Aside"
+ aov_magic.50.desc: "A spell struck at me and failed. I felt its shape, and I know whose hand cast it: [aov_spell_caster.GetName]."
+ aov_magic.50.a: "I will remember this."

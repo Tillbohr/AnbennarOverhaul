@@ -112,16 +112,8 @@ aov_magic.10 = {
 
 	immediate = {
 		if = {
-			limit = { exists = scope:aov_new_elementals }
-			scope:aov_new_elementals = { deplete_army_by_percentage = 1 }
-		}
-		if = {
-			limit = {
-				exists = var:aov_elemental_army
-				exists = scope:aov_new_elementals
-				var:aov_elemental_army = scope:aov_new_elementals
-			}
-			remove_variable = aov_elemental_army
+			limit = { exists = scope:aov_spell_army }
+			scope:aov_spell_army = { deplete_army_by_percentage = 1 }
 		}
 	}
 }
@@ -169,5 +161,19 @@ aov_magic.30 = {
 
 	option = {
 		name = aov_magic.30.a
+	}
+}
+
+# A hostile spell aimed at me missed; scope:aov_spell_caster cast it (aov_spell_missed)
+aov_magic.50 = {
+	type = character_event
+	title = aov_magic.50.t
+	desc = aov_magic.50.desc
+	theme = intrigue
+	left_portrait = root
+	right_portrait = scope:aov_spell_caster
+
+	option = {
+		name = aov_magic.50.a
 	}
 }

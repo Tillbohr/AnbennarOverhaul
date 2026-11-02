@@ -12,17 +12,23 @@ interaction: targeted spells only; Anbennar's own interaction for Compel and Dom
 years_mult: an extra script value multiplying the duration (a magic advancement's bonus), or "".
 needs_land: castable only by a landed ruler, because it works only on a domain, capital, levies or vassals (landless
 adventurer mages, AI included, cannot cast it).
+hostile: targeted only; the cast rolls aov_spell_land_chance (common/script_values/aov_spell_tuning.txt) and on a miss
+runs aov_spell_missed instead of the modifier and effect. AI mages cast it on rivals and war enemies.
+target_trigger: targeted only; a hand-written trigger (with scope:actor and scope:recipient) the interaction requires.
+curse: the hand-written modifier this spell puts on its target; Purify removes it (aov_spell_remove_curses).
+requires, requires_text: an extra hand-written caster trigger for casting, and the tooltip text for it.
 """
 
 
 def spell(key, school, level, slot, type, name, desc, flavour, modifier="", effect="", interaction="", scales_duration=None,
-          years_mult="", needs_land=False):
+          years_mult="", needs_land=False, hostile=False, target_trigger="", curse="", requires="", requires_text=""):
     if type == "targeted" and not interaction:
         interaction = f"aov_spell_{key}_interaction"
     return dict(key=key, school=school, level=level, slot=slot, type=type, name=name, desc=desc, flavour=flavour,
                 modifier=modifier, effect=effect, interaction=interaction,
                 scales_duration=bool(modifier.strip()) if scales_duration is None else scales_duration,
-                years_mult=years_mult, needs_land=needs_land)
+                years_mult=years_mult, needs_land=needs_land, hostile=hostile, target_trigger=target_trigger,
+                curse=curse, requires=requires, requires_text=requires_text)
 
 
 SPELLS = [
