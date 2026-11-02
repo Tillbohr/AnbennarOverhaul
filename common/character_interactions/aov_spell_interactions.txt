@@ -78,6 +78,129 @@ aov_spell_heartstring_interaction = {
 	}
 }
 
+aov_spell_fireball_interaction = {
+	category = interaction_category_spells
+	common_interaction = no
+	desc = aov_spell_fireball_interaction_desc
+
+	is_shown = {
+		scope:actor = { aov_is_mage = yes }
+		NOT = { scope:recipient = scope:actor }
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = { aov_spell_fireball_castable = yes }
+		scope:recipient = { aov_spell_target_allowed = yes }
+		aov_spell_target_war_foe = yes
+	}
+
+	on_accept = {
+		scope:actor = { aov_spell_fireball_cast = yes }
+	}
+
+	auto_accept = yes
+
+	ai_targets = {
+		ai_recipients = scripted_relations
+		ai_recipients = primary_war_enemies
+	}
+	ai_frequency = 12
+
+	ai_will_do = {
+		base = 0
+		modifier = {
+			add = 60
+			aov_spell_ai_hostile_target = yes
+		}
+		modifier = {
+			factor = 0
+			scope:actor = { aov_spell_land_chance < 40 }
+		}
+	}
+}
+
+aov_spell_winters_grip_interaction = {
+	category = interaction_category_spells
+	common_interaction = no
+	desc = aov_spell_winters_grip_interaction_desc
+
+	is_shown = {
+		scope:actor = { aov_is_mage = yes }
+		NOT = { scope:recipient = scope:actor }
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = { aov_spell_winters_grip_castable = yes }
+		scope:recipient = { aov_spell_target_allowed = yes }
+		aov_spell_target_war_capital = yes
+	}
+
+	on_accept = {
+		scope:actor = { aov_spell_winters_grip_cast = yes }
+	}
+
+	auto_accept = yes
+
+	ai_targets = {
+		ai_recipients = scripted_relations
+		ai_recipients = primary_war_enemies
+	}
+	ai_frequency = 12
+
+	ai_will_do = {
+		base = 0
+		modifier = {
+			add = 60
+			aov_spell_ai_hostile_target = yes
+		}
+		modifier = {
+			factor = 0
+			scope:actor = { aov_spell_land_chance < 40 }
+		}
+	}
+}
+
+aov_spell_earthquake_interaction = {
+	category = interaction_category_spells
+	common_interaction = no
+	desc = aov_spell_earthquake_interaction_desc
+
+	is_shown = {
+		scope:actor = { aov_is_mage = yes }
+		NOT = { scope:recipient = scope:actor }
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = { aov_spell_earthquake_castable = yes }
+		scope:recipient = { aov_spell_target_allowed = yes }
+		aov_spell_target_war_capital = yes
+	}
+
+	on_accept = {
+		scope:actor = { aov_spell_earthquake_cast = yes }
+	}
+
+	auto_accept = yes
+
+	ai_targets = {
+		ai_recipients = scripted_relations
+		ai_recipients = primary_war_enemies
+	}
+	ai_frequency = 12
+
+	ai_will_do = {
+		base = 0
+		modifier = {
+			add = 60
+			aov_spell_ai_hostile_target = yes
+		}
+		modifier = {
+			factor = 0
+			scope:actor = { aov_spell_land_chance < 40 }
+		}
+	}
+}
+
 aov_spell_steal_vitality_interaction = {
 	category = interaction_category_spells
 	common_interaction = no

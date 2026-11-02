@@ -30,3 +30,13 @@ aov_spell_miss_chance = {
 aov_planar_gate_demon_chance = {
 	value = 10
 }
+
+# Fireball: chance of a second wound
+aov_fireball_severe_chance = {
+	value = 20
+}
+
+# Earthquake: chance of a further -1 development
+aov_earthquake_extra_chance = {
+	value = 25
+}

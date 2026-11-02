@@ -149,3 +149,13 @@
  aov_spell_trinket_intrigue: "Charm of Whispers"
  aov_spell_trinket_learning: "Charm of Insight"
  aov_spell_trinket_prowess: "Charm of the Blade"
+
+ # Evocation
+ AOV_SPELL_REQ_WAR_FOE: "At war with you, or a knight or commander of a ruler at war with you"
+ AOV_SPELL_REQ_WAR_CAPITAL: "At war with you, and holds a capital"
+ aov_spell_winters_grip_target: "Winter's Grip"
+ aov_spell_winters_grip_target_desc: "Snow and ice hold this character's armies fast."
+ aov_earthquake_damage: "Shattered by Earthquake"
+ aov_earthquake_damage_desc: "The walls are cracked and the garrison scattered."
+ aov_meteor_scorched: "Scorched by Meteors"
+ aov_meteor_scorched_desc: "Fire fell from the sky; the fields and the people are burned."

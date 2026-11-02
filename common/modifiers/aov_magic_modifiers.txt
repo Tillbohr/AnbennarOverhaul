@@ -36,3 +36,25 @@ aov_spell_trinket_learning = {
 aov_spell_trinket_prowess = {
 	prowess = 4
 }
+
+# Winter's Grip (on the target)
+aov_spell_winters_grip_target = {
+	icon = martial_negative
+	movement_speed = -0.4
+	maa_damage_mult = -0.15
+	supply_limit_mult = -0.2
+}
+
+# Earthquake (county)
+aov_earthquake_damage = {
+	icon = county_modifier_development_negative
+	fort_level = -1
+	garrison_size = -0.5
+}
+
+# Meteor Swarm (county)
+aov_meteor_scorched = {
+	icon = county_modifier_development_negative
+	levy_size = -0.5
+	tax_mult = -0.5
+}

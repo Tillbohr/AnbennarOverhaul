@@ -2065,14 +2065,14 @@ types AovMagic
 				align = left|nobaseline
 			}
 
-			button_standard = {
+			text_multi = {
 				parentanchor = right
 				position = { -6 16 }
-				size = { 110 32 }
-				text = "AOV_SPELL_CAST"
-				enabled = "[GetScriptedGui('aov_spell_fireball_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_spell_fireball_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_spell_fireball_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				size = { 110 0 }
+				max_width = 110
+				autoresize = yes
+				text = "AOV_SPELL_CAST_FROM_PORTRAIT"
+				default_format = "#weak"
 			}
 		}
 
@@ -2207,9 +2207,9 @@ types AovMagic
 		}
 
 		widget = {
-			name = "aov_spell_card_meteor_swarm"
+			name = "aov_spell_card_winters_grip"
 			size = { 480 88 }
-			tooltip = "aov_spell_meteor_swarm_tt"
+			tooltip = "aov_spell_winters_grip_tt"
 
 			icon = {
 				position = { 0 0 }
@@ -2229,6 +2229,136 @@ types AovMagic
 				texture = "gfx/interface/icons/aov_magic/spell_frames.dds"
 				framesize = { 64 76 }
 				frame = 3
+			}
+
+			text_single = {
+				position = { 72 8 }
+				text = "aov_spell_winters_grip"
+				default_format = "#T"
+				max_width = 205
+				align = left|nobaseline
+			}
+			text_single = {
+				position = { 72 38 }
+				text = "aov_spell_winters_grip_facts"
+				default_format = "#weak"
+				max_width = 280
+				align = left|nobaseline
+			}
+			text_single = {
+				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_winters_grip_cd' ).IsSet )]"
+				position = { 72 66 }
+				text = "aov_spell_winters_grip_desc"
+				max_width = 400
+				align = left|nobaseline
+			}
+			text_single = {
+				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_winters_grip_cd' ).IsSet]"
+				position = { 72 66 }
+				text = "AOV_SPELL_ON_COOLDOWN"
+				max_width = 400
+				align = left|nobaseline
+			}
+
+			text_multi = {
+				parentanchor = right
+				position = { -6 16 }
+				size = { 110 0 }
+				max_width = 110
+				autoresize = yes
+				text = "AOV_SPELL_CAST_FROM_PORTRAIT"
+				default_format = "#weak"
+			}
+		}
+
+		widget = {
+			name = "aov_spell_card_earthquake"
+			size = { 480 88 }
+			tooltip = "aov_spell_earthquake_tt"
+
+			icon = {
+				position = { 0 0 }
+				size = { 290 64 }
+				texture = "gfx/interface/icons/aov_magic/spell_plate.dds"
+			}
+			icon = {
+				position = { 2 2 }
+				size = { 60 60 }
+				texture = "gfx/interface/icons/aov_magic/spell_slot_5.dds"
+				framesize = { 60 60 }
+				frame = 5
+			}
+			icon = {
+				position = { 0 0 }
+				size = { 64 76 }
+				texture = "gfx/interface/icons/aov_magic/spell_frames.dds"
+				framesize = { 64 76 }
+				frame = 3
+			}
+
+			text_single = {
+				position = { 72 8 }
+				text = "aov_spell_earthquake"
+				default_format = "#T"
+				max_width = 205
+				align = left|nobaseline
+			}
+			text_single = {
+				position = { 72 38 }
+				text = "aov_spell_earthquake_facts"
+				default_format = "#weak"
+				max_width = 280
+				align = left|nobaseline
+			}
+			text_single = {
+				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_earthquake_cd' ).IsSet )]"
+				position = { 72 66 }
+				text = "aov_spell_earthquake_desc"
+				max_width = 400
+				align = left|nobaseline
+			}
+			text_single = {
+				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_earthquake_cd' ).IsSet]"
+				position = { 72 66 }
+				text = "AOV_SPELL_ON_COOLDOWN"
+				max_width = 400
+				align = left|nobaseline
+			}
+
+			text_multi = {
+				parentanchor = right
+				position = { -6 16 }
+				size = { 110 0 }
+				max_width = 110
+				autoresize = yes
+				text = "AOV_SPELL_CAST_FROM_PORTRAIT"
+				default_format = "#weak"
+			}
+		}
+
+		widget = {
+			name = "aov_spell_card_meteor_swarm"
+			size = { 480 88 }
+			tooltip = "aov_spell_meteor_swarm_tt"
+
+			icon = {
+				position = { 0 0 }
+				size = { 290 64 }
+				texture = "gfx/interface/icons/aov_magic/spell_plate.dds"
+			}
+			icon = {
+				position = { 2 2 }
+				size = { 60 60 }
+				texture = "gfx/interface/icons/aov_magic/spell_slot_6.dds"
+				framesize = { 60 60 }
+				frame = 5
+			}
+			icon = {
+				position = { 0 0 }
+				size = { 64 76 }
+				texture = "gfx/interface/icons/aov_magic/spell_frames.dds"
+				framesize = { 64 76 }
+				frame = 4
 			}
 
 			text_single = {
@@ -2268,136 +2398,6 @@ types AovMagic
 				enabled = "[GetScriptedGui('aov_spell_meteor_swarm_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				tooltip = "[GetScriptedGui('aov_spell_meteor_swarm_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				onclick = "[GetScriptedGui('aov_spell_meteor_swarm_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-			}
-		}
-
-		widget = {
-			name = "aov_spell_card_tearfall"
-			size = { 480 88 }
-			tooltip = "aov_spell_tearfall_tt"
-
-			icon = {
-				position = { 0 0 }
-				size = { 290 64 }
-				texture = "gfx/interface/icons/aov_magic/spell_plate.dds"
-			}
-			icon = {
-				position = { 2 2 }
-				size = { 60 60 }
-				texture = "gfx/interface/icons/aov_magic/spell_slot_5.dds"
-				framesize = { 60 60 }
-				frame = 5
-			}
-			icon = {
-				position = { 0 0 }
-				size = { 64 76 }
-				texture = "gfx/interface/icons/aov_magic/spell_frames.dds"
-				framesize = { 64 76 }
-				frame = 3
-			}
-
-			text_single = {
-				position = { 72 8 }
-				text = "aov_spell_tearfall"
-				default_format = "#T"
-				max_width = 205
-				align = left|nobaseline
-			}
-			text_single = {
-				position = { 72 38 }
-				text = "aov_spell_tearfall_facts"
-				default_format = "#weak"
-				max_width = 280
-				align = left|nobaseline
-			}
-			text_single = {
-				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_tearfall_cd' ).IsSet )]"
-				position = { 72 66 }
-				text = "aov_spell_tearfall_desc"
-				max_width = 400
-				align = left|nobaseline
-			}
-			text_single = {
-				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_tearfall_cd' ).IsSet]"
-				position = { 72 66 }
-				text = "AOV_SPELL_ON_COOLDOWN"
-				max_width = 400
-				align = left|nobaseline
-			}
-
-			button_standard = {
-				parentanchor = right
-				position = { -6 16 }
-				size = { 110 32 }
-				text = "AOV_SPELL_CAST"
-				enabled = "[GetScriptedGui('aov_spell_tearfall_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_spell_tearfall_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_spell_tearfall_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-			}
-		}
-
-		widget = {
-			name = "aov_spell_card_elemental_fury"
-			size = { 480 88 }
-			tooltip = "aov_spell_elemental_fury_tt"
-
-			icon = {
-				position = { 0 0 }
-				size = { 290 64 }
-				texture = "gfx/interface/icons/aov_magic/spell_plate.dds"
-			}
-			icon = {
-				position = { 2 2 }
-				size = { 60 60 }
-				texture = "gfx/interface/icons/aov_magic/spell_slot_6.dds"
-				framesize = { 60 60 }
-				frame = 5
-			}
-			icon = {
-				position = { 0 0 }
-				size = { 64 76 }
-				texture = "gfx/interface/icons/aov_magic/spell_frames.dds"
-				framesize = { 64 76 }
-				frame = 4
-			}
-
-			text_single = {
-				position = { 72 8 }
-				text = "aov_spell_elemental_fury"
-				default_format = "#T"
-				max_width = 205
-				align = left|nobaseline
-			}
-			text_single = {
-				position = { 72 38 }
-				text = "aov_spell_elemental_fury_facts"
-				default_format = "#weak"
-				max_width = 280
-				align = left|nobaseline
-			}
-			text_single = {
-				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_elemental_fury_cd' ).IsSet )]"
-				position = { 72 66 }
-				text = "aov_spell_elemental_fury_desc"
-				max_width = 400
-				align = left|nobaseline
-			}
-			text_single = {
-				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_elemental_fury_cd' ).IsSet]"
-				position = { 72 66 }
-				text = "AOV_SPELL_ON_COOLDOWN"
-				max_width = 400
-				align = left|nobaseline
-			}
-
-			button_standard = {
-				parentanchor = right
-				position = { -6 16 }
-				size = { 110 32 }
-				text = "AOV_SPELL_CAST"
-				enabled = "[GetScriptedGui('aov_spell_elemental_fury_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_spell_elemental_fury_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_spell_elemental_fury_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			}
 		}
 	}

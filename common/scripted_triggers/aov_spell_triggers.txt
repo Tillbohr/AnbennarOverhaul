@@ -632,8 +632,52 @@ aov_spell_flaming_munitions_castable = {
 	}
 }
 
-aov_spell_meteor_swarm_known = {
+aov_spell_winters_grip_known = {
 	aov_school_level_at_least = { SCHOOL = evocation LEVEL = 2 }
+}
+aov_spell_winters_grip_ready = {
+	NOT = { has_variable = aov_spell_winters_grip_cd }
+}
+aov_spell_winters_grip_castable = {
+	aov_is_mage = yes
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_EVOCATION_2
+		aov_spell_winters_grip_known = yes
+	}
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_READY
+		aov_spell_winters_grip_ready = yes
+	}
+	custom_tooltip = {
+		text = aov_spell_winters_grip_req_mana
+		aov_mana >= aov_spell_winters_grip_cost
+	}
+}
+
+aov_spell_earthquake_known = {
+	aov_school_level_at_least = { SCHOOL = evocation LEVEL = 2 }
+}
+aov_spell_earthquake_ready = {
+	NOT = { has_variable = aov_spell_earthquake_cd }
+}
+aov_spell_earthquake_castable = {
+	aov_is_mage = yes
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_EVOCATION_2
+		aov_spell_earthquake_known = yes
+	}
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_READY
+		aov_spell_earthquake_ready = yes
+	}
+	custom_tooltip = {
+		text = aov_spell_earthquake_req_mana
+		aov_mana >= aov_spell_earthquake_cost
+	}
+}
+
+aov_spell_meteor_swarm_known = {
+	aov_school_level_at_least = { SCHOOL = evocation LEVEL = 3 }
 }
 aov_spell_meteor_swarm_ready = {
 	NOT = { has_variable = aov_spell_meteor_swarm_cd }
@@ -641,7 +685,7 @@ aov_spell_meteor_swarm_ready = {
 aov_spell_meteor_swarm_castable = {
 	aov_is_mage = yes
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_EVOCATION_2
+		text = AOV_SPELL_REQ_EVOCATION_3
 		aov_spell_meteor_swarm_known = yes
 	}
 	custom_tooltip = {
@@ -651,58 +695,6 @@ aov_spell_meteor_swarm_castable = {
 	custom_tooltip = {
 		text = aov_spell_meteor_swarm_req_mana
 		aov_mana >= aov_spell_meteor_swarm_cost
-	}
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_WAR
-		is_at_war = yes
-	}
-}
-
-aov_spell_tearfall_known = {
-	aov_school_level_at_least = { SCHOOL = evocation LEVEL = 2 }
-}
-aov_spell_tearfall_ready = {
-	NOT = { has_variable = aov_spell_tearfall_cd }
-}
-aov_spell_tearfall_castable = {
-	aov_is_mage = yes
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_EVOCATION_2
-		aov_spell_tearfall_known = yes
-	}
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_READY
-		aov_spell_tearfall_ready = yes
-	}
-	custom_tooltip = {
-		text = aov_spell_tearfall_req_mana
-		aov_mana >= aov_spell_tearfall_cost
-	}
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_WAR
-		is_at_war = yes
-	}
-}
-
-aov_spell_elemental_fury_known = {
-	aov_school_level_at_least = { SCHOOL = evocation LEVEL = 3 }
-}
-aov_spell_elemental_fury_ready = {
-	NOT = { has_variable = aov_spell_elemental_fury_cd }
-}
-aov_spell_elemental_fury_castable = {
-	aov_is_mage = yes
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_EVOCATION_3
-		aov_spell_elemental_fury_known = yes
-	}
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_READY
-		aov_spell_elemental_fury_ready = yes
-	}
-	custom_tooltip = {
-		text = aov_spell_elemental_fury_req_mana
-		aov_mana >= aov_spell_elemental_fury_cost
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_WAR
@@ -1148,12 +1140,9 @@ aov_magic_ai_any_castable = {
 		aov_spell_enchanting_envoy_castable = yes
 		aov_spell_enchant_trinket_castable = yes
 		aov_spell_enchanting_embassy_castable = yes
-		aov_spell_fireball_castable = yes
 		aov_spell_shock_and_awe_castable = yes
 		aov_spell_flaming_munitions_castable = yes
 		aov_spell_meteor_swarm_castable = yes
-		aov_spell_tearfall_castable = yes
-		aov_spell_elemental_fury_castable = yes
 		aov_spell_invisibility_castable = yes
 		aov_spell_fear_and_loathing_castable = yes
 		aov_spell_bread_and_circuses_castable = yes

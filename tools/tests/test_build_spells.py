@@ -25,6 +25,9 @@ def load_data():
 
 DATA = load_data()
 SPELLS = DATA.SPELLS
+# Targeted spells whose interaction the generator writes (Thoughtweave and Dominate are hand-written)
+GENERATED_INTERACTIONS = {s["key"] for s in SPELLS
+                          if s["type"] == "targeted" and s["interaction"] == f"aov_spell_{s['key']}_interaction"}
 
 import build_spells as bs  # noqa: E402
 import build_hud_override  # noqa: E402  (brace_delta)
@@ -75,7 +78,7 @@ class DataTests(unittest.TestCase):
     def test_types(self):
         targeted = {s["key"] for s in SPELLS if s["type"] == "targeted"}
         self.assertEqual(targeted, {"ward", "heartstring", "thoughtweave", "dominate_to_surrender", "scry",
-                                    "steal_vitality", "contagion"})
+                                    "steal_vitality", "contagion", "fireball", "winters_grip", "earthquake"})
         for s in SPELLS:
             if s["type"] in ("self", "realm", "war"):
                 self.assertTrue(s["modifier"].strip() or s["effect"].strip(), s["key"])
@@ -114,13 +117,13 @@ class ValueTests(unittest.TestCase):
         self.assertIn("subtract = aov_cost_cut_evocation", b)
         self.assertIn("subtract = aov_cost_cut_war", b)
         self.assertIn("min = 0.5", b)
-        self.assertIn("multiply = 100", b)
+        self.assertIn("multiply = 200", b)
         self.assertIn("floor = yes", b)
         self.assertNotIn("aov_cost_cut_war", block(self.v, "aov_spell_guidance_cost"))
         self.assertIn("subtract = aov_cost_cut_targeted", block(self.v, "aov_spell_scry_cost"))
 
     def test_years_value(self):
-        b = block(self.v, "aov_spell_elemental_fury_years")
+        b = block(self.v, "aov_spell_meteor_swarm_years")
         self.assertIn("value = 5", b)
         self.assertIn("multiply = aov_years_mult_evocation", b)
         self.assertIn("floor = yes", b)
@@ -226,7 +229,7 @@ class GeneratedTests(unittest.TestCase):
         text = bs.interactions(SPELLS)
         self.assertTrue(balanced(text))
         names = set(top_level_blocks(text))
-        self.assertEqual(names, {f"aov_spell_{k}_interaction" for k in ("ward", "heartstring", "scry", "steal_vitality", "contagion")})
+        self.assertEqual(names, {f"aov_spell_{k}_interaction" for k in GENERATED_INTERACTIONS})
         for name in names:
             b = block(text, name)
             k = name[len("aov_spell_"):-len("_interaction")]
@@ -237,7 +240,7 @@ class GeneratedTests(unittest.TestCase):
 
     def test_interaction_loc(self):
         lc = bs.loc(SPELLS)
-        for k in ("ward", "heartstring", "scry", "steal_vitality", "contagion"):
+        for k in GENERATED_INTERACTIONS:
             self.assertIn(f" aov_spell_{k}_interaction:", lc)
             self.assertIn(f" aov_spell_{k}_interaction_desc:", lc)
 

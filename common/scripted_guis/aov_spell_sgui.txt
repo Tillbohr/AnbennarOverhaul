@@ -116,12 +116,6 @@ aov_spell_enchanting_embassy_sgui = {
 	effect = { aov_spell_enchanting_embassy_cast = yes }
 }
 
-aov_spell_fireball_sgui = {
-	scope = character
-	is_valid = { aov_spell_fireball_castable = yes }
-	effect = { aov_spell_fireball_cast = yes }
-}
-
 aov_spell_shock_and_awe_sgui = {
 	scope = character
 	is_valid = { aov_spell_shock_and_awe_castable = yes }
@@ -138,18 +132,6 @@ aov_spell_meteor_swarm_sgui = {
 	scope = character
 	is_valid = { aov_spell_meteor_swarm_castable = yes }
 	effect = { aov_spell_meteor_swarm_cast = yes }
-}
-
-aov_spell_tearfall_sgui = {
-	scope = character
-	is_valid = { aov_spell_tearfall_castable = yes }
-	effect = { aov_spell_tearfall_cast = yes }
-}
-
-aov_spell_elemental_fury_sgui = {
-	scope = character
-	is_valid = { aov_spell_elemental_fury_castable = yes }
-	effect = { aov_spell_elemental_fury_cast = yes }
 }
 
 aov_spell_invisibility_sgui = {

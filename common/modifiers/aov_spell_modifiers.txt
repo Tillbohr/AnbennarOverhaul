@@ -66,33 +66,18 @@ aov_spell_enchanting_embassy = {
 	general_opinion = 10
 }
 
-aov_spell_fireball = {
-	icon = learning_positive
-	prowess = 6
-}
-
 aov_spell_shock_and_awe = {
 	icon = learning_positive
-	advantage = 4
+	advantage = 6
+	maa_damage_mult = 0.1
 }
 
 aov_spell_flaming_munitions = {
 	icon = learning_positive
-	siege_phase_time = -0.25
+	siege_phase_time = -0.4
 }
 
 aov_spell_meteor_swarm = {
-	icon = learning_positive
-	maa_damage_mult = 0.2
-}
-
-aov_spell_tearfall = {
-	icon = learning_positive
-	siege_phase_time = -0.5
-	supply_limit_mult = 0.2
-}
-
-aov_spell_elemental_fury = {
 	icon = learning_positive
 	maa_damage_mult = 0.3
 	advantage = 10

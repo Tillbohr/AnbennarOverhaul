@@ -291,5 +291,79 @@ class EnchantmentTests(unittest.TestCase):
         self.assertNotIn("command_animals", BY)
 
 
+class EvocationTests(unittest.TestCase):
+    def test_keys(self):
+        self.assertEqual(keys_in_slot_order("evocation"),
+                         ["fireball", "shock_and_awe", "flaming_munitions", "winters_grip", "earthquake", "meteor_swarm"])
+
+    def test_types_and_numbers(self):
+        for k in ("fireball", "winters_grip", "earthquake"):
+            self.assertEqual(BY[k]["type"], "targeted", k)
+            self.assertTrue(BY[k]["hostile"], k)
+        m = BY["meteor_swarm"]
+        self.assertEqual((m["type"], m["level"], m["slot"]), ("war", 3, 6))
+        for s in ("maa_damage_mult = 0.3", "advantage = 10", "health = -0.5"):
+            self.assertIn(s, m["modifier"])
+        self.assertEqual(m["effect"].strip(), "aov_meteor_swarm = yes")
+        self.assertEqual(BY["shock_and_awe"]["name"], "Thunderclap")
+        self.assertIn("advantage = 6", BY["shock_and_awe"]["modifier"])
+        self.assertIn("maa_damage_mult = 0.1", BY["shock_and_awe"]["modifier"])
+        self.assertIn("siege_phase_time = -0.4", BY["flaming_munitions"]["modifier"])
+
+    def test_evocation_target_trigger(self):
+        self.assertEqual(BY["fireball"]["target_trigger"], "aov_spell_target_war_foe")
+        self.assertEqual(BY["winters_grip"]["target_trigger"], "aov_spell_target_war_capital")
+        self.assertEqual(BY["earthquake"]["target_trigger"], "aov_spell_target_war_capital")
+        triggers = read("common/scripted_triggers/aov_magic_triggers.txt")
+        foe = block(triggers, "aov_spell_target_war_foe")
+        for s in ("is_at_war_with = scope:recipient", "is_knight = yes", "is_commanding_army = yes"):
+            self.assertIn(s, foe)
+        cap = block(triggers, "aov_spell_target_war_capital")
+        self.assertIn("is_at_war_with = scope:recipient", cap)
+        self.assertIn("exists = capital_province", cap)
+
+    def test_fireball(self):
+        self.assertEqual(BY["fireball"]["effect"].strip(), "aov_fireball = yes")
+        b = block(effects(), "aov_fireball")
+        self.assertEqual(b.count("increase_wounds_effect = { REASON = fight }"), 2)
+        self.assertIn("chance = aov_fireball_severe_chance", b)
+        self.assertIn("value = 20", block(tuning(), "aov_fireball_severe_chance"))
+
+    def test_winters_grip(self):
+        self.assertEqual(BY["winters_grip"]["curse"], "aov_spell_winters_grip_target")
+        m = block(modifiers(), "aov_spell_winters_grip_target")
+        for s in ("movement_speed = -0.4", "maa_damage_mult = -0.15", "supply_limit_mult = -0.2"):
+            self.assertIn(s, m)
+        b = block(effects(), "aov_winters_grip")
+        self.assertIn("value = aov_spell_winters_grip_years", b)
+        self.assertIn("modifier = aov_spell_winters_grip_target", b)
+
+    def test_earthquake(self):
+        b = block(effects(), "aov_earthquake")
+        for s in ("change_development_level = -2", "change_county_control = -40",
+                  "add_county_modifier = { modifier = aov_earthquake_damage years = 3 }",
+                  "chance = aov_earthquake_extra_chance", "change_development_level = -1"):
+            self.assertIn(s, b)
+        self.assertIn("value = 25", block(tuning(), "aov_earthquake_extra_chance"))
+        m = block(modifiers(), "aov_earthquake_damage")
+        self.assertIn("fort_level = -1", m)
+        self.assertIn("garrison_size = -0.5", m)
+
+    def test_meteor_swarm(self):
+        b = block(effects(), "aov_meteor_swarm")
+        for s in ("is_attacker = scope:aov_meteor_caster", "primary_defender", "primary_attacker",
+                  "ordered_held_county = {", "order_by = development_level", "max = 3",
+                  "change_development_level = -1", "change_county_control = -30",
+                  "add_county_modifier = { modifier = aov_meteor_scorched years = 5 }"):
+            self.assertIn(s, b)
+        m = block(modifiers(), "aov_meteor_scorched")
+        self.assertIn("levy_size = -0.5", m)
+        self.assertIn("tax_mult = -0.5", m)
+
+    def test_removed(self):
+        for k in ("tearfall", "elemental_fury"):
+            self.assertNotIn(k, BY)
+
+
 if __name__ == "__main__":
     unittest.main()

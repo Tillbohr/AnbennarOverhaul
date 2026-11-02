@@ -295,7 +295,16 @@ aov_spell_fireball_cast = {
 		add_magic_lifestyle_xp = 25
 		set_variable = { name = aov_spell_fireball_cd years = aov_spell_fireball_years }
 	}
-	add_character_modifier = { modifier = aov_spell_fireball years = aov_spell_fireball_years }
+	random_list = {
+		0 = {
+			modifier = { add = aov_spell_land_chance }
+			aov_fireball = yes
+		}
+		0 = {
+			modifier = { add = aov_spell_miss_chance }
+			aov_spell_missed = yes
+		}
+	}
 }
 
 aov_spell_shock_and_awe_cast = {
@@ -320,37 +329,56 @@ aov_spell_flaming_munitions_cast = {
 	add_character_modifier = { modifier = aov_spell_flaming_munitions years = aov_spell_flaming_munitions_years }
 }
 
+aov_spell_winters_grip_cast = {
+	custom_tooltip = aov_spell_winters_grip_cost_tt
+	hidden_effect = {
+		aov_mana_spend = { AMOUNT = aov_spell_winters_grip_cost }
+		aov_school_add_progress = { SCHOOL = evocation AMOUNT = 100 }
+		add_magic_lifestyle_xp = 100
+		set_variable = { name = aov_spell_winters_grip_cd years = aov_spell_winters_grip_years }
+	}
+	random_list = {
+		0 = {
+			modifier = { add = aov_spell_land_chance }
+			aov_winters_grip = yes
+		}
+		0 = {
+			modifier = { add = aov_spell_miss_chance }
+			aov_spell_missed = yes
+		}
+	}
+}
+
+aov_spell_earthquake_cast = {
+	custom_tooltip = aov_spell_earthquake_cost_tt
+	hidden_effect = {
+		aov_mana_spend = { AMOUNT = aov_spell_earthquake_cost }
+		aov_school_add_progress = { SCHOOL = evocation AMOUNT = 100 }
+		add_magic_lifestyle_xp = 100
+		set_variable = { name = aov_spell_earthquake_cd years = aov_spell_earthquake_years }
+	}
+	random_list = {
+		0 = {
+			modifier = { add = aov_spell_land_chance }
+			aov_earthquake = yes
+		}
+		0 = {
+			modifier = { add = aov_spell_miss_chance }
+			aov_spell_missed = yes
+		}
+	}
+}
+
 aov_spell_meteor_swarm_cast = {
 	custom_tooltip = aov_spell_meteor_swarm_cost_tt
 	hidden_effect = {
 		aov_mana_spend = { AMOUNT = aov_spell_meteor_swarm_cost }
-		aov_school_add_progress = { SCHOOL = evocation AMOUNT = 100 }
-		add_magic_lifestyle_xp = 100
+		aov_school_add_progress = { SCHOOL = evocation AMOUNT = 200 }
+		add_magic_lifestyle_xp = 200
 		set_variable = { name = aov_spell_meteor_swarm_cd years = aov_spell_meteor_swarm_years }
 	}
 	add_character_modifier = { modifier = aov_spell_meteor_swarm years = aov_spell_meteor_swarm_years }
-}
-
-aov_spell_tearfall_cast = {
-	custom_tooltip = aov_spell_tearfall_cost_tt
-	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_tearfall_cost }
-		aov_school_add_progress = { SCHOOL = evocation AMOUNT = 100 }
-		add_magic_lifestyle_xp = 100
-		set_variable = { name = aov_spell_tearfall_cd years = aov_spell_tearfall_years }
-	}
-	add_character_modifier = { modifier = aov_spell_tearfall years = aov_spell_tearfall_years }
-}
-
-aov_spell_elemental_fury_cast = {
-	custom_tooltip = aov_spell_elemental_fury_cost_tt
-	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_elemental_fury_cost }
-		aov_school_add_progress = { SCHOOL = evocation AMOUNT = 200 }
-		add_magic_lifestyle_xp = 200
-		set_variable = { name = aov_spell_elemental_fury_cd years = aov_spell_elemental_fury_years }
-	}
-	add_character_modifier = { modifier = aov_spell_elemental_fury years = aov_spell_elemental_fury_years }
+	aov_meteor_swarm = yes
 }
 
 aov_spell_invisibility_cast = {
@@ -561,6 +589,10 @@ aov_spell_rite_of_conception_cast = {
 
 # Purify: remove every hostile spell's modifier from this character
 aov_spell_remove_curses = {
+	if = {
+		limit = { has_character_modifier = aov_spell_winters_grip_target }
+		remove_character_modifier = aov_spell_winters_grip_target
+	}
 }
 
 # Field of Forbiddance: dispel this character's war spells
@@ -580,14 +612,6 @@ aov_spell_dispel_war_spells = {
 	if = {
 		limit = { has_character_modifier = aov_spell_meteor_swarm }
 		remove_character_modifier = aov_spell_meteor_swarm
-	}
-	if = {
-		limit = { has_character_modifier = aov_spell_tearfall }
-		remove_character_modifier = aov_spell_tearfall
-	}
-	if = {
-		limit = { has_character_modifier = aov_spell_elemental_fury }
-		remove_character_modifier = aov_spell_elemental_fury
 	}
 	if = {
 		limit = { has_character_modifier = aov_spell_mass_enlarge }
@@ -674,10 +698,6 @@ aov_magic_ai_cast_random = {
 			trigger = { aov_spell_enchanting_embassy_castable = yes }
 			aov_spell_enchanting_embassy_cast = yes
 		}
-		10 = {
-			trigger = { aov_spell_fireball_castable = yes }
-			aov_spell_fireball_cast = yes
-		}
 		30 = {
 			trigger = { aov_spell_shock_and_awe_castable = yes }
 			aov_spell_shock_and_awe_cast = yes
@@ -689,14 +709,6 @@ aov_magic_ai_cast_random = {
 		30 = {
 			trigger = { aov_spell_meteor_swarm_castable = yes }
 			aov_spell_meteor_swarm_cast = yes
-		}
-		30 = {
-			trigger = { aov_spell_tearfall_castable = yes }
-			aov_spell_tearfall_cast = yes
-		}
-		30 = {
-			trigger = { aov_spell_elemental_fury_castable = yes }
-			aov_spell_elemental_fury_cast = yes
 		}
 		10 = {
 			trigger = { aov_spell_invisibility_castable = yes }

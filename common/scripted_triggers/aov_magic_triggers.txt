@@ -76,3 +76,30 @@ aov_dominate_surrender_possible = {
 		}
 	}
 }
+
+# Fireball: a ruler at war with the caster, or a knight or army commander of one (interaction scopes)
+aov_spell_target_war_foe = {
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_WAR_FOE
+		OR = {
+			scope:actor = { is_at_war_with = scope:recipient }
+			scope:recipient = {
+				OR = {
+					is_knight = yes
+					is_commanding_army = yes
+				}
+				exists = liege
+				liege = { is_at_war_with = scope:actor }
+			}
+		}
+	}
+}
+
+# Winter's Grip, Earthquake: a ruler at war with the caster who has a capital (interaction scopes)
+aov_spell_target_war_capital = {
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_WAR_CAPITAL
+		scope:actor = { is_at_war_with = scope:recipient }
+		scope:recipient = { exists = capital_province }
+	}
+}

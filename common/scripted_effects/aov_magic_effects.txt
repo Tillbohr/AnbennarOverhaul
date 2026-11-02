@@ -832,3 +832,71 @@ aov_enchant_trinket = {
 		}
 	}
 }
+
+##########
+# Evocation
+
+# Fireball landed (caster scope, scope:recipient): a wound, sometimes two
+aov_fireball = {
+	scope:recipient = {
+		increase_wounds_effect = { REASON = fight }
+		random = {
+			chance = aov_fireball_severe_chance
+			increase_wounds_effect = { REASON = fight }
+		}
+	}
+}
+
+# Winter's Grip landed: the target's armies freeze for the caster's spell duration
+aov_winters_grip = {
+	save_scope_value_as = {
+		name = aov_winters_grip_years
+		value = aov_spell_winters_grip_years
+	}
+	scope:recipient = {
+		add_character_modifier = {
+			modifier = aov_spell_winters_grip_target
+			years = scope:aov_winters_grip_years
+		}
+	}
+}
+
+# Earthquake landed: the target's capital county shakes
+aov_earthquake = {
+	scope:recipient.capital_county = {
+		change_development_level = -2
+		change_county_control = -40
+		add_county_modifier = { modifier = aov_earthquake_damage years = 3 }
+		random = {
+			chance = aov_earthquake_extra_chance
+			change_development_level = -1
+		}
+	}
+}
+
+# Meteor Swarm: fire on the three most developed counties of the leader of the other side of one of the caster's wars
+aov_meteor_swarm = {
+	save_scope_as = aov_meteor_caster
+	random_character_war = {
+		if = {
+			limit = { is_attacker = scope:aov_meteor_caster }
+			primary_defender = { save_scope_as = aov_meteor_target }
+		}
+		else = {
+			primary_attacker = { save_scope_as = aov_meteor_target }
+		}
+	}
+	if = {
+		limit = { exists = scope:aov_meteor_target }
+		scope:aov_meteor_target = {
+			ordered_held_county = {
+				order_by = development_level
+				max = 3
+				check_range_bounds = no
+				change_development_level = -1
+				change_county_control = -30
+				add_county_modifier = { modifier = aov_meteor_scorched years = 5 }
+			}
+		}
+	}
+}
