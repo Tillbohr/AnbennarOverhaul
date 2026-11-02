@@ -3,7 +3,7 @@
 # Ward
 aov_spell_ward_target = {
 	icon = martial_positive
-	enemy_hostile_scheme_success_chance_add = -15
+	enemy_hostile_scheme_success_chance_add = -30
 }
 
 # Steal Vitality

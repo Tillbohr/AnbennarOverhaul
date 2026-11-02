@@ -2,29 +2,25 @@
 
 aov_spell_combat_ward = {
 	icon = learning_positive
-	prowess = 4
-}
-
-aov_spell_protected_journey = {
-	icon = learning_positive
-	character_travel_safety = 10
-	character_travel_speed_mult = 0.1
+	prowess = 6
+	health = 0.25
 }
 
 aov_spell_mass_ward = {
 	icon = learning_positive
-	garrison_size = 0.25
-	defender_advantage = 3
+	garrison_size = 0.5
+	defender_advantage = 6
 }
 
 aov_spell_mage_armor = {
 	icon = learning_positive
-	maa_toughness_mult = 0.15
+	maa_toughness_mult = 0.25
+	levy_toughness = 2.5
 }
 
 aov_spell_field_of_forbiddance = {
 	icon = learning_positive
-	enemy_hostile_scheme_success_chance_add = -20
+	enemy_hostile_scheme_success_chance_add = -30
 }
 
 aov_spell_summon_familiars = {

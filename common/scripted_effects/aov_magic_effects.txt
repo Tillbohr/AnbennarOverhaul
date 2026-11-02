@@ -296,13 +296,27 @@ aov_speak_with_dead = {
 	}
 }
 
-# Remove Pain: wounds and illness healed, stress eased
-aov_remove_pain = {
+# Purify: wounds, illness, the diseases Necromancy spreads and hostile spells lifted
+aov_purify = {
 	if = { limit = { has_trait = wounded_1 } remove_trait = wounded_1 }
 	if = { limit = { has_trait = wounded_2 } remove_trait = wounded_2 }
 	if = { limit = { has_trait = wounded_3 } remove_trait = wounded_3 }
-	if = { limit = { has_trait = ill } remove_trait = ill }
-	add_stress = -30
+	recover_from_disease_effect = { DISEASE = ill }
+	recover_from_disease_effect = { DISEASE = consumption }
+	recover_from_disease_effect = { DISEASE = typhus }
+	recover_from_disease_effect = { DISEASE = smallpox }
+	recover_from_disease_effect = { DISEASE = bubonic_plague }
+	recover_from_disease_effect = { DISEASE = measles }
+	recover_from_disease_effect = { DISEASE = dysentery }
+	aov_spell_remove_curses = yes
+	add_stress = -20
+}
+
+# Field of Forbiddance: the war spells of everyone at war with the caster are dispelled
+aov_field_of_forbiddance = {
+	every_war_enemy = {
+		aov_spell_dispel_war_spells = yes
+	}
 }
 
 # Transmute to Gold: Learning x 15 gold, at a stress cost

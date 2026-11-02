@@ -178,7 +178,7 @@ class GeneratedTests(unittest.TestCase):
         # Landless adventurer mages cast only what works without a domain
         self.assertIn("is_landed = yes", block(bs.triggers(SPELLS), "aov_spell_plant_growth_castable"))
         self.assertIn("text = AOV_SPELL_REQ_LANDED", block(bs.triggers(SPELLS), "aov_spell_lead_the_crowds_castable"))
-        self.assertNotIn("is_landed", block(bs.triggers(SPELLS), "aov_spell_protected_journey_castable"))
+        self.assertNotIn("is_landed", block(bs.triggers(SPELLS), "aov_spell_combat_ward_castable"))
         self.assertNotIn("is_landed", block(bs.triggers(SPELLS), "aov_spell_summon_elementals_castable"))
 
     def test_sgui_only_for_window_spells(self):

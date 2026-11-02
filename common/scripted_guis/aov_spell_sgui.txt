@@ -8,10 +8,10 @@ aov_spell_combat_ward_sgui = {
 	effect = { aov_spell_combat_ward_cast = yes }
 }
 
-aov_spell_protected_journey_sgui = {
+aov_spell_purify_sgui = {
 	scope = character
-	is_valid = { aov_spell_protected_journey_castable = yes }
-	effect = { aov_spell_protected_journey_cast = yes }
+	is_valid = { aov_spell_purify_castable = yes }
+	effect = { aov_spell_purify_cast = yes }
 }
 
 aov_spell_mass_ward_sgui = {

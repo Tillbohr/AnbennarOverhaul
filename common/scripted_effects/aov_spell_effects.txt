@@ -24,15 +24,15 @@ aov_spell_ward_cast = {
 	scope:recipient = { add_character_modifier = { modifier = aov_spell_ward_target years = 2 } }
 }
 
-aov_spell_protected_journey_cast = {
-	custom_tooltip = aov_spell_protected_journey_cost_tt
+aov_spell_purify_cast = {
+	custom_tooltip = aov_spell_purify_cost_tt
 	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_protected_journey_cost }
+		aov_mana_spend = { AMOUNT = aov_spell_purify_cost }
 		aov_school_add_progress = { SCHOOL = abjuration AMOUNT = 50 }
 		add_magic_lifestyle_xp = 50
-		set_variable = { name = aov_spell_protected_journey_cd years = aov_spell_protected_journey_years }
+		set_variable = { name = aov_spell_purify_cd years = aov_spell_purify_years }
 	}
-	add_character_modifier = { modifier = aov_spell_protected_journey years = aov_spell_protected_journey_years }
+	aov_purify = yes
 }
 
 aov_spell_mass_ward_cast = {
@@ -66,6 +66,7 @@ aov_spell_field_of_forbiddance_cast = {
 		set_variable = { name = aov_spell_field_of_forbiddance_cd years = aov_spell_field_of_forbiddance_years }
 	}
 	add_character_modifier = { modifier = aov_spell_field_of_forbiddance years = aov_spell_field_of_forbiddance_years }
+	aov_field_of_forbiddance = yes
 }
 
 aov_spell_summon_familiars_cast = {
@@ -455,7 +456,7 @@ aov_spell_remove_pain_cast = {
 		add_magic_lifestyle_xp = 100
 		set_variable = { name = aov_spell_remove_pain_cd years = aov_spell_remove_pain_years }
 	}
-	aov_remove_pain = yes
+	aov_purify = yes
 	aov_dark_magic_roll = yes
 }
 
@@ -593,8 +594,8 @@ aov_magic_ai_cast_random = {
 			aov_spell_combat_ward_cast = yes
 		}
 		10 = {
-			trigger = { aov_spell_protected_journey_castable = yes }
-			aov_spell_protected_journey_cast = yes
+			trigger = { aov_spell_purify_castable = yes }
+			aov_spell_purify_cast = yes
 		}
 		10 = {
 			trigger = { aov_spell_mass_ward_castable = yes }

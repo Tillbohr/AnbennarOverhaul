@@ -32,7 +32,7 @@ aov_spell_ward_years = {
 	floor = yes
 }
 
-aov_spell_protected_journey_cost = {
+aov_spell_purify_cost = {
 	value = 1
 	subtract = aov_cost_cut_abjuration
 	min = 0.5
@@ -40,9 +40,8 @@ aov_spell_protected_journey_cost = {
 	add = 0.5
 	floor = yes
 }
-aov_spell_protected_journey_years = {
+aov_spell_purify_years = {
 	value = 2
-	multiply = aov_years_mult_abjuration
 	add = 0.5
 	floor = yes
 }

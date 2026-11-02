@@ -46,25 +46,25 @@ aov_spell_ward_castable = {
 	}
 }
 
-aov_spell_protected_journey_known = {
+aov_spell_purify_known = {
 	aov_school_level_at_least = { SCHOOL = abjuration LEVEL = 1 }
 }
-aov_spell_protected_journey_ready = {
-	NOT = { has_variable = aov_spell_protected_journey_cd }
+aov_spell_purify_ready = {
+	NOT = { has_variable = aov_spell_purify_cd }
 }
-aov_spell_protected_journey_castable = {
+aov_spell_purify_castable = {
 	aov_is_mage = yes
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_ABJURATION_1
-		aov_spell_protected_journey_known = yes
+		aov_spell_purify_known = yes
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_READY
-		aov_spell_protected_journey_ready = yes
+		aov_spell_purify_ready = yes
 	}
 	custom_tooltip = {
-		text = aov_spell_protected_journey_req_mana
-		aov_mana >= aov_spell_protected_journey_cost
+		text = aov_spell_purify_req_mana
+		aov_mana >= aov_spell_purify_cost
 	}
 }
 
@@ -1142,7 +1142,7 @@ aov_spell_rite_of_conception_castable = {
 aov_magic_ai_any_castable = {
 	OR = {
 		aov_spell_combat_ward_castable = yes
-		aov_spell_protected_journey_castable = yes
+		aov_spell_purify_castable = yes
 		aov_spell_mass_ward_castable = yes
 		aov_spell_mage_armor_castable = yes
 		aov_spell_field_of_forbiddance_castable = yes
