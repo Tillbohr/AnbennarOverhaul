@@ -386,6 +386,252 @@ aov_hold_delve.1 = {
 			}
 		}
 	}
+	option = {
+		name = aov_hold_delve.1.hold_10
+		trigger = {
+			title:b_arg_ordstun = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_arg_ordstun.title_province = {
+				aov_can_dig_at = yes
+				scope:digger.gold >= aov_dig_cost
+				# The AI keeps as much gold again in reserve.
+				trigger_if = {
+					limit = { scope:digger = { is_ai = yes } }
+					scope:digger.gold >= {
+						value = aov_dig_cost
+						multiply = 2
+					}
+				}
+			}
+		}
+		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
+		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		show_as_unavailable = {
+			title:b_arg_ordstun = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_arg_ordstun.title_province = { aov_can_start_dig_base = yes }
+		}
+		title:b_arg_ordstun.title_province = {
+			save_scope_value_as = { name = dig_cost value = aov_dig_cost }
+			barony.holder = { remove_short_term_gold = scope:dig_cost }
+			aov_hold_start_dig_effect = yes
+		}
+		ai_chance = {
+			base = 1
+			# Cheaper holds first (cost is 150 x the target level); always at least 1 so the AI can still pick a dear hold.
+			modifier = {
+				add = {
+					value = 1500
+					divide = title:b_arg_ordstun.title_province.aov_dig_cost
+				}
+			}
+		}
+	}
+	option = {
+		name = aov_hold_delve.1.hold_11
+		trigger = {
+			title:b_ovdal_lodhum = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_ovdal_lodhum.title_province = {
+				aov_can_dig_at = yes
+				scope:digger.gold >= aov_dig_cost
+				# The AI keeps as much gold again in reserve.
+				trigger_if = {
+					limit = { scope:digger = { is_ai = yes } }
+					scope:digger.gold >= {
+						value = aov_dig_cost
+						multiply = 2
+					}
+				}
+			}
+		}
+		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
+		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		show_as_unavailable = {
+			title:b_ovdal_lodhum = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_ovdal_lodhum.title_province = { aov_can_start_dig_base = yes }
+		}
+		title:b_ovdal_lodhum.title_province = {
+			save_scope_value_as = { name = dig_cost value = aov_dig_cost }
+			barony.holder = { remove_short_term_gold = scope:dig_cost }
+			aov_hold_start_dig_effect = yes
+		}
+		ai_chance = {
+			base = 1
+			# Cheaper holds first (cost is 150 x the target level); always at least 1 so the AI can still pick a dear hold.
+			modifier = {
+				add = {
+					value = 1500
+					divide = title:b_ovdal_lodhum.title_province.aov_dig_cost
+				}
+			}
+		}
+	}
+	option = {
+		name = aov_hold_delve.1.hold_12
+		trigger = {
+			title:b_gor_burad = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_gor_burad.title_province = {
+				aov_can_dig_at = yes
+				scope:digger.gold >= aov_dig_cost
+				# The AI keeps as much gold again in reserve.
+				trigger_if = {
+					limit = { scope:digger = { is_ai = yes } }
+					scope:digger.gold >= {
+						value = aov_dig_cost
+						multiply = 2
+					}
+				}
+			}
+		}
+		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
+		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		show_as_unavailable = {
+			title:b_gor_burad = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_gor_burad.title_province = { aov_can_start_dig_base = yes }
+		}
+		title:b_gor_burad.title_province = {
+			save_scope_value_as = { name = dig_cost value = aov_dig_cost }
+			barony.holder = { remove_short_term_gold = scope:dig_cost }
+			aov_hold_start_dig_effect = yes
+		}
+		ai_chance = {
+			base = 1
+			# Cheaper holds first (cost is 150 x the target level); always at least 1 so the AI can still pick a dear hold.
+			modifier = {
+				add = {
+					value = 1500
+					divide = title:b_gor_burad.title_province.aov_dig_cost
+				}
+			}
+		}
+	}
+	option = {
+		name = aov_hold_delve.1.hold_13
+		trigger = {
+			title:b_shazstundihr = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_shazstundihr.title_province = {
+				aov_can_dig_at = yes
+				scope:digger.gold >= aov_dig_cost
+				# The AI keeps as much gold again in reserve.
+				trigger_if = {
+					limit = { scope:digger = { is_ai = yes } }
+					scope:digger.gold >= {
+						value = aov_dig_cost
+						multiply = 2
+					}
+				}
+			}
+		}
+		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
+		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		show_as_unavailable = {
+			title:b_shazstundihr = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_shazstundihr.title_province = { aov_can_start_dig_base = yes }
+		}
+		title:b_shazstundihr.title_province = {
+			save_scope_value_as = { name = dig_cost value = aov_dig_cost }
+			barony.holder = { remove_short_term_gold = scope:dig_cost }
+			aov_hold_start_dig_effect = yes
+		}
+		ai_chance = {
+			base = 1
+			# Cheaper holds first (cost is 150 x the target level); always at least 1 so the AI can still pick a dear hold.
+			modifier = {
+				add = {
+					value = 1500
+					divide = title:b_shazstundihr.title_province.aov_dig_cost
+				}
+			}
+		}
+	}
+	option = {
+		name = aov_hold_delve.1.hold_14
+		trigger = {
+			title:b_verkal_skomdihr = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_verkal_skomdihr.title_province = {
+				aov_can_dig_at = yes
+				scope:digger.gold >= aov_dig_cost
+				# The AI keeps as much gold again in reserve.
+				trigger_if = {
+					limit = { scope:digger = { is_ai = yes } }
+					scope:digger.gold >= {
+						value = aov_dig_cost
+						multiply = 2
+					}
+				}
+			}
+		}
+		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
+		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		show_as_unavailable = {
+			title:b_verkal_skomdihr = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_verkal_skomdihr.title_province = { aov_can_start_dig_base = yes }
+		}
+		title:b_verkal_skomdihr.title_province = {
+			save_scope_value_as = { name = dig_cost value = aov_dig_cost }
+			barony.holder = { remove_short_term_gold = scope:dig_cost }
+			aov_hold_start_dig_effect = yes
+		}
+		ai_chance = {
+			base = 1
+			# Cheaper holds first (cost is 150 x the target level); always at least 1 so the AI can still pick a dear hold.
+			modifier = {
+				add = {
+					value = 1500
+					divide = title:b_verkal_skomdihr.title_province.aov_dig_cost
+				}
+			}
+		}
+	}
+	option = {
+		name = aov_hold_delve.1.hold_15
+		trigger = {
+			title:b_orlghelovar = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_orlghelovar.title_province = {
+				aov_can_dig_at = yes
+				scope:digger.gold >= aov_dig_cost
+				# The AI keeps as much gold again in reserve.
+				trigger_if = {
+					limit = { scope:digger = { is_ai = yes } }
+					scope:digger.gold >= {
+						value = aov_dig_cost
+						multiply = 2
+					}
+				}
+			}
+		}
+		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
+		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		show_as_unavailable = {
+			title:b_orlghelovar = { holder = root }
+			save_temporary_scope_as = digger
+			title:b_orlghelovar.title_province = { aov_can_start_dig_base = yes }
+		}
+		title:b_orlghelovar.title_province = {
+			save_scope_value_as = { name = dig_cost value = aov_dig_cost }
+			barony.holder = { remove_short_term_gold = scope:dig_cost }
+			aov_hold_start_dig_effect = yes
+		}
+		ai_chance = {
+			base = 1
+			# Cheaper holds first (cost is 150 x the target level); always at least 1 so the AI can still pick a dear hold.
+			modifier = {
+				add = {
+					value = 1500
+					divide = title:b_orlghelovar.title_province.aov_dig_cost
+				}
+			}
+		}
+	}
 
 	option = {
 		name = aov_hold_delve.1.cancel

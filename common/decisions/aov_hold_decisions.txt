@@ -124,6 +124,48 @@ aov_delve_deeper_decision = {
 		}
 		triggered_desc = {
 			trigger = {
+				title:b_arg_ordstun = { holder = root }
+				title:b_arg_ordstun.title_province = { aov_hold_dig_running = yes }
+			}
+			desc = aov_delve_deeper_decision_desc_10
+		}
+		triggered_desc = {
+			trigger = {
+				title:b_ovdal_lodhum = { holder = root }
+				title:b_ovdal_lodhum.title_province = { aov_hold_dig_running = yes }
+			}
+			desc = aov_delve_deeper_decision_desc_11
+		}
+		triggered_desc = {
+			trigger = {
+				title:b_gor_burad = { holder = root }
+				title:b_gor_burad.title_province = { aov_hold_dig_running = yes }
+			}
+			desc = aov_delve_deeper_decision_desc_12
+		}
+		triggered_desc = {
+			trigger = {
+				title:b_shazstundihr = { holder = root }
+				title:b_shazstundihr.title_province = { aov_hold_dig_running = yes }
+			}
+			desc = aov_delve_deeper_decision_desc_13
+		}
+		triggered_desc = {
+			trigger = {
+				title:b_verkal_skomdihr = { holder = root }
+				title:b_verkal_skomdihr.title_province = { aov_hold_dig_running = yes }
+			}
+			desc = aov_delve_deeper_decision_desc_14
+		}
+		triggered_desc = {
+			trigger = {
+				title:b_orlghelovar = { holder = root }
+				title:b_orlghelovar.title_province = { aov_hold_dig_running = yes }
+			}
+			desc = aov_delve_deeper_decision_desc_15
+		}
+		triggered_desc = {
+			trigger = {
 				save_temporary_scope_as = digger
 				title:b_marrhold = { holder = root }
 				title:b_marrhold.title_province = { aov_can_dig_at = yes }
@@ -193,6 +235,54 @@ aov_delve_deeper_decision = {
 				title:b_aghatehargun.title_province = { aov_can_dig_at = yes }
 			}
 			desc = aov_delve_deeper_cost_9
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_arg_ordstun = { holder = root }
+				title:b_arg_ordstun.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_10
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_ovdal_lodhum = { holder = root }
+				title:b_ovdal_lodhum.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_11
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_gor_burad = { holder = root }
+				title:b_gor_burad.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_12
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_shazstundihr = { holder = root }
+				title:b_shazstundihr.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_13
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_verkal_skomdihr = { holder = root }
+				title:b_verkal_skomdihr.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_14
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_orlghelovar = { holder = root }
+				title:b_orlghelovar.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_15
 		}
 	}
 

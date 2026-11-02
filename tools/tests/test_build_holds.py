@@ -332,7 +332,7 @@ class DigRequirementTests(unittest.TestCase):
 
     def test_picker_shows_blocked_holds(self):
         text = self.hand("events/aov_hold_delve_events.txt")
-        options = re.findall(r"\toption = \{\n\t\tname = aov_hold_delve\.1\.hold_\d\n.*?\n\t\}\n", text, re.S)
+        options = re.findall(r"\toption = \{\n\t\tname = aov_hold_delve\.1\.hold_\d+\n.*?\n\t\}\n", text, re.S)
         self.assertEqual(len(options), len(holds.HOLDS))
         for h, option in zip(holds.HOLDS, options):
             self.assertIn(f"\t\t\ttitle:{h['barony']} = {{ holder = root }}\n", option, h["name"])

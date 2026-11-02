@@ -161,6 +161,90 @@ aov_hold_ruin.2 = {
 			aov_hold_begin_restoration_effect = yes
 		}
 	}
+	option = {
+		name = aov_hold_ruin.2.hold_10
+		trigger = {
+			title:b_arg_ordstun = { holder = root }
+			title:b_arg_ordstun.title_province = {
+				aov_hold_is_ruined = yes
+				NOT = { has_province_modifier = aov_restoring_hold }
+				NOT = { has_variable = aov_restore_pending }
+			}
+		}
+		title:b_arg_ordstun.title_province = {
+			aov_hold_begin_restoration_effect = yes
+		}
+	}
+	option = {
+		name = aov_hold_ruin.2.hold_11
+		trigger = {
+			title:b_ovdal_lodhum = { holder = root }
+			title:b_ovdal_lodhum.title_province = {
+				aov_hold_is_ruined = yes
+				NOT = { has_province_modifier = aov_restoring_hold }
+				NOT = { has_variable = aov_restore_pending }
+			}
+		}
+		title:b_ovdal_lodhum.title_province = {
+			aov_hold_begin_restoration_effect = yes
+		}
+	}
+	option = {
+		name = aov_hold_ruin.2.hold_12
+		trigger = {
+			title:b_gor_burad = { holder = root }
+			title:b_gor_burad.title_province = {
+				aov_hold_is_ruined = yes
+				NOT = { has_province_modifier = aov_restoring_hold }
+				NOT = { has_variable = aov_restore_pending }
+			}
+		}
+		title:b_gor_burad.title_province = {
+			aov_hold_begin_restoration_effect = yes
+		}
+	}
+	option = {
+		name = aov_hold_ruin.2.hold_13
+		trigger = {
+			title:b_shazstundihr = { holder = root }
+			title:b_shazstundihr.title_province = {
+				aov_hold_is_ruined = yes
+				NOT = { has_province_modifier = aov_restoring_hold }
+				NOT = { has_variable = aov_restore_pending }
+			}
+		}
+		title:b_shazstundihr.title_province = {
+			aov_hold_begin_restoration_effect = yes
+		}
+	}
+	option = {
+		name = aov_hold_ruin.2.hold_14
+		trigger = {
+			title:b_verkal_skomdihr = { holder = root }
+			title:b_verkal_skomdihr.title_province = {
+				aov_hold_is_ruined = yes
+				NOT = { has_province_modifier = aov_restoring_hold }
+				NOT = { has_variable = aov_restore_pending }
+			}
+		}
+		title:b_verkal_skomdihr.title_province = {
+			aov_hold_begin_restoration_effect = yes
+		}
+	}
+	option = {
+		name = aov_hold_ruin.2.hold_15
+		trigger = {
+			title:b_orlghelovar = { holder = root }
+			title:b_orlghelovar.title_province = {
+				aov_hold_is_ruined = yes
+				NOT = { has_province_modifier = aov_restoring_hold }
+				NOT = { has_variable = aov_restore_pending }
+			}
+		}
+		title:b_orlghelovar.title_province = {
+			aov_hold_begin_restoration_effect = yes
+		}
+	}
 }
 
 # The restoration is done (scope:hold_province, scope:hold_title). Resolved on the hold's current holder:

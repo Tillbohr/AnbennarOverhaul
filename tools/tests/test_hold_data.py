@@ -11,13 +11,16 @@ LIVE = ANBENNAR_CK3.is_dir()
 
 
 class HoldDataTests(unittest.TestCase):
-    def test_nine_holds_one_ruined(self):
-        self.assertEqual(len(holds.HOLDS), 9)
+    def test_fifteen_holds_one_ruined(self):
+        self.assertEqual(len(holds.HOLDS), 15)
         self.assertEqual([h["name"] for h in holds.HOLDS if h["ruined"]], ["Khugdihr"])
 
     @unittest.skipUnless(LIVE, "needs Anbennar CK3")
     def test_titles_and_baronies_exist(self):
         provinces, county_baronies = pdx_script.ck3_titles(ANBENNAR_CK3)
+        ours = pdx_script.ck3_titles(Path(__file__).resolve().parents[2])  # Serpentreach's holds are the overhaul's
+        provinces.update(ours[0])
+        county_baronies.update(ours[1])
         for h in holds.HOLDS:
             self.assertIn(h["barony"], provinces)
             if h["title"].startswith("c_"):
@@ -28,7 +31,9 @@ class HoldDataTests(unittest.TestCase):
     def test_start_levels(self):
         self.assertEqual({h["name"]: h["start_level"] for h in holds.HOLDS},
                          {"Marrhold": 1, "Anvilwright": 1, "Verkal Gulan": 2, "Seghdihr": 2, "Ovdal Tûngr": 2,
-                          "Rubyhold": 2, "Hehodovar": 2, "Gor Ozumbrog": 2, "Khugdihr": 1})
+                          "Rubyhold": 2, "Hehodovar": 2, "Gor Ozumbrog": 2, "Khugdihr": 1,
+                          "Arg-Ôrdstun": 2, "Ovdal Lodhum": 2, "Gor Bûrad": 2, "Shazstundihr": 1,
+                          "Verkal Skomdihr": 1, "Orlghelovar": 1})
 
     def test_buildings_and_constants(self):
         self.assertEqual(set(holds.ASSET_BAND), set(range(1, 11)))

@@ -174,7 +174,7 @@ def render_setup() -> str:
                       "\t\tcounty = { add_county_modifier = { modifier = aov_ruined_hold } }"]
         lines.append("\t}")
         blocks.append("\n".join(lines))
-    return (HEADER + "\n# Converts the nine dwarven holds at game start. Special buildings are left alone.\n"
+    return (HEADER + "\n# Converts the dwarven holds at game start. Special buildings are left alone.\n"
             "aov_hold_setup_effect = {\n" + "\n".join(blocks) + "\n}\n")
 
 

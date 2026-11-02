@@ -169,7 +169,7 @@ class HoldDigTests(unittest.TestCase):
     def test_picker_ai_weights_positive_and_reserve(self):
         ev = event_block("aov_hold_delve.1")
         opts = [o for o in ev.split("	option = {")[1:] if "aov_hold_delve.1.hold_" in o]
-        self.assertEqual(len(opts), 9)
+        self.assertEqual(len(opts), len(holds.HOLDS))
         for o in opts:
             m = re.search(r"ai_chance = \{\s*base = (\d+)", o)
             self.assertTrue(m and int(m.group(1)) >= 1, o)   # positive floor: never all zero
