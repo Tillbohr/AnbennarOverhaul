@@ -13,7 +13,8 @@ recruiter's faith. Anbennar marked Druids and Skalds `# Change to religion` itse
 - Both tenets can only be picked by their own religion (Lencori, Skaldhyrric). The patron god can be changed on
   reformation, so any Cannorian faith that takes Adean gains Knights of the Spear.
 - Each unit is Anbennar's block with only `can_recruit` changed
-  (`common/men_at_arms_types/zz_aov_faith_maa_overrides.txt`).
+  (`common/men_at_arms_types/zz_aov_faith_maa_overrides.txt`), except that Druids and Skalds also carry the mage
+  retune's damage, toughness and terrain and winter bonuses (`magic.md`, Mage men-at-arms).
 - Their four traditions (`tradition_test_maa_anb_dercinges`, `_druids`, `_skalds`, `_knights_of_the_spear`) are
   hidden, unpickable (`common/culture/traditions/zz_aov_faith_traditions.txt`) and removed from every culture at game
   start (`aov_faith_maa_game_start`, `common/on_action/aov_faith_maa_on_actions.txt`). Carnetori and Gerudian cultures

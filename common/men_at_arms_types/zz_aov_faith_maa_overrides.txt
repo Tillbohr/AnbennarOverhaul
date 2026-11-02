@@ -3,7 +3,8 @@
 # (Skaldhyrric Faith, Reverian Cult, West Damish), Knights of the Spear Adean as patron god (alone, with the Dame or
 # with Minara). Their culture traditions are retired in common/culture/traditions/zz_aov_faith_traditions.txt.
 # Each block is otherwise Anbennar's, except that Druids and Skalds use Anbennar's unused druids and skalds icons
-# (docs/systems/base-art-fixes.md). See docs/systems/faith-maa.md.
+# (docs/systems/base-art-fixes.md) and have the mage retune's stats (zz_aov_mage_maa_overrides.txt, magic.md).
+# See docs/systems/faith-maa.md.
 
 @cultural_maa_extra_ai_score = 80
 
@@ -40,19 +41,19 @@ dercinges = {
 druids = {
 	type = mages
 
-	damage = 120
-	toughness = 30
+	damage = 200 # Anbennar Overhaul: was 120 (retuned, zz_aov_mage_maa_overrides.txt)
+	toughness = 66 # Anbennar Overhaul: was 30
 	pursuit = 0
 	screen = 20
-	
+
 	siege_tier = 1
 	siege_value = 0.1
 
-	terrain_bonus = {
-		forest = { damage = 10 toughness = 8 }
-		wetlands = { damage = 10 toughness = 8 }
-		desert = { damage = -10 toughness = -8 }
-		drylands = { damage = -10 toughness = -8 }
+	terrain_bonus = { # Anbennar Overhaul: each was damage = 10 toughness = 8 (or -10 / -8)
+		forest = { damage = 17 toughness = 18 }
+		wetlands = { damage = 17 toughness = 18 }
+		desert = { damage = -17 toughness = -18 }
+		drylands = { damage = -17 toughness = -18 }
 	}
 
 	counters = {
@@ -83,17 +84,17 @@ druids = {
 skalds = {
 	type = mages
 
-	damage = 130
-	toughness = 15
+	damage = 230 # Anbennar Overhaul: was 130 (retuned, zz_aov_mage_maa_overrides.txt)
+	toughness = 57 # Anbennar Overhaul: was 15
 	pursuit = 0
 	screen = 0
-	
+
 	siege_value = 0.05
 
-	terrain_bonus = {
-		mountains = { damage = 10 toughness = 8 }
-		hills = { damage = 10 toughness = 8 }
-		taiga = { damage = 10 toughness = 8 }
+	terrain_bonus = { # Anbennar Overhaul: each was damage = 10 toughness = 8
+		mountains = { damage = 18 toughness = 30 }
+		hills = { damage = 18 toughness = 30 }
+		taiga = { damage = 18 toughness = 30 }
 	}
 
 	counters = {
@@ -101,9 +102,9 @@ skalds = {
 		heavy_infantry = 1
 	}
 
-	winter_bonus = {
-		normal_winter = { damage = 10 toughness = 8 }
-		harsh_winter = { damage = 10 toughness = 8 }
+	winter_bonus = { # Anbennar Overhaul: each was damage = 10 toughness = 8
+		normal_winter = { damage = 18 toughness = 30 }
+		harsh_winter = { damage = 18 toughness = 30 }
 	}
 
 	can_recruit = { # Anbennar Overhaul: was the Gerudian tradition

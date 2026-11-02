@@ -30,8 +30,16 @@ JOKE_FLAVOR_FILE = "localization/replace/english/aov_maa_joke_flavor_replace_l_e
 FLAVOR_FILE = "localization/replace/english/aov_maa_flavor_replace_l_english.yml"
 BASE_LOC_FILE = "localization/english/culture/anb_cultural_maa_innovations_l_english.yml"
 
+BASE_VALUES_FILE = "common/script_values/anb_men_at_arms_values.txt"
+
 ACADEMY_GATE = "aov_battlemage_academy_tier_at_least = { TIER = 2 }"
 GATES = {"battlemages": ACADEMY_GATE, "storm_sorcerers": "always = no"}
+# Mage units retuned to vanilla armored footmen's power per gold (docs/systems/magic.md, Mage men-at-arms): only
+# damage, toughness and the terrain and winter bonuses differ from Anbennar. Druids and Skalds live in the faith file.
+RETUNED_MAGES = {"battlemages", "druids", "skalds", "wren_hedge_witches", "bladedancers"}
+RETUNED_BLOCKS = ("terrain_bonus", "winter_bonus")
+# sqrt(regiment damage x regiment toughness) / buy cost of vanilla armored footmen: 32 / 22 per man, 100 men, 90 gold.
+PARITY = (3200 * 2200) ** 0.5 / 90
 # Cultural mage units not gated by the academy (Skalds and Druids are recruited by faith: test_faith_maa.py).
 KEPT_MAGES = {"skalds", "druids", "wren_hedge_witches", "bladedancers"}
 RETIRED = ("tradition_test_maa_anb_storm_sorcerers",)
@@ -84,6 +92,38 @@ def anbennar_icon(body, key):
     return re.sub(rf"(?m)^(\s*)icon = {new}\s*$", rf"\g<1>icon = {old}", body)
 
 
+def without_stats(body, key):
+    """A retuned mage unit's block without the fields the retune changes; any other block unchanged."""
+    if key not in RETUNED_MAGES:
+        return body
+    return re.sub(r"(?m)^[ \t]*(damage|toughness)[ \t]*=.*$", "", without_blocks(body, RETUNED_BLOCKS))
+
+
+def stat(body, name):
+    """A depth-0 integer field of a men-at-arms block."""
+    flat = strip_comments(without_blocks(body, RETUNED_BLOCKS))
+    return int(re.search(rf"(?m)^\s*{name}\s*=\s*(-?\d+)", flat).group(1))
+
+
+def bonuses(body):
+    """{(block, terrain or winter): (damage, toughness)} from a block's terrain and winter bonuses."""
+    inner = parse_blocks(body)
+    found = {}
+    for block in RETUNED_BLOCKS:
+        for where, d, t in re.findall(r"(\w+)\s*=\s*\{\s*damage\s*=\s*(-?\d+)\s+toughness\s*=\s*(-?\d+)\s*\}",
+                                      strip_comments(inner.get(block, ""))):
+            found[(block, where)] = (int(d), int(t))
+    return found
+
+
+def mage_buy_cost(key):
+    """A cultural mage unit's buy cost from Anbennar's script values (@mages_recruitment_cost times its factor)."""
+    text = strip_comments(_text(ANBENNAR / BASE_VALUES_FILE))
+    base = float(re.search(r"(?m)^@mages_recruitment_cost\s*=\s*([\d.]+)", text).group(1))
+    m = re.search(rf"(?m)^{key}_recruitment_cost\s*=\s*@\[mages_recruitment_cost(?:\s*\*\s*([\d.]+))?\]", text)
+    return base * float(m.group(1) or 1)
+
+
 def maa_files():
     """Every men-at-arms file of the game, Anbennar and the overhaul, in load order (a same-named file of a later
     mod replaces the earlier one; objects defined twice: the last file wins)."""
@@ -101,14 +141,17 @@ class MageMaaTests(unittest.TestCase):
         cls.ours = blocks(MAA_FILE)
         cls.base = base_blocks(BASE_MAA_FILE)
 
-    def test_only_battlemages_and_storm_sorcerers_are_overridden(self):
-        self.assertEqual(set(self.ours), set(GATES))
+    def test_only_regated_and_retuned_units_are_overridden(self):
+        self.assertEqual(set(self.ours), set(GATES) | {"wren_hedge_witches", "bladedancers"})
 
     def test_units_regated_and_otherwise_anbennars(self):
         for key, gate in GATES.items():
             self.assertEqual(squash(parse_blocks(self.ours[key]).get("can_recruit", "")), gate, key)
-            self.assertEqual(squash(without_blocks(anbennar_icon(self.ours[key], key), ("can_recruit",))),
-                             squash(without_blocks(self.base[key], ("can_recruit",))), key)
+        for key in self.ours:
+            ours = without_stats(anbennar_icon(self.ours[key], key), key)
+            self.assertEqual(squash(without_blocks(ours, ("can_recruit",) if key in GATES else ())),
+                             squash(without_blocks(without_stats(self.base[key], key),
+                                                   ("can_recruit",) if key in GATES else ())), key)
 
     def test_no_other_cultural_mage_unit_changes_hands(self):
         effective = {}
@@ -121,6 +164,38 @@ class MageMaaTests(unittest.TestCase):
         gated = {key for key in open_mages if squash(parse_blocks(effective[key]).get("can_recruit", "")) == ACADEMY_GATE}
         self.assertEqual(open_mages - gated, KEPT_MAGES)
         self.assertEqual(gated, {"battlemages"})
+
+
+class RetunedMageTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.effective = {}
+        for f in maa_files():
+            cls.effective.update(parse_blocks(_text(f)))
+        cls.base = base_blocks(BASE_MAA_FILE)
+
+    def test_power_per_gold_matches_armored_footmen(self):
+        for key in RETUNED_MAGES:
+            body = self.effective[key]
+            men = stat(body, "stack")
+            power = (men * stat(body, "damage") * men * stat(body, "toughness")) ** 0.5
+            self.assertAlmostEqual(power / mage_buy_cost(key) / PARITY, 1, delta=0.02, msg=key)
+
+    def test_costs_are_anbennars(self):
+        for key in RETUNED_MAGES:
+            for cost in ("buy_cost", "low_maintenance_cost", "high_maintenance_cost"):
+                self.assertEqual(squash(parse_blocks(self.effective[key])[cost]),
+                                 squash(parse_blocks(self.base[key])[cost]), key)
+
+    def test_bonuses_keep_their_share_of_the_stats(self):
+        for key in RETUNED_MAGES:
+            ours, base = self.effective[key], self.base[key]
+            scale = (stat(ours, "damage") / stat(base, "damage"), stat(ours, "toughness") / stat(base, "toughness"))
+            old, new = bonuses(base), bonuses(ours)
+            self.assertEqual(set(new), set(old), key)
+            for where, values in old.items():
+                for value, factor, got in zip(values, scale, new[where]):
+                    self.assertLessEqual(abs(got - value * factor), 1, (key, where))
 
 
 class GnomeMaaTests(unittest.TestCase):

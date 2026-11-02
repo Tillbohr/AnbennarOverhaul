@@ -157,9 +157,25 @@ were not ported).
   the academy also recruits `aov_battlemages` (tier 2) and `aov_battlemages_3` (tier 3). Storm Sorcerers are disabled
   (`can_recruit = { always = no }`; gnomes field artificers instead), their tradition
   `tradition_test_maa_anb_storm_sorcerers` hidden, unpickable and removed from every culture at game start
-  (`common/on_action/aov_mage_maa_on_actions.txt`). Both units are Anbennar's blocks with only `can_recruit` changed
+  (`common/on_action/aov_mage_maa_on_actions.txt`). Both units are Anbennar's blocks with `can_recruit` changed (and War Mages retuned, below)
   (`common/men_at_arms_types/zz_aov_mage_maa_overrides.txt`, tradition in
   `common/culture/traditions/zz_aov_mage_traditions.txt`); `common/culture/innovations/zz_aov_mage_innovations.txt`
   drops the unit line from Magic Schools, which keeps its +10% magic lifestyle experience. Druids and Skalds are
-  recruited by faith (`faith-maa.md`); Wren Hedge Witches and Bladedancers are unchanged. `tools/tests/test_cultural_maa.py` fails when Anbennar changes a copied block
-  or adds a cultural mage unit.
+  recruited by faith (`faith-maa.md`); Wren Hedge Witches and Bladedancers keep Anbennar's gates.
+  **Retune.** Anbennar's 50-man mage regiments gave a third to a half of vanilla's power per gold, √(regiment damage ×
+  regiment toughness) ÷ buy cost (armored footmen: 29.5; the racial units use the same rule, `racial-armies.md`).
+  Costs stay Anbennar's; damage and toughness per man rise to par, toughness most, since 12–35 per man melted the
+  regiments; terrain and winter bonuses keep the same share of the new stats. Storm Sorcerers (unrecruitable) and the
+  academy's own `aov_battlemages`/`aov_battlemages_3` (an Evocation reward, vanilla bowmen +60%/+100%) are not retuned.
+
+  | Unit | Buy | Damage / toughness per man (was) | Power per gold vs par (was) | Bonuses (each, was +10 / +8) |
+  |---|---|---|---|---|
+  | War Mages (`battlemages`) | 240 | 280 / 72 (120 / 12) | 1.00 (0.27) | none |
+  | Druids | 195 | 200 / 66 (120 / 30) | 1.00 (0.52) | forest, wetlands +17 / +18; desert, drylands −17 / −18 |
+  | Skalds | 195 | 230 / 57 (130 / 15) | 1.00 (0.38) | mountains, hills, taiga, winter +18 / +30 |
+  | Wren Hedge Witches | 150 | 155 / 50 (100 / 20) | 1.00 (0.51) | forest, farmlands, plains, winter +16 / +20 |
+  | Bladedancers | 300 | 280 / 112 (100 / 35) | 1.00 (0.33) | none |
+
+  Wren Hedge Witches and Bladedancers are overridden in `zz_aov_mage_maa_overrides.txt` for the stats alone.
+  `tools/tests/test_cultural_maa.py` fails when Anbennar changes a copied block (any field but the retuned ones), a
+  cost, or adds a cultural mage unit; `RetunedMageTests` checks par and the bonus shares.
