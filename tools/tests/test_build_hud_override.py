@@ -30,6 +30,14 @@ HUD = (
     "\t\twidget_hud_main_tab = {\n"
     "\t\t\tname = \"royal_court_button_tutorial_uses_this\"\n"
     "\t\t}\n"
+    "\n"
+    "\t\twidget_hud_main_tab = {\n"
+    "\t\t\tname = \"tab_tax_jurisdiction\"\n"
+    "\t\t\tblockoverride \"maintab_button\"\n"
+    "\t\t\t{\n"
+    "\t\t\t\tonclick = \"[ToggleGameViewData('manage_tax_slots', GetPlayer.GetID)]\"\n"
+    "\t\t\t}\n"
+    "\t\t}\n"
     "\t}\n"
     "\thbox = {\n"
     "\t\tname = \"tutorial_highlight_resources_bar\"\n"
@@ -58,13 +66,15 @@ class BraceDeltaTests(unittest.TestCase):
 
 
 class InsertTabTests(unittest.TestCase):
-    def test_inserts_after_situation_tab(self):
+    def test_inserts_at_bottom_after_tax_jurisdiction_tab(self):
         out = bho.insert_tab(HUD)
-        sit_end = out.index('name = "tab_situation"')
-        ours = out.index('name = "tab_aov_artificery"')
         court = out.index('name = "royal_court_button_tutorial_uses_this"')
-        self.assertLess(sit_end, ours)
-        self.assertLess(ours, court)
+        tax = out.index('name = "tab_tax_jurisdiction"')
+        ours = out.index('name = "tab_aov_artificery"')
+        self.assertLess(court, tax)
+        self.assertLess(tax, ours)
+        # Still inside the tab bar's vbox: only its closing brace follows the block
+        self.assertTrue(out[out.index(bho.END):].startswith(bho.END + "\n\t}\n\thbox = {"))
 
     def test_only_adds_the_marked_block(self):
         out = bho.insert_tab(HUD)
@@ -90,7 +100,7 @@ class InsertTabTests(unittest.TestCase):
 
     def test_button_closes_open_main_tab_before_toggling(self):
         # Toggling then closing a vanilla game view closes whichever main tab is open (PoD's pattern),
-        # so the Artificery window is not left hidden behind Not( IsRightWindowOpen )
+        # so the Artifice window is not left hidden behind Not( IsRightWindowOpen )
         out = bho.insert_tab(HUD)
         toggle_view = out.index("onclick = \"[ToggleGameView( 'decisions' )]\"", out.index("tab_aov_artificery"))
         close_view = out.index("onclick = \"[CloseGameView( 'decisions' )]\"", toggle_view)
@@ -126,15 +136,15 @@ class InsertTabTests(unittest.TestCase):
 
     def test_missing_anchor(self):
         with self.assertRaises(bho.GeneratorError):
-            bho.insert_tab(HUD.replace("tab_situation", "tab_renamed"))
+            bho.insert_tab(HUD.replace("tab_tax_jurisdiction", "tab_renamed"))
 
     def test_refuses_when_already_present(self):
         with self.assertRaises(bho.GeneratorError):
             bho.insert_tab(bho.insert_tab(HUD))
 
     def test_unbalanced_braces(self):
-        # file ends before the Situations widget closes
-        broken = HUD[:HUD.index("\t\t\t}\n\t\t}\n\n\t\twidget_hud_main_tab = {\n\t\t\tname = \"royal")]
+        # file ends before the Tax Jurisdictions widget closes
+        broken = HUD[:HUD.index("\t\t\t}\n\t\t}\n\t}\n\thbox = {")]
         with self.assertRaises(bho.GeneratorError):
             bho.insert_tab(broken)
 

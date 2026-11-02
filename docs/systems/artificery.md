@@ -6,7 +6,7 @@ The HUD override also carries the Magic tab (see magic.md).
 
 | File | Generator | Why |
 |---|---|---|
-| `gui/hud.gui` | `python -I tools/build_hud_override.py` | The main tab bar is whole-file only. The script copies Anbennar's `gui/hud.gui` if it has one, else the game's, and inserts the Artificery and Magic tabs after `tab_situation` and a mage's mana before the resource bar's `gold` widget (all marked `# Anbennar Overhaul`; see magic.md). Never edit the output by hand. |
+| `gui/hud.gui` | `python -I tools/build_hud_override.py` | The main tab bar is whole-file only. The script copies Anbennar's `gui/hud.gui` if it has one, else the game's, and inserts the Artifice and Magic tabs at the bottom of the tab bar, after `tab_tax_jurisdiction`, and a mage's mana before the resource bar's `gold` widget (all marked `# Anbennar Overhaul`; see magic.md). Never edit the output by hand. |
 | `common/modifiers/aov_invention_modifiers.txt`, `common/scripted_triggers/aov_invention_triggers.txt`, `common/script_values/aov_invention_values.txt`, `common/scripted_effects/aov_invention_effects.txt`, `common/scripted_guis/aov_invention_sgui.txt`, `common/customizable_localization/aov_invention_custom_loc.txt`, `gui/aov_inventions_generated.gui`, `localization/english/aov_inventions_l_english.yml`, `gfx/interface/icons/aov_inventions/` | `python -I tools/build_inventions.py` | One block per invention, generated from `tools/data/inventions.py` (edit the data, then rerun). The icons in `gfx/interface/icons/aov_inventions/` were imported once from EU4 Anbennar and are committed (not rebuilt); a new invention needs its icon there first, or the build stops. |
 
 ## System
@@ -16,7 +16,8 @@ The HUD override also carries the Magic tab (see magic.md).
   castle/city building, university icon and modifiers, one per ruler's domain, all of a ruler's academies disabled
   if they hold 2+) → `artificer_handgunners` MaA (shown as Artificers; Anbennar's generic `artificers` is disabled in `zz_aov_gnome_maa_overrides.txt`; handgunner stats, needs the tradition and an enabled academy in
   the recruiter's domain). Anbennar's `armored_artificers` is re-enabled there as a `gunpowder` unit (Prototype Tanks and Damestear Megacannon removed); see Unlocks.
-- **Artificery tab:** HUD main tab below Situations (`gui/hud.gui`, generated) shown when the player passes
+- **Artifice tab** (keys and files keep the `artificery` name): HUD main tab at the bottom of the
+  tab bar, below Tax Jurisdictions (`gui/hud.gui`, generated), shown when the player passes
   `can_use_artificery_trigger` (gnome race, Gnomish Ingenuity culture, exactly one academy) via scripted GUI
   `aov_artificery_available`. Opens `gui/aov_window_artificery.gui` (scripted widget, variable
   `aov_artificery_window`) with Factions/Inventions tabs (variable `aov_artificery_tab`, unset = Factions).

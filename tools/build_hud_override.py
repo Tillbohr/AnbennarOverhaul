@@ -1,8 +1,8 @@
 """Regenerate gui/hud.gui for Anbennar Overhaul.
 
 The HUD tab bar can only be changed by overriding the whole hud.gui, so the submod ships a copy
-with the Artificery and Magic main tabs inserted directly below the Situations tab, and a mage's mana
-in the resource bar left of gold (as Godherja shows its magic). The copy is taken from
+with the Artifice and Magic main tabs inserted at the bottom of the tab bar (below the Tax Jurisdictions
+tab), and a mage's mana in the resource bar left of gold (as Godherja shows its magic). The copy is taken from
 Anbennar's gui/hud.gui if Anbennar ships one, otherwise from the game. Rerun this after every
 CK3 patch and Anbennar update:
 
@@ -14,9 +14,9 @@ import sys
 from pathlib import Path
 
 MARKER = "# Anbennar Overhaul"
-BEGIN = f"{MARKER}: begin Artificery and Magic tabs"
-END = f"{MARKER}: end Artificery and Magic tabs"
-ANCHOR = 'name = "tab_situation"'
+BEGIN = f"{MARKER}: begin Artifice and Magic tabs"
+END = f"{MARKER}: end Artifice and Magic tabs"
+ANCHOR = 'name = "tab_tax_jurisdiction"'  # the last tab in the bar
 TAB_NAME = "tab_aov_artificery"
 TEXTURE = "gfx/interface/skinned/hud_maintab/aov_maintab_artificery.dds"  # EU4 Anbennar artifice_tier_emblems_strip.dds, frame 1
 MAGIC_TAB_NAME = "tab_aov_magic"
@@ -37,8 +37,8 @@ SUBMOD = Path(__file__).resolve().parent.parent
 DEFAULT_ANBENNAR = SUBMOD.parent / "anbennar-ck3-dev-master"
 DEFAULT_GAME = Path("C:/Program Files (x86)/Steam/steamapps/common/Crusader Kings III/game")
 
-# Inserted after the Situations tab, indented like the sibling widgets. The two windows share the main-tab
-# area, so each tab closes the other's window.
+# Inserted after the Tax Jurisdictions tab (the bottom of the bar), indented like the sibling widgets. The two
+# windows share the main-tab area, so each tab closes the other's window.
 BLOCK = [
     BEGIN,
     "widget_hud_main_tab = {",
@@ -177,11 +177,11 @@ def insert_tab(text: str) -> str:
     try:
         anchor = next(i for i, l in enumerate(lines) if l.strip() == ANCHOR)
     except StopIteration:
-        raise GeneratorError(f"anchor '{ANCHOR}' not found; did a CK3 patch rename the Situations tab?")
+        raise GeneratorError(f"anchor '{ANCHOR}' not found; did a CK3 patch rename the Tax Jurisdictions tab?")
     try:
         start = next(i for i in range(anchor, -1, -1) if lines[i].strip() == "widget_hud_main_tab = {")
     except StopIteration:
-        raise GeneratorError("no 'widget_hud_main_tab = {' opens the Situations tab")
+        raise GeneratorError("no 'widget_hud_main_tab = {' opens the Tax Jurisdictions tab")
 
     depth = 0
     for end in range(start, len(lines)):
@@ -189,7 +189,7 @@ def insert_tab(text: str) -> str:
         if depth == 0:
             break
     else:
-        raise GeneratorError("unbalanced braces in the Situations tab widget")
+        raise GeneratorError("unbalanced braces in the Tax Jurisdictions tab widget")
 
     indent = lines[start][: len(lines[start]) - len(lines[start].lstrip("\t"))]
     block = [""] + [indent + l if l else "" for l in BLOCK]

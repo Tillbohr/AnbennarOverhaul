@@ -94,7 +94,7 @@ were not ported).
   theme per school: Abjuration defence, Conjuration summoned armies and minions, Divination hidden things and the future,
   Enchantment minds and enchanted objects, Evocation offensive war magic, Illusion deception, Necromancy disease and
   death, Transmutation changing the caster and their army. Self/realm/war spells are cast from the Magic window
-  (`gui/aov_window_magic.gui`, HUD tab below Artificery, generated pages `gui/aov_magic_generated.gui`), targeted
+  (`gui/aov_window_magic.gui`, HUD tab at the bottom of the bar, below Artifice, generated pages `gui/aov_magic_generated.gui`), targeted
   spells are interactions in Anbennar's Spells category (generated, except Thoughtweave and Dominate in
   `common/character_interactions/aov_magic_interactions.txt`, whose choice is a send option). Anbennar's Compel,
   Dominate and Enhance Ability interactions are hidden by never-shown stubs (`zz_aov_spell_overrides.txt`).

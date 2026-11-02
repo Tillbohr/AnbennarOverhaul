@@ -1,7 +1,7 @@
 ﻿l_english:
  # Tradition
  tradition_gnomish_ingenuity_name: "Gnomish Ingenuity"
- tradition_gnomish_ingenuity_desc: "No problem is too great for a sufficiently clever contraption. This culture channels its boundless curiosity into the art of artificery, founding academies where tinkerers forge the wondrous weapons of tomorrow."
+ tradition_gnomish_ingenuity_desc: "No problem is too great for a sufficiently clever contraption. This culture channels its boundless curiosity into the art of artifice, founding academies where tinkerers forge the wondrous weapons of tomorrow."
  culture_parameter_can_build_artificer_academy: "Can construct the [GetBuilding('artificer_academy_01').GetName] [building|E]"
  culture_parameter_unlock_maa_artificer_handgunners: "Can recruit [GetMaA('artificer_handgunners').GetName] as [men_at_arms|E] when their [domain|E] has an active [GetBuilding('artificer_academy_01').GetName]"
  gnomish_heritage_trigger: "The [culture|E] must be of Gnomish [heritage|E]"
@@ -35,9 +35,9 @@
  artificer_handgunners: "Artificers"
  artificer_handgunners_flavor: "#F Trained in the halls of the Artificer Academy, these gnomish gunners wield firearms of their own meticulous design.#!\n#help Enabled by the [GetBuilding('artificer_academy_01').GetName].#!"
 
- # Artificery tab
- AOV_ARTIFICERY_BUTTON: "Artificery"
- AOV_ARTIFICERY_WINDOW_TITLE: "Artificery"
+ # Artifice tab
+ AOV_ARTIFICERY_BUTTON: "Artifice"
+ AOV_ARTIFICERY_WINDOW_TITLE: "Artifice"
  AOV_ARTIFICERY_TAB_FACTIONS: "Factions"
  AOV_ARTIFICERY_TAB_INVENTIONS: "Inventions"
 
