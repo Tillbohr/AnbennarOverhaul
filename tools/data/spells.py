@@ -17,18 +17,21 @@ runs aov_spell_missed instead of the modifier and effect. AI mages cast it on ri
 target_trigger: targeted only; a hand-written trigger (with scope:actor and scope:recipient) the interaction requires.
 curse: the hand-written modifier this spell puts on its target; Purify removes it (aov_spell_remove_curses).
 requires, requires_text: an extra hand-written caster trigger for casting, and the tooltip text for it.
+dispels: war spells only; the hand-written modifiers the spell gives besides aov_spell_<key> (a choice event's), which
+Field of Forbiddance also removes (aov_spell_dispel_war_spells).
 """
 
 
 def spell(key, school, level, slot, type, name, desc, flavour, modifier="", effect="", interaction="", scales_duration=None,
-          years_mult="", needs_land=False, hostile=False, target_trigger="", curse="", requires="", requires_text=""):
+          years_mult="", needs_land=False, hostile=False, target_trigger="", curse="", requires="", requires_text="",
+          dispels=()):
     if type == "targeted" and not interaction:
         interaction = f"aov_spell_{key}_interaction"
     return dict(key=key, school=school, level=level, slot=slot, type=type, name=name, desc=desc, flavour=flavour,
                 modifier=modifier, effect=effect, interaction=interaction,
                 scales_duration=bool(modifier.strip()) if scales_duration is None else scales_duration,
                 years_mult=years_mult, needs_land=needs_land, hostile=hostile, target_trigger=target_trigger,
-                curse=curse, requires=requires, requires_text=requires_text)
+                curse=curse, requires=requires, requires_text=requires_text, dispels=tuple(dispels))
 
 
 SPELLS = [
@@ -212,7 +215,9 @@ SPELLS = [
     spell("living_steel", "transmutation", 2, 4, "war", "Living Steel",
           "Choose a troop type: +30% damage and toughness for it",
           "Steel that bends and heals, hide that turns blades, bows that never break.",
-          effect="trigger_event = aov_magic.41", scales_duration=True),
+          effect="trigger_event = aov_magic.41", scales_duration=True,
+          dispels=[f"aov_spell_living_steel_{t}" for t in ("heavy_infantry", "skirmishers", "pikemen", "archers",
+                                                           "light_cavalry", "heavy_cavalry")]),
     spell("shapechange", "transmutation", 2, 5, "self", "Shapechange",
           "Take a beast's form: Bear (prowess, health), Wolf (Martial, advantage) or Hawk (Intrigue, travel); +20 dread",
           "The mage's shape runs like wax and sets again in fur, fang or feather.",

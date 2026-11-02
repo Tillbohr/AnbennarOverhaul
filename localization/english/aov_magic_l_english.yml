@@ -212,3 +212,7 @@
  # Anbennar's Compel and Dominate are hidden stubs (zz_aov_spell_overrides.txt); their spells are Thoughtweave and Dominate
  start_compel_interaction_desc: "Replaced by the Thoughtweave spell."
  start_dominate_interaction_desc: "Replaced by the Dominate spell."
+
+ aov_magic.51.t: "Struck by War Magic"
+ aov_magic.51.desc: "The spell that struck me was no accident of weather or fate. I know whose magic it was: [aov_spell_caster.GetName]."
+ aov_magic.51.a: "They will pay for this."

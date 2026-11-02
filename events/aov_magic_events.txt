@@ -492,3 +492,17 @@ aov_magic.42 = {
 		}
 	}
 }
+
+# A war spell struck me; scope:aov_spell_caster cast it (aov_spell_struck_notice)
+aov_magic.51 = {
+	type = character_event
+	title = aov_magic.51.t
+	desc = aov_magic.51.desc
+	theme = war
+	left_portrait = root
+	right_portrait = scope:aov_spell_caster
+
+	option = {
+		name = aov_magic.51.a
+	}
+}

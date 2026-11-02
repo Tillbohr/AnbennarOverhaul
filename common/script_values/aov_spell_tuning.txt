@@ -68,3 +68,26 @@ aov_finger_disease_chance = {
 aov_perfect_form_health_risk = {
 	value = 10
 }
+
+# Enchant Trinket: durability taken off a new trinket (common artifacts start at 60 and lose about 1 a year)
+aov_enchant_trinket_durability_cut = {
+	value = -50
+}
+
+# Dominate: order of the target's prisoners offered for release (prisoner scope; scope:aov_dominator the caster).
+# The caster's family, spouses, courtiers, vassals and allies come first, then the strongest
+aov_dominate_prisoner_priority = {
+	value = prowess
+	if = {
+		limit = {
+			OR = {
+				is_close_family_of = scope:aov_dominator
+				is_spouse_of = scope:aov_dominator
+				is_courtier_of = scope:aov_dominator
+				liege = scope:aov_dominator
+				is_allied_to = scope:aov_dominator
+			}
+		}
+		add = 100
+	}
+}

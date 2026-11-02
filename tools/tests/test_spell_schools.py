@@ -605,5 +605,49 @@ def modifiers_text():
     return read("common/modifiers/aov_magic_modifiers.txt")
 
 
+
+class ReviewFixTests(unittest.TestCase):
+    """Findings of the final review of the spell revision."""
+
+    def test_forbiddance_dispels_living_steel(self):
+        dispel = block(read("common/scripted_effects/aov_spell_effects.txt"), "aov_spell_dispel_war_spells")
+        for t in TROOPS:
+            self.assertIn(f"remove_character_modifier = aov_spell_living_steel_{t}", dispel)
+        self.assertIn("remove_character_modifier = aov_spell_mass_enlarge", dispel)
+
+    def test_bound_champion_can_be_a_knight(self):
+        tpl = block(read("common/scripted_character_templates/aov_magic_templates.txt"), "aov_bound_champion_template")
+        self.assertIn("gender_female_chance = root_soldier_female_chance", tpl)
+
+    def test_enchanted_trinket_decays_in_about_ten_years(self):
+        b = block(effects(), "aov_enchant_trinket")
+        self.assertIn("add_durability = aov_enchant_trinket_durability_cut", b)
+        self.assertIn("value = -50", block(tuning(), "aov_enchant_trinket_durability_cut"))
+
+    def test_dominate_offers_the_casters_people_first(self):
+        b = block(effects(), "aov_dominate_apply")
+        for n in (0, 1, 2):
+            self.assertIn(f"position = {n}", b)
+        self.assertEqual(b.count("order_by = aov_dominate_prisoner_priority"), 3)
+        self.assertEqual(b.count("check_range_bounds = no"), 3)
+        v = block(tuning(), "aov_dominate_prisoner_priority")
+        for s in ("value = prowess", "is_close_family_of = scope:aov_dominator", "is_spouse_of = scope:aov_dominator",
+                  "is_courtier_of = scope:aov_dominator", "liege = scope:aov_dominator",
+                  "is_allied_to = scope:aov_dominator", "add = 100"):
+            self.assertIn(s, v)
+
+    def test_war_spell_hits_are_open(self):
+        for eff in ("aov_fireball", "aov_winters_grip", "aov_earthquake"):
+            self.assertIn("aov_spell_struck_notice = yes", block(effects(), eff), eff)
+        n = block(effects(), "aov_spell_struck_notice")
+        self.assertIn("save_scope_as = aov_spell_caster", n)
+        self.assertIn("trigger_event = aov_magic.51", n)
+        e = block(read("events/aov_magic_events.txt"), "aov_magic.51")
+        self.assertIn("right_portrait = scope:aov_spell_caster", e)
+        loc = read("localization/english/aov_magic_l_english.yml")
+        for k in ("aov_magic.51.t", "aov_magic.51.desc", "aov_magic.51.a"):
+            self.assertIn(f" {k}:", loc)
+
+
 if __name__ == "__main__":
     unittest.main()

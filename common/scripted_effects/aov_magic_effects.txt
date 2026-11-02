@@ -735,18 +735,21 @@ aov_dominate_apply = {
 		}
 		scope:recipient = {
 			ordered_prisoner = {
-				order_by = prowess
+				order_by = aov_dominate_prisoner_priority
 				position = 0
+				check_range_bounds = no
 				save_scope_as = aov_dom_prisoner_1
 			}
 			ordered_prisoner = {
-				order_by = prowess
+				order_by = aov_dominate_prisoner_priority
 				position = 1
+				check_range_bounds = no
 				save_scope_as = aov_dom_prisoner_2
 			}
 			ordered_prisoner = {
-				order_by = prowess
+				order_by = aov_dominate_prisoner_priority
 				position = 2
+				check_range_bounds = no
 				save_scope_as = aov_dom_prisoner_3
 			}
 		}
@@ -781,6 +784,7 @@ aov_enchant_trinket = {
 		decaying = yes
 	}
 	scope:aov_new_trinket = {
+		add_durability = aov_enchant_trinket_durability_cut
 		random_list = {
 			1 = { add_artifact_modifier = aov_spell_trinket_diplomacy }
 			1 = { add_artifact_modifier = aov_spell_trinket_martial }
@@ -804,6 +808,7 @@ aov_fireball = {
 			increase_wounds_effect = { REASON = fight }
 		}
 	}
+	aov_spell_struck_notice = yes
 }
 
 # Winter's Grip landed: the target's armies freeze for the caster's spell duration
@@ -818,6 +823,7 @@ aov_winters_grip = {
 			years = scope:aov_winters_grip_years
 		}
 	}
+	aov_spell_struck_notice = yes
 }
 
 # Earthquake landed: the target's capital county shakes
@@ -831,6 +837,7 @@ aov_earthquake = {
 			change_development_level = -1
 		}
 	}
+	aov_spell_struck_notice = yes
 }
 
 # Meteor Swarm: fire on the three most developed counties of the leader of the other side of one of the caster's wars
@@ -1256,4 +1263,10 @@ aov_perfect_form = {
 		chance = aov_perfect_form_health_risk
 		add_character_modifier = { modifier = aov_perfect_form_strain years = 5 }
 	}
+}
+
+# A war spell landed (caster scope, scope:recipient): war magic is open, so the target learns who cast it
+aov_spell_struck_notice = {
+	save_scope_as = aov_spell_caster
+	scope:recipient = { trigger_event = aov_magic.51 }
 }

@@ -65,6 +65,8 @@ def validate(spells: list) -> None:
             raise GeneratorError(f"{k}: only targeted spells can be hostile")
         if s.get("target_trigger") and s["type"] != "targeted":
             raise GeneratorError(f"{k}: target_trigger on a window spell")
+        if s.get("dispels") and s["type"] != "war":
+            raise GeneratorError(f"{k}: dispels on a spell that is not a war spell")
         if bool(s.get("requires")) != bool(s.get("requires_text")):
             raise GeneratorError(f"{k}: requires and requires_text go together")
         if s["type"] != "targeted" and not (s["modifier"].strip() or s["effect"].strip()):
@@ -183,6 +185,7 @@ def effects(spells: list) -> str:
     out.append("# Purify: remove every hostile spell's modifier from this character\n"
                f"aov_spell_remove_curses = {{\n{remove_all(curses)}}}\n")
     war = [f"aov_spell_{s['key']}" for s in spells if s["type"] == "war" and lasting(s)]
+    war += [m for s in spells if s["type"] == "war" for m in s.get("dispels", ())]
     out.append("# Field of Forbiddance: dispel this character's war spells\n"
                f"aov_spell_dispel_war_spells = {{\n{remove_all(war)}}}\n")
     options = "\n".join(

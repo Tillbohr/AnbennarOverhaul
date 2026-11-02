@@ -700,6 +700,30 @@ aov_spell_dispel_war_spells = {
 		limit = { has_character_modifier = aov_spell_mass_enlarge }
 		remove_character_modifier = aov_spell_mass_enlarge
 	}
+	if = {
+		limit = { has_character_modifier = aov_spell_living_steel_heavy_infantry }
+		remove_character_modifier = aov_spell_living_steel_heavy_infantry
+	}
+	if = {
+		limit = { has_character_modifier = aov_spell_living_steel_skirmishers }
+		remove_character_modifier = aov_spell_living_steel_skirmishers
+	}
+	if = {
+		limit = { has_character_modifier = aov_spell_living_steel_pikemen }
+		remove_character_modifier = aov_spell_living_steel_pikemen
+	}
+	if = {
+		limit = { has_character_modifier = aov_spell_living_steel_archers }
+		remove_character_modifier = aov_spell_living_steel_archers
+	}
+	if = {
+		limit = { has_character_modifier = aov_spell_living_steel_light_cavalry }
+		remove_character_modifier = aov_spell_living_steel_light_cavalry
+	}
+	if = {
+		limit = { has_character_modifier = aov_spell_living_steel_heavy_cavalry }
+		remove_character_modifier = aov_spell_living_steel_heavy_cavalry
+	}
 }
 
 # AI (aov_magic_ai_quarterly): one castable window spell; war spells weigh more
