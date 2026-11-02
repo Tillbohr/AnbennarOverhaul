@@ -103,3 +103,11 @@ aov_spell_target_war_capital = {
 		scope:recipient = { exists = capital_province }
 	}
 }
+
+# Grand Deception: the target holds a county (interaction scopes)
+aov_spell_target_has_county = {
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_HAS_COUNTY
+		scope:recipient = { any_held_county = { count >= 1 } }
+	}
+}

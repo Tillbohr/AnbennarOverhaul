@@ -2622,9 +2622,9 @@ types AovMagic
 		}
 
 		widget = {
-			name = "aov_spell_card_bread_and_circuses"
+			name = "aov_spell_card_phantasmal_rumour"
 			size = { 480 88 }
-			tooltip = "aov_spell_bread_and_circuses_tt"
+			tooltip = "aov_spell_phantasmal_rumour_tt"
 
 			icon = {
 				position = { 0 0 }
@@ -2648,106 +2648,41 @@ types AovMagic
 
 			text_single = {
 				position = { 72 8 }
-				text = "aov_spell_bread_and_circuses"
+				text = "aov_spell_phantasmal_rumour"
 				default_format = "#T"
 				max_width = 205
 				align = left|nobaseline
 			}
 			text_single = {
 				position = { 72 38 }
-				text = "aov_spell_bread_and_circuses_facts"
+				text = "aov_spell_phantasmal_rumour_facts"
 				default_format = "#weak"
 				max_width = 280
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_bread_and_circuses_cd' ).IsSet )]"
+				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_phantasmal_rumour_cd' ).IsSet )]"
 				position = { 72 66 }
-				text = "aov_spell_bread_and_circuses_desc"
+				text = "aov_spell_phantasmal_rumour_desc"
 				max_width = 400
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_bread_and_circuses_cd' ).IsSet]"
+				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_phantasmal_rumour_cd' ).IsSet]"
 				position = { 72 66 }
 				text = "AOV_SPELL_ON_COOLDOWN"
 				max_width = 400
 				align = left|nobaseline
 			}
 
-			button_standard = {
+			text_multi = {
 				parentanchor = right
 				position = { -6 16 }
-				size = { 110 32 }
-				text = "AOV_SPELL_CAST"
-				enabled = "[GetScriptedGui('aov_spell_bread_and_circuses_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_spell_bread_and_circuses_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_spell_bread_and_circuses_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-			}
-		}
-
-		widget = {
-			name = "aov_spell_card_assimilation_program"
-			size = { 480 88 }
-			tooltip = "aov_spell_assimilation_program_tt"
-
-			icon = {
-				position = { 0 0 }
-				size = { 290 64 }
-				texture = "gfx/interface/icons/aov_magic/spell_plate.dds"
-			}
-			icon = {
-				position = { 2 2 }
-				size = { 60 60 }
-				texture = "gfx/interface/icons/aov_magic/spell_slot_4.dds"
-				framesize = { 60 60 }
-				frame = 6
-			}
-			icon = {
-				position = { 0 0 }
-				size = { 64 76 }
-				texture = "gfx/interface/icons/aov_magic/spell_frames.dds"
-				framesize = { 64 76 }
-				frame = 3
-			}
-
-			text_single = {
-				position = { 72 8 }
-				text = "aov_spell_assimilation_program"
-				default_format = "#T"
-				max_width = 205
-				align = left|nobaseline
-			}
-			text_single = {
-				position = { 72 38 }
-				text = "aov_spell_assimilation_program_facts"
+				size = { 110 0 }
+				max_width = 110
+				autoresize = yes
+				text = "AOV_SPELL_CAST_FROM_PORTRAIT"
 				default_format = "#weak"
-				max_width = 280
-				align = left|nobaseline
-			}
-			text_single = {
-				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_assimilation_program_cd' ).IsSet )]"
-				position = { 72 66 }
-				text = "aov_spell_assimilation_program_desc"
-				max_width = 400
-				align = left|nobaseline
-			}
-			text_single = {
-				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_assimilation_program_cd' ).IsSet]"
-				position = { 72 66 }
-				text = "AOV_SPELL_ON_COOLDOWN"
-				max_width = 400
-				align = left|nobaseline
-			}
-
-			button_standard = {
-				parentanchor = right
-				position = { -6 16 }
-				size = { 110 32 }
-				text = "AOV_SPELL_CAST"
-				enabled = "[GetScriptedGui('aov_spell_assimilation_program_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_spell_assimilation_program_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_spell_assimilation_program_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			}
 		}
 
@@ -2764,7 +2699,7 @@ types AovMagic
 			icon = {
 				position = { 2 2 }
 				size = { 60 60 }
-				texture = "gfx/interface/icons/aov_magic/spell_slot_5.dds"
+				texture = "gfx/interface/icons/aov_magic/spell_slot_4.dds"
 				framesize = { 60 60 }
 				frame = 6
 			}
@@ -2817,9 +2752,74 @@ types AovMagic
 		}
 
 		widget = {
-			name = "aov_spell_card_lead_the_crowds"
+			name = "aov_spell_card_implant_scandal"
 			size = { 480 88 }
-			tooltip = "aov_spell_lead_the_crowds_tt"
+			tooltip = "aov_spell_implant_scandal_tt"
+
+			icon = {
+				position = { 0 0 }
+				size = { 290 64 }
+				texture = "gfx/interface/icons/aov_magic/spell_plate.dds"
+			}
+			icon = {
+				position = { 2 2 }
+				size = { 60 60 }
+				texture = "gfx/interface/icons/aov_magic/spell_slot_5.dds"
+				framesize = { 60 60 }
+				frame = 6
+			}
+			icon = {
+				position = { 0 0 }
+				size = { 64 76 }
+				texture = "gfx/interface/icons/aov_magic/spell_frames.dds"
+				framesize = { 64 76 }
+				frame = 3
+			}
+
+			text_single = {
+				position = { 72 8 }
+				text = "aov_spell_implant_scandal"
+				default_format = "#T"
+				max_width = 205
+				align = left|nobaseline
+			}
+			text_single = {
+				position = { 72 38 }
+				text = "aov_spell_implant_scandal_facts"
+				default_format = "#weak"
+				max_width = 280
+				align = left|nobaseline
+			}
+			text_single = {
+				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_implant_scandal_cd' ).IsSet )]"
+				position = { 72 66 }
+				text = "aov_spell_implant_scandal_desc"
+				max_width = 400
+				align = left|nobaseline
+			}
+			text_single = {
+				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_implant_scandal_cd' ).IsSet]"
+				position = { 72 66 }
+				text = "AOV_SPELL_ON_COOLDOWN"
+				max_width = 400
+				align = left|nobaseline
+			}
+
+			text_multi = {
+				parentanchor = right
+				position = { -6 16 }
+				size = { 110 0 }
+				max_width = 110
+				autoresize = yes
+				text = "AOV_SPELL_CAST_FROM_PORTRAIT"
+				default_format = "#weak"
+			}
+		}
+
+		widget = {
+			name = "aov_spell_card_grand_deception"
+			size = { 480 88 }
+			tooltip = "aov_spell_grand_deception_tt"
 
 			icon = {
 				position = { 0 0 }
@@ -2843,41 +2843,41 @@ types AovMagic
 
 			text_single = {
 				position = { 72 8 }
-				text = "aov_spell_lead_the_crowds"
+				text = "aov_spell_grand_deception"
 				default_format = "#T"
 				max_width = 205
 				align = left|nobaseline
 			}
 			text_single = {
 				position = { 72 38 }
-				text = "aov_spell_lead_the_crowds_facts"
+				text = "aov_spell_grand_deception_facts"
 				default_format = "#weak"
 				max_width = 280
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_lead_the_crowds_cd' ).IsSet )]"
+				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_grand_deception_cd' ).IsSet )]"
 				position = { 72 66 }
-				text = "aov_spell_lead_the_crowds_desc"
+				text = "aov_spell_grand_deception_desc"
 				max_width = 400
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_lead_the_crowds_cd' ).IsSet]"
+				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_grand_deception_cd' ).IsSet]"
 				position = { 72 66 }
 				text = "AOV_SPELL_ON_COOLDOWN"
 				max_width = 400
 				align = left|nobaseline
 			}
 
-			button_standard = {
+			text_multi = {
 				parentanchor = right
 				position = { -6 16 }
-				size = { 110 32 }
-				text = "AOV_SPELL_CAST"
-				enabled = "[GetScriptedGui('aov_spell_lead_the_crowds_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_spell_lead_the_crowds_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_spell_lead_the_crowds_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				size = { 110 0 }
+				max_width = 110
+				autoresize = yes
+				text = "AOV_SPELL_CAST_FROM_PORTRAIT"
+				default_format = "#weak"
 			}
 		}
 	}

@@ -746,55 +746,25 @@ aov_spell_fear_and_loathing_castable = {
 	}
 }
 
-aov_spell_bread_and_circuses_known = {
+aov_spell_phantasmal_rumour_known = {
 	aov_school_level_at_least = { SCHOOL = illusion LEVEL = 1 }
 }
-aov_spell_bread_and_circuses_ready = {
-	NOT = { has_variable = aov_spell_bread_and_circuses_cd }
+aov_spell_phantasmal_rumour_ready = {
+	NOT = { has_variable = aov_spell_phantasmal_rumour_cd }
 }
-aov_spell_bread_and_circuses_castable = {
+aov_spell_phantasmal_rumour_castable = {
 	aov_is_mage = yes
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_ILLUSION_1
-		aov_spell_bread_and_circuses_known = yes
+		aov_spell_phantasmal_rumour_known = yes
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_READY
-		aov_spell_bread_and_circuses_ready = yes
+		aov_spell_phantasmal_rumour_ready = yes
 	}
 	custom_tooltip = {
-		text = aov_spell_bread_and_circuses_req_mana
-		aov_mana >= aov_spell_bread_and_circuses_cost
-	}
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_LANDED
-		is_landed = yes
-	}
-}
-
-aov_spell_assimilation_program_known = {
-	aov_school_level_at_least = { SCHOOL = illusion LEVEL = 2 }
-}
-aov_spell_assimilation_program_ready = {
-	NOT = { has_variable = aov_spell_assimilation_program_cd }
-}
-aov_spell_assimilation_program_castable = {
-	aov_is_mage = yes
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_ILLUSION_2
-		aov_spell_assimilation_program_known = yes
-	}
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_READY
-		aov_spell_assimilation_program_ready = yes
-	}
-	custom_tooltip = {
-		text = aov_spell_assimilation_program_req_mana
-		aov_mana >= aov_spell_assimilation_program_cost
-	}
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_LANDED
-		is_landed = yes
+		text = aov_spell_phantasmal_rumour_req_mana
+		aov_mana >= aov_spell_phantasmal_rumour_cost
 	}
 }
 
@@ -820,29 +790,47 @@ aov_spell_shadows_in_the_night_castable = {
 	}
 }
 
-aov_spell_lead_the_crowds_known = {
-	aov_school_level_at_least = { SCHOOL = illusion LEVEL = 3 }
+aov_spell_implant_scandal_known = {
+	aov_school_level_at_least = { SCHOOL = illusion LEVEL = 2 }
 }
-aov_spell_lead_the_crowds_ready = {
-	NOT = { has_variable = aov_spell_lead_the_crowds_cd }
+aov_spell_implant_scandal_ready = {
+	NOT = { has_variable = aov_spell_implant_scandal_cd }
 }
-aov_spell_lead_the_crowds_castable = {
+aov_spell_implant_scandal_castable = {
 	aov_is_mage = yes
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_ILLUSION_3
-		aov_spell_lead_the_crowds_known = yes
+		text = AOV_SPELL_REQ_ILLUSION_2
+		aov_spell_implant_scandal_known = yes
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_READY
-		aov_spell_lead_the_crowds_ready = yes
+		aov_spell_implant_scandal_ready = yes
 	}
 	custom_tooltip = {
-		text = aov_spell_lead_the_crowds_req_mana
-		aov_mana >= aov_spell_lead_the_crowds_cost
+		text = aov_spell_implant_scandal_req_mana
+		aov_mana >= aov_spell_implant_scandal_cost
+	}
+}
+
+aov_spell_grand_deception_known = {
+	aov_school_level_at_least = { SCHOOL = illusion LEVEL = 3 }
+}
+aov_spell_grand_deception_ready = {
+	NOT = { has_variable = aov_spell_grand_deception_cd }
+}
+aov_spell_grand_deception_castable = {
+	aov_is_mage = yes
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_ILLUSION_3
+		aov_spell_grand_deception_known = yes
 	}
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_LANDED
-		is_landed = yes
+		text = AOV_SPELL_REQ_READY
+		aov_spell_grand_deception_ready = yes
+	}
+	custom_tooltip = {
+		text = aov_spell_grand_deception_req_mana
+		aov_mana >= aov_spell_grand_deception_cost
 	}
 }
 
@@ -1145,10 +1133,7 @@ aov_magic_ai_any_castable = {
 		aov_spell_meteor_swarm_castable = yes
 		aov_spell_invisibility_castable = yes
 		aov_spell_fear_and_loathing_castable = yes
-		aov_spell_bread_and_circuses_castable = yes
-		aov_spell_assimilation_program_castable = yes
 		aov_spell_shadows_in_the_night_castable = yes
-		aov_spell_lead_the_crowds_castable = yes
 		aov_spell_false_life_castable = yes
 		aov_spell_speak_with_dead_castable = yes
 		aov_spell_remove_pain_castable = yes

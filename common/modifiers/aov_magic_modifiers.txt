@@ -58,3 +58,9 @@ aov_meteor_scorched = {
 	levy_size = -0.5
 	tax_mult = -0.5
 }
+
+# Phantasmal Rumour (on the target)
+aov_spell_phantasmal_rumour_target = {
+	icon = prestige_negative
+	vassal_opinion = -20
+}

@@ -201,6 +201,127 @@ aov_spell_earthquake_interaction = {
 	}
 }
 
+aov_spell_phantasmal_rumour_interaction = {
+	category = interaction_category_spells
+	common_interaction = no
+	desc = aov_spell_phantasmal_rumour_interaction_desc
+
+	is_shown = {
+		scope:actor = { aov_is_mage = yes }
+		NOT = { scope:recipient = scope:actor }
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = { aov_spell_phantasmal_rumour_castable = yes }
+		scope:recipient = { aov_spell_target_allowed = yes }
+	}
+
+	on_accept = {
+		scope:actor = { aov_spell_phantasmal_rumour_cast = yes }
+	}
+
+	auto_accept = yes
+
+	ai_targets = {
+		ai_recipients = scripted_relations
+		ai_recipients = primary_war_enemies
+	}
+	ai_frequency = 12
+
+	ai_will_do = {
+		base = 0
+		modifier = {
+			add = 60
+			aov_spell_ai_hostile_target = yes
+		}
+		modifier = {
+			factor = 0
+			scope:actor = { aov_spell_land_chance < 40 }
+		}
+	}
+}
+
+aov_spell_implant_scandal_interaction = {
+	category = interaction_category_spells
+	common_interaction = no
+	desc = aov_spell_implant_scandal_interaction_desc
+
+	is_shown = {
+		scope:actor = { aov_is_mage = yes }
+		NOT = { scope:recipient = scope:actor }
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = { aov_spell_implant_scandal_castable = yes }
+		scope:recipient = { aov_spell_target_allowed = yes }
+	}
+
+	on_accept = {
+		scope:actor = { aov_spell_implant_scandal_cast = yes }
+	}
+
+	auto_accept = yes
+
+	ai_targets = {
+		ai_recipients = scripted_relations
+		ai_recipients = primary_war_enemies
+	}
+	ai_frequency = 12
+
+	ai_will_do = {
+		base = 0
+		modifier = {
+			add = 60
+			aov_spell_ai_hostile_target = yes
+		}
+		modifier = {
+			factor = 0
+			scope:actor = { aov_spell_land_chance < 40 }
+		}
+	}
+}
+
+aov_spell_grand_deception_interaction = {
+	category = interaction_category_spells
+	common_interaction = no
+	desc = aov_spell_grand_deception_interaction_desc
+
+	is_shown = {
+		scope:actor = { aov_is_mage = yes }
+		NOT = { scope:recipient = scope:actor }
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = { aov_spell_grand_deception_castable = yes }
+		scope:recipient = { aov_spell_target_allowed = yes }
+		aov_spell_target_has_county = yes
+	}
+
+	on_accept = {
+		scope:actor = { aov_spell_grand_deception_cast = yes }
+	}
+
+	auto_accept = yes
+
+	ai_targets = {
+		ai_recipients = scripted_relations
+		ai_recipients = primary_war_enemies
+	}
+	ai_frequency = 12
+
+	ai_will_do = {
+		base = 0
+		modifier = {
+			add = 60
+			aov_spell_ai_hostile_target = yes
+		}
+		modifier = {
+			factor = 0
+			scope:actor = { aov_spell_land_chance < 40 }
+		}
+	}
+}
+
 aov_spell_steal_vitality_interaction = {
 	category = interaction_category_spells
 	common_interaction = no

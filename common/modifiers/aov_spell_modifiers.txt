@@ -86,35 +86,19 @@ aov_spell_meteor_swarm = {
 
 aov_spell_invisibility = {
 	icon = learning_positive
-	intrigue = 3
-	owned_scheme_secrecy_add = 15
+	intrigue = 4
+	owned_scheme_secrecy_add = 25
 }
 
 aov_spell_fear_and_loathing = {
 	icon = learning_positive
-	dread_baseline_add = 30
-}
-
-aov_spell_bread_and_circuses = {
-	icon = learning_positive
-	county_opinion_add = 15
-}
-
-aov_spell_assimilation_program = {
-	icon = learning_positive
-	different_culture_opinion = 15
+	dread_baseline_add = 40
 }
 
 aov_spell_shadows_in_the_night = {
 	icon = learning_positive
-	owned_hostile_scheme_success_chance_add = 20
-	owned_scheme_secrecy_add = 30
-}
-
-aov_spell_lead_the_crowds = {
-	icon = learning_positive
-	county_opinion_add = 25
-	levy_size = 0.15
+	owned_hostile_scheme_success_chance_add = 25
+	owned_scheme_secrecy_add = 40
 }
 
 aov_spell_false_life = {

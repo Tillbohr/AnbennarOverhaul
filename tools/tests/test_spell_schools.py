@@ -365,5 +365,53 @@ class EvocationTests(unittest.TestCase):
             self.assertNotIn(k, BY)
 
 
+
+class IllusionTests(unittest.TestCase):
+    def test_keys(self):
+        self.assertEqual(keys_in_slot_order("illusion"),
+                         ["invisibility", "fear_and_loathing", "phantasmal_rumour", "shadows_in_the_night",
+                          "implant_scandal", "grand_deception"])
+
+    def test_numbers(self):
+        self.assertIn("intrigue = 4", BY["invisibility"]["modifier"])
+        self.assertIn("owned_scheme_secrecy_add = 25", BY["invisibility"]["modifier"])
+        self.assertIn("dread_baseline_add = 40", BY["fear_and_loathing"]["modifier"])
+        self.assertIn("owned_hostile_scheme_success_chance_add = 25", BY["shadows_in_the_night"]["modifier"])
+        self.assertIn("owned_scheme_secrecy_add = 40", BY["shadows_in_the_night"]["modifier"])
+        for k in ("phantasmal_rumour", "implant_scandal", "grand_deception"):
+            self.assertEqual(BY[k]["type"], "targeted", k)
+            self.assertTrue(BY[k]["hostile"], k)
+
+    def test_phantasmal_rumour(self):
+        self.assertEqual(BY["phantasmal_rumour"]["curse"], "aov_spell_phantasmal_rumour_target")
+        b = block(effects(), "aov_phantasmal_rumour")
+        self.assertIn("add_prestige = -150", b)
+        self.assertIn("modifier = aov_spell_phantasmal_rumour_target", b)
+        self.assertIn("years = 3", b)
+        self.assertIn("vassal_opinion = -20", block(modifiers(), "aov_spell_phantasmal_rumour_target"))
+
+    def test_implant_scandal(self):
+        b = block(effects(), "aov_implant_scandal")
+        for secret in ("secret_deviant", "secret_witch", "secret_non_believer"):
+            self.assertIn(f"{secret}_is_valid_trigger = {{ OWNER = scope:recipient }}", b)
+            self.assertIn(f"any_secret = {{ secret_type = {secret} }}", b)
+            self.assertIn(f"add_secret = {{ type = {secret} }}", b)
+        self.assertIn("reveal_to = scope:aov_deceiver", b)
+
+    def test_illusion_target_trigger(self):
+        self.assertEqual(BY["grand_deception"]["target_trigger"], "aov_spell_target_has_county")
+        self.assertIn("any_held_county", block(read("common/scripted_triggers/aov_magic_triggers.txt"),
+                                               "aov_spell_target_has_county"))
+        b = block(effects(), "aov_grand_deception")
+        self.assertIn("any_neighboring_county", b)
+        self.assertIn("capital_county", b)
+        self.assertIn("add_pressed_claim = scope:aov_deception_county", b)
+
+    def test_removed(self):
+        for k in ("bread_and_circuses", "assimilation_program", "lead_the_crowds"):
+            self.assertNotIn(k, BY)
+        self.assertNotIn("aov_assimilation_program = {", effects())
+
+
 if __name__ == "__main__":
     unittest.main()

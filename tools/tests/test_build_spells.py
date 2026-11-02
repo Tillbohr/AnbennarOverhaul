@@ -78,7 +78,8 @@ class DataTests(unittest.TestCase):
     def test_types(self):
         targeted = {s["key"] for s in SPELLS if s["type"] == "targeted"}
         self.assertEqual(targeted, {"ward", "heartstring", "thoughtweave", "dominate_to_surrender", "scry",
-                                    "steal_vitality", "contagion", "fireball", "winters_grip", "earthquake"})
+                                    "steal_vitality", "contagion", "fireball", "winters_grip", "earthquake",
+                                    "phantasmal_rumour", "implant_scandal", "grand_deception"})
         for s in SPELLS:
             if s["type"] in ("self", "realm", "war"):
                 self.assertTrue(s["modifier"].strip() or s["effect"].strip(), s["key"])
@@ -181,7 +182,7 @@ class GeneratedTests(unittest.TestCase):
     def test_land_spells_need_land(self):
         # Landless adventurer mages cast only what works without a domain
         self.assertIn("is_landed = yes", block(bs.triggers(SPELLS), "aov_spell_plant_growth_castable"))
-        self.assertIn("text = AOV_SPELL_REQ_LANDED", block(bs.triggers(SPELLS), "aov_spell_lead_the_crowds_castable"))
+        self.assertIn("text = AOV_SPELL_REQ_LANDED", block(bs.triggers(SPELLS), "aov_spell_enchanting_embassy_castable"))
         self.assertNotIn("is_landed", block(bs.triggers(SPELLS), "aov_spell_combat_ward_castable"))
         self.assertNotIn("is_landed", block(bs.triggers(SPELLS), "aov_spell_summon_elementals_castable"))
 

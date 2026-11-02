@@ -159,3 +159,8 @@
  aov_earthquake_damage_desc: "The walls are cracked and the garrison scattered."
  aov_meteor_scorched: "Scorched by Meteors"
  aov_meteor_scorched_desc: "Fire fell from the sky; the fields and the people are burned."
+
+ # Illusion
+ AOV_SPELL_REQ_HAS_COUNTY: "Holds at least one county"
+ aov_spell_phantasmal_rumour_target: "Phantasmal Rumours"
+ aov_spell_phantasmal_rumour_target_desc: "Everyone has heard something about this character; no one can say what."

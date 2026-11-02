@@ -366,20 +366,6 @@ aov_transmute_to_gold = {
 	add_stress = 20
 }
 
-# Assimilation Program: the most developed domain county of another culture adopts the caster's
-aov_assimilation_program = {
-	if = {
-		limit = {
-			any_held_county = { NOT = { culture = root.culture } }
-		}
-		ordered_held_county = {
-			limit = { NOT = { culture = root.culture } }
-			order_by = development_level
-			set_county_culture = root.culture
-		}
-	}
-}
-
 ### Special spells (Task 4). Caster scope.
 
 # Summon Elementals: a free army at the capital (where the caster is, for a landless adventurer), bound to the caster's
@@ -899,4 +885,77 @@ aov_meteor_swarm = {
 			}
 		}
 	}
+}
+
+##########
+# Illusion
+
+# Phantasmal Rumour landed (caster scope, scope:recipient)
+aov_phantasmal_rumour = {
+	scope:recipient = {
+		add_prestige = -150
+		add_character_modifier = { modifier = aov_spell_phantasmal_rumour_target years = 3 }
+	}
+}
+
+# Implant Scandal landed: a false secret that fits the target, known only to the caster
+aov_implant_scandal = {
+	save_scope_as = aov_deceiver
+	scope:recipient = {
+		random_list = {
+			1 = {
+				trigger = {
+					secret_deviant_is_valid_trigger = { OWNER = scope:recipient }
+					NOT = { any_secret = { secret_type = secret_deviant } }
+				}
+				add_secret = { type = secret_deviant }
+			}
+			1 = {
+				trigger = {
+					secret_witch_is_valid_trigger = { OWNER = scope:recipient }
+					NOT = { any_secret = { secret_type = secret_witch } }
+				}
+				add_secret = { type = secret_witch }
+			}
+			1 = {
+				trigger = {
+					secret_non_believer_is_valid_trigger = { OWNER = scope:recipient }
+					NOT = { any_secret = { secret_type = secret_non_believer } }
+				}
+				add_secret = { type = secret_non_believer }
+			}
+		}
+		every_secret = {
+			limit = {
+				OR = {
+					secret_type = secret_deviant
+					secret_type = secret_witch
+					secret_type = secret_non_believer
+				}
+				NOT = { is_known_by = scope:aov_deceiver }
+			}
+			reveal_to = scope:aov_deceiver
+		}
+	}
+}
+
+# Grand Deception landed: a pressed claim on a county of the target's, bordering the caster's realm if one does
+aov_grand_deception = {
+	save_scope_as = aov_deceiver
+	scope:recipient = {
+		random_held_county = {
+			limit = {
+				any_neighboring_county = {
+					exists = holder
+					holder.top_liege = scope:aov_deceiver.top_liege
+				}
+			}
+			save_scope_as = aov_deception_county
+		}
+		if = {
+			limit = { NOT = { exists = scope:aov_deception_county } }
+			capital_county = { save_scope_as = aov_deception_county }
+		}
+	}
+	add_pressed_claim = scope:aov_deception_county
 }

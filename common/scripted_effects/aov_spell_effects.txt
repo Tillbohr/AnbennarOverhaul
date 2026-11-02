@@ -403,27 +403,24 @@ aov_spell_fear_and_loathing_cast = {
 	add_character_modifier = { modifier = aov_spell_fear_and_loathing years = aov_spell_fear_and_loathing_years }
 }
 
-aov_spell_bread_and_circuses_cast = {
-	custom_tooltip = aov_spell_bread_and_circuses_cost_tt
+aov_spell_phantasmal_rumour_cast = {
+	custom_tooltip = aov_spell_phantasmal_rumour_cost_tt
 	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_bread_and_circuses_cost }
+		aov_mana_spend = { AMOUNT = aov_spell_phantasmal_rumour_cost }
 		aov_school_add_progress = { SCHOOL = illusion AMOUNT = 50 }
 		add_magic_lifestyle_xp = 50
-		set_variable = { name = aov_spell_bread_and_circuses_cd years = aov_spell_bread_and_circuses_years }
+		set_variable = { name = aov_spell_phantasmal_rumour_cd years = aov_spell_phantasmal_rumour_years }
 	}
-	add_character_modifier = { modifier = aov_spell_bread_and_circuses years = aov_spell_bread_and_circuses_years }
-}
-
-aov_spell_assimilation_program_cast = {
-	custom_tooltip = aov_spell_assimilation_program_cost_tt
-	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_assimilation_program_cost }
-		aov_school_add_progress = { SCHOOL = illusion AMOUNT = 100 }
-		add_magic_lifestyle_xp = 100
-		set_variable = { name = aov_spell_assimilation_program_cd years = aov_spell_assimilation_program_years }
+	random_list = {
+		0 = {
+			modifier = { add = aov_spell_land_chance }
+			aov_phantasmal_rumour = yes
+		}
+		0 = {
+			modifier = { add = aov_spell_miss_chance }
+			aov_spell_missed = yes
+		}
 	}
-	add_character_modifier = { modifier = aov_spell_assimilation_program years = aov_spell_assimilation_program_years }
-	aov_assimilation_program = yes
 }
 
 aov_spell_shadows_in_the_night_cast = {
@@ -437,15 +434,44 @@ aov_spell_shadows_in_the_night_cast = {
 	add_character_modifier = { modifier = aov_spell_shadows_in_the_night years = aov_spell_shadows_in_the_night_years }
 }
 
-aov_spell_lead_the_crowds_cast = {
-	custom_tooltip = aov_spell_lead_the_crowds_cost_tt
+aov_spell_implant_scandal_cast = {
+	custom_tooltip = aov_spell_implant_scandal_cost_tt
 	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_lead_the_crowds_cost }
+		aov_mana_spend = { AMOUNT = aov_spell_implant_scandal_cost }
+		aov_school_add_progress = { SCHOOL = illusion AMOUNT = 100 }
+		add_magic_lifestyle_xp = 100
+		set_variable = { name = aov_spell_implant_scandal_cd years = aov_spell_implant_scandal_years }
+	}
+	random_list = {
+		0 = {
+			modifier = { add = aov_spell_land_chance }
+			aov_implant_scandal = yes
+		}
+		0 = {
+			modifier = { add = aov_spell_miss_chance }
+			aov_spell_missed = yes
+		}
+	}
+}
+
+aov_spell_grand_deception_cast = {
+	custom_tooltip = aov_spell_grand_deception_cost_tt
+	hidden_effect = {
+		aov_mana_spend = { AMOUNT = aov_spell_grand_deception_cost }
 		aov_school_add_progress = { SCHOOL = illusion AMOUNT = 200 }
 		add_magic_lifestyle_xp = 200
-		set_variable = { name = aov_spell_lead_the_crowds_cd years = aov_spell_lead_the_crowds_years }
+		set_variable = { name = aov_spell_grand_deception_cd years = aov_spell_grand_deception_years }
 	}
-	add_character_modifier = { modifier = aov_spell_lead_the_crowds years = aov_spell_lead_the_crowds_years }
+	random_list = {
+		0 = {
+			modifier = { add = aov_spell_land_chance }
+			aov_grand_deception = yes
+		}
+		0 = {
+			modifier = { add = aov_spell_miss_chance }
+			aov_spell_missed = yes
+		}
+	}
 }
 
 aov_spell_false_life_cast = {
@@ -593,6 +619,10 @@ aov_spell_remove_curses = {
 		limit = { has_character_modifier = aov_spell_winters_grip_target }
 		remove_character_modifier = aov_spell_winters_grip_target
 	}
+	if = {
+		limit = { has_character_modifier = aov_spell_phantasmal_rumour_target }
+		remove_character_modifier = aov_spell_phantasmal_rumour_target
+	}
 }
 
 # Field of Forbiddance: dispel this character's war spells
@@ -719,20 +749,8 @@ aov_magic_ai_cast_random = {
 			aov_spell_fear_and_loathing_cast = yes
 		}
 		10 = {
-			trigger = { aov_spell_bread_and_circuses_castable = yes }
-			aov_spell_bread_and_circuses_cast = yes
-		}
-		10 = {
-			trigger = { aov_spell_assimilation_program_castable = yes }
-			aov_spell_assimilation_program_cast = yes
-		}
-		10 = {
 			trigger = { aov_spell_shadows_in_the_night_castable = yes }
 			aov_spell_shadows_in_the_night_cast = yes
-		}
-		10 = {
-			trigger = { aov_spell_lead_the_crowds_castable = yes }
-			aov_spell_lead_the_crowds_cast = yes
 		}
 		10 = {
 			trigger = { NOT = { aov_dark_magic_risky = yes } aov_spell_false_life_castable = yes }

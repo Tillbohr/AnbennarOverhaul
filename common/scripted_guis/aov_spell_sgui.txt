@@ -146,28 +146,10 @@ aov_spell_fear_and_loathing_sgui = {
 	effect = { aov_spell_fear_and_loathing_cast = yes }
 }
 
-aov_spell_bread_and_circuses_sgui = {
-	scope = character
-	is_valid = { aov_spell_bread_and_circuses_castable = yes }
-	effect = { aov_spell_bread_and_circuses_cast = yes }
-}
-
-aov_spell_assimilation_program_sgui = {
-	scope = character
-	is_valid = { aov_spell_assimilation_program_castable = yes }
-	effect = { aov_spell_assimilation_program_cast = yes }
-}
-
 aov_spell_shadows_in_the_night_sgui = {
 	scope = character
 	is_valid = { aov_spell_shadows_in_the_night_castable = yes }
 	effect = { aov_spell_shadows_in_the_night_cast = yes }
-}
-
-aov_spell_lead_the_crowds_sgui = {
-	scope = character
-	is_valid = { aov_spell_lead_the_crowds_castable = yes }
-	effect = { aov_spell_lead_the_crowds_cast = yes }
 }
 
 aov_spell_false_life_sgui = {
