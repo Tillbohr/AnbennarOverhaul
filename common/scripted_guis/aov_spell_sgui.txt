@@ -152,28 +152,10 @@ aov_spell_shadows_in_the_night_sgui = {
 	effect = { aov_spell_shadows_in_the_night_cast = yes }
 }
 
-aov_spell_false_life_sgui = {
+aov_spell_raise_dead_sgui = {
 	scope = character
-	is_valid = { aov_spell_false_life_castable = yes }
-	effect = { aov_spell_false_life_cast = yes }
-}
-
-aov_spell_speak_with_dead_sgui = {
-	scope = character
-	is_valid = { aov_spell_speak_with_dead_castable = yes }
-	effect = { aov_spell_speak_with_dead_cast = yes }
-}
-
-aov_spell_remove_pain_sgui = {
-	scope = character
-	is_valid = { aov_spell_remove_pain_castable = yes }
-	effect = { aov_spell_remove_pain_cast = yes }
-}
-
-aov_spell_chronophage_sgui = {
-	scope = character
-	is_valid = { aov_spell_chronophage_castable = yes }
-	effect = { aov_spell_chronophage_cast = yes }
+	is_valid = { aov_spell_raise_dead_castable = yes }
+	effect = { aov_spell_raise_dead_cast = yes }
 }
 
 aov_spell_longstrider_sgui = {

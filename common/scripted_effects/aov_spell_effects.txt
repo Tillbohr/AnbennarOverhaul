@@ -474,28 +474,24 @@ aov_spell_grand_deception_cast = {
 	}
 }
 
-aov_spell_false_life_cast = {
-	custom_tooltip = aov_spell_false_life_cost_tt
+aov_spell_ray_of_sickness_cast = {
+	custom_tooltip = aov_spell_ray_of_sickness_cost_tt
 	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_false_life_cost }
+		aov_mana_spend = { AMOUNT = aov_spell_ray_of_sickness_cost }
 		aov_school_add_progress = { SCHOOL = necromancy AMOUNT = 25 }
 		add_magic_lifestyle_xp = 25
-		set_variable = { name = aov_spell_false_life_cd years = aov_spell_false_life_years }
+		set_variable = { name = aov_spell_ray_of_sickness_cd years = aov_spell_ray_of_sickness_years }
 	}
-	add_character_modifier = { modifier = aov_spell_false_life years = aov_spell_false_life_years }
-	aov_dark_magic_roll = yes
-}
-
-aov_spell_steal_vitality_cast = {
-	custom_tooltip = aov_spell_steal_vitality_cost_tt
-	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_steal_vitality_cost }
-		aov_school_add_progress = { SCHOOL = necromancy AMOUNT = 50 }
-		add_magic_lifestyle_xp = 50
-		set_variable = { name = aov_spell_steal_vitality_cd years = aov_spell_steal_vitality_years }
+	random_list = {
+		0 = {
+			modifier = { add = aov_spell_land_chance }
+			aov_ray_of_sickness = yes
+		}
+		0 = {
+			modifier = { add = aov_spell_miss_chance }
+			aov_spell_missed = yes
+		}
 	}
-	add_character_modifier = { modifier = aov_spell_steal_vitality years = aov_spell_steal_vitality_years }
-	scope:recipient = { add_character_modifier = { modifier = aov_spell_steal_vitality_victim years = 2 } }
 	aov_dark_magic_roll = yes
 }
 
@@ -507,43 +503,92 @@ aov_spell_contagion_cast = {
 		add_magic_lifestyle_xp = 50
 		set_variable = { name = aov_spell_contagion_cd years = aov_spell_contagion_years }
 	}
-	scope:recipient = { if = { limit = { NOT = { has_trait = ill } } add_trait = ill } }
+	random_list = {
+		0 = {
+			modifier = { add = aov_spell_land_chance }
+			aov_contagion = yes
+		}
+		0 = {
+			modifier = { add = aov_spell_miss_chance }
+			aov_spell_missed = yes
+		}
+	}
 	aov_dark_magic_roll = yes
 }
 
-aov_spell_speak_with_dead_cast = {
-	custom_tooltip = aov_spell_speak_with_dead_cost_tt
+aov_spell_steal_vitality_cast = {
+	custom_tooltip = aov_spell_steal_vitality_cost_tt
 	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_speak_with_dead_cost }
+		aov_mana_spend = { AMOUNT = aov_spell_steal_vitality_cost }
+		aov_school_add_progress = { SCHOOL = necromancy AMOUNT = 50 }
+		add_magic_lifestyle_xp = 50
+		set_variable = { name = aov_spell_steal_vitality_cd years = aov_spell_steal_vitality_years }
+	}
+	random_list = {
+		0 = {
+			modifier = { add = aov_spell_land_chance }
+			add_character_modifier = { modifier = aov_spell_steal_vitality years = aov_spell_steal_vitality_years }
+			aov_life_drain = yes
+		}
+		0 = {
+			modifier = { add = aov_spell_miss_chance }
+			aov_spell_missed = yes
+		}
+	}
+	aov_dark_magic_roll = yes
+}
+
+aov_spell_plague_cloud_cast = {
+	custom_tooltip = aov_spell_plague_cloud_cost_tt
+	hidden_effect = {
+		aov_mana_spend = { AMOUNT = aov_spell_plague_cloud_cost }
 		aov_school_add_progress = { SCHOOL = necromancy AMOUNT = 100 }
 		add_magic_lifestyle_xp = 100
-		set_variable = { name = aov_spell_speak_with_dead_cd years = aov_spell_speak_with_dead_years }
+		set_variable = { name = aov_spell_plague_cloud_cd years = aov_spell_plague_cloud_years }
 	}
-	aov_speak_with_dead = yes
+	random_list = {
+		0 = {
+			modifier = { add = aov_spell_land_chance }
+			aov_plague_cloud = yes
+		}
+		0 = {
+			modifier = { add = aov_spell_miss_chance }
+			aov_spell_missed = yes
+		}
+	}
 	aov_dark_magic_roll = yes
 }
 
-aov_spell_remove_pain_cast = {
-	custom_tooltip = aov_spell_remove_pain_cost_tt
+aov_spell_raise_dead_cast = {
+	custom_tooltip = aov_spell_raise_dead_cost_tt
 	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_remove_pain_cost }
+		aov_mana_spend = { AMOUNT = aov_spell_raise_dead_cost }
 		aov_school_add_progress = { SCHOOL = necromancy AMOUNT = 100 }
 		add_magic_lifestyle_xp = 100
-		set_variable = { name = aov_spell_remove_pain_cd years = aov_spell_remove_pain_years }
+		set_variable = { name = aov_spell_raise_dead_cd years = aov_spell_raise_dead_years }
 	}
-	aov_purify = yes
+	aov_raise_dead = yes
 	aov_dark_magic_roll = yes
 }
 
-aov_spell_chronophage_cast = {
-	custom_tooltip = aov_spell_chronophage_cost_tt
+aov_spell_finger_of_death_cast = {
+	custom_tooltip = aov_spell_finger_of_death_cost_tt
 	hidden_effect = {
-		aov_mana_spend = { AMOUNT = aov_spell_chronophage_cost }
+		aov_mana_spend = { AMOUNT = aov_spell_finger_of_death_cost }
 		aov_school_add_progress = { SCHOOL = necromancy AMOUNT = 200 }
 		add_magic_lifestyle_xp = 200
-		set_variable = { name = aov_spell_chronophage_cd years = aov_spell_chronophage_years }
+		set_variable = { name = aov_spell_finger_of_death_cd years = aov_spell_finger_of_death_years }
 	}
-	add_character_modifier = { modifier = aov_spell_chronophage years = aov_spell_chronophage_years }
+	random_list = {
+		0 = {
+			modifier = { add = aov_spell_land_chance }
+			aov_finger_of_death = yes
+		}
+		0 = {
+			modifier = { add = aov_spell_miss_chance }
+			aov_spell_missed = yes
+		}
+	}
 	aov_dark_magic_roll = yes
 }
 
@@ -622,6 +667,14 @@ aov_spell_remove_curses = {
 	if = {
 		limit = { has_character_modifier = aov_spell_phantasmal_rumour_target }
 		remove_character_modifier = aov_spell_phantasmal_rumour_target
+	}
+	if = {
+		limit = { has_character_modifier = aov_spell_ray_of_sickness_victim }
+		remove_character_modifier = aov_spell_ray_of_sickness_victim
+	}
+	if = {
+		limit = { has_character_modifier = aov_spell_steal_vitality_victim }
+		remove_character_modifier = aov_spell_steal_vitality_victim
 	}
 }
 
@@ -752,21 +805,9 @@ aov_magic_ai_cast_random = {
 			trigger = { aov_spell_shadows_in_the_night_castable = yes }
 			aov_spell_shadows_in_the_night_cast = yes
 		}
-		10 = {
-			trigger = { NOT = { aov_dark_magic_risky = yes } aov_spell_false_life_castable = yes }
-			aov_spell_false_life_cast = yes
-		}
-		10 = {
-			trigger = { NOT = { aov_dark_magic_risky = yes } aov_spell_speak_with_dead_castable = yes }
-			aov_spell_speak_with_dead_cast = yes
-		}
-		10 = {
-			trigger = { NOT = { aov_dark_magic_risky = yes } aov_spell_remove_pain_castable = yes }
-			aov_spell_remove_pain_cast = yes
-		}
-		10 = {
-			trigger = { NOT = { aov_dark_magic_risky = yes } aov_spell_chronophage_castable = yes }
-			aov_spell_chronophage_cast = yes
+		30 = {
+			trigger = { NOT = { aov_dark_magic_risky = yes } aov_spell_raise_dead_castable = yes }
+			aov_spell_raise_dead_cast = yes
 		}
 		10 = {
 			trigger = { aov_spell_longstrider_castable = yes }

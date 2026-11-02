@@ -164,3 +164,9 @@
  AOV_SPELL_REQ_HAS_COUNTY: "Holds at least one county"
  aov_spell_phantasmal_rumour_target: "Phantasmal Rumours"
  aov_spell_phantasmal_rumour_target_desc: "Everyone has heard something about this character; no one can say what."
+
+ # Necromancy
+ AOV_SPELL_REQ_HAS_CAPITAL: "Holds a capital"
+ aov_spell_ray_of_sickness_victim: "Ray of Sickness"
+ aov_spell_ray_of_sickness_victim_desc: "A sickness that will not lift has settled on this character."
+ aov_raise_dead_army_name: "Risen Dead"

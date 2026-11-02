@@ -322,10 +322,10 @@ aov_spell_grand_deception_interaction = {
 	}
 }
 
-aov_spell_steal_vitality_interaction = {
+aov_spell_ray_of_sickness_interaction = {
 	category = interaction_category_spells
 	common_interaction = no
-	desc = aov_spell_steal_vitality_interaction_desc
+	desc = aov_spell_ray_of_sickness_interaction_desc
 
 	is_shown = {
 		scope:actor = { aov_is_mage = yes }
@@ -333,18 +333,32 @@ aov_spell_steal_vitality_interaction = {
 	}
 
 	is_valid_showing_failures_only = {
-		scope:actor = { aov_spell_steal_vitality_castable = yes }
+		scope:actor = { aov_spell_ray_of_sickness_castable = yes }
 		scope:recipient = { aov_spell_target_allowed = yes }
 	}
 
 	on_accept = {
-		scope:actor = { aov_spell_steal_vitality_cast = yes }
+		scope:actor = { aov_spell_ray_of_sickness_cast = yes }
 	}
 
 	auto_accept = yes
 
+	ai_targets = {
+		ai_recipients = scripted_relations
+		ai_recipients = primary_war_enemies
+	}
+	ai_frequency = 12
+
 	ai_will_do = {
 		base = 0
+		modifier = {
+			add = 60
+			aov_spell_ai_hostile_target = yes
+		}
+		modifier = {
+			factor = 0
+			scope:actor = { aov_spell_land_chance < 40 }
+		}
 	}
 }
 
@@ -369,7 +383,142 @@ aov_spell_contagion_interaction = {
 
 	auto_accept = yes
 
+	ai_targets = {
+		ai_recipients = scripted_relations
+		ai_recipients = primary_war_enemies
+	}
+	ai_frequency = 12
+
 	ai_will_do = {
 		base = 0
+		modifier = {
+			add = 60
+			aov_spell_ai_hostile_target = yes
+		}
+		modifier = {
+			factor = 0
+			scope:actor = { aov_spell_land_chance < 40 }
+		}
+	}
+}
+
+aov_spell_steal_vitality_interaction = {
+	category = interaction_category_spells
+	common_interaction = no
+	desc = aov_spell_steal_vitality_interaction_desc
+
+	is_shown = {
+		scope:actor = { aov_is_mage = yes }
+		NOT = { scope:recipient = scope:actor }
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = { aov_spell_steal_vitality_castable = yes }
+		scope:recipient = { aov_spell_target_allowed = yes }
+	}
+
+	on_accept = {
+		scope:actor = { aov_spell_steal_vitality_cast = yes }
+	}
+
+	auto_accept = yes
+
+	ai_targets = {
+		ai_recipients = scripted_relations
+		ai_recipients = primary_war_enemies
+	}
+	ai_frequency = 12
+
+	ai_will_do = {
+		base = 0
+		modifier = {
+			add = 60
+			aov_spell_ai_hostile_target = yes
+		}
+		modifier = {
+			factor = 0
+			scope:actor = { aov_spell_land_chance < 40 }
+		}
+	}
+}
+
+aov_spell_plague_cloud_interaction = {
+	category = interaction_category_spells
+	common_interaction = no
+	desc = aov_spell_plague_cloud_interaction_desc
+
+	is_shown = {
+		scope:actor = { aov_is_mage = yes }
+		NOT = { scope:recipient = scope:actor }
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = { aov_spell_plague_cloud_castable = yes }
+		scope:recipient = { aov_spell_target_allowed = yes }
+		aov_spell_target_has_capital = yes
+	}
+
+	on_accept = {
+		scope:actor = { aov_spell_plague_cloud_cast = yes }
+	}
+
+	auto_accept = yes
+
+	ai_targets = {
+		ai_recipients = scripted_relations
+		ai_recipients = primary_war_enemies
+	}
+	ai_frequency = 12
+
+	ai_will_do = {
+		base = 0
+		modifier = {
+			add = 60
+			aov_spell_ai_hostile_target = yes
+		}
+		modifier = {
+			factor = 0
+			scope:actor = { aov_spell_land_chance < 40 }
+		}
+	}
+}
+
+aov_spell_finger_of_death_interaction = {
+	category = interaction_category_spells
+	common_interaction = no
+	desc = aov_spell_finger_of_death_interaction_desc
+
+	is_shown = {
+		scope:actor = { aov_is_mage = yes }
+		NOT = { scope:recipient = scope:actor }
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = { aov_spell_finger_of_death_castable = yes }
+		scope:recipient = { aov_spell_target_allowed = yes }
+	}
+
+	on_accept = {
+		scope:actor = { aov_spell_finger_of_death_cast = yes }
+	}
+
+	auto_accept = yes
+
+	ai_targets = {
+		ai_recipients = scripted_relations
+		ai_recipients = primary_war_enemies
+	}
+	ai_frequency = 12
+
+	ai_will_do = {
+		base = 0
+		modifier = {
+			add = 60
+			aov_spell_ai_hostile_target = yes
+		}
+		modifier = {
+			factor = 0
+			scope:actor = { aov_spell_land_chance < 40 }
+		}
 	}
 }

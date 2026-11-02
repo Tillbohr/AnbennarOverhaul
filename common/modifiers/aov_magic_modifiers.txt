@@ -6,10 +6,10 @@ aov_spell_ward_target = {
 	enemy_hostile_scheme_success_chance_add = -30
 }
 
-# Steal Vitality
+# Life Drain (on the target)
 aov_spell_steal_vitality_victim = {
 	icon = health_negative
-	health = -1
+	health = -2
 }
 
 # Enchant Trinket: one of these on the trinket
@@ -63,4 +63,10 @@ aov_meteor_scorched = {
 aov_spell_phantasmal_rumour_target = {
 	icon = prestige_negative
 	vassal_opinion = -20
+}
+
+# Ray of Sickness (on the target)
+aov_spell_ray_of_sickness_victim = {
+	icon = health_negative
+	health = -1
 }

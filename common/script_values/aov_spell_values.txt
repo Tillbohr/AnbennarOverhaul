@@ -547,17 +547,32 @@ aov_spell_grand_deception_years = {
 	floor = yes
 }
 
-aov_spell_false_life_cost = {
+aov_spell_ray_of_sickness_cost = {
 	value = 1
 	subtract = aov_cost_cut_necromancy
+	subtract = aov_cost_cut_targeted
 	min = 0.5
 	multiply = 25
 	add = 0.5
 	floor = yes
 }
-aov_spell_false_life_years = {
+aov_spell_ray_of_sickness_years = {
 	value = 1
-	multiply = aov_years_mult_necromancy
+	add = 0.5
+	floor = yes
+}
+
+aov_spell_contagion_cost = {
+	value = 1
+	subtract = aov_cost_cut_necromancy
+	subtract = aov_cost_cut_targeted
+	min = 0.5
+	multiply = 50
+	add = 0.5
+	floor = yes
+}
+aov_spell_contagion_years = {
+	value = 2
 	add = 0.5
 	floor = yes
 }
@@ -578,60 +593,48 @@ aov_spell_steal_vitality_years = {
 	floor = yes
 }
 
-aov_spell_contagion_cost = {
+aov_spell_plague_cloud_cost = {
 	value = 1
 	subtract = aov_cost_cut_necromancy
 	subtract = aov_cost_cut_targeted
 	min = 0.5
-	multiply = 50
-	add = 0.5
-	floor = yes
-}
-aov_spell_contagion_years = {
-	value = 2
-	add = 0.5
-	floor = yes
-}
-
-aov_spell_speak_with_dead_cost = {
-	value = 1
-	subtract = aov_cost_cut_necromancy
-	min = 0.5
 	multiply = 100
 	add = 0.5
 	floor = yes
 }
-aov_spell_speak_with_dead_years = {
+aov_spell_plague_cloud_years = {
 	value = 3
 	add = 0.5
 	floor = yes
 }
 
-aov_spell_remove_pain_cost = {
+aov_spell_raise_dead_cost = {
 	value = 1
 	subtract = aov_cost_cut_necromancy
+	subtract = aov_cost_cut_war
 	min = 0.5
 	multiply = 100
 	add = 0.5
 	floor = yes
 }
-aov_spell_remove_pain_years = {
+aov_spell_raise_dead_years = {
 	value = 3
+	multiply = aov_years_mult_necromancy
 	add = 0.5
 	floor = yes
 }
 
-aov_spell_chronophage_cost = {
+aov_spell_finger_of_death_cost = {
 	value = 1
 	subtract = aov_cost_cut_necromancy
+	subtract = aov_cost_cut_targeted
 	min = 0.5
 	multiply = 200
 	add = 0.5
 	floor = yes
 }
-aov_spell_chronophage_years = {
+aov_spell_finger_of_death_years = {
 	value = 5
-	multiply = aov_years_mult_necromancy
 	add = 0.5
 	floor = yes
 }

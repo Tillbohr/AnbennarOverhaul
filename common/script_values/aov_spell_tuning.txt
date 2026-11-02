@@ -40,3 +40,26 @@ aov_fireball_severe_chance = {
 aov_earthquake_extra_chance = {
 	value = 25
 }
+
+# Plague Cloud: outbreak scale (weights; never apocalyptic)
+aov_plague_cloud_major_chance = {
+	value = 20
+}
+
+aov_plague_cloud_minor_chance = {
+	value = 100
+	subtract = aov_plague_cloud_major_chance
+}
+
+# Finger of Death: outcome weights once it lands
+aov_finger_death_chance = {
+	value = 15
+}
+
+aov_finger_injury_chance = {
+	value = 45
+}
+
+aov_finger_disease_chance = {
+	value = 40
+}

@@ -101,22 +101,9 @@ aov_spell_shadows_in_the_night = {
 	owned_scheme_secrecy_add = 40
 }
 
-aov_spell_false_life = {
-	icon = learning_positive
-	health = 1
-	stress_gain_mult = 0.1
-}
-
 aov_spell_steal_vitality = {
 	icon = learning_positive
-	health = 1
-}
-
-aov_spell_chronophage = {
-	icon = learning_positive
 	health = 2
-	dread_baseline_add = 10
-	stress_gain_mult = 0.15
 }
 
 aov_spell_longstrider = {

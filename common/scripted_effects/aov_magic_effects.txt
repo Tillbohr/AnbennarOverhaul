@@ -316,24 +316,6 @@ aov_augury = {
 }
 
 
-# Speak With Dead: the ancestors teach, and sometimes tell
-aov_speak_with_dead = {
-	add_learning_lifestyle_xp = 1000
-	random = {
-		chance = 33
-		random_close_or_extended_family_member = {
-			limit = {
-				is_alive = yes
-				any_secret = { NOT = { is_known_by = root } }
-			}
-			random_secret = {
-				limit = { NOT = { is_known_by = root } }
-				reveal_to = root
-			}
-		}
-	}
-}
-
 # Purify: wounds, illness, the diseases Necromancy spreads and hostile spells lifted
 aov_purify = {
 	if = { limit = { has_trait = wounded_1 } remove_trait = wounded_1 }
@@ -958,4 +940,175 @@ aov_grand_deception = {
 		}
 	}
 	add_pressed_claim = scope:aov_deception_county
+}
+
+##########
+# Necromancy
+
+# Ray of Sickness landed (caster scope, scope:recipient): -1 health for the caster's spell duration
+aov_ray_of_sickness = {
+	save_scope_value_as = {
+		name = aov_curse_years
+		value = aov_spell_ray_of_sickness_years
+	}
+	scope:recipient = {
+		add_character_modifier = { modifier = aov_spell_ray_of_sickness_victim years = scope:aov_curse_years }
+	}
+}
+
+# Life Drain landed: the caster's own +2 health is the spell's modifier
+aov_life_drain = {
+	save_scope_value_as = {
+		name = aov_curse_years
+		value = aov_spell_steal_vitality_years
+	}
+	scope:recipient = {
+		add_character_modifier = { modifier = aov_spell_steal_vitality_victim years = scope:aov_curse_years }
+	}
+}
+
+# Contagion landed: a disease the target can catch, else plain illness
+aov_contagion = {
+	scope:recipient = {
+		random_list = {
+			1 = {
+				trigger = { can_contract_disease_trigger = { DISEASE = consumption } }
+				contract_disease_effect = { DISEASE = consumption TREATMENT_EVENT = no }
+			}
+			1 = {
+				trigger = { can_contract_disease_trigger = { DISEASE = typhus } }
+				contract_disease_effect = { DISEASE = typhus TREATMENT_EVENT = no }
+			}
+			1 = {
+				trigger = { can_contract_disease_trigger = { DISEASE = smallpox } }
+				contract_disease_effect = { DISEASE = smallpox TREATMENT_EVENT = no }
+			}
+			1 = {
+				trigger = {
+					NOR = {
+						can_contract_disease_trigger = { DISEASE = consumption }
+						can_contract_disease_trigger = { DISEASE = typhus }
+						can_contract_disease_trigger = { DISEASE = smallpox }
+					}
+				}
+				if = { limit = { NOT = { has_trait = ill } } add_trait = ill }
+			}
+		}
+	}
+}
+
+# Plague Cloud landed: an outbreak of a random contagious disease at the target's capital; major outbreaks are rare
+aov_plague_cloud = {
+	scope:recipient = {
+		capital_province = {
+			random_list = {
+				0 = {
+					modifier = { add = aov_plague_cloud_major_chance }
+				random_list = {
+					1 = { create_epidemic_outbreak = { type = smallpox intensity = major } }
+					1 = { create_epidemic_outbreak = { type = bubonic_plague intensity = major } }
+					1 = { create_epidemic_outbreak = { type = typhus intensity = major } }
+					1 = { create_epidemic_outbreak = { type = consumption intensity = major } }
+					1 = { create_epidemic_outbreak = { type = measles intensity = major } }
+					1 = { create_epidemic_outbreak = { type = dysentery intensity = major } }
+				}
+				}
+				0 = {
+					modifier = { add = aov_plague_cloud_minor_chance }
+				random_list = {
+					1 = { create_epidemic_outbreak = { type = smallpox intensity = minor } }
+					1 = { create_epidemic_outbreak = { type = bubonic_plague intensity = minor } }
+					1 = { create_epidemic_outbreak = { type = typhus intensity = minor } }
+					1 = { create_epidemic_outbreak = { type = consumption intensity = minor } }
+					1 = { create_epidemic_outbreak = { type = measles intensity = minor } }
+					1 = { create_epidemic_outbreak = { type = dysentery intensity = minor } }
+				}
+				}
+			}
+		}
+	}
+}
+
+# Raise Dead: skeletons and skeleton archers (the Lich men-at-arms types); a Lich raises twice as many
+aov_raise_dead = {
+	if = {
+		limit = { aov_spell_army_possible = yes }
+		if = {
+			limit = { has_trait = lich }
+			aov_spawn_spell_army = { SPELL = raise_dead TYPE = aov_lich_skeletons STACKS = 4 }
+			aov_spawn_spell_army = { SPELL = raise_dead TYPE = aov_lich_skeleton_archers STACKS = 2 }
+		}
+		else = {
+			aov_spawn_spell_army = { SPELL = raise_dead TYPE = aov_lich_skeletons STACKS = 2 }
+			aov_spawn_spell_army = { SPELL = raise_dead TYPE = aov_lich_skeleton_archers STACKS = 1 }
+		}
+	}
+	else = {
+		aov_spell_army_fizzle = { SPELL = raise_dead }
+	}
+}
+
+# Finger of Death landed: death is the rarest outcome; maiming or a deadly disease are likelier
+aov_finger_of_death = {
+	add_dread = 20
+	scope:recipient = {
+		random_list = {
+			0 = {
+				modifier = { add = aov_finger_death_chance }
+				death = { death_reason = death_mysterious }
+			}
+			0 = {
+				modifier = { add = aov_finger_injury_chance }
+				random_list = {
+					1 = {
+						trigger = { NOT = { has_trait = maimed } }
+						add_trait = maimed
+					}
+					1 = {
+						trigger = { NOT = { has_trait = one_eyed } }
+						add_trait = one_eyed
+					}
+					1 = {
+						trigger = { NOT = { has_trait = one_legged } }
+						add_trait = one_legged
+					}
+					1 = {
+						trigger = { NOT = { has_trait = disfigured } }
+						add_trait = disfigured
+					}
+					1 = {
+						increase_wounds_effect = { REASON = mysterious }
+						increase_wounds_effect = { REASON = mysterious }
+					}
+				}
+			}
+			0 = {
+				modifier = { add = aov_finger_disease_chance }
+				random_list = {
+					1 = {
+						trigger = { can_contract_disease_trigger = { DISEASE = consumption } }
+						contract_disease_effect = { DISEASE = consumption TREATMENT_EVENT = no }
+					}
+					1 = {
+						trigger = { can_contract_disease_trigger = { DISEASE = smallpox } }
+						contract_disease_effect = { DISEASE = smallpox TREATMENT_EVENT = no }
+					}
+					1 = {
+						trigger = { can_contract_disease_trigger = { DISEASE = bubonic_plague } }
+						contract_disease_effect = { DISEASE = bubonic_plague TREATMENT_EVENT = no }
+					}
+					1 = {
+						trigger = {
+							NOR = {
+								can_contract_disease_trigger = { DISEASE = consumption }
+								can_contract_disease_trigger = { DISEASE = smallpox }
+								can_contract_disease_trigger = { DISEASE = bubonic_plague }
+							}
+						}
+						increase_wounds_effect = { REASON = mysterious }
+					}
+				}
+			}
+		}
+	}
 }

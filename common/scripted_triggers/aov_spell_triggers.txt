@@ -834,47 +834,25 @@ aov_spell_grand_deception_castable = {
 	}
 }
 
-aov_spell_false_life_known = {
+aov_spell_ray_of_sickness_known = {
 	aov_school_level_at_least = { SCHOOL = necromancy LEVEL = 0 }
 }
-aov_spell_false_life_ready = {
-	NOT = { has_variable = aov_spell_false_life_cd }
+aov_spell_ray_of_sickness_ready = {
+	NOT = { has_variable = aov_spell_ray_of_sickness_cd }
 }
-aov_spell_false_life_castable = {
+aov_spell_ray_of_sickness_castable = {
 	aov_is_mage = yes
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_NECROMANCY_0
-		aov_spell_false_life_known = yes
+		aov_spell_ray_of_sickness_known = yes
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_READY
-		aov_spell_false_life_ready = yes
+		aov_spell_ray_of_sickness_ready = yes
 	}
 	custom_tooltip = {
-		text = aov_spell_false_life_req_mana
-		aov_mana >= aov_spell_false_life_cost
-	}
-}
-
-aov_spell_steal_vitality_known = {
-	aov_school_level_at_least = { SCHOOL = necromancy LEVEL = 1 }
-}
-aov_spell_steal_vitality_ready = {
-	NOT = { has_variable = aov_spell_steal_vitality_cd }
-}
-aov_spell_steal_vitality_castable = {
-	aov_is_mage = yes
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_NECROMANCY_1
-		aov_spell_steal_vitality_known = yes
-	}
-	custom_tooltip = {
-		text = AOV_SPELL_REQ_READY
-		aov_spell_steal_vitality_ready = yes
-	}
-	custom_tooltip = {
-		text = aov_spell_steal_vitality_req_mana
-		aov_mana >= aov_spell_steal_vitality_cost
+		text = aov_spell_ray_of_sickness_req_mana
+		aov_mana >= aov_spell_ray_of_sickness_cost
 	}
 }
 
@@ -900,69 +878,95 @@ aov_spell_contagion_castable = {
 	}
 }
 
-aov_spell_speak_with_dead_known = {
-	aov_school_level_at_least = { SCHOOL = necromancy LEVEL = 2 }
+aov_spell_steal_vitality_known = {
+	aov_school_level_at_least = { SCHOOL = necromancy LEVEL = 1 }
 }
-aov_spell_speak_with_dead_ready = {
-	NOT = { has_variable = aov_spell_speak_with_dead_cd }
+aov_spell_steal_vitality_ready = {
+	NOT = { has_variable = aov_spell_steal_vitality_cd }
 }
-aov_spell_speak_with_dead_castable = {
+aov_spell_steal_vitality_castable = {
 	aov_is_mage = yes
 	custom_tooltip = {
-		text = AOV_SPELL_REQ_NECROMANCY_2
-		aov_spell_speak_with_dead_known = yes
+		text = AOV_SPELL_REQ_NECROMANCY_1
+		aov_spell_steal_vitality_known = yes
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_READY
-		aov_spell_speak_with_dead_ready = yes
+		aov_spell_steal_vitality_ready = yes
 	}
 	custom_tooltip = {
-		text = aov_spell_speak_with_dead_req_mana
-		aov_mana >= aov_spell_speak_with_dead_cost
+		text = aov_spell_steal_vitality_req_mana
+		aov_mana >= aov_spell_steal_vitality_cost
 	}
 }
 
-aov_spell_remove_pain_known = {
+aov_spell_plague_cloud_known = {
 	aov_school_level_at_least = { SCHOOL = necromancy LEVEL = 2 }
 }
-aov_spell_remove_pain_ready = {
-	NOT = { has_variable = aov_spell_remove_pain_cd }
+aov_spell_plague_cloud_ready = {
+	NOT = { has_variable = aov_spell_plague_cloud_cd }
 }
-aov_spell_remove_pain_castable = {
+aov_spell_plague_cloud_castable = {
 	aov_is_mage = yes
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_NECROMANCY_2
-		aov_spell_remove_pain_known = yes
+		aov_spell_plague_cloud_known = yes
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_READY
-		aov_spell_remove_pain_ready = yes
+		aov_spell_plague_cloud_ready = yes
 	}
 	custom_tooltip = {
-		text = aov_spell_remove_pain_req_mana
-		aov_mana >= aov_spell_remove_pain_cost
+		text = aov_spell_plague_cloud_req_mana
+		aov_mana >= aov_spell_plague_cloud_cost
 	}
 }
 
-aov_spell_chronophage_known = {
+aov_spell_raise_dead_known = {
+	aov_school_level_at_least = { SCHOOL = necromancy LEVEL = 2 }
+}
+aov_spell_raise_dead_ready = {
+	NOT = { has_variable = aov_spell_raise_dead_cd }
+}
+aov_spell_raise_dead_castable = {
+	aov_is_mage = yes
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_NECROMANCY_2
+		aov_spell_raise_dead_known = yes
+	}
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_READY
+		aov_spell_raise_dead_ready = yes
+	}
+	custom_tooltip = {
+		text = aov_spell_raise_dead_req_mana
+		aov_mana >= aov_spell_raise_dead_cost
+	}
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_WAR
+		is_at_war = yes
+	}
+}
+
+aov_spell_finger_of_death_known = {
 	aov_school_level_at_least = { SCHOOL = necromancy LEVEL = 3 }
 }
-aov_spell_chronophage_ready = {
-	NOT = { has_variable = aov_spell_chronophage_cd }
+aov_spell_finger_of_death_ready = {
+	NOT = { has_variable = aov_spell_finger_of_death_cd }
 }
-aov_spell_chronophage_castable = {
+aov_spell_finger_of_death_castable = {
 	aov_is_mage = yes
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_NECROMANCY_3
-		aov_spell_chronophage_known = yes
+		aov_spell_finger_of_death_known = yes
 	}
 	custom_tooltip = {
 		text = AOV_SPELL_REQ_READY
-		aov_spell_chronophage_ready = yes
+		aov_spell_finger_of_death_ready = yes
 	}
 	custom_tooltip = {
-		text = aov_spell_chronophage_req_mana
-		aov_mana >= aov_spell_chronophage_cost
+		text = aov_spell_finger_of_death_req_mana
+		aov_mana >= aov_spell_finger_of_death_cost
 	}
 }
 
@@ -1134,10 +1138,7 @@ aov_magic_ai_any_castable = {
 		aov_spell_invisibility_castable = yes
 		aov_spell_fear_and_loathing_castable = yes
 		aov_spell_shadows_in_the_night_castable = yes
-		aov_spell_false_life_castable = yes
-		aov_spell_speak_with_dead_castable = yes
-		aov_spell_remove_pain_castable = yes
-		aov_spell_chronophage_castable = yes
+		aov_spell_raise_dead_castable = yes
 		aov_spell_longstrider_castable = yes
 		aov_spell_plant_growth_castable = yes
 		aov_spell_mass_enlarge_castable = yes

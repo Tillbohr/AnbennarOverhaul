@@ -2972,9 +2972,9 @@ types AovMagic
 		}
 
 		widget = {
-			name = "aov_spell_card_false_life"
+			name = "aov_spell_card_ray_of_sickness"
 			size = { 480 88 }
-			tooltip = "aov_spell_false_life_tt"
+			tooltip = "aov_spell_ray_of_sickness_tt"
 
 			icon = {
 				position = { 0 0 }
@@ -2998,92 +2998,27 @@ types AovMagic
 
 			text_single = {
 				position = { 72 8 }
-				text = "aov_spell_false_life"
+				text = "aov_spell_ray_of_sickness"
 				default_format = "#T"
 				max_width = 205
 				align = left|nobaseline
 			}
 			text_single = {
 				position = { 72 38 }
-				text = "aov_spell_false_life_facts"
+				text = "aov_spell_ray_of_sickness_facts"
 				default_format = "#weak"
 				max_width = 280
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_false_life_cd' ).IsSet )]"
+				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_ray_of_sickness_cd' ).IsSet )]"
 				position = { 72 66 }
-				text = "aov_spell_false_life_desc"
+				text = "aov_spell_ray_of_sickness_desc"
 				max_width = 400
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_false_life_cd' ).IsSet]"
-				position = { 72 66 }
-				text = "AOV_SPELL_ON_COOLDOWN"
-				max_width = 400
-				align = left|nobaseline
-			}
-
-			button_standard = {
-				parentanchor = right
-				position = { -6 16 }
-				size = { 110 32 }
-				text = "AOV_SPELL_CAST"
-				enabled = "[GetScriptedGui('aov_spell_false_life_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_spell_false_life_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_spell_false_life_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-			}
-		}
-
-		widget = {
-			name = "aov_spell_card_steal_vitality"
-			size = { 480 88 }
-			tooltip = "aov_spell_steal_vitality_tt"
-
-			icon = {
-				position = { 0 0 }
-				size = { 290 64 }
-				texture = "gfx/interface/icons/aov_magic/spell_plate.dds"
-			}
-			icon = {
-				position = { 2 2 }
-				size = { 60 60 }
-				texture = "gfx/interface/icons/aov_magic/spell_slot_2.dds"
-				framesize = { 60 60 }
-				frame = 7
-			}
-			icon = {
-				position = { 0 0 }
-				size = { 64 76 }
-				texture = "gfx/interface/icons/aov_magic/spell_frames.dds"
-				framesize = { 64 76 }
-				frame = 2
-			}
-
-			text_single = {
-				position = { 72 8 }
-				text = "aov_spell_steal_vitality"
-				default_format = "#T"
-				max_width = 205
-				align = left|nobaseline
-			}
-			text_single = {
-				position = { 72 38 }
-				text = "aov_spell_steal_vitality_facts"
-				default_format = "#weak"
-				max_width = 280
-				align = left|nobaseline
-			}
-			text_single = {
-				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_steal_vitality_cd' ).IsSet )]"
-				position = { 72 66 }
-				text = "aov_spell_steal_vitality_desc"
-				max_width = 400
-				align = left|nobaseline
-			}
-			text_single = {
-				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_steal_vitality_cd' ).IsSet]"
+				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_ray_of_sickness_cd' ).IsSet]"
 				position = { 72 66 }
 				text = "AOV_SPELL_ON_COOLDOWN"
 				max_width = 400
@@ -3114,7 +3049,7 @@ types AovMagic
 			icon = {
 				position = { 2 2 }
 				size = { 60 60 }
-				texture = "gfx/interface/icons/aov_magic/spell_slot_3.dds"
+				texture = "gfx/interface/icons/aov_magic/spell_slot_2.dds"
 				framesize = { 60 60 }
 				frame = 7
 			}
@@ -3167,9 +3102,74 @@ types AovMagic
 		}
 
 		widget = {
-			name = "aov_spell_card_speak_with_dead"
+			name = "aov_spell_card_steal_vitality"
 			size = { 480 88 }
-			tooltip = "aov_spell_speak_with_dead_tt"
+			tooltip = "aov_spell_steal_vitality_tt"
+
+			icon = {
+				position = { 0 0 }
+				size = { 290 64 }
+				texture = "gfx/interface/icons/aov_magic/spell_plate.dds"
+			}
+			icon = {
+				position = { 2 2 }
+				size = { 60 60 }
+				texture = "gfx/interface/icons/aov_magic/spell_slot_3.dds"
+				framesize = { 60 60 }
+				frame = 7
+			}
+			icon = {
+				position = { 0 0 }
+				size = { 64 76 }
+				texture = "gfx/interface/icons/aov_magic/spell_frames.dds"
+				framesize = { 64 76 }
+				frame = 2
+			}
+
+			text_single = {
+				position = { 72 8 }
+				text = "aov_spell_steal_vitality"
+				default_format = "#T"
+				max_width = 205
+				align = left|nobaseline
+			}
+			text_single = {
+				position = { 72 38 }
+				text = "aov_spell_steal_vitality_facts"
+				default_format = "#weak"
+				max_width = 280
+				align = left|nobaseline
+			}
+			text_single = {
+				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_steal_vitality_cd' ).IsSet )]"
+				position = { 72 66 }
+				text = "aov_spell_steal_vitality_desc"
+				max_width = 400
+				align = left|nobaseline
+			}
+			text_single = {
+				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_steal_vitality_cd' ).IsSet]"
+				position = { 72 66 }
+				text = "AOV_SPELL_ON_COOLDOWN"
+				max_width = 400
+				align = left|nobaseline
+			}
+
+			text_multi = {
+				parentanchor = right
+				position = { -6 16 }
+				size = { 110 0 }
+				max_width = 110
+				autoresize = yes
+				text = "AOV_SPELL_CAST_FROM_PORTRAIT"
+				default_format = "#weak"
+			}
+		}
+
+		widget = {
+			name = "aov_spell_card_plague_cloud"
+			size = { 480 88 }
+			tooltip = "aov_spell_plague_cloud_tt"
 
 			icon = {
 				position = { 0 0 }
@@ -3193,48 +3193,48 @@ types AovMagic
 
 			text_single = {
 				position = { 72 8 }
-				text = "aov_spell_speak_with_dead"
+				text = "aov_spell_plague_cloud"
 				default_format = "#T"
 				max_width = 205
 				align = left|nobaseline
 			}
 			text_single = {
 				position = { 72 38 }
-				text = "aov_spell_speak_with_dead_facts"
+				text = "aov_spell_plague_cloud_facts"
 				default_format = "#weak"
 				max_width = 280
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_speak_with_dead_cd' ).IsSet )]"
+				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_plague_cloud_cd' ).IsSet )]"
 				position = { 72 66 }
-				text = "aov_spell_speak_with_dead_desc"
+				text = "aov_spell_plague_cloud_desc"
 				max_width = 400
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_speak_with_dead_cd' ).IsSet]"
+				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_plague_cloud_cd' ).IsSet]"
 				position = { 72 66 }
 				text = "AOV_SPELL_ON_COOLDOWN"
 				max_width = 400
 				align = left|nobaseline
 			}
 
-			button_standard = {
+			text_multi = {
 				parentanchor = right
 				position = { -6 16 }
-				size = { 110 32 }
-				text = "AOV_SPELL_CAST"
-				enabled = "[GetScriptedGui('aov_spell_speak_with_dead_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_spell_speak_with_dead_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_spell_speak_with_dead_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				size = { 110 0 }
+				max_width = 110
+				autoresize = yes
+				text = "AOV_SPELL_CAST_FROM_PORTRAIT"
+				default_format = "#weak"
 			}
 		}
 
 		widget = {
-			name = "aov_spell_card_remove_pain"
+			name = "aov_spell_card_raise_dead"
 			size = { 480 88 }
-			tooltip = "aov_spell_remove_pain_tt"
+			tooltip = "aov_spell_raise_dead_tt"
 
 			icon = {
 				position = { 0 0 }
@@ -3258,27 +3258,27 @@ types AovMagic
 
 			text_single = {
 				position = { 72 8 }
-				text = "aov_spell_remove_pain"
+				text = "aov_spell_raise_dead"
 				default_format = "#T"
 				max_width = 205
 				align = left|nobaseline
 			}
 			text_single = {
 				position = { 72 38 }
-				text = "aov_spell_remove_pain_facts"
+				text = "aov_spell_raise_dead_facts"
 				default_format = "#weak"
 				max_width = 280
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_remove_pain_cd' ).IsSet )]"
+				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_raise_dead_cd' ).IsSet )]"
 				position = { 72 66 }
-				text = "aov_spell_remove_pain_desc"
+				text = "aov_spell_raise_dead_desc"
 				max_width = 400
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_remove_pain_cd' ).IsSet]"
+				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_raise_dead_cd' ).IsSet]"
 				position = { 72 66 }
 				text = "AOV_SPELL_ON_COOLDOWN"
 				max_width = 400
@@ -3290,16 +3290,16 @@ types AovMagic
 				position = { -6 16 }
 				size = { 110 32 }
 				text = "AOV_SPELL_CAST"
-				enabled = "[GetScriptedGui('aov_spell_remove_pain_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_spell_remove_pain_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_spell_remove_pain_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				enabled = "[GetScriptedGui('aov_spell_raise_dead_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				tooltip = "[GetScriptedGui('aov_spell_raise_dead_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				onclick = "[GetScriptedGui('aov_spell_raise_dead_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			}
 		}
 
 		widget = {
-			name = "aov_spell_card_chronophage"
+			name = "aov_spell_card_finger_of_death"
 			size = { 480 88 }
-			tooltip = "aov_spell_chronophage_tt"
+			tooltip = "aov_spell_finger_of_death_tt"
 
 			icon = {
 				position = { 0 0 }
@@ -3323,41 +3323,41 @@ types AovMagic
 
 			text_single = {
 				position = { 72 8 }
-				text = "aov_spell_chronophage"
+				text = "aov_spell_finger_of_death"
 				default_format = "#T"
 				max_width = 205
 				align = left|nobaseline
 			}
 			text_single = {
 				position = { 72 38 }
-				text = "aov_spell_chronophage_facts"
+				text = "aov_spell_finger_of_death_facts"
 				default_format = "#weak"
 				max_width = 280
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_chronophage_cd' ).IsSet )]"
+				visible = "[Not( GetPlayer.MakeScope.Var( 'aov_spell_finger_of_death_cd' ).IsSet )]"
 				position = { 72 66 }
-				text = "aov_spell_chronophage_desc"
+				text = "aov_spell_finger_of_death_desc"
 				max_width = 400
 				align = left|nobaseline
 			}
 			text_single = {
-				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_chronophage_cd' ).IsSet]"
+				visible = "[GetPlayer.MakeScope.Var( 'aov_spell_finger_of_death_cd' ).IsSet]"
 				position = { 72 66 }
 				text = "AOV_SPELL_ON_COOLDOWN"
 				max_width = 400
 				align = left|nobaseline
 			}
 
-			button_standard = {
+			text_multi = {
 				parentanchor = right
 				position = { -6 16 }
-				size = { 110 32 }
-				text = "AOV_SPELL_CAST"
-				enabled = "[GetScriptedGui('aov_spell_chronophage_sgui').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				tooltip = "[GetScriptedGui('aov_spell_chronophage_sgui').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-				onclick = "[GetScriptedGui('aov_spell_chronophage_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				size = { 110 0 }
+				max_width = 110
+				autoresize = yes
+				text = "AOV_SPELL_CAST_FROM_PORTRAIT"
+				default_format = "#weak"
 			}
 		}
 	}

@@ -413,5 +413,84 @@ class IllusionTests(unittest.TestCase):
         self.assertNotIn("aov_assimilation_program = {", effects())
 
 
+
+class NecromancyTests(unittest.TestCase):
+    def test_keys(self):
+        self.assertEqual(keys_in_slot_order("necromancy"),
+                         ["ray_of_sickness", "contagion", "steal_vitality", "plague_cloud", "raise_dead", "finger_of_death"])
+
+    def test_numbers(self):
+        for k in ("ray_of_sickness", "contagion", "steal_vitality", "plague_cloud", "finger_of_death"):
+            self.assertEqual(BY[k]["type"], "targeted", k)
+            self.assertTrue(BY[k]["hostile"], k)
+        self.assertEqual(BY["raise_dead"]["type"], "war")
+        self.assertEqual(BY["steal_vitality"]["name"], "Life Drain")
+        self.assertIn("health = 2", BY["steal_vitality"]["modifier"])
+        self.assertIn("health = -2", block(modifiers(), "aov_spell_steal_vitality_victim"))
+        self.assertIn("health = -1", block(modifiers(), "aov_spell_ray_of_sickness_victim"))
+        self.assertEqual(BY["ray_of_sickness"]["curse"], "aov_spell_ray_of_sickness_victim")
+        self.assertEqual(BY["steal_vitality"]["curse"], "aov_spell_steal_vitality_victim")
+
+    def test_curses_last_the_casters_duration(self):
+        for k, eff in (("ray_of_sickness", "aov_ray_of_sickness"), ("steal_vitality", "aov_life_drain")):
+            self.assertEqual(BY[k]["effect"].strip(), f"{eff} = yes")
+            b = block(effects(), eff)
+            self.assertIn(f"value = aov_spell_{k}_years", b)
+
+    def test_contagion(self):
+        b = block(effects(), "aov_contagion")
+        for d in ("consumption", "typhus", "smallpox"):
+            self.assertIn(f"can_contract_disease_trigger = {{ DISEASE = {d} }}", b)
+            self.assertIn(f"contract_disease_effect = {{ DISEASE = {d} TREATMENT_EVENT = no }}", b)
+        self.assertIn("add_trait = ill", b)
+
+    def test_plague_cloud_target_trigger(self):
+        self.assertEqual(BY["plague_cloud"]["target_trigger"], "aov_spell_target_has_capital")
+        self.assertIn("exists = capital_province", block(read("common/scripted_triggers/aov_magic_triggers.txt"),
+                                                         "aov_spell_target_has_capital"))
+        b = block(effects(), "aov_plague_cloud")
+        self.assertIn("capital_province = {", b)
+        for d in ("smallpox", "bubonic_plague", "typhus", "consumption", "measles", "dysentery"):
+            self.assertIn(f"type = {d}", b)
+        self.assertIn("add = aov_plague_cloud_major_chance", b)
+        self.assertIn("intensity = major", b)
+        self.assertIn("intensity = minor", b)
+        self.assertNotIn("apocalyptic", b)
+        self.assertIn("value = 20", block(tuning(), "aov_plague_cloud_major_chance"))
+
+    def test_raise_dead(self):
+        b = block(effects(), "aov_raise_dead")
+        self.assertIn("aov_spawn_spell_army = { SPELL = raise_dead TYPE = aov_lich_skeletons STACKS = 2 }", b)
+        self.assertIn("aov_spawn_spell_army = { SPELL = raise_dead TYPE = aov_lich_skeleton_archers STACKS = 1 }", b)
+        self.assertIn("aov_spawn_spell_army = { SPELL = raise_dead TYPE = aov_lich_skeletons STACKS = 4 }", b)
+        self.assertIn("aov_spawn_spell_army = { SPELL = raise_dead TYPE = aov_lich_skeleton_archers STACKS = 2 }", b)
+        self.assertIn("has_trait = lich", b)
+        self.assertIn("aov_spell_army_fizzle = { SPELL = raise_dead }", b)
+        self.assertIn(" aov_raise_dead_army_name:", read("localization/english/aov_magic_l_english.yml"))
+
+    def test_finger_of_death(self):
+        b = block(effects(), "aov_finger_of_death")
+        for v, n in (("aov_finger_death_chance", 15), ("aov_finger_injury_chance", 45), ("aov_finger_disease_chance", 40)):
+            self.assertIn(f"add = {v}", b)
+            self.assertIn(f"value = {n}", block(tuning(), v))
+        self.assertIn("death = { death_reason = death_mysterious }", b)
+        for t in ("maimed", "one_eyed", "one_legged", "disfigured"):
+            self.assertIn(f"has_trait = {t}", b)
+        self.assertIn("increase_wounds_effect", b)
+        self.assertIn("contract_disease_effect", b)
+        self.assertIn("add_dread = 20", b)
+
+    def test_dark_magic_on_every_necromancy_spell(self):
+        spell_effects = read("common/scripted_effects/aov_spell_effects.txt")
+        for s in SPELLS:
+            if s["school"] == "necromancy":
+                self.assertIn("aov_dark_magic_roll = yes", block(spell_effects, f"aov_spell_{s['key']}_cast"), s["key"])
+
+    def test_removed(self):
+        for k in ("false_life", "speak_with_dead", "remove_pain", "chronophage"):
+            self.assertNotIn(k, BY)
+        self.assertNotIn("aov_speak_with_dead = {", effects())
+
+
 if __name__ == "__main__":
     unittest.main()

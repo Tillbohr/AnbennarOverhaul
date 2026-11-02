@@ -111,3 +111,11 @@ aov_spell_target_has_county = {
 		scope:recipient = { any_held_county = { count >= 1 } }
 	}
 }
+
+# Plague Cloud: the target has a capital for the outbreak (interaction scopes)
+aov_spell_target_has_capital = {
+	custom_tooltip = {
+		text = AOV_SPELL_REQ_HAS_CAPITAL
+		scope:recipient = { exists = capital_province }
+	}
+}

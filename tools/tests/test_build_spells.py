@@ -79,7 +79,8 @@ class DataTests(unittest.TestCase):
         targeted = {s["key"] for s in SPELLS if s["type"] == "targeted"}
         self.assertEqual(targeted, {"ward", "heartstring", "thoughtweave", "dominate_to_surrender", "scry",
                                     "steal_vitality", "contagion", "fireball", "winters_grip", "earthquake",
-                                    "phantasmal_rumour", "implant_scandal", "grand_deception"})
+                                    "phantasmal_rumour", "implant_scandal", "grand_deception",
+                                    "ray_of_sickness", "plague_cloud", "finger_of_death"})
         for s in SPELLS:
             if s["type"] in ("self", "realm", "war"):
                 self.assertTrue(s["modifier"].strip() or s["effect"].strip(), s["key"])
@@ -165,7 +166,7 @@ class GeneratedTests(unittest.TestCase):
 
     def test_necromancy_rolls_dark_magic(self):
         t = bs.effects(SPELLS)
-        self.assertIn("aov_dark_magic_roll = yes", block(t, "aov_spell_false_life_cast"))
+        self.assertIn("aov_dark_magic_roll = yes", block(t, "aov_spell_ray_of_sickness_cast"))
         self.assertNotIn("aov_dark_magic_roll", block(t, "aov_spell_guidance_cast"))
 
     def test_castable_requires_mage(self):
