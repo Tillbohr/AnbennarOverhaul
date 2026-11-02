@@ -60,6 +60,9 @@ castle_holding = {
 		fungus_farms_01
 		artificer_academy_01 # Anbennar Overhaul
 		battlemage_academy_01 # Anbennar Overhaul
+		aov_clockwork_mill_01 # Anbennar Overhaul
+		aov_alchemical_distillery_01 # Anbennar Overhaul
+		aov_damestear_foundry_01 # Anbennar Overhaul
 		dwarven_terrace_farm_01 # Anbennar Overhaul
 		dwarven_outpost_01 # Anbennar Overhaul
 		dwarven_surface_farm_01 # Anbennar Overhaul
@@ -179,6 +182,9 @@ city_holding = {
 		fungus_farms_01
 		artificer_academy_01 # Anbennar Overhaul
 		battlemage_academy_01 # Anbennar Overhaul
+		aov_clockwork_mill_01 # Anbennar Overhaul
+		aov_alchemical_distillery_01 # Anbennar Overhaul
+		aov_damestear_foundry_01 # Anbennar Overhaul
 		dwarven_terrace_farm_01 # Anbennar Overhaul
 		dwarven_outpost_01 # Anbennar Overhaul
 		dwarven_surface_farm_01 # Anbennar Overhaul

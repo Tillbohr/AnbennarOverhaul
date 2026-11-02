@@ -1,0 +1,108 @@
+﻿##########
+# Invention buildings
+##########
+
+# Each is unlocked permanently by the named invention (aov_invention_<key>_unlock_ready on the holder, so a vassal who
+# has not discovered it cannot build) and is off while the holder's artificery is dormant. See docs/systems/artificery.md.
+aov_clockwork_mill_01 = {
+	construction_time = standard_construction_time
+
+	type_icon = "icon_building_watermills.dds"
+
+	effect_desc = {
+		desc = aov_clockwork_mill_01_effect_desc
+	}
+
+	can_construct_potential = {
+		building_requirement_tribal = no
+		building_requirement_castle_city_church = { LEVEL = 01 }
+		scope:holder = { aov_invention_clockwork_waterwheels_unlock_ready = yes }
+	}
+
+	is_enabled = {
+		scope:holder = { aov_invention_clockwork_waterwheels_unlock_ready = yes }
+	}
+
+	show_disabled = yes
+
+	cost_gold = 150
+
+	county_modifier = {
+		tax_mult = 0.15
+		development_growth_factor = 0.1
+	}
+
+	ai_value = {
+		base = 20
+		ai_general_building_modifier = yes
+	}
+}
+
+aov_alchemical_distillery_01 = {
+	construction_time = slow_construction_time
+
+	type_icon = "icon_building_breweries.dds"
+
+	effect_desc = {
+		desc = aov_alchemical_distillery_01_effect_desc
+	}
+
+	can_construct_potential = {
+		building_requirement_tribal = no
+		building_requirement_castle_city_church = { LEVEL = 01 }
+		scope:holder = { aov_invention_alchemical_distilleries_unlock_ready = yes }
+	}
+
+	is_enabled = {
+		scope:holder = { aov_invention_alchemical_distilleries_unlock_ready = yes }
+	}
+
+	show_disabled = yes
+
+	cost_gold = 250
+
+	county_modifier = {
+		tax_mult = 0.2
+		county_opinion_add = 5
+	}
+
+	ai_value = {
+		base = 20
+		ai_general_building_modifier = yes
+	}
+}
+
+aov_damestear_foundry_01 = {
+	construction_time = slow_construction_time
+
+	type_icon = "icon_building_wind_furnaces.dds"
+
+	effect_desc = {
+		desc = aov_damestear_foundry_01_effect_desc
+	}
+
+	can_construct_potential = {
+		building_requirement_tribal = no
+		building_requirement_castle_city_church = { LEVEL = 01 }
+		scope:holder = { aov_invention_damestear_foundries_unlock_ready = yes }
+	}
+
+	is_enabled = {
+		scope:holder = { aov_invention_damestear_foundries_unlock_ready = yes }
+	}
+
+	show_disabled = yes
+
+	cost_gold = 400
+
+	county_modifier = {
+		tax_mult = 0.25
+		development_growth_factor = 0.15
+		levy_size = 0.15
+	}
+
+	ai_value = {
+		base = 20
+		ai_general_building_modifier = yes
+	}
+}

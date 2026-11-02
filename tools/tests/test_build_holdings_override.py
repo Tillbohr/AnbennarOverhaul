@@ -69,6 +69,9 @@ class GeneratedFileTests(unittest.TestCase):
     def test_generated_holdings(self):
         out = parse_blocks((hov.SUBMOD / hov.REL_PATH).read_bytes().decode("utf-8-sig"))
         self.assertIn("artificer_academy_01", out["castle_holding"])
+        for holding in ("castle_holding", "city_holding"):
+            for b in ("aov_clockwork_mill_01", "aov_alchemical_distillery_01", "aov_damestear_foundry_01"):
+                self.assertIn(b, out[holding])
         hold = out["dwarven_hold_holding"]
         self.assertIn("primary_building = dwarven_hold_01", hold)
         self.assertEqual(listed(hold), rie.HOLD_BUILDINGS)
@@ -102,7 +105,7 @@ class GeneratedFileTests(unittest.TestCase):
 
     def test_additions_and_extra_come_from_the_data(self):
         for holding in ("castle_holding", "city_holding"):
-            self.assertEqual(hov.ADDITIONS[holding], ["artificer_academy_01", "battlemage_academy_01"] + rie.SURFACE_BUILDINGS + rie.MINE_BUILDINGS)
+            self.assertEqual(hov.ADDITIONS[holding], ["artificer_academy_01", "battlemage_academy_01", "aov_clockwork_mill_01", "aov_alchemical_distillery_01", "aov_damestear_foundry_01"] + rie.SURFACE_BUILDINGS + rie.MINE_BUILDINGS)
         self.assertEqual(hov.NEW_HOLDINGS["dwarven_hold_holding"]["extra"], rie.HOLD_BUILDINGS)
 
     def test_add_holding_drops_duplicates_keeping_the_first(self):

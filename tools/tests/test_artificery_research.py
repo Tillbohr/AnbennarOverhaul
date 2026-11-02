@@ -20,7 +20,38 @@ def block(text, name):
     return m.group(1)
 
 
+BUILDINGS = {
+    "aov_clockwork_mill_01": ("clockwork_waterwheels", 150, "icon_building_watermills.dds",
+                              ["tax_mult = 0.15", "development_growth_factor = 0.1"]),
+    "aov_alchemical_distillery_01": ("alchemical_distilleries", 250, "icon_building_breweries.dds",
+                                     ["tax_mult = 0.2", "county_opinion_add = 5"]),
+    "aov_damestear_foundry_01": ("damestear_foundries", 400, "icon_building_wind_furnaces.dds",
+                                 ["tax_mult = 0.25", "development_growth_factor = 0.15", "levy_size = 0.15"]),
+}
+
+
 class ResearchTests(unittest.TestCase):
+    def test_invention_buildings(self):
+        text = read("common/buildings/aov_invention_buildings.txt")
+        self.assertEqual(re.findall(r"^([a-z0-9_]+) = \{", text, re.M), list(BUILDINGS))
+        for b, (inv, cost, icon, mods) in BUILDINGS.items():
+            body = block(text, b)
+            gate = f"scope:holder = {{ aov_invention_{inv}_unlock_ready = yes }}"
+            self.assertIn(gate, body.split("can_construct_potential = {")[1].split("\n\t}")[0])
+            self.assertIn(gate, body.split("is_enabled = {")[1].split("\n\t}")[0])
+            self.assertIn("show_disabled = yes", body)
+            self.assertIn(f"cost_gold = {cost}", body)
+            self.assertIn(f'type_icon = "{icon}"', body)
+            county = body.split("county_modifier = {")[1].split("}")[0]
+            for m in mods:
+                self.assertIn(m, county)
+
+    def test_invention_building_loc(self):
+        text = read("localization/english/aov_artificery_l_english.yml")
+        for b in BUILDINGS:
+            for key in (f"building_type_{b}", f"building_type_{b}_desc", f"building_{b}", f"building_{b}_desc", f"{b}_effect_desc"):
+                self.assertIn(f" {key}:", text)
+
     def test_complete_research_refunds_when_nothing_discovered(self):
         b = block(read("common/scripted_effects/aov_artificery_research_effects.txt"), "aov_artificery_complete_research")
         self.assertIn("remove_variable = aov_last_discovered", b)

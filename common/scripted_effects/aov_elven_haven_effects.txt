@@ -598,6 +598,9 @@ aov_convert_to_elven_haven_effect = {
 	if = { limit = { has_building = fungus_farms_06 } remove_building = fungus_farms_06 }
 	if = { limit = { has_building = fungus_farms_07 } remove_building = fungus_farms_07 }
 	if = { limit = { has_building = fungus_farms_08 } remove_building = fungus_farms_08 }
+	if = { limit = { has_building = aov_clockwork_mill_01 } remove_building = aov_clockwork_mill_01 }
+	if = { limit = { has_building = aov_alchemical_distillery_01 } remove_building = aov_alchemical_distillery_01 }
+	if = { limit = { has_building = aov_damestear_foundry_01 } remove_building = aov_damestear_foundry_01 }
 	if = { limit = { has_building = dwarven_terrace_farm_01 } remove_building = dwarven_terrace_farm_01 }
 	if = { limit = { has_building = dwarven_terrace_farm_02 } remove_building = dwarven_terrace_farm_02 }
 	if = { limit = { has_building = dwarven_terrace_farm_03 } remove_building = dwarven_terrace_farm_03 }
