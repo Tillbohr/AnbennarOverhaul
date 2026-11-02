@@ -1004,25 +1004,25 @@ aov_plague_cloud = {
 			random_list = {
 				0 = {
 					modifier = { add = aov_plague_cloud_major_chance }
-				random_list = {
-					1 = { create_epidemic_outbreak = { type = smallpox intensity = major } }
-					1 = { create_epidemic_outbreak = { type = bubonic_plague intensity = major } }
-					1 = { create_epidemic_outbreak = { type = typhus intensity = major } }
-					1 = { create_epidemic_outbreak = { type = consumption intensity = major } }
-					1 = { create_epidemic_outbreak = { type = measles intensity = major } }
-					1 = { create_epidemic_outbreak = { type = dysentery intensity = major } }
-				}
+					random_list = {
+						1 = { create_epidemic_outbreak = { type = smallpox intensity = major } }
+						1 = { create_epidemic_outbreak = { type = bubonic_plague intensity = major } }
+						1 = { create_epidemic_outbreak = { type = typhus intensity = major } }
+						1 = { create_epidemic_outbreak = { type = consumption intensity = major } }
+						1 = { create_epidemic_outbreak = { type = measles intensity = major } }
+						1 = { create_epidemic_outbreak = { type = dysentery intensity = major } }
+					}
 				}
 				0 = {
 					modifier = { add = aov_plague_cloud_minor_chance }
-				random_list = {
-					1 = { create_epidemic_outbreak = { type = smallpox intensity = minor } }
-					1 = { create_epidemic_outbreak = { type = bubonic_plague intensity = minor } }
-					1 = { create_epidemic_outbreak = { type = typhus intensity = minor } }
-					1 = { create_epidemic_outbreak = { type = consumption intensity = minor } }
-					1 = { create_epidemic_outbreak = { type = measles intensity = minor } }
-					1 = { create_epidemic_outbreak = { type = dysentery intensity = minor } }
-				}
+					random_list = {
+						1 = { create_epidemic_outbreak = { type = smallpox intensity = minor } }
+						1 = { create_epidemic_outbreak = { type = bubonic_plague intensity = minor } }
+						1 = { create_epidemic_outbreak = { type = typhus intensity = minor } }
+						1 = { create_epidemic_outbreak = { type = consumption intensity = minor } }
+						1 = { create_epidemic_outbreak = { type = measles intensity = minor } }
+						1 = { create_epidemic_outbreak = { type = dysentery intensity = minor } }
+					}
 				}
 			}
 		}
