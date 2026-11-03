@@ -141,9 +141,13 @@ class Realm:
             dkey = area_duchy[c.area]
             self.duchies[dkey][1].append(c.key)
             self.duchy_of[c.key] = dkey
-        for name, table in (("KINGDOM_CAPITALS", data.KINGDOM_CAPITALS), ("KINGDOM_ARMS", data.KINGDOM_ARMS)):
+        for name, table in (("KINGDOM_CAPITALS", data.KINGDOM_CAPITALS), ("KINGDOM_ARMS", data.KINGDOM_ARMS),
+                            ("KINGDOM_CULTURES", data.KINGDOM_CULTURES)):
             if set(table) != set(self.kingdoms):
                 raise GeneratorError(f"{name} does not list exactly the kingdoms of KINGDOMS")
+        unknown = sorted(set(data.DYNASTY_NAMES) - set(self.duchies))
+        if unknown:
+            raise GeneratorError(f"DYNASTY_NAMES: not Serpentreach duchies: {', '.join(unknown)}")
         for kkey, ckey in data.KINGDOM_CAPITALS.items():
             if ckey not in self.county or self.kingdom_of[self.duchy_of[ckey]] != kkey:
                 raise GeneratorError(f"KINGDOM_CAPITALS: {ckey} is not a county of {kkey}")
@@ -156,6 +160,10 @@ class Realm:
         if data.EMPIRE_CAPITAL not in self.county:
             raise GeneratorError(f"EMPIRE_CAPITAL {data.EMPIRE_CAPITAL} is not a Serpentreach county")
         self.emperor_duchy = self.duchy_of[data.EMPIRE_CAPITAL]
+
+    def culture_of(self, dkey: str) -> str:
+        """The culture of a duchy's kingdom (KINGDOM_CULTURES)."""
+        return data.KINGDOM_CULTURES[self.kingdom_of[dkey]]
 
     def duchy_capital(self, dkey: str) -> str:
         counties = self.duchies[dkey][1]
@@ -225,7 +233,8 @@ def render_province_history(realm: Realm) -> bytes:
         holdings = data.HOLDINGS[c.type]
         for i, (pid, name) in enumerate(zip(c.baronies, realm.barony_names(c.key))):
             holding = holdings[i] if i < len(holdings) else None
-            lines += ["", f"{pid} = {{\t# {name}", f"\tculture = {data.CULTURE}", f"\treligion = {data.RELIGION}",
+            lines += ["", f"{pid} = {{\t# {name}", f"\tculture = {realm.culture_of(realm.duchy_of[c.key])}",
+                      f"\treligion = {data.RELIGION}",
                       f"\tholding = {holding or 'none'}", "}"]
     return _text(lines)
 
@@ -249,8 +258,8 @@ class People:
     death or None)])."""
 
     def __init__(self, realm: Realm, names: list):
-        self.lines = {}  # duchy key -> {"dynasty", "dyn_name", "chars": [(id, name, birth, death)]}
-        used = set()
+        self.lines = {}  # duchy key -> {"dynasty", "dyn_key", "dyn_name", "eu4_name", "culture", "chars": [...]}
+        used = set(data.DYNASTY_NAMES.values())  # a generated name never repeats an EU4 one
         for dkey, (dname, _) in realm.duchies.items():
             prefix = "aov_sr_emperor" if dkey == realm.emperor_duchy else f"aov_sr_{dkey[2:]}"
             elder, son = f"{prefix}_1", f"{prefix}_2"
@@ -258,18 +267,24 @@ class People:
             for cid, birth, death in ((elder, life_date(elder, data.ELDER_BIRTH), life_date(elder + "d", data.ELDER_DEATH)),
                                       (son, life_date(son, data.SON_BIRTH), None)):
                 chars.append((cid, names[_hash("name:" + cid) % len(names)], birth, death))
-            base = re.sub(r"[\d|]+", "", dname).strip(" -")
-            dyn_name = base if base not in used else f"{base}-{chars[0][1]}"
-            used.add(dyn_name)
+            eu4_name = data.DYNASTY_NAMES.get(dkey)
+            if eu4_name:
+                dyn_name = eu4_name
+            else:
+                base = re.sub(r"[\d|]+", "", dname).strip(" -")
+                dyn_name = base if base not in used else f"{base}-{chars[0][1]}"
+                used.add(dyn_name)
             self.lines[dkey] = {"dynasty": f"aov_dynasty_{dkey[2:]}", "dyn_key": f"dynn_aov_{dkey[2:]}",
-                                "dyn_name": dyn_name, "chars": chars}
+                                "dyn_name": dyn_name, "eu4_name": bool(eu4_name), "culture": realm.culture_of(dkey),
+                                "chars": chars}
 
 
 def render_dynasties(people: People) -> bytes:
     lines = header_lines()
     for line in people.lines.values():
-        lines += ["", f"{line['dynasty']} = {{", '\tprefix = "dynnp_az"', f"\tname = \"{line['dyn_key']}\"",
-                  f"\tculture = {data.CULTURE}", "}"]
+        prefix = [] if line["eu4_name"] else ['\tprefix = "dynnp_az"']  # EU4's names stand alone
+        lines += ["", f"{line['dynasty']} = {{"] + prefix + [f"\tname = \"{line['dyn_key']}\"",
+                                                             f"\tculture = {line['culture']}", "}"]
     return _text(lines)
 
 
@@ -279,7 +294,7 @@ def render_characters(people: People) -> bytes:
         elder = line["chars"][0][0]
         for cid, name, birth, death in line["chars"]:
             lines += ["", f"{cid} = {{", f'\tname = "{name}"', f"\tdynasty = {line['dynasty']}",
-                      f'\treligion = "{data.RELIGION}"', f'\tculture = "{data.CULTURE}"', "\ttrait = race_dwarf"]
+                      f'\treligion = "{data.RELIGION}"', f'\tculture = "{line["culture"]}"', "\ttrait = race_dwarf"]
             if cid != elder:
                 lines.append(f"\tfather = {elder}")
             lines.append(f"\t{birth} = {{ birth = yes }}")

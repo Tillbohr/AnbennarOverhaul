@@ -257,7 +257,8 @@ class BuildTests(unittest.TestCase):
     def setUpClass(cls):
         import build_serpentreach as bs
         cls.bs = bs
-        cls.files = bs.build_all(ANBENNAR, EU4)
+        cls.lay = sl.layout(ANBENNAR, EU4)
+        cls.files = bs.build_from_layout(ANBENNAR, cls.lay)
 
     def test_generated_files_match_the_mod(self):
         stale = [rel for rel, content in self.files.items()
@@ -325,6 +326,52 @@ class BuildTests(unittest.TestCase):
         self.assertIn("d_zarn = {\n\t860.1.1 = { holder = aov_sr_zarn_1 liege = k_gor_burad }", history)
         self.assertIn("d_kings_caverns = {\n\t860.1.1 = { holder = aov_sr_kings_caverns_1 liege = e_serpentreach }",
                       history)
+
+    def test_every_county_and_character_has_its_kingdom_culture(self):
+        import re
+        from data import serpentreach as data
+        self.assertEqual(data.KINGDOM_CULTURES, {
+            "k_orlghelovar": "cobalt_dwarvish", "k_shazstundihr": "marble_dwarvish",
+            "k_arg_ordstun": "diamond_dwarvish", "k_verkal_skomdihr": "flint_dwarvish",
+            "k_ovdal_lodhum": "garnet_dwarvish", "k_gor_burad": "basalt_dwarvish"})
+        history = self.files["history/provinces/aov_serpentreach.txt"].decode("utf-8-sig")
+        self.assertNotIn("stone_dwarvish", history)
+        titles = self.files["common/landed_titles/aov_serpentreach.txt"].decode("utf-8-sig")
+        for block in re.split(r"(?m)^\t(?=k_)", titles)[1:]:
+            kkey = block.split(" ", 1)[0]
+            for pid in re.findall(r"province = (\d+)", block):
+                self.assertRegex(history, rf"(?m)^{pid} = \{{\t# .*\n\tculture = {data.KINGDOM_CULTURES[kkey]}\n")
+        characters = self.files["history/characters/aov_serpentreach.txt"].decode("utf-8-sig")
+        self.assertNotIn("stone_dwarvish", characters)
+        self.assertRegex(characters, r'aov_sr_emperor_1 = \{[^}]*culture = "diamond_dwarvish"')
+        self.assertRegex(characters, r'aov_sr_zarn_1 = \{[^}]*culture = "basalt_dwarvish"')
+        dynasties = self.files[self.bs.DYNASTIES].decode("utf-8-sig")
+        self.assertRegex(dynasties, r"aov_dynasty_still_caverns = \{[^}]*culture = garnet_dwarvish")
+
+    def test_eu4_dynasty_names_without_prefix(self):
+        import re
+        want = {"d_arg_ordstun": "Whiteforged", "d_kings_caverns": "Stormheart", "d_ovdal_lodhum": "Garnetpick",
+                "d_still_caverns": "Slatecutter", "d_shazstundihr": "Whitebeard", "d_south_altar": "Brightbeard"}
+        dynasties = self.files[self.bs.DYNASTIES].decode("utf-8-sig")
+        loc = self.files["localization/english/aov_serpentreach_l_english.yml"].decode("utf-8-sig")
+        for dkey, name in want.items():
+            block = re.search(rf"(?ms)^aov_dynasty_{dkey[2:]} = \{{.*?^\}}", dynasties).group(0)
+            self.assertNotIn("prefix", block, dkey)
+            self.assertIn(f' dynn_aov_{dkey[2:]}:0 "{name}"', loc)
+        self.assertEqual(dynasties.count('prefix = "dynnp_az"'), 19 - len(want))
+        names = re.findall(r'(?m)^ dynn_aov_\w+:0 "([^"]*)"', loc)
+        self.assertEqual(len(names), len(set(names)))
+
+    def test_culture_and_dynasty_tables_checked(self):
+        from unittest import mock
+        from data import serpentreach as data
+        cultures = {k: v for k, v in data.KINGDOM_CULTURES.items() if k != "k_gor_burad"}
+        with mock.patch.object(data, "KINGDOM_CULTURES", cultures):
+            with self.assertRaisesRegex(GeneratorError, "KINGDOM_CULTURES"):
+                self.bs.Realm(self.lay)
+        with mock.patch.dict(data.DYNASTY_NAMES, {"d_nowhere": "Nobody"}):
+            with self.assertRaisesRegex(GeneratorError, "d_nowhere"):
+                self.bs.Realm(self.lay)
 
 
 if __name__ == "__main__":

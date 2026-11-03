@@ -82,7 +82,11 @@ The generator stops when one is missing.
   Ethos and three traditions come from each hold's EU4 ideas. Every other field is `stone_dwarvish`'s from the
   overhaul's generated `anb_dwarf.txt`, including the RiE gfx keys, which the generators only add to Anbennar's
   files. `test_serpentreach_cultures.py` keeps the two equal, so copy any change by hand.
-- **People:** placeholder `stone_dwarvish` dwarves; per duchy an elder (holds from 860.1.1, dies 1000-1010) and his
-  son; the emperor holds `d_arg_ordstun` himself. The 6 holds are in `tools/data/holds.py`.
+- **People:** every county, character and dynasty of a kingdom has its hold's culture (`KINGDOM_CULTURES`; marble for
+  Shazstundihr). Per duchy there is an elder (holds from 860.1.1, dies 1000-1010) and his son; the emperor holds
+  `d_arg_ordstun` himself. Dynasties are named `az-<duchy>`, except six that take EU4 names with no prefix
+  (`DYNASTY_NAMES`): Whiteforged (Arg-Ôrdstun, H76's 1444 dynasty), Stormheart (King's Caverns), Garnetpick (Ovdal
+  Lodhum, H77's native line), Slatecutter (Still Caverns), Whitebeard (Shazstundihr) and Brightbeard (South Altar).
+  The 6 holds are in `tools/data/holds.py`.
 - **Needs an in-game test:** the map loads with the new ids; locators, province terrain and region files are read;
   textures and wall heights look right (tune in `tools/data/serpentreach.py`).

@@ -98,7 +98,19 @@ CHARGE_METAL = ((212, 175, 55), (225, 225, 225))  # on dark fields: charge gold,
 CHARGE_DARK = ((35, 35, 40), (212, 175, 55))  # on pale fields (HLS lightness above PALE_FIELD)
 PALE_FIELD = 0.65
 
-CULTURE = "stone_dwarvish"
+# Each kingdom's counties, characters and dynasties take its hold's EU4 culture (common/cultures/anb_cultures.txt,
+# primary = the hold's tag). Spec: docs/superpowers/specs/2026-11-03-serpentreach-dwarf-cultures-draft.md
+KINGDOM_CULTURES = {
+    "k_orlghelovar": "cobalt_dwarvish", "k_shazstundihr": "marble_dwarvish", "k_arg_ordstun": "diamond_dwarvish",
+    "k_verkal_skomdihr": "flint_dwarvish", "k_ovdal_lodhum": "garnet_dwarvish", "k_gor_burad": "basalt_dwarvish",
+}
+# Duchy -> its dynasty's name, shown without the "az" prefix the other duchies' dynasties carry. The holds' ruling
+# lines are EU4's 1444 rulers (H76 Ardeginn XXII Whiteforged; H77 Dwalra Garnetpick, as Gerin Orcrend is a human who
+# marries in later); the rest come from EU4's culture dynasty_names (diamond, garnet and marble dwarves).
+DYNASTY_NAMES = {
+    "d_arg_ordstun": "Whiteforged", "d_kings_caverns": "Stormheart", "d_ovdal_lodhum": "Garnetpick",
+    "d_still_caverns": "Slatecutter", "d_shazstundihr": "Whitebeard", "d_south_altar": "Brightbeard",
+}
 RELIGION = "ancestor_worship"
 
 # Holdings by barony position (capital first) for each EU4 terrain type; None leaves the barony empty.
