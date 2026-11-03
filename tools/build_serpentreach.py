@@ -1,7 +1,8 @@
 """Generate Serpentreach: EU4 Anbennar's serpentreach_region as provinces carved into the Serpentspine block.
 
 Writes the province map (whole-file overrides of Anbennar's provinces.png and definition.csv), the titles, history,
-placeholder characters and dynasties, province terrain, geographical region, localization and the locator overrides,
+placeholder characters and dynasties, province terrain, geographical region, localization, the kingdoms' arms (EU4 hold
+flags, converted once into textured emblems) and the locator overrides,
 all from tools/serpentreach_layout.py and tools/data/serpentreach.py. Rerun after an Anbennar map, title or locator
 change, then rerun tools/build_map_graphics.py (it carves the heightmap from the same layout):
 
@@ -11,6 +12,7 @@ Spec: docs/superpowers/specs/2026-11-02-serpentreach-design.md
 """
 
 import argparse
+import colorsys
 import hashlib
 import re
 import sys
@@ -40,6 +42,8 @@ DYNASTIES = "common/dynasties/aov_serpentreach_dynasties.txt"
 TERRAIN = "common/province_terrain/aov_serpentreach_terrain.txt"
 REGIONS = "map_data/geographical_regions/aov_serpentreach_regions.txt"
 LOC = "localization/english/aov_serpentreach_l_english.yml"
+ARMS = "common/coat_of_arms/coat_of_arms/aov_serpentreach.txt"
+EMBLEM_DIR = "gfx/coat_of_arms/textured_emblems"
 LOCATOR_FILES = ("building_locators", "special_building_locators", "combat_locators", "player_stack_locators",
                  "siege_locators", "other_stack_locators", "stack_locators", "activities")
 LOCATOR_DIR = "gfx/map/map_object_data"
@@ -65,9 +69,22 @@ def life_date(key: str, years: tuple) -> str:
     return f"{y}.{(h >> 8) % 12 + 1}.{(h >> 16) % 28 + 1}"
 
 
-def title_colour(key: str) -> str:
-    h = _hash("colour:" + key)
-    return "{ " + " ".join(str(60 + (h >> s) % 180) for s in (0, 8, 16)) + " }"
+def rgb_text(rgb: tuple) -> str:
+    return "{ " + " ".join(str(v) for v in rgb) + " }"
+
+
+def shade(rgb: tuple, delta: float) -> tuple:
+    """`rgb` with its HLS lightness moved by `delta`, the other way when that leaves 0.12..0.92."""
+    h, light, s = colorsys.rgb_to_hls(*(v / 255 for v in rgb))
+    target = light + delta
+    if not 0.12 <= target <= 0.92:
+        target = light - delta
+    target = min(0.92, max(0.12, target))
+    return tuple(round(v * 255) for v in colorsys.hls_to_rgb(h, target, s))
+
+
+def emblem(kkey: str) -> str:
+    return f"aov_{kkey[2:]}.dds"
 
 
 def ascii_name(name: str) -> str:
@@ -123,9 +140,13 @@ class Realm:
             dkey = area_duchy[c.area]
             self.duchies[dkey][1].append(c.key)
             self.duchy_of[c.key] = dkey
+        for name, table in (("KINGDOM_CAPITALS", data.KINGDOM_CAPITALS), ("KINGDOM_ARMS", data.KINGDOM_ARMS)):
+            if set(table) != set(self.kingdoms):
+                raise GeneratorError(f"{name} does not list exactly the kingdoms of KINGDOMS")
         for kkey, ckey in data.KINGDOM_CAPITALS.items():
             if ckey not in self.county or self.kingdom_of[self.duchy_of[ckey]] != kkey:
                 raise GeneratorError(f"KINGDOM_CAPITALS: {ckey} is not a county of {kkey}")
+        self.hold_duchy = {kkey: self.duchy_of[ckey] for kkey, ckey in data.KINGDOM_CAPITALS.items()}
         if data.EMPIRE_CAPITAL not in self.county:
             raise GeneratorError(f"EMPIRE_CAPITAL {data.EMPIRE_CAPITAL} is not a Serpentreach county")
         self.emperor_duchy = self.duchy_of[data.EMPIRE_CAPITAL]
@@ -145,6 +166,22 @@ class Realm:
         n = len(self.county[ckey].baronies)
         return [name] + [f"{name} {data.BARONY_SUFFIXES[i - 1]}" for i in range(1, n)]
 
+    def colours(self) -> dict:
+        """Title key -> map colour: kingdoms their EU4 colour, duchies shades of it, counties near their duchy's."""
+        out = {data.EMPIRE[0]: data.EMPIRE_COLOUR}
+        for kkey, (_, duchies) in self.kingdoms.items():
+            out[kkey] = data.KINGDOM_ARMS[kkey][1]
+            # the duchies' offsets slide together so all stay inside 0.12..0.92 and none folds onto another
+            offsets = [data.DUCHY_SHADES[i % len(data.DUCHY_SHADES)] for i in range(len(duchies))]
+            light = colorsys.rgb_to_hls(*(v / 255 for v in out[kkey]))[1]
+            slide = min(0.0, 0.92 - light - max(offsets)) + max(0.0, 0.12 - light - min(offsets))
+            for dkey, offset in zip(duchies, offsets):
+                out[dkey] = shade(out[kkey], offset + slide)
+                for ckey in self.duchies[dkey][1]:
+                    jitter = (_hash("colour:" + ckey) % 2001 / 1000 - 1) * data.COUNTY_JITTER
+                    out[ckey] = shade(out[dkey], jitter)
+        return out
+
     def all_keys(self) -> set:
         keys = {data.EMPIRE[0]} | set(self.kingdoms) | set(self.duchies) | set(self.county)
         for ckey in self.county:
@@ -155,19 +192,20 @@ class Realm:
 # --- renderers ----------------------------------------------------------------------------------------------------
 
 def render_titles(realm: Realm) -> bytes:
-    lines = header_lines() + ["", f"{data.EMPIRE[0]} = {{", f"\tcolor = {title_colour(data.EMPIRE[0])}",
+    colour = {key: rgb_text(rgb) for key, rgb in realm.colours().items()}
+    lines = header_lines() + ["", f"{data.EMPIRE[0]} = {{", f"\tcolor = {colour[data.EMPIRE[0]]}",
                               f"\tcapital = {data.EMPIRE_CAPITAL}", ""]
     for kkey, (_, duchies) in realm.kingdoms.items():
-        lines += [f"\t{kkey} = {{", f"\t\tcolor = {title_colour(kkey)}",
+        lines += [f"\t{kkey} = {{", f"\t\tcolor = {colour[kkey]}",
                   f"\t\tcapital = {data.KINGDOM_CAPITALS[kkey]}", ""]
         for dkey in duchies:
-            lines += [f"\t\t{dkey} = {{", f"\t\t\tcolor = {title_colour(dkey)}",
+            lines += [f"\t\t{dkey} = {{", f"\t\t\tcolor = {colour[dkey]}",
                       f"\t\t\tcapital = {realm.duchy_capital(dkey)}", ""]
             for ckey in realm.duchies[dkey][1]:
-                lines += [f"\t\t\t{ckey} = {{", f"\t\t\t\tcolor = {title_colour(ckey)}", ""]
+                lines += [f"\t\t\t{ckey} = {{", f"\t\t\t\tcolor = {colour[ckey]}", ""]
                 for bkey, pid in zip(realm.barony_keys(ckey), realm.county[ckey].baronies):
                     lines += [f"\t\t\t\t{bkey} = {{", f"\t\t\t\t\tprovince = {pid}",
-                              f"\t\t\t\t\tcolor = {title_colour(ckey)}", "\t\t\t\t}"]
+                              f"\t\t\t\t\tcolor = {colour[ckey]}", "\t\t\t\t}"]
                 lines.append("\t\t\t}")
             lines.append("\t\t}")
         lines.append("\t}")
@@ -254,14 +292,33 @@ def render_title_history(realm: Realm, people: People) -> bytes:
         return ["", f"{key} = {{", f"\t{data.START} = {{ holder = {elder}{extra} }}",
                 f"\t{death} = {{ holder = {son} }}", "}"]
 
-    emperor = people.lines[realm.emperor_duchy]
-    lines += block(data.EMPIRE[0], None, emperor)
-    for dkey, (_, counties) in realm.duchies.items():
-        line = people.lines[dkey]
-        mine = dkey == realm.emperor_duchy
-        lines += block(dkey, None if mine else data.EMPIRE[0], line)
-        for ckey in counties:
-            lines += block(ckey, data.EMPIRE[0] if mine else dkey, line)
+    # Each kingdom is held by the lord of its hold's duchy, a vassal of the emperor (who holds Arg-Ôrdstun's); the
+    # other dukes of a kingdom are the king's vassals. A title's liege is the highest title of its holder's liege.
+    empire = data.EMPIRE[0]
+    lines += block(empire, None, people.lines[realm.emperor_duchy])
+    for kkey, (_, duchies) in realm.kingdoms.items():
+        hold = realm.hold_duchy[kkey]
+        royal = hold == realm.emperor_duchy
+        lines += block(kkey, None if royal else empire, people.lines[hold])
+        for dkey in duchies:
+            line = people.lines[dkey]
+            mine = dkey == realm.emperor_duchy
+            liege = None if mine else empire if royal or dkey == hold else kkey
+            lines += block(dkey, liege, line)
+            for ckey in realm.duchies[dkey][1]:
+                lines += block(ckey, empire if mine else dkey, line)
+    return _text(lines)
+
+
+def render_arms(realm: Realm) -> bytes:
+    """Each kingdom and its hold county carry the EU4 hold's flag as a textured emblem."""
+    lines = header_lines()
+    for kkey, (kname, _) in realm.kingdoms.items():
+        tag, _, background = data.KINGDOM_ARMS[kkey]
+        lines += ["", f"# {kname} (EU4 {tag})"]
+        for key in (kkey, data.KINGDOM_CAPITALS[kkey]):
+            lines += [f"{key} = {{", '\tpattern = "pattern_solid.dds"', f"\tcolor1 = rgb {rgb_text(background)}",
+                      "\ttextured_emblem = {", f'\t\ttexture = "{emblem(kkey)}"', "\t}", "}"]
     return _text(lines)
 
 
@@ -273,7 +330,8 @@ def render_terrain(lay: sl.Layout) -> bytes:
 
 
 def render_regions() -> bytes:
-    return _text(header_lines() + ["", "world_serpentreach = {", f"\tempires = {{ {data.EMPIRE[0]} }}", "}"])
+    # regions take kingdoms, duchies, counties or provinces, not empires
+    return _text(header_lines() + ["", "world_serpentreach = {", f"\tkingdoms = {{ {' '.join(data.KINGDOMS)} }}", "}"])
 
 
 def render_loc(realm: Realm, people: People) -> bytes:
@@ -343,6 +401,9 @@ def build_from_layout(anbennar: Path, lay: sl.Layout) -> dict:
     titles_text = "\n".join(p.read_text(encoding="utf-8-sig", errors="replace")
                             for p in sorted((anbennar / "common/landed_titles").glob("*.txt")))
     check_new_keys(realm.all_keys(), titles_text)
+    missing = [emblem(k) for k in realm.kingdoms if not (SUBMOD / EMBLEM_DIR / emblem(k)).is_file()]
+    if missing:
+        raise GeneratorError(f"flag emblems missing from {EMBLEM_DIR} (see KINGDOM_ARMS): {', '.join(missing)}")
     people = People(realm, male_names(anbennar))
     folder = anbennar / "map_data"
     files = {
@@ -356,6 +417,7 @@ def build_from_layout(anbennar: Path, lay: sl.Layout) -> dict:
         TERRAIN: render_terrain(lay),
         REGIONS: render_regions(),
         LOC: render_loc(realm, people),
+        ARMS: render_arms(realm),
     }
     files.update(render_locators(anbennar, lay))
     return files

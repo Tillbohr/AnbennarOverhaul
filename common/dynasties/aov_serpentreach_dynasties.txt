@@ -7,9 +7,9 @@ aov_dynasty_orlghelovar = {
 	culture = stone_dwarvish
 }
 
-aov_dynasty_south_altar = {
+aov_dynasty_argrod_origin = {
 	prefix = "dynnp_az"
-	name = "dynn_aov_south_altar"
+	name = "dynn_aov_argrod_origin"
 	culture = stone_dwarvish
 }
 
@@ -19,9 +19,15 @@ aov_dynasty_north_altar = {
 	culture = stone_dwarvish
 }
 
-aov_dynasty_argrod_origin = {
+aov_dynasty_shazstundihr = {
 	prefix = "dynnp_az"
-	name = "dynn_aov_argrod_origin"
+	name = "dynn_aov_shazstundihr"
+	culture = stone_dwarvish
+}
+
+aov_dynasty_south_altar = {
+	prefix = "dynnp_az"
+	name = "dynn_aov_south_altar"
 	culture = stone_dwarvish
 }
 
@@ -31,27 +37,21 @@ aov_dynasty_arg_ordstun = {
 	culture = stone_dwarvish
 }
 
-aov_dynasty_shazstundihr = {
-	prefix = "dynnp_az"
-	name = "dynn_aov_shazstundihr"
-	culture = stone_dwarvish
-}
-
 aov_dynasty_kings_caverns = {
 	prefix = "dynnp_az"
 	name = "dynn_aov_kings_caverns"
 	culture = stone_dwarvish
 }
 
-aov_dynasty_argrod_6_8 = {
-	prefix = "dynnp_az"
-	name = "dynn_aov_argrod_6_8"
-	culture = stone_dwarvish
-}
-
 aov_dynasty_stunad_skomdihr = {
 	prefix = "dynnp_az"
 	name = "dynn_aov_stunad_skomdihr"
+	culture = stone_dwarvish
+}
+
+aov_dynasty_argrod_6_8 = {
+	prefix = "dynnp_az"
+	name = "dynn_aov_argrod_6_8"
 	culture = stone_dwarvish
 }
 
@@ -85,9 +85,15 @@ aov_dynasty_still_caverns = {
 	culture = stone_dwarvish
 }
 
-aov_dynasty_argrod_junction = {
+aov_dynasty_gor_burad = {
 	prefix = "dynnp_az"
-	name = "dynn_aov_argrod_junction"
+	name = "dynn_aov_gor_burad"
+	culture = stone_dwarvish
+}
+
+aov_dynasty_buradforge = {
+	prefix = "dynnp_az"
+	name = "dynn_aov_buradforge"
 	culture = stone_dwarvish
 }
 
@@ -103,14 +109,8 @@ aov_dynasty_argrod_14_16 = {
 	culture = stone_dwarvish
 }
 
-aov_dynasty_buradforge = {
+aov_dynasty_argrod_junction = {
 	prefix = "dynnp_az"
-	name = "dynn_aov_buradforge"
-	culture = stone_dwarvish
-}
-
-aov_dynasty_gor_burad = {
-	prefix = "dynnp_az"
-	name = "dynn_aov_gor_burad"
+	name = "dynn_aov_argrod_junction"
 	culture = stone_dwarvish
 }

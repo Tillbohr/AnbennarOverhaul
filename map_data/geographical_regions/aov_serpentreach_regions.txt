@@ -2,5 +2,5 @@
 # Anbennar Overhaul: do not edit by hand; edit tools/data/serpentreach.py and rerun the generator.
 
 world_serpentreach = {
-	empires = { e_serpentreach }
+	kingdoms = { k_orlghelovar k_shazstundihr k_arg_ordstun k_verkal_skomdihr k_ovdal_lodhum k_gor_burad }
 }

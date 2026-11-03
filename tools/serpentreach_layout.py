@@ -481,13 +481,14 @@ def layout(anbennar: Path, eu4: Path, ck3=None) -> Layout:
         notes.append("clipped (not province " + str(src) + "): " +
                      ", ".join(f"{cnames.get(p, p)} {n} px" for p, n in sorted(spill.items())))
 
-    # counties in kingdom -> area -> area.txt order
+    # counties in AREA_ORDER -> area.txt order (fixed, so regrouping kingdoms keeps the province ids)
     order = area_order(eu4)
     region_areas = {eareas[p] for p in serp}
-    listed = [a for _, (_, areas) in data.KINGDOMS.items() for a in areas]
-    if sorted(listed) != sorted(region_areas):
-        raise GeneratorError(f"KINGDOMS must list exactly the areas of {data.REGION}: missing "
-                             f"{sorted(region_areas - set(listed))}, extra {sorted(set(listed) - region_areas)}")
+    listed = list(data.AREA_ORDER)
+    for name, areas in (("AREA_ORDER", listed), ("KINGDOMS", [a for _, (_, k) in data.KINGDOMS.items() for a in k])):
+        if sorted(areas) != sorted(region_areas):
+            raise GeneratorError(f"{name} must list exactly the areas of {data.REGION}: missing "
+                                 f"{sorted(region_areas - set(areas))}, extra {sorted(set(areas) - region_areas)}")
     counties = []
     keys = set()
     next_id = max(cnames) + 1

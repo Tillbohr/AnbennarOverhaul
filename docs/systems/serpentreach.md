@@ -4,15 +4,37 @@
 
 | File | Generator | Why |
 |---|---|---|
-| `map_data/provinces.png`, `map_data/definition.csv`, `gfx/map/map_object_data/{building,special_building,combat,player_stack,siege,other_stack,stack}_locators.txt`, `gfx/map/map_object_data/activities.txt` (whole-file overrides of Anbennar's), `common/landed_titles/aov_serpentreach.txt`, `history/provinces/aov_serpentreach.txt`, `history/titles/aov_serpentreach.txt`, `history/characters/aov_serpentreach.txt`, `common/dynasties/aov_serpentreach_dynasties.txt`, `common/province_terrain/aov_serpentreach_terrain.txt`, `map_data/geographical_regions/aov_serpentreach_regions.txt`, `localization/english/aov_serpentreach_l_english.yml` | `python -I tools/build_serpentreach.py` | EU4 Anbennar's `serpentreach_region` traced onto CK3 province 2426 by `tools/serpentreach_layout.py` with `tools/data/serpentreach.py`. Rerun after any Anbennar map, title or locator change, then `build_holds.py` and `build_map_graphics.py`. |
+| `map_data/provinces.png`, `map_data/definition.csv`, `gfx/map/map_object_data/{building,special_building,combat,player_stack,siege,other_stack,stack}_locators.txt`, `gfx/map/map_object_data/activities.txt` (whole-file overrides of Anbennar's), `common/landed_titles/aov_serpentreach.txt`, `history/provinces/aov_serpentreach.txt`, `history/titles/aov_serpentreach.txt`, `history/characters/aov_serpentreach.txt`, `common/dynasties/aov_serpentreach_dynasties.txt`, `common/province_terrain/aov_serpentreach_terrain.txt`, `map_data/geographical_regions/aov_serpentreach_regions.txt`, `localization/english/aov_serpentreach_l_english.yml`, `common/coat_of_arms/coat_of_arms/aov_serpentreach.txt` | `python -I tools/build_serpentreach.py` | EU4 Anbennar's `serpentreach_region` traced onto CK3 province 2426 by `tools/serpentreach_layout.py` with `tools/data/serpentreach.py`. Rerun after any Anbennar map, title or locator change, then `build_holds.py` and `build_map_graphics.py`. |
+
+Imported once (no generator): `gfx/coat_of_arms/textured_emblems/aov_{orlghelovar,shazstundihr,arg_ordstun,verkal_skomdihr,ovdal_lodhum,gor_burad}.dds`,
+the EU4 flags of the six holds (`KINGDOM_ARMS` names the tag) converted with
+`python -I tools/eu4_import.py convert gfx/flags/<tag>.tga gfx/coat_of_arms/textured_emblems/aov_<kingdom>.dds --upscale2x --mips`.
+The generator stops when one is missing.
 
 ## System
 
 - Spec `docs/superpowers/specs/2026-11-02-serpentreach-design.md`, plan `docs/superpowers/plans/2026-11-02-serpentreach.md`.
 - **Layout:** an affine fit (111 shared provinces, median error ~21 px) maps EU4's 67 Serpentreach provinces onto
   the Serpentspine block inside impassable province 2426; floors keep 4 px of rock from every other province.
-  67 counties (EU4 provinces), 19 duchies (EU4 areas), 3 kingdoms (`KINGDOMS`), `e_serpentreach`; 124 baronies (holds
-  4, caverns 2, roads 1), new ids from 6944.
+  67 counties (EU4 provinces), 19 duchies (EU4 areas), 6 kingdoms (`KINGDOMS`), `e_serpentreach`; 124 baronies (holds
+  4, caverns 2, roads 1), new ids from 6944, numbered in `AREA_ORDER` (fixed, so regrouping kingdoms keeps the ids,
+  the province map and the locators).
+- **Kingdoms:** one per dwarven hold, each a contiguous run of areas from the hold's out (west to east):
+  Orlghelovar (+ Argrod Origin, North Altar), Shazstundihr (+ South Altar), Arg-Ôrdstun (+ King's Caverns),
+  Verkal Skomdihr (Stunad Skomdihr + Argrod 6-8, Thievesbane), Ovdal Lodhum (+ Argrod 9-11, Shroomfissure, Still
+  Caverns), Gor Bûrad (+ Buradforge, Zarn, Argrod 14-16, Argrod Junction). The hold county is the kingdom's capital.
+  `world_serpentreach` lists the six kingdoms (geographical regions take no `empires`).
+- **Arms:** each kingdom and its hold county carry the EU4 hold's flag (`KINGDOM_ARMS`: Orlghelovar I12, Shazstundihr
+  I11, Arg-Ôrdstun H76, Verkal Skomdihr I13, Ovdal Lodhum H77, Gor Bûrad I16) as a textured emblem over the whole
+  shield, like the Deepwoods groves; `color1` is the flag's most common colour. EU4 has no Serpentreach tag, so the
+  empire, duchies and other counties keep generated arms.
+- **Map colours:** each kingdom takes its EU4 country colour, except Arg-Ôrdstun's grey (200 200 200), darkened to
+  steel (120 124 132) so it does not merge with Shazstundihr's off-white beside it. Duchies are HLS lightness shades
+  of it (`DUCHY_SHADES`, slid together to stay within 0.12-0.92 so none repeats); counties vary
+  +/- `COUNTY_JITTER` around their duchy's; `e_serpentreach` is bronze (`EMPIRE_COLOUR`).
+- **Rulers:** the emperor holds Arg-Ôrdstun's kingdom and duchy; each other kingdom is held by the lord of its hold's
+  duchy, a vassal of the emperor, and the other dukes of a kingdom are the king's vassals (King's Caverns is the
+  emperor's). The realm map mode shows the empire's colour; the kingdom colours show in the de jure kingdom map mode.
 - **Openings:** corridors `OPENING_WIDTH` 10 px wide, at most `OPENING_REACH` 160 px long: Shazstundihr -> Basilan
   (county Bazibar; Bazibar itself is not reachable at that width), Orlghelovar -> Grenwoud, Glogund Cave -> Rianelen
   (Azkasad is boxed in by its own county), Verkal Skomdihr -> Deepwoods85, cut through Deepwoods Wasteland (1782,

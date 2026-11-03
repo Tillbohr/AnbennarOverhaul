@@ -21,24 +21,24 @@ aov_sr_orlghelovar_2 = {
 	990.10.25 = { birth = yes }
 }
 
-aov_sr_south_altar_1 = {
-	name = "Thrur"
-	dynasty = aov_dynasty_south_altar
+aov_sr_argrod_origin_1 = {
+	name = "Gundomar"
+	dynasty = aov_dynasty_argrod_origin
 	religion = "ancestor_worship"
 	culture = "stone_dwarvish"
 	trait = race_dwarf
-	837.10.2 = { birth = yes }
-	1003.8.16 = { death = yes }
+	832.6.14 = { birth = yes }
+	1007.7.25 = { death = yes }
 }
 
-aov_sr_south_altar_2 = {
-	name = "Fimbur"
-	dynasty = aov_dynasty_south_altar
+aov_sr_argrod_origin_2 = {
+	name = "Odar"
+	dynasty = aov_dynasty_argrod_origin
 	religion = "ancestor_worship"
 	culture = "stone_dwarvish"
 	trait = race_dwarf
-	father = aov_sr_south_altar_1
-	983.6.13 = { birth = yes }
+	father = aov_sr_argrod_origin_1
+	986.3.25 = { birth = yes }
 }
 
 aov_sr_north_altar_1 = {
@@ -61,24 +61,44 @@ aov_sr_north_altar_2 = {
 	988.8.24 = { birth = yes }
 }
 
-aov_sr_argrod_origin_1 = {
-	name = "Gundomar"
-	dynasty = aov_dynasty_argrod_origin
+aov_sr_shazstundihr_1 = {
+	name = "Nalin"
+	dynasty = aov_dynasty_shazstundihr
 	religion = "ancestor_worship"
 	culture = "stone_dwarvish"
 	trait = race_dwarf
-	832.6.14 = { birth = yes }
-	1007.7.25 = { death = yes }
+	839.2.8 = { birth = yes }
+	1007.9.28 = { death = yes }
 }
 
-aov_sr_argrod_origin_2 = {
-	name = "Odar"
-	dynasty = aov_dynasty_argrod_origin
+aov_sr_shazstundihr_2 = {
+	name = "Balin"
+	dynasty = aov_dynasty_shazstundihr
 	religion = "ancestor_worship"
 	culture = "stone_dwarvish"
 	trait = race_dwarf
-	father = aov_sr_argrod_origin_1
-	986.3.25 = { birth = yes }
+	father = aov_sr_shazstundihr_1
+	983.7.24 = { birth = yes }
+}
+
+aov_sr_south_altar_1 = {
+	name = "Thrur"
+	dynasty = aov_dynasty_south_altar
+	religion = "ancestor_worship"
+	culture = "stone_dwarvish"
+	trait = race_dwarf
+	837.10.2 = { birth = yes }
+	1003.8.16 = { death = yes }
+}
+
+aov_sr_south_altar_2 = {
+	name = "Fimbur"
+	dynasty = aov_dynasty_south_altar
+	religion = "ancestor_worship"
+	culture = "stone_dwarvish"
+	trait = race_dwarf
+	father = aov_sr_south_altar_1
+	983.6.13 = { birth = yes }
 }
 
 aov_sr_emperor_1 = {
@@ -101,26 +121,6 @@ aov_sr_emperor_2 = {
 	978.4.25 = { birth = yes }
 }
 
-aov_sr_shazstundihr_1 = {
-	name = "Nalin"
-	dynasty = aov_dynasty_shazstundihr
-	religion = "ancestor_worship"
-	culture = "stone_dwarvish"
-	trait = race_dwarf
-	839.2.8 = { birth = yes }
-	1007.9.28 = { death = yes }
-}
-
-aov_sr_shazstundihr_2 = {
-	name = "Balin"
-	dynasty = aov_dynasty_shazstundihr
-	religion = "ancestor_worship"
-	culture = "stone_dwarvish"
-	trait = race_dwarf
-	father = aov_sr_shazstundihr_1
-	983.7.24 = { birth = yes }
-}
-
 aov_sr_kings_caverns_1 = {
 	name = "Dolin"
 	dynasty = aov_dynasty_kings_caverns
@@ -141,26 +141,6 @@ aov_sr_kings_caverns_2 = {
 	975.1.22 = { birth = yes }
 }
 
-aov_sr_argrod_6_8_1 = {
-	name = "Kazadur"
-	dynasty = aov_dynasty_argrod_6_8
-	religion = "ancestor_worship"
-	culture = "stone_dwarvish"
-	trait = race_dwarf
-	844.2.24 = { birth = yes }
-	1004.2.14 = { death = yes }
-}
-
-aov_sr_argrod_6_8_2 = {
-	name = "Foldan"
-	dynasty = aov_dynasty_argrod_6_8
-	religion = "ancestor_worship"
-	culture = "stone_dwarvish"
-	trait = race_dwarf
-	father = aov_sr_argrod_6_8_1
-	984.7.28 = { birth = yes }
-}
-
 aov_sr_stunad_skomdihr_1 = {
 	name = "Edun"
 	dynasty = aov_dynasty_stunad_skomdihr
@@ -179,6 +159,26 @@ aov_sr_stunad_skomdihr_2 = {
 	trait = race_dwarf
 	father = aov_sr_stunad_skomdihr_1
 	980.5.15 = { birth = yes }
+}
+
+aov_sr_argrod_6_8_1 = {
+	name = "Kazadur"
+	dynasty = aov_dynasty_argrod_6_8
+	religion = "ancestor_worship"
+	culture = "stone_dwarvish"
+	trait = race_dwarf
+	844.2.24 = { birth = yes }
+	1004.2.14 = { death = yes }
+}
+
+aov_sr_argrod_6_8_2 = {
+	name = "Foldan"
+	dynasty = aov_dynasty_argrod_6_8
+	religion = "ancestor_worship"
+	culture = "stone_dwarvish"
+	trait = race_dwarf
+	father = aov_sr_argrod_6_8_1
+	984.7.28 = { birth = yes }
 }
 
 aov_sr_thievesbane_1 = {
@@ -281,24 +281,44 @@ aov_sr_still_caverns_2 = {
 	990.6.1 = { birth = yes }
 }
 
-aov_sr_argrod_junction_1 = {
-	name = "Magni"
-	dynasty = aov_dynasty_argrod_junction
+aov_sr_gor_burad_1 = {
+	name = "Gundobar"
+	dynasty = aov_dynasty_gor_burad
 	religion = "ancestor_worship"
 	culture = "stone_dwarvish"
 	trait = race_dwarf
-	844.5.5 = { birth = yes }
-	1010.1.27 = { death = yes }
+	841.3.5 = { birth = yes }
+	1008.4.12 = { death = yes }
 }
 
-aov_sr_argrod_junction_2 = {
-	name = "Gundobad"
-	dynasty = aov_dynasty_argrod_junction
+aov_sr_gor_burad_2 = {
+	name = "Odar"
+	dynasty = aov_dynasty_gor_burad
 	religion = "ancestor_worship"
 	culture = "stone_dwarvish"
 	trait = race_dwarf
-	father = aov_sr_argrod_junction_1
-	980.10.13 = { birth = yes }
+	father = aov_sr_gor_burad_1
+	984.4.3 = { birth = yes }
+}
+
+aov_sr_buradforge_1 = {
+	name = "Falstad"
+	dynasty = aov_dynasty_buradforge
+	religion = "ancestor_worship"
+	culture = "stone_dwarvish"
+	trait = race_dwarf
+	835.1.10 = { birth = yes }
+	1000.10.21 = { death = yes }
+}
+
+aov_sr_buradforge_2 = {
+	name = "Thingrim"
+	dynasty = aov_dynasty_buradforge
+	religion = "ancestor_worship"
+	culture = "stone_dwarvish"
+	trait = race_dwarf
+	father = aov_sr_buradforge_1
+	987.3.10 = { birth = yes }
 }
 
 aov_sr_zarn_1 = {
@@ -341,42 +361,22 @@ aov_sr_argrod_14_16_2 = {
 	982.10.2 = { birth = yes }
 }
 
-aov_sr_buradforge_1 = {
-	name = "Falstad"
-	dynasty = aov_dynasty_buradforge
+aov_sr_argrod_junction_1 = {
+	name = "Magni"
+	dynasty = aov_dynasty_argrod_junction
 	religion = "ancestor_worship"
 	culture = "stone_dwarvish"
 	trait = race_dwarf
-	835.1.10 = { birth = yes }
-	1000.10.21 = { death = yes }
+	844.5.5 = { birth = yes }
+	1010.1.27 = { death = yes }
 }
 
-aov_sr_buradforge_2 = {
-	name = "Thingrim"
-	dynasty = aov_dynasty_buradforge
+aov_sr_argrod_junction_2 = {
+	name = "Gundobad"
+	dynasty = aov_dynasty_argrod_junction
 	religion = "ancestor_worship"
 	culture = "stone_dwarvish"
 	trait = race_dwarf
-	father = aov_sr_buradforge_1
-	987.3.10 = { birth = yes }
-}
-
-aov_sr_gor_burad_1 = {
-	name = "Gundobar"
-	dynasty = aov_dynasty_gor_burad
-	religion = "ancestor_worship"
-	culture = "stone_dwarvish"
-	trait = race_dwarf
-	841.3.5 = { birth = yes }
-	1008.4.12 = { death = yes }
-}
-
-aov_sr_gor_burad_2 = {
-	name = "Odar"
-	dynasty = aov_dynasty_gor_burad
-	religion = "ancestor_worship"
-	culture = "stone_dwarvish"
-	trait = race_dwarf
-	father = aov_sr_gor_burad_1
-	984.4.3 = { birth = yes }
+	father = aov_sr_argrod_junction_1
+	980.10.13 = { birth = yes }
 }

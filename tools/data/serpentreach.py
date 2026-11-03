@@ -29,21 +29,48 @@ BARONY_OVERRIDES = {}  # county key -> barony count
 OPENING_TARGETS = {}  # (EU4 Serpentreach province, EU4 neighbour) -> CK3 province id
 BARONY_SUFFIXES = ("Halls", "Deeps", "Vaults")  # names of a county's 2nd, 3rd and 4th baronies
 
-# EU4 area keys of each kingdom, west to east.
+# Province ids (from 6944) are numbered area by area in this order. Keep it fixed: reordering renumbers every
+# Serpentreach province (provinces.png, locators, history), so a kingdom change only touches KINGDOMS.
+AREA_ORDER = ("orlghelovar_area", "south_altar_area", "north_altar_area", "argrod_origin_area", "arg_ordstun_area",
+              "shazstundihr_area", "kings_caverns_area", "argrod_6_8_area", "stunad_skomdihr_area", "thievesbane_area",
+              "ovdal_lodhum_area", "argrod_9_11_area", "shroomfissure_area", "still_caverns_area",
+              "argrod_junction_area", "zarn_area", "argrod_14_16_area", "buradforge_area", "gor_burad_area")
+
+# One kingdom per dwarven hold, west to east: EU4 area keys, the hold's area first (each kingdom is contiguous).
 KINGDOMS = {
-    "k_arg_ordstun": ("Arg-Ôrdstun", ["orlghelovar_area", "south_altar_area", "north_altar_area",
-                                       "argrod_origin_area", "arg_ordstun_area", "shazstundihr_area",
-                                       "kings_caverns_area"]),
-    "k_ovdal_lodhum": ("Ovdal Lodhum", ["argrod_6_8_area", "stunad_skomdihr_area", "thievesbane_area",
-                                        "ovdal_lodhum_area", "argrod_9_11_area", "shroomfissure_area",
+    "k_orlghelovar": ("Orlghelovar", ["orlghelovar_area", "argrod_origin_area", "north_altar_area"]),
+    "k_shazstundihr": ("Shazstundihr", ["shazstundihr_area", "south_altar_area"]),
+    "k_arg_ordstun": ("Arg-Ôrdstun", ["arg_ordstun_area", "kings_caverns_area"]),
+    "k_verkal_skomdihr": ("Verkal Skomdihr", ["stunad_skomdihr_area", "argrod_6_8_area", "thievesbane_area"]),
+    "k_ovdal_lodhum": ("Ovdal Lodhum", ["ovdal_lodhum_area", "argrod_9_11_area", "shroomfissure_area",
                                         "still_caverns_area"]),
-    "k_gor_burad": ("Gor Bûrad", ["argrod_junction_area", "zarn_area", "argrod_14_16_area", "buradforge_area",
-                                  "gor_burad_area"]),
+    "k_gor_burad": ("Gor Bûrad", ["gor_burad_area", "buradforge_area", "zarn_area", "argrod_14_16_area",
+                                  "argrod_junction_area"]),
 }
 EMPIRE = ("e_serpentreach", "Serpentreach")
-KINGDOM_CAPITALS = {"k_arg_ordstun": "c_arg_ordstun", "k_ovdal_lodhum": "c_ovdal_lodhum",
-                    "k_gor_burad": "c_gor_burad"}
+KINGDOM_CAPITALS = {"k_orlghelovar": "c_orlghelovar", "k_shazstundihr": "c_shazstundihr",
+                    "k_arg_ordstun": "c_arg_ordstun", "k_verkal_skomdihr": "c_verkal_skomdihr",
+                    "k_ovdal_lodhum": "c_ovdal_lodhum", "k_gor_burad": "c_gor_burad"}
 EMPIRE_CAPITAL = "c_arg_ordstun"
+
+# Map colours and arms. Each kingdom takes its EU4 hold's country colour (common/countries/<name>.txt); its duchies
+# are lighter and darker shades of it and its counties vary slightly around their duchy's. Arg-Ôrdstun's EU4 grey
+# (200 200 200) is darkened to steel so it does not merge with Shazstundihr's off-white next to it.
+EMPIRE_COLOUR = (150, 105, 50)  # dwarven bronze; e_middle_dwarovar is blue (36 96 143)
+DUCHY_SHADES = (0.0, -0.12, 0.12, -0.22, 0.22)  # HLS lightness offsets by duchy position; mirrored when out of range
+COUNTY_JITTER = 0.05  # +/- lightness around the duchy's colour
+# kingdom -> (EU4 tag, map colour, arms background colour: the flag's most common pixel). The flag, gfx/flags/<tag>.tga,
+# was converted once into gfx/coat_of_arms/textured_emblems/aov_<kingdom key without k_>.dds with
+# `python -I tools/eu4_import.py convert gfx/flags/<tag>.tga <dds> --upscale2x --mips`; the kingdom and its hold
+# county carry it.
+KINGDOM_ARMS = {
+    "k_orlghelovar": ("I12", (0, 71, 171), (18, 34, 108)),
+    "k_shazstundihr": ("I11", (241, 242, 227), (96, 96, 96)),
+    "k_arg_ordstun": ("H76", (120, 124, 132), (43, 48, 57)),
+    "k_verkal_skomdihr": ("I13", (55, 144, 90), (111, 111, 102)),
+    "k_ovdal_lodhum": ("H77", (247, 179, 215), (48, 52, 61)),
+    "k_gor_burad": ("I16", (240, 72, 72), (162, 163, 162)),
+}
 
 CULTURE = "stone_dwarvish"
 RELIGION = "ancestor_worship"

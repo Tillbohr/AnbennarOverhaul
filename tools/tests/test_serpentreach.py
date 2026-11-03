@@ -286,6 +286,34 @@ class BuildTests(unittest.TestCase):
         for key in re.findall(r"(?m)^\t*([ekdcb]_\w+) = \{", titles):
             self.assertRegex(loc, rf"(?m)^ {key}:0 \"")
 
+    def test_a_kingdom_per_hold_with_its_flag(self):
+        import re
+        from data import holds, serpentreach as data
+        hold_counties = {h["title"] for h in holds.HOLDS[-6:]}  # the six Serpentreach holds
+        self.assertEqual(set(data.KINGDOM_CAPITALS.values()), hold_counties)
+        arms = self.files[self.bs.ARMS].decode("utf-8-sig")
+        for kkey, ckey in data.KINGDOM_CAPITALS.items():
+            for key in (kkey, ckey):
+                self.assertRegex(arms, rf'(?m)^{key} = \{{\n(\t.*\n)*?\t\ttexture = "aov_{kkey[2:]}.dds"')
+            self.assertTrue((self.bs.SUBMOD / self.bs.EMBLEM_DIR / f"aov_{kkey[2:]}.dds").is_file())
+        titles = self.files["common/landed_titles/aov_serpentreach.txt"].decode("utf-8-sig")
+        self.assertEqual(re.findall(r"(?m)^\t(k_\w+) = \{", titles), list(data.KINGDOMS))
+
+    def test_duchy_colours_differ_within_each_kingdom(self):
+        titles = self.files["common/landed_titles/aov_serpentreach.txt"].decode("utf-8-sig")
+        import re
+        for block in re.split(r"(?m)^\tk_", titles)[1:]:
+            colours = re.findall(r"(?m)^\t\td_\w+ = \{\n\t\t\tcolor = (\{[^}]*\})", block)
+            self.assertEqual(len(colours), len(set(colours)), block[:40])
+
+    def test_kings_hold_under_the_emperor(self):
+        history = self.files["history/titles/aov_serpentreach.txt"].decode("utf-8-sig")
+        self.assertIn("k_arg_ordstun = {\n\t860.1.1 = { holder = aov_sr_emperor_1 }", history)
+        self.assertIn("k_gor_burad = {\n\t860.1.1 = { holder = aov_sr_gor_burad_1 liege = e_serpentreach }", history)
+        self.assertIn("d_zarn = {\n\t860.1.1 = { holder = aov_sr_zarn_1 liege = k_gor_burad }", history)
+        self.assertIn("d_kings_caverns = {\n\t860.1.1 = { holder = aov_sr_kings_caverns_1 liege = e_serpentreach }",
+                      history)
+
 
 if __name__ == "__main__":
     unittest.main()
