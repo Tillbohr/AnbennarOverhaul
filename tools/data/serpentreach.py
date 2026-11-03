@@ -163,3 +163,7 @@ ELDER_BIRTH = (830, 845)
 ELDER_DEATH = (1000, 1010)
 SON_BIRTH = (975, 990)
 START = "860.1.1"
+
+# Provinces Anbennar already has (none here; see tools/data/segbandal.py) and regions whose contacts make no opening.
+EXISTING = {}
+NO_LINK_REGIONS = ()
