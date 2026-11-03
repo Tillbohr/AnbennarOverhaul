@@ -29,6 +29,7 @@ import carved_ranges as cr  # noqa: E402
 import terrain_fill as tfill  # noqa: E402
 from data import map_graphics as data  # noqa: E402
 from data.holds import HOLDS  # noqa: E402
+from data import segbandal as sb_data  # noqa: E402
 from data import serpentreach as sr_data  # noqa: E402
 from eu4_import import EU4_ROOTS  # noqa: E402
 
@@ -217,7 +218,7 @@ def appended_ids(roots: Roots) -> list:
     """The Serpentreach terrain materials (sl.used_materials) Anbennar's list lacks, sorted: these are appended
     from Godherja or Realms in Exile."""
     anbennar = {m["id"] for m in parse_materials(_read_text(roots.anbennar / MATERIALS_REL))}
-    return [m for m in sl.used_materials() if m not in anbennar]
+    return [m for m in sorted(set(sl.used_materials()) | set(sl.used_materials(sb_data))) if m not in anbennar]
 
 
 def appended_materials(roots: Roots, size: tuple) -> tuple:
@@ -1060,8 +1061,10 @@ def gate_sites_for_openings(lay: "sl.Layout", titles: dict) -> list:
 
 
 def serpentreach_sites(roots: Roots, ck3: tuple) -> list:
-    """Gate sites at the Serpentreach openings; `ck3` is (province map, water, impassable)."""
-    return gate_sites_for_openings(serpentreach_layout(roots, ck3), dm.province_titles(titles_text(roots)))
+    """Gate sites at the Serpentreach and Segbandal openings; `ck3` is (province map, water, impassable)."""
+    titles = dm.province_titles(titles_text(roots))
+    return (gate_sites_for_openings(serpentreach_layout(roots, ck3), titles)
+            + gate_sites_for_openings(segbandal_layout(roots, ck3), titles))
 
 
 def transplant_overrides(sr_sites: list) -> dict:
@@ -1105,6 +1108,25 @@ def serpentreach_layout(roots: Roots, ck3: tuple = None) -> "sl.Layout":
 _CARVED = {}  # anbennar -> [(county, floor, terrain, rock)], one analysis per build
 
 
+_SEGBANDAL = {}  # (anbennar, eu4) -> Segbandal's layout, one trace per build
+
+
+def segbandal_layout(roots: Roots, ck3: tuple = None) -> "sl.Layout":
+    """Segbandal's new provinces (tools/build_serpentreach.layouts: ids after Serpentreach's, colours apart from
+    them). `ck3` is (province map, water, impassable) when already loaded."""
+    key = _layout_key(roots)
+    if key not in _SEGBANDAL:
+        serp = serpentreach_layout(roots, ck3)
+        if ck3 is None:
+            loaded = sl.load_ck3(roots.anbennar)
+        else:
+            definition = (roots.anbennar / MAP_DATA / "definition.csv").read_bytes().decode("utf-8", errors="replace")
+            loaded = (ck3[0], definition, ck3[1], ck3[2])
+        _SEGBANDAL[key] = sl.layout(roots.anbennar, roots.eu4, loaded, cfg=sb_data, first_id=max(serp.provinces) + 1,
+                                    used={p.colour for p in serp.provinces.values()})
+    return _SEGBANDAL[key]
+
+
 def carved_ranges(roots: Roots, ck3: tuple = None) -> list:
     """[(county, floor {(x, y): province}, province terrain, rock provinces)] for every CARVED_RANGES county, from
     Anbennar's map. `ck3` is (province map, water, impassable) when already loaded."""
@@ -1123,7 +1145,12 @@ def carved_ranges(roots: Roots, ck3: tuple = None) -> list:
         out = []
         for county in data.CARVED_RANGES:
             floor = cr.floor_pixels(pm, cr.carved_range(ranges, titles, county))
-            out.append((county, floor, terrain, cr.rock_around(pm, floor, impassable, data.CARVE_ROCK_RADIUS)))
+            kinds = terrain
+            if county in sb_data.EXISTING.values():  # Segbandal: its new caverns join Anbennar's range
+                seg = segbandal_layout(roots, ck3)
+                floor.update(seg.owner)
+                kinds = {**terrain, **{pid: c.type for c in seg.counties for pid in c.baronies}}
+            out.append((county, floor, kinds, cr.rock_around(pm, floor, impassable, data.CARVE_ROCK_RADIUS)))
         _CARVED[key] = out
     return _CARVED[key]
 
@@ -1144,8 +1171,11 @@ def build_terrain_fill(roots: Roots, notes: list = None) -> dict:
     materials = {pid: (ids.index(floor), ids.index(wall)) for pid, (floor, wall) in sl.province_materials(lay).items()}
     pm = _SERPENTREACH[_layout_key(roots)][1]
     index, intensity = sl.paint(index, intensity, lay, materials, pm)
-    for _, floor, terrain, rock in carved_ranges(roots):
-        materials = {pid: (ids.index(f), ids.index(w)) for pid, (f, w) in cr.province_materials(floor, terrain).items()}
+    for county, floor, terrain, rock in carved_ranges(roots):
+        names = cr.province_materials(floor, terrain)
+        if county in sb_data.EXISTING.values():  # Segbandal's new provinces by their EU4 area's style
+            names.update(sl.province_materials(segbandal_layout(roots), sb_data))
+        materials = {pid: (ids.index(f), ids.index(w)) for pid, (f, w) in names.items()}
         index, intensity = cr.paint(index, intensity, floor, materials, pm, rock)
     if notes is not None:
         notes.append(f"terrain gaps filled: {report['small_pixels']} px in {report['small_groups']} small gaps "

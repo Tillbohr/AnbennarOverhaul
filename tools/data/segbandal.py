@@ -96,3 +96,11 @@ DUCHY_CHARGES = {
     "xazor_area": (("ce_flaming_jewel.dds",) + _CENTRE,),  # the Pit of Xazor
     "ulagom_area": (("ce_anb_anvil.dds",) + _CENTRE,),  # the Old Excavation
 }
+
+# --- look (tools/build_map_graphics.py) ---------------------------------------------------------------------------------
+# Floors of the new provinces by EU4 area, in Serpentreach's TERRAIN_STYLES; unlisted areas (and Anbennar's own floors)
+# use "default". Steamsource's steaming fissures volcanic; Deep One's Lair (the Waterlogged Cave) moss; Ulagom Canyon
+# red canyon stone.
+AREA_STYLES = {"steamsource_area": "volcanic", "deep_ones_lair_area": "mushroom", "ulagom_area": "garnet"}
+COUNTY_FLOORS = {}
+BARONY_FLOORS = {}

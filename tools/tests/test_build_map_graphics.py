@@ -1287,6 +1287,36 @@ class HeightOutputsTests(unittest.TestCase):
         self.assertEqual(max(min(h) for h in heights.values()) - min(min(h) for h in heights.values()),
                          2 * sr.TERRACE_STEP)
 
+    def test_segbandal_floor_carved(self):
+        from data import serpentreach as sr
+        seg = bmg.segbandal_layout(ROOTS)
+        base = int(re.search(r"range of c_seghdihr carved: ground (\d+)", "\n".join(self.notes)).group(1))
+        levels = {base + sr.TERRACE[t] * sr.TERRACE_STEP for t in ("cavern", "dwarven_road", "dwarven_hold")}
+        self.assertGreater(len(seg.owner), 50000)
+        # floors within CARVE_RAMP of passable land (Hero's Vale inside Verkal Gulan) ramp to it by design
+        import carved_ranges as cr
+        import serpentreach_layout as sl
+        _, floor, _, rock = next(r for r in bmg.carved_ranges(ROOTS) if r[0] == "c_seghdihr")
+        pm, _, water, _ = sl.load_ck3(ROOTS.anbennar)
+        ramp = set(sl.chamfer(list(cr._open_land(pm, floor, rock, water)), (0, 0, pm.width, pm.height),
+                              data.CARVE_RAMP))
+        self.assertEqual([p for p in seg.owner if p not in ramp and self.new_height.get(*p) not in levels], [])
+
+    def test_segbandal_gates(self):
+        seg = bmg.segbandal_layout(ROOTS)
+        notes = "\n".join(self.notes)
+        for op in seg.openings:
+            self.assertRegex(notes, rf"gate {op.county}/")
+
+    def test_segbandal_floors_painted(self):
+        import terrain_fill as tfill
+        seg = bmg.segbandal_layout(ROOTS)
+        index = tfill.read_tga(self.files[bmg.DETAIL_INDEX_REL])
+        ids = bmg.material_ids(ROOTS)
+        county = next(c for c in seg.counties if c.area == "steamsource_area")
+        x, y = seg.provinces[county.baronies[0]].interior
+        self.assertEqual(index.pixels[(y * index.width + x) * 4], ids.index("hardened_lava"))
+
     def test_notes_cover_ranges_and_sites(self):
         lay = bmg.serpentreach_layout(ROOTS)
         self.assertEqual(sum(note.startswith("range ") and " carved: " not in note for note in self.notes), 9)
