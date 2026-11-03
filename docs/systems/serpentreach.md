@@ -23,6 +23,9 @@ The generator stops when one is missing.
   Orlghelovar (+ Argrod Origin, North Altar), Shazstundihr (+ South Altar), Arg-Ôrdstun (+ King's Caverns),
   Verkal Skomdihr (Stunad Skomdihr + Argrod 6-8, Thievesbane), Ovdal Lodhum (+ Argrod 9-11, Shroomfissure, Still
   Caverns), Gor Bûrad (+ Buradforge, Zarn, Argrod 14-16, Argrod Junction). The hold county is the kingdom's capital.
+  Each duchy lists its capital county (the hold, when it has one) first: the game builds the duchy capital building
+  in a duchy's first county whatever its `capital` says (seen in game for Shazstundihr, Arg-Ôrdstun and Verkal
+  Skomdihr before the fix; `test_each_duchy_lists_its_capital_county_first`).
   `world_serpentreach` lists the six kingdoms (geographical regions take no `empires`).
 - **Arms:** each kingdom, its hold's duchy (named like the kingdom, except Verkal Skomdihr's Stunad Skomdihr) and its
   hold county carry the EU4 hold's flag (`KINGDOM_ARMS`: Orlghelovar I12, Shazstundihr I11, Arg-Ôrdstun H76, Verkal

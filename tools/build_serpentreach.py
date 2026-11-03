@@ -157,6 +157,11 @@ class Realm:
             raise GeneratorError(f"DUCHY_CHARGES must list exactly the areas of duchies without a hold: missing "
                                  f"{sorted(others - set(data.DUCHY_CHARGES))}, "
                                  f"extra {sorted(set(data.DUCHY_CHARGES) - others)}")
+        # The game builds a duchy's capital building in the duchy's first county, whatever its `capital` says, so the
+        # capital county (the hold, when there is one) leads each duchy.
+        for dkey, (dname, counties) in self.duchies.items():
+            capital = self.duchy_capital(dkey)
+            self.duchies[dkey] = (dname, [capital] + [c for c in counties if c != capital])
         if data.EMPIRE_CAPITAL not in self.county:
             raise GeneratorError(f"EMPIRE_CAPITAL {data.EMPIRE_CAPITAL} is not a Serpentreach county")
         self.emperor_duchy = self.duchy_of[data.EMPIRE_CAPITAL]

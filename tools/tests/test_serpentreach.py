@@ -327,6 +327,17 @@ class BuildTests(unittest.TestCase):
         self.assertIn("d_kings_caverns = {\n\t860.1.1 = { holder = aov_sr_kings_caverns_1 liege = e_serpentreach }",
                       history)
 
+    def test_each_duchy_lists_its_capital_county_first(self):
+        """The game puts a duchy's capital building in its first county, whatever `capital` says (seen in game:
+        Shazstundihr's, Arg-Ôrdstun's and Verkal Skomdihr's went to another county), so the hold county leads."""
+        import re
+        titles = self.files["common/landed_titles/aov_serpentreach.txt"].decode("utf-8-sig")
+        duchies = re.findall(r"(?m)^\t\t(d_\w+) = \{\n\t\t\tcolor = [^\n]*\n\t\t\tcapital = (c_\w+)\n\n\t\t\t(c_\w+) = \{",
+                             titles)
+        self.assertEqual(len(duchies), 19)
+        for dkey, capital, first in duchies:
+            self.assertEqual(first, capital, dkey)
+
     def test_every_county_and_character_has_its_kingdom_culture(self):
         import re
         from data import serpentreach as data
