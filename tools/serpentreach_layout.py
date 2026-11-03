@@ -537,6 +537,16 @@ def layout(anbennar: Path, eu4: Path, ck3=None, cfg=None, first_id=None, used=No
         if sorted(areas) != sorted(region_areas):
             raise GeneratorError(f"{name} must list exactly the areas of {cfg.REGION}: missing "
                                  f"{sorted(region_areas - set(areas))}, extra {sorted(set(areas) - region_areas)}")
+    if existing:
+        # an EU4 province Anbennar has since added as its own county must join EXISTING, not be traced twice
+        box_ids = {ck(x, y) for y in range(box[1], box[3]) for x in range(box[0], box[2])}
+        local = {c for c, pids in cprov.items() if pids & box_ids}
+        candidates = [(e, "c_" + slug(display_name(enames.get(e, f"Province {e}"))),
+                       display_name(enames.get(e, f"Province {e}")))
+                      for area in listed for e in order[area] if e in serp and e not in existing]
+        dup = anbennar_duplicates(candidates, cnames, local)
+        if dup:
+            raise GeneratorError(f"Anbennar now has {', '.join(dup)}; add them to EXISTING")
     counties = []
     keys = set()
     next_id = max(cnames) + 1 if first_id is None else first_id
@@ -627,23 +637,76 @@ def layout(anbennar: Path, eu4: Path, ck3=None, cfg=None, first_id=None, used=No
         links = _links(ck, counties, provinces, owner, adj, allowed, src, cfg, notes)
         old = {pid for c in set(existing.values()) for pid in cprov[c]}
         old_px = {(x, y) for y in range(box[1], box[3]) for x in range(box[0], box[2]) if ck(x, y) in old}
-        while True:
-            comps = components(set(owner) | old_px)
-            loose = [c for c in comps if not any(p in old_px for p in c)]
-            if not loose:
-                break
-            link = _piece_link(ck, loose[0], counties, provinces, owner, allowed, src, cfg)
-            if link is None:
-                break
-            links.append(link)
-            notes.append(f"link {link.county} -> {link.target}: {len(link.pixels)} px (joins a cut-off piece)")
+        links += join_pieces(ck, counties, provinces, owner, allowed, old_px, src, cfg, notes)
+        comps = components(set(owner) | old_px)
         if len(comps) > 1:
             cut = sorted({provinces[owner[p]].county for c in comps if not any(ck(*q) in old for q in c)
                           for p in c if p in owner})
             raise GeneratorError(f"{cfg.REGION}: floor falls apart into {len(comps)} pieces; cut off: {', '.join(cut)}")
+        # corridors may reach what the trace kept apart: no new floor may touch a county or Anbennar province EU4
+        # does not make its neighbour
+        bad = foreign_contacts(ck, owner, provinces, counties, adj, allowed, old)
+        if bad:
+            raise GeneratorError(f"{cfg.REGION}: floors touch what EU4 does not make their neighbours: "
+                                 + ", ".join(f"{a} -> {b}" for a, b in bad[:10]))
 
     area_names = {a: display_name(loc.get(a, a)) for a in listed}
     return Layout(W, H, counties, provinces, owner, openings, area_names, notes, links)
+
+
+def foreign_contacts(ck, owner, provinces, counties, adj, allowed, watched):
+    """Sorted (county, other) pairs where a new floor pixel 4-touches another new county (`other` its key) or a
+    `watched` province (`other` its id) that its EU4 province does not neighbour (`adj`, `allowed`)."""
+    eu4_of = {c.key: c.eu4_id for c in counties}
+    out = set()
+    for (x, y), pid in owner.items():
+        a = provinces[pid].county
+        for dx, dy in N4:
+            n = (x + dx, y + dy)
+            if n in owner:
+                b = provinces[owner[n]].county
+                if b != a and eu4_of[b] not in adj.get(eu4_of[a], set()):
+                    out.add((a, b))
+            else:
+                q = ck(*n)
+                if q in watched and q not in allowed.get(eu4_of[a], set()):
+                    out.add((a, q))
+    return sorted(out, key=lambda ab: (ab[0], str(ab[1])))
+
+
+def anbennar_duplicates(candidates, cnames, local_counties):
+    """Traced EU4 provinces Anbennar already has: `candidates` (EU4 id, county key, name) whose id names the same
+    province in CK3's definition.csv (`cnames`), or whose key matches a nearby Anbennar county ignoring underscores."""
+    squashed = {c.replace("_", ""): c for c in local_counties}
+    out = []
+    for e, key, name in candidates:
+        if _same_name(name, cnames.get(e)):
+            out.append(f"{key} (province {e})")
+        elif key.replace("_", "") in squashed:
+            out.append(f"{key} ({squashed[key.replace('_', '')]})")
+    return out
+
+
+def join_pieces(ck, counties, provinces, owner, allowed, old_px, src, cfg, notes, link=None):
+    """Link every floor piece holding no pixel of `old_px` (Anbennar's provinces) to them, one corridor at a time;
+    stops when a piece has no corridor or comes back unchanged after its corridor."""
+    link = link or _piece_link
+    links = []
+    seen = set()
+    while True:
+        comps = components(set(owner) | old_px)
+        loose = [c for c in comps if not any(p in old_px for p in c)]
+        if not loose:
+            return links
+        piece = frozenset(provinces[owner[p]].county for p in loose[0] if p in owner)
+        if piece in seen:
+            raise GeneratorError(f"linking {', '.join(sorted(piece))} to Anbennar's provinces made no progress")
+        seen.add(piece)
+        made = link(ck, loose[0], counties, provinces, owner, allowed, src, cfg)
+        if made is None:
+            return links
+        links.append(made)
+        notes.append(f"link {made.county} -> {made.target}: {len(made.pixels)} px (joins a cut-off piece)")
 
 
 def _attach(provinces, owner, start, corridor):

@@ -80,6 +80,50 @@ class DataTests(unittest.TestCase):
             self.assertEqual(county, want, eu4_id)
 
 
+
+class GuardTests(unittest.TestCase):
+    """The review's guards: no contact EU4 lacks, no duplicate of a province Anbennar gained, no endless link loop."""
+
+    def two_counties(self):
+        provinces = {10: sl.Province(10, (1, 1, 1), "c_a", 0, [(5, 5)], (5, 5)),
+                     11: sl.Province(11, (2, 2, 2), "c_b", 0, [(6, 5)], (6, 5))}
+        counties = [sl.County("c_a", 1, "A", "x_area", "cavern", [10]), sl.County("c_b", 2, "B", "x_area", "cavern", [11])]
+        owner = {(5, 5): 10, (6, 5): 11}
+        return provinces, counties, owner
+
+    def test_foreign_contacts_between_new_counties(self):
+        provinces, counties, owner = self.two_counties()
+        ck = lambda x, y: 2608  # noqa: E731
+        self.assertEqual(sl.foreign_contacts(ck, owner, provinces, counties, {1: set(), 2: set()}, {}, set()),
+                         [("c_a", "c_b"), ("c_b", "c_a")])
+        self.assertEqual(sl.foreign_contacts(ck, owner, provinces, counties, {1: {2}, 2: {1}}, {}, set()), [])
+
+    def test_foreign_contacts_with_anbennar(self):
+        provinces, counties, owner = self.two_counties()
+        ck = lambda x, y: 99 if (x, y) == (5, 4) else 98 if (x, y) == (6, 4) else 2608  # noqa: E731
+        adj = {1: {2}, 2: {1}}
+        self.assertEqual(sl.foreign_contacts(ck, owner, provinces, counties, adj, {1: {99}, 2: set()}, {98, 99}),
+                         [("c_b", 98)])
+
+    def test_anbennar_duplicates(self):
+        candidates = [(7, "c_dwarovrod_25", "Dwarovrod 25"), (8, "c_longtunnel", "Longtunnel")]
+        self.assertEqual(sl.anbennar_duplicates(candidates, {7: "Dwarovrod 25"}, set()), ["c_dwarovrod_25 (province 7)"])
+        self.assertEqual(sl.anbennar_duplicates(candidates, {}, {"c_dwarovrod25"}), ["c_dwarovrod_25 (c_dwarovrod25)"])
+        self.assertEqual(sl.anbennar_duplicates(candidates, {7: "Thissilen"}, {"c_other"}), [])
+
+    def test_join_pieces_stops_on_a_repeating_piece(self):
+        provinces, counties, owner = self.two_counties()
+        provinces = {10: provinces[10]}
+        counties = counties[:1]
+        owner = {(5, 5): 10}
+
+        def no_progress(*args):  # a link that leaves the piece as loose as before
+            return sl.Opening("c_a", 99, set(), (0, 0), (5, 5))
+        with self.assertRaisesRegex(GeneratorError, "c_a"):
+            sl.join_pieces(lambda x, y: 2608, counties, provinces, owner, {}, {(0, 0)}, 2608, data, [],
+                           link=no_progress)
+
+
 @unittest.skipUnless(HAVE_GAME_DATA, "needs EU4 Anbennar and Anbennar CK3")
 class LayoutTests(unittest.TestCase):
     @classmethod
