@@ -395,7 +395,7 @@ aov_lens_crossbows = {
 	high_maintenance_cost = { gold = aov_lens_crossbows_high_maint_cost }
 	stack = 80
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = aov_rie_ironfist_crossbowmen
+	icon = aov_lens_crossbows
 	allowed_in_hired_troops = no
 }
 
@@ -502,7 +502,7 @@ aov_orcrend_guard = {
 	high_maintenance_cost = { gold = aov_orcrend_guard_high_maint_cost }
 	stack = 80
 	ai_quality = { value = @cultural_maa_extra_ai_score }
-	icon = aov_rie_broadbeam_pikemen
+	icon = aov_rie_firebeard_pikemen
 	allowed_in_hired_troops = no
 }
 

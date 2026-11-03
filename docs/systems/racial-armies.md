@@ -83,7 +83,10 @@ Spec: `docs/superpowers/specs/2026-10-21-racial-armies-design.md` (every stat an
   `men_at_arms_small/`; each unit's `icon` names the file. Sun elves use RiE's Calaquendi (`high_elven_*`) set and
   `noldor_heavy_infantry`, moon elves its Lomiquendi (`grey_elven_*`) set, wood elves its Moriquendi (`green_elven_*`,
   Avarin) set, and every dwarf unit the Longbeard set, chosen by unit role, except the five Serpentreach clan units,
-  which take RiE dwarf sets no other unit uses (Ironfist, Broadbeam, Stiffbeard, Firebeard) so the new clans look apart:
+  which take RiE dwarf sets no other unit uses (Broadbeam, Stiffbeard, Firebeard) so the new clans look apart. Lens
+  Crossbows use the game's own crossbowmen icon (the Longbeard crossbow without its banner; RiE's other crossbow icons
+  are hand-drawn and clash) with RiE's Ironfist crossbow pictures, all three saved as `aov_lens_crossbows`, because the
+  game finds a unit's pictures by its icon name:
 
   | RiE picture | Units |
   |---|---|
@@ -97,10 +100,10 @@ Spec: `docs/superpowers/specs/2026-10-21-racial-armies-design.md` (every stat an
   | `longbeard_cavalry` (ram riders) | Ramriders |
   | `longbeard_horse_archers` (ram chariots) | Copper Road Wardens |
   | `longbeard_skirmishers` | Uthojdihr Marines, Seg Band Gnollhunters |
-  | `ironfist_crossbowmen`, `broadbeam_heavy_infantry`, `stiffbeard_skirmishers`, `broadbeam_pikemen`, `firebeard_heavy_infantry` | Lens Crossbows, Lightflare Guard, Flint Forest Rangers, Orcrend Guard, Basalt Berserkers |
+  | `broadbeam_heavy_infantry`, `stiffbeard_skirmishers`, `firebeard_pikemen`, `firebeard_heavy_infantry` | Lightflare Guard, Flint Forest Rangers, Orcrend Guard, Basalt Berserkers |
+  | game `crossbowmen` icon + `ironfist_crossbowmen` pictures (`aov_lens_crossbows`) | Lens Crossbows |
 
   The two light cavalry icons were 130×130 DXT5 in RiE and are resized to 120×120 (`eu4_import.py convert --resize`).
-  So are `broadbeam_pikemen` (117×134) and `ironfist_crossbowmen` (114×102), whose sizes tiger rejects for compressed DDS.
   Siege units (Silverforge Engineer Corps, Dwarven Bombards) keep the vanilla bombard art. The military window's levy
   and knight pictures for elf and dwarf rulers (RiE's `levies_elven`, `levies_longbeard`, `knights_elven`,
   `knights_falathrim`, `knights_silvan`, `knights_longbeard`, copied the same way) are wired up by
