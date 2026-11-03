@@ -73,6 +73,15 @@ The generator stops when one is missing.
   its textures copied as `aov_<file name>` (mods reuse vanilla names, e.g. Godherja's
   `mountain_02_d_desert_normal.dds`; spaces become `_`), a texture only the game has used as it is, with blank masks
   `masks/aov_<id>_mask.png`. Ask the Godherja team before a Workshop upload, as for the shaders.
+- **Cultures** (hand-written; spec `docs/superpowers/specs/2026-11-03-serpentreach-dwarf-cultures-draft.md`, plan
+  `docs/superpowers/plans/2026-11-03-serpentreach-dwarf-cultures.md`): one EU4 culture per hold, `cobalt_dwarvish`
+  (Orlghelovar), `diamond_dwarvish` (Arg-Ôrdstun), `flint_dwarvish` (Verkal Skomdihr), `garnet_dwarvish` (Ovdal Lodhum)
+  and `basalt_dwarvish` (Gor Bûrad) in `common/culture/cultures/aov_serpentreach_cultures.txt`, speaking
+  `language_serpentreach_dwarven` (`common/culture/pillars/aov_serpentreach_language.txt`); loc in
+  `aov_serpentreach_cultures_l_english.yml`. Shazstundihr keeps Anbennar's `marble_dwarvish` (Segbandalic, unchanged).
+  Ethos and three traditions come from each hold's EU4 ideas. Every other field is `stone_dwarvish`'s from the
+  overhaul's generated `anb_dwarf.txt`, including the RiE gfx keys, which the generators only add to Anbennar's
+  files. `test_serpentreach_cultures.py` keeps the two equal, so copy any change by hand.
 - **People:** placeholder `stone_dwarvish` dwarves; per duchy an elder (holds from 860.1.1, dies 1000-1010) and his
   son; the emperor holds `d_arg_ordstun` himself. The 6 holds are in `tools/data/holds.py`.
 - **Needs an in-game test:** the map loads with the new ids; locators, province terrain and region files are read;

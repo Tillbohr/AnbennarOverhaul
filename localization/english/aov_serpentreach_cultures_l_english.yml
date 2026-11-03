@@ -1,0 +1,18 @@
+﻿l_english:
+ # Anbennar Overhaul: Serpentreach cultures (docs/systems/serpentreach.md)
+ cobalt_dwarvish:0 "Cobalt Dwarven"
+ cobalt_dwarvish_prefix:0 "Cobalt Dwarf"
+ cobalt_dwarvish_collective_noun:0 "Cobalt Dwarves"
+ diamond_dwarvish:0 "Diamond Dwarven"
+ diamond_dwarvish_prefix:0 "Diamond Dwarf"
+ diamond_dwarvish_collective_noun:0 "Diamond Dwarves"
+ flint_dwarvish:0 "Flint Dwarven"
+ flint_dwarvish_prefix:0 "Flint Dwarf"
+ flint_dwarvish_collective_noun:0 "Flint Dwarves"
+ garnet_dwarvish:0 "Garnet Dwarven"
+ garnet_dwarvish_prefix:0 "Garnet Dwarf"
+ garnet_dwarvish_collective_noun:0 "Garnet Dwarves"
+ basalt_dwarvish:0 "Basalt Dwarven"
+ basalt_dwarvish_prefix:0 "Basalt Dwarf"
+ basalt_dwarvish_collective_noun:0 "Basalt Dwarves"
+ language_serpentreach_dwarven_name:0 "Serpentreach Dwarven"

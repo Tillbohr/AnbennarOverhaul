@@ -1,0 +1,143 @@
+﻿# Anbennar Overhaul: Serpentreach cultures (docs/systems/serpentreach.md). One culture per Serpentreach hold, from EU4
+# Anbennar's dwarven group; Shazstundihr keeps Anbennar's marble_dwarvish. Traditions follow each hold's EU4 ideas; the
+# racial traditions system grants each its own clan tradition at game start (docs/systems/racial-traditions.md).
+# Every field but color, ethos, language and traditions is stone_dwarvish's from the overhaul's anb_dwarf.txt, so the
+# RiE buildings, clothes and armies show for them too (tools/tests/test_serpentreach_cultures.py keeps them equal).
+
+cobalt_dwarvish = { # Orlghelovar, the Glasslords
+	color = { 0 71 171 }
+
+	ethos = ethos_bureaucratic
+	heritage = heritage_dwarven
+	language = language_serpentreach_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_philosopher_culture # Guntîrhug, the university of Orlghelovar
+		tradition_music_theory # Glass and Trumpets
+	}
+	dlc_tradition = {
+		trait = tradition_artisans # Lords of Glass
+		requires_dlc_flag = royal_court
+	}
+
+	name_list = name_list_dwarven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
+
+	ethnicities = {
+		100 = dwarf
+	}
+}
+
+diamond_dwarvish = { # Arg-Ôrdstun, the Diamond Kings
+	color = { 185 225 240 }
+
+	ethos = ethos_courtly
+	heritage = heritage_dwarven
+	language = language_serpentreach_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_ancient_miners # the Great Clast Shafts
+		tradition_hereditary_hierarchy # the Diamond Kings; Queen Halkraz the Defiant
+	}
+	dlc_tradition = {
+		trait = tradition_artisans # the Gromdhal lapidary guild
+		requires_dlc_flag = royal_court
+	}
+
+	name_list = name_list_dwarven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
+
+	ethnicities = {
+		100 = dwarf
+	}
+}
+
+flint_dwarvish = { # Verkal Skomdihr, the Gate against the Woods
+	color = { 55 144 90 }
+
+	ethos = ethos_spiritual
+	heritage = heritage_dwarven
+	language = language_serpentreach_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_forest_fighters # Dwarven Forest Rangers
+		tradition_medicinal_plants # Herbal Remedies
+	}
+
+	name_list = name_list_dwarven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
+
+	ethnicities = {
+		100 = dwarf
+	}
+}
+
+garnet_dwarvish = { # Ovdal Lodhum, the Hold Where Love Lives
+	color = { 247 179 215 }
+
+	ethos = ethos_communal
+	heritage = heritage_dwarven
+	language = language_serpentreach_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_wedding_ceremonies # the Tunnel of Love
+		tradition_distinguished_winemakers # Love and Wine
+	}
+
+	name_list = name_list_dwarven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
+
+	ethnicities = {
+		100 = dwarf
+	}
+}
+
+basalt_dwarvish = { # Gor Bûrad, Firetop Mountain
+	color = { 240 72 72 }
+
+	ethos = ethos_bellicose
+	heritage = heritage_dwarven
+	language = language_serpentreach_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_stand_and_fight # Bûrad Pride
+		tradition_metal_craftsmanship # the Armory of Gor Bûrad
+	}
+
+	name_list = name_list_dwarven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
+
+	ethnicities = {
+		100 = dwarf
+	}
+}
