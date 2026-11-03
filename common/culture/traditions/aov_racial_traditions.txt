@@ -923,6 +923,223 @@ tradition_masons_of_the_deep = {
 	ai_will_do = { value = 100 }
 }
 
+# Shazstundihr ideas: The Whitestone Council, Mausoleum of Argor Whitebeard
+tradition_whitestone_council = {
+	category = realm
+	layers = {
+		0 = diplo
+		1 = western
+		4 = council.dds
+	}
+	is_shown = { has_cultural_pillar = heritage_dwarven }
+	can_pick = {
+		OR = {
+			this = culture:marble_dwarvish
+			any_parent_culture_or_above = { this = culture:marble_dwarvish }
+		}
+	}
+	character_modifier = {
+		powerful_vassal_opinion = 10
+		councillor_opinion = 10
+		monthly_piety_gain_mult = 0.1
+	}
+	cost = {
+		prestige = {
+			add = {
+				value = tradition_base_cost
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+			multiply = tradition_replacement_cost_if_relevant
+		}
+	}
+	ai_will_do = { value = 100 }
+}
+
+# Orlghelovar ideas: Lords of Glass, Reflecting Daylight, Guntîrhug
+tradition_glasslords = {
+	category = societal
+	layers = {
+		0 = learning
+		1 = western
+		4 = philosopher.dds
+	}
+	is_shown = { has_cultural_pillar = heritage_dwarven }
+	can_pick = {
+		OR = {
+			this = culture:cobalt_dwarvish
+			any_parent_culture_or_above = { this = culture:cobalt_dwarvish }
+		}
+	}
+	parameters = {
+		aov_unlock_maa_lens_crossbows = yes
+	}
+	character_modifier = {
+		domain_tax_mult = 0.1
+		learning = 1
+	}
+	county_modifier = {
+		development_growth_factor = 0.1
+	}
+	cost = {
+		prestige = {
+			add = {
+				value = tradition_base_cost
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+			multiply = tradition_replacement_cost_if_relevant
+		}
+	}
+	ai_will_do = { value = 100 }
+}
+
+# Arg-Ôrdstun ideas: The Aegis of the Serpentreach, Diamond Hegemony, Rebellious Legacy
+tradition_aegis_of_the_serpentreach = {
+	category = realm
+	layers = {
+		0 = diplo
+		1 = western
+		4 = king.dds
+	}
+	is_shown = { has_cultural_pillar = heritage_dwarven }
+	can_pick = {
+		OR = {
+			this = culture:diamond_dwarvish
+			any_parent_culture_or_above = { this = culture:diamond_dwarvish }
+		}
+	}
+	parameters = {
+		aov_unlock_maa_lightflare_guard = yes
+	}
+	character_modifier = {
+		monthly_prestige_gain_mult = 0.1
+		diplomacy = 1
+		vassal_opinion = 5
+	}
+	cost = {
+		prestige = {
+			add = {
+				value = tradition_base_cost
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+			multiply = tradition_replacement_cost_if_relevant
+		}
+	}
+	ai_will_do = { value = 100 }
+}
+
+# Verkal Skomdihr ideas: The Warding Gate, Flint Superstitions, Kekig's Labyrinth
+tradition_warding_gate = {
+	category = combat
+	layers = {
+		0 = martial
+		1 = western
+		4 = runestone.dds
+	}
+	is_shown = { has_cultural_pillar = heritage_dwarven }
+	can_pick = {
+		OR = {
+			this = culture:flint_dwarvish
+			any_parent_culture_or_above = { this = culture:flint_dwarvish }
+		}
+	}
+	parameters = {
+		aov_unlock_maa_flint_forest_rangers = yes
+	}
+	character_modifier = {
+		defender_advantage = 4
+		enemy_hostile_scheme_success_chance_add = -10
+		hostile_county_attrition = 0.1
+	}
+	cost = {
+		prestige = {
+			add = {
+				value = tradition_base_cost
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+			multiply = tradition_replacement_cost_if_relevant
+		}
+	}
+	ai_will_do = { value = 100 }
+}
+
+# Ovdal Lodhum ideas: Full of Love, Dwarven Midwives, Honourable Leadership
+tradition_hold_where_love_lives = {
+	category = societal
+	layers = {
+		0 = diplo
+		1 = western
+		4 = ceremony.dds
+	}
+	is_shown = { has_cultural_pillar = heritage_dwarven }
+	can_pick = {
+		OR = {
+			this = culture:garnet_dwarvish
+			any_parent_culture_or_above = { this = culture:garnet_dwarvish }
+		}
+	}
+	parameters = {
+		aov_unlock_maa_orcrend_guard = yes
+	}
+	character_modifier = {
+		fertility = 0.15
+		spouse_opinion = 15
+	}
+	county_modifier = {
+		county_opinion_add = 5
+	}
+	cost = {
+		prestige = {
+			add = {
+				value = tradition_base_cost
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+			multiply = tradition_replacement_cost_if_relevant
+		}
+	}
+	ai_will_do = { value = 100 }
+}
+
+# Gor Bûrad ideas: Hearts of Fire, The Great Anger, Scorched Halls of Gor Bûrad, Borbordûz
+tradition_hearts_of_fire = {
+	category = combat
+	layers = {
+		0 = martial
+		1 = western
+		4 = fight.dds
+	}
+	is_shown = { has_cultural_pillar = heritage_dwarven }
+	can_pick = {
+		OR = {
+			this = culture:basalt_dwarvish
+			any_parent_culture_or_above = { this = culture:basalt_dwarvish }
+		}
+	}
+	parameters = {
+		aov_unlock_maa_basalt_berserkers = yes
+	}
+	character_modifier = {
+		prowess = 2
+		heavy_infantry_damage_mult = 0.15
+		hostile_county_attrition = 0.1
+	}
+	cost = {
+		prestige = {
+			add = {
+				value = tradition_base_cost
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+			multiply = tradition_replacement_cost_if_relevant
+		}
+	}
+	ai_will_do = { value = 100 }
+}
+
 # gnollish ideas: A Race of Scavengers and Raiders, Flesh Eaters
 tradition_scavengers_and_raiders = {
 	category = combat

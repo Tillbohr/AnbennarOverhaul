@@ -217,6 +217,55 @@ TRADITIONS = {
         parameters=("aov_unlock_maa_brightbeard_hammers",),
         desc="The marble dwarves carve the finest halls under the mountains. They honour Mhoki Brightbeard, whose "
              "hammer ended a siege of 47 years with one blow."),
+    "tradition_whitestone_council": dict(
+        name="The Whitestone Council", heritage="heritage_dwarven", gate=culture("marble_dwarvish"), category="realm",
+        layers=("diplo", "western", "council.dds"),
+        eu4="Shazstundihr ideas: The Whitestone Council, Mausoleum of Argor Whitebeard",
+        character={"powerful_vassal_opinion": 10, "councillor_opinion": 10, "monthly_piety_gain_mult": 0.1},
+        desc="Fifty of Shazstundihr's foremost dwarves sit on the Whitestone Council, and seldom change. Beneath the "
+             "statue of Argor Whitebeard in the ancestral mausoleum, every marble dwarf learns whose work they carry on."),
+    # Serpentreach clans (docs/superpowers/plans/2026-11-03-serpentreach-dwarf-cultures.md)
+    "tradition_glasslords": dict(
+        name="The Glasslords", heritage="heritage_dwarven", gate=culture("cobalt_dwarvish"), category="societal",
+        layers=("learning", "western", "philosopher.dds"),
+        eu4="Orlghelovar ideas: Lords of Glass, Reflecting Daylight, Guntîrhug",
+        character={"domain_tax_mult": 0.1, "learning": 1}, county={"development_growth_factor": 0.1},
+        parameters=("aov_unlock_maa_lens_crossbows",),
+        desc="Orlghelovar taught mankind to make glass, and its blue glass is prized still. Mirrors fill the hold "
+             "with daylight, and the scholars of Guntîrhug study every corner of the natural world."),
+    "tradition_aegis_of_the_serpentreach": dict(
+        name="The Aegis of the Serpentreach", heritage="heritage_dwarven", gate=culture("diamond_dwarvish"),
+        category="realm", layers=("diplo", "western", "king.dds"),
+        eu4="Arg-Ôrdstun ideas: The Aegis of the Serpentreach, Diamond Hegemony, Rebellious Legacy",
+        character={"monthly_prestige_gain_mult": 0.1, "diplomacy": 1, "vassal_opinion": 5},
+        parameters=("aov_unlock_maa_lightflare_guard",),
+        desc="The Diamond Kings of Arg-Ôrdstun once held sway over every hold of the Serpentreach and defied the "
+             "High King himself. Envoys who gaze too long into the Aegis, their great diamond, rarely refuse them."),
+    "tradition_warding_gate": dict(
+        name="The Warding Gate", heritage="heritage_dwarven", gate=culture("flint_dwarvish"), category="combat",
+        layers=("martial", "western", "runestone.dds"),
+        eu4="Verkal Skomdihr ideas: The Warding Gate, Flint Superstitions, Kekig's Labyrinth",
+        character={"defender_advantage": 4, "enemy_hostile_scheme_success_chance_add": -10,
+                   "hostile_county_attrition": 0.1},
+        parameters=("aov_unlock_maa_flint_forest_rangers",),
+        desc="Verkal Skomdihr's rune-warded gate shields the Dwarovar from the fey of the Deepwoods, and Kekig's "
+             "labyrinth swallows whoever gets past it. Flint dwarves trust no glamour and no stranger."),
+    "tradition_hold_where_love_lives": dict(
+        name="The Hold Where Love Lives", heritage="heritage_dwarven", gate=culture("garnet_dwarvish"),
+        category="societal", layers=("diplo", "western", "ceremony.dds"),
+        eu4="Ovdal Lodhum ideas: Full of Love, Dwarven Midwives, Honourable Leadership",
+        character={"fertility": 0.15, "spouse_opinion": 15}, county={"county_opinion_add": 5},
+        parameters=("aov_unlock_maa_orcrend_guard",),
+        desc="Newlyweds of the old empire came to Ovdal Lodhum to share its glowing garnets. Its midwives are the "
+             "best in the Dwarovar, and its rulers are raised to rule justly."),
+    "tradition_hearts_of_fire": dict(
+        name="Hearts of Fire", heritage="heritage_dwarven", gate=culture("basalt_dwarvish"), category="combat",
+        layers=("martial", "western", "fight.dds"),
+        eu4="Gor Bûrad ideas: Hearts of Fire, The Great Anger, Scorched Halls of Gor Bûrad, Borbordûz",
+        character={"prowess": 2, "heavy_infantry_damage_mult": 0.15, "hostile_county_attrition": 0.1},
+        parameters=("aov_unlock_maa_basalt_berserkers",),
+        desc="The fire of Firetop Mountain burns in every basalt dwarf. They settle their quarrels by Borbordûz, the "
+             "fire duel above the lava lake, and few who invade their scorched halls endure the heat."),
     # --- Gnolls ----------------------------------------------------------------------------------------------------
     "tradition_scavengers_and_raiders": dict(
         name="Scavengers and Raiders", heritage="heritage_gnollish", gate=culture("sandfang_gnoll"), category="combat",
@@ -409,7 +458,12 @@ GRANTS = {
     "pyrite_dwarvish": ("tradition_thirteen_stages",),
     "titanium_dwarvish": ("tradition_dauvek_veker",),
     "topaz_dwarvish": ("tradition_copper_road_pact",),
-    "marble_dwarvish": ("tradition_masons_of_the_deep",),
+    "marble_dwarvish": ("tradition_masons_of_the_deep", "tradition_whitestone_council"),
+    "cobalt_dwarvish": ("tradition_glasslords",),
+    "diamond_dwarvish": ("tradition_aegis_of_the_serpentreach",),
+    "flint_dwarvish": ("tradition_warding_gate",),
+    "garnet_dwarvish": ("tradition_hold_where_love_lives",),
+    "basalt_dwarvish": ("tradition_hearts_of_fire",),
     "sandfang_gnoll": ("tradition_scavengers_and_raiders",),
     "fieldstalker_gnoll": ("tradition_tight_leash",),
     "ciderfoot_halfling": ("tradition_apple_lords",),

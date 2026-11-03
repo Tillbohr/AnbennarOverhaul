@@ -2,13 +2,15 @@
 
 Every racial culture that had no tradition of its own gets one, written from EU4 Anbennar's ideas for its realm or
 culture group, and most of them unlock a men-at-arms unit. Three human cultures with two traditions or fewer get an
-existing tradition. The Sundancer Legions are back for sun elves, without their levy penalty.
+existing tradition. The Sundancer Legions are back for sun elves, without their levy penalty. The five Serpentreach
+hold cultures (`serpentreach.md`) get a clan tradition and unit each, and marble dwarves get a second tradition for
+their homeland.
 
 ## Files
 
 | File | Generator | Why |
 |---|---|---|
-| `common/culture/traditions/aov_racial_traditions.txt`, `common/men_at_arms_types/aov_regional_maa_types.txt`, `common/script_values/aov_regional_maa_values.txt`, `common/scripted_effects/aov_racial_traditions_effects.txt`, `localization/english/aov_racial_traditions_l_english.yml` | `python -I tools/build_racial_traditions.py` (data `tools/data/racial_traditions.py`) | 34 traditions, 17 units with their costs, the game-start grants and their text, from one data file. It errors on an unknown culture or tradition, a unit no tradition unlocks, a missing icon, or a Realms in Exile word in our text. Rerun `build_racial_levies.py` afterwards if a tradition gains a levy modifier. |
+| `common/culture/traditions/aov_racial_traditions.txt`, `common/men_at_arms_types/aov_regional_maa_types.txt`, `common/script_values/aov_regional_maa_values.txt`, `common/scripted_effects/aov_racial_traditions_effects.txt`, `localization/english/aov_racial_traditions_l_english.yml` | `python -I tools/build_racial_traditions.py` (data `tools/data/racial_traditions.py`) | 40 traditions, 17 units with their costs, the game-start grants and their text, from one data file. It errors on an unknown culture or tradition, a unit no tradition unlocks, a missing icon, or a Realms in Exile word in our text. Rerun `build_racial_levies.py` afterwards if a tradition gains a levy modifier. |
 
 Hand-written:
 - `common/on_action/aov_racial_traditions_on_actions.txt`: the `on_game_start` hook.
@@ -66,6 +68,12 @@ Hand-written:
 | The Titanium Orders | titanium_dwarvish | heavy infantry toughness +15%, prowess +2 | Dauvek Veker |
 | The Copper Road Pact | topaz_dwarvish | movement speed +15%, garrison +20%, defender advantage +2 | Copper Road Wardens |
 | Masons of the Deep | marble_dwarvish | building cost −15%; counties: development +10% | Brightbeard Hammers |
+| The Whitestone Council | marble_dwarvish (second grant) | powerful vassal opinion +10, councillor opinion +10, piety +10% | |
+| The Glasslords | cobalt_dwarvish | domain tax +10%, Learning +1; counties: development +10% | Lens Crossbows |
+| The Aegis of the Serpentreach | diamond_dwarvish | prestige +10%, Diplomacy +1, vassal opinion +5 | Lightflare Guard |
+| The Warding Gate | flint_dwarvish | defender advantage +4, enemy hostile scheme success −10, hostile county attrition +10% | Flint Forest Rangers |
+| The Hold Where Love Lives | garnet_dwarvish | fertility +15%, spouse opinion +15; counties: opinion +5 | Orcrend Guard |
+| Hearts of Fire | basalt_dwarvish | prowess +2, heavy infantry damage +15%, hostile county attrition +10% | Basalt Berserkers |
 | Scavengers and Raiders | sandfang_gnoll | raid speed +25%, loot +25%, supply duration +20% | Hyena Riders |
 | A Tight Leash | fieldstalker_gnoll | dread gain +20%, county control growth +15%, hostile county attrition +10% | Fieldstalker Packs |
 | Apple Lords | ciderfoot_halfling | health +0.2, stress gain −10%, domain tax +10% | Orchard Bowmen |

@@ -93,6 +93,22 @@ aov_racial_traditions_game_start_effect = {
 	}
 	culture:marble_dwarvish = {
 		if = { limit = { NOT = { has_cultural_tradition = tradition_masons_of_the_deep } } add_culture_tradition = tradition_masons_of_the_deep }
+		if = { limit = { NOT = { has_cultural_tradition = tradition_whitestone_council } } add_culture_tradition = tradition_whitestone_council }
+	}
+	culture:cobalt_dwarvish = {
+		if = { limit = { NOT = { has_cultural_tradition = tradition_glasslords } } add_culture_tradition = tradition_glasslords }
+	}
+	culture:diamond_dwarvish = {
+		if = { limit = { NOT = { has_cultural_tradition = tradition_aegis_of_the_serpentreach } } add_culture_tradition = tradition_aegis_of_the_serpentreach }
+	}
+	culture:flint_dwarvish = {
+		if = { limit = { NOT = { has_cultural_tradition = tradition_warding_gate } } add_culture_tradition = tradition_warding_gate }
+	}
+	culture:garnet_dwarvish = {
+		if = { limit = { NOT = { has_cultural_tradition = tradition_hold_where_love_lives } } add_culture_tradition = tradition_hold_where_love_lives }
+	}
+	culture:basalt_dwarvish = {
+		if = { limit = { NOT = { has_cultural_tradition = tradition_hearts_of_fire } } add_culture_tradition = tradition_hearts_of_fire }
 	}
 	culture:sandfang_gnoll = {
 		if = { limit = { NOT = { has_cultural_tradition = tradition_scavengers_and_raiders } } add_culture_tradition = tradition_scavengers_and_raiders }

@@ -24,7 +24,8 @@ GATED_ELSEWHERE = {  # units of Anbennar or the overhaul unlocked by a tradition
 GATED_ELSEWHERE.update({f"aov_unlock_maa_{u}": "common/men_at_arms_types/aov_dwarven_maa_types.txt" for u in (
     "grudgebearers", "silverforge_engineers", "tortoise_formation", "giantbane_crossbows", "uthojdihr_marines",
     "seg_band_gnollhunters", "golden_gate_guard", "clockwork_bows", "dauvek_veker", "copper_road_wardens",
-    "brightbeard_hammers")})
+    "brightbeard_hammers", "lens_crossbows", "lightflare_guard", "flint_forest_rangers", "orcrend_guard",
+    "basalt_berserkers")})
 
 
 def _text(rel):
@@ -102,6 +103,18 @@ class GeneratedTests(unittest.TestCase):
                 self.assertIn(f"if = {{ limit = {{ NOT = {{ has_cultural_tradition = {t} }} }} "
                               f"add_culture_tradition = {t} }}", squash(self.effects.split(f"culture:{culture} = {{")[1]
                                                                          .split("\n\t}")[0]), culture)
+
+    def test_marble_keeps_masons_and_gets_whitestone(self):
+        self.assertEqual(data.GRANTS["marble_dwarvish"],
+                         ("tradition_masons_of_the_deep", "tradition_whitestone_council"))
+
+    def test_serpentreach_cultures_granted(self):
+        want = {"cobalt_dwarvish": "tradition_glasslords", "diamond_dwarvish": "tradition_aegis_of_the_serpentreach",
+                "flint_dwarvish": "tradition_warding_gate", "garnet_dwarvish": "tradition_hold_where_love_lives",
+                "basalt_dwarvish": "tradition_hearts_of_fire"}
+        for culture, tradition in want.items():
+            self.assertEqual(data.GRANTS[culture], (tradition,), culture)
+            self.assertEqual(data.TRADITIONS[tradition]["gate"], ("culture", culture), tradition)
 
     def test_regional_elves_get_their_parents_tradition(self):
         for culture in ("redglader", "ibevari", "celmaldorian", "venaili"):
