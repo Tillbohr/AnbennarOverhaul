@@ -63,13 +63,35 @@ TERRACE = {"dwarven_road": 0, "cavern": -1, "dwarven_hold": 1, "dwarven_hold_sur
 MIN_WALL = 6000  # the rim stands at least this far above the floor
 WALL_WIDTH = 4  # px of smoothstep slope from the floor up to the rock
 WALL_FADE = 8
-# Floor material per county type, and the wall material blended in over WALL_WIDTH. Godherja's textures, appended to
-# the end of materials.settings by tools/build_map_graphics.py (GODHERJA_MATERIALS: id -> name in its list).
-FLOOR_MATERIALS = {"dwarven_road": "imperial_road", "cavern": "canyon_rough_rock",
-                   "dwarven_hold": "mayik_tiles_01", "dwarven_hold_surface": "mayik_tiles_01"}
-WALL_MATERIAL = "mayik_cliff_01"
-GODHERJA_MATERIALS = {"imperial_road": "Road - Imperial", "canyon_rough_rock": "Canyon Rough Rock",
-                      "mayik_tiles_01": "Mayik Tiles 01", "mayik_cliff_01": "Mayik Cliff 01"}
+# Terrain by region, from EU4 Anbennar lore. A style gives the floor material per county type and the wall material
+# blended in over WALL_WIDTH; styles other than "default" list only what they change. Material ids are Anbennar's or
+# Godherja's: tools/build_map_graphics.py appends every used id Anbennar lacks from Godherja's materials.settings.
+TERRAIN_STYLES = {
+    # Tiled roads and holds, grey granite caves, grey layered cliffs.
+    "default": {"dwarven_road": "mayik_tiles_01", "dwarven_hold": "mayik_tiles_01",
+                "dwarven_hold_surface": "mayik_tiles_01", "cavern": "mountain_02_d_granitegrey",
+                "wall": "rock_13_05_10"},
+    # Gor Bûrad, "the Basalt Hold" inside an active volcano: basalt caves and dark cracked walls.
+    "volcanic": {"cavern": "hardened_lava", "wall": "rock_14_05_05"},
+    # Shazstundihr, the Marble Gate (marble quarries, mausoleums; the Marble Galleries): pale cracked roads,
+    # patterned marble tiles in the hold, white rock.
+    "marble": {"dwarven_road": "desert_cracked_white", "dwarven_hold": "mayik_tiles_02",
+               "dwarven_hold_surface": "mayik_tiles_02", "cavern": "rock_white", "wall": "mountains_white"},
+    # Arg-Ôrdstun's diamond mines: kimberlite shafts of old solidified magma.
+    "diamond": {"cavern": "mountain_02_dark"},
+    # Ovdal Lodhum's garnets (Garnetheart).
+    "garnet": {"cavern": "red_canyon_surface_stone_2"},
+    # Shroomfissure's mushroom caverns.
+    "mushroom": {"cavern": "moss_ground_01"},
+}
+AREA_STYLES = {  # EU4 area -> style; unlisted areas use "default"
+    "gor_burad_area": "volcanic", "buradforge_area": "volcanic", "zarn_area": "volcanic",
+    "argrod_14_16_area": "volcanic", "shazstundihr_area": "marble", "south_altar_area": "marble",
+    "arg_ordstun_area": "diamond", "ovdal_lodhum_area": "garnet", "shroomfissure_area": "mushroom",
+}
+COUNTY_FLOORS = {"c_lavawater": "lava", "c_molten_core": "lava", "c_gor_burad": "hardened_lava_b"}
+# (county, barony index; 0 is the capital) -> floor. b_gor_burad_2 is the barony facing Lavawater and Molten Core.
+BARONY_FLOORS = {("c_gor_burad", 1): "lava"}
 
 # People (placeholders): an elder holds from 860.1.1, his son from the elder's death.
 ELDER_BIRTH = (830, 845)

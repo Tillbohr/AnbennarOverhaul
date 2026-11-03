@@ -29,11 +29,23 @@
   +/- `TERRACE_STEP` by type; within `WALL_WIDTH` 4 px (Euclidean, nearest floor pixel carried outward) a
   smoothstep slope from the floor up to the rock, or to the rim (floor + `MIN_WALL`) where the rock is lower; beyond
   it low rock fades from the rim to its own height over `WALL_FADE` and is never lowered.
-- **Terrain:** each floor gets its county type's material (`FLOOR_MATERIALS`: roads `imperial_road`, caverns
-  `canyon_rough_rock`, holds `mayik_tiles_01`); the slope blends it into `WALL_MATERIAL` `mayik_cliff_01`. The four are
-  Godherja's textures, appended to the end of `materials.settings` (existing indices unchanged) with blank masks
-  `masks/aov_<id>_mask.png` (`GODHERJA_MATERIALS`, `build_map_graphics.godherja_materials`). Ask the Godherja team
-  before a Workshop upload, as for the shaders.
+- **Terrain, by region from EU4 lore** (`sl.province_materials`; plan previewed in the git-ignored
+  `art_work/serpentreach_terrain_plan.html`): each EU4 area has a style (`AREA_STYLES`, default otherwise) giving the
+  floor per county type and the wall the slope blends into (`TERRAIN_STYLES`); `COUNTY_FLOORS` and `BARONY_FLOORS`
+  override single floors.
+  - default: roads and holds `mayik_tiles_01` (stone tiles), caves `mountain_02_d_granitegrey`, walls `rock_13_05_10`;
+  - volcanic (Gor Bûrad, Bûradforge, Zarn, Argrod 14-16): caves `hardened_lava`, walls `rock_14_05_05`; Gor Bûrad's
+    hold `hardened_lava_b` (the Basalt Hold) with `lava` in `b_gor_burad_2`, the barony facing Lavawater and Molten
+    Core, which are `lava` too (a test checks the barony index still faces them after a layout change);
+  - marble (Shazstundihr, South Altar): roads `desert_cracked_white`, holds `mayik_tiles_02`, caves `rock_white`,
+    walls `mountains_white`;
+  - diamond (Arg-Ôrdstun): caves `mountain_02_dark` (kimberlite); garnet (Ovdal Lodhum): caves
+    `red_canyon_surface_stone_2`; mushroom (Shroomfissure): caves `moss_ground_01`.
+  Every used material Anbennar lacks is appended to the end of `materials.settings` (existing indices unchanged) from
+  Godherja's list, else Realms in Exile's (`build_map_graphics.appended_materials`, 14 today: 10 Godherja, 4 RiE),
+  its textures copied as `aov_<file name>` (mods reuse vanilla names, e.g. Godherja's
+  `mountain_02_d_desert_normal.dds`; spaces become `_`), a texture only the game has used as it is, with blank masks
+  `masks/aov_<id>_mask.png`. Ask the Godherja team before a Workshop upload, as for the shaders.
 - **People:** placeholder `stone_dwarvish` dwarves; per duchy an elder (holds from 860.1.1, dies 1000-1010) and his
   son; the emperor holds `d_arg_ordstun` himself. The 6 holds are in `tools/data/holds.py`.
 - **Needs an in-game test:** the map loads with the new ids; locators, province terrain and region files are read;

@@ -2,10 +2,10 @@ Anbennar Overhaul credits
 
 Map graphics (terrain textures, dwarven gates, shaders, environment, skybox, snow, water, fog of war, colour grading):
 - Lord of the Rings: Realms in Exile - https://steamcommunity.com/sharedfiles/filedetails/?id=2291024373
-  Terrain textures and materials, shaders, environment, water, skybox, fog of war textures and colour-grading LUTs, and the Erebor gate model (erebor_gate, with its mountain textures) placed at the dwarven mountain gates.
+  Terrain textures and materials, shaders, environment, water, skybox, fog of war textures and colour-grading LUTs, and the Erebor gate model (erebor_gate, with its mountain textures) placed at the dwarven mountain gates. The desert_cracked_white, hardened_lava_b, mountains_white and rock_white terrain textures for Serpentreach.
 - Godherja: The Dying World - https://steamcommunity.com/sharedfiles/filedetails/?id=2326030123
   The gh_ shaders (gh_snowfall, gh_utils, gh_atmospheric and related), as adapted by Realms in Exile.
-  The imperial_road, mayik_tiles_01, canyon_rough_rock and mayik_cliff_01 terrain textures, used for the carved floors and walls of Serpentreach.
+  Terrain textures for the carved floors and walls of Serpentreach: mayik_tiles_01, mayik_tiles_02, hardened_lava, lava, moss_ground_01, mountain_02_d_granitegrey, mountain_02_dark, red_canyon_surface_stone_2, rock_13_05_10 and rock_14_05_05.
 - Victoria 3 (Paradox Interactive)
   The fog of war shader (gh_vic3_fog_of_war) is based on Victoria 3's.
 

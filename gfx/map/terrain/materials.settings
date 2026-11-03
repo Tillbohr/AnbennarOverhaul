@@ -1015,37 +1015,117 @@
 		id       = "gen_mediterranean_mountain_transition"
 		sort_order = 8
 	}
-	{ # Anbennar Overhaul: Godherja, for Serpentreach
-		name     = "Road - Imperial"
-		diffuse  = "imperial_road_diffuse.dds"
-		normal   = "imperial_road_normal.dds"
-		material = "imperial_road_properties.dds"
-		mask     = "masks/aov_imperial_road_mask.png"
-		id       = "imperial_road"
+	{ # Anbennar Overhaul: Realms in Exile, for Serpentreach
+		name     = "Desert Cracked White"
+		diffuse  = "aov_desert_cracked_white_diffuse.dds"
+		normal   = "desert_cracked_normal.dds"
+		material = "desert_cracked_properties.dds"
+		mask     = "masks/aov_desert_cracked_white_mask.png"
+		id       = "desert_cracked_white"
 	}
 	{ # Anbennar Overhaul: Godherja, for Serpentreach
-		name     = "Canyon Rough Rock"
-		diffuse  = "canyon_rough_rock_diffuse.dds"
-		normal   = "canyon_rough_rock_normal.dds"
-		material = "canyon_rough_rock_properties.dds"
-		mask     = "masks/aov_canyon_rough_rock_mask.png"
-		id       = "canyon_rough_rock"
+		name     = "Lava - Hardened"
+		diffuse  = "aov_hardened_lava_diffuse.dds"
+		normal   = "aov_hardened_lava_normal.dds"
+		material = "aov_hardened_lava_properties.dds"
+		mask     = "masks/aov_hardened_lava_mask.png"
+		id       = "hardened_lava"
+	}
+	{ # Anbennar Overhaul: Realms in Exile, for Serpentreach
+		name     = "Hardened Lava B"
+		diffuse  = "aov_hardened_lava_b_diffuse.dds"
+		normal   = "aov_hardened_lava_b_normal.dds"
+		material = "aov_hardened_lava_b_properties.dds"
+		mask     = "masks/aov_hardened_lava_b_mask.png"
+		id       = "hardened_lava_b"
+	}
+	{ # Anbennar Overhaul: Godherja, for Serpentreach
+		name     = "Lava"
+		diffuse  = "aov_lava_diffuse.dds"
+		normal   = "aov_lava_normal.dds"
+		material = "aov_lava_properties.dds"
+		mask     = "masks/aov_lava_mask.png"
+		id       = "lava"
 	}
 	{ # Anbennar Overhaul: Godherja, for Serpentreach
 		name     = "Mayik Tiles 01"
-		diffuse  = "mayik_tiles_01_diffuse.dds"
-		normal   = "mayik_tiles_01_normal.dds"
-		material = "mayik_tiles_01_properties.dds"
+		diffuse  = "aov_mayik_tiles_01_diffuse.dds"
+		normal   = "aov_mayik_tiles_01_normal.dds"
+		material = "aov_mayik_tiles_01_properties.dds"
 		mask     = "masks/aov_mayik_tiles_01_mask.png"
 		id       = "mayik_tiles_01"
 	}
 	{ # Anbennar Overhaul: Godherja, for Serpentreach
-		name     = "Mayik Cliff 01"
-		diffuse  = "mayik_cliff_01_diffuse.dds"
-		normal   = "mayik_cliff_01_normal.dds"
-		material = "mayik_cliff_01_properties.dds"
-		mask     = "masks/aov_mayik_cliff_01_mask.png"
-		id       = "mayik_cliff_01"
+		name     = "Mayik Tiles 02"
+		diffuse  = "aov_mayik_tiles_02_diffuse.dds"
+		normal   = "aov_mayik_tiles_02_normal.dds"
+		material = "aov_mayik_tiles_02_properties.dds"
+		mask     = "masks/aov_mayik_tiles_02_mask.png"
+		id       = "mayik_tiles_02"
+	}
+	{ # Anbennar Overhaul: Godherja, for Serpentreach
+		name     = "Moss Ground 01"
+		diffuse  = "aov_moss_ground_01_diffuse.dds"
+		normal   = "aov_moss_ground_01_normal.dds"
+		material = "aov_moss_ground_01_properties.dds"
+		mask     = "masks/aov_moss_ground_01_mask.png"
+		id       = "moss_ground_01"
+	}
+	{ # Anbennar Overhaul: Godherja, for Serpentreach
+		name     = "Mountain 02 d granitegrey"
+		diffuse  = "aov_mountain_02_d_granitegrey_diffuse.dds"
+		normal   = "aov_mountain_02_d_desert_normal.dds"
+		material = "aov_mountain_02_d_desert_properties.dds"
+		mask     = "masks/aov_mountain_02_d_granitegrey_mask.png"
+		id       = "mountain_02_d_granitegrey"
+	}
+	{ # Anbennar Overhaul: Godherja, for Serpentreach
+		name     = "Mountain - Variant 1 - Wasteland"
+		diffuse  = "aov_mountain_02_b_wasteland_diffuse.dds"
+		normal   = "aov_mountain_02_b_normal.dds"
+		material = "aov_mountain_02_b_properties.dds"
+		mask     = "masks/aov_mountain_02_dark_mask.png"
+		id       = "mountain_02_dark"
+	}
+	{ # Anbennar Overhaul: Realms in Exile, for Serpentreach
+		name     = "Mountains White"
+		diffuse  = "aov_mountains_white_diffuse.dds"
+		normal   = "aov_mountains_white_normal.dds"
+		material = "aov_mountains_white_properties.dds"
+		mask     = "masks/aov_mountains_white_mask.png"
+		id       = "mountains_white"
+	}
+	{ # Anbennar Overhaul: Godherja, for Serpentreach
+		name     = "Red Canyon Surface Stone 2"
+		diffuse  = "aov_red_canyon_surface_stone_2_diffuse.dds"
+		normal   = "aov_red_canyon_surface_stone_2_normal.dds"
+		material = "aov_red_canyon_surface_stone_2_properties.dds"
+		mask     = "masks/aov_red_canyon_surface_stone_2_mask.png"
+		id       = "red_canyon_surface_stone_2"
+	}
+	{ # Anbennar Overhaul: Godherja, for Serpentreach
+		name     = "rock 13 05_10 elis"
+		diffuse  = "aov_rock_13_05_10_elis_diffuse.dds"
+		normal   = "aov_rock_13_05_10_elis_normal.dds"
+		material = "aov_no_shine_properties.dds"
+		mask     = "masks/aov_rock_13_05_10_mask.png"
+		id       = "rock_13_05_10"
+	}
+	{ # Anbennar Overhaul: Godherja, for Serpentreach
+		name     = "rock 14 05_05 elis"
+		diffuse  = "aov_rock_14_05_05_elis_diffuse.dds"
+		normal   = "aov_rock_14_05_05_elis_normal.dds"
+		material = "aov_no_shine_properties.dds"
+		mask     = "masks/aov_rock_14_05_05_mask.png"
+		id       = "rock_14_05_05"
+	}
+	{ # Anbennar Overhaul: Realms in Exile, for Serpentreach
+		name     = "Rock - White"
+		diffuse  = "aov_rock_white_diffuse.dds"
+		normal   = "aov_rock_white_normal.dds"
+		material = "aov_rock_white_properties.dds"
+		mask     = "masks/aov_rock_white_mask.png"
+		id       = "rock_white"
 	}
 }
 

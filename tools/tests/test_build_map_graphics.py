@@ -465,15 +465,14 @@ class RealFileTests(unittest.TestCase):
 
     def test_materials_settings_differs_only_in_header_and_mapped_lines(self):
         out = bmg.build_terrain(ROOTS)["gfx/map/terrain/materials.settings"].decode("utf-8")
-        from data import serpentreach as sr
+        count = len(bmg.appended_ids(ROOTS))
         old, new = self.anb.splitlines(), out.splitlines()
         header = len(bmg.HEADER("gfx/map/terrain/materials.settings"))
         block = len(bmg.MATERIAL_KEYS) + 2
-        start = next(i for i, line in enumerate(new) if line.startswith("\t{ # Anbennar Overhaul: Godherja"))
-        appended = new[start:start + block * len(sr.GODHERJA_MATERIALS)]
-        self.assertEqual(sum(line.startswith("\t{ # Anbennar Overhaul: Godherja") for line in appended),
-                         len(sr.GODHERJA_MATERIALS))
-        new = new[:start] + new[start + len(appended):]  # the Godherja blocks follow the last material
+        start = next(i for i, line in enumerate(new) if line.endswith(", for Serpentreach"))
+        appended = new[start:start + block * count]
+        self.assertEqual(sum(line.endswith(", for Serpentreach") for line in appended), count)
+        new = new[:start] + new[start + len(appended):]  # the appended blocks follow the last material
         self.assertEqual(len(new), len(old) + header)
         changed = [b for a, b in zip(old, new[header:]) if a != b]
         self.assertEqual(len(changed), 3 * len(data.TEXTURE_MAP))
@@ -1235,22 +1234,40 @@ class HeightOutputsTests(unittest.TestCase):
         for name in names:
             self.assertIn(folder + name, self.files)
 
-    def test_godherja_floor_materials_are_appended_and_painted(self):
+    def test_serpentreach_materials_are_appended_and_every_barony_painted(self):
+        import serpentreach_layout as sl
         import terrain_fill as tfill
-        from data import serpentreach as sr
         text = self.files["gfx/map/terrain/materials.settings"].decode("utf-8-sig")
         ids = [m["id"] for m in bmg.parse_materials(text)]
-        self.assertEqual(ids[-len(sr.GODHERJA_MATERIALS):], list(sr.GODHERJA_MATERIALS))
-        for m in bmg.parse_materials(text)[-len(sr.GODHERJA_MATERIALS):]:
+        appended = bmg.appended_ids(ROOTS)
+        self.assertEqual(ids[-len(appended):], appended)
+        self.assertEqual(set(appended) | set(ids[:-len(appended)]) >= set(sl.used_materials()), True)
+        for m in bmg.parse_materials(text)[-len(appended):]:
             for key in ("diffuse", "normal", "material", "mask"):
-                self.assertIn(f"gfx/map/terrain/{m[key]}", self.files, m[key])
+                built = f"gfx/map/terrain/{m[key]}" in self.files
+                self.assertTrue(built or (key != "mask" and (ROOTS.game_terrain / m[key]).is_file()), m[key])
+                self.assertNotIn(" ", m[key])
         lay = bmg.serpentreach_layout(ROOTS)
         index = tfill.read_tga(self.files["gfx/map/terrain/detail_index.tga"])
+        for pid, (floor, _) in sl.province_materials(lay).items():
+            x, y = lay.provinces[pid].interior
+            self.assertEqual(index.pixels[(y * index.width + x) * 4], ids.index(floor), pid)
+
+    def test_gor_burad_lava_barony_faces_the_lava_caves(self):
+        """BARONY_FLOORS names Gor Bûrad's barony by index: it must still be the one nearest Lavawater and Molten
+        Core after a layout change."""
+        from data import serpentreach as sr
+        lay = bmg.serpentreach_layout(ROOTS)
         county = {c.key: c for c in lay.counties}
-        for kind in sr.FLOOR_MATERIALS:
-            p = next(p for p, pid in lay.owner.items() if county[lay.provinces[pid].county].type == kind)
-            k = (p[1] * index.width + p[0]) * 4
-            self.assertEqual(index.pixels[k], ids.index(sr.FLOOR_MATERIALS[kind]), kind)
+        lava = [p for pid in county["c_lavawater"].baronies + county["c_molten_core"].baronies
+                for p in lay.provinces[pid].pixels]
+
+        def gap(pid):
+            ix, iy = lay.provinces[pid].interior
+            return min(math.hypot(ix - x, iy - y) for x, y in lava)
+        hold = county["c_gor_burad"].baronies
+        (key, index), = [k for k in sr.BARONY_FLOORS if k[0] == "c_gor_burad"]
+        self.assertEqual(hold[index], min(hold[1:], key=gap))
 
     def test_serpentreach_floor_is_flat_in_the_build(self):
         from data import serpentreach as sr

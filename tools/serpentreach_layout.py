@@ -715,26 +715,68 @@ def carve(grid, lay, pm, water):
     return hp.Grid(W, H, values), {"base": base, "floor_px": len(fh), "wall_px": walls}
 
 
-def paint(index, intensity, lay, floor_indices, wall_index, pm=None):
-    """Copies of the blend maps (terrain_fill.Tga): floor pixels get their county type's material from
-    `floor_indices` at full weight; wall pixels within WALL_WIDTH (province-2426 rock only when `pm` is given)
-    blend that floor material into `wall_index` by smoothstep of the distance, full wall at WALL_WIDTH."""
+def check_terrain_data(area_styles, styles):
+    """Stop on a style no TERRAIN_STYLES entry defines, a style key that is not a county type or "wall", or a
+    default style that leaves a type out."""
+    keys = set(data.BARONIES) | {"wall"}
+    missing = sorted(keys - set(styles.get("default", {})))
+    if missing:
+        raise GeneratorError(f"TERRAIN_STYLES default lacks {', '.join(missing)}")
+    for name, style in styles.items():
+        bad = sorted(set(style) - keys)
+        if bad:
+            raise GeneratorError(f"TERRAIN_STYLES {name}: unknown keys {', '.join(bad)}")
+    for area, name in area_styles.items():
+        if name not in styles:
+            raise GeneratorError(f"AREA_STYLES {area}: no style {name}")
+
+
+def province_materials(lay):
+    """{province id: (floor material id, wall material id)} from the county's area style (TERRAIN_STYLES,
+    AREA_STYLES), with COUNTY_FLOORS and BARONY_FLOORS overriding the floor."""
+    check_terrain_data(data.AREA_STYLES, data.TERRAIN_STYLES)
+    county = {c.key: c for c in lay.counties}
+    unknown = sorted({k for k in data.COUNTY_FLOORS if k not in county} |
+                     {k for k, i in data.BARONY_FLOORS if k not in county or i >= len(county[k].baronies)})
+    if unknown:
+        raise GeneratorError(f"COUNTY_FLOORS/BARONY_FLOORS name counties or baronies Serpentreach lacks: "
+                             f"{', '.join(unknown)}")
+    out = {}
+    for pid, prov in lay.provinces.items():
+        c = county[prov.county]
+        style = {**data.TERRAIN_STYLES["default"], **data.TERRAIN_STYLES[data.AREA_STYLES.get(c.area, "default")]}
+        floor = data.BARONY_FLOORS.get((c.key, prov.index)) or data.COUNTY_FLOORS.get(c.key) or style[c.type]
+        out[pid] = (floor, style["wall"])
+    return out
+
+
+def used_materials():
+    """Every material id the terrain data names, sorted."""
+    ids = {m for style in data.TERRAIN_STYLES.values() for m in style.values()}
+    return sorted(ids | set(data.COUNTY_FLOORS.values()) | set(data.BARONY_FLOORS.values()))
+
+
+def paint(index, intensity, lay, materials, pm=None):
+    """Copies of the blend maps (terrain_fill.Tga): floor pixels get their province's floor material from
+    `materials` ({province id: (floor index, wall index)}) at full weight; wall pixels within WALL_WIDTH
+    (impassable rock only when `pm` is given) blend the nearest floor's material into that province's wall material
+    by smoothstep of the distance, full wall at WALL_WIDTH."""
     import terrain_fill as tf
     W, H = index.width, index.height
     idx = bytearray(index.pixels)
     wgt = bytearray(intensity.pixels)
-    county = {c.key: c for c in lay.counties}
-    kinds = {p: county[lay.provinces[pid].county].type for p, pid in lay.owner.items()}
-    missing = sorted(set(kinds.values()) - set(floor_indices))
+    missing = sorted(set(lay.owner.values()) - set(materials))
     if missing:
-        raise GeneratorError(f"no floor material for {', '.join(missing)}")
+        raise GeneratorError(f"no terrain material for provinces {', '.join(map(str, missing[:5]))}")
     floor = list(lay.owner)
-    for (x, y), (d, kind) in _nearest(kinds, _box_around(floor, data.WALL_WIDTH + 1, W, H), data.WALL_WIDTH).items():
+    sources = {p: materials[pid] for p, pid in lay.owner.items()}
+    for (x, y), (d, (fi, wi)) in _nearest(sources, _box_around(floor, data.WALL_WIDTH + 1, W, H),
+                                          data.WALL_WIDTH).items():
         if d and pm is not None and pm.ids[y * W + x] not in rock_provinces():
             continue
         k = (y * W + x) * 4
         w = round(255 * _smooth(d / data.WALL_WIDTH))
-        idx[k:k + 4] = bytes((floor_indices[kind], wall_index if d else 0, 0, 0))
+        idx[k:k + 4] = bytes((fi, wi if d else 0, 0, 0))
         wgt[k:k + 4] = bytes((255 - w, w, 0, 0))
     return (tf.Tga(W, H, index.header, idx, index.footer), tf.Tga(W, H, intensity.header, wgt, intensity.footer))
 

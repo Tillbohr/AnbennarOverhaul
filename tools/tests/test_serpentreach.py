@@ -82,6 +82,46 @@ def synthetic(width=60, height=30):
     return hp.Grid(width, height, vals), lay, dm.ProvinceMap(width, height, ids)
 
 
+def material_layout():
+    """Counties in four regions: a plain road, a Shazstundihr road, Gor Bûrad's two-barony hold, Lavawater."""
+    counties = [sl.County("c_road", 1, "R", "argrod_origin_area", "dwarven_road", [1]),
+                sl.County("c_marble_road", 2, "M", "shazstundihr_area", "dwarven_road", [2]),
+                sl.County("c_marble_hold", 3, "H", "shazstundihr_area", "dwarven_hold_surface", [3]),
+                sl.County("c_gor_burad", 4, "G", "gor_burad_area", "dwarven_hold", [4, 5]),
+                sl.County("c_lavawater", 5, "L", "buradforge_area", "cavern", [6]),
+                sl.County("c_cave", 6, "C", "thievesbane_area", "cavern", [7]),
+                sl.County("c_molten_core", 7, "MC", "buradforge_area", "cavern", [8])]
+    provinces = {}
+    for c in counties:
+        for i, pid in enumerate(c.baronies):
+            provinces[pid] = sl.Province(pid, (pid, 0, 0), c.key, i, [(pid * 10, 0)], (pid * 10, 0))
+    return sl.Layout(100, 10, counties, provinces, {}, [], {}, [])
+
+
+class MaterialTests(unittest.TestCase):
+    def test_regional_styles_and_overrides(self):
+        m = sl.province_materials(material_layout())
+        self.assertEqual(m[1], ("mayik_tiles_01", "rock_13_05_10"))  # tiled road, grey cliff
+        self.assertEqual(m[2], ("desert_cracked_white", "mountains_white"))  # Shazstundihr's white road
+        self.assertEqual(m[3], ("mayik_tiles_02", "mountains_white"))  # its marble-tiled hold
+        self.assertEqual(m[4], ("hardened_lava_b", "rock_14_05_05"))  # the Basalt Hold
+        self.assertEqual(m[5], ("lava", "rock_14_05_05"))  # its barony facing the lava caves
+        self.assertEqual(m[6], ("lava", "rock_14_05_05"))  # Lavawater
+        self.assertEqual(m[7], ("mountain_02_d_granitegrey", "rock_13_05_10"))  # a plain grey cave
+
+    def test_used_materials_cover_every_choice(self):
+        used = set(sl.used_materials())
+        for pid, (floor, wall) in sl.province_materials(material_layout()).items():
+            self.assertIn(floor, used)
+            self.assertIn(wall, used)
+        self.assertEqual(sl.used_materials(), sorted(used))
+
+    def test_style_for_an_unknown_area_stops(self):
+        from data import serpentreach as data
+        with self.assertRaisesRegex(GeneratorError, "no_such"):
+            sl.check_terrain_data({**data.AREA_STYLES, "x_area": "no_such"}, data.TERRAIN_STYLES)
+
+
 class SmoothTests(unittest.TestCase):
     def test_smooth_fills_notches_and_drops_spurs(self):
         labels = {(x, y): "a" for x in range(10) for y in range(10)}
@@ -148,7 +188,7 @@ class CarveTests(unittest.TestCase):
         _, lay, _ = synthetic()
         w, h = 60, 30
         blank = tf.Tga(w, h, bytes(18), bytearray(w * h * 4), b"")
-        index, intensity = sl.paint(blank, blank, lay, {"cavern": 7, "dwarven_road": 8}, wall_index=9)
+        index, intensity = sl.paint(blank, blank, lay, {100: (7, 9)})
 
         def px(img, x, y):
             return bytes(img.pixels[(y * w + x) * 4:(y * w + x) * 4 + 4])

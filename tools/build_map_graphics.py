@@ -201,7 +201,7 @@ def append_materials(text: str, entries: list) -> str:
     end = materials[-1]["end"]
     blocks = []
     for e in entries:
-        blocks.append(f"\t{{ {MARKER}: Godherja, for Serpentreach{eol}")
+        blocks.append(f"\t{{ {MARKER}: {e.get('source', 'Godherja')}, for Serpentreach{eol}")
         blocks += [f'\t\t{key:<8} = "{e[key]}"{eol}' for key in MATERIAL_KEYS]
         blocks.append(f"\t}}{eol}")
     return "".join(lines[:end + 1] + blocks + lines[end + 1:])
@@ -212,50 +212,65 @@ def blank_mask(width: int, height: int) -> bytes:
     return pngio.write_png(pngio.Image(width, height, 8, 0, bytes(width * height)))
 
 
-def godherja_materials(roots: Roots, size: tuple) -> tuple:
-    """(material entries, output rel path -> bytes) for sr_data.GODHERJA_MATERIALS: Godherja's textures copied
-    under their own names, each with a blank mask of `size` under masks/aov_<id>_mask.png."""
-    terrain = roots.godherja / TERRAIN
-    if not (terrain / "materials.settings").is_file():
-        raise GeneratorError(f"Godherja not found: {terrain / 'materials.settings'} does not exist")
-    by_id = _by_id(parse_materials(_read_text(terrain / "materials.settings")), "Godherja")
+def appended_ids(roots: Roots) -> list:
+    """The Serpentreach terrain materials (sl.used_materials) Anbennar's list lacks, sorted: these are appended
+    from Godherja or Realms in Exile."""
+    anbennar = {m["id"] for m in parse_materials(_read_text(roots.anbennar / MATERIALS_REL))}
+    return [m for m in sl.used_materials() if m not in anbennar]
+
+
+def appended_materials(roots: Roots, size: tuple) -> tuple:
+    """(material entries, output rel path -> bytes) for appended_ids, each from Godherja's list or, failing that,
+    Realms in Exile's: its textures copied as aov_<file name> (a texture only the game has is used as it is), its
+    name, and a blank mask of `size` under masks/aov_<id>_mask.png."""
+    sources = []
+    for label, root in (("Godherja", roots.godherja), ("Realms in Exile", roots.rie)):
+        terrain = root / TERRAIN
+        if not (terrain / "materials.settings").is_file():
+            raise GeneratorError(f"{label} not found: {terrain / 'materials.settings'} does not exist")
+        sources.append((label, terrain, _by_id(parse_materials(_read_text(terrain / "materials.settings")), label)))
     entries, files = [], {}
-    for mid, name in sr_data.GODHERJA_MATERIALS.items():
-        if mid not in by_id:
-            raise GeneratorError(f"GODHERJA_MATERIALS: {mid} is not a material of Godherja's materials.settings")
-        entry = {"id": mid, "name": name, "mask": f"masks/aov_{mid}_mask.png"}
+    for mid in appended_ids(roots):
+        found = next(((label, terrain, by_id[mid]) for label, terrain, by_id in sources if mid in by_id), None)
+        if found is None:
+            raise GeneratorError(f"Serpentreach terrain material {mid} is in none of Anbennar's, Godherja's or "
+                                 f"Realms in Exile's materials.settings")
+        label, terrain, material = found
+        entry = {"id": mid, "name": material.get("name") or mid, "mask": f"masks/aov_{mid}_mask.png",
+                 "source": label}
         for key in TEXTURE_KEYS:
-            file = by_id[mid].get(key)
+            file = material.get(key)
             source = terrain / file if file else None
+            if file and not source.is_file() and (roots.game_terrain / file).is_file():
+                entry[key] = file  # a texture only the game has is used from the game, as in the RiE remap
+                continue
             if source is None or not source.is_file():
-                raise GeneratorError(f"Godherja material {mid}: its {key} texture {file} does not exist")
-            for other in (roots.game_terrain / file, roots.rie_terrain / file, roots.anbennar / TERRAIN / file):
-                if other.is_file() and other.read_bytes() != source.read_bytes():
-                    raise GeneratorError(f"Godherja's {file} would replace a different {other}")
-            _check_dds(source, f"Godherja texture {file}")
-            entry[key] = file
-            files[f"{TERRAIN}/{file}"] = source.read_bytes()
+                raise GeneratorError(f"{label} material {mid}: its {key} texture {file} does not exist")
+            _check_dds(source, f"{label} texture {file}")
+            # Copied as aov_<name>: mods reuse vanilla names for their own versions (Godherja's
+            # mountain_02_d_desert_normal.dds), which must not replace the game's under the same name.
+            target = "aov_" + file.replace(" ", "_")  # Godherja has file names with spaces
+            entry[key] = target
+            files[f"{TERRAIN}/{target}"] = source.read_bytes()
         files[f"{TERRAIN}/{entry['mask']}"] = blank_mask(*size)
         entries.append(entry)
     return entries, files
 
 
 def material_ids(roots: Roots) -> list:
-    """Material ids in texture-array order: Anbennar's list, then the appended Godherja materials."""
-    return [m["id"] for m in parse_materials(_read_text(roots.anbennar / MATERIALS_REL))] + \
-        list(sr_data.GODHERJA_MATERIALS)
+    """Material ids in texture-array order: Anbennar's list, then the appended Serpentreach materials."""
+    return [m["id"] for m in parse_materials(_read_text(roots.anbennar / MATERIALS_REL))] + appended_ids(roots)
 
 
 def build_terrain(roots: Roots) -> dict:
-    """Output rel path -> bytes for the material list, the mapped RiE textures, the drop-ins and the Godherja
-    materials appended for Serpentreach."""
+    """Output rel path -> bytes for the material list, the mapped RiE textures, the drop-ins and the materials
+    appended for Serpentreach."""
     mapping = data.TEXTURE_MAP
     anb_text = _read_text(roots.anbennar / MATERIALS_REL)
     rie_text = _read_text(roots.rie / MATERIALS_REL)
     out = {}
 
-    entries, godherja_files = godherja_materials(roots, png_size(roots.anbennar / "map_data/provinces.png"))
-    out.update(godherja_files)
+    entries, appended_files = appended_materials(roots, png_size(roots.anbennar / "map_data/provinces.png"))
     remapped = append_materials(remap_materials(anb_text, rie_text, mapping), entries)
     bom = "\ufeff" if remapped.startswith("\ufeff") else ""
     eol = "\r\n" if "\r\n" in remapped else "\n"
@@ -275,6 +290,11 @@ def build_terrain(roots: Roots) -> dict:
         if name not in NOT_ARRAY_MEMBERS:
             _check_dds(source, f"drop-in {name}")
         out[f"{TERRAIN}/{name}"] = source.read_bytes()
+
+    for rel, content in appended_files.items():
+        if rel in out and out[rel] != content:
+            raise GeneratorError(f"a Serpentreach terrain texture would replace the RiE {rel} this build copies")
+        out[rel] = content
     return out
 
 
@@ -1094,12 +1114,8 @@ def build_terrain_fill(roots: Roots, notes: list = None) -> dict:
                                                     fill_material=material, large=data.TERRAIN_FILL_LARGE)
     lay = serpentreach_layout(roots)
     ids = material_ids(roots)
-    for m in list(sr_data.FLOOR_MATERIALS.values()) + [sr_data.WALL_MATERIAL]:
-        if m not in ids:
-            raise GeneratorError(f"Serpentreach material {m} is in neither Anbennar's list nor GODHERJA_MATERIALS")
-    floors = {kind: ids.index(m) for kind, m in sr_data.FLOOR_MATERIALS.items()}
-    index, intensity = sl.paint(index, intensity, lay, floors, ids.index(sr_data.WALL_MATERIAL),
-                                _SERPENTREACH[_layout_key(roots)][1])
+    materials = {pid: (ids.index(floor), ids.index(wall)) for pid, (floor, wall) in sl.province_materials(lay).items()}
+    index, intensity = sl.paint(index, intensity, lay, materials, _SERPENTREACH[_layout_key(roots)][1])
     if notes is not None:
         notes.append(f"terrain gaps filled: {report['small_pixels']} px in {report['small_groups']} small gaps "
                      f"(copied from neighbours), {report['large_pixels']} px in {report['large_groups']} large "

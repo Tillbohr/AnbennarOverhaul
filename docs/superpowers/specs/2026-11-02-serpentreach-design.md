@@ -64,10 +64,7 @@ gate and cone steps keep running on Anbennar's map unchanged; carving is a final
   rock within 4 px of the floor may come down); up to `WALL_WIDTH + WALL_FADE` (8): `max(orig, lerp(rim, orig, t))`;
   beyond, unchanged.
 - **Packed heightmap:** changed blocks are repacked by the existing code.
-- **Terrain:** floor pixels get their county type's `FLOOR_MATERIALS` entry at full weight; wall pixels (d <=
-  `WALL_WIDTH`) blend it into `WALL_MATERIAL` by smoothstep(d / WALL_WIDTH). The materials are Godherja's
-  `imperial_road` (roads), `canyon_rough_rock` (caverns), `mayik_tiles_01` (holds) and `mayik_cliff_01` (walls),
-  appended to the end of `materials.settings` with blank masks.
+- **Terrain** (revised after the user's review): regional styles from EU4 lore, per EU4 area, with county and barony floor overrides; see `docs/systems/serpentreach.md` for the scheme. Floors at full weight; walls blend the nearest floor into the style's wall material by smoothstep(d / WALL_WIDTH). Materials Anbennar lacks are appended from Godherja or RiE, copied as `aov_<file name>`.
 - **Smoothing** (addendum after the first in-game look, which showed 3-4 px stair steps): the traced labels go through
   a majority filter (radius 3, 3 passes) before the wall margin and the county split.
 - **Gates** (addendum, user request): every opening gets RiE's Erebor gate through the existing gate pipeline, cone turn 0; the carve runs after the cones and re-cuts the corridor; pieces near the floor are dropped. Verkal Skomdihr's corridor cuts through Deepwoods Wasteland (1782) to reach the Deepwoods.
