@@ -236,11 +236,13 @@ def read_text(path: Path) -> str:
     return path.read_bytes().decode("utf-8")
 
 
-def dwarf_model_provinces(anbennar: Path) -> list:
-    """Provinces whose castles and cities show the dwarf model whoever holds them: the dwarven terrains minus
+def dwarf_model_provinces(anbennar: Path, submod: Path = SUBMOD) -> list:
+    """Provinces whose castles and cities show the dwarf model whoever holds them: the dwarven terrains of Anbennar's
+    province terrain and of this mod's (Serpentreach's new provinces, tools/build_serpentreach.py), minus
     DWARF_PROVINCE_EXCLUDE. Shared by the asset lists here and in tools/build_holds.py."""
-    ids = terrain_provinces(read_text(Path(anbennar) / TERRAIN_FILE), data.DWARF_TERRAIN_TERRAINS,
-                            data.DWARF_PROVINCE_EXCLUDE)
+    texts = [read_text(Path(anbennar) / TERRAIN_FILE)]
+    texts += [read_text(p) for p in sorted((Path(submod) / "common/province_terrain").glob("*.txt"))]
+    ids = terrain_provinces("\n".join(texts), data.DWARF_TERRAIN_TERRAINS, data.DWARF_PROVINCE_EXCLUDE)
     if not ids:
         raise GeneratorError("no dwarven terrain provinces found")
     return ids

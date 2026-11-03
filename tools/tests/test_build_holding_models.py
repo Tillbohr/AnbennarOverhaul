@@ -500,9 +500,13 @@ class RealBuildingTests(unittest.TestCase):
 
     def test_dwarf_terrain_asset_only(self):
         terrain = bhm.read_text(REAL.anbennar / bhm.TERRAIN_FILE)
+        # the overhaul's own province terrain (Serpentreach's 124 new provinces) counts too
+        terrain += "\n" + "\n".join(bhm.read_text(p) for p in sorted((bhm.SUBMOD / "common/province_terrain")
+                                                                      .glob("*.txt")))
         any_owner = bhm.terrain_provinces(terrain, data.DWARF_TERRAIN_TERRAINS, exclude=data.DWARF_PROVINCE_EXCLUDE)
         self.assertEqual(any_owner, bhm.dwarf_model_provinces(REAL.anbennar))
         self.assertNotIn(263, any_owner)
+        self.assertIn(6944, any_owner)  # Orlghelovar, the first Serpentreach hold province (dwarven_hold_surface)
         self.assertTrue(any_owner)
         regions = bhm.graphical_regions(REAL.anbennar)
         for kind in ("castle", "city", "temple"):

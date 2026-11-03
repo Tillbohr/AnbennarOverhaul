@@ -85,6 +85,9 @@ The generator stops when one is missing.
   Ethos and three traditions come from each hold's EU4 ideas. Every other field is `stone_dwarvish`'s from the
   overhaul's generated `anb_dwarf.txt`, including the RiE gfx keys, which the generators only add to Anbennar's
   files. `test_serpentreach_cultures.py` keeps the two equal, so copy any change by hand.
+- **Holding models:** every Serpentreach province is dwarven terrain, so its castles and cities show RiE's dwarf
+  model whoever holds them: `build_holding_models.dwarf_model_provinces` reads this mod's province terrain too
+  (`holding-models.md`), so rerun `build_holding_models.py` and `build_holds.py` after this generator.
 - **People:** every county, character and dynasty of a kingdom has its hold's culture (`KINGDOM_CULTURES`; marble for
   Shazstundihr). Per duchy there is an elder (holds from 860.1.1, dies 1000-1010) and his son; the emperor holds
   `d_arg_ordstun` himself. Dynasties are named `az-<duchy>`, except six that take EU4 names with no prefix
