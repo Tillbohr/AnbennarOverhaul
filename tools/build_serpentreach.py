@@ -24,6 +24,7 @@ from build_hud_override import DEFAULT_GAME, GeneratorError  # noqa: E402
 import eu4_import as eu4i  # noqa: E402
 import pngio  # noqa: E402
 import serpentreach_layout as sl  # noqa: E402
+from data import segbandal as segbandal_data  # noqa: E402
 from data import serpentreach as data  # noqa: E402
 
 SUBMOD = Path(__file__).resolve().parent.parent
@@ -105,6 +106,10 @@ def locator_override(text: str, instances: list) -> str:
     body = text.lstrip(BOM)
     if body.count("game_object_locator") != 1 or not body.endswith("\t}\n}\n"):
         raise GeneratorError("locator file is not a single game_object_locator ending in its instances block")
+    # Anbennar's other_stack_locators holds stray instances for ids it has no province for; ours replace them
+    new_ids = {str(pid) for pid, _, _ in instances}
+    body = re.sub(r"\t\t\{\n\t\t\tid=(\d+)\n(?:\t\t\t[^\n]*\n)*?\t\t\}\n",
+                  lambda m: "" if m.group(1) in new_ids else m.group(0), body)
     extra = "".join(f"\t\t{{\n\t\t\tid={pid}\n\t\t\tposition={{ {x:.6f} 0.000000 {z:.6f} }}\n"
                     "\t\t\trotation={ -0.000000 -0.000000 -0.000000 1.000000 }\n"
                     "\t\t\tscale={ 1.000000 1.000000 1.000000 }\n\t\t}\n" for pid, x, z in instances)
@@ -406,11 +411,11 @@ def render_loc(realm: Realm, people: People) -> bytes:
     return _text(lines)
 
 
-def render_definition(original: bytes, lay: sl.Layout) -> bytes:
+def render_definition(original: bytes, lays) -> bytes:
     nl = b"\r\n" if b"\r\n" in original else b"\n"
     out = original if original.endswith(nl) else original + nl
     rows = []
-    for c in lay.counties:
+    for lay, c in ((lay, c) for lay in lays for c in lay.counties):
         for i, pid in enumerate(c.baronies):
             p = lay.provinces[pid]
             name = ascii_name(c.name if i == 0 else f"{c.name} {data.BARONY_SUFFIXES[i - 1]}")
@@ -418,20 +423,22 @@ def render_definition(original: bytes, lay: sl.Layout) -> bytes:
     return out + nl.join(rows) + nl
 
 
-def render_provinces(png: bytes, lay: sl.Layout) -> bytes:
+def render_provinces(png: bytes, lays) -> bytes:
     img = pngio.read_png(png)
     if img.bit_depth != 8 or img.color_type not in (2, 6):
         raise GeneratorError("provinces.png must be 8-bit RGB or RGBA")
     bpp = 3 if img.color_type == 2 else 4
     px = bytearray(img.pixels)
-    for (x, y), pid in lay.owner.items():
-        k = ((img.height - 1 - y) * img.width + x) * bpp
-        px[k:k + 3] = bytes(lay.provinces[pid].colour)
+    for lay in lays:
+        for (x, y), pid in lay.owner.items():
+            k = ((img.height - 1 - y) * img.width + x) * bpp
+            px[k:k + 3] = bytes(lay.provinces[pid].colour)
     return pngio.write_png(pngio.Image(img.width, img.height, 8, img.color_type, bytes(px)))
 
 
-def render_locators(anbennar: Path, lay: sl.Layout) -> dict:
-    instances = [(pid, p.interior[0] + 0.5, p.interior[1] + 0.5) for pid, p in sorted(lay.provinces.items())]
+def render_locators(anbennar: Path, lays) -> dict:
+    instances = [(pid, p.interior[0] + 0.5, p.interior[1] + 0.5)
+                 for lay in lays for pid, p in sorted(lay.provinces.items())]
     out = {}
     for name in LOCATOR_FILES:
         path = anbennar / LOCATOR_DIR / f"{name}.txt"
@@ -442,13 +449,23 @@ def render_locators(anbennar: Path, lay: sl.Layout) -> dict:
     return out
 
 
+def layouts(anbennar: Path = ANBENNAR, eu4: Path = EU4, ck3=None) -> tuple:
+    """(Serpentreach's layout, Segbandal's): Segbandal's ids follow Serpentreach's and its colours avoid them."""
+    ck3 = ck3 or sl.load_ck3(anbennar)
+    serp = sl.layout(anbennar, eu4, ck3)
+    seg = sl.layout(anbennar, eu4, ck3, cfg=segbandal_data, first_id=max(serp.provinces) + 1,
+                    used={p.colour for p in serp.provinces.values()})
+    return serp, seg
+
+
 def build_all(anbennar: Path = ANBENNAR, eu4: Path = EU4, ck3=None) -> dict:
     """Every output (rel path -> bytes); nothing is written here."""
-    lay = sl.layout(anbennar, eu4, ck3)
-    return build_from_layout(anbennar, lay)
+    return build_from_layout(anbennar, layouts(anbennar, eu4, ck3))
 
 
-def build_from_layout(anbennar: Path, lay: sl.Layout) -> dict:
+def build_from_layout(anbennar: Path, lays) -> dict:
+    """Serpentreach's files from `lays` (Serpentreach's layout first); the shared map files hold every layout."""
+    lay = lays[0]
     realm = Realm(lay)
     titles_text = "\n".join(p.read_text(encoding="utf-8-sig", errors="replace")
                             for p in sorted((anbennar / "common/landed_titles").glob("*.txt")))
@@ -462,8 +479,8 @@ def build_from_layout(anbennar: Path, lay: sl.Layout) -> dict:
     people = People(realm, male_names(anbennar))
     folder = anbennar / "map_data"
     files = {
-        PROVINCES_PNG: render_provinces((folder / "provinces.png").read_bytes(), lay),
-        DEFINITION: render_definition((folder / "definition.csv").read_bytes(), lay),
+        PROVINCES_PNG: render_provinces((folder / "provinces.png").read_bytes(), lays),
+        DEFINITION: render_definition((folder / "definition.csv").read_bytes(), lays),
         TITLES: render_titles(realm),
         PROVINCE_HISTORY: render_province_history(realm),
         TITLE_HISTORY: render_title_history(realm, people),
@@ -474,7 +491,7 @@ def build_from_layout(anbennar: Path, lay: sl.Layout) -> dict:
         LOC: render_loc(realm, people),
         ARMS: render_arms(realm),
     }
-    files.update(render_locators(anbennar, lay))
+    files.update(render_locators(anbennar, lays))
     return files
 
 
@@ -484,18 +501,20 @@ def main() -> int:
     parser.add_argument("--eu4", type=Path, default=EU4)
     args = parser.parse_args()
     try:
-        lay = sl.layout(args.anbennar, args.eu4)
-        files = build_from_layout(args.anbennar, lay)
+        lays = layouts(args.anbennar, args.eu4)
+        files = build_from_layout(args.anbennar, lays)
     except (GeneratorError, OSError, UnicodeDecodeError) as error:
         print(f"error: {error}", file=sys.stderr)
         return 1
-    for note in lay.notes:
-        print(f"note: {note}")
+    for lay in lays:
+        for note in lay.notes:
+            print(f"note: {note}")
     for rel, content in files.items():
         target = SUBMOD / rel
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(content)
-    print(f"wrote {len(files)} files: {len(lay.counties)} counties, {len(lay.provinces)} provinces")
+    print(f"wrote {len(files)} files: " + "; ".join(f"{len(lay.counties)} counties, {len(lay.provinces)} provinces"
+                                                    for lay in lays))
     return 0
 
 

@@ -130,5 +130,33 @@ class LayoutTests(unittest.TestCase):
         self.assertEqual(len(sl.components(pixels)), 1)
 
 
+@unittest.skipUnless(HAVE_GAME_DATA, "needs EU4 Anbennar and Anbennar CK3")
+class MapTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        import build_serpentreach as bs
+        cls.bs = bs
+        cls.lays = bs.layouts(ANBENNAR, EU4)
+        cls.files = bs.build_from_layout(ANBENNAR, cls.lays)
+
+    def test_map_files_hold_both_regions(self):
+        serp, seg = self.lays
+        rows = self.files["map_data/definition.csv"].decode("utf-8", errors="replace").splitlines()
+        anbennar = (ANBENNAR / "map_data/definition.csv").read_bytes().decode("utf-8", errors="replace").splitlines()
+        new = [int(r.split(";")[0]) for r in rows[len(anbennar):]]
+        self.assertEqual(new, sorted(serp.provinces) + sorted(seg.provinces))
+        colours = [tuple(r.split(";")[1:4]) for r in rows if r[:1].isdigit() and r.split(";")[0] != "0"]
+        self.assertEqual(len(colours), len(set(colours)))
+        for name in self.bs.LOCATOR_FILES:
+            text = self.files[f"{self.bs.LOCATOR_DIR}/{name}.txt"].decode("utf-8")
+            for pid in list(seg.provinces)[:3] + list(serp.provinces)[:3]:
+                self.assertEqual(len(re.findall(r"\bid=" + str(pid) + r"\n", text)), 1, (name, pid))
+
+    def test_serpentreach_ids_unchanged(self):
+        serp, seg = self.lays
+        self.assertEqual((min(serp.provinces), max(serp.provinces)), (6944, 7067))
+        self.assertEqual(min(seg.provinces), 7068)
+
+
 if __name__ == "__main__":
     unittest.main()

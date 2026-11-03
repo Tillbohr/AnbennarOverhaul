@@ -233,6 +233,16 @@ class OutputTests(unittest.TestCase):
         self.assertIn("\t\t\tid=7\n\t\t\tposition={ 10.500000 0.000000 20.500000 }\n", out)
         self.assertTrue(out.endswith("\t\t}\n\t}\n}\n"))
 
+    def test_locators_replace_stray_instances_of_new_ids(self):
+        # Anbennar's other_stack_locators has stray instances for ids it has no province for (up to 9659); a new
+        # province's id must end with exactly one instance, ours
+        import build_serpentreach as bs
+        out = bs.locator_override(LOCATORS, [(2, 10.5, 20.5)])
+        self.assertEqual(out.count("\t\t\tid=2\n"), 1)
+        self.assertIn("\t\t\tid=2\n\t\t\tposition={ 10.500000 0.000000 20.500000 }\n", out)
+        self.assertIn("\t\t\tid=1\n\t\t\tposition={ 1.000000 0.000000 2.000000 }\n", out)
+        self.assertTrue(out.endswith("\t\t}\n\t}\n}\n"))
+
     def test_title_collision_raises(self):
         import build_serpentreach as bs
         with self.assertRaisesRegex(GeneratorError, "c_x"):
@@ -257,8 +267,9 @@ class BuildTests(unittest.TestCase):
     def setUpClass(cls):
         import build_serpentreach as bs
         cls.bs = bs
-        cls.lay = sl.layout(ANBENNAR, EU4)
-        cls.files = bs.build_from_layout(ANBENNAR, cls.lay)
+        cls.lays = bs.layouts(ANBENNAR, EU4)
+        cls.lay = cls.lays[0]
+        cls.files = bs.build_from_layout(ANBENNAR, cls.lays)
 
     def test_generated_files_match_the_mod(self):
         stale = [rel for rel, content in self.files.items()
@@ -272,7 +283,8 @@ class BuildTests(unittest.TestCase):
         old = dm.load_province_map((ANBENNAR / "map_data/provinces.png").read_bytes(), definition)
         from data import serpentreach as data
         changed = {o for o, n in zip(old.ids, new.ids) if o != n}
-        self.assertEqual(changed, {2426} | set(data.OPENING_CUT_THROUGH))
+        from data import segbandal
+        self.assertEqual(changed, {2426, segbandal.SOURCE_PROVINCE} | set(data.OPENING_CUT_THROUGH))
         self.assertGreater(len(set(new.ids)), len(set(old.ids)) + 100)
 
     def test_every_barony_has_history_and_loc(self):
