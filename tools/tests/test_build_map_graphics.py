@@ -1004,10 +1004,13 @@ class ConeRealTests(unittest.TestCase):
         return gt.frame(math.atan2(site.inward[0] + 0.0, site.inward[1] + 0.0) + plan.turn)
 
     def test_the_build_uses_this_stamp(self):
-        """The build's heightmap is this stamp with Serpentreach carved into it last."""
+        """The build's heightmap is this stamp with Serpentreach, then the carved ranges, carved into it last."""
+        import carved_ranges as cr
         import serpentreach_layout as sl
         files = real_build()[0]
         carved, _ = sl.carve(self.new, bmg.serpentreach_layout(ROOTS), self.pm, self.water)
+        for _, floor, terrain, rock in bmg.carved_ranges(ROOTS):
+            carved, _ = cr.carve(carved, floor, terrain, rock, self.pm, self.water, data.CARVE_RAMP)
         self.assertEqual(pngio.write_png(carved.to_png()), files["map_data/heightmap.png"])
 
     def test_changes_stay_near_a_gate_and_nothing_is_lowered(self):
@@ -1286,7 +1289,9 @@ class HeightOutputsTests(unittest.TestCase):
 
     def test_notes_cover_ranges_and_sites(self):
         lay = bmg.serpentreach_layout(ROOTS)
-        self.assertEqual(sum(note.startswith("range ") for note in self.notes), 9)
+        self.assertEqual(sum(note.startswith("range ") and " carved: " not in note for note in self.notes), 9)
+        self.assertEqual(sum(note.startswith("range of ") and " carved: " in note for note in self.notes),
+                         len(data.CARVED_RANGES))
         self.assertEqual(sum(note.startswith("gate ") for note in self.notes), 9 + len(lay.openings))
         self.assertFalse(any("c_oldpassage" in note for note in self.notes if note.startswith("gate ")))
         for op in lay.openings:

@@ -25,6 +25,7 @@ import gate_transplant as gt  # noqa: E402
 import heightpack as hp  # noqa: E402
 import pngio  # noqa: E402
 import serpentreach_layout as sl  # noqa: E402
+import carved_ranges as cr  # noqa: E402
 import terrain_fill as tfill  # noqa: E402
 from data import map_graphics as data  # noqa: E402
 from data.holds import HOLDS  # noqa: E402
@@ -1101,6 +1102,32 @@ def serpentreach_layout(roots: Roots, ck3: tuple = None) -> "sl.Layout":
     return _SERPENTREACH[key][0]
 
 
+_CARVED = {}  # anbennar -> [(county, floor, terrain, rock)], one analysis per build
+
+
+def carved_ranges(roots: Roots, ck3: tuple = None) -> list:
+    """[(county, floor {(x, y): province}, province terrain, rock provinces)] for every CARVED_RANGES county, from
+    Anbennar's map. `ck3` is (province map, water, impassable) when already loaded."""
+    key = str(roots.anbennar)
+    if key not in _CARVED:
+        folder = roots.anbennar / MAP_DATA
+        if ck3 is None:
+            pm = dm.load_province_map((folder / "provinces.png").read_bytes(), _read_text(folder / "definition.csv"))
+            _, impassable = dm.default_map_sets(_read_text(folder / "default.map"))
+        else:
+            pm, _, impassable = ck3
+        terrain = dm.province_terrain(_read_text(roots.anbennar / "common/province_terrain/00_province_terrain.txt"))
+        titles = dm.province_titles("\n".join(_read_text(p) for p in
+                                              sorted((roots.anbennar / "common/landed_titles").glob("*.txt"))))
+        ranges = dm.ranges(dm.dwarven_provinces(terrain), dm.border_pixels(pm))
+        out = []
+        for county in data.CARVED_RANGES:
+            floor = cr.floor_pixels(pm, cr.carved_range(ranges, titles, county))
+            out.append((county, floor, terrain, cr.rock_around(pm, floor, impassable, data.CARVE_ROCK_RADIUS)))
+        _CARVED[key] = out
+    return _CARVED[key]
+
+
 def build_terrain_fill(roots: Roots, notes: list = None) -> dict:
     """Anbennar's terrain blend maps with every unpainted (zero-weight, drawn black) pixel filled; see
     tools/terrain_fill.py. Whole-file overrides of detail_index.tga and detail_intensity.tga."""
@@ -1115,7 +1142,11 @@ def build_terrain_fill(roots: Roots, notes: list = None) -> dict:
     lay = serpentreach_layout(roots)
     ids = material_ids(roots)
     materials = {pid: (ids.index(floor), ids.index(wall)) for pid, (floor, wall) in sl.province_materials(lay).items()}
-    index, intensity = sl.paint(index, intensity, lay, materials, _SERPENTREACH[_layout_key(roots)][1])
+    pm = _SERPENTREACH[_layout_key(roots)][1]
+    index, intensity = sl.paint(index, intensity, lay, materials, pm)
+    for _, floor, terrain, rock in carved_ranges(roots):
+        materials = {pid: (ids.index(f), ids.index(w)) for pid, (f, w) in cr.province_materials(floor, terrain).items()}
+        index, intensity = cr.paint(index, intensity, floor, materials, pm, rock)
     if notes is not None:
         notes.append(f"terrain gaps filled: {report['small_pixels']} px in {report['small_groups']} small gaps "
                      f"(copied from neighbours), {report['large_pixels']} px in {report['large_groups']} large "
@@ -1155,13 +1186,23 @@ def build_heightmap(roots: Roots, notes: list = None) -> dict:
     comp = gt.load_composition(roots.rie)
     new, plans = gt.transplant(lifted, pm, water, placed, comp, transplant_overrides(sr_sites),
                                ranges=set(dwarven) | set(impassable), piece_bounds=piece_bounds(roots.rie, comp))
+    carved_floors = carved_ranges(roots, (pm, water, impassable))
     for plan in plans:
         drop_pieces_on_floor(plan, lay.owner, sr_data.PIECE_FLOOR_CLEARANCE)
+        for _, floor, _, _ in carved_floors:
+            drop_pieces_on_floor(plan, floor, sr_data.PIECE_FLOOR_CLEARANCE)
     new, carved = sl.carve(new, lay, pm, water)
+    range_reports = []
+    for county, floor, terrain, rock in carved_floors:
+        new, r = cr.carve(new, floor, terrain, rock, pm, water, data.CARVE_RAMP)
+        range_reports.append((county, r))
     if notes is not None:
         notes.extend(_height_notes(report, plans))
         notes.append(f"serpentreach carved: ground {carved['base']}, {carved['floor_px']} floor px, "
                      f"{carved['wall_px']} wall px")
+        for county, r in range_reports:
+            notes.append(f"range of {county} carved: ground {r['base']}, {r['floor_px']} floor px, {r['wall_px']} "
+                         f"wall px, {r['opening_px']} opening px, rock {', '.join(map(str, r['rock']))}")
 
     changed = hp.changed_blocks(old, new)
     blocks = {}

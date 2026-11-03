@@ -168,3 +168,11 @@ PACK_TOLERANCE = 257  # largest height error allowed when repacking the heightma
 # than TERRAIN_FILL_LARGE pixels copy a painted neighbour; larger ones get TERRAIN_FILL_MATERIAL at full weight.
 TERRAIN_FILL_MATERIAL = "mountain_02"  # Anbennar material id; draws RiE's Mountains 01 rock through TEXTURE_MAP
 TERRAIN_FILL_LARGE = 1000
+
+# Carved dwarven ranges (tools/carved_ranges.py): Serpentreach's carved-in look for an Anbennar dwarven range inside
+# impassable rock. Each county names the range holding it (Segbandal: Seghdihr's). Floors are flat at the ground
+# +/- Serpentreach's terraces, ramping to the land over CARVE_RAMP px where they open onto it; impassable provinces
+# within CARVE_ROCK_RADIUS px of the floor get walls and Serpentreach's default wall material.
+CARVED_RANGES = ("c_seghdihr",)
+CARVE_ROCK_RADIUS = 12
+CARVE_RAMP = 12

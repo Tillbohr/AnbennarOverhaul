@@ -757,12 +757,13 @@ def used_materials():
     return sorted(ids | set(data.COUNTY_FLOORS.values()) | set(data.BARONY_FLOORS.values()))
 
 
-def paint(index, intensity, lay, materials, pm=None):
+def paint(index, intensity, lay, materials, pm=None, rock=None):
     """Copies of the blend maps (terrain_fill.Tga): floor pixels get their province's floor material from
     `materials` ({province id: (floor index, wall index)}) at full weight; wall pixels within WALL_WIDTH
-    (impassable rock only when `pm` is given) blend the nearest floor's material into that province's wall material
-    by smoothstep of the distance, full wall at WALL_WIDTH."""
+    (impassable rock only when `pm` is given: `rock`, default Serpentreach's) blend the nearest floor's material
+    into that province's wall material by smoothstep of the distance, full wall at WALL_WIDTH."""
     import terrain_fill as tf
+    rock = rock_provinces() if rock is None else rock
     W, H = index.width, index.height
     idx = bytearray(index.pixels)
     wgt = bytearray(intensity.pixels)
@@ -773,7 +774,7 @@ def paint(index, intensity, lay, materials, pm=None):
     sources = {p: materials[pid] for p, pid in lay.owner.items()}
     for (x, y), (d, (fi, wi)) in _nearest(sources, _box_around(floor, data.WALL_WIDTH + 1, W, H),
                                           data.WALL_WIDTH).items():
-        if d and pm is not None and pm.ids[y * W + x] not in rock_provinces():
+        if d and pm is not None and pm.ids[y * W + x] not in rock:
             continue
         k = (y * W + x) * 4
         w = round(255 * _smooth(d / data.WALL_WIDTH))
