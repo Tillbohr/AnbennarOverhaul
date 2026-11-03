@@ -1,0 +1,71 @@
+﻿# Anbennar Overhaul: the Vic3 Anbennar gnoll head (gfx/portraits/portrait_modifiers/aov_gnoll.txt). The head is a special
+# gene, like the game's gene_wounded: not part of anyone's DNA, added only by the portrait modifier. Index 0 of the eyes
+# gene is nothing. Art in gfx/models/portraits/aov_gnoll/ and the head blendshapes folders.
+
+special_genes = {
+	morph_genes = {
+		# The hyena head: Vic3 Anbennar's gnoll blend shape on the game's head mesh (attribute gnoll_head_bs, added to
+		# the head assets by tools/build_gnoll_portraits.py) and its spotted fur painted over the head as a decal.
+		# The first two in-game tests had this as a regular gene set by mode = replace: the blend shape showed but the
+		# head kept the human skin (as a texture_override, then as decals). The game's own decal genes (gene_wounded,
+		# gene_illness) are special genes added by mode = add, so this one is too.
+		aov_gnoll_head = {
+			aov_gnoll_head_full = {
+				index = 0
+				male = {
+					setting = { attribute = "gnoll_head_bs" value = { min = 1.0 max = 1.0 } }
+					# The fur's colours replace the skin after the skin colour is applied, so every gnoll has the same
+					# fur, above the game's eyebrow and lip decals (priority 10). The head keeps the game's normal map
+					# and properties: Vic3's normal map is flat and its properties have no scattering or specular,
+					# which made the faces look soft and plastic.
+					decal = {
+						body_part = head
+						textures = {
+							diffuse = "gfx/models/portraits/aov_gnoll/aov_gnoll_head_diffuse.dds"
+						}
+						alpha_curve = {
+							{ 0.0 1.0 }
+							{ 1.0 1.0 }
+						}
+						blend_modes = {
+							diffuse = replace
+						}
+						priority = 20
+						decal_apply_order = post_skin_color
+					}
+				}
+				female = male
+				boy = male
+				girl = male
+			}
+		}
+	}
+}
+
+accessory_genes = {
+	# Vic3 Anbennar's gnoll eyes (a wider iris) on the game's eye meshes, in place of the eye_accessory gene's eyes
+	aov_gnoll_eyes = {
+		inheritable = no
+		group = eyes
+		aov_gnoll_no_eyes = {
+			index = 0
+			male = {
+				1 = empty
+			}
+			female = male
+			boy = male
+			girl = female
+		}
+		aov_gnoll_eyes = {
+			index = 1
+			male = {
+				1 = aov_male_gnoll_eyes
+			}
+			female = {
+				1 = aov_female_gnoll_eyes
+			}
+			boy = male
+			girl = female
+		}
+	}
+}

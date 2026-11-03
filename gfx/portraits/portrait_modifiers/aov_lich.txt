@@ -45,13 +45,13 @@ aov_lich = {
 				value = 0.5
 			}
 			accessory = {
-				mode = replace
+				mode = add
 				gene = hairstyles
 				template = no_hairstyles
 				value = 0
 			}
 			accessory = {
-				mode = replace
+				mode = add
 				gene = beards
 				template = no_beard
 				value = 0

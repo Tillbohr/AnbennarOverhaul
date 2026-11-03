@@ -1,0 +1,9 @@
+﻿# Anbennar Overhaul: gnoll eyes (aov_gnoll_eyes gene, common/genes/aov_gnoll_genes.txt)
+
+aov_male_gnoll_eyes = {
+	entity = { required_tags = "" shared_pose_entity = head  entity = aov_male_gnoll_eyes_entity }
+}
+
+aov_female_gnoll_eyes = {
+	entity = { required_tags = "" shared_pose_entity = head  entity = aov_female_gnoll_eyes_entity }
+}

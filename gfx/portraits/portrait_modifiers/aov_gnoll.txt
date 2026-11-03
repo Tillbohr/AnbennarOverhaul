@@ -1,0 +1,90 @@
+﻿# Anbennar Overhaul: a gnoll (Anbennar's race_gnoll trait) has Victoria 3 Anbennar's hyena head: its blend shape and
+# spotted fur (the special gene aov_gnoll_head, common/genes/aov_gnoll_genes.txt, added with mode = add as the game adds
+# gene_wounded) and its gnoll eyes (aov_gnoll_eyes gene) in place of the game's eyes, with no hair or beard. A blind
+# gnoll keeps the game's eyes, so it still looks blind. A Lich is left to the Lich portrait (aov_lich.txt), which hides
+# the head.
+
+aov_gnoll = {
+	usage = game
+	priority = 100
+
+	aov_gnoll = {
+		dna_modifiers = {
+			morph = {
+				mode = add
+				gene = aov_gnoll_head
+				template = aov_gnoll_head_full
+				value = 1.0
+			}
+			accessory = {
+				mode = replace
+				gene = aov_gnoll_eyes
+				template = aov_gnoll_eyes
+				value = 0.5
+			}
+			accessory = {
+				mode = replace
+				gene = eye_accessory
+				template = no_eyes
+				value = 0.5
+			}
+			accessory = {
+				mode = add
+				gene = hairstyles
+				template = no_hairstyles
+				value = 0
+			}
+			accessory = {
+				mode = add
+				gene = beards
+				template = no_beard
+				value = 0
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 100
+				exists = this
+				has_trait = race_gnoll
+				NOR = {
+					has_trait = lich
+					has_trait = blind
+				}
+			}
+		}
+	}
+
+	aov_gnoll_blind = {
+		dna_modifiers = {
+			morph = {
+				mode = add
+				gene = aov_gnoll_head
+				template = aov_gnoll_head_full
+				value = 1.0
+			}
+			accessory = {
+				mode = add
+				gene = hairstyles
+				template = no_hairstyles
+				value = 0
+			}
+			accessory = {
+				mode = add
+				gene = beards
+				template = no_beard
+				value = 0
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 100
+				exists = this
+				has_trait = race_gnoll
+				has_trait = blind
+				NOT = { has_trait = lich }
+			}
+		}
+	}
+}

@@ -1,0 +1,41 @@
+# Anbennar Overhaul: gnoll eyes, imported once from Victoria 3 Anbennar (pupil_gnoll_L.dds) onto the game's eye meshes,
+# like Anbennar's kobold eyes: only the diffuse changes, the mesh keeps the game's eye normal and properties. The iris is
+# tinted by the eye colour gene (color_mask_remap_interval, as on the game's eyes). Names prefixed aov_; edit by hand.
+
+entity = {
+	name = "aov_male_gnoll_eyes_entity"
+	pdxmesh = "male_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 1.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "male_eyesShape"
+		index = 0
+		texture_diffuse = "aov_gnoll_eyes_diffuse.dds"
+	}
+}
+
+entity = {
+	name = "aov_female_gnoll_eyes_entity"
+	pdxmesh = "female_eyes_mesh"
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = { 0.0 1.0 }
+			}
+		}
+	}
+
+	meshsettings = {
+		name = "female_eyesShape"
+		index = 0
+		texture_diffuse = "aov_gnoll_eyes_diffuse.dds"
+	}
+}
