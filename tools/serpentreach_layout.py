@@ -195,6 +195,37 @@ def split(pixels, k, min_px, label):
     return [first] + rest
 
 
+def _disk(radius):
+    r2 = radius * radius + radius
+    return [(dx, dy) for dy in range(-radius, radius + 1) for dx in range(-radius, radius + 1) if dx * dx + dy * dy <= r2]
+
+
+def smooth_labels(labels, radius, passes):
+    """A majority (mode) filter over a disk of `radius`, `passes` times: each pixel takes the label most common
+    around it, unlabelled counting as one more label; a tie keeps the pixel's own label (else the smallest). Removes
+    the stair steps of an upscaled outline and stray pixels. {(x, y): label} in, the same out."""
+    disk = _disk(radius)
+    cur = dict(labels)
+    for _ in range(passes):
+        candidates = {(x + dx, y + dy) for x, y in cur for dx, dy in disk}
+        nxt = {}
+        for p in sorted(candidates, key=_key):
+            counts = {}
+            for dx, dy in disk:
+                label = cur.get((p[0] + dx, p[1] + dy))
+                counts[label] = counts.get(label, 0) + 1
+            mine = cur.get(p)
+            top = max(counts.values())
+            if counts.get(mine, 0) == top:
+                new = mine
+            else:
+                new = min((l for l, c in counts.items() if c == top), key=lambda l: (l is None, str(l)))
+            if new is not None:
+                nxt[p] = new
+        cur = nxt
+    return cur
+
+
 def chamfer(sources, box, limit):
     """Chessboard (8-neighbour) distance from `sources` to every pixel within `limit` inside `box` (x0, y0, x1, y1,
     end-exclusive): {(x, y): d}."""
@@ -430,7 +461,7 @@ def layout(anbennar: Path, eu4: Path, ck3=None) -> Layout:
             if ck(x, y) != src and any(ck(x + dx, y + dy) == src for dx, dy in N8):
                 edge.append((x, y))
     near = chamfer(edge, box, data.WALL_MARGIN - 1)
-    traced = {}
+    labels = {}
     spill = {}
     for y in range(box[1], box[3]):
         for x in range(box[0], box[2]):
@@ -438,10 +469,13 @@ def layout(anbennar: Path, eu4: Path, ck3=None) -> Layout:
             a = emap.at(int(math.floor(ex)), int(math.floor(ey)))
             if a not in serp:
                 continue
+            labels[(x, y)] = a
             if ck(x, y) != src:
                 spill[ck(x, y)] = spill.get(ck(x, y), 0) + 1
-            elif (x, y) not in near:
-                traced.setdefault(a, set()).add((x, y))
+    traced = {}
+    for (x, y), a in smooth_labels(labels, data.SMOOTH_RADIUS, data.SMOOTH_PASSES).items():
+        if ck(x, y) == src and (x, y) not in near:
+            traced.setdefault(a, set()).add((x, y))
     if spill:
         notes.append("clipped (not province " + str(src) + "): " +
                      ", ".join(f"{cnames.get(p, p)} {n} px" for p, n in sorted(spill.items())))
@@ -593,24 +627,37 @@ def _box_around(pixels, margin, width, height):
             min(max(xs) + margin + 1, width), min(max(ys) + margin + 1, height))
 
 
-def _spread(heights, box, limit):
-    """Chessboard distance and source height from the pixels of `heights` to every pixel within `limit` inside
-    `box`: {(x, y): (d, h)}; a pixel reached from several sources at once takes the highest."""
+def _nearest(sources, box, limit):
+    """Euclidean distance to, and the payload of, the nearest pixel of `sources` ({(x, y): payload}) for every
+    pixel within `limit` inside `box`: {(x, y): (d, payload)}. The nearest source is carried outward ring by ring
+    (vector propagation); among equally near sources the largest payload wins."""
     x0, y0, x1, y1 = box
-    out = {p: (0, h) for p, h in heights.items()}
-    frontier = sorted(heights, key=_key)
-    for d in range(1, limit + 1):
+    best = {p: (0.0, v, p) for p, v in sources.items()}
+    frontier = sorted(sources, key=_key)
+    for _ in range(int(math.ceil(limit)) + 1):
         reached = {}
         for x, y in frontier:
-            h = out[(x, y)][1]
+            _, v, s = best[(x, y)]
             for dx, dy in N8:
                 n = (x + dx, y + dy)
-                if n not in out and x0 <= n[0] < x1 and y0 <= n[1] < y1:
-                    reached[n] = max(reached.get(n, h), h)
-        for n, h in reached.items():
-            out[n] = (d, h)
+                if n in best or not (x0 <= n[0] < x1 and y0 <= n[1] < y1):
+                    continue
+                d = math.dist(n, s)
+                if d > limit:
+                    continue
+                old = reached.get(n)
+                if old is None or d < old[0] or (d == old[0] and v > old[1]):
+                    reached[n] = (d, v, s)
+        best.update(reached)
         frontier = sorted(reached, key=_key)
-    return out
+        if not frontier:
+            break
+    return {p: (d, v) for p, (d, v, _) in best.items()}
+
+
+def _smooth(t):
+    t = max(0.0, min(1.0, t))
+    return t * t * (3 - 2 * t)
 
 
 def floor_heights(lay, base, grid):
@@ -629,9 +676,10 @@ def floor_heights(lay, base, grid):
 
 
 def carve(grid, lay, pm, water):
-    """(new grid, report) with the Serpentreach floor carved into the mountain (spec §2): floors flat, walls
-    rising to at least MIN_WALL above the floor within WALL_WIDTH, then fading into the mountain over WALL_FADE.
-    Only floor and province-2426 rock pixels change; rock is never lowered."""
+    """(new grid, report) with the Serpentreach floor carved into the mountain (spec §2): floors flat; within
+    WALL_WIDTH (Euclidean) a smoothstep slope from the floor up to the rock, or to the rim (floor + MIN_WALL) where
+    the rock is lower; beyond it, low rock fades from the rim back to its own height over WALL_FADE and is never
+    lowered. Only floor and province-2426 rock pixels change."""
     import heightpack as hp
     W, H = pm.width, pm.height
     src = data.SOURCE_PROVINCE
@@ -648,39 +696,44 @@ def carve(grid, lay, pm, water):
         values[y * W + x] = max(0, min(65535, h))
     limit = data.WALL_WIDTH + data.WALL_FADE
     walls = 0
-    for (x, y), (d, h) in _spread(fh, _box_around(floor, limit, W, H), limit).items():
+    for (x, y), (d, h) in _nearest(fh, _box_around(floor, limit + 1, W, H), limit).items():
         i = y * W + x
         if d == 0 or pm.ids[i] != src or (x, y) in lay.owner:
             continue
         orig = grid.values[i]
         rim = h + data.MIN_WALL
         if d <= data.WALL_WIDTH:
-            t = d / data.WALL_WIDTH
-            target = h + data.MIN_WALL * (t * t * (3 - 2 * t))
+            new = h + (max(orig, rim) - h) * _smooth(d / data.WALL_WIDTH)
         else:
-            target = rim + (orig - rim) * (d - data.WALL_WIDTH) / data.WALL_FADE
-        new = max(orig, min(65535, round(target)))
+            new = max(orig, rim + (orig - rim) * (d - data.WALL_WIDTH) / data.WALL_FADE)
+        new = max(0, min(65535, round(new)))
         if new != orig:
             values[i] = new
             walls += 1
     return hp.Grid(W, H, values), {"base": base, "floor_px": len(fh), "wall_px": walls}
 
 
-def paint(index, intensity, lay, floor_index, wall_index, pm=None):
-    """Copies of the blend maps (terrain_fill.Tga) with floor pixels set to `floor_index` and wall pixels (within
-    WALL_WIDTH of the floor; province-2426 rock only when `pm` is given) to `wall_index`, both at full weight."""
+def paint(index, intensity, lay, floor_indices, wall_index, pm=None):
+    """Copies of the blend maps (terrain_fill.Tga): floor pixels get their county type's material from
+    `floor_indices` at full weight; wall pixels within WALL_WIDTH (province-2426 rock only when `pm` is given)
+    blend that floor material into `wall_index` by smoothstep of the distance, full wall at WALL_WIDTH."""
     import terrain_fill as tf
     W, H = index.width, index.height
     idx = bytearray(index.pixels)
     wgt = bytearray(intensity.pixels)
-    full = bytes((255, 0, 0, 0))
+    county = {c.key: c for c in lay.counties}
+    kinds = {p: county[lay.provinces[pid].county].type for p, pid in lay.owner.items()}
+    missing = sorted(set(kinds.values()) - set(floor_indices))
+    if missing:
+        raise GeneratorError(f"no floor material for {', '.join(missing)}")
     floor = list(lay.owner)
-    for (x, y), d in chamfer(floor, _box_around(floor, data.WALL_WIDTH, W, H), data.WALL_WIDTH).items():
+    for (x, y), (d, kind) in _nearest(kinds, _box_around(floor, data.WALL_WIDTH + 1, W, H), data.WALL_WIDTH).items():
         if d and pm is not None and pm.ids[y * W + x] != data.SOURCE_PROVINCE:
             continue
         k = (y * W + x) * 4
-        idx[k:k + 4] = bytes((floor_index if d == 0 else wall_index, 0, 0, 0))
-        wgt[k:k + 4] = full
+        w = round(255 * _smooth(d / data.WALL_WIDTH))
+        idx[k:k + 4] = bytes((floor_indices[kind], wall_index if d else 0, 0, 0))
+        wgt[k:k + 4] = bytes((255 - w, w, 0, 0))
     return (tf.Tga(W, H, index.header, idx, index.footer), tf.Tga(W, H, intensity.header, wgt, intensity.footer))
 
 

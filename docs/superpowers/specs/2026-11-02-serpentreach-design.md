@@ -59,13 +59,17 @@ gate and cone steps keep running on Anbennar's map unchanged; carving is a final
 - **Floors:** every floor pixel is flat at `base + TERRACE[type]` (roads 0, caverns -`TERRACE_STEP`, holds and surface
   holds +`TERRACE_STEP`; `TERRACE_STEP` 600 in 16-bit height units), giving Godherja's stepped halls. Opening
   corridors ramp linearly from the county floor to the outside land height at their mouth.
-- **Walls:** for 2426 pixels at distance d (8-neighbour chamfer) from the floor, with `rim = floor + MIN_WALL` (6000):
-  d <= `WALL_WIDTH` (3): `floor + (max(orig, rim) - floor) * smoothstep(d / WALL_WIDTH)`; up to `WALL_WIDTH +
-  WALL_FADE` (8): `max(orig, lerp(rim, orig, t))`; beyond, unchanged. Mountain is never lowered except on the floor.
+- **Walls:** for 2426 pixels at Euclidean distance d from the nearest floor pixel, with `rim = floor + MIN_WALL`
+  (6000): d <= `WALL_WIDTH` (4): `floor + (max(orig, rim) - floor) * smoothstep(d / WALL_WIDTH)` (a steep slope, so
+  rock within 4 px of the floor may come down); up to `WALL_WIDTH + WALL_FADE` (8): `max(orig, lerp(rim, orig, t))`;
+  beyond, unchanged.
 - **Packed heightmap:** changed blocks are repacked by the existing code.
-- **Terrain:** in the filled blend maps, floor pixels get `FLOOR_MATERIAL` and wall pixels (d <= `WALL_WIDTH`)
-  `WALL_MATERIAL` at full weight (both ids from Anbennar's `materials.settings`; start `steppe_rocks` and
-  `mountain_02_c`, tune in game).
+- **Terrain:** floor pixels get their county type's `FLOOR_MATERIALS` entry at full weight; wall pixels (d <=
+  `WALL_WIDTH`) blend it into `WALL_MATERIAL` by smoothstep(d / WALL_WIDTH). The materials are Godherja's
+  `imperial_road` (roads), `canyon_rough_rock` (caverns), `mayik_tiles_01` (holds) and `mayik_cliff_01` (walls),
+  appended to the end of `materials.settings` with blank masks.
+- **Smoothing** (addendum after the first in-game look, which showed 3-4 px stair steps): the traced labels go through
+  a majority filter (radius 3, 3 passes) before the wall margin and the county split.
 - **Gates:** none at the openings in v1 (the cone would refill the corridor); a follow-up can place them.
 
 ## §3 Titles, history and people (`tools/build_serpentreach.py`)

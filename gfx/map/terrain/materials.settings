@@ -1015,6 +1015,38 @@
 		id       = "gen_mediterranean_mountain_transition"
 		sort_order = 8
 	}
+	{ # Anbennar Overhaul: Godherja, for Serpentreach
+		name     = "Road - Imperial"
+		diffuse  = "imperial_road_diffuse.dds"
+		normal   = "imperial_road_normal.dds"
+		material = "imperial_road_properties.dds"
+		mask     = "masks/aov_imperial_road_mask.png"
+		id       = "imperial_road"
+	}
+	{ # Anbennar Overhaul: Godherja, for Serpentreach
+		name     = "Canyon Rough Rock"
+		diffuse  = "canyon_rough_rock_diffuse.dds"
+		normal   = "canyon_rough_rock_normal.dds"
+		material = "canyon_rough_rock_properties.dds"
+		mask     = "masks/aov_canyon_rough_rock_mask.png"
+		id       = "canyon_rough_rock"
+	}
+	{ # Anbennar Overhaul: Godherja, for Serpentreach
+		name     = "Mayik Tiles 01"
+		diffuse  = "mayik_tiles_01_diffuse.dds"
+		normal   = "mayik_tiles_01_normal.dds"
+		material = "mayik_tiles_01_properties.dds"
+		mask     = "masks/aov_mayik_tiles_01_mask.png"
+		id       = "mayik_tiles_01"
+	}
+	{ # Anbennar Overhaul: Godherja, for Serpentreach
+		name     = "Mayik Cliff 01"
+		diffuse  = "mayik_cliff_01_diffuse.dds"
+		normal   = "mayik_cliff_01_normal.dds"
+		material = "mayik_cliff_01_properties.dds"
+		mask     = "masks/aov_mayik_cliff_01_mask.png"
+		id       = "mayik_cliff_01"
+	}
 }
 
 # unmasked textures

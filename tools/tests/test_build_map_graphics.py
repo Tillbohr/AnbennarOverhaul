@@ -56,6 +56,30 @@ def dds_header(width, height, fourcc):
     return bytes(head)
 
 
+class AppendMaterialsTests(unittest.TestCase):
+    ENTRY = {"id": "tiles", "name": "Tiles", "diffuse": "tiles_diffuse.dds", "normal": "tiles_normal.dds",
+             "material": "tiles_properties.dds", "mask": "masks/aov_tiles_mask.png"}
+
+    def test_appended_after_the_last_material(self):
+        tail = "\n# unmasked\n{\n}\n"
+        out = bmg.append_materials(ANB + tail, [self.ENTRY])
+        materials = bmg.parse_materials(out)
+        self.assertEqual([m["id"] for m in materials], ["rock", "grass", "tiles"])
+        self.assertEqual(materials[2]["diffuse"], "tiles_diffuse.dds")
+        self.assertEqual(materials[2]["mask"], "masks/aov_tiles_mask.png")
+        self.assertTrue(out.startswith(ANB[:ANB.index('\t\tid       = "grass"')]))  # the rest kept byte for byte
+        self.assertTrue(out.endswith("}\n" + tail))
+
+    def test_duplicate_id_stops(self):
+        with self.assertRaisesRegex(GeneratorError, "rock"):
+            bmg.append_materials(ANB, [dict(self.ENTRY, id="rock")])
+
+    def test_blank_mask_is_grey_and_empty(self):
+        img = pngio.read_png(bmg.blank_mask(16, 8))
+        self.assertEqual((img.width, img.height, img.bit_depth, img.color_type), (16, 8, 8, 0))
+        self.assertEqual(set(img.pixels), {0})
+
+
 class RemapTests(unittest.TestCase):
     def test_parse_materials(self):
         mats = bmg.parse_materials(ANB)
@@ -423,8 +447,15 @@ class RealFileTests(unittest.TestCase):
 
     def test_materials_settings_differs_only_in_header_and_mapped_lines(self):
         out = bmg.build_terrain(ROOTS)["gfx/map/terrain/materials.settings"].decode("utf-8")
+        from data import serpentreach as sr
         old, new = self.anb.splitlines(), out.splitlines()
         header = len(bmg.HEADER("gfx/map/terrain/materials.settings"))
+        block = len(bmg.MATERIAL_KEYS) + 2
+        start = next(i for i, line in enumerate(new) if line.startswith("\t{ # Anbennar Overhaul: Godherja"))
+        appended = new[start:start + block * len(sr.GODHERJA_MATERIALS)]
+        self.assertEqual(sum(line.startswith("\t{ # Anbennar Overhaul: Godherja") for line in appended),
+                         len(sr.GODHERJA_MATERIALS))
+        new = new[:start] + new[start + len(appended):]  # the Godherja blocks follow the last material
         self.assertEqual(len(new), len(old) + header)
         changed = [b for a, b in zip(old, new[header:]) if a != b]
         self.assertEqual(len(changed), 3 * len(data.TEXTURE_MAP))
@@ -1176,6 +1207,23 @@ class HeightOutputsTests(unittest.TestCase):
         self.assertTrue(names)
         for name in names:
             self.assertIn(folder + name, self.files)
+
+    def test_godherja_floor_materials_are_appended_and_painted(self):
+        import terrain_fill as tfill
+        from data import serpentreach as sr
+        text = self.files["gfx/map/terrain/materials.settings"].decode("utf-8-sig")
+        ids = [m["id"] for m in bmg.parse_materials(text)]
+        self.assertEqual(ids[-len(sr.GODHERJA_MATERIALS):], list(sr.GODHERJA_MATERIALS))
+        for m in bmg.parse_materials(text)[-len(sr.GODHERJA_MATERIALS):]:
+            for key in ("diffuse", "normal", "material", "mask"):
+                self.assertIn(f"gfx/map/terrain/{m[key]}", self.files, m[key])
+        lay = bmg.serpentreach_layout(ROOTS)
+        index = tfill.read_tga(self.files["gfx/map/terrain/detail_index.tga"])
+        county = {c.key: c for c in lay.counties}
+        for kind in sr.FLOOR_MATERIALS:
+            p = next(p for p, pid in lay.owner.items() if county[lay.provinces[pid].county].type == kind)
+            k = (p[1] * index.width + p[0]) * 4
+            self.assertEqual(index.pixels[k], ids.index(sr.FLOOR_MATERIALS[kind]), kind)
 
     def test_serpentreach_floor_is_flat_in_the_build(self):
         from data import serpentreach as sr

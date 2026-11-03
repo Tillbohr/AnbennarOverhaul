@@ -1,3 +1,4 @@
+import math
 import sys
 import unittest
 from pathlib import Path
@@ -81,6 +82,34 @@ def synthetic(width=60, height=30):
     return hp.Grid(width, height, vals), lay, dm.ProvinceMap(width, height, ids)
 
 
+class SmoothTests(unittest.TestCase):
+    def test_smooth_fills_notches_and_drops_spurs(self):
+        labels = {(x, y): "a" for x in range(10) for y in range(10)}
+        del labels[(9, 5)]  # a notch in the edge
+        labels[(14, 5)] = "a"  # a lone spur
+        out = sl.smooth_labels(labels, radius=2, passes=1)
+        self.assertEqual(out.get((9, 5)), "a")
+        self.assertNotIn((14, 5), out)
+        self.assertEqual(out.get((4, 4)), "a")
+
+    def test_smooth_cuts_stairs(self):
+        """A 3-px staircase edge (like EU4 pixels scaled 3.5x) loses its corner pixels."""
+        labels = {(x, y): "a" for y in range(30) for x in range(0, 3 * (y // 3) + 3)}
+        out = sl.smooth_labels(labels, radius=2, passes=3)
+
+        def jumps(pixels):
+            right = [max(x for x in range(40) if (x, y) in pixels) for y in range(6, 24)]
+            return max(b - a for a, b in zip(right, right[1:]))
+        self.assertEqual(jumps(labels), 3)
+        self.assertLess(jumps(out), 3)
+
+    def test_smooth_keeps_label_boundaries_between_counties(self):
+        labels = {(x, y): ("a" if x < 10 else "b") for x in range(20) for y in range(10)}
+        out = sl.smooth_labels(labels, radius=2, passes=3)
+        self.assertEqual(out[(5, 5)], "a")
+        self.assertEqual(out[(15, 5)], "b")
+
+
 class CarveTests(unittest.TestCase):
     def test_carve_profile(self):
         from data import serpentreach as data
@@ -91,12 +120,14 @@ class CarveTests(unittest.TestCase):
         floor_h = base + data.TERRACE["cavern"] * data.TERRACE_STEP
         for p in lay.owner:
             self.assertEqual(new.get(*p), floor_h)
+        row = [new.get(x, 13) for x in range(29, 29 + data.WALL_WIDTH + data.WALL_FADE + 2)]
+        self.assertEqual(row, sorted(row))  # walls rise away from the floor
+        self.assertLess(new.get(30, 13), grid.get(30, 13))  # a sloped wall, not a 1 px cliff
+        self.assertEqual(new.get(29 + data.WALL_WIDTH, 13), grid.get(29 + data.WALL_WIDTH, 13))
         for y in range(pm.height):
             for x in range(pm.width):
-                if (x, y) not in lay.owner:
-                    self.assertGreaterEqual(new.get(x, y), grid.get(x, y), (x, y))
-        row = [new.get(x, 13) for x in range(29, 29 + data.WALL_WIDTH + 1)]
-        self.assertEqual(row, sorted(row))  # walls rise away from the floor
+                if math.hypot(max(20 - x, 0, x - 29), max(12 - y, 0, y - 15)) > data.WALL_WIDTH:
+                    self.assertGreaterEqual(new.get(x, y), grid.get(x, y), (x, y))  # never lowered beyond the wall
         far = 29 + data.WALL_WIDTH + data.WALL_FADE + 1
         self.assertEqual(new.get(far, 13), grid.get(far, 13))
         self.assertEqual(new.get(10, 2), 5000)  # land untouched
@@ -113,14 +144,21 @@ class CarveTests(unittest.TestCase):
 
     def test_paint(self):
         import terrain_fill as tf
+        from data import serpentreach as data
         _, lay, _ = synthetic()
         w, h = 60, 30
-        blank = tf.Tga(w, h, b"\0" * 18, bytearray(w * h * 4), b"")
-        index, intensity = sl.paint(blank, blank, lay, floor_index=7, wall_index=9)
-        self.assertEqual(bytes(index.pixels[(13 * w + 24) * 4:(13 * w + 24) * 4 + 4]), bytes((7, 0, 0, 0)))
-        self.assertEqual(bytes(intensity.pixels[(13 * w + 24) * 4:(13 * w + 24) * 4 + 4]), bytes((255, 0, 0, 0)))
-        self.assertEqual(bytes(index.pixels[(13 * w + 31) * 4:(13 * w + 31) * 4 + 4]), bytes((9, 0, 0, 0)))
-        self.assertEqual(bytes(index.pixels[(13 * w + 45) * 4:(13 * w + 45) * 4 + 4]), bytes(4))  # untouched
+        blank = tf.Tga(w, h, bytes(18), bytearray(w * h * 4), b"")
+        index, intensity = sl.paint(blank, blank, lay, {"cavern": 7, "dwarven_road": 8}, wall_index=9)
+
+        def px(img, x, y):
+            return bytes(img.pixels[(y * w + x) * 4:(y * w + x) * 4 + 4])
+        self.assertEqual(px(index, 24, 13), bytes((7, 0, 0, 0)))  # the cavern's own floor material
+        self.assertEqual(px(intensity, 24, 13), bytes((255, 0, 0, 0)))
+        self.assertEqual(px(index, 29 + data.WALL_WIDTH, 13), bytes((7, 9, 0, 0)))
+        self.assertEqual(px(intensity, 29 + data.WALL_WIDTH, 13), bytes((0, 255, 0, 0)))  # wall at full weight
+        mid = px(intensity, 30, 13)
+        self.assertTrue(0 < mid[1] < 255 and mid[0] + mid[1] == 255, mid)  # blended on the slope
+        self.assertEqual(px(index, 45, 13), bytes(4))  # untouched
         self.assertEqual(bytes(blank.pixels), bytes(w * h * 4))  # inputs not modified
 
 

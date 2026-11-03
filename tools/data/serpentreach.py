@@ -13,6 +13,8 @@ FIT_BOX = (2950, 480, 3550, 760)
 CK3_FIT_BOX = (1900, 1496, 3800, 2396)
 
 WALL_MARGIN = 4  # px of rock kept between the floor and any other province
+SMOOTH_RADIUS = 3  # majority filter over the traced EU4 labels: removes the ~3.5 px stair steps
+SMOOTH_PASSES = 3
 OPENING_WIDTH = 6  # px width of a corridor to the surface
 MIN_BARONY_PX = 60  # a county needs at least this many floor px per barony
 MIN_FRAGMENT_PX = 0  # floor pieces cut off from their county's main piece are dropped (reported)
@@ -54,10 +56,15 @@ CARVE_GROUND_RADIUS = 40  # px around the floor sampled for the ground (median o
 TERRACE_STEP = 600
 TERRACE = {"dwarven_road": 0, "cavern": -1, "dwarven_hold": 1, "dwarven_hold_surface": 1}  # x TERRACE_STEP
 MIN_WALL = 6000  # the rim stands at least this far above the floor
-WALL_WIDTH = 3
+WALL_WIDTH = 4  # px of smoothstep slope from the floor up to the rock
 WALL_FADE = 8
-FLOOR_MATERIAL = "steppe_rocks"
-WALL_MATERIAL = "mountain_02_c"
+# Floor material per county type, and the wall material blended in over WALL_WIDTH. Godherja's textures, appended to
+# the end of materials.settings by tools/build_map_graphics.py (GODHERJA_MATERIALS: id -> name in its list).
+FLOOR_MATERIALS = {"dwarven_road": "imperial_road", "cavern": "canyon_rough_rock",
+                   "dwarven_hold": "mayik_tiles_01", "dwarven_hold_surface": "mayik_tiles_01"}
+WALL_MATERIAL = "mayik_cliff_01"
+GODHERJA_MATERIALS = {"imperial_road": "Road - Imperial", "canyon_rough_rock": "Canyon Rough Rock",
+                      "mayik_tiles_01": "Mayik Tiles 01", "mayik_cliff_01": "Mayik Cliff 01"}
 
 # People (placeholders): an elder holds from 860.1.1, his son from the elder's death.
 ELDER_BIRTH = (830, 845)

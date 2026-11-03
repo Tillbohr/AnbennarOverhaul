@@ -52,6 +52,7 @@ class Roots:
     anbennar: Path
     game: Path  # the install folder holding game/, jomini/ and clausewitz/
     eu4: Path = EU4_ROOTS["anbennar"]  # EU4 Anbennar, traced for Serpentreach (tools/serpentreach_layout.py)
+    godherja: Path = Path("C:/Program Files (x86)/Steam/steamapps/workshop/content/1158310/2326030123")
 
     @classmethod
     def default(cls):
@@ -182,14 +183,80 @@ def _read_text(path: Path) -> str:
     return path.read_bytes().decode("utf-8")  # keeps BOM and line endings
 
 
+MATERIAL_KEYS = ("name", "diffuse", "normal", "material", "mask", "id")
+
+
+def append_materials(text: str, entries: list) -> str:
+    """`text` (a materials.settings) with one block per entry (dicts of MATERIAL_KEYS) after its last material, so
+    every existing material keeps its texture-array index. A new id that is already listed stops the build."""
+    materials = parse_materials(text)
+    if not materials:
+        raise GeneratorError("materials.settings lists no materials")
+    taken = {m.get("id") for m in materials}
+    clash = sorted(e["id"] for e in entries if e["id"] in taken)
+    if clash:
+        raise GeneratorError(f"materials.settings already has {', '.join(clash)}")
+    eol = "\r\n" if "\r\n" in text else "\n"
+    lines = text.splitlines(keepends=True)
+    end = materials[-1]["end"]
+    blocks = []
+    for e in entries:
+        blocks.append(f"\t{{ {MARKER}: Godherja, for Serpentreach{eol}")
+        blocks += [f'\t\t{key:<8} = "{e[key]}"{eol}' for key in MATERIAL_KEYS]
+        blocks.append(f"\t}}{eol}")
+    return "".join(lines[:end + 1] + blocks + lines[end + 1:])
+
+
+def blank_mask(width: int, height: int) -> bytes:
+    """An all-black 8-bit grey mask PNG (the material is painted through the blend maps, not the mask)."""
+    return pngio.write_png(pngio.Image(width, height, 8, 0, bytes(width * height)))
+
+
+def godherja_materials(roots: Roots, size: tuple) -> tuple:
+    """(material entries, output rel path -> bytes) for sr_data.GODHERJA_MATERIALS: Godherja's textures copied
+    under their own names, each with a blank mask of `size` under masks/aov_<id>_mask.png."""
+    terrain = roots.godherja / TERRAIN
+    if not (terrain / "materials.settings").is_file():
+        raise GeneratorError(f"Godherja not found: {terrain / 'materials.settings'} does not exist")
+    by_id = _by_id(parse_materials(_read_text(terrain / "materials.settings")), "Godherja")
+    entries, files = [], {}
+    for mid, name in sr_data.GODHERJA_MATERIALS.items():
+        if mid not in by_id:
+            raise GeneratorError(f"GODHERJA_MATERIALS: {mid} is not a material of Godherja's materials.settings")
+        entry = {"id": mid, "name": name, "mask": f"masks/aov_{mid}_mask.png"}
+        for key in TEXTURE_KEYS:
+            file = by_id[mid].get(key)
+            source = terrain / file if file else None
+            if source is None or not source.is_file():
+                raise GeneratorError(f"Godherja material {mid}: its {key} texture {file} does not exist")
+            for other in (roots.game_terrain / file, roots.rie_terrain / file, roots.anbennar / TERRAIN / file):
+                if other.is_file() and other.read_bytes() != source.read_bytes():
+                    raise GeneratorError(f"Godherja's {file} would replace a different {other}")
+            _check_dds(source, f"Godherja texture {file}")
+            entry[key] = file
+            files[f"{TERRAIN}/{file}"] = source.read_bytes()
+        files[f"{TERRAIN}/{entry['mask']}"] = blank_mask(*size)
+        entries.append(entry)
+    return entries, files
+
+
+def material_ids(roots: Roots) -> list:
+    """Material ids in texture-array order: Anbennar's list, then the appended Godherja materials."""
+    return [m["id"] for m in parse_materials(_read_text(roots.anbennar / MATERIALS_REL))] + \
+        list(sr_data.GODHERJA_MATERIALS)
+
+
 def build_terrain(roots: Roots) -> dict:
-    """Output rel path -> bytes for the material list, the mapped RiE textures and the drop-ins."""
+    """Output rel path -> bytes for the material list, the mapped RiE textures, the drop-ins and the Godherja
+    materials appended for Serpentreach."""
     mapping = data.TEXTURE_MAP
     anb_text = _read_text(roots.anbennar / MATERIALS_REL)
     rie_text = _read_text(roots.rie / MATERIALS_REL)
     out = {}
 
-    remapped = remap_materials(anb_text, rie_text, mapping)
+    entries, godherja_files = godherja_materials(roots, png_size(roots.anbennar / "map_data/provinces.png"))
+    out.update(godherja_files)
+    remapped = append_materials(remap_materials(anb_text, rie_text, mapping), entries)
     bom = "\ufeff" if remapped.startswith("\ufeff") else ""
     eol = "\r\n" if "\r\n" in remapped else "\n"
     header = "".join(line + eol for line in HEADER(MATERIALS_REL))
@@ -978,9 +1045,13 @@ def build_terrain_fill(roots: Roots, notes: list = None) -> dict:
                                                     tfill.read_tga(paths[1].read_bytes()),
                                                     fill_material=material, large=data.TERRAIN_FILL_LARGE)
     lay = serpentreach_layout(roots)
-    floor, wall = (material_index(_read_text(roots.anbennar / MATERIALS_REL), m)
-                   for m in (sr_data.FLOOR_MATERIAL, sr_data.WALL_MATERIAL))
-    index, intensity = sl.paint(index, intensity, lay, floor, wall, _SERPENTREACH[_layout_key(roots)][1])
+    ids = material_ids(roots)
+    for m in list(sr_data.FLOOR_MATERIALS.values()) + [sr_data.WALL_MATERIAL]:
+        if m not in ids:
+            raise GeneratorError(f"Serpentreach material {m} is in neither Anbennar's list nor GODHERJA_MATERIALS")
+    floors = {kind: ids.index(m) for kind, m in sr_data.FLOOR_MATERIALS.items()}
+    index, intensity = sl.paint(index, intensity, lay, floors, ids.index(sr_data.WALL_MATERIAL),
+                                _SERPENTREACH[_layout_key(roots)][1])
     if notes is not None:
         notes.append(f"terrain gaps filled: {report['small_pixels']} px in {report['small_groups']} small gaps "
                      f"(copied from neighbours), {report['large_pixels']} px in {report['large_groups']} large "
