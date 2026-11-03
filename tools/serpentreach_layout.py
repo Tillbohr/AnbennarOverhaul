@@ -26,7 +26,8 @@ County = namedtuple("County", "key eu4_id name area type baronies")  # baronies:
 Province = namedtuple("Province", "id colour county index pixels interior")  # pixels sorted by (y, x)
 # corridor pixels (a set); mouth: the target pixel it opens onto; start: the floor pixel it leaves from
 Opening = namedtuple("Opening", "county target pixels mouth start")
-Layout = namedtuple("Layout", "width height counties provinces owner openings area_names notes")
+# links: corridors from a new county to a province it neighbours in EU4 that the trace did not reach (Segbandal)
+Layout = namedtuple("Layout", "width height counties provinces owner openings area_names notes links", defaults=((),))
 
 N4 = ((1, 0), (-1, 0), (0, 1), (0, -1))
 N8 = N4 + ((1, 1), (1, -1), (-1, 1), (-1, -1))
@@ -393,8 +394,11 @@ def load_ck3(anbennar: Path):
     return pm, definition, water, impassable
 
 
-def layout(anbennar: Path, eu4: Path, ck3=None) -> Layout:
-    """The Serpentreach provinces on Anbennar's map. `ck3` is load_ck3(anbennar), passed when already loaded."""
+def layout(anbennar: Path, eu4: Path, ck3=None, cfg=None, first_id=None, used=None) -> Layout:
+    """A traced region's provinces on Anbennar's map. `ck3` is load_ck3(anbennar), passed when already loaded; `cfg`
+    is the region's data module (default Serpentreach's); new ids start at `first_id` (default: after Anbennar's
+    last) and colours avoid `used` (RGB tuples) as well as Anbennar's."""
+    cfg = cfg or data
     if not (eu4 / "map/provinces.bmp").is_file():
         raise GeneratorError(f"EU4 Anbennar not found: {eu4 / 'map/provinces.bmp'} does not exist")
     pm, definition, water, impassable = ck3 or load_ck3(anbennar)
@@ -405,9 +409,9 @@ def layout(anbennar: Path, eu4: Path, ck3=None) -> Layout:
         return ids[y * W + x] if 0 <= x < W and 0 <= y < H else 0
 
     emap = Eu4Map(eu4)
-    serp = eu4i.region_provinces((data.REGION,), eu4)
+    serp = eu4i.region_provinces((cfg.REGION,), eu4)
     if not serp:
-        raise GeneratorError(f"EU4 region {data.REGION} has no provinces")
+        raise GeneratorError(f"EU4 region {cfg.REGION} has no provinces")
     enames = eu4i.province_names(eu4)
     eareas = eu4i.province_areas(eu4)
     eterrain = eu4_terrain_overrides(eu4)
@@ -416,10 +420,10 @@ def layout(anbennar: Path, eu4: Path, ck3=None) -> Layout:
     cnames = ck3_names(definition)
 
     # fit
-    ex0, ey0, ex1, ey1 = data.FIT_BOX
-    ecent = _centroids(emap.at, data.FIT_BOX, _AnyId())
+    ex0, ey0, ex1, ey1 = cfg.FIT_BOX
+    ecent = _centroids(emap.at, cfg.FIT_BOX, _AnyId())
     wanted = {pid for pid in ecent if pid not in serp and _same_name(enames.get(pid), cnames.get(pid))}
-    ccent = _centroids(ck, data.CK3_FIT_BOX, wanted)
+    ccent = _centroids(ck, cfg.CK3_FIT_BOX, wanted)
     pairs = [(ecent[p][0], ecent[p][1], ccent[p][0], ccent[p][1]) for p in sorted(ccent)]
     fit = fit_affine(pairs)
     res = sorted(math.dist(apply(fit, ex, ey), (cx, cy)) for ex, ey, cx, cy in pairs)
@@ -446,14 +450,14 @@ def layout(anbennar: Path, eu4: Path, ck3=None) -> Layout:
                         contacts.setdefault((a, b), []).append((x + 0.5 + dx / 2, y + 0.5 + dy / 2))
     missing = sorted(serp - set(epix))
     if missing:
-        raise GeneratorError(f"EU4 provinces of {data.REGION} outside FIT_BOX: {missing}")
+        raise GeneratorError(f"EU4 provinces of {cfg.REGION} outside FIT_BOX: {missing}")
 
     # CK3 box of the transformed region
     corners = [apply(fit, x, y) for x, y in ((ex0, ey0), (ex1, ey0), (ex0, ey1), (ex1, ey1))]
     xs = [min(max(int(min(c[0] for c in corners)) - 2, 0), W), min(int(max(c[0] for c in corners)) + 3, W)]
     ys = [min(max(int(min(c[1] for c in corners)) - 2, 0), H), min(int(max(c[1] for c in corners)) + 3, H)]
     box = (xs[0], ys[0], xs[1], ys[1])
-    src = data.SOURCE_PROVINCE
+    src = cfg.SOURCE_PROVINCE
 
     # traced floor, kept WALL_MARGIN px from every other province
     edge = []
@@ -461,7 +465,7 @@ def layout(anbennar: Path, eu4: Path, ck3=None) -> Layout:
         for x in range(box[0], box[2]):
             if ck(x, y) != src and any(ck(x + dx, y + dy) == src for dx, dy in N8):
                 edge.append((x, y))
-    near = chamfer(edge, box, data.WALL_MARGIN - 1)
+    near = chamfer(edge, box, cfg.WALL_MARGIN - 1)
     labels = {}
     spill = {}
     for y in range(box[1], box[3]):
@@ -474,7 +478,7 @@ def layout(anbennar: Path, eu4: Path, ck3=None) -> Layout:
             if ck(x, y) != src:
                 spill[ck(x, y)] = spill.get(ck(x, y), 0) + 1
     traced = {}
-    for (x, y), a in smooth_labels(labels, data.SMOOTH_RADIUS, data.SMOOTH_PASSES).items():
+    for (x, y), a in smooth_labels(labels, cfg.SMOOTH_RADIUS, cfg.SMOOTH_PASSES).items():
         if ck(x, y) == src and (x, y) not in near:
             traced.setdefault(a, set()).add((x, y))
     if spill:
@@ -484,15 +488,15 @@ def layout(anbennar: Path, eu4: Path, ck3=None) -> Layout:
     # counties in AREA_ORDER -> area.txt order (fixed, so regrouping kingdoms keeps the province ids)
     order = area_order(eu4)
     region_areas = {eareas[p] for p in serp}
-    listed = list(data.AREA_ORDER)
-    for name, areas in (("AREA_ORDER", listed), ("KINGDOMS", [a for _, (_, k) in data.KINGDOMS.items() for a in k])):
+    listed = list(cfg.AREA_ORDER)
+    for name, areas in (("AREA_ORDER", listed), ("KINGDOMS", [a for _, (_, k) in cfg.KINGDOMS.items() for a in k])):
         if sorted(areas) != sorted(region_areas):
-            raise GeneratorError(f"{name} must list exactly the areas of {data.REGION}: missing "
+            raise GeneratorError(f"{name} must list exactly the areas of {cfg.REGION}: missing "
                                  f"{sorted(region_areas - set(areas))}, extra {sorted(set(areas) - region_areas)}")
     counties = []
     keys = set()
-    next_id = max(cnames) + 1
-    used = ck3_colours(definition)
+    next_id = max(cnames) + 1 if first_id is None else first_id
+    used = ck3_colours(definition) | set(used or ())
     provinces = {}
     owner = {}
     for area in listed:
@@ -505,16 +509,16 @@ def layout(anbennar: Path, eu4: Path, ck3=None) -> Layout:
                 key = f"{key}_{e}"
             keys.add(key)
             kind = eterrain.get(e)
-            if kind not in data.BARONIES:
-                raise GeneratorError(f"EU4 province {e} ({name}) has terrain {kind}, not one of {sorted(data.BARONIES)}")
+            if kind not in cfg.BARONIES:
+                raise GeneratorError(f"EU4 province {e} ({name}) has terrain {kind}, not one of {sorted(cfg.BARONIES)}")
             comps = components(traced.get(e, ()))
             if not comps:
                 raise GeneratorError(f"{key}: no floor left after clipping to province {src}")
             dropped = sum(len(c) for c in comps[1:])
             if dropped:
                 notes.append(f"{key}: dropped {dropped} px in {len(comps) - 1} stray pieces")
-            k = data.BARONY_OVERRIDES.get(key, data.BARONIES[kind])
-            pieces = split(comps[0], k, data.MIN_BARONY_PX, key)
+            k = cfg.BARONY_OVERRIDES.get(key, cfg.BARONIES[kind])
+            pieces = split(comps[0], k, cfg.MIN_BARONY_PX, key)
             pids = []
             for i, piece in enumerate(pieces):
                 pid = next_id
@@ -541,28 +545,28 @@ def layout(anbennar: Path, eu4: Path, ck3=None) -> Layout:
         mx = sum(p[0] for p in pts) / len(pts)
         my = sum(p[1] for p in pts) / len(pts)
         cx, cy = apply(fit, mx, my)
-        target = data.OPENING_TARGETS.get((a, b))
+        target = cfg.OPENING_TARGETS.get((a, b))
         if target is None:
             if _same_name(enames.get(b), cnames.get(b)):
                 target = b
             else:
                 target = _nearest_land(ck, cx, cy, src, water, impassable)
         floor = [p for pid in county.baronies for p in provinces[pid].pixels]
-        start, end, corridor = _opening(ck, floor, owner, src, target, cx, cy)
-        if corridor is None and (a, b) not in data.OPENING_TARGETS:
+        start, end, corridor = _opening(ck, floor, owner, src, target, cx, cy, cfg)
+        if corridor is None and (a, b) not in cfg.OPENING_TARGETS:
             wanted = target
-            for target in _land_near(ck, cx, cy, src, water, impassable, data.OPENING_REACH):
-                start, end, corridor = _opening(ck, floor, owner, src, target, cx, cy)
+            for target in _land_near(ck, cx, cy, src, water, impassable, cfg.OPENING_REACH):
+                start, end, corridor = _opening(ck, floor, owner, src, target, cx, cy, cfg)
                 if corridor is not None:
                     notes.append(f"opening {county.key}: {cnames.get(wanted, wanted)} cannot be reached, using "
                                  f"{cnames.get(target, target)} instead")
                     break
         if corridor is None:
-            if (a, b) in data.OPENING_TARGETS:
+            if (a, b) in cfg.OPENING_TARGETS:
                 raise GeneratorError(f"opening {county.key} -> {cnames.get(target, target)}: no corridor within "
-                                     f"{data.OPENING_REACH} px touches only the target")
+                                     f"{cfg.OPENING_REACH} px touches only the target")
             notes.append(f"opening {county.key} (EU4 {a} -> {b}): no surface province reachable through province "
-                         f"{src} within {data.OPENING_REACH} px; skipped")
+                         f"{src} within {cfg.OPENING_REACH} px; skipped")
             continue
         pid = owner[start]
         piece = provinces[pid]
@@ -732,29 +736,31 @@ def check_terrain_data(area_styles, styles):
             raise GeneratorError(f"AREA_STYLES {area}: no style {name}")
 
 
-def province_materials(lay):
+def province_materials(lay, cfg=None):
     """{province id: (floor material id, wall material id)} from the county's area style (TERRAIN_STYLES,
     AREA_STYLES), with COUNTY_FLOORS and BARONY_FLOORS overriding the floor."""
-    check_terrain_data(data.AREA_STYLES, data.TERRAIN_STYLES)
+    cfg = cfg or data
+    check_terrain_data(cfg.AREA_STYLES, cfg.TERRAIN_STYLES)
     county = {c.key: c for c in lay.counties}
-    unknown = sorted({k for k in data.COUNTY_FLOORS if k not in county} |
-                     {k for k, i in data.BARONY_FLOORS if k not in county or i >= len(county[k].baronies)})
+    unknown = sorted({k for k in cfg.COUNTY_FLOORS if k not in county} |
+                     {k for k, i in cfg.BARONY_FLOORS if k not in county or i >= len(county[k].baronies)})
     if unknown:
-        raise GeneratorError(f"COUNTY_FLOORS/BARONY_FLOORS name counties or baronies Serpentreach lacks: "
+        raise GeneratorError(f"COUNTY_FLOORS/BARONY_FLOORS name counties or baronies the region lacks: "
                              f"{', '.join(unknown)}")
     out = {}
     for pid, prov in lay.provinces.items():
         c = county[prov.county]
-        style = {**data.TERRAIN_STYLES["default"], **data.TERRAIN_STYLES[data.AREA_STYLES.get(c.area, "default")]}
-        floor = data.BARONY_FLOORS.get((c.key, prov.index)) or data.COUNTY_FLOORS.get(c.key) or style[c.type]
+        style = {**cfg.TERRAIN_STYLES["default"], **cfg.TERRAIN_STYLES[cfg.AREA_STYLES.get(c.area, "default")]}
+        floor = cfg.BARONY_FLOORS.get((c.key, prov.index)) or cfg.COUNTY_FLOORS.get(c.key) or style[c.type]
         out[pid] = (floor, style["wall"])
     return out
 
 
-def used_materials():
+def used_materials(cfg=None):
     """Every material id the terrain data names, sorted."""
-    ids = {m for style in data.TERRAIN_STYLES.values() for m in style.values()}
-    return sorted(ids | set(data.COUNTY_FLOORS.values()) | set(data.BARONY_FLOORS.values()))
+    cfg = cfg or data
+    ids = {m for style in cfg.TERRAIN_STYLES.values() for m in style.values()}
+    return sorted(ids | set(cfg.COUNTY_FLOORS.values()) | set(cfg.BARONY_FLOORS.values()))
 
 
 def paint(index, intensity, lay, materials, pm=None, rock=None):
@@ -786,31 +792,33 @@ def paint(index, intensity, lay, materials, pm=None, rock=None):
 OPENING_TRIES = 400
 
 
-def rock_provinces():
+def rock_provinces(cfg=None):
     """Impassable provinces whose pixels the floor and its corridors may take and whose rock gets walls."""
-    return {data.SOURCE_PROVINCE} | set(data.OPENING_CUT_THROUGH)
+    cfg = cfg or data
+    return {cfg.SOURCE_PROVINCE} | set(cfg.OPENING_CUT_THROUGH)
 
 
-def _opening(ck, floor, owner, src, target, cx, cy):
+def _opening(ck, floor, owner, src, target, cx, cy, cfg=None):
     """(start, end, corridor) of the shortest corridor from `floor` to `target` that touches no province but the
     target and `src`; corridor None when none is found. Candidate ends are the target's pixels in order of their
     distance to the floor."""
+    cfg = cfg or data
     tpix = _province_pixels_near(ck, target, cx, cy, 250)
     if not tpix:
         raise GeneratorError(f"opening to {target}: no pixel of the target within 250 px of ({cx:.0f}, {cy:.0f})")
     xs = [p[0] for p in floor]
     ys = [p[1] for p in floor]
-    box = (min(xs) - data.OPENING_REACH, min(ys) - data.OPENING_REACH, max(xs) + data.OPENING_REACH + 1, max(ys) + data.OPENING_REACH + 1)
-    dist = chamfer(floor, box, data.OPENING_REACH)
+    box = (min(xs) - cfg.OPENING_REACH, min(ys) - cfg.OPENING_REACH, max(xs) + cfg.OPENING_REACH + 1, max(ys) + cfg.OPENING_REACH + 1)
+    dist = chamfer(floor, box, cfg.OPENING_REACH)
     ends = sorted((t for t in tpix if t in dist), key=lambda t: (dist[t], t[1], t[0]))
-    rock = rock_provinces()
+    rock = rock_provinces(cfg)
     tried = set()
     for end in ends[:OPENING_TRIES]:
         start = min(floor, key=lambda p: (_d2(p, end), p[1], p[0]))
         if (start, end) in tried:
             continue
         tried.add((start, end))
-        corridor = _corridor(start, end, data.OPENING_WIDTH / 2, lambda p: ck(*p) in rock and p not in owner)
+        corridor = _corridor(start, end, cfg.OPENING_WIDTH / 2, lambda p: ck(*p) in rock and p not in owner)
         touched = {ck(x + dx, y + dy) for x, y in corridor for dx, dy in N4}
         if target in touched and not (touched - rock - {target, 0}) and _joins(corridor, start):
             return start, end, corridor
