@@ -341,14 +341,16 @@ def render_title_history(realm: Realm, people: People) -> bytes:
     return _text(lines)
 
 
-def duchy_arms(dkey: str, area: str, field: tuple) -> list:
-    """A dwarven charge (DUCHY_CHARGES) on a field of `field`, divided by a pattern picked from the key."""
+def duchy_arms(dkey: str, area: str, field: tuple, charges: dict = None) -> list:
+    """A dwarven charge (`charges`, default DUCHY_CHARGES) on a field of `field`, divided by a pattern picked from
+    the key."""
+    charges = data.DUCHY_CHARGES if charges is None else charges
     pattern = data.DUCHY_PATTERNS[_hash("arms:" + dkey) % len(data.DUCHY_PATTERNS)]
     pale = colorsys.rgb_to_hls(*(v / 255 for v in field))[1] > data.PALE_FIELD
     charge, accent = data.CHARGE_DARK if pale else data.CHARGE_METAL
     lines = [f"{dkey} = {{", f'\tpattern = "{pattern}"', f"\tcolor1 = rgb {rgb_text(field)}",
              f"\tcolor2 = rgb {rgb_text(shade(field, -0.15))}"]
-    for texture, (x, y), (sx, sy) in data.DUCHY_CHARGES[area]:
+    for texture, (x, y), (sx, sy) in charges[area]:
         lines += ["\tcolored_emblem = {", f'\t\ttexture = "{texture}"', f"\t\tcolor1 = rgb {rgb_text(charge)}",
                   f"\t\tcolor2 = rgb {rgb_text(accent)}",
                   f"\t\tinstance = {{ position = {{ {x} {y} }} scale = {{ {sx} {sy} }} }}", "\t}"]
@@ -372,10 +374,11 @@ def render_arms(realm: Realm) -> bytes:
     return _text(lines)
 
 
-def missing_charges(anbennar: Path, game: Path) -> list:
-    """Colored emblems of DUCHY_CHARGES found in none of the mod, Anbennar and the game."""
+def missing_charges(anbennar: Path, game: Path, charges: dict = None) -> list:
+    """Colored emblems of `charges` (default DUCHY_CHARGES) found in none of the mod, Anbennar and the game."""
     folder = "gfx/coat_of_arms/colored_emblems"
-    textures = {t for charges in data.DUCHY_CHARGES.values() for t, _, _ in charges}
+    charges = data.DUCHY_CHARGES if charges is None else charges
+    textures = {t for entry in charges.values() for t, _, _ in entry}
     return sorted(t for t in textures if not any((root / folder / t).is_file() for root in (SUBMOD, anbennar, game)))
 
 

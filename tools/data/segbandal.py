@@ -63,3 +63,36 @@ AREA_ORDER = tuple(AREA_DUCHIES)
 _KINGDOM_NAMES = {"k_gor_vazumbrog": "Gor Vazumbrog", "k_hehodovar": "Hehodovar", "k_seghdihr": "Seghdihr",
                   "k_verkal_gulan": "Verkal Gulan", "k_gor_ozumbrog": "Gor Ozumbrog"}
 KINGDOMS = {k: (name, [a for a, (_, kk, _) in AREA_DUCHIES.items() if kk == k]) for k, name in _KINGDOM_NAMES.items()}
+
+# --- titles, people and arms (tools/build_segbandal.py) ---------------------------------------------------------------
+EMPIRE = "e_middle_dwarovar"
+# The new kingdom: (key, name, EU4 tag, map colour, arms background). EU4's I14 "Gor Vazumbrog" (common/countries/Gor
+# Vazumbrog.txt colour 146 160 161); its flag gfx/flags/I14.tga, converted once into
+# gfx/coat_of_arms/textured_emblems/aov_gor_vazumbrog.dds (python -I tools/eu4_import.py convert gfx/flags/I14.tga
+# <dds> --upscale2x --mips), is the arms of the kingdom, d_vazumbrog and c_gor_vazumbrog over the flag's most common
+# colour.
+NEW_KINGDOM = ("k_gor_vazumbrog", "Gor Vazumbrog", "I14", (146, 160, 161), (56, 57, 56))
+# New baronies, characters and dynasties take their kingdom hold's Anbennar culture (I14's titanium_dwarf for Gor
+# Vazumbrog, which Anbennar CK3 has as titanium_dwarvish).
+KINGDOM_CULTURES = {"k_gor_vazumbrog": "titanium_dwarvish", "k_hehodovar": "pyrite_dwarvish",
+                    "k_seghdihr": "citrine_dwarvish", "k_verkal_gulan": "gold_dwarvish",
+                    "k_gor_ozumbrog": "topaz_dwarvish"}
+# Kingdoms whose new duchies get an elder and his son as the king's vassals; the others' new land stays unheld, as
+# Anbennar leaves Hehodovar and Gor Ozumbrog.
+ELDER_KINGDOMS = ("k_seghdihr", "k_verkal_gulan")
+# Arms of the new duchies other than Gor Vazumbrog's: a charge from the area's EU4 lore (as Serpentreach's), generic
+# game and Anbennar emblems only. area -> charges, each (colored emblem, (x, y), (scale x, scale y)).
+_CENTRE = ((0.5, 0.5), (0.65, 0.65))
+DUCHY_CHARGES = {
+    "dwarovrod_27_29_area": (("ce_anb_redgarhavn_runestone.dds",) + _CENTRE,),  # a road's waymark
+    "misty_cave_trail_area": (("ce_eastern_clouds.dds",) + _CENTRE,),  # the mist
+    "deep_ones_lair_area": (("ce_waves_01.dds",) + _CENTRE,),  # the Waterlogged Cave
+    "diggers_road_area": (("ce_ukkos_hammer.dds",) + _CENTRE,),  # the diggers
+    "dwarovrod_33_35_area": (("ce_anb_cog.dds",) + _CENTRE,),
+    "steamsource_area": (("ce_cloud_swirl_nestorian.dds",) + _CENTRE,),  # its steaming fissure
+    "stunad_kradoz_area": (("ce_anb_crystal.dds",) + _CENTRE,),
+    "goblin_grotto_area": (("ce_anb_skull.dds",) + _CENTRE,),  # goblin-held in EU4
+    "greatcavern_area": (("ce_kamon_mountain.dds",) + _CENTRE,),  # the great hollow under the mountain
+    "xazor_area": (("ce_flaming_jewel.dds",) + _CENTRE,),  # the Pit of Xazor
+    "ulagom_area": (("ce_anb_anvil.dds",) + _CENTRE,),  # the Old Excavation
+}
