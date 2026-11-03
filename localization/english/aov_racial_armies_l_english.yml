@@ -40,6 +40,16 @@
  aov_copper_road_wardens_flavor:0 "#F By the Copper Road Pact, Gor Ozumbrog patrols the dwarven road to Ovdal Kanzad. Its ram riders know every tunnel and every goblin ambush along it.#!"
  aov_brightbeard_hammers:0 "Brightbeard Hammers"
  aov_brightbeard_hammers_flavor:0 "#F Shazstundihr honours Mhoki Brightbeard, who ended a 47-year siege by slaying the Precursor emperor with one blow of his warhammer. His heirs still crush armour with theirs.#!"
+ aov_lens_crossbows:0 "Lens Crossbows"
+ aov_lens_crossbows_flavor:0 "#F The scholars of Guntîrhug ground lenses of blue Orlghelovar glass for every science. The cobalt dwarves mount the same lenses on their crossbows, and seldom miss.#!"
+ aov_lightflare_guard:0 "Lightflare Guard"
+ aov_lightflare_guard_flavor:0 "#F Their armour is set with dozens of warded diamonds that throw the light of the Diamond Kings' halls into the eyes of anything waiting in the dark. Cave goblins learned long ago not to ambush them.#!"
+ aov_flint_forest_rangers:0 "Flint Forest Rangers"
+ aov_flint_forest_rangers_flavor:0 "#F Verkal Skomdihr's rangers spend their lives in the Deepwoods, keeping the fey at bay. The flint dwarves made the first handheld guns for them, and they trust their own eyes before any glamour.#!"
+ aov_orcrend_guard:0 "Orcrend Guard"
+ aov_orcrend_guard_flavor:0 "#F Gerin Orcrend came to Ovdal Lodhum to kill orcs, stayed for love and was chosen king. The pike drill he taught the garnet dwarves still breaks every charge that comes down the tunnels.#!"
+ aov_basalt_berserkers:0 "Basalt Berserkers"
+ aov_basalt_berserkers_flavor:0 "#F Every basalt dwarf carries the fire of Gor Bûrad inside. Its berserkers were raised on Borbordûz, the fire duel above the lava lake, and fight with little armour and no mercy.#!"
  # Debug battles
  aov_racial_armies_debug_army:0 "Test Army"
  # Heritage parameters (heritage tooltip)

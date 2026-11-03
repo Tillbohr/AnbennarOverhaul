@@ -104,6 +104,22 @@ aov_copper_road_wardens_high_maint_cost = 1.59
 aov_brightbeard_hammers_recruitment_cost = 140
 aov_brightbeard_hammers_low_maint_cost = 0.63
 aov_brightbeard_hammers_high_maint_cost = 1.89
+# Serpentreach clans
+aov_lens_crossbows_recruitment_cost = 121
+aov_lens_crossbows_low_maint_cost = 0.41
+aov_lens_crossbows_high_maint_cost = 1.23
+aov_lightflare_guard_recruitment_cost = 180
+aov_lightflare_guard_low_maint_cost = 0.8
+aov_lightflare_guard_high_maint_cost = 2.4
+aov_flint_forest_rangers_recruitment_cost = 108
+aov_flint_forest_rangers_low_maint_cost = 0.36
+aov_flint_forest_rangers_high_maint_cost = 1.08
+aov_orcrend_guard_recruitment_cost = 133
+aov_orcrend_guard_low_maint_cost = 0.53
+aov_orcrend_guard_high_maint_cost = 1.59
+aov_basalt_berserkers_recruitment_cost = 143
+aov_basalt_berserkers_low_maint_cost = 0.64
+aov_basalt_berserkers_high_maint_cost = 1.92
 
 # Silverforge Engineer Corps: 1.3x Anbennar's Dwarven Bombards (its buy cost and its maintenance values).
 aov_silverforge_engineers_recruitment_cost = {

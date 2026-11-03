@@ -191,6 +191,10 @@ ROSTER = {  # key -> role, men, damage, toughness (spec roster tables)
     "aov_seg_band_gnollhunters": ("skirmishers", 80, 35, 40), "aov_golden_gate_guard": ("heavy_infantry", 50, 70, 160),
     "aov_clockwork_bows": ("crossbow", 80, 80, 30), "aov_dauvek_veker": ("heavy_infantry", 50, 110, 90),
     "aov_copper_road_wardens": ("light_cavalry", 50, 55, 55), "aov_brightbeard_hammers": ("heavy_infantry", 50, 100, 70),
+    # Serpentreach clans (docs/superpowers/plans/2026-11-03-serpentreach-dwarf-cultures.md)
+    "aov_lens_crossbows": ("crossbow", 80, 70, 32), "aov_lightflare_guard": ("heavy_infantry", 50, 75, 150),
+    "aov_flint_forest_rangers": ("skirmishers", 80, 32, 45), "aov_orcrend_guard": ("pikemen", 80, 42, 62),
+    "aov_basalt_berserkers": ("heavy_infantry", 50, 130, 55),
 }
 
 
@@ -284,13 +288,19 @@ EXPECTED.update({  # spec dwarf tables
     "aov_dauvek_veker": ("heavy_infantry", 50, 110, 90, 0, 0, "PARAM:aov_unlock_maa_dauvek_veker"),
     "aov_copper_road_wardens": ("light_cavalry", 50, 55, 55, 30, 60, "PARAM:aov_unlock_maa_copper_road_wardens"),
     "aov_brightbeard_hammers": ("heavy_infantry", 50, 100, 70, 0, 0, "PARAM:aov_unlock_maa_brightbeard_hammers"),
+    "aov_lens_crossbows": ("archers", 80, 70, 32, 0, 0, "PARAM:aov_unlock_maa_lens_crossbows"),
+    "aov_lightflare_guard": ("heavy_infantry", 50, 75, 150, 0, 0, "PARAM:aov_unlock_maa_lightflare_guard"),
+    "aov_flint_forest_rangers": ("skirmishers", 80, 32, 45, 0, 0, "PARAM:aov_unlock_maa_flint_forest_rangers"),
+    "aov_orcrend_guard": ("pikemen", 80, 42, 62, 0, 0, "PARAM:aov_unlock_maa_orcrend_guard"),
+    "aov_basalt_berserkers": ("heavy_infantry", 50, 130, 55, 0, 0, "PARAM:aov_unlock_maa_basalt_berserkers"),
 })
 DWARF_TERRAIN = {"hills": 0.3, "mountains": 0.45, "desert_mountains": 0.45, "dwarven_hold": 0.65,
                  "dwarven_hold_surface": 0.65, "cavern": 0.65, "dwarven_road": 0.65, "forest": -0.15}
 DWARF_EXTRA = {"aov_grudgebearers": {"plains": 0.2, "farmlands": 0.2},
                "aov_uthojdihr_marines": {"wetlands": 0.5, "floodplains": 0.5, "oasis": 0.5},
                "aov_seg_band_gnollhunters": {"desert": 0.5, "drylands": 0.5, "desert_mountains": 0.5},
-               "aov_golden_gate_guard": {"dwarven_hold": 1.0}, "aov_copper_road_wardens": {"dwarven_road": 1.0}}
+               "aov_golden_gate_guard": {"dwarven_hold": 1.0}, "aov_copper_road_wardens": {"dwarven_road": 1.0},
+               "aov_lightflare_guard": {"cavern": 1.0}, "aov_flint_forest_rangers": {"forest": 0.5, "taiga": 0.5}}
 TERRAIN_SETS.update({key: dict(DWARF_TERRAIN, **DWARF_EXTRA.get(key, {}))
                      for key, row in EXPECTED.items() if row[6] == DWARF or row[6].startswith("PARAM:aov_")})
 CHANGED_FIELDS = ("stack", "damage", "toughness", "pursuit", "screen", "icon")
@@ -375,11 +385,21 @@ class MaaTests(unittest.TestCase):
     def test_signature_counters(self):
         want = {"aov_giantbane_crossbows": {"beasts": "1", "elephant_cavalry": "1"},
                 "aov_dauvek_veker": {"beasts": "2", "elephant_cavalry": "2"},
-                "aov_brightbeard_hammers": {"heavy_infantry": "1"}}
+                "aov_brightbeard_hammers": {"heavy_infantry": "1"},
+                "aov_lightflare_guard": {"peasant_militia": "2"}, "aov_basalt_berserkers": {"skirmishers": "1"},
+                "aov_orcrend_guard": {"camel_cavalry": "1"}}
         for key, counters in want.items():
             body = parse_blocks(self.unit(key)).get("counters", "")
             for target, value in counters.items():
                 self.assertEqual(field(body, target), value, f"{key} {target}")
+
+    def test_clan_unit_art_copied(self):
+        for key in ("aov_lens_crossbows", "aov_lightflare_guard", "aov_flint_forest_rangers", "aov_orcrend_guard",
+                    "aov_basalt_berserkers"):
+            icon = field(self.unit(key), "icon")
+            for folder in ("gfx/interface/icons/regimenttypes", "gfx/interface/illustrations/men_at_arms_big",
+                           "gfx/interface/illustrations/men_at_arms_small"):
+                self.assertTrue((SUBMOD / folder / f"{icon}.dds").is_file(), f"{key}: {folder}/{icon}.dds")
 
     def test_engineer_corps_siege(self):
         body = self.unit("aov_silverforge_engineers")

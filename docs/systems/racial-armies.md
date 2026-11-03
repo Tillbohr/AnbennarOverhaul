@@ -71,7 +71,7 @@ Spec: `docs/superpowers/specs/2026-10-21-racial-armies-design.md` (every stat an
   | Sun elves | Sundancer Legionaries, Jaherkadezim (retuned), Sunspear Phalanx, Phoenix Bowmen, Sandwind Outriders, Duneblades |
   | Wood elves | Ayethi, Felwyr, Glaifes, Hyodeth (retuned), Greatoak Wardens |
   | Every dwarf | Guardians, Shieldwall, Armor Breakers, Ramriders (retuned), Dwarven Bombards (Anbennar's) |
-  | Dwarf clans | Ruby Grudgebearers, Silver Silverforge Engineer Corps, Stone Tortoise Formation, Agate Giantbane Crossbows, Copper Uthojdihr Marines, Citrine Seg Band Gnollhunters, Gold Golden Gate Guard, Pyrite Massed Clockwork Bows, Titanium Dauvek Veker, Topaz Copper Road Wardens, Marble Brightbeard Hammers |
+  | Dwarf clans | Ruby Grudgebearers, Silver Silverforge Engineer Corps, Stone Tortoise Formation, Agate Giantbane Crossbows, Copper Uthojdihr Marines, Citrine Seg Band Gnollhunters, Gold Golden Gate Guard, Pyrite Massed Clockwork Bows, Titanium Dauvek Veker, Topaz Copper Road Wardens, Marble Brightbeard Hammers; Serpentreach: Cobalt Lens Crossbows, Diamond Lightflare Guard, Flint Forest Rangers, Garnet Orcrend Guard, Basalt Berserkers |
 
   Retuned units are single-object overrides in `common/men_at_arms_types/zz_aov_racial_maa_overrides.txt` (only stack,
   stats, terrain and winter bonuses, gate, costs and `ai_quality` change); new units are in
@@ -82,7 +82,8 @@ Spec: `docs/superpowers/specs/2026-10-21-racial-armies-design.md` (every stat an
   an `aov_rie_` prefix into `gfx/interface/icons/regimenttypes/`, `gfx/interface/illustrations/men_at_arms_big/` and
   `men_at_arms_small/`; each unit's `icon` names the file. Sun elves use RiE's Calaquendi (`high_elven_*`) set and
   `noldor_heavy_infantry`, moon elves its Lomiquendi (`grey_elven_*`) set, wood elves its Moriquendi (`green_elven_*`,
-  Avarin) set, and every dwarf unit the Longbeard set, chosen by unit role:
+  Avarin) set, and every dwarf unit the Longbeard set, chosen by unit role, except the five Serpentreach clan units,
+  which take RiE dwarf sets no other unit uses (Ironfist, Broadbeam, Stiffbeard, Firebeard) so the new clans look apart:
 
   | RiE picture | Units |
   |---|---|
@@ -96,6 +97,7 @@ Spec: `docs/superpowers/specs/2026-10-21-racial-armies-design.md` (every stat an
   | `longbeard_cavalry` (ram riders) | Ramriders |
   | `longbeard_horse_archers` (ram chariots) | Copper Road Wardens |
   | `longbeard_skirmishers` | Uthojdihr Marines, Seg Band Gnollhunters |
+  | `ironfist_crossbowmen`, `broadbeam_heavy_infantry`, `stiffbeard_skirmishers`, `broadbeam_pikemen`, `firebeard_heavy_infantry` | Lens Crossbows, Lightflare Guard, Flint Forest Rangers, Orcrend Guard, Basalt Berserkers |
 
   The two light cavalry icons were 130×130 DXT5 in RiE and are resized to 120×120 (`eu4_import.py convert --resize`).
   Siege units (Silverforge Engineer Corps, Dwarven Bombards) keep the vanilla bombard art. The military window's levy

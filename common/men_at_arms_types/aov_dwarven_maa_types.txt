@@ -360,6 +360,186 @@ aov_brightbeard_hammers = {
 	icon = aov_rie_longbeard_heavy_infantry
 	allowed_in_hired_troops = no
 }
+
+### Serpentreach clans (docs/superpowers/plans/2026-11-03-serpentreach-dwarf-cultures.md)
+
+# Cobalt dwarves (Orlghelovar).
+aov_lens_crossbows = {
+	type = archers
+
+	damage = 70
+	toughness = 32
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		heavy_infantry = 1
+		heavy_cavalry = 1
+		archer_cavalry = 0.5
+	}
+	terrain_bonus = {
+		hills = { damage = 21 toughness = 10 }
+		mountains = { damage = 32 toughness = 14 }
+		desert_mountains = { damage = 32 toughness = 14 }
+		dwarven_hold = { damage = 46 toughness = 21 }
+		dwarven_hold_surface = { damage = 46 toughness = 21 }
+		cavern = { damage = 46 toughness = 21 }
+		dwarven_road = { damage = 46 toughness = 21 }
+		forest = { damage = -11 toughness = -5 }
+	}
+	can_recruit = {
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_lens_crossbows } # the clan tradition (racial-traditions.md)
+	}
+	buy_cost = { gold = aov_lens_crossbows_recruitment_cost }
+	low_maintenance_cost = { gold = aov_lens_crossbows_low_maint_cost }
+	high_maintenance_cost = { gold = aov_lens_crossbows_high_maint_cost }
+	stack = 80
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = aov_rie_ironfist_crossbowmen
+	allowed_in_hired_troops = no
+}
+
+# Diamond dwarves (Arg-Ôrdstun): strongest in the caverns, where their armour blinds ambushers.
+aov_lightflare_guard = {
+	type = heavy_infantry
+
+	damage = 75
+	toughness = 150
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		pikemen = 1
+		peasant_militia = 2
+	}
+	terrain_bonus = {
+		hills = { damage = 23 toughness = 45 }
+		mountains = { damage = 34 toughness = 68 }
+		desert_mountains = { damage = 34 toughness = 68 }
+		dwarven_hold = { damage = 49 toughness = 98 }
+		dwarven_hold_surface = { damage = 49 toughness = 98 }
+		cavern = { damage = 75 toughness = 150 }
+		dwarven_road = { damage = 49 toughness = 98 }
+		forest = { damage = -11 toughness = -23 }
+	}
+	can_recruit = {
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_lightflare_guard } # the clan tradition (racial-traditions.md)
+	}
+	buy_cost = { gold = aov_lightflare_guard_recruitment_cost }
+	low_maintenance_cost = { gold = aov_lightflare_guard_low_maint_cost }
+	high_maintenance_cost = { gold = aov_lightflare_guard_high_maint_cost }
+	stack = 50
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = aov_rie_broadbeam_heavy_infantry
+	allowed_in_hired_troops = no
+}
+
+# Flint dwarves (Verkal Skomdihr): at home in the Deepwoods.
+aov_flint_forest_rangers = {
+	type = skirmishers
+
+	damage = 32
+	toughness = 45
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		heavy_infantry = 1
+	}
+	terrain_bonus = {
+		hills = { damage = 10 toughness = 14 }
+		mountains = { damage = 14 toughness = 20 }
+		desert_mountains = { damage = 14 toughness = 20 }
+		dwarven_hold = { damage = 21 toughness = 29 }
+		dwarven_hold_surface = { damage = 21 toughness = 29 }
+		cavern = { damage = 21 toughness = 29 }
+		dwarven_road = { damage = 21 toughness = 29 }
+		forest = { damage = 16 toughness = 23 }
+		taiga = { damage = 16 toughness = 23 }
+	}
+	can_recruit = {
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_flint_forest_rangers } # the clan tradition (racial-traditions.md)
+	}
+	buy_cost = { gold = aov_flint_forest_rangers_recruitment_cost }
+	low_maintenance_cost = { gold = aov_flint_forest_rangers_low_maint_cost }
+	high_maintenance_cost = { gold = aov_flint_forest_rangers_high_maint_cost }
+	stack = 80
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = aov_rie_stiffbeard_skirmishers
+	allowed_in_hired_troops = no
+}
+
+# Garnet dwarves (Ovdal Lodhum).
+aov_orcrend_guard = {
+	type = pikemen
+
+	damage = 42
+	toughness = 62
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		light_cavalry = 1
+		heavy_cavalry = 1
+		camel_cavalry = 1
+		elephant_cavalry = 1
+	}
+	terrain_bonus = {
+		hills = { damage = 13 toughness = 19 }
+		mountains = { damage = 19 toughness = 28 }
+		desert_mountains = { damage = 19 toughness = 28 }
+		dwarven_hold = { damage = 27 toughness = 40 }
+		dwarven_hold_surface = { damage = 27 toughness = 40 }
+		cavern = { damage = 27 toughness = 40 }
+		dwarven_road = { damage = 27 toughness = 40 }
+		forest = { damage = -6 toughness = -9 }
+	}
+	can_recruit = {
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_orcrend_guard } # the clan tradition (racial-traditions.md)
+	}
+	buy_cost = { gold = aov_orcrend_guard_recruitment_cost }
+	low_maintenance_cost = { gold = aov_orcrend_guard_low_maint_cost }
+	high_maintenance_cost = { gold = aov_orcrend_guard_high_maint_cost }
+	stack = 80
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = aov_rie_broadbeam_pikemen
+	allowed_in_hired_troops = no
+}
+
+# Basalt dwarves (Gor Bûrad): all fury, little armour.
+aov_basalt_berserkers = {
+	type = heavy_infantry
+
+	damage = 130
+	toughness = 55
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		pikemen = 1
+		skirmishers = 1
+	}
+	terrain_bonus = {
+		hills = { damage = 39 toughness = 17 }
+		mountains = { damage = 59 toughness = 25 }
+		desert_mountains = { damage = 59 toughness = 25 }
+		dwarven_hold = { damage = 85 toughness = 36 }
+		dwarven_hold_surface = { damage = 85 toughness = 36 }
+		cavern = { damage = 85 toughness = 36 }
+		dwarven_road = { damage = 85 toughness = 36 }
+		forest = { damage = -20 toughness = -8 }
+	}
+	can_recruit = {
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_basalt_berserkers } # the clan tradition (racial-traditions.md)
+	}
+	buy_cost = { gold = aov_basalt_berserkers_recruitment_cost }
+	low_maintenance_cost = { gold = aov_basalt_berserkers_low_maint_cost }
+	high_maintenance_cost = { gold = aov_basalt_berserkers_high_maint_cost }
+	stack = 50
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = aov_rie_firebeard_heavy_infantry
+	allowed_in_hired_troops = no
+}
 # Silver dwarves: the best siege unit (spec). Shaped like Anbennar's dwarven_bombards.
 aov_silverforge_engineers = {
 	type = siege_weapon
