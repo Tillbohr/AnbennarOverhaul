@@ -56,6 +56,24 @@ def dds_header(width, height, fourcc):
     return bytes(head)
 
 
+class SerpentreachGateSiteTests(unittest.TestCase):
+    def test_site_at_the_corridor_mouth_facing_out(self):
+        import serpentreach_layout as sl
+        corridor = {(10, y) for y in range(10, 21)}
+        op = sl.Opening("c_a", 5, corridor, (10, 21), (10, 9))
+        lay = sl.Layout(40, 40, [], {}, {}, [op], {}, [])
+        (site,) = bmg.gate_sites_for_openings(lay, {5: (None, None, "c_out")})
+        self.assertEqual((site.dwarven_county, site.normal_county, site.x, site.y), ("c_a", "c_out", 10, 20))
+        self.assertAlmostEqual(site.inward[0], 0.0)
+        self.assertAlmostEqual(site.inward[1], -1.0)  # into the mountain, away from the mouth
+
+    def test_opening_into_a_province_without_a_county_stops(self):
+        import serpentreach_layout as sl
+        op = sl.Opening("c_a", 5, {(10, 10)}, (10, 11), (10, 9))
+        with self.assertRaisesRegex(GeneratorError, "c_a"):
+            bmg.gate_sites_for_openings(sl.Layout(40, 40, [], {}, {}, [op], {}, []), {})
+
+
 class AppendMaterialsTests(unittest.TestCase):
     ENTRY = {"id": "tiles", "name": "Tiles", "diffuse": "tiles_diffuse.dds", "normal": "tiles_normal.dds",
              "material": "tiles_properties.dds", "mask": "masks/aov_tiles_mask.png"}
@@ -884,14 +902,17 @@ class GateOverlayRealTests(unittest.TestCase):
 
     def test_twelve_erebor_gates_only(self):
         blocks = _blocks(self.files["gfx/map/map_object_data/aov_dwarven_gates.txt"].decode("utf-8-sig"))
-        self.assertEqual({k: (v[0], v[1]) for k, v in blocks.items()}, {"aov_dwarven_gates": ("erebor_gate_mesh", 9)})
+        gates = 9 + len(bmg.serpentreach_layout(ROOTS).openings)  # Anbennar's 9 and one per Serpentreach opening
+        self.assertEqual({k: (v[0], v[1]) for k, v in blocks.items()},
+                         {"aov_dwarven_gates": ("erebor_gate_mesh", gates)})
         for rel in self.files:
             self.assertNotIn("moria", rel.lower())
 
     def test_ten_pieces_per_gate_minus_the_dropped(self):
         dropped = sum(int(re.search(r"/ (\d+) dropped", n).group(1)) for n in self.notes if n.startswith("gate "))
         placed = sum(len(v[2]) for v in self.blocks.values())
-        self.assertEqual(placed, 10 * 9 - dropped)
+        gates = sum(n.startswith("gate ") for n in self.notes)  # Anbennar's 9 and the Serpentreach openings
+        self.assertEqual(placed, 10 * gates - dropped)
         # mountain_04 and mountain_05 stand outside the narrow cone (or in front of the face): dropped at every gate;
         # the keep-out then removes the large mountain_01 and mountain_03 footprints at most gates
         self.assertEqual({v[0] for v in self.blocks.values()} - {f"aov_mountain_0{n}_mesh" for n in (1, 2, 3, 6)},
@@ -963,7 +984,9 @@ class ConeRealTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.pm, cls.water, _, cls.dwarven, cls.sites = bmg._analyse(ROOTS)
+        cls.pm, cls.water, impassable, cls.dwarven, cls.sites = bmg._analyse(ROOTS)
+        cls.sr_sites = bmg.serpentreach_sites(ROOTS, (cls.pm, cls.water, impassable))
+        cls.sites = cls.sites + cls.sr_sites
         old = hp.Grid.from_png(pngio.read_png((ROOTS.anbennar / "map_data/heightmap.png").read_bytes()))
         cls.lifted, _ = dm.raise_heights(old, cls.pm, cls.dwarven, cls.water)
         cls.placed = [(s, z, p) for s, z, _, p in bmg.placed_gates(cls.sites, data.GATE_SCALE, data.GATE_YAW_OFFSET,
@@ -972,7 +995,8 @@ class ConeRealTests(unittest.TestCase):
         cls.impassable = _impassable()
         cls.bounds = bmg.piece_bounds(ROOTS.rie, cls.comp)
         cls.new, cls.plans = gt.transplant(cls.lifted, cls.pm, cls.water, cls.placed, cls.comp,
-                                           data.TRANSPLANT_OVERRIDES, ranges=set(cls.dwarven) | cls.impassable,
+                                           bmg.transplant_overrides(cls.sr_sites),
+                                           ranges=set(cls.dwarven) | cls.impassable,
                                            piece_bounds=cls.bounds)
         cls.site = {(s.dwarven_county, s.normal_county): s for s, _, _ in cls.placed}
 
@@ -1017,11 +1041,14 @@ class ConeRealTests(unittest.TestCase):
 
     def test_every_range_joins_its_cone_peak(self):
         """The range behind each cone is scaled toward the cone's peak (at most RANGE_JOIN_MAX): its highest point
-        after is at least min(peak - 2000, the capped scaling of its highest point before)."""
+        after is at least min(peak - 2000, the capped scaling of its highest point before). At the cap the scaled
+        point can stay lower still: the highest pixel may lie in the join's fade-out, where the scale is weighted
+        down (Serpentreach's Glogund Cave gate, on 45,600-high ground), so only 'never lowered' is promised there."""
         for plan in self.plans:
             m, g = plan.join_before, plan.foot
             capped = g + data.RANGE_JOIN_MAX * (m - g) if m > g else m
-            self.assertGreaterEqual(plan.join_after, min(plan.peak - 2000, capped) if plan.peak else m, plan.key)
+            if plan.join_scale < data.RANGE_JOIN_MAX:
+                self.assertGreaterEqual(plan.join_after, min(plan.peak - 2000, capped) if plan.peak else m, plan.key)
             self.assertGreaterEqual(plan.join_after, m, plan.key)
 
     def test_footprint_and_apron_are_at_or_above_the_foot(self):
@@ -1241,9 +1268,36 @@ class HeightOutputsTests(unittest.TestCase):
                          2 * sr.TERRACE_STEP)
 
     def test_notes_cover_ranges_and_sites(self):
+        lay = bmg.serpentreach_layout(ROOTS)
         self.assertEqual(sum(note.startswith("range ") for note in self.notes), 9)
-        self.assertEqual(sum(note.startswith("gate ") for note in self.notes), 9)
+        self.assertEqual(sum(note.startswith("gate ") for note in self.notes), 9 + len(lay.openings))
         self.assertFalse(any("c_oldpassage" in note for note in self.notes if note.startswith("gate ")))
+        for op in lay.openings:
+            self.assertTrue(any(note.startswith(f"gate {op.county}/") for note in self.notes), op.county)
+
+    def test_verkal_skomdihr_opens_to_the_deepwoods_through_the_wasteland(self):
+        lay = bmg.serpentreach_layout(ROOTS)
+        names = {}
+        for line in (ROOTS.anbennar / "map_data/definition.csv").read_bytes().decode("utf-8", "replace").splitlines():
+            f = line.split(";")
+            if len(f) > 4 and f[0].isdigit():
+                names[int(f[0])] = f[4]
+        verkal = [op for op in lay.openings if op.county == "c_verkal_skomdihr"]
+        self.assertEqual(len(verkal), 1)
+        self.assertTrue(names[verkal[0].target].startswith("Deepwoods"), names[verkal[0].target])
+        pm = bmg._SERPENTREACH[bmg._layout_key(ROOTS)][1]
+        self.assertTrue(any(pm.ids[y * pm.width + x] == 1782 for x, y in verkal[0].pixels))
+
+    def test_serpentreach_gate_pieces_stay_off_the_floor(self):
+        from data import serpentreach as sr
+        lay = bmg.serpentreach_layout(ROOTS)
+        text = self.files["gfx/map/map_object_data/aov_dwarven_gate_overlays.txt"].decode("utf-8-sig")
+        floor = set(lay.owner)
+        for x, _, y in re.findall(r"^\s*([\d.]+) ([\d.-]+) ([\d.]+) ", text, re.M):
+            px, py = int(float(x)), int(float(y))
+            near = any((px + dx, py + dy) in floor for dx in range(-sr.PIECE_FLOOR_CLEARANCE, sr.PIECE_FLOOR_CLEARANCE + 1)
+                       for dy in range(-sr.PIECE_FLOOR_CLEARANCE, sr.PIECE_FLOOR_CLEARANCE + 1))
+            self.assertFalse(near, (x, y))
 
     def test_every_gate_has_a_cone_rising_to_its_peak(self):
         """The cone peak is at least foot + 0.8 * k * Erebor's peak; where the soft ceiling compresses the sum (a gate
@@ -1251,7 +1305,7 @@ class HeightOutputsTests(unittest.TestCase):
         import gate_transplant as gt_
         found = [re.search(r"^gate (\S+) at .*height factor ([\d.]+), cone peak (\d+) \(foot (\d+)", n)
                  for n in self.notes if n.startswith("gate ")]
-        self.assertEqual(len(found), 9)
+        self.assertEqual(len(found), 9 + len(bmg.serpentreach_layout(ROOTS).openings))
         k = 1.6 / data.EREBOR_GATE_SCALE
         peak = gt_.load_composition(ROOTS.rie).peak
         for m in found:

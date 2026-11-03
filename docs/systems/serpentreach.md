@@ -13,9 +13,15 @@
   the Serpentspine block inside impassable province 2426; floors keep 4 px of rock from every other province.
   67 counties (EU4 provinces), 19 duchies (EU4 areas), 3 kingdoms (`KINGDOMS`), `e_serpentreach`; 124 baronies (holds
   4, caverns 2, roads 1), new ids from 6944.
-- **Openings:** Shazstundihr -> Bazibar, Orlghelovar -> Grenwoud, Glogund Cave -> Rianelen (Azkasad is boxed in by
-  its own county). Verkal Skomdihr has none: Deepwoods Wasteland (1782) lies between; add one with `OPENING_TARGETS`
-  and a cut-through if wanted. No gate meshes at the openings yet.
+- **Openings:** corridors `OPENING_WIDTH` 10 px wide, at most `OPENING_REACH` 160 px long: Shazstundihr -> Basilan
+  (county Bazibar; Bazibar itself is not reachable at that width), Orlghelovar -> Grenwoud, Glogund Cave -> Rianelen
+  (Azkasad is boxed in by its own county), Verkal Skomdihr -> Deepwoods85, cut through Deepwoods Wasteland (1782,
+  `OPENING_CUT_THROUGH`: its corridor pixels become the barony's and its rock gets walls like 2426's).
+- **Gates:** `build_map_graphics.py` puts RiE's Erebor gate at every opening, like the 9 dwarven-range gates
+  (`gate_sites_for_openings`: at the corridor pixel nearest the mouth, facing out of the corridor). Their cones
+  keep turn 0 (`transplant_overrides`), so they stay on the corridor's axis; mountain pieces within
+  `PIECE_FLOOR_CLEARANCE` 3 px of the floor are dropped (`drop_pieces_on_floor`); the carve runs after the cones,
+  so the corridor and floor are cut back through them.
 - **Smooth outlines:** before the wall margin and the county split, a majority filter (`SMOOTH_RADIUS` 3,
   `SMOOTH_PASSES` 3, `smooth_labels`) removes the ~3.5 px stair steps of the upscaled EU4 shapes from the floor
   outline and the province borders.

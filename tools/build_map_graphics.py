@@ -1019,6 +1019,54 @@ def _layout_key(roots: Roots) -> tuple:
     return (str(roots.anbennar), str(roots.eu4))
 
 
+def gate_sites_for_openings(lay: "sl.Layout", titles: dict) -> list:
+    """One GateSite per Serpentreach opening: at the corridor pixel nearest the mouth (ties: smallest (y, x)),
+    facing out of the corridor (`inward` points from the mouth to the floor pixel the corridor leaves from).
+    `titles` is dm.province_titles; the normal county is the target province's."""
+    sites = []
+    for op in lay.openings:
+        county = titles.get(op.target, (None, None, None))[2]
+        if county is None:
+            raise GeneratorError(f"opening {op.county}: target province {op.target} has no county")
+        mx, my = op.mouth
+        x, y = min(op.pixels, key=lambda p: ((p[0] - mx) ** 2 + (p[1] - my) ** 2, p[1], p[0]))
+        dx, dy = op.start[0] - mx, op.start[1] - my
+        length = math.hypot(dx, dy)
+        if length == 0:
+            raise GeneratorError(f"opening {op.county}: its mouth and start are the same pixel")
+        sites.append(dm.GateSite(op.county, county, x, y, (dx / length, dy / length)))
+    return sites
+
+
+def serpentreach_sites(roots: Roots, ck3: tuple) -> list:
+    """Gate sites at the Serpentreach openings; `ck3` is (province map, water, impassable)."""
+    return gate_sites_for_openings(serpentreach_layout(roots, ck3), dm.province_titles(titles_text(roots)))
+
+
+def transplant_overrides(sr_sites: list) -> dict:
+    """data.TRANSPLANT_OVERRIDES, plus turn 0 for every Serpentreach gate (its cone stays on the corridor's axis)
+    unless the data pins that gate itself."""
+    pins = {(s.dwarven_county, s.normal_county): {"turn": 0.0} for s in sr_sites}
+    for key, pin in data.TRANSPLANT_OVERRIDES.items():
+        pins[key] = {**pins.get(key, {}), **pin}
+    return pins
+
+
+def drop_pieces_on_floor(plan, floor: dict, clearance: int) -> None:
+    """Drop the plan's mountain pieces standing within `clearance` px of a Serpentreach floor pixel (they would sit
+    in the carved trench); dropped pieces are counted and named like the transplant's own drops."""
+    kept = []
+    for o in plan.objects:
+        px, py = int(o.x), int(o.y)
+        if any((px + dx, py + dy) in floor for dx in range(-clearance, clearance + 1)
+               for dy in range(-clearance, clearance + 1)):
+            plan.dropped += 1
+            plan.dropped_names.append(o.mesh)
+        else:
+            kept.append(o)
+    plan.objects = kept
+
+
 def serpentreach_layout(roots: Roots, ck3: tuple = None) -> "sl.Layout":
     """The Serpentreach layout (tools/serpentreach_layout.py), traced once per build. `ck3` is (province map,
     water, impassable) when already loaded."""
@@ -1082,13 +1130,17 @@ def build_heightmap(roots: Roots, notes: list = None) -> dict:
     if (pm.width, pm.height) != (old.width, old.height):
         raise GeneratorError(f"provinces.png is {pm.width}x{pm.height} but heightmap.png is "
                              f"{old.width}x{old.height}")
+    lay = serpentreach_layout(roots, (pm, water, impassable))
+    sr_sites = serpentreach_sites(roots, (pm, water, impassable))
+    sites = sites + sr_sites
     lifted, report = dm.raise_heights(old, pm, dwarven, water)
     placed = [(site, size, pos) for site, size, _, pos in
               placed_gates(sites, data.GATE_SCALE, data.GATE_YAW_OFFSET, data.GATE_INSET, data.GATE_OVERRIDES)]
     comp = gt.load_composition(roots.rie)
-    new, plans = gt.transplant(lifted, pm, water, placed, comp, data.TRANSPLANT_OVERRIDES,
+    new, plans = gt.transplant(lifted, pm, water, placed, comp, transplant_overrides(sr_sites),
                                ranges=set(dwarven) | set(impassable), piece_bounds=piece_bounds(roots.rie, comp))
-    lay = serpentreach_layout(roots, (pm, water, impassable))
+    for plan in plans:
+        drop_pieces_on_floor(plan, lay.owner, sr_data.PIECE_FLOOR_CLEARANCE)
     new, carved = sl.carve(new, lay, pm, water)
     if notes is not None:
         notes.extend(_height_notes(report, plans))

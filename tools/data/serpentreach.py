@@ -15,7 +15,12 @@ CK3_FIT_BOX = (1900, 1496, 3800, 2396)
 WALL_MARGIN = 4  # px of rock kept between the floor and any other province
 SMOOTH_RADIUS = 3  # majority filter over the traced EU4 labels: removes the ~3.5 px stair steps
 SMOOTH_PASSES = 3
-OPENING_WIDTH = 6  # px width of a corridor to the surface
+OPENING_WIDTH = 10  # px width of a corridor to the surface (a gate at scale 1.6 is ~12.5 px wide)
+OPENING_REACH = 160  # px: farthest a corridor may run from the floor to its target
+# Impassable provinces an opening corridor may also cut through (their pixels on the corridor become the barony's):
+# Deepwoods Wasteland, between Verkal Skomdihr and the Deepwoods.
+OPENING_CUT_THROUGH = (1782,)
+PIECE_FLOOR_CLEARANCE = 3  # px: a gate's mountain pieces closer than this to the floor are dropped
 MIN_BARONY_PX = 60  # a county needs at least this many floor px per barony
 MIN_FRAGMENT_PX = 0  # floor pieces cut off from their county's main piece are dropped (reported)
 

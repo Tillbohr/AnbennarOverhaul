@@ -24,7 +24,8 @@ from data import serpentreach as data  # noqa: E402
 
 County = namedtuple("County", "key eu4_id name area type baronies")  # baronies: new province ids, capital first
 Province = namedtuple("Province", "id colour county index pixels interior")  # pixels sorted by (y, x)
-Opening = namedtuple("Opening", "county target pixels mouth")  # corridor pixels (a set), mouth: (x, y) at the target
+# corridor pixels (a set); mouth: the target pixel it opens onto; start: the floor pixel it leaves from
+Opening = namedtuple("Opening", "county target pixels mouth start")
 Layout = namedtuple("Layout", "width height counties provinces owner openings area_names notes")
 
 N4 = ((1, 0), (-1, 0), (0, 1), (0, -1))
@@ -549,7 +550,7 @@ def layout(anbennar: Path, eu4: Path, ck3=None) -> Layout:
         start, end, corridor = _opening(ck, floor, owner, src, target, cx, cy)
         if corridor is None and (a, b) not in data.OPENING_TARGETS:
             wanted = target
-            for target in _land_near(ck, cx, cy, src, water, impassable, OPENING_REACH):
+            for target in _land_near(ck, cx, cy, src, water, impassable, data.OPENING_REACH):
                 start, end, corridor = _opening(ck, floor, owner, src, target, cx, cy)
                 if corridor is not None:
                     notes.append(f"opening {county.key}: {cnames.get(wanted, wanted)} cannot be reached, using "
@@ -558,9 +559,9 @@ def layout(anbennar: Path, eu4: Path, ck3=None) -> Layout:
         if corridor is None:
             if (a, b) in data.OPENING_TARGETS:
                 raise GeneratorError(f"opening {county.key} -> {cnames.get(target, target)}: no corridor within "
-                                     f"{OPENING_REACH} px touches only the target")
+                                     f"{data.OPENING_REACH} px touches only the target")
             notes.append(f"opening {county.key} (EU4 {a} -> {b}): no surface province reachable through province "
-                         f"{src} within {OPENING_REACH} px; skipped")
+                         f"{src} within {data.OPENING_REACH} px; skipped")
             continue
         pid = owner[start]
         piece = provinces[pid]
@@ -568,7 +569,7 @@ def layout(anbennar: Path, eu4: Path, ck3=None) -> Layout:
         provinces[pid] = piece._replace(pixels=merged)
         for p in corridor:
             owner[p] = pid
-        openings.append(Opening(county.key, target, corridor, end))
+        openings.append(Opening(county.key, target, corridor, end, start))
         notes.append(f"opening {county.key} -> {target} {cnames.get(target, '')}: {len(corridor)} px, "
                      f"{math.dist(start, end):.0f} px long")
 
@@ -683,10 +684,11 @@ def carve(grid, lay, pm, water):
     import heightpack as hp
     W, H = pm.width, pm.height
     src = data.SOURCE_PROVINCE
+    rock = rock_provinces()
     floor = list(lay.owner)
     near = chamfer(floor, _box_around(floor, data.CARVE_GROUND_RADIUS, W, H), data.CARVE_GROUND_RADIUS)
     ground = sorted(grid.get(x, y) for (x, y) in near
-                    if pm.ids[y * W + x] not in (0, src) and pm.ids[y * W + x] not in water and (x, y) not in lay.owner)
+                    if pm.ids[y * W + x] != 0 and pm.ids[y * W + x] not in rock and pm.ids[y * W + x] not in water and (x, y) not in lay.owner)
     if not ground:
         raise GeneratorError(f"no land within {data.CARVE_GROUND_RADIUS} px of the Serpentreach floor")
     base = ground[len(ground) // 2]
@@ -698,7 +700,7 @@ def carve(grid, lay, pm, water):
     walls = 0
     for (x, y), (d, h) in _nearest(fh, _box_around(floor, limit + 1, W, H), limit).items():
         i = y * W + x
-        if d == 0 or pm.ids[i] != src or (x, y) in lay.owner:
+        if d == 0 or pm.ids[i] not in rock or (x, y) in lay.owner:
             continue
         orig = grid.values[i]
         rim = h + data.MIN_WALL
@@ -728,7 +730,7 @@ def paint(index, intensity, lay, floor_indices, wall_index, pm=None):
         raise GeneratorError(f"no floor material for {', '.join(missing)}")
     floor = list(lay.owner)
     for (x, y), (d, kind) in _nearest(kinds, _box_around(floor, data.WALL_WIDTH + 1, W, H), data.WALL_WIDTH).items():
-        if d and pm is not None and pm.ids[y * W + x] != data.SOURCE_PROVINCE:
+        if d and pm is not None and pm.ids[y * W + x] not in rock_provinces():
             continue
         k = (y * W + x) * 4
         w = round(255 * _smooth(d / data.WALL_WIDTH))
@@ -737,8 +739,12 @@ def paint(index, intensity, lay, floor_indices, wall_index, pm=None):
     return (tf.Tga(W, H, index.header, idx, index.footer), tf.Tga(W, H, intensity.header, wgt, intensity.footer))
 
 
-OPENING_REACH = 120  # px: farthest a corridor may run from the floor to its target
 OPENING_TRIES = 400
+
+
+def rock_provinces():
+    """Impassable provinces whose pixels the floor and its corridors may take and whose rock gets walls."""
+    return {data.SOURCE_PROVINCE} | set(data.OPENING_CUT_THROUGH)
 
 
 def _opening(ck, floor, owner, src, target, cx, cy):
@@ -750,18 +756,19 @@ def _opening(ck, floor, owner, src, target, cx, cy):
         raise GeneratorError(f"opening to {target}: no pixel of the target within 250 px of ({cx:.0f}, {cy:.0f})")
     xs = [p[0] for p in floor]
     ys = [p[1] for p in floor]
-    box = (min(xs) - OPENING_REACH, min(ys) - OPENING_REACH, max(xs) + OPENING_REACH + 1, max(ys) + OPENING_REACH + 1)
-    dist = chamfer(floor, box, OPENING_REACH)
+    box = (min(xs) - data.OPENING_REACH, min(ys) - data.OPENING_REACH, max(xs) + data.OPENING_REACH + 1, max(ys) + data.OPENING_REACH + 1)
+    dist = chamfer(floor, box, data.OPENING_REACH)
     ends = sorted((t for t in tpix if t in dist), key=lambda t: (dist[t], t[1], t[0]))
+    rock = rock_provinces()
     tried = set()
     for end in ends[:OPENING_TRIES]:
         start = min(floor, key=lambda p: (_d2(p, end), p[1], p[0]))
         if (start, end) in tried:
             continue
         tried.add((start, end))
-        corridor = _corridor(start, end, data.OPENING_WIDTH / 2, lambda p: ck(*p) == src and p not in owner)
+        corridor = _corridor(start, end, data.OPENING_WIDTH / 2, lambda p: ck(*p) in rock and p not in owner)
         touched = {ck(x + dx, y + dy) for x, y in corridor for dx, dy in N4}
-        if target in touched and not (touched - {src, target, 0}) and _joins(corridor, start):
+        if target in touched and not (touched - rock - {target, 0}) and _joins(corridor, start):
             return start, end, corridor
     return None, None, None
 

@@ -70,7 +70,7 @@ gate and cone steps keep running on Anbennar's map unchanged; carving is a final
   appended to the end of `materials.settings` with blank masks.
 - **Smoothing** (addendum after the first in-game look, which showed 3-4 px stair steps): the traced labels go through
   a majority filter (radius 3, 3 passes) before the wall margin and the county split.
-- **Gates:** none at the openings in v1 (the cone would refill the corridor); a follow-up can place them.
+- **Gates** (addendum, user request): every opening gets RiE's Erebor gate through the existing gate pipeline, cone turn 0; the carve runs after the cones and re-cuts the corridor; pieces near the floor are dropped. Verkal Skomdihr's corridor cuts through Deepwoods Wasteland (1782) to reach the Deepwoods.
 
 ## §3 Titles, history and people (`tools/build_serpentreach.py`)
 

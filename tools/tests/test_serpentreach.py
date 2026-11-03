@@ -229,8 +229,9 @@ class BuildTests(unittest.TestCase):
         definition = self.files["map_data/definition.csv"].decode("utf-8", errors="replace")
         new = dm.load_province_map(self.files["map_data/provinces.png"], definition)
         old = dm.load_province_map((ANBENNAR / "map_data/provinces.png").read_bytes(), definition)
+        from data import serpentreach as data
         changed = {o for o, n in zip(old.ids, new.ids) if o != n}
-        self.assertEqual(changed, {2426})
+        self.assertEqual(changed, {2426} | set(data.OPENING_CUT_THROUGH))
         self.assertGreater(len(set(new.ids)), len(set(old.ids)) + 100)
 
     def test_every_barony_has_history_and_loc(self):
