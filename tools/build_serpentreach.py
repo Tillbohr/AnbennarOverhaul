@@ -20,7 +20,7 @@ import unicodedata
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # python -I does not add the script's folder
-from build_hud_override import GeneratorError  # noqa: E402
+from build_hud_override import DEFAULT_GAME, GeneratorError  # noqa: E402
 import eu4_import as eu4i  # noqa: E402
 import pngio  # noqa: E402
 import serpentreach_layout as sl  # noqa: E402
@@ -136,6 +136,7 @@ class Realm:
                 area_duchy[area] = dkey
                 self.kingdoms[kkey][1].append(dkey)
                 self.kingdom_of[dkey] = kkey
+        self.duchy_area = {dkey: area for area, dkey in area_duchy.items()}
         for c in lay.counties:
             dkey = area_duchy[c.area]
             self.duchies[dkey][1].append(c.key)
@@ -147,6 +148,11 @@ class Realm:
             if ckey not in self.county or self.kingdom_of[self.duchy_of[ckey]] != kkey:
                 raise GeneratorError(f"KINGDOM_CAPITALS: {ckey} is not a county of {kkey}")
         self.hold_duchy = {kkey: self.duchy_of[ckey] for kkey, ckey in data.KINGDOM_CAPITALS.items()}
+        others = {self.duchy_area[d] for d in self.duchies} - {self.duchy_area[d] for d in self.hold_duchy.values()}
+        if set(data.DUCHY_CHARGES) != others:
+            raise GeneratorError(f"DUCHY_CHARGES must list exactly the areas of duchies without a hold: missing "
+                                 f"{sorted(others - set(data.DUCHY_CHARGES))}, "
+                                 f"extra {sorted(set(data.DUCHY_CHARGES) - others)}")
         if data.EMPIRE_CAPITAL not in self.county:
             raise GeneratorError(f"EMPIRE_CAPITAL {data.EMPIRE_CAPITAL} is not a Serpentreach county")
         self.emperor_duchy = self.duchy_of[data.EMPIRE_CAPITAL]
@@ -310,16 +316,42 @@ def render_title_history(realm: Realm, people: People) -> bytes:
     return _text(lines)
 
 
+def duchy_arms(dkey: str, area: str, field: tuple) -> list:
+    """A dwarven charge (DUCHY_CHARGES) on a field of `field`, divided by a pattern picked from the key."""
+    pattern = data.DUCHY_PATTERNS[_hash("arms:" + dkey) % len(data.DUCHY_PATTERNS)]
+    pale = colorsys.rgb_to_hls(*(v / 255 for v in field))[1] > data.PALE_FIELD
+    charge, accent = data.CHARGE_DARK if pale else data.CHARGE_METAL
+    lines = [f"{dkey} = {{", f'\tpattern = "{pattern}"', f"\tcolor1 = rgb {rgb_text(field)}",
+             f"\tcolor2 = rgb {rgb_text(shade(field, -0.15))}"]
+    for texture, (x, y), (sx, sy) in data.DUCHY_CHARGES[area]:
+        lines += ["\tcolored_emblem = {", f'\t\ttexture = "{texture}"', f"\t\tcolor1 = rgb {rgb_text(charge)}",
+                  f"\t\tcolor2 = rgb {rgb_text(accent)}",
+                  f"\t\tinstance = {{ position = {{ {x} {y} }} scale = {{ {sx} {sy} }} }}", "\t}"]
+    return lines + ["}"]
+
+
 def render_arms(realm: Realm) -> bytes:
-    """Each kingdom and its hold county carry the EU4 hold's flag as a textured emblem."""
+    """Each kingdom, its hold's duchy and its hold county carry the EU4 hold's flag as a textured emblem; the other
+    duchies a dwarven charge on their map colour."""
     lines = header_lines()
-    for kkey, (kname, _) in realm.kingdoms.items():
+    colours = realm.colours()
+    for kkey, (kname, duchies) in realm.kingdoms.items():
         tag, _, background = data.KINGDOM_ARMS[kkey]
         lines += ["", f"# {kname} (EU4 {tag})"]
-        for key in (kkey, data.KINGDOM_CAPITALS[kkey]):
+        for key in (kkey, realm.hold_duchy[kkey], data.KINGDOM_CAPITALS[kkey]):
             lines += [f"{key} = {{", '\tpattern = "pattern_solid.dds"', f"\tcolor1 = rgb {rgb_text(background)}",
                       "\ttextured_emblem = {", f'\t\ttexture = "{emblem(kkey)}"', "\t}", "}"]
+        for dkey in duchies:
+            if dkey != realm.hold_duchy[kkey]:
+                lines += duchy_arms(dkey, realm.duchy_area[dkey], colours[dkey])
     return _text(lines)
+
+
+def missing_charges(anbennar: Path, game: Path) -> list:
+    """Colored emblems of DUCHY_CHARGES found in none of the mod, Anbennar and the game."""
+    folder = "gfx/coat_of_arms/colored_emblems"
+    textures = {t for charges in data.DUCHY_CHARGES.values() for t, _, _ in charges}
+    return sorted(t for t in textures if not any((root / folder / t).is_file() for root in (SUBMOD, anbennar, game)))
 
 
 def render_terrain(lay: sl.Layout) -> bytes:
@@ -404,6 +436,9 @@ def build_from_layout(anbennar: Path, lay: sl.Layout) -> dict:
     missing = [emblem(k) for k in realm.kingdoms if not (SUBMOD / EMBLEM_DIR / emblem(k)).is_file()]
     if missing:
         raise GeneratorError(f"flag emblems missing from {EMBLEM_DIR} (see KINGDOM_ARMS): {', '.join(missing)}")
+    missing = missing_charges(anbennar, DEFAULT_GAME)
+    if missing:
+        raise GeneratorError(f"DUCHY_CHARGES emblems found nowhere: {', '.join(missing)}")
     people = People(realm, male_names(anbennar))
     folder = anbennar / "map_data"
     files = {

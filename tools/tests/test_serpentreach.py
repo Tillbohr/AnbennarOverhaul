@@ -292,12 +292,24 @@ class BuildTests(unittest.TestCase):
         hold_counties = {h["title"] for h in holds.HOLDS[-6:]}  # the six Serpentreach holds
         self.assertEqual(set(data.KINGDOM_CAPITALS.values()), hold_counties)
         arms = self.files[self.bs.ARMS].decode("utf-8-sig")
+        hold_duchies = {"k_verkal_skomdihr": "d_stunad_skomdihr"}  # EU4's area name; the others match the kingdom
         for kkey, ckey in data.KINGDOM_CAPITALS.items():
-            for key in (kkey, ckey):
+            for key in (kkey, hold_duchies.get(kkey, "d_" + kkey[2:]), ckey):
                 self.assertRegex(arms, rf'(?m)^{key} = \{{\n(\t.*\n)*?\t\ttexture = "aov_{kkey[2:]}.dds"')
             self.assertTrue((self.bs.SUBMOD / self.bs.EMBLEM_DIR / f"aov_{kkey[2:]}.dds").is_file())
         titles = self.files["common/landed_titles/aov_serpentreach.txt"].decode("utf-8-sig")
         self.assertEqual(re.findall(r"(?m)^\t(k_\w+) = \{", titles), list(data.KINGDOMS))
+
+    def test_every_duchy_has_arms(self):
+        import re
+        from build_hud_override import DEFAULT_GAME
+        arms = self.files[self.bs.ARMS].decode("utf-8-sig")
+        titles = self.files["common/landed_titles/aov_serpentreach.txt"].decode("utf-8-sig")
+        duchies = re.findall(r"(?m)^\t\t(d_\w+) = \{", titles)
+        self.assertEqual(len(duchies), 19)
+        self.assertEqual(sorted(re.findall(r"(?m)^(d_\w+) = \{", arms)), sorted(duchies))
+        self.assertEqual(arms.count("colored_emblem = {"), 13 + 1)  # 13 duchies without a hold; the forge has two
+        self.assertEqual(self.bs.missing_charges(ANBENNAR, DEFAULT_GAME), [])
 
     def test_duchy_colours_differ_within_each_kingdom(self):
         titles = self.files["common/landed_titles/aov_serpentreach.txt"].decode("utf-8-sig")

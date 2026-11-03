@@ -61,8 +61,8 @@ DUCHY_SHADES = (0.0, -0.12, 0.12, -0.22, 0.22)  # HLS lightness offsets by duchy
 COUNTY_JITTER = 0.05  # +/- lightness around the duchy's colour
 # kingdom -> (EU4 tag, map colour, arms background colour: the flag's most common pixel). The flag, gfx/flags/<tag>.tga,
 # was converted once into gfx/coat_of_arms/textured_emblems/aov_<kingdom key without k_>.dds with
-# `python -I tools/eu4_import.py convert gfx/flags/<tag>.tga <dds> --upscale2x --mips`; the kingdom and its hold
-# county carry it.
+# `python -I tools/eu4_import.py convert gfx/flags/<tag>.tga <dds> --upscale2x --mips`; the kingdom, its hold's duchy
+# and its hold county carry it.
 KINGDOM_ARMS = {
     "k_orlghelovar": ("I12", (0, 71, 171), (18, 34, 108)),
     "k_shazstundihr": ("I11", (241, 242, 227), (96, 96, 96)),
@@ -71,6 +71,32 @@ KINGDOM_ARMS = {
     "k_ovdal_lodhum": ("H77", (247, 179, 215), (48, 52, 61)),
     "k_gor_burad": ("I16", (240, 72, 72), (162, 163, 162)),
 }
+# Arms of the other duchies (EU4 has no country there): a dwarven charge on a field of the duchy's map colour, metal on
+# dark fields and black on pale ones. Generic emblems only, none of another hold's own arms (ce_anb_seghdihr, ...).
+# area -> charges, each (colored emblem, (x, y), (scale x, scale y)).
+_CENTRE = ((0.5, 0.5), (0.65, 0.65))
+DUCHY_CHARGES = {
+    "argrod_origin_area": (("ce_mjolnir.dds",) + _CENTRE,),  # where the Argrod, the dwarven road, begins
+    "north_altar_area": (("ce_zoroastrian_fire_altar.dds",) + _CENTRE,),
+    "south_altar_area": (("ce_zoroastrian_fire_altar.dds",) + _CENTRE,),
+    "kings_caverns_area": (("ce_crown.dds",) + _CENTRE,),
+    "argrod_6_8_area": (("ce_axe.dds",) + _CENTRE,),
+    "thievesbane_area": (("ce_keys_crossed.dds",) + _CENTRE,),
+    "argrod_9_11_area": (("ce_anb_lamp.dds",) + _CENTRE,),
+    "shroomfissure_area": (("ce_flaming_jewel.dds",) + _CENTRE,),  # the glow of its mushroom caverns
+    "still_caverns_area": (("ce_anb_gem.dds",) + _CENTRE,),
+    "argrod_junction_area": (("ce_anb_cog.dds",) + _CENTRE,),
+    "zarn_area": (("ce_fire.dds",) + _CENTRE,),
+    "argrod_14_16_area": (("ce_anb_redgarhavn_runestone.dds",) + _CENTRE,),  # a road's waymark
+    # the forge: Anbennar's d_silverforge layout, a flame over an anvil
+    "buradforge_area": (("ce_fire.dds", (0.5, 0.3), (0.3, 0.4)), ("ce_anb_anvil.dds", (0.5, 0.62), (0.7, 0.7))),
+}
+# Field divisions, picked per duchy by a hash of its key; color2 is a darker shade of the field.
+DUCHY_PATTERNS = ("pattern_solid.dds", "pattern_chief.dds", "pattern_horizontal_split_01.dds",
+                  "pattern_stepped_pyramid.dds", "pattern_chevron_01.dds")
+CHARGE_METAL = ((212, 175, 55), (225, 225, 225))  # on dark fields: charge gold, its accents silver
+CHARGE_DARK = ((35, 35, 40), (212, 175, 55))  # on pale fields (HLS lightness above PALE_FIELD)
+PALE_FIELD = 0.65
 
 CULTURE = "stone_dwarvish"
 RELIGION = "ancestor_worship"

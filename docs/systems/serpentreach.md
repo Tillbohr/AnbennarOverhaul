@@ -24,10 +24,15 @@ The generator stops when one is missing.
   Verkal Skomdihr (Stunad Skomdihr + Argrod 6-8, Thievesbane), Ovdal Lodhum (+ Argrod 9-11, Shroomfissure, Still
   Caverns), Gor Bûrad (+ Buradforge, Zarn, Argrod 14-16, Argrod Junction). The hold county is the kingdom's capital.
   `world_serpentreach` lists the six kingdoms (geographical regions take no `empires`).
-- **Arms:** each kingdom and its hold county carry the EU4 hold's flag (`KINGDOM_ARMS`: Orlghelovar I12, Shazstundihr
-  I11, Arg-Ôrdstun H76, Verkal Skomdihr I13, Ovdal Lodhum H77, Gor Bûrad I16) as a textured emblem over the whole
-  shield, like the Deepwoods groves; `color1` is the flag's most common colour. EU4 has no Serpentreach tag, so the
-  empire, duchies and other counties keep generated arms.
+- **Arms:** each kingdom, its hold's duchy (named like the kingdom, except Verkal Skomdihr's Stunad Skomdihr) and its
+  hold county carry the EU4 hold's flag (`KINGDOM_ARMS`: Orlghelovar I12, Shazstundihr I11, Arg-Ôrdstun H76, Verkal
+  Skomdihr I13, Ovdal Lodhum H77, Gor Bûrad I16) as a textured emblem over the whole shield, like the Deepwoods groves;
+  `color1` is the flag's most common colour. EU4 has no country in the other 13 areas, so their duchies get composed
+  dwarven arms (`DUCHY_CHARGES`, one per area: hammer, fire altars, crown, axe, crossed keys, lamp, flaming jewel, gem,
+  cog, fire, runestone, a flame over an anvil for Buradforge) on a field of the duchy's map colour divided by a
+  `DUCHY_PATTERNS` pattern picked by key hash; charges are gold on dark fields and black on pale ones. Only generic
+  game and Anbennar emblems, never another hold's own (`ce_anb_seghdihr`, ...); the build stops on a missing emblem.
+  EU4 has no Serpentreach tag, so the empire and the other counties keep generated arms.
 - **Map colours:** each kingdom takes its EU4 country colour, except Arg-Ôrdstun's grey (200 200 200), darkened to
   steel (120 124 132) so it does not merge with Shazstundihr's off-white beside it. Duchies are HLS lightness shades
   of it (`DUCHY_SHADES`, slid together to stay within 0.12-0.92 so none repeats); counties vary
