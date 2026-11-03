@@ -100,6 +100,7 @@ Spec: `docs/superpowers/specs/2026-10-21-racial-armies-design.md` (every stat an
   | `ironfist_crossbowmen`, `broadbeam_heavy_infantry`, `stiffbeard_skirmishers`, `broadbeam_pikemen`, `firebeard_heavy_infantry` | Lens Crossbows, Lightflare Guard, Flint Forest Rangers, Orcrend Guard, Basalt Berserkers |
 
   The two light cavalry icons were 130×130 DXT5 in RiE and are resized to 120×120 (`eu4_import.py convert --resize`).
+  So are `broadbeam_pikemen` (117×134) and `ironfist_crossbowmen` (114×102), whose sizes tiger rejects for compressed DDS.
   Siege units (Silverforge Engineer Corps, Dwarven Bombards) keep the vanilla bombard art. The military window's levy
   and knight pictures for elf and dwarf rulers (RiE's `levies_elven`, `levies_longbeard`, `knights_elven`,
   `knights_falathrim`, `knights_silvan`, `knights_longbeard`, copied the same way) are wired up by

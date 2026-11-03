@@ -89,4 +89,13 @@ The generator stops when one is missing.
   Lodhum, H77's native line), Slatecutter (Still Caverns), Whitebeard (Shazstundihr) and Brightbeard (South Altar).
   The 6 holds are in `tools/data/holds.py`.
 - **Needs an in-game test:** the map loads with the new ids; locators, province terrain and region files are read;
-  textures and wall heights look right (tune in `tools/data/serpentreach.py`).
+  textures and wall heights look right (tune in `tools/data/serpentreach.py`). Cultures:
+  1. Each kingdom's counties show its hold culture, and the culture window shows Serpentreach Dwarven (marble:
+     Segbandalic).
+  2. Rulers' dynasties read Whiteforged, Stormheart, Garnetpick, Slatecutter, Whitebeard and Brightbeard, with no
+     "az-".
+  3. The five cultures have their three base traditions and their clan tradition at game start; marble has Masons
+     of the Deep and the Whitestone Council; cobalt and diamond get Artisans with Royal Court.
+  4. Each clan unit (Lens Crossbows, Lightflare Guard, Flint Forest Rangers, Orcrend Guard, Basalt Berserkers) can
+     be recruited by its culture only, and shows its RiE icon and pictures.
+  5. Their holdings, clothes and armies use the RiE dwarf assets, like the other dwarf cultures.
