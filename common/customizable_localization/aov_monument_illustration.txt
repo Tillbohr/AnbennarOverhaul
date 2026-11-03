@@ -519,6 +519,61 @@ AovMonumentIllustration = {
 	}
 
 	text = {
+		trigger = {
+			has_holding = yes
+			OR = {
+				county = title:c_lake_grove_1_1
+				county = title:c_lake_grove_1_2
+				county = title:c_lake_grove_1_3
+				county = title:c_lake_grove_1_4
+				barony = title:b_lake_grove_3
+				barony = title:b_lake_grove_4
+				barony = title:b_lake_grove_7
+				barony = title:b_lake_grove_9
+				county = title:c_bone_grove_1_1
+				county = title:c_bone_grove_1_3
+				county = title:c_bone_grove_1_4
+				county = title:c_thorn_grove_1_1
+				county = title:c_thorn_grove_1_2
+				county = title:c_thorn_grove_1_3
+				county = title:c_thorn_grove_1_4
+				county = title:c_mountain_grove_1_1
+				county = title:c_mountain_grove_1_3
+				county = title:c_mountain_grove_1_4
+				barony = title:b_mountain_grove_1
+				barony = title:b_mountain_grove_4
+				barony = title:b_mountain_grove_6
+				barony = title:b_mountain_grove_8
+				county = title:c_hunter_grove_1_1
+				county = title:c_hunter_grove_1_2
+				county = title:c_hunter_grove_1_3
+				county = title:c_flower_grove_1_1
+				county = title:c_flower_grove_1_2
+				county = title:c_arrow_grove_1_1
+				county = title:c_arrow_grove_1_2
+				county = title:c_arrow_grove_1_3
+				county = title:c_river_grove_1_1
+				county = title:c_river_grove_1_2
+				county = title:c_river_grove_1_3
+				county = title:c_shadow_grove_1_1
+				county = title:c_shadow_grove_1_2
+				county = title:c_gladegate
+				county = title:c_ioriellen
+				county = title:c_autumnglade
+				county = title:c_springlade
+				county = title:c_summerglade
+				county = title:c_winterglade
+				county = title:c_carneter
+				county = title:c_woodwell
+				county = title:c_ancards_crossing
+				county = title:c_ilvandet
+				county = title:c_timberfort
+			}
+		}
+		localization_key = aov_monument_art_terrain_ancient_forest
+	}
+
+	text = {
 		fallback = yes
 		localization_key = aov_monument_art_none
 	}

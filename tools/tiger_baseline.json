@@ -343,6 +343,48 @@
     {
       "column": 80,
       "from": "MOD",
+      "fullpath": ".\\gfx\\models\\portraits\\female_head\\female_head.asset",
+      "length": 30,
+      "line": "\tattribute = { name = \"kobold_head_proportions\"\t\t\t\t\t\t\t\t\t\tadditive_animation = \"female_head_kobold_proportions\" }",
+      "linenr": 1406,
+      "path": "gfx\\models\\portraits\\female_head\\female_head.asset",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "gene attribute female_head_kobold_proportions not defined in gfx/models/",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 80,
+      "from": "MOD",
+      "fullpath": ".\\gfx\\models\\portraits\\male_head\\male_head.asset",
+      "length": 28,
+      "line": "\tattribute = { name = \"kobold_head_proportions\"\t\t\t\t\t\t\t\t\t\tadditive_animation = \"male_head_kobold_proportions\" }",
+      "linenr": 2029,
+      "path": "gfx\\models\\portraits\\male_head\\male_head.asset",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "gene attribute male_head_kobold_proportions not defined in gfx/models/",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "strong",
+  "info": null,
+  "key": "missing-item",
+  "locations": [
+    {
+      "column": 80,
+      "from": "MOD",
       "fullpath": ".\\gui\\hud.gui",
       "length": 12,
       "line": "\t\t\tvisible = \"[And(GetSituation('dynastic_cycle').GetTopParticipantGroupByKey('other_rulers').IsCharacterParticipant( Character.Self ), Character.ShouldShowMerit)]\"",
@@ -584,6 +626,27 @@
     }
   ],
   "message": "`falloff = ` is only for spot_light or point_light",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "image-format",
+  "locations": [
+    {
+      "column": null,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\provinces.png",
+      "length": 1,
+      "line": null,
+      "linenr": null,
+      "path": "map_data\\provinces.png",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "`map_data\\provinces.png` has wrong color format `Rgba8`, should be Rgb8",
   "severity": "error",
   "wiki": null
 },
@@ -2047,7 +2110,7 @@
       "fullpath": ".\\common\\holdings\\00_holdings.txt",
       "length": 22,
       "line": "temple_citadel_holding = {",
-      "linenr": 299,
+      "linenr": 305,
       "path": "common\\holdings\\00_holdings.txt",
       "stage": null,
       "tag": null
@@ -2068,7 +2131,7 @@
       "fullpath": ".\\common\\holdings\\00_holdings.txt",
       "length": 22,
       "line": "temple_citadel_holding = {",
-      "linenr": 299,
+      "linenr": 305,
       "path": "common\\holdings\\00_holdings.txt",
       "stage": null,
       "tag": null
@@ -2089,7 +2152,7 @@
       "fullpath": ".\\common\\holdings\\00_holdings.txt",
       "length": 22,
       "line": "temple_citadel_holding = {",
-      "linenr": 299,
+      "linenr": 305,
       "path": "common\\holdings\\00_holdings.txt",
       "stage": null,
       "tag": null
@@ -2110,7 +2173,7 @@
       "fullpath": ".\\common\\holdings\\00_holdings.txt",
       "length": 22,
       "line": "temple_citadel_holding = {",
-      "linenr": 299,
+      "linenr": 305,
       "path": "common\\holdings\\00_holdings.txt",
       "stage": null,
       "tag": null
@@ -19830,6 +19893,3807 @@
     }
   ],
   "message": "missing localization key PORTRAIT_MODIFIER_custom_hair_female_hair_custom_05",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 15,
+      "line": "1252;3;220;250;North Dameshead;x",
+      "linenr": 1253,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key North Dameshead",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 15,
+      "line": "1253;4;250;250;South Dameshead;x",
+      "linenr": 1254,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key South Dameshead",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1254;5;200;200;Gulf of Stone;x",
+      "linenr": 1255,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Gulf of Stone",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1255;6;200;250;Lover's Coast;x",
+      "linenr": 1256,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Lover's Coast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1256;7;220;250;Bay of Chills;x",
+      "linenr": 1257,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Bay of Chills",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 16,
+      "line": "1257;8;250;250;Floodmarsh Coast;x",
+      "linenr": 1258,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Floodmarsh Coast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 16,
+      "line": "1258;9;200;200;Coast of Konwell;x",
+      "linenr": 1259,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Coast of Konwell",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 11,
+      "line": "1259;10;200;250;Bay of Ekha;x",
+      "linenr": 1260,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Bay of Ekha",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 3,
+      "line": "1260;11;220;250;Eye;x",
+      "linenr": 1261,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Eye",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 10,
+      "line": "1263;14;200;250;Fogged Sea;x",
+      "linenr": 1264,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Fogged Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1264;15;220;250;Bay of Crovan;x",
+      "linenr": 1265,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Bay of Crovan",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 15,
+      "line": "1265;16;250;250;Coast of Venail;x",
+      "linenr": 1266,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Coast of Venail",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 8,
+      "line": "1266;17;200;200;Uelcoast;x",
+      "linenr": 1267,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Uelcoast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 14,
+      "line": "1267;18;200;250;Bay of Vertesk;x",
+      "linenr": 1268,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Bay of Vertesk",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 14,
+      "line": "1268;19;220;250;Dameseye Coast;x",
+      "linenr": 1269,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Dameseye Coast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 19,
+      "line": "1269;20;250;250;Damesteeth Approach;x",
+      "linenr": 1270,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Damesteeth Approach",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 10,
+      "line": "1270;21;200;200;Anbenncost;x",
+      "linenr": 1271,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Anbenncost",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 18,
+      "line": "1271;22;200;250;Damesteeth Channel;x",
+      "linenr": 1272,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Damesteeth Channel",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 17,
+      "line": "1272;23;220;250;Damesear Crossing;x",
+      "linenr": 1273,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Damesear Crossing",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 14,
+      "line": "1274;25;200;200;East Damesneck;x",
+      "linenr": 1275,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key East Damesneck",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 14,
+      "line": "1275;26;200;250;West Damesneck;x",
+      "linenr": 1276,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key West Damesneck",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 15,
+      "line": "1276;27;220;250;South Damesneck;x",
+      "linenr": 1277,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key South Damesneck",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 9,
+      "line": "1277;28;250;250;Far Diven;x",
+      "linenr": 1278,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Far Diven",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 17,
+      "line": "1278;29;200;200;Lorentish Winebay;x",
+      "linenr": 1279,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Lorentish Winebay",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1279;30;200;250;Sandspite Sea;x",
+      "linenr": 1280,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Sandspite Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1280;31;220;250;Wyvern's Gulf;x",
+      "linenr": 1281,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Wyvern's Gulf",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1281;32;250;250;Norcamb Coast;x",
+      "linenr": 1282,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Norcamb Coast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 17,
+      "line": "1282;33;200;200;Eborthil Approach;x",
+      "linenr": 1283,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Eborthil Approach",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 17,
+      "line": "1284;35;220;250;Reaver's Approach;x",
+      "linenr": 1285,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Reaver's Approach",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 9,
+      "line": "1285;36;250;250;Westcoast;x",
+      "linenr": 1286,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Westcoast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 10,
+      "line": "1286;37;200;200;Vrorensbay;x",
+      "linenr": 1287,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Vrorensbay",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "1287;38;200;250;Portnamm Bay;x",
+      "linenr": 1288,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Portnamm Bay",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1289;40;250;250;Gerudian Bank;x",
+      "linenr": 1290,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Gerudian Bank",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 14,
+      "line": "1290;41;200;200;Finisterre Bay;x",
+      "linenr": 1291,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Finisterre Bay",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 16,
+      "line": "1291;42;200;250;Coast of Ebenuel;x",
+      "linenr": 1292,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Coast of Ebenuel",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "1292;43;220;250;Bay of Wines;x",
+      "linenr": 1293,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Bay of Wines",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 18,
+      "line": "1293;44;250;250;Dameshead Approach;x",
+      "linenr": 1294,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Dameshead Approach",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "1294;45;200;200;Dragon Coast;x",
+      "linenr": 1295,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Dragon Coast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 16,
+      "line": "1295;46;200;250;West of Nimscodd;x",
+      "linenr": 1296,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key West of Nimscodd",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 16,
+      "line": "1296;47;220;250;Busilari Straits;x",
+      "linenr": 1297,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Busilari Straits",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 16,
+      "line": "1297;48;250;250;Imperial Winebay;x",
+      "linenr": 1298,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Imperial Winebay",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1298;49;200;200;Gulf of Ouord;x",
+      "linenr": 1299,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Gulf of Ouord",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1299;50;200;250;Shattered Bay;x",
+      "linenr": 1300,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Shattered Bay",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 9,
+      "line": "1300;51;220;250;Dog Coast;x",
+      "linenr": 1301,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Dog Coast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 15,
+      "line": "1301;52;250;250;Coast of Deshak;x",
+      "linenr": 1302,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Coast of Deshak",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "1302;53;200;200;Tefkora Pass;x",
+      "linenr": 1303,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Tefkora Pass",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1303;54;200;250;Flooded Coast;x",
+      "linenr": 1304,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Flooded Coast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 19,
+      "line": "1304;55;220;250;North Salahad Coast;x",
+      "linenr": 1305,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key North Salahad Coast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 17,
+      "line": "1305;56;250;250;Coast of Kheterat;x",
+      "linenr": 1306,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Coast of Kheterat",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 8,
+      "line": "1306;181;48;132;Sao Tome;x",
+      "linenr": 1307,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Sao Tome",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 14,
+      "line": "1307;58;200;250;Sea of Follies;x",
+      "linenr": 1308,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Sea of Follies",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 11,
+      "line": "1308;59;220;250;Bay of Paws;x",
+      "linenr": 1309,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Bay of Paws",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1309;60;250;250;Bay of Brasan;x",
+      "linenr": 1310,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Bay of Brasan",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 14,
+      "line": "1310;61;200;200;Bay of Mirrors;x",
+      "linenr": 1311,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Bay of Mirrors",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1311;62;200;250;Gulf of Glass;x",
+      "linenr": 1312,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Gulf of Glass",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1312;63;220;250;Sea of Echoes;x",
+      "linenr": 1313,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Sea of Echoes",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 18,
+      "line": "1313;64;250;250;Coast of Crathanor;x",
+      "linenr": 1314,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Coast of Crathanor",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 10,
+      "line": "1314;65;200;200;East Diven;x",
+      "linenr": 1315,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key East Diven",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 11,
+      "line": "1315;66;200;250;Sea of Eliz;x",
+      "linenr": 1316,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Sea of Eliz",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 15,
+      "line": "1316;67;220;250;Coast of Drolas;x",
+      "linenr": 1317,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Coast of Drolas",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 18,
+      "line": "1317;68;250;250;Titan's Walk Coast;x",
+      "linenr": 1318,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Titan's Walk Coast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "1319;70;200;250;Brasanni Sea;x",
+      "linenr": 1320,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Brasanni Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 17,
+      "line": "1320;71;220;250;Sea of Broken Ice;x",
+      "linenr": 1321,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Sea of Broken Ice",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1321;72;250;250;Serpent's Maw;x",
+      "linenr": 1322,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Serpent's Maw",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 11,
+      "line": "1322;73;200;200;Frozen Pass;x",
+      "linenr": 1323,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Frozen Pass",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 17,
+      "line": "1323;74;200;250;Serpentback Coast;x",
+      "linenr": 1324,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Serpentback Coast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 14,
+      "line": "1324;75;220;250;Reaver's Coast;x",
+      "linenr": 1325,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Reaver's Coast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "1343;94;200;250;Ganges Delta;x",
+      "linenr": 1344,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Ganges Delta",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 9,
+      "line": "1344;95;220;250;Akyab Bay;x",
+      "linenr": 1345,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Akyab Bay",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 14,
+      "line": "1345;96;250;250;Irrawady Delta;x",
+      "linenr": 1346,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Irrawady Delta",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 11,
+      "line": "1346;97;200;200;Andaman Sea;x",
+      "linenr": 1347,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Andaman Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1347;98;200;250;Ofehibi Coast;x;",
+      "linenr": 1348,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Ofehibi Coast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 11,
+      "line": "1348;99;220;250;Salahad Sea;x;",
+      "linenr": 1349,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Salahad Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 15,
+      "line": "1349;100;250;250;West Rahen Gulf;x;",
+      "linenr": 1350,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key West Rahen Gulf",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 17,
+      "line": "1350;101;200;200;Raghamidesh Coast;x;",
+      "linenr": 1351,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Raghamidesh Coast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 16,
+      "line": "1351;102;200;250;Coast of Sumatra;x",
+      "linenr": 1352,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Coast of Sumatra",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1353;104;250;250;Coast of Java;x",
+      "linenr": 1354,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Coast of Java",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 15,
+      "line": "1360;111;220;250;Karimata Strait;x",
+      "linenr": 1361,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Karimata Strait",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 17,
+      "line": "1361;112;250;250;Straits of Johore;x",
+      "linenr": 1362,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Straits of Johore",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 11,
+      "line": "1362;113;200;200;Malayan Sea;x",
+      "linenr": 1363,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Malayan Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "1364;115;220;250;Mekong Delta;x",
+      "linenr": 1365,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Mekong Delta",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "1365;116;250;250;Gulf of Siam;x",
+      "linenr": 1366,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Gulf of Siam",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 11,
+      "line": "1366;117;200;200;Cam Rah Bay;x",
+      "linenr": 1367,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Cam Rah Bay",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 15,
+      "line": "1367;118;200;250;South China Sea;x",
+      "linenr": 1368,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key South China Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 14,
+      "line": "1369;120;250;250;Coast of Annam;x",
+      "linenr": 1370,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Coast of Annam",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 14,
+      "line": "1370;121;200;200;Gulf of Tonkin;x",
+      "linenr": 1371,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Gulf of Tonkin",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "1371;122;200;250;Guanghou Bay;x",
+      "linenr": 1372,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Guanghou Bay",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1372;123;220;250;Taiwan Strait;x",
+      "linenr": 1373,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Taiwan Strait",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 14,
+      "line": "1373;124;250;250;Yang Tse Delta;x",
+      "linenr": 1374,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Yang Tse Delta",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 18,
+      "line": "1374;125;200;200;Western Yellow Sea;x",
+      "linenr": 1375,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Western Yellow Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 9,
+      "line": "1375;126;200;250;Korea Bay;x",
+      "linenr": 1376,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Korea Bay",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 16,
+      "line": "1376;127;220;250;South Korean Sea;x",
+      "linenr": 1377,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key South Korean Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 16,
+      "line": "1377;0;251;251;North Korean Sea;x",
+      "linenr": 1378,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key North Korean Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1378;1;201;201;Coast of Olga;x",
+      "linenr": 1379,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Coast of Olga",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1379;2;201;251;Tatar Straits;x",
+      "linenr": 1380,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Tatar Straits",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 10,
+      "line": "1380;3;221;251;Amur Delta;x",
+      "linenr": 1381,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Amur Delta",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 11,
+      "line": "1381;4;251;251;Baj of Ayan;x",
+      "linenr": 1382,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Baj of Ayan",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 17,
+      "line": "1382;5;201;201;Bay of Komenskoie;x",
+      "linenr": 1383,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Bay of Komenskoie",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 19,
+      "line": "1383;6;201;251;Coast of Kamchatska;x",
+      "linenr": 1384,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Coast of Kamchatska",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "1384;7;221;251;Oktothsk Sea;x",
+      "linenr": 1385,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Oktothsk Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 14,
+      "line": "1385;8;251;251;Coast Sahkalin;x",
+      "linenr": 1386,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Coast Sahkalin",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 16,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 11,
+      "line": "1386;9;201;201;Soya Strait;x",
+      "linenr": 1387,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Soya Strait",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 14,
+      "line": "1387;10;201;251;Tsugaru Strait;x",
+      "linenr": 1388,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Tsugaru Strait",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "1388;11;221;251;Yamato Basin;x",
+      "linenr": 1389,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Yamato Basin",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 11,
+      "line": "1389;12;251;251;Amakusa Sea;x",
+      "linenr": 1390,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Amakusa Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 17,
+      "line": "1392;15;221;251;West Reaver's Sea;x",
+      "linenr": 1393,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key West Reaver's Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1402;25;201;201;Philipine Sea;x",
+      "linenr": 1403,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Philipine Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 11,
+      "line": "1408;31;221;251;Arafuam Sea;x",
+      "linenr": 1409,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Arafuam Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 18,
+      "line": "1411;34;201;251;Great Barrier Reef;x",
+      "linenr": 1412,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Great Barrier Reef",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 9,
+      "line": "1413;36;251;251;Cape Howe;x",
+      "linenr": 1414,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Cape Howe",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 15,
+      "line": "1415;38;201;251;Kangaroo Island;x",
+      "linenr": 1416,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Kangaroo Island",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "1417;40;251;251;Cape Leuwiin;x",
+      "linenr": 1418,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Cape Leuwiin",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 9,
+      "line": "1418;41;201;201;Shark Bay;x",
+      "linenr": 1419,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Shark Bay",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 14,
+      "line": "1419;42;201;251;Northwest Cape;x",
+      "linenr": 1420,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Northwest Cape",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 11,
+      "line": "1431;54;201;251;Gilbert Sea;x",
+      "linenr": 1432,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Gilbert Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 9,
+      "line": "1436;59;221;251;Fjordsbay;x",
+      "linenr": 1437,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Fjordsbay",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 18,
+      "line": "1437;60;251;251;Divengate Approach;x",
+      "linenr": 1438,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Divengate Approach",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 11,
+      "line": "1441;64;251;251;The Kuriles;x",
+      "linenr": 1442,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key The Kuriles",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 10,
+      "line": "1442;65;201;201;Bay of Uka;x",
+      "linenr": 1443,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Bay of Uka",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "1443;66;201;251;Bay of Oljut;x",
+      "linenr": 1444,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Bay of Oljut",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1444;67;221;251;Bay of Anadyr;x",
+      "linenr": 1445,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Bay of Anadyr",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 11,
+      "line": "1467;90;201;251;Grain Coast;x",
+      "linenr": 1468,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Grain Coast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 14,
+      "line": "1468;91;221;251;Sandspite Gulf;x",
+      "linenr": 1469,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Sandspite Gulf",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 14,
+      "line": "1471;94;201;251;Tretunic Coast;x",
+      "linenr": 1472,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Tretunic Coast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 14,
+      "line": "1472;95;221;251;Jewelpoint Bay;x",
+      "linenr": 1473,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Jewelpoint Bay",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 17,
+      "line": "1473;96;251;251;Edillion's Relief;x",
+      "linenr": 1474,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Edillion's Relief",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 19,
+      "line": "1474;97;201;201;Giant's Manse Coast;x",
+      "linenr": 1475,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Giant's Manse Coast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 17,
+      "line": "1475;98;201;251;Giant's Grave Sea;x",
+      "linenr": 1476,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Giant's Grave Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1476;99;221;251;Sea of Storms;x",
+      "linenr": 1477,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Sea of Storms",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 15,
+      "line": "1477;100;251;251;Chilly Approach;x",
+      "linenr": 1478,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Chilly Approach",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 21,
+      "line": "1478;101;201;201;Northeastern Atlantic;x",
+      "linenr": 1479,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Northeastern Atlantic",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "1479;102;201;251;Bay of Oddan;x",
+      "linenr": 1480,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Bay of Oddan",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 19,
+      "line": "1480;103;221;251;Dragon's Breath Sea;x",
+      "linenr": 1481,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Dragon's Breath Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 14,
+      "line": "1482;105;201;201;Far Isle Coast;x",
+      "linenr": 1483,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Far Isle Coast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 18,
+      "line": "1498;121;201;201;Sandspite Approach;x",
+      "linenr": 1499,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Sandspite Approach",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1563;58;202;252;Divengate Sea;x",
+      "linenr": 1564,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Divengate Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 7,
+      "line": "1566;61;202;202;Far Sea;x",
+      "linenr": 1567,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Far Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 19,
+      "line": "1578;73;202;202;Devil's Trident Sea;x",
+      "linenr": 1579,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Devil's Trident Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 15,
+      "line": "1585;80;252;252;Corsair Reaches;x",
+      "linenr": 1586,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Corsair Reaches",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 16,
+      "line": "1586;81;202;202;Sea of Wreckages;x",
+      "linenr": 1587,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Sea of Wreckages",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 11,
+      "line": "1598;93;202;202;Bumpy Waves;x",
+      "linenr": 1599,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Bumpy Waves",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 16,
+      "line": "1604;99;222;252;Zombasa Approach;x",
+      "linenr": 1605,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Zombasa Approach",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 10,
+      "line": "1609;104;252;252;Pointsight;x",
+      "linenr": 1610,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Pointsight",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 10,
+      "line": "1610;105;202;202;Sea of Ice;x",
+      "linenr": 1611,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Sea of Ice",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 14,
+      "line": "1611;106;202;252;Gulf of Bengal;x",
+      "linenr": 1612,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Gulf of Bengal",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 21,
+      "line": "1612;107;222;252;Northen Bay of Bengal;x",
+      "linenr": 1613,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Northen Bay of Bengal",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1616;111;222;252;Indian Ocean #1;x",
+      "linenr": 1617,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Indian Ocean ",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1644;11;223;253;Indian Ocean #29;x",
+      "linenr": 1645,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Indian Ocean ",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1645;12;253;253;Indian Ocean #30;x",
+      "linenr": 1646,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Indian Ocean ",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 10,
+      "line": "1652;19;223;253;Ekhani Tip;x",
+      "linenr": 1653,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Ekhani Tip",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 16,
+      "line": "1666;33;203;203;Western Pacific #1;x",
+      "linenr": 1667,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Western Pacific ",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 16,
+      "line": "1667;34;203;253;Western Pacific #2;x",
+      "linenr": 1668,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Western Pacific ",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 16,
+      "line": "1668;35;223;253;Western Pacific #3;x",
+      "linenr": 1669,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Western Pacific ",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 17,
+      "line": "1679;46;203;253;Northern Pacific #3;x",
+      "linenr": 1680,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Northern Pacific ",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 17,
+      "line": "1924;62;206;252;East Reaver's Sea;x",
+      "linenr": 1925,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key East Reaver's Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 13,
+      "line": "1926;62;230;252;Bay of Crowns;x",
+      "linenr": 1927,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Bay of Crowns",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 18,
+      "line": "1927;62;218;252;Hillsight Approach;x",
+      "linenr": 1928,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Hillsight Approach",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 11,
+      "line": "1928;62;234;252;Beepeck Bay;x",
+      "linenr": 1929,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Beepeck Bay",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 10,
+      "line": "1929;62;210;252;Southcoast;x",
+      "linenr": 1930,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Southcoast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 8,
+      "line": "1932;49;150;248;Divenhal;x",
+      "linenr": 1933,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Divenhal",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 10,
+      "line": "1975;105;225;255;West Diven;x",
+      "linenr": 1976,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key West Diven",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "1980;136;253;253;Sea of Japan;x",
+      "linenr": 1981,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Sea of Japan",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 11,
+      "line": "3072;207;110;21;Salahad Bay;x;",
+      "linenr": 3073,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Salahad Bay",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "3073;207;110;22;Maqeti Coast;x;",
+      "linenr": 3074,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Maqeti Coast",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 17,
+      "line": "4225;64;173;200;Coast of Hokkaido;x",
+      "linenr": 4226,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Coast of Hokkaido",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 17,
+      "line": "4226;29;124;148;North Japan Basin;x",
+      "linenr": 4227,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key North Japan Basin",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 9,
+      "line": "4233;31;182;184;Bahai Sea;x",
+      "linenr": 4234,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Bahai Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 18,
+      "line": "4234;45;117;167;Eastern Yellow Sea;x",
+      "linenr": 4235,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Eastern Yellow Sea",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "5307;47;229;249;Anbennar5307;x",
+      "linenr": 5308,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Anbennar5307",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "5308;28;165;165;Anbennar5308;x",
+      "linenr": 5309,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Anbennar5308",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "5309;52;157;249;Anbennar5309;x",
+      "linenr": 5310,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Anbennar5309",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "5310;126;222;252;Anbennar5310;x",
+      "linenr": 5311,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Anbennar5310",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "5311;41;219;216;Anbennar5311;x",
+      "linenr": 5312,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Anbennar5311",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 18,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "5312;120;219;217;Anbennar5312;x",
+      "linenr": 5313,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Anbennar5312",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "5313;62;219;217;Anbennar5313;x",
+      "linenr": 5314,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Anbennar5313",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "5314;41;216;228;Anbennar5314;x",
+      "linenr": 5315,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Anbennar5314",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "5315;79;210;249;Anbennar5315;x",
+      "linenr": 5316,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Anbennar5315",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "5316;57;169;204;Anbennar5316;x",
+      "linenr": 5317,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Anbennar5316",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "5317;57;168;167;Anbennar5317;x",
+      "linenr": 5318,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Anbennar5317",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "5318;48;142;139;Anbennar5318;x",
+      "linenr": 5319,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Anbennar5318",
+  "severity": "warning",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "missing-localization",
+  "locations": [
+    {
+      "column": 17,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\definition.csv",
+      "length": 12,
+      "line": "6202;20;190;226;Anbennar6202;Sea Province",
+      "linenr": 6203,
+      "path": "map_data\\definition.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "missing english localization key Anbennar6202",
   "severity": "warning",
   "wiki": null
 },

@@ -6,3 +6,5 @@ __pycache__/
 *.bak
 /.vs
 /.vscode
+# Working art for outside upscalers (tools/eu4_import.py png / monument-pngs)
+/art_work/

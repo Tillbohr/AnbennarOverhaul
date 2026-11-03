@@ -68,6 +68,8 @@ Nothing is rebuilt from EU4 Anbennar: EU4 art and data are imported once, commit
 `tools/eu4_import.py` holds the import helpers (EU4 paths, loc, map regions and province names, DDS/TGA
 readers, DX10 header fix, Lanczos 2x upscale, mip chains). Convert one EU4 picture with
 `python -I tools/eu4_import.py convert <eu4 path> <mod path> [--upscale2x] [--resize WxH] [--mips]`.
+For an outside (AI) upscaler, export PNGs into the git-ignored `art_work/` with `png <eu4 path> <png> [--painting]`
+or `monument-pngs art_work/eu4_png/great_projects` (name plate lifted, frame cropped).
 
 ## Generated files
 
@@ -85,7 +87,7 @@ Read only the doc for the system you are working on. Each holds the generated-fi
 | Magic schools (mana, knowledge, 48 spells, Magic tab with Advancements and Spells tabs), 8 magic advancements (one per school), the magic lifestyle (3 trees, focuses, traits), Liches (portrait, clothes, backgrounds, raised-dead men-at-arms paid in mana), Anbennar's mage men-at-arms and Bladedancers retuned to vanilla power per gold | `docs/systems/magic.md` | `build_spells.py`, `build_advancements.py`, `build_lifestyle_override.py`, `build_lich_maa.py` |
 | Great projects: EU4 monuments in Cannor, Middle Dwarovar, Bulwar, Salahad, Deepwoods; county view paintings | `docs/systems/great-projects.md` | `build_monuments.py`, `build_county_view_override.py` |
 | Dwarven holds: `dwarven_hold_holding`, 10 levels, Delve Deeper digs, ruin and clear | `docs/systems/dwarven-holds.md` | `build_holds.py`, `build_holdings_override.py`, `build_governments_override.py` |
-| Serpentreach: EU4's Serpentreach (67 counties, 124 baronies) carved Godherja-style into the Serpentspine block (province 2426), under a placeholder dwarven empire `e_serpentreach`; its 6 holds join the dwarven holds | `docs/systems/serpentreach.md` | `build_serpentreach.py` (before `build_holds.py` and `build_map_graphics.py`, which carves the heightmap from the same layout) |
+| Serpentreach: EU4's Serpentreach (67 counties, 124 baronies) carved Godherja-style into the Serpentspine block (province 2426), under a placeholder dwarven empire `e_serpentreach`; a kingdom per hold with the EU4 hold's flag and colour; its 6 holds join the dwarven holds | `docs/systems/serpentreach.md` | `build_serpentreach.py` (before `build_holds.py` and `build_map_graphics.py`, which carves the heightmap from the same layout) |
 | RiE dwarf buildings, ore deposits, mines and the Dwarven Expedition activity | `docs/systems/rie-dwarves.md` | `build_rie_dwarves.py` (run before `build_holds.py` and `build_holdings_override.py`) |
 | Elven Haven: RiE's elven holding (7 levels) and 24 elf building lines, renamed for Anbennar, elves only; conversion at game start and by decision | `docs/systems/rie-elves.md` | `build_rie_elves.py` (after `build_rie_dwarves.py`, before `build_holdings_override.py`) |
 | RiE holding models, walls and army models (elves, dwarves, Castanorians) | `docs/systems/holding-models.md` | `build_holding_models.py` |
@@ -103,6 +105,7 @@ Read only the doc for the system you are working on. Each holds the generated-fi
 | Isle of Adráil: Anbennar's test realm on province 524 (`e_test`, `k_test`, `d_test_1`, Emperor Testor) turned back into EU4's Isle of Adráil under Damesear | `docs/systems/adrail.md` | none (hand-written) |
 | Base art fixes: Anbennar art copied to the file name the game looks up (Adeanic knight education icons, griffon rider icon); Warcraft mod pictures for griffon riders; nine men-at-arms switched to the unit icons Anbennar ships for them; icons for the avatar, racial purist, planetouched, vampire, lycanthrope, bladeshunned, Sun Reborn and Scion of the Sun Reborn traits; Sun Reborn text | `docs/systems/base-art-fixes.md` | none (copied once) |
 | Race knight badges: EU4 tech group icons (gear removed) as the knight badge for elf, dwarf, gnome and kobold rulers; RiE levy and knight pictures in the military window for elf and dwarf rulers | `docs/systems/knight-icons.md` | `build_knight_icons.py` |
+| Gnoll portraits: Victoria 3 Anbennar's hyena head (blend shape, spotted fur, gnoll eyes, no hair or beard) for every `race_gnoll` character, by portrait modifier | `docs/systems/gnoll-portraits.md` | `build_gnoll_portraits.py` |
 
 ## Updating and validation
 

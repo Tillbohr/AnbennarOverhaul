@@ -47,10 +47,9 @@ SHARED_LOC = "localization/english/aov_monument_illustration_l_english.yml"
 PAINTING_MASK = "gfx/interface/window_county/aov_monument_painting_mask.dds"
 MASK_SIZE = (618, 311)  # vanilla gfx/interface/window_county/mask_holding_illustration.dds
 MASK_PEAK = 242  # 95% opacity in the middle
-MASK_FADE = {"left": 0.10, "right": 0.08, "top": 0.06, "bottom": 0.10}  # short at the top: spires reach it
-# The painting ends at the garrison box, above the building slot row of the county view's holding panel:
-# holding_info margin 5 + widget_building_item 55 + spacing 3 (GUI units, so the same at any UI scale).
-PAINTING_MARGIN_BOTTOM = 63
+# Short at the top (spires reach it) and the bottom (the painting fills the panel down to its bottom edge, under
+# the building slot row; a margin there left a dark bar under the painting).
+MASK_FADE = {"left": 0.10, "right": 0.08, "top": 0.06, "bottom": 0.06}
 # Pictures that are not monument paintings (ruined holds, dwarven terrain art): tools/data/holding_art.py. They come
 # after every monument entry in the custom loc (a monument painting wins, e.g. ruined Khugdihr).
 EXTRA_ART = holding_art.HOLDING_ART
@@ -611,7 +610,6 @@ def painting_backgrounds(monuments: list) -> list:
                 f'	texture = "{texture}"']
         if style == "painting":
             out += ["	fittype = start",  # anchored at the top: EU4 spires reach almost to the frame
-                    f"	margin_bottom = {PAINTING_MARGIN_BOTTOM}",
                     "	modify_texture = {",
                     f'		texture = "{PAINTING_MASK}"',
                     "		blend_mode = alphamultiply",

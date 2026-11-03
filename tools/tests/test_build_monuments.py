@@ -769,14 +769,14 @@ class ValidationTests(unittest.TestCase):
 
 class ArtTests(unittest.TestCase):
     def test_every_painting_is_committed(self):
-        """The paintings were converted once from EU4 (572x272 uncompressed BGRA); build_monuments.py no longer
-        writes them, so each monument with art needs its file in the mod."""
+        """The paintings were converted once from EU4 and upscaled 4x outside (1144x544 uncompressed BGRA);
+        build_monuments.py does not write them, so each monument with art needs its file in the mod."""
         from eu4_import import read_dds as read_bgra
         for m in bm.all_monuments():
             if m["art"]:
                 path = bm.SUBMOD / bm.ART_DIR / f"{m['eu4_key']}.dds"
                 self.assertTrue(path.is_file(), path)
-                self.assertEqual(read_bgra(path.read_bytes())[:2], (572, 272), path)
+                self.assertEqual(read_bgra(path.read_bytes())[:2], (1144, 544), path)
 
     def test_painting_keeps_its_top(self):
         """EU4 spires reach almost to the frame: anchor the painting at the top (fittype start, which vanilla uses
@@ -785,14 +785,13 @@ class ArtTests(unittest.TestCase):
         self.assertIn("fittype = start", gui)
         self.assertNotIn("centercrop", gui)
 
-    def test_painting_stops_above_the_building_slots(self):
-        """The painting covers the holding panel down to the garrison box, not behind the building slot row:
-        5 (holding_info margin) + 55 (widget_building_item) + 3 (spacing above the slots)."""
+    def test_painting_fills_the_panel(self):
+        """The painting covers the whole holding panel, under the building slot row too: a bottom margin left a dark
+        bar under it. Short mask fades at the top (spires) and the bottom."""
         lines = bm.painting_backgrounds(bm.all_monuments())
-        painted = len([m for m in bm.all_monuments() if m["art"]])
-        self.assertEqual(bm.PAINTING_MARGIN_BOTTOM, 63)
-        self.assertEqual(lines.count("\tmargin_bottom = 63"), painted + len(bm.EXTRA_ART) - len(ILLUSTRATION_ART))
+        self.assertFalse([line for line in lines if "margin" in line])
         self.assertLessEqual(bm.MASK_FADE["top"], 0.06)
+        self.assertLessEqual(bm.MASK_FADE["bottom"], 0.06)
 
     def test_painting_mask(self):
         from eu4_import import read_dds as read_bgra
@@ -858,9 +857,25 @@ class ArtTests(unittest.TestCase):
         self.assertIn("aov_hold_is_ruined = yes", cl)
         self.assertEqual(bm.render_shared()[bm.SHARED_LOC].count(" aov_monument_art_ruined_hold:"), 1)
 
+    def test_eu4_terrain_art_by_title(self):
+        """EU4-only terrains (ancient forest) show on built holdings in the titles matched to EU4's provinces; every
+        title exists in Anbennar and its picture is in the mod."""
+        import pdx_script
+        from data import holding_art
+        provinces, county_baronies = pdx_script.ck3_titles()
+        cl = bm.render_shared()[bm.SHARED]
+        for terrain, titles in holding_art.EU4_TERRAIN_TITLES.items():
+            self.assertEqual(len(titles), len(set(titles)), terrain)
+            for t in titles:
+                self.assertIn(t, county_baronies if t.startswith("c_") else provinces, t)
+                self.assertIn(f"\t\t\t\t{'county' if t.startswith('c_') else 'barony'} = title:{t}\n", cl)
+            self.assertIn(f"localization_key = aov_monument_art_terrain_{terrain}", cl)
+            self.assertTrue((bm.SUBMOD / f"gfx/interface/illustrations/aov_terrain/{terrain}.dds").is_file())
+        self.assertEqual(len(holding_art.EU4_TERRAIN_TITLES["ancient_forest"]), 46)
+
     def test_dwarven_terrain_art_for_built_holdings(self):
-        """A built holding on a dwarven terrain shows Anbennar's EU4 terrain picture (the one an empty holding there
-        shows) instead of vanilla's castle art, drawn like the vanilla illustration; a ruined hold keeps its picture."""
+        """A built holding on a dwarven terrain shows its EU4 terrain picture (ours upscaled 4x, else Anbennar's)
+        instead of vanilla's castle art, drawn like the vanilla illustration; a ruined hold keeps its picture."""
         cl = bm.render_shared()[bm.SHARED]
         gui = "\n".join(bm.painting_backgrounds(bm.all_monuments()))
         for t in ("dwarven_hold", "dwarven_hold_surface", "cavern", "dwarven_road"):
@@ -870,7 +885,10 @@ class ArtTests(unittest.TestCase):
             self.assertLess(cl.index(f"aov_monument_art_terrain_{t}"), cl.index("fallback = yes"))
             block = gui[gui.index(f"Localize('aov_monument_art_terrain_{t}')"):]
             block = block[:block.index("\n}")]
-            self.assertIn(f'texture = "gfx/interface/illustrations/terrain_types/{t}.dds"', block)
+            folder = "terrain_types" if t == "dwarven_hold" else "aov_terrain"
+            self.assertIn(f'texture = "gfx/interface/illustrations/{folder}/{t}.dds"', block)
+            self.assertTrue((bm.SUBMOD / f"gfx/interface/illustrations/{folder}/{t}.dds").is_file()
+                            or folder == "terrain_types", t)
             self.assertIn("fittype = centercrop", block)
             self.assertIn(f'texture = "{bm.VANILLA_MASK}"', block)
 
