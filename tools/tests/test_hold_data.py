@@ -11,8 +11,10 @@ LIVE = ANBENNAR_CK3.is_dir()
 
 
 class HoldDataTests(unittest.TestCase):
-    def test_fifteen_holds_one_ruined(self):
-        self.assertEqual(len(holds.HOLDS), 15)
+    def test_sixteen_holds_one_ruined(self):
+        self.assertEqual(len(holds.HOLDS), 16)
+        self.assertIn(("Gor Vazumbrog", 4217, "c_gor_vazumbrog", "b_gor_vazumbrog", 2),
+                      [(h["name"], h["eu4_province"], h["title"], h["barony"], h["start_level"]) for h in holds.HOLDS])
         self.assertEqual([h["name"] for h in holds.HOLDS if h["ruined"]], ["Khugdihr"])
 
     @unittest.skipUnless(LIVE, "needs Anbennar CK3")
@@ -33,7 +35,7 @@ class HoldDataTests(unittest.TestCase):
                          {"Marrhold": 1, "Anvilwright": 1, "Verkal Gulan": 2, "Seghdihr": 2, "Ovdal Tûngr": 2,
                           "Rubyhold": 2, "Hehodovar": 2, "Gor Ozumbrog": 2, "Khugdihr": 1,
                           "Arg-Ôrdstun": 2, "Ovdal Lodhum": 2, "Gor Bûrad": 2, "Shazstundihr": 1,
-                          "Verkal Skomdihr": 1, "Orlghelovar": 1})
+                          "Verkal Skomdihr": 1, "Orlghelovar": 1, "Gor Vazumbrog": 2})
 
     def test_buildings_and_constants(self):
         self.assertEqual(set(holds.ASSET_BAND), set(range(1, 11)))

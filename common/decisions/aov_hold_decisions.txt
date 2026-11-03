@@ -166,6 +166,13 @@ aov_delve_deeper_decision = {
 		}
 		triggered_desc = {
 			trigger = {
+				title:b_gor_vazumbrog = { holder = root }
+				title:b_gor_vazumbrog.title_province = { aov_hold_dig_running = yes }
+			}
+			desc = aov_delve_deeper_decision_desc_16
+		}
+		triggered_desc = {
+			trigger = {
 				save_temporary_scope_as = digger
 				title:b_marrhold = { holder = root }
 				title:b_marrhold.title_province = { aov_can_dig_at = yes }
@@ -283,6 +290,14 @@ aov_delve_deeper_decision = {
 				title:b_orlghelovar.title_province = { aov_can_dig_at = yes }
 			}
 			desc = aov_delve_deeper_cost_15
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_gor_vazumbrog = { holder = root }
+				title:b_gor_vazumbrog.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_16
 		}
 	}
 

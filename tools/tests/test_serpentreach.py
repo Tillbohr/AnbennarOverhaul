@@ -302,7 +302,7 @@ class BuildTests(unittest.TestCase):
     def test_a_kingdom_per_hold_with_its_flag(self):
         import re
         from data import holds, serpentreach as data
-        hold_counties = {h["title"] for h in holds.HOLDS[-6:]}  # the six Serpentreach holds
+        hold_counties = {h["title"] for h in holds.HOLDS[9:15]}  # the six Serpentreach holds
         self.assertEqual(set(data.KINGDOM_CAPITALS.values()), hold_counties)
         arms = self.files[self.bs.ARMS].decode("utf-8-sig")
         hold_duchies = {"k_verkal_skomdihr": "d_stunad_skomdihr"}  # EU4's area name; the others match the kingdom

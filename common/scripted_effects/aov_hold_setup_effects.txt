@@ -88,4 +88,10 @@ aov_hold_setup_effect = {
 		set_holding_type = dwarven_hold_holding
 		set_variable = { name = aov_dig_progress value = 0 }
 	}
+	# Gor Vazumbrog
+	title:b_gor_vazumbrog.title_province = {
+		set_holding_type = dwarven_hold_holding
+		add_building = dwarven_hold_02
+		set_variable = { name = aov_dig_progress value = 0 }
+	}
 }

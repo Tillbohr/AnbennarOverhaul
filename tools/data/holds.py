@@ -1,4 +1,4 @@
-"""Dwarven hold data: the 15 holds (9 of Anbennar's, 6 of Serpentreach's) and the dig constants. The level effects come from Realms in Exile's
+"""Dwarven hold data: the 16 holds (9 of Anbennar's, 6 of Serpentreach's, 1 of Segbandal's) and the dig constants. The level effects come from Realms in Exile's
 dwarven_depths_01..10 (tools/build_rie_dwarves.py, depths_level_effects).
 
 Specs: docs/superpowers/specs/2026-10-10-dwarven-hold-digging-design.md,
@@ -28,6 +28,8 @@ HOLDS = [
     _hold("Shazstundihr", 2942, "c_shazstundihr", "b_shazstundihr", 1),
     _hold("Verkal Skomdihr", 4100, "c_verkal_skomdihr", "b_verkal_skomdihr", 1),
     _hold("Orlghelovar", 4238, "c_orlghelovar", "b_orlghelovar", 1),
+    # Segbandal (tools/build_segbandal.py makes these titles)
+    _hold("Gor Vazumbrog", 4217, "c_gor_vazumbrog", "b_gor_vazumbrog", 2),
 ]
 
 DIG_COST_PER_LEVEL = 150

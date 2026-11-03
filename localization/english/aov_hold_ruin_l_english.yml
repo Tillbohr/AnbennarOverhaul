@@ -21,6 +21,7 @@
  aov_hold_ruin.2.hold_13:0 "Restore [GetTitleByKey('b_shazstundihr').GetName]"
  aov_hold_ruin.2.hold_14:0 "Restore [GetTitleByKey('b_verkal_skomdihr').GetName]"
  aov_hold_ruin.2.hold_15:0 "Restore [GetTitleByKey('b_orlghelovar').GetName]"
+ aov_hold_ruin.2.hold_16:0 "Restore [GetTitleByKey('b_gor_vazumbrog').GetName]"
  aov_hold_ruin.3.t:0 "[SCOPE.sTitle('hold_title').GetName] Restored"
  aov_hold_ruin.3.desc.restored:0 "The rubble is cleared and the halls of [SCOPE.sTitle('hold_title').GetName] ring with hammers again. The hold is whole once more."
  aov_hold_ruin.3.desc.lost:0 "The masons were turned out of [SCOPE.sTitle('hold_title').GetName], whose holder is not of the Dwarven folk. The work is abandoned and the ruin stays."
