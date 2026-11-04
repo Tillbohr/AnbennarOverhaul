@@ -72,6 +72,13 @@ EMPIRE = "e_middle_dwarovar"
 # <dds> --upscale2x --mips), is the arms of the kingdom, d_vazumbrog and c_gor_vazumbrog over the flag's most common
 # colour.
 NEW_KINGDOM = ("k_gor_vazumbrog", "Gor Vazumbrog", "I14", (146, 160, 161), (56, 57, 56))
+# Parking titles (empire, kingdom, duchy): CK3 crashes running history when a landed title has no county -> duchy ->
+# kingdom -> empire chain in the landed titles, so every new title is defined under these and the title history moves
+# it to its real parent on 1.1.1. They end up with no de jure land and no holder (like Anbennar's e_test), so they
+# never show and cannot be created.
+PARKING = ("e_aov_segbandal_parking", "k_aov_segbandal_parking", "d_aov_segbandal_parking")
+PARKING_NAME = "Segbandal Unsorted"
+PARKING_COLOUR = (90, 90, 90)
 # New baronies, characters and dynasties take their kingdom hold's Anbennar culture (I14's titanium_dwarf for Gor
 # Vazumbrog, which Anbennar CK3 has as titanium_dwarvish).
 KINGDOM_CULTURES = {"k_gor_vazumbrog": "titanium_dwarvish", "k_hehodovar": "pyrite_dwarvish",

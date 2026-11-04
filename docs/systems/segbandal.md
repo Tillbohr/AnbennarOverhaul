@@ -33,11 +33,18 @@ flag (`python -I tools/eu4_import.py convert gfx/flags/I14.tga gfx/coat_of_arms/
 - **Kingdoms**, one per hold, west to east: `k_gor_vazumbrog` (new: Vazumbrog, Dwarovrod 27-29, Misty Cave Trail),
   `k_hehodovar` (+ Dwarovrod 30-32, Deep One's Lair, Digger's Road), `k_seghdihr` (+ Dwarovrod 33-35, Steamsource,
   Stunad Kradoz, Goblin Grotto), `k_verkal_gulan` (+ Greatcavern, Xazor), `k_gor_ozumbrog` (+ Dwarovrod 38-41, Ulagom).
-- **No Anbennar file is overridden:** `aov_segbandal.txt` defines `k_gor_vazumbrog` with its duchies, every other new
-  duchy at top level, and the new counties of reused Anbennar duchies (Stonewall, Easthollow, Hehogrim's Mausoleum,
-  Bahged Breach) at top level. `history/titles/aov_segbandal.txt` links them with `1.1.1 = { de_jure_liege = ... }`
-  and moves Anbennar's counties, computed from Anbennar's current titles (`title_parents`), so an Anbennar change is
-  followed on the next run.
+- **No Anbennar file is overridden:** `aov_segbandal.txt` defines every new title under three parking titles
+  (`PARKING`: `e_`, `k_` and `d_aov_segbandal_parking`): `k_gor_vazumbrog` with its duchies, every other new duchy in
+  the parking kingdom, and the new counties of reused Anbennar duchies (Stonewall, Easthollow, Hehogrim's Mausoleum,
+  Bahged Breach) in the parking duchy. `history/titles/aov_segbandal.txt` moves them to their real parents with
+  `1.1.1 = { de_jure_liege = ... }` and moves Anbennar's counties, computed from Anbennar's current titles
+  (`title_parents`), so an Anbennar change is followed on the next run. The parking titles end with no de jure land
+  and no holder, like Anbennar's `e_test`, so they never show and cannot be created.
+- **Why parking titles:** the first build put those titles at the top level of the landed titles and relied on the
+  history alone for their parents. CK3 1.19 crashed (access violation, no log line) at "Start running through history"
+  on every start. No vanilla or Anbennar landed title lacks a county -> duchy -> kingdom -> empire chain in the landed
+  titles, and history de jure moves come too late. `TitleTests.test_every_title_has_a_full_chain_at_load` keeps every
+  new title on a full chain.
 - **Rulers:** the new duchies of `k_seghdihr` and `k_verkal_gulan` with new counties (Steamsource, Stunad Kradoz,
   Goblin Grotto, Greatcavern, Xazor) get an elder (from 860.1.1, dies 1000-1010) and his son (`aov_sb_*`, dynasties
   `az-<duchy>`), who become vassals of the king from the king's first holder date in Anbennar's history (Ungrim
@@ -57,9 +64,9 @@ flag (`python -I tools/eu4_import.py convert gfx/flags/I14.tga gfx/coat_of_arms/
   (`AREA_STYLES`). Preview: `art_work/segbandal_reworked_preview.png` (git-ignored).
 - **Needs an in-game test:**
   1. The map loads; the new provinces show in the caverns and their locators sit on the floors.
-  2. The top-level duchies and counties take their de jure parents from history (risk: the game may reject or
-     re-parent them; fallback: wrap each in a hidden parent of ours and keep the history links). Check the de jure
-     kingdom map mode at both bookmarks: five Segbandal kingdoms, Gor Vazumbrog's in the west.
+  2. The game starts from the 1022 bookmark (the history crash is gone) and the parked titles take their de jure
+     parents from history: check the de jure kingdom map mode for five Segbandal kingdoms, Gor Vazumbrog's in the
+     west, and that no "Segbandal Unsorted" title shows anywhere.
   3. `d_seghrod`, `d_gulanrod` and `d_ozumrod` no longer show; Dwarovrod 32, 35 and 38 sit in their new kingdoms.
   4. Elders hold Steamsource, Stunad Kradoz, Goblin Grotto, Greatcavern and Xazor as vassals of Ungrim and Girud.
   5. Gor Vazumbrog's arms show I14's flag; the hold appears in the Delve Deeper picker for its holder.

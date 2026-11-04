@@ -1,6 +1,12 @@
 ﻿l_english:
  k_gor_vazumbrog:0 "Gor Vazumbrog"
  k_gor_vazumbrog_adj:0 "Gor Vazumbrog"
+ e_aov_segbandal_parking:0 "Segbandal Unsorted"
+ e_aov_segbandal_parking_adj:0 "Segbandal Unsorted"
+ k_aov_segbandal_parking:0 "Segbandal Unsorted"
+ k_aov_segbandal_parking_adj:0 "Segbandal Unsorted"
+ d_aov_segbandal_parking:0 "Segbandal Unsorted"
+ d_aov_segbandal_parking_adj:0 "Segbandal Unsorted"
  d_vazumbrog:0 "Vazumbrog"
  d_vazumbrog_adj:0 "Vazumbrog"
  d_dwarovrod_27_29:0 "Dwarovrod 27-29"

@@ -196,7 +196,7 @@ class Segbandal:
         return out
 
     def all_keys(self) -> set:
-        keys = {data.NEW_KINGDOM[0]} | set(self.new_duchies()) | set(self.county)
+        keys = {data.NEW_KINGDOM[0]} | set(data.PARKING) | set(self.new_duchies()) | set(self.county)
         for ckey in self.county:
             keys |= set(self.barony_keys(ckey))
         return keys
@@ -222,23 +222,27 @@ def _duchy_lines(sb: Segbandal, duchy: str, colour: dict, tabs: int) -> list:
 
 
 def render_titles(sb: Segbandal) -> bytes:
-    """The new kingdom with its duchies; every other new duchy at top level; the new counties of Anbennar's duchies at
-    top level. Their de jure parents are set in the title history."""
+    """Every new title under the parking empire (`data.PARKING`), so each has a full chain at load: the new kingdom
+    with its duchies; the other new duchies in the parking kingdom; the new counties of Anbennar's duchies in the
+    parking duchy. The title history moves each to its real de jure parent."""
     colour = sb.colours()
+    grey = bs.rgb_text(data.PARKING_COLOUR)
+    empire, pk, pd = data.PARKING
     kkey = data.NEW_KINGDOM[0]
-    lines = header_lines() + ["", f"{kkey} = {{", f"\tcolor = {bs.rgb_text(colour[kkey])}",
-                              f"\tcapital = {sb.capital(data.AREA_DUCHIES[data.KINGDOMS[kkey][1][0]][0])}", ""]
+    kcapital = sb.capital(data.AREA_DUCHIES[data.KINGDOMS[kkey][1][0]][0])
+    duchies = [d for d in sb.new_duchies() if sb.kingdom_of[d] != kkey]
+    counties = [c for d in sb.duchies if d in sb.reused for c in sb.duchies[d]]
+    lines = header_lines() + ["", f"{empire} = {{", f"\tcolor = {grey}", f"\tcapital = {kcapital}", "",
+                              f"\t{kkey} = {{", f"\t\tcolor = {bs.rgb_text(colour[kkey])}", f"\t\tcapital = {kcapital}", ""]
     for area in data.KINGDOMS[kkey][1]:
-        lines += _duchy_lines(sb, data.AREA_DUCHIES[area][0], colour, 1)
-    lines.append("}")
-    for duchy in sb.new_duchies():
-        if sb.kingdom_of[duchy] != kkey:
-            lines += [""] + _duchy_lines(sb, duchy, colour, 0)
-    for duchy in sb.duchies:
-        if duchy in sb.reused:
-            for ckey in sb.duchies[duchy]:
-                lines += [""] + _county_lines(sb, ckey, colour, 0)
-    return _text(lines)
+        lines += _duchy_lines(sb, data.AREA_DUCHIES[area][0], colour, 2)
+    lines += ["\t}", "", f"\t{pk} = {{", f"\t\tcolor = {grey}", f"\t\tcapital = {sb.capital(duchies[0])}", ""]
+    for duchy in duchies:
+        lines += _duchy_lines(sb, duchy, colour, 2)
+    lines += ["", f"\t\t{pd} = {{", f"\t\t\tcolor = {grey}", f"\t\t\tcapital = {counties[0]}", ""]
+    for ckey in counties:
+        lines += _county_lines(sb, ckey, colour, 3)
+    return _text(lines + ["\t\t}", "\t}", "}"])
 
 
 class People:
@@ -362,6 +366,8 @@ def render_loc(sb: Segbandal, people: People) -> bytes:
         return [f' {key}:0 "{name}"'] + ([f' {key}_adj:0 "{name}"'] if adj else [])
 
     lines = ["l_english:"] + pair(data.NEW_KINGDOM[0], data.NEW_KINGDOM[1])
+    for key in data.PARKING:
+        lines += pair(key, data.PARKING_NAME)
     for duchy in sb.new_duchies():
         lines += pair(duchy, sb.lay.area_names[sb.duchy_area[duchy]])
     for ckey, c in sb.county.items():

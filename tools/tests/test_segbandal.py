@@ -251,22 +251,39 @@ class TitleTests(unittest.TestCase):
             self.assertNotIn(emptied, parents.values())
         self.assertEqual(parents["c_heros_vale"], "d_heros_vale")
 
+    def test_every_title_has_a_full_chain_at_load(self):
+        # CK3 crashes running history when a landed title has no county -> duchy -> kingdom -> empire chain in the
+        # landed titles themselves (history de jure moves come too late)
+        parents = self.bsb.title_parents(self.titles)
+        tiers = "cdke"
+        for key, parent in parents.items():
+            if key.startswith("e_"):
+                self.assertIsNone(parent, key)
+            else:
+                self.assertIsNotNone(parent, f"{key} has no parent in landed titles")
+                self.assertEqual(tiers.index(parent[0]), tiers.index(key[0]) + 1, f"{key} under {parent}")
+
     def test_new_titles_link_by_history(self):
-        tops = re.findall(r"(?m)^([kdc]_\w+) = \{", self.titles)
-        self.assertIn("k_gor_vazumbrog", tops)
-        for key in tops:
+        parked = [k for k, p in self.bsb.title_parents(self.titles).items()
+                  if p in data.PARKING and k not in data.PARKING]
+        self.assertIn("k_gor_vazumbrog", parked)
+        for key in parked:
             self.assertRegex(self.history, rf"(?m)^{key} = \{{\n\t1\.1\.1 = \{{ de_jure_liege = \w+ \}}")
+        kept = {k: p for k, p in self.de_jure().items() if p in data.PARKING and k not in data.PARKING}
+        self.assertEqual(kept, {}, "parking titles keep de jure land")
+        for key in data.PARKING:
+            self.assertNotRegex(self.history, rf"(?m)^{key} = ")
         anbennar = set(self.bsb.title_parents(titles_text()))
         self.assertFalse(set(self.bsb.title_parents(self.titles)) & anbennar)
 
     def test_new_duchies_list_capital_first(self):
-        for duchy, body in re.findall(r"(?ms)^\t?(d_\w+) = \{\n(.*?)^\t?\}", self.titles):
+        for _, duchy, body in re.findall(r"(?ms)^(\t*)(d_\w+) = \{\n(.*?)^\1\}", self.titles):
             counties = re.findall(r"(?m)^\t*(c_\w+) = \{", body)
             capital = re.search(r"capital = (c_\w+)", body).group(1)
             if counties:
                 self.assertEqual(counties[0], capital, duchy)
-        self.assertRegex(self.titles, r"\n\td_vazumbrog = \{\n\t\tcolor = \{[^}]*\}\n\t\tcapital = c_gor_vazumbrog\n")
-        self.assertRegex(self.titles, r"\nd_dwarovrod_33_35 = \{\n\tcolor = \{[^}]*\}\n\tcapital = c_dwarovrod33\n")
+        self.assertRegex(self.titles, r"\n\t\td_vazumbrog = \{\n\t\t\tcolor = \{[^}]*\}\n\t\t\tcapital = c_gor_vazumbrog\n")
+        self.assertRegex(self.titles, r"\n\t\td_dwarovrod_33_35 = \{\n\t\t\tcolor = \{[^}]*\}\n\t\t\tcapital = c_dwarovrod33\n")
 
     def test_holders(self):
         elders = {"d_steamsource", "d_stunad_kradoz", "d_goblin_grotto", "d_greatcavern", "d_xazor"}
