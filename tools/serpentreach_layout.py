@@ -1195,6 +1195,8 @@ def province_materials(lay, cfg=None):
     out = {}
     for pid, prov in lay.provinces.items():
         c = county[prov.county]
+        if c.type == "surface":  # Serpent's Vale: painted by paint_surface, not as a cave
+            continue
         style = {**cfg.TERRAIN_STYLES["default"], **cfg.TERRAIN_STYLES[cfg.AREA_STYLES.get(c.area, "default")]}
         floor = cfg.BARONY_FLOORS.get((c.key, prov.index)) or cfg.COUNTY_FLOORS.get(c.key) or style[c.type]
         out[pid] = (floor, style["wall"])
@@ -1231,6 +1233,43 @@ def paint(index, intensity, lay, materials, pm=None, rock=None):
         w = round(255 * _smooth(d / data.WALL_WIDTH))
         idx[k:k + 4] = bytes((fi, wi if d else 0, 0, 0))
         wgt[k:k + 4] = bytes((255 - w, w, 0, 0))
+    return (tf.Tga(W, H, index.header, idx, index.footer), tf.Tga(W, H, intensity.header, wgt, intensity.footer))
+
+
+def paint_surface(index, intensity, lay, materials, feather):
+    """Copies of the blend maps with every pixel of the layout's surface counties (Serpent's Vale) at full weight in
+    its province's material (`materials`: province id -> material index), feathered into the paint around over
+    `feather` px: there the surface material blends by smoothstep with the pixel's strongest material. Cave floors
+    are left to the cave paint."""
+    import terrain_fill as tf
+    W, H = index.width, index.height
+    idx = bytearray(index.pixels)
+    wgt = bytearray(intensity.pixels)
+    county = {c.key: c for c in lay.counties}
+    surface = {p: pid for p, pid in lay.owner.items() if county[lay.provinces[pid].county].type == "surface"}
+    missing = sorted(set(surface.values()) - set(materials))
+    if missing:
+        raise GeneratorError(f"no surface material for provinces {', '.join(map(str, missing[:5]))}")
+    sources = {p: materials[pid] for p, pid in surface.items()}
+    for (x, y), (d, m) in _nearest(sources, _box_around(list(sources), feather + 1, W, H), feather).items():
+        if (x, y) in lay.owner and (x, y) not in surface:
+            continue
+        k = (y * W + x) * 4
+        if d == 0:
+            idx[k:k + 4] = bytes((m, 0, 0, 0))
+            wgt[k:k + 4] = bytes((255, 0, 0, 0))
+            continue
+        a = round(255 * (1 - _smooth(d / feather)))
+        if a <= 0:
+            continue
+        strongest = max(range(4), key=lambda j: (wgt[k + j], -j))
+        old = idx[k + strongest]
+        if old == m:
+            idx[k:k + 4] = bytes((m, 0, 0, 0))
+            wgt[k:k + 4] = bytes((255, 0, 0, 0))
+        else:
+            idx[k:k + 4] = bytes((m, old, 0, 0))
+            wgt[k:k + 4] = bytes((a, 255 - a, 0, 0))
     return (tf.Tga(W, H, index.header, idx, index.footer), tf.Tga(W, H, intensity.header, wgt, intensity.footer))
 
 

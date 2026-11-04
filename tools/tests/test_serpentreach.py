@@ -374,6 +374,29 @@ class ConnectionTests(unittest.TestCase):
         self.assertFalse(sl.dropped_pair(option_cfg(), 1, 7))  # no NO_LINK_PAIRS: nothing dropped
 
 
+class SurfacePaintTests(unittest.TestCase):
+    def test_paint_surface(self):
+        # a surface county (x 10..19) beside a cave (x 0..9); the blend maps start with material 3 everywhere
+        import terrain_fill as tf
+        counties, provinces, owner = cave_and_vale()
+        lay = sl.Layout(40, 10, counties, provinces, owner, [], {}, [])
+        w, h = 40, 10
+        index = tf.Tga(w, h, bytes(18), bytearray(bytes((3, 0, 0, 0)) * (w * h)), b"")
+        intensity = tf.Tga(w, h, bytes(18), bytearray(bytes((255, 0, 0, 0)) * (w * h)), b"")
+        new_index, new_intensity = sl.paint_surface(index, intensity, lay, {200: 7, 201: 8}, 4)
+
+        def px(img, x, y):
+            return tuple(img.pixels[(y * w + x) * 4:(y * w + x) * 4 + 4])
+        self.assertEqual((px(new_index, 12, 5), px(new_intensity, 12, 5)), ((7, 0, 0, 0), (255, 0, 0, 0)))
+        self.assertEqual(px(new_index, 17, 5)[0], 8)
+        self.assertEqual((px(new_index, 30, 5), px(new_intensity, 30, 5)), ((3, 0, 0, 0), (255, 0, 0, 0)))
+        near, mid = px(new_intensity, 21, 5), px(new_intensity, 22, 5)  # feathered into material 3 east of it
+        self.assertEqual(px(new_index, 21, 5)[:2], (8, 3))
+        self.assertTrue(0 < mid[0] < near[0] < 255 and near[0] + near[1] == 255, (near, mid))
+        self.assertEqual(px(new_index, 5, 5), (3, 0, 0, 0))  # cave floor pixels are not surface paint
+        self.assertEqual(bytes(index.pixels), bytes((3, 0, 0, 0)) * (w * h))  # inputs unchanged
+
+
 LOCATORS = """\ufeffgame_object_locator={
 \tname="buildings"
 \tinstances={

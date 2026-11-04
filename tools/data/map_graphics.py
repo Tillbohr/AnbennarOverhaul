@@ -172,16 +172,18 @@ TERRAIN_FILL_LARGE = 1000
 # Carved dwarven ranges (tools/carved_ranges.py): Serpentreach's carved-in look for an Anbennar dwarven range inside
 # impassable rock. Each county names the range holding it (Segbandal: Seghdihr's). Floors are flat at the ground
 # +/- Serpentreach's terraces, ramping to the land over CARVE_RAMP px where they open onto it; impassable provinces
-# within CARVE_ROCK_RADIUS px of the floor get walls and Serpentreach's default wall material.
-CARVED_RANGES = ("c_seghdihr",)
+# within CARVE_ROCK_RADIUS px of the floor get walls and Serpentreach's default wall material. Khugdihr's range takes
+# West Dwarovar's new cave floors with it (tools/data/west_dwarovar.py).
+CARVED_RANGES = ("c_seghdihr", "c_khugdihr")
 
 # Surround fog (tools/surround_mask.py): Anbennar's gfx/map/surround_map/surround_mask.dds starts the fog that fades
 # the unplayable map into black on the Serpentspine's crest. Inside SURROUND_BOX (mask pixels, half the map's
 # resolution, rows top-down: x0, y0, x1, y1) the fog is cleared within SURROUND_REVEAL mask px of the range (pixels
 # at least SURROUND_THRESHOLD high on the 0-255 heightmap, joined to the visible range) and fades back in over
 # SURROUND_FADE px. Within SURROUND_FEATHER px of the box's edge the fog returns to Anbennar's (no seam where the
-# range runs on out of the box). It never gets more fog than Anbennar's.
-SURROUND_BOX = (1400, 400, 2540, 1350)
+# range runs on out of the box). It never gets more fog than Anbennar's. The top edge (row 300) clears Dûr-Vazhatun
+# (mask row ~402) and Dagrinrod 16-17; the left-out Krakdhum pocket (row ~183) stays fogged.
+SURROUND_BOX = (1400, 300, 2540, 1350)
 SURROUND_THRESHOLD = 64
 SURROUND_REVEAL = 20
 SURROUND_FADE = 40

@@ -42,8 +42,9 @@ def rock_around(pm, floor, impassable, radius):
     return {pm.ids[y * W + x] for (x, y) in near if pm.ids[y * W + x] in impassable}
 
 
-def _open_land(pm, floor, rock, water):
-    """Passable land pixels (not floor, rock, water or id 0) touching the floor: where the floor opens to the land."""
+def _open_land(pm, floor, rock, water, land=()):
+    """Passable land pixels (not floor, rock, water or id 0, or a `land` pixel whatever its province) touching the
+    floor: where the floor opens to the land."""
     W, H = pm.width, pm.height
     out = set()
     for x, y in floor:
@@ -52,14 +53,17 @@ def _open_land(pm, floor, rock, water):
             if n in floor or not (0 <= n[0] < W and 0 <= n[1] < H):
                 continue
             pid = pm.ids[n[1] * W + n[0]]
-            if pid and pid not in rock and pid not in water:
+            if n in land or (pid and pid not in rock and pid not in water):
                 out.add(n)
     return out
 
 
-def carve(grid, floor, terrain, rock, pm, water, ramp, ground_radius=None):
+def carve(grid, floor, terrain, rock, pm, water, ramp, ground_radius=None, land=None):
     """(new grid, report): the floor ({(x, y): province id}) carved into `rock`. `terrain` maps a province to its
-    terrain type (sr_data.TERRACE key). Only floor and rock pixels change; rock is never lowered."""
+    terrain type (sr_data.TERRACE key). Only floor and rock pixels change; rock is never lowered. `land` pixels
+    ({(x, y): province}) are rock on the province map but land to the carve (Serpent's Vale, other regions' floors):
+    the floor ramps to them where it touches them and they are never walled; they do not count for the ground."""
+    land = land or {}
     import heightpack as hp
     W, H = pm.width, pm.height
     ground_radius = ground_radius or sr_data.CARVE_GROUND_RADIUS
@@ -75,7 +79,7 @@ def carve(grid, floor, terrain, rock, pm, water, ramp, ground_radius=None):
     if unknown:
         raise GeneratorError(f"carved floor provinces with no terrace: {', '.join(map(str, unknown[:5]))}")
     fh = {p: base + sr_data.TERRACE[terrain[pid]] * sr_data.TERRACE_STEP for p, pid in floor.items()}
-    opening = {p: grid.get(*p) for p in _open_land(pm, floor, rock, water)}
+    opening = {p: grid.get(*p) for p in _open_land(pm, floor, rock, water, land)}
     if opening:
         for p, (d, h) in sl._nearest(opening, sl._box_around(pts, 1, W, H), ramp).items():
             if p in fh:
@@ -87,7 +91,7 @@ def carve(grid, floor, terrain, rock, pm, water, ramp, ground_radius=None):
     walls = 0
     for (x, y), (d, h) in sl._nearest(fh, sl._box_around(pts, limit + 1, W, H), limit).items():
         i = y * W + x
-        if d == 0 or (x, y) in floor or pm.ids[i] not in rock:
+        if d == 0 or (x, y) in floor or (x, y) in land or pm.ids[i] not in rock:
             continue
         orig = grid.values[i]
         rim = h + sr_data.MIN_WALL

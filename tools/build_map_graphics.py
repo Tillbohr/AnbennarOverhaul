@@ -33,6 +33,7 @@ from data import map_graphics as data  # noqa: E402
 from data.holds import HOLDS  # noqa: E402
 from data import segbandal as sb_data  # noqa: E402
 from data import serpentreach as sr_data  # noqa: E402
+from data import west_dwarovar as wd_data  # noqa: E402
 import eu4_import as eu4i  # noqa: E402
 from eu4_import import EU4_ROOTS  # noqa: E402
 
@@ -1063,11 +1064,29 @@ def gate_sites_for_openings(lay: "sl.Layout", titles: dict) -> list:
     return sites
 
 
+def gate_sites_for_mouths(lay: "sl.Layout") -> list:
+    """One GateSite per Vale mouth (`lay.mouths`), placed and turned as an opening's (`inward` from the surface pixel
+    into the cave); the normal county is the surface county's, read from the layout since Anbennar lacks it."""
+    sites = []
+    for m in lay.mouths:
+        mx, my = m.mouth
+        x, y = min(m.pixels, key=lambda p: ((p[0] - mx) ** 2 + (p[1] - my) ** 2, p[1], p[0]))
+        dx, dy = m.start[0] - mx, m.start[1] - my
+        length = math.hypot(dx, dy)
+        if length == 0:
+            raise GeneratorError(f"mouth {m.county}: its mouth and start are the same pixel")
+        sites.append(dm.GateSite(m.county, lay.provinces[m.target].county, x, y, (dx / length, dy / length)))
+    return sites
+
+
 def serpentreach_sites(roots: Roots, ck3: tuple) -> list:
-    """Gate sites at the Serpentreach and Segbandal openings; `ck3` is (province map, water, impassable)."""
+    """Gate sites at the Serpentreach, Segbandal and West Dwarovar openings and West Dwarovar's Vale mouths (none on
+    tunnels between regions); `ck3` is (province map, water, impassable)."""
     titles = dm.province_titles(titles_text(roots))
+    wd = west_dwarovar_layout(roots, ck3)
     return (gate_sites_for_openings(serpentreach_layout(roots, ck3), titles)
-            + gate_sites_for_openings(segbandal_layout(roots, ck3), titles))
+            + gate_sites_for_openings(segbandal_layout(roots, ck3), titles)
+            + gate_sites_for_openings(wd, titles) + gate_sites_for_mouths(wd))
 
 
 def transplant_overrides(sr_sites: list) -> dict:
@@ -1150,8 +1169,10 @@ def west_dwarovar_layout(roots: Roots, ck3: tuple = None) -> "sl.Layout":
 
 
 def carved_ranges(roots: Roots, ck3: tuple = None) -> list:
-    """[(county, floor {(x, y): province}, province terrain, rock provinces)] for every CARVED_RANGES county, from
-    Anbennar's map. `ck3` is (province map, water, impassable) when already loaded."""
+    """[(county, floor {(x, y): province}, province terrain, rock provinces, land {(x, y): province})] for every
+    CARVED_RANGES county, from Anbennar's map. `land` is rock on Anbennar's map that the carve treats as land: Serpent's
+    Vale and the other regions' floors (never walled; floors ramp to them). `ck3` is (province map, water, impassable)
+    when already loaded."""
     key = str(roots.anbennar)
     if key not in _CARVED:
         folder = roots.anbennar / MAP_DATA
@@ -1168,11 +1189,20 @@ def carved_ranges(roots: Roots, ck3: tuple = None) -> list:
         for county in data.CARVED_RANGES:
             floor = cr.floor_pixels(pm, cr.carved_range(ranges, titles, county))
             kinds = terrain
+            land = {}
             if county in sb_data.EXISTING.values():  # Segbandal: its new caverns join Anbennar's range
                 seg = segbandal_layout(roots, ck3)
                 floor.update(seg.owner)
                 kinds = {**terrain, **{pid: c.type for c in seg.counties for pid in c.baronies}}
-            out.append((county, floor, kinds, cr.rock_around(pm, floor, impassable, data.CARVE_ROCK_RADIUS)))
+            if county in wd_data.EXISTING.values():  # West Dwarovar: its new caves join Khugdihr's range
+                wd = west_dwarovar_layout(roots, ck3)
+                ctype = {pid: c.type for c in wd.counties for pid in c.baronies}
+                floor.update({p: pid for p, pid in wd.owner.items() if ctype[pid] != "surface"})
+                kinds = {**terrain, **ctype}
+                land = {p: pid for p, pid in wd.owner.items() if ctype[pid] == "surface"}
+                for lay in (serpentreach_layout(roots, ck3), segbandal_layout(roots, ck3)):
+                    land.update(lay.owner)
+            out.append((county, floor, kinds, cr.rock_around(pm, floor, impassable, data.CARVE_ROCK_RADIUS), land))
         _CARVED[key] = out
     return _CARVED[key]
 
@@ -1193,12 +1223,19 @@ def build_terrain_fill(roots: Roots, notes: list = None) -> dict:
     materials = {pid: (ids.index(floor), ids.index(wall)) for pid, (floor, wall) in sl.province_materials(lay).items()}
     pm = _SERPENTREACH[_layout_key(roots)][1]
     index, intensity = sl.paint(index, intensity, lay, materials, pm)
-    for county, floor, terrain, rock in carved_ranges(roots):
+    for county, floor, terrain, rock, _ in carved_ranges(roots):
         names = cr.province_materials(floor, terrain)
         if county in sb_data.EXISTING.values():  # Segbandal's new provinces by their EU4 area's style
             names.update(sl.province_materials(segbandal_layout(roots), sb_data))
+        if county in wd_data.EXISTING.values():  # West Dwarovar's new caves by their EU4 area's style
+            names.update(sl.province_materials(west_dwarovar_layout(roots), wd_data))
         materials = {pid: (ids.index(f), ids.index(w)) for pid, (f, w) in names.items()}
         index, intensity = cr.paint(index, intensity, floor, materials, pm, rock)
+    # Serpent's Vale last, over any cave wall paint that reached it
+    wd = west_dwarovar_layout(roots)
+    surface = {pid: ids.index(wd_data.SURFACE_MATERIALS[wd_data.SURFACE_TERRAIN[c.key]])
+               for c in wd.counties if c.type == "surface" for pid in c.baronies}
+    index, intensity = sl.paint_surface(index, intensity, wd, surface, wd_data.SURFACE_FEATHER)
     if notes is not None:
         notes.append(f"terrain gaps filled: {report['small_pixels']} px in {report['small_groups']} small gaps "
                      f"(copied from neighbours), {report['large_pixels']} px in {report['large_groups']} large "
@@ -1241,12 +1278,12 @@ def build_heightmap(roots: Roots, notes: list = None) -> dict:
     carved_floors = carved_ranges(roots, (pm, water, impassable))
     for plan in plans:
         drop_pieces_on_floor(plan, lay.owner, sr_data.PIECE_FLOOR_CLEARANCE)
-        for _, floor, _, _ in carved_floors:
+        for _, floor, _, _, _ in carved_floors:
             drop_pieces_on_floor(plan, floor, sr_data.PIECE_FLOOR_CLEARANCE)
     new, carved = sl.carve(new, lay, pm, water)
     range_reports = []
-    for county, floor, terrain, rock in carved_floors:
-        new, r = cr.carve(new, floor, terrain, rock, pm, water, data.CARVE_RAMP)
+    for county, floor, terrain, rock, land in carved_floors:
+        new, r = cr.carve(new, floor, terrain, rock, pm, water, data.CARVE_RAMP, land=land)
         range_reports.append((county, r))
     if notes is not None:
         notes.extend(_height_notes(report, plans))

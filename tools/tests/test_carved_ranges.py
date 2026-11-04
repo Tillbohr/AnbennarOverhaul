@@ -67,6 +67,26 @@ class CarvedRangeTests(unittest.TestCase):
         self.assertEqual(new.get(30, 14), hold)
         self.assertEqual(new.get(30, 13 - sr.WALL_WIDTH), hold + sr.MIN_WALL)  # rim above low rock
 
+    def test_carve_with_land(self):
+        # a low valley drawn on the rock (x 40..49, y 8..20, height 8000; still rock on the province map) meets the
+        # road's end: given as `land`, it is never walled and the road ramps down to it
+        grid, pm = synthetic()
+        vale = {}
+        for y in range(8, 21):
+            for x in range(40, 50):
+                grid.values[y * W + x] = 8000
+                vale[(x, y)] = 99
+        floor = cr.floor_pixels(pm, {ROAD})
+        new, report = cr.carve(grid, floor, {ROAD: "dwarven_hold"}, {ROCK}, pm, set(), ramp=6, ground_radius=20,
+                               land=vale)
+        self.assertEqual([p for p in vale if new.get(*p) != 8000], [])  # the valley keeps its heights
+        hold = 5000 + sr.TERRACE["dwarven_hold"] * sr.TERRACE_STEP
+        self.assertGreater(new.get(39, 14), 7500)  # the floor meets the valley near its height
+        self.assertTrue(hold < new.get(36, 14) < new.get(39, 14))  # and ramps down to the hold's level
+        self.assertEqual(new.get(30, 14), hold)
+        walled, _ = cr.carve(grid, floor, {ROAD: "dwarven_hold"}, {ROCK}, pm, set(), ramp=6, ground_radius=20)
+        self.assertNotEqual(walled.get(41, 12), 8000)  # without `land` the valley would be walled
+
     def test_unknown_terrain_stops(self):
         grid, pm = synthetic()
         with self.assertRaises(GeneratorError):

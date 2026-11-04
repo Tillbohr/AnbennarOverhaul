@@ -74,6 +74,21 @@ class SerpentreachGateSiteTests(unittest.TestCase):
             bmg.gate_sites_for_openings(sl.Layout(40, 40, [], {}, {}, [op], {}, []), {})
 
 
+class MouthGateSiteTests(unittest.TestCase):
+    def test_site_at_the_mouth_facing_into_the_vale(self):
+        import serpentreach_layout as sl
+        cave = sl.County("c_cave", 1, "Cave", "a_area", "cavern", [100])
+        vale = sl.County("c_vale", 2, "Vale", "b_area", "surface", [200, 201])
+        provinces = {100: sl.Province(100, (1, 1, 1), "c_cave", 0, [(9, 5)], (9, 5)),
+                     200: sl.Province(200, (2, 2, 2), "c_vale", 0, [(10, 5)], (10, 5)),
+                     201: sl.Province(201, (3, 3, 3), "c_vale", 1, [(11, 5)], (11, 5))}
+        mouth = sl.Opening("c_cave", 200, {(9, 5), (8, 5), (7, 5)}, (10, 5), (9, 5))
+        lay = sl.Layout(20, 10, [cave, vale], provinces, {}, [], {}, [], [], [mouth])
+        (site,) = bmg.gate_sites_for_mouths(lay)
+        self.assertEqual((site.dwarven_county, site.normal_county, site.x, site.y), ("c_cave", "c_vale", 9, 5))
+        self.assertEqual(site.inward, (-1.0, 0.0))  # from the Vale into the cave
+
+
 class AppendMaterialsTests(unittest.TestCase):
     ENTRY = {"id": "tiles", "name": "Tiles", "diffuse": "tiles_diffuse.dds", "normal": "tiles_normal.dds",
              "material": "tiles_properties.dds", "mask": "masks/aov_tiles_mask.png"}
@@ -408,6 +423,14 @@ def _impassable():
     return dm.default_map_sets((folder / "default.map").read_text(encoding="utf-8-sig", errors="replace"))[1]
 
 
+def region_gates():
+    """Gates the regions add to Anbennar's 9: one per opening of Serpentreach, Segbandal and West Dwarovar, and one
+    per West Dwarovar Vale mouth (none on the Dwarovrod 24-25 tunnel)."""
+    wd = bmg.west_dwarovar_layout(ROOTS)
+    return (len(bmg.serpentreach_layout(ROOTS).openings) + len(bmg.segbandal_layout(ROOTS).openings)
+            + len(wd.openings) + len(wd.mouths))
+
+
 def real_build():
     """(files, notes) of one build_all on the installed mods, shared by every real-data test (about a minute)."""
     if not _BUILD:
@@ -446,6 +469,24 @@ class RealFileTests(unittest.TestCase):
                 if not (x0 // 4 <= bx <= (x1 - 1) // 4 and y0 // 4 <= by <= (y1 - 1) // 4):
                     at = 128 + (by * blocks_wide + bx) * 16
                     self.assertEqual(ours_bytes[at:at + 16], anb_bytes[at:at + 16], (bx, by))
+
+    def test_surround_clears_vazhatun(self):
+        """The fog box reaches up to row 300: Dur-Vazhatun's hold (map 3324, 3292 from the bottom) comes out of the
+        fog; the left-out Krakdhum (map 3427, 3731) stays in it."""
+        import eu4_import as eu4i
+        files, _ = real_build()
+        w, _, anb = eu4i.read_dds((ROOTS.anbennar / bmg.SURROUND_MASK_REL).read_bytes())
+        _, _, ours = eu4i.read_dds(files[bmg.SURROUND_MASK_REL])
+        red = lambda img, x, y: img[(y * w + x) * 4 + 2]  # noqa: E731
+        wd = bmg.west_dwarovar_layout(ROOTS)
+        hold = next(c for c in wd.counties if c.key == "c_dur_vazhatun")
+        x, y = wd.provinces[hold.baronies[0]].interior
+        vazhatun = (x // 2, (4096 - y) // 2)
+        self.assertGreater(red(anb, *vazhatun), 0)
+        self.assertEqual(red(ours, *vazhatun), 0)
+        krakdhum = (3427 // 2, (4096 - 3731) // 2)
+        self.assertGreater(red(ours, *krakdhum), 0)
+        self.assertEqual(red(ours, *krakdhum), red(anb, *krakdhum))
 
     def test_terrain_gaps_filled(self):
         """Anbennar's blend maps have unpainted pixels (drawn black); the build fills every one, large gaps with
@@ -925,7 +966,7 @@ class GateOverlayRealTests(unittest.TestCase):
 
     def test_twelve_erebor_gates_only(self):
         blocks = _blocks(self.files["gfx/map/map_object_data/aov_dwarven_gates.txt"].decode("utf-8-sig"))
-        gates = 9 + len(bmg.serpentreach_layout(ROOTS).openings)  # Anbennar's 9 and one per Serpentreach opening
+        gates = 9 + region_gates()  # Anbennar's 9 and one per region opening or Vale mouth
         self.assertEqual({k: (v[0], v[1]) for k, v in blocks.items()},
                          {"aov_dwarven_gates": ("erebor_gate_mesh", gates)})
         for rel in self.files:
@@ -1033,9 +1074,19 @@ class ConeRealTests(unittest.TestCase):
         import serpentreach_layout as sl
         files = real_build()[0]
         carved, _ = sl.carve(self.new, bmg.serpentreach_layout(ROOTS), self.pm, self.water)
-        for _, floor, terrain, rock in bmg.carved_ranges(ROOTS):
-            carved, _ = cr.carve(carved, floor, terrain, rock, self.pm, self.water, data.CARVE_RAMP)
+        for _, floor, terrain, rock, land in bmg.carved_ranges(ROOTS):
+            carved, _ = cr.carve(carved, floor, terrain, rock, self.pm, self.water, data.CARVE_RAMP, land=land)
         self.assertEqual(pngio.write_png(carved.to_png()), files["map_data/heightmap.png"])
+
+    def test_vale_heights_untouched(self):
+        """Serpent's Vale is never carved or walled: its heights in the build are the stamp's (Anbennar's basin, with
+        the gates already transplanted)."""
+        final = hp.Grid.from_png(pngio.read_png(real_build()[0]["map_data/heightmap.png"]))
+        wd = bmg.west_dwarovar_layout(ROOTS)
+        county = {c.key: c for c in wd.counties}
+        vale = [p for p, pid in wd.owner.items() if county[wd.provinces[pid].county].type == "surface"]
+        self.assertGreater(len(vale), 1000)
+        self.assertEqual([p for p in vale if final.get(*p) != self.new.get(*p)], [])
 
     def test_changes_stay_near_a_gate_and_nothing_is_lowered(self):
         """Every changed pixel is in a cone, or in a gate's range-join region (behind its face, within the join
@@ -1320,7 +1371,7 @@ class HeightOutputsTests(unittest.TestCase):
         # floors within CARVE_RAMP of passable land (Hero's Vale inside Verkal Gulan) ramp to it by design
         import carved_ranges as cr
         import serpentreach_layout as sl
-        _, floor, _, rock = next(r for r in bmg.carved_ranges(ROOTS) if r[0] == "c_seghdihr")
+        _, floor, _, rock, _ = next(r for r in bmg.carved_ranges(ROOTS) if r[0] == "c_seghdihr")
         pm, _, water, _ = sl.load_ck3(ROOTS.anbennar)
         ramp = set(sl.chamfer(list(cr._open_land(pm, floor, rock, water)), (0, 0, pm.width, pm.height),
                               data.CARVE_RAMP))
@@ -1341,12 +1392,79 @@ class HeightOutputsTests(unittest.TestCase):
         x, y = seg.provinces[county.baronies[0]].interior
         self.assertEqual(index.pixels[(y * index.width + x) * 4], ids.index("hardened_lava"))
 
+    def carved_levels(self, county):
+        from data import serpentreach as sr
+        base = int(re.search(rf"range of {county} carved: ground (\d+)", "\n".join(self.notes)).group(1))
+        return {t: base + sr.TERRACE[t] * sr.TERRACE_STEP for t in sr.TERRACE}
+
+    def test_khugdihr_range_carved(self):
+        """Khugdihr's Anbennar floors and West Dwarovar's new caves are one range, flat at its ground +/- the
+        terraces, but within CARVE_RAMP of what they open onto (Khugdihr's exits, the openings, the Vale, the tunnel's
+        end on Segbandal's floor)."""
+        import carved_ranges as cr
+        import serpentreach_layout as sl
+        _, floor, terrain, rock, land = next(r for r in bmg.carved_ranges(ROOTS) if r[0] == "c_khugdihr")
+        wd = bmg.west_dwarovar_layout(ROOTS)
+        self.assertTrue(set(floor) >= {p for p, pid in wd.owner.items() if p not in land})
+        self.assertTrue({6301, 6467, 6472} <= set(floor.values()))  # Khugdihr's own baronies
+        levels = set(self.carved_levels("c_khugdihr").values())
+        pm, _, water, _ = sl.load_ck3(ROOTS.anbennar)
+        ramp = set(sl.chamfer(list(cr._open_land(pm, floor, rock, water, land)), (0, 0, pm.width, pm.height),
+                              data.CARVE_RAMP))
+        self.assertEqual([p for p in floor if p not in ramp and self.new_height.get(*p) not in levels], [])
+
+    def test_vale_mouth_ramps(self):
+        """Cave floors within CARVE_RAMP of the Vale lie between their floor level and the Vale's heights there."""
+        wd = bmg.west_dwarovar_layout(ROOTS)
+        county = {c.key: c for c in wd.counties}
+        level = self.carved_levels("c_khugdihr")
+        kind = {p: county[wd.provinces[pid].county].type for p, pid in wd.owner.items()}
+        for m in wd.mouths:
+            vale = [self.new_height.get(x + dx, y + dy) for x, y in m.pixels
+                    for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)) if kind.get((x + dx, y + dy)) == "surface"]
+            self.assertTrue(vale, m.county)
+            for p in m.pixels:
+                if math.dist(p, m.mouth) <= data.CARVE_RAMP:
+                    h = self.new_height.get(*p)
+                    lo, hi = min(level[kind[p]], min(vale)), max(level[kind[p]], max(vale))
+                    self.assertTrue(lo <= h <= hi, (m.county, p, h, lo, hi))
+
+    def test_vale_painted(self):
+        import terrain_fill as tfill
+        from data import west_dwarovar as wdd
+        wd = bmg.west_dwarovar_layout(ROOTS)
+        index = tfill.read_tga(self.files[bmg.DETAIL_INDEX_REL])
+        intensity = tfill.read_tga(self.files[bmg.DETAIL_INTENSITY_REL])
+        ids = bmg.material_ids(ROOTS)
+        surface = [c for c in wd.counties if c.type == "surface"]
+        self.assertEqual(len(surface), 12)
+        for c in surface:
+            want = ids.index(wdd.SURFACE_MATERIALS[wdd.SURFACE_TERRAIN[c.key]])
+            for pid in c.baronies:
+                x, y = wd.provinces[pid].interior
+                k = (y * index.width + x) * 4
+                self.assertEqual((index.pixels[k], intensity.pixels[k]), (want, 255), (c.key, pid))
+        cave = next(c for c in wd.counties if c.area == "westnest_area")
+        x, y = wd.provinces[cave.baronies[0]].interior
+        self.assertEqual(index.pixels[(y * index.width + x) * 4], ids.index("moss_ground_01"))
+
+    def test_west_dwarovar_gates(self):
+        wd = bmg.west_dwarovar_layout(ROOTS)
+        notes = "\n".join(n for n in self.notes if n.startswith("gate "))
+        self.assertEqual(len(wd.openings), 3)
+        self.assertEqual(len(wd.mouths), 6)
+        for op in list(wd.openings) + list(wd.mouths):
+            self.assertRegex(notes, rf"(?m)^gate {op.county}/")
+        tunnel = [lk for lk in wd.links if lk.target in bmg.segbandal_layout(ROOTS).provinces]
+        self.assertEqual(len(tunnel), 1)
+        self.assertNotRegex(notes, rf"(?m)^gate {tunnel[0].county}/")
+
     def test_notes_cover_ranges_and_sites(self):
         lay = bmg.serpentreach_layout(ROOTS)
         self.assertEqual(sum(note.startswith("range ") and " carved: " not in note for note in self.notes), 9)
         self.assertEqual(sum(note.startswith("range of ") and " carved: " in note for note in self.notes),
                          len(data.CARVED_RANGES))
-        self.assertEqual(sum(note.startswith("gate ") for note in self.notes), 9 + len(lay.openings))
+        self.assertEqual(sum(note.startswith("gate ") for note in self.notes), 9 + region_gates())
         self.assertFalse(any("c_oldpassage" in note for note in self.notes if note.startswith("gate ")))
         for op in lay.openings:
             self.assertTrue(any(note.startswith(f"gate {op.county}/") for note in self.notes), op.county)
@@ -1381,7 +1499,7 @@ class HeightOutputsTests(unittest.TestCase):
         import gate_transplant as gt_
         found = [re.search(r"^gate (\S+) at .*height factor ([\d.]+), cone peak (\d+) \(foot (\d+)", n)
                  for n in self.notes if n.startswith("gate ")]
-        self.assertEqual(len(found), 9 + len(bmg.serpentreach_layout(ROOTS).openings))
+        self.assertEqual(len(found), 9 + region_gates())
         k = 1.6 / data.EREBOR_GATE_SCALE
         peak = gt_.load_composition(ROOTS.rie).peak
         for m in found:

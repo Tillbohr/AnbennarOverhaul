@@ -168,3 +168,15 @@ DUCHY_CHARGES = {area: ((f"{charge}.dds",) + _CENTRE,) for area, charge in (
     ("assembly_terrace_area", "ce_bell"),
     ("castle_hill_area", "ce_castle"),
 )}
+
+# --- look (tools/build_map_graphics.py) ---------------------------------------------------------------------------------
+# The caves are carved with Anbennar's Khugdihr as one range (data/map_graphics.py CARVED_RANGES c_khugdihr). Floors by
+# EU4 area in Serpentreach's TERRAIN_STYLES: the spider nests of Westnest and Eastnest and Zokkorna's caverns moss;
+# every other area "default" (tiled roads and holds, granite caves, grey walls).
+AREA_STYLES = {"westnest_area": "mushroom", "eastnest_area": "mushroom", "zokkorna_caverns_area": "mushroom"}
+COUNTY_FLOORS = {}
+BARONY_FLOORS = {}
+# Serpent's Vale is never carved; each county is painted at full weight with the Anbennar material of its CK3 terrain
+# (SURFACE_TERRAIN), blended into the paint around over SURFACE_FEATHER px.
+SURFACE_MATERIALS = {"farmlands": "farmland_01", "plains": "plains_01", "hills": "hills_01", "wetlands": "wetlands_02"}
+SURFACE_FEATHER = 4
