@@ -94,4 +94,45 @@ aov_hold_setup_effect = {
 		add_building = dwarven_hold_02
 		set_variable = { name = aov_dig_progress value = 0 }
 	}
+	# Amldihr
+	title:b_amldihr.title_province = {
+		set_holding_type = dwarven_hold_holding
+		add_building = dwarven_hold_02
+		set_variable = { name = aov_dig_progress value = 0 }
+	}
+	# Haraz Orldhûm
+	title:b_haraz_orldhum.title_province = {
+		set_holding_type = dwarven_hold_holding
+		set_variable = { name = aov_dig_progress value = 0 }
+	}
+	# Mithradhûm
+	title:b_mithradhum.title_province = {
+		set_holding_type = dwarven_hold_holding
+		set_variable = { name = aov_dig_progress value = 0 }
+	}
+	# Er-Natvir
+	title:b_er_natvir.title_province = {
+		set_holding_type = dwarven_hold_holding
+		set_variable = { name = aov_dig_progress value = 0 }
+	}
+	# Verkal Kozenad
+	title:b_verkal_kozenad.title_province = {
+		set_holding_type = dwarven_hold_holding
+		set_variable = { name = aov_dig_progress value = 0 }
+	}
+	# Hul-Jorkad
+	title:b_hul_jorkad.title_province = {
+		set_holding_type = dwarven_hold_holding
+		set_variable = { name = aov_dig_progress value = 0 }
+	}
+	# Orlazam-az-dihr
+	title:b_orlazam_az_dihr.title_province = {
+		set_holding_type = dwarven_hold_holding
+		set_variable = { name = aov_dig_progress value = 0 }
+	}
+	# Dûr-Vazhatun
+	title:b_dur_vazhatun.title_province = {
+		set_holding_type = dwarven_hold_holding
+		set_variable = { name = aov_dig_progress value = 0 }
+	}
 }

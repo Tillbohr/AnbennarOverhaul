@@ -343,6 +343,27 @@ class DigRequirementTests(unittest.TestCase):
             trigger = re.search(r"\t\ttrigger = \{\n(.*?)\n\t\t\}\n", option, re.S).group(1)
             self.assertIn("aov_can_dig_at = yes", trigger, h["name"])  # the option itself needs the buildings
 
+    def test_every_picker_lists_every_hold(self):
+        """Each hold has its Delve Deeper progress and cost lines, its Restore option and their loc, numbered in
+        HOLDS order."""
+        n = len(holds.HOLDS)
+        decision = self.hand("common/decisions/aov_hold_decisions.txt")
+        ruin = self.hand("events/aov_hold_ruin_events.txt")
+        options = re.findall(r"\toption = \{\n\t\tname = aov_hold_ruin\.2\.hold_(\d+)\n(.*?)\n\t\}\n", ruin, re.S)
+        self.assertEqual([int(i) for i, _ in options], list(range(1, n + 1)))
+        loc = (self.hand("localization/english/aov_hold_delve_l_english.yml")
+               + self.hand("localization/english/aov_hold_ruin_l_english.yml"))
+        for i, h in enumerate(holds.HOLDS, 1):
+            b = h["barony"]
+            self.assertIn(f"title:{b} = {{ holder = root }}", options[i - 1][1], h["name"])
+            for check, desc in (("aov_hold_dig_running", f"aov_delve_deeper_decision_desc_{i}"),
+                                ("aov_can_dig_at", f"aov_delve_deeper_cost_{i}")):
+                self.assertIn(f"title:{b} = {{ holder = root }}\n\t\t\t\ttitle:{b}.title_province = "
+                              f"{{ {check} = yes }}\n\t\t\t}}\n\t\t\tdesc = {desc}\n", decision, h["name"])
+            for key in (f"aov_delve_deeper_decision_desc_{i}", f"aov_hold_delve.1.hold_{i}",
+                        f"aov_delve_deeper_cost_{i}", f"aov_hold_ruin.2.hold_{i}"):
+                self.assertRegex(loc, rf"(?m)^ {re.escape(key)}:0 \".*GetTitleByKey\('{b}'\)", key)
+
     def test_game_start_sets_deposits(self):
         effect = parse_blocks(self.hand("common/on_action/aov_hold_on_actions.txt"))["aov_hold_game_start"]
         self.assertRegex(effect, r"aov_hold_setup_effect = yes\n\t+aov_rie_deposit_setup_effect = yes\n")

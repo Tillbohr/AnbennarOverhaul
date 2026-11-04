@@ -173,6 +173,62 @@ aov_delve_deeper_decision = {
 		}
 		triggered_desc = {
 			trigger = {
+				title:b_amldihr = { holder = root }
+				title:b_amldihr.title_province = { aov_hold_dig_running = yes }
+			}
+			desc = aov_delve_deeper_decision_desc_17
+		}
+		triggered_desc = {
+			trigger = {
+				title:b_haraz_orldhum = { holder = root }
+				title:b_haraz_orldhum.title_province = { aov_hold_dig_running = yes }
+			}
+			desc = aov_delve_deeper_decision_desc_18
+		}
+		triggered_desc = {
+			trigger = {
+				title:b_mithradhum = { holder = root }
+				title:b_mithradhum.title_province = { aov_hold_dig_running = yes }
+			}
+			desc = aov_delve_deeper_decision_desc_19
+		}
+		triggered_desc = {
+			trigger = {
+				title:b_er_natvir = { holder = root }
+				title:b_er_natvir.title_province = { aov_hold_dig_running = yes }
+			}
+			desc = aov_delve_deeper_decision_desc_20
+		}
+		triggered_desc = {
+			trigger = {
+				title:b_verkal_kozenad = { holder = root }
+				title:b_verkal_kozenad.title_province = { aov_hold_dig_running = yes }
+			}
+			desc = aov_delve_deeper_decision_desc_21
+		}
+		triggered_desc = {
+			trigger = {
+				title:b_hul_jorkad = { holder = root }
+				title:b_hul_jorkad.title_province = { aov_hold_dig_running = yes }
+			}
+			desc = aov_delve_deeper_decision_desc_22
+		}
+		triggered_desc = {
+			trigger = {
+				title:b_orlazam_az_dihr = { holder = root }
+				title:b_orlazam_az_dihr.title_province = { aov_hold_dig_running = yes }
+			}
+			desc = aov_delve_deeper_decision_desc_23
+		}
+		triggered_desc = {
+			trigger = {
+				title:b_dur_vazhatun = { holder = root }
+				title:b_dur_vazhatun.title_province = { aov_hold_dig_running = yes }
+			}
+			desc = aov_delve_deeper_decision_desc_24
+		}
+		triggered_desc = {
+			trigger = {
 				save_temporary_scope_as = digger
 				title:b_marrhold = { holder = root }
 				title:b_marrhold.title_province = { aov_can_dig_at = yes }
@@ -298,6 +354,70 @@ aov_delve_deeper_decision = {
 				title:b_gor_vazumbrog.title_province = { aov_can_dig_at = yes }
 			}
 			desc = aov_delve_deeper_cost_16
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_amldihr = { holder = root }
+				title:b_amldihr.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_17
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_haraz_orldhum = { holder = root }
+				title:b_haraz_orldhum.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_18
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_mithradhum = { holder = root }
+				title:b_mithradhum.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_19
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_er_natvir = { holder = root }
+				title:b_er_natvir.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_20
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_verkal_kozenad = { holder = root }
+				title:b_verkal_kozenad.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_21
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_hul_jorkad = { holder = root }
+				title:b_hul_jorkad.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_22
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_orlazam_az_dihr = { holder = root }
+				title:b_orlazam_az_dihr.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_23
+		}
+		triggered_desc = {
+			trigger = {
+				save_temporary_scope_as = digger
+				title:b_dur_vazhatun = { holder = root }
+				title:b_dur_vazhatun.title_province = { aov_can_dig_at = yes }
+			}
+			desc = aov_delve_deeper_cost_24
 		}
 	}
 

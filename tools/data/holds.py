@@ -1,4 +1,5 @@
-"""Dwarven hold data: the 16 holds (9 of Anbennar's, 6 of Serpentreach's, 1 of Segbandal's) and the dig constants. The level effects come from Realms in Exile's
+"""Dwarven hold data: the 24 holds (9 of Anbennar's, 6 of Serpentreach's, 1 of Segbandal's, 8 of West Dwarovar's) and
+the dig constants. The level effects come from Realms in Exile's
 dwarven_depths_01..10 (tools/build_rie_dwarves.py, depths_level_effects).
 
 Specs: docs/superpowers/specs/2026-10-10-dwarven-hold-digging-design.md,
@@ -30,6 +31,15 @@ HOLDS = [
     _hold("Orlghelovar", 4238, "c_orlghelovar", "b_orlghelovar", 1),
     # Segbandal (tools/build_segbandal.py makes these titles)
     _hold("Gor Vazumbrog", 4217, "c_gor_vazumbrog", "b_gor_vazumbrog", 2),
+    # West Dwarovar (tools/build_west_dwarovar.py makes these titles); Amldihr, the old capital, starts deeper
+    _hold("Amldihr", 4119, "c_amldihr", "b_amldihr", 2),
+    _hold("Haraz Orldhûm", 2868, "c_haraz_orldhum", "b_haraz_orldhum", 1),
+    _hold("Mithradhûm", 4236, "c_mithradhum", "b_mithradhum", 1),
+    _hold("Er-Natvir", 2931, "c_er_natvir", "b_er_natvir", 1),
+    _hold("Verkal Kozenad", 4056, "c_verkal_kozenad", "b_verkal_kozenad", 1),
+    _hold("Hul-Jorkad", 2963, "c_hul_jorkad", "b_hul_jorkad", 1),
+    _hold("Orlazam-az-dihr", 4147, "c_orlazam_az_dihr", "b_orlazam_az_dihr", 1),
+    _hold("Dûr-Vazhatun", 4020, "c_dur_vazhatun", "b_dur_vazhatun", 1),
 ]
 
 DIG_COST_PER_LEVEL = 150
