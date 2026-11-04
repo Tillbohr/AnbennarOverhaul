@@ -2,6 +2,9 @@
 west_dwarovar_region (without the Krakdhum pocket) and serpents_vale_region under one placeholder empire,
 e_west_dwarovar, with Anbennar's k_khugdihr moved in.
 
+Each kingdom, its hold duchy and hold county carry the EU4 hold's flag (k_khugdihr EU4 I07's), the other new duchies
+a dwarven charge on their map colour.
+
 The new provinces come from tools/build_serpentreach.py (`layouts`, which also draws them into the shared map files).
 Every EU4 area becomes a duchy under its hold's kingdom (tools/data/west_dwarovar.py, KINGDOMS). Anbennar's Khugdihr
 keeps its kobolds: no culture, faith, holder or province change, only history `de_jure_liege` moves at 1.1.1, so no
@@ -18,7 +21,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # python -I does not add the script's folder
-from build_hud_override import GeneratorError  # noqa: E402
+from build_hud_override import DEFAULT_GAME, GeneratorError  # noqa: E402
 import build_segbandal as bsb  # noqa: E402
 import build_serpentreach as bs  # noqa: E402
 import eu4_import as eu4i  # noqa: E402
@@ -37,6 +40,7 @@ DYNASTIES = "common/dynasties/aov_west_dwarovar_dynasties.txt"
 TERRAIN = "common/province_terrain/aov_west_dwarovar_terrain.txt"
 REGIONS = "map_data/geographical_regions/aov_west_dwarovar_regions.txt"
 LOC = "localization/english/aov_west_dwarovar_l_english.yml"
+ARMS = "common/coat_of_arms/coat_of_arms/aov_west_dwarovar.txt"
 DE_JURE_DATE = "1.1.1"
 
 
@@ -162,12 +166,31 @@ def render_terrain(lay: sl.Layout) -> bytes:
     return _text(lines)
 
 
+def check_arms(wd: WestDwarovar, anbennar: Path) -> None:
+    """Stop when a flag emblem or a duchy charge is missing, or when Anbennar now scripts arms for a title of its own
+    that this file gives arms to (k_khugdihr, its hold duchy and hold county)."""
+    realm = wd.realm
+    missing = [bs.emblem(k) for k in realm.kingdoms if not (SUBMOD / bs.EMBLEM_DIR / bs.emblem(k)).is_file()]
+    if missing:
+        raise GeneratorError(f"flag emblems missing from {bs.EMBLEM_DIR} (see KINGDOM_ARMS): {', '.join(missing)}")
+    missing = bs.missing_charges(anbennar, DEFAULT_GAME, cfg=data)
+    if missing:
+        raise GeneratorError(f"DUCHY_CHARGES emblems found nowhere: {', '.join(missing)}")
+    ours = {k for kkey in realm.existing_kingdoms
+            for k in (kkey, realm.hold_duchy[kkey], data.KINGDOM_CAPITALS[kkey])}
+    scripted = sorted(ours & bsb._scripted_arms(anbennar))
+    if scripted:
+        raise GeneratorError(f"Anbennar now scripts arms for {', '.join(scripted)}; drop them from KINGDOM_ARMS or "
+                             "decide which arms win")
+
+
 def build_from_layout(anbennar: Path, lay: sl.Layout, eu4: Path = EU4) -> dict:
     """West Dwarovar's files from its layout (build_serpentreach.layouts(...)[2]); nothing is written here."""
     titles_text = bsb._read_titles(anbennar)
     check_khugdihr(titles_text, bsb._read_history(anbennar))
     wd = WestDwarovar(lay, titles_text, eu4i.province_areas(eu4), bs.male_names(anbennar))
     bs.check_new_keys(wd.realm.all_keys(), titles_text)
+    check_arms(wd, anbennar)
     return {
         TITLES: bs.render_titles(wd.realm, data),
         TITLE_HISTORY: render_title_history(wd),
@@ -177,6 +200,7 @@ def build_from_layout(anbennar: Path, lay: sl.Layout, eu4: Path = EU4) -> dict:
         TERRAIN: render_terrain(lay),
         REGIONS: bs.render_regions(data, list(data.KINGDOMS), data.REGION_NAME),
         LOC: bs.render_loc(wd.realm, wd.people, data),
+        ARMS: bs.render_arms(wd.realm, data),
     }
 
 

@@ -331,6 +331,30 @@ class TitleTests(unittest.TestCase):
         regions = self.files[self.bwd.REGIONS].decode("utf-8-sig")
         self.assertIn("world_west_dwarovar = {\n\tkingdoms = { " + " ".join(data.KINGDOMS) + " }", regions)
 
+    def test_arms(self):
+        from unittest import mock
+        arms = self.files[self.bwd.ARMS].decode("utf-8-sig")
+        for kkey, (tag, _, field) in data.KINGDOM_ARMS.items():
+            hold = "d_khugdihr" if kkey == "k_khugdihr" else self.duchy_of_area(data.KINGDOMS[kkey][1][0])
+            emblem = f"aov_{kkey[2:]}.dds"
+            for key in (kkey, hold, data.KINGDOM_CAPITALS[kkey]):
+                self.assertRegex(arms, rf'(?m)^{key} = \{{\n\tpattern = "pattern_solid.dds"\n\tcolor1 = rgb '
+                                       rf'\{{ {" ".join(map(str, field))} \}}\n\ttextured_emblem = \{{\n'
+                                       rf'\t\ttexture = "{emblem}"', key)
+            self.assertTrue((self.bwd.SUBMOD / "gfx/coat_of_arms/textured_emblems" / emblem).is_file(), emblem)
+        self.assertIn("aov_khugdihr.dds", arms)
+        self.assertEqual(len(data.DUCHY_CHARGES), 30)
+        for area, ((charge, _, _),) in data.DUCHY_CHARGES.items():
+            self.assertRegex(arms, rf'(?m)^{self.duchy_of_area(area)} = \{{\n(\t.*\n)*?\t\ttexture = "{charge}"', area)
+        duchies = set(re.findall(r"(?m)^(d_\w+) = \{", arms))
+        self.assertEqual(len(duchies), 30 + 9)
+        with mock.patch.object(self.bsb, "_scripted_arms", return_value={"d_khugdihr"}):
+            with self.assertRaisesRegex(GeneratorError, "d_khugdihr"):
+                self.bwd.build_from_layout(ANBENNAR, self.lay, EU4)
+        with mock.patch.dict(data.DUCHY_CHARGES, {"azmak_area": (("ce_nowhere.dds", (0.5, 0.5), (0.6, 0.6)),)}):
+            with self.assertRaisesRegex(GeneratorError, "ce_nowhere"):
+                self.bwd.build_from_layout(ANBENNAR, self.lay, EU4)
+
     def test_outputs_current(self):
         stale = [rel for rel, content in self.files.items()
                  if not (self.bwd.SUBMOD / rel).is_file() or (self.bwd.SUBMOD / rel).read_bytes() != content]
