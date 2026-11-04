@@ -7,8 +7,9 @@
 | Segbandal's provinces in `map_data/provinces.png`, `map_data/definition.csv` and the 8 locator files | `python -I tools/build_serpentreach.py` | The Serpentreach generator draws both regions into the shared map files (`layouts`: Segbandal's ids follow Serpentreach's). See `serpentreach.md`. |
 | `common/landed_titles/aov_segbandal.txt`, `history/titles/aov_segbandal.txt`, `history/provinces/aov_segbandal.txt`, `history/characters/aov_segbandal.txt`, `common/dynasties/aov_segbandal_dynasties.txt`, `common/province_terrain/aov_segbandal_terrain.txt`, `map_data/geographical_regions/aov_segbandal_regions.txt`, `localization/english/aov_segbandal_l_english.yml`, `common/coat_of_arms/coat_of_arms/aov_segbandal.txt` | `python -I tools/build_segbandal.py` | EU4 Anbennar's `middle_dwarovar_region` completed around Anbennar's `e_middle_dwarovar` from `tools/data/segbandal.py`. Rerun after `build_serpentreach.py` and after any Anbennar title, title-history or map change; then `build_rie_elves.py`, `build_holds.py`, `build_holding_models.py` and `build_map_graphics.py` (the Elven Haven buildings and the holding models list the dwarf-model provinces, which include Segbandal's). |
 
-Imported once (no generator): `gfx/coat_of_arms/textured_emblems/aov_gor_vazumbrog.dds`, EU4 I14 "Gor Vazumbrog"'s
-flag (`python -I tools/eu4_import.py convert gfx/flags/I14.tga gfx/coat_of_arms/textured_emblems/aov_gor_vazumbrog.dds --upscale2x --mips`).
+Imported once (no generator): `gfx/coat_of_arms/textured_emblems/aov_gor_vazumbrog.dds`, `aov_hehodovar.dds` and
+`aov_gor_ozumbrog.dds`, the flags of EU4 I14 "Gor Vazumbrog", I15 "Hehodovar" and I17 "Gor Ozumbrog"
+(`python -I tools/eu4_import.py convert gfx/flags/<tag>.tga gfx/coat_of_arms/textured_emblems/aov_<kingdom>.dds --upscale2x --mips`).
 
 ## System
 
@@ -55,7 +56,12 @@ flag (`python -I tools/eu4_import.py convert gfx/flags/I14.tga gfx/coat_of_arms/
   `gold_dwarvish`, Gor Ozumbrog `topaz_dwarvish`; `ancestor_worship`.
 - **Arms and colours, new titles only:** Gor Vazumbrog's kingdom, duchy and hold county carry I14's flag; the other
   new duchies a charge from their lore (`DUCHY_CHARGES`) on their map colour, as Serpentreach's. `k_gor_vazumbrog` is
-  I14's 146 160 161; new duchies are shades of their kingdom's Anbennar colour. Anbennar's titles keep theirs.
+  I14's 146 160 161; new duchies are shades of their kingdom's Anbennar colour. Anbennar's titles keep their colours.
+  Anbennar ships Hehodovar, Gor Ozumbrog, Hehorod and Xazorod with random arms, so the overhaul gives them new ones
+  (`HOLD_ARMS`, `REUSED_DUCHY_CHARGES`): `k_hehodovar`, `d_hehodovar` and `c_hehodovar` carry EU4 I15's flag on its
+  blue (58 39 236); `k_gor_ozumbrog`, `d_gor_ozumbrog` and `c_gor_ozumbrog` I17's flag on its dark grey (56 57 56);
+  `d_hehorod` a one-arch bridge (the road to Hehodovar) and `d_xazorod` an empty gem socket (the road past the Pit of
+  Xazor), each on its Anbennar map colour. The build stops if Anbennar ever scripts arms for any of these keys.
 - **Gor Vazumbrog** is a dwarven hold (`tools/data/holds.py`, level 2, not ruined); its options 16 in the hand-written
   delve and ruin pickers (`events/aov_hold_delve_events.txt`, `events/aov_hold_ruin_events.txt`,
   `common/decisions/aov_hold_decisions.txt` and their loc) were added by copying option 15.
@@ -69,5 +75,6 @@ flag (`python -I tools/eu4_import.py convert gfx/flags/I14.tga gfx/coat_of_arms/
      west, and that no "Segbandal Unsorted" title shows anywhere.
   3. `d_seghrod`, `d_gulanrod` and `d_ozumrod` no longer show; Dwarovrod 32, 35 and 38 sit in their new kingdoms.
   4. Elders hold Steamsource, Stunad Kradoz, Goblin Grotto, Greatcavern and Xazor as vassals of Ungrim and Girud.
-  5. Gor Vazumbrog's arms show I14's flag; the hold appears in the Delve Deeper picker for its holder.
+  5. Gor Vazumbrog's arms show I14's flag, Hehodovar's I15's and Gor Ozumbrog's I17's (kingdom, hold duchy, hold
+     county); Hehorod and Xazorod show their charges. Gor Vazumbrog appears in the Delve Deeper picker for its holder.
   6. Floors and walls look right; tune `AREA_STYLES` and the carve values.

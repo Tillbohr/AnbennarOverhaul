@@ -99,6 +99,15 @@ def _read_history(anbennar: Path) -> str:
                      for p in sorted((anbennar / "history/titles").glob("*.txt")))
 
 
+def _scripted_arms(anbennar: Path) -> set:
+    """Title keys with arms in Anbennar's common/coat_of_arms/coat_of_arms."""
+    keys = set()
+    for path in sorted((anbennar / "common/coat_of_arms/coat_of_arms").glob("*.txt")):
+        text = _strip_comments(path.read_text(encoding="utf-8-sig", errors="replace"))
+        keys |= set(re.findall(r"(?m)^\s*([ekdcb]_\w+)\s*=", text))
+    return keys
+
+
 def kingdom_colour(titles_text: str, kingdom: str) -> tuple:
     m = re.search(rf"\b{kingdom}\s*=\s*\{{\s*color\s*=\s*\{{\s*(\d+)\s+(\d+)\s+(\d+)\s*\}}", titles_text)
     if not m:
@@ -149,6 +158,9 @@ class Segbandal:
         new_kingdom = data.NEW_KINGDOM[0]
         self.kingdom_colours = {k: data.NEW_KINGDOM[3] if k == new_kingdom else kingdom_colour(titles_text, k)
                                 for k in data.KINGDOMS}
+        # Anbennar map colours of the reused duchies that get charged arms
+        self.anbennar_colours = {data.AREA_DUCHIES[a][0]: kingdom_colour(titles_text, data.AREA_DUCHIES[a][0])
+                                 for a in data.REUSED_DUCHY_CHARGES}
 
     def capital(self, duchy: str) -> str:
         """A new duchy's capital: its first new county, or for a duchy of Anbennar's counties only, the first of them
@@ -333,19 +345,40 @@ def render_characters(people: People) -> bytes:
     return _text(lines)
 
 
+def _flag_arms(keys, kkey: str, background: tuple) -> list:
+    lines = []
+    for key in keys:
+        lines += [f"{key} = {{", '\tpattern = "pattern_solid.dds"', f"\tcolor1 = rgb {bs.rgb_text(background)}",
+                  "\ttextured_emblem = {", f'\t\ttexture = "{bs.emblem(kkey)}"', "\t}", "}"]
+    return lines
+
+
+def arms_keys() -> set:
+    """Anbennar titles this file gives arms to (Anbennar must not script arms for them)."""
+    keys = {data.AREA_DUCHIES[a][0] for a in data.REUSED_DUCHY_CHARGES}
+    for kkey, (_, duchy, county, _) in data.HOLD_ARMS.items():
+        keys |= {kkey, duchy, county}
+    return keys
+
+
 def render_arms(sb: Segbandal) -> bytes:
-    """Gor Vazumbrog's kingdom, duchy and hold county carry EU4 I14's flag; the other new duchies a dwarven charge on
-    their map colour. Anbennar's titles keep their arms."""
+    """Gor Vazumbrog's kingdom, duchy and hold county carry EU4 I14's flag, Hehodovar's and Gor Ozumbrog's their EU4
+    flags (`HOLD_ARMS`); the other new duchies a dwarven charge on their map colour, Hehorod and Xazorod on Anbennar's
+    (`REUSED_DUCHY_CHARGES`). Anbennar's other titles keep their arms."""
     colours = sb.colours()
     kkey, name, tag, _, background = data.NEW_KINGDOM
     hold_duchy = data.AREA_DUCHIES[data.KINGDOMS[kkey][1][0]][0]
     lines = header_lines() + ["", f"# {name} (EU4 {tag})"]
-    for key in (kkey, hold_duchy, sb.capital(hold_duchy)):
-        lines += [f"{key} = {{", '\tpattern = "pattern_solid.dds"', f"\tcolor1 = rgb {bs.rgb_text(background)}",
-                  "\ttextured_emblem = {", f'\t\ttexture = "{bs.emblem(kkey)}"', "\t}", "}"]
+    lines += _flag_arms((kkey, hold_duchy, sb.capital(hold_duchy)), kkey, background)
+    for hkey, (htag, duchy, county, field) in data.HOLD_ARMS.items():
+        lines += ["", f"# {data.KINGDOMS[hkey][0]} (EU4 {htag})"] + _flag_arms((hkey, duchy, county), hkey, field)
+    lines.append("")
     for duchy in sb.new_duchies():
         if duchy != hold_duchy:
             lines += bs.duchy_arms(duchy, sb.duchy_area[duchy], colours[duchy], data.DUCHY_CHARGES)
+    for area in data.REUSED_DUCHY_CHARGES:
+        duchy = data.AREA_DUCHIES[area][0]
+        lines += bs.duchy_arms(duchy, area, sb.anbennar_colours[duchy], data.REUSED_DUCHY_CHARGES)
     return _text(lines)
 
 
@@ -383,9 +416,14 @@ def build_from_layout(anbennar: Path, lay: sl.Layout, eu4: Path = EU4) -> dict:
     titles_text = _read_titles(anbennar)
     sb = Segbandal(lay, titles_text, _read_history(anbennar), eu4i.province_areas(eu4), sl.area_order(eu4))
     bs.check_new_keys(sb.all_keys(), titles_text)
-    if not (SUBMOD / bs.EMBLEM_DIR / bs.emblem(data.NEW_KINGDOM[0])).is_file():
-        raise GeneratorError(f"flag emblem missing: {bs.EMBLEM_DIR}/{bs.emblem(data.NEW_KINGDOM[0])} (see NEW_KINGDOM)")
-    missing = bs.missing_charges(anbennar, DEFAULT_GAME, data.DUCHY_CHARGES)
+    for kkey in (data.NEW_KINGDOM[0],) + tuple(data.HOLD_ARMS):
+        if not (SUBMOD / bs.EMBLEM_DIR / bs.emblem(kkey)).is_file():
+            raise GeneratorError(f"flag emblem missing: {bs.EMBLEM_DIR}/{bs.emblem(kkey)} (see NEW_KINGDOM, HOLD_ARMS)")
+    scripted = sorted(arms_keys() & _scripted_arms(anbennar))
+    if scripted:
+        raise GeneratorError(f"Anbennar now scripts arms for {', '.join(scripted)}; drop them from HOLD_ARMS or "
+                             "REUSED_DUCHY_CHARGES, or decide which arms win")
+    missing = bs.missing_charges(anbennar, DEFAULT_GAME, {**data.DUCHY_CHARGES, **data.REUSED_DUCHY_CHARGES})
     if missing:
         raise GeneratorError(f"DUCHY_CHARGES emblems found nowhere: {', '.join(missing)}")
     wanted = {data.AREA_DUCHIES[a][0] for a in data.DUCHY_CHARGES}

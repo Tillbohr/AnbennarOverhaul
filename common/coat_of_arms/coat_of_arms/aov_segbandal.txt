@@ -23,6 +23,53 @@ c_gor_vazumbrog = {
 		texture = "aov_gor_vazumbrog.dds"
 	}
 }
+
+# Hehodovar (EU4 I15)
+k_hehodovar = {
+	pattern = "pattern_solid.dds"
+	color1 = rgb { 58 39 236 }
+	textured_emblem = {
+		texture = "aov_hehodovar.dds"
+	}
+}
+d_hehodovar = {
+	pattern = "pattern_solid.dds"
+	color1 = rgb { 58 39 236 }
+	textured_emblem = {
+		texture = "aov_hehodovar.dds"
+	}
+}
+c_hehodovar = {
+	pattern = "pattern_solid.dds"
+	color1 = rgb { 58 39 236 }
+	textured_emblem = {
+		texture = "aov_hehodovar.dds"
+	}
+}
+
+# Gor Ozumbrog (EU4 I17)
+k_gor_ozumbrog = {
+	pattern = "pattern_solid.dds"
+	color1 = rgb { 56 57 56 }
+	textured_emblem = {
+		texture = "aov_gor_ozumbrog.dds"
+	}
+}
+d_gor_ozumbrog = {
+	pattern = "pattern_solid.dds"
+	color1 = rgb { 56 57 56 }
+	textured_emblem = {
+		texture = "aov_gor_ozumbrog.dds"
+	}
+}
+c_gor_ozumbrog = {
+	pattern = "pattern_solid.dds"
+	color1 = rgb { 56 57 56 }
+	textured_emblem = {
+		texture = "aov_gor_ozumbrog.dds"
+	}
+}
+
 d_dwarovrod_27_29 = {
 	pattern = "pattern_chevron_01.dds"
 	color1 = rgb { 114 131 132 }
@@ -139,6 +186,28 @@ d_ulagom = {
 	color2 = rgb { 88 152 144 }
 	colored_emblem = {
 		texture = "ce_anb_anvil.dds"
+		color1 = rgb { 212 175 55 }
+		color2 = rgb { 225 225 225 }
+		instance = { position = { 0.5 0.5 } scale = { 0.65 0.65 } }
+	}
+}
+d_hehorod = {
+	pattern = "pattern_horizontal_split_01.dds"
+	color1 = rgb { 16 55 183 }
+	color2 = rgb { 10 34 113 }
+	colored_emblem = {
+		texture = "ce_anb_bridge_one_arch.dds"
+		color1 = rgb { 212 175 55 }
+		color2 = rgb { 225 225 225 }
+		instance = { position = { 0.5 0.5 } scale = { 0.65 0.65 } }
+	}
+}
+d_xazorod = {
+	pattern = "pattern_solid.dds"
+	color1 = rgb { 93 160 141 }
+	color2 = rgb { 65 112 98 }
+	colored_emblem = {
+		texture = "ce_anb_gem_socket.dds"
 		color1 = rgb { 212 175 55 }
 		color2 = rgb { 225 225 225 }
 		instance = { position = { 0.5 0.5 } scale = { 0.65 0.65 } }

@@ -103,6 +103,20 @@ DUCHY_CHARGES = {
     "xazor_area": (("ce_flaming_jewel.dds",) + _CENTRE,),  # the Pit of Xazor
     "ulagom_area": (("ce_anb_anvil.dds",) + _CENTRE,),  # the Old Excavation
 }
+# Anbennar's duchies that Anbennar ships with random arms and that get a charge on their Anbennar map colour (same
+# format as DUCHY_CHARGES).
+REUSED_DUCHY_CHARGES = {
+    "dwarovrod_30_32_area": (("ce_anb_bridge_one_arch.dds",) + _CENTRE,),  # Hehorod, the road to Hehodovar
+    "dwarovrod_38_41_area": (("ce_anb_gem_socket.dds",) + _CENTRE,),  # Xazorod, the road past the Pit of Xazor
+}
+# Anbennar's hold kingdoms that Anbennar ships with random arms: the kingdom, its hold duchy and hold county carry the
+# EU4 hold's flag over the flag's most common colour, as Gor Vazumbrog's. kingdom -> (EU4 tag, hold duchy, hold
+# county, background). Flags converted once like I14's into gfx/coat_of_arms/textured_emblems/aov_<kingdom>.dds
+# (python -I tools/eu4_import.py convert gfx/flags/<tag>.tga <dds> --upscale2x --mips).
+HOLD_ARMS = {
+    "k_hehodovar": ("I15", "d_hehodovar", "c_hehodovar", (58, 39, 236)),
+    "k_gor_ozumbrog": ("I17", "d_gor_ozumbrog", "c_gor_ozumbrog", (56, 57, 56)),
+}
 
 # --- look (tools/build_map_graphics.py) ---------------------------------------------------------------------------------
 # Floors of the new provinces by EU4 area, in Serpentreach's TERRAIN_STYLES; unlisted areas (and Anbennar's own floors)

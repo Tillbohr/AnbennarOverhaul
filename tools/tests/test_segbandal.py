@@ -81,6 +81,20 @@ class DataTests(unittest.TestCase):
 
 
 
+class ArmsGuardTests(unittest.TestCase):
+    def test_scripted_arms_reads_anbennar_title_keys(self):
+        import tempfile
+        import build_segbandal as bsb
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp) / "common/coat_of_arms/coat_of_arms"
+            folder.mkdir(parents=True)
+            (folder / "a.txt").write_text("k_hehodovar = {\n\tpattern = x\n}\n# d_xazorod = {\n"
+                                          "template = {\n\tc_gor_ozumbrog = { }\n}\n", encoding="utf-8-sig")
+            self.assertEqual(bsb._scripted_arms(Path(tmp)), {"k_hehodovar", "c_gor_ozumbrog"})
+        self.assertEqual(bsb.arms_keys(), {"k_hehodovar", "d_hehodovar", "c_hehodovar", "k_gor_ozumbrog",
+                                           "d_gor_ozumbrog", "c_gor_ozumbrog", "d_hehorod", "d_xazorod"})
+
+
 class GuardTests(unittest.TestCase):
     """The review's guards: no contact EU4 lacks, no duplicate of a province Anbennar gained, no endless link loop."""
 
@@ -312,8 +326,25 @@ class TitleTests(unittest.TestCase):
         for key in ("k_gor_vazumbrog", "d_vazumbrog", "c_gor_vazumbrog"):
             self.assertRegex(arms, rf'(?m)^{key} = \{{\n(\t.*\n)*?\t\ttexture = "aov_gor_vazumbrog.dds"')
         new_duchies = {d for d, _, reused in data.AREA_DUCHIES.values() if not reused} - {"d_vazumbrog"}
-        self.assertEqual(set(re.findall(r"(?m)^(d_\w+) = \{", arms)) - {"d_vazumbrog"}, new_duchies)
+        anbennar = {"d_hehodovar", "d_gor_ozumbrog", "d_hehorod", "d_xazorod"}
+        self.assertEqual(set(re.findall(r"(?m)^(d_\w+) = \{", arms)) - {"d_vazumbrog"}, new_duchies | anbennar)
         self.assertEqual(set(data.DUCHY_CHARGES), {a for a, (d, _, _) in data.AREA_DUCHIES.items() if d in new_duchies})
+
+    def test_arms_of_anbennar_holds(self):
+        # EU4 I15 Hehodovar and I17 Gor Ozumbrog: kingdom, hold duchy and hold county, over the flag's commonest colour
+        arms = self.files[self.bsb.ARMS].decode("utf-8-sig")
+        for keys, emblem, field in ((("k_hehodovar", "d_hehodovar", "c_hehodovar"), "aov_hehodovar.dds", "58 39 236"),
+                                    (("k_gor_ozumbrog", "d_gor_ozumbrog", "c_gor_ozumbrog"), "aov_gor_ozumbrog.dds",
+                                     "56 57 56")):
+            for key in keys:
+                self.assertRegex(arms, rf'(?m)^{key} = \{{\n\tpattern = "pattern_solid.dds"\n\tcolor1 = rgb \{{ {field} \}}'
+                                       rf'\n\ttextured_emblem = \{{\n\t\ttexture = "{emblem}"')
+            self.assertTrue((self.bsb.SUBMOD / "gfx/coat_of_arms/textured_emblems" / emblem).is_file(), emblem)
+        # Hehorod and Xazorod: a charge on Anbennar's map colour
+        for duchy, field, charge in (("d_hehorod", "16 55 183", "ce_anb_bridge_one_arch.dds"),
+                                     ("d_xazorod", "93 160 141", "ce_anb_gem_socket.dds")):
+            self.assertRegex(arms, rf'(?m)^{duchy} = \{{\n\tpattern = "[^"]+"\n\tcolor1 = rgb \{{ {field} \}}\n'
+                                   rf'(\t.*\n)*?\t\ttexture = "{charge}"')
 
     def test_every_new_key_has_loc(self):
         loc = self.files[self.bsb.LOC].decode("utf-8-sig")
