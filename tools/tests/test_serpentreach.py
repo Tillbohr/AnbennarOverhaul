@@ -250,6 +250,16 @@ class OptionTests(unittest.TestCase):
         with self.assertRaisesRegex(GeneratorError, "c_x"):
             sl.county_type(None, "royal_terrace_area", option_cfg(), "c_x")  # no SURFACE_AREAS: never surface
 
+    def test_separate_non_neighbours(self):
+        # labels 1 (x 0..9) and 2 (x 10..19) touch; EU4 makes them neighbours only in the second call
+        labels = {(x, y): 1 if x < 10 else 2 for x in range(20) for y in range(5)}
+        apart = sl.separate_non_neighbours(labels, {}, 4)
+        ones = [x for (x, _), a in apart.items() if a == 1]
+        twos = [x for (x, _), a in apart.items() if a == 2]
+        self.assertGreaterEqual(min(twos) - max(ones), 4 + 1)  # a 4 px seam of rock
+        self.assertEqual((max(ones), min(twos)), (7, 12))
+        self.assertEqual(sl.separate_non_neighbours(labels, {1: {2}, 2: {1}}, 4), labels)
+
     def test_avoid_keeps_margin(self):
         # rock 9 everywhere; the label "a" covers x 5..25; an earlier region's floor pixel sits at (20, 6), still rock
         # on Anbennar's map
@@ -325,6 +335,28 @@ class ConnectionTests(unittest.TestCase):
         self.assertEqual([(l.county, l.target) for l in links], [("c_cave", 50)])
         self.assertTrue(all(owner[p] == 100 for p in links[0].pixels))
         self.assertTrue(any(ck(x + 1, y) == 50 for x, y in links[0].pixels))
+
+    def test_link_bends_around_land(self):
+        # the floor (x 0..4, y 0..10) and the target (x 60..89, y 0..10) face each other across a land block (province
+        # 7, x 20..30, y 0..30); the only way is through the rock below it
+        floor = sorted(((x, y) for x in range(5) for y in range(11)), key=lambda p: (p[1], p[0]))
+
+        def ck(x, y):
+            if not (0 <= x < 120 and 0 <= y < 50):
+                return 0
+            return 50 if 60 <= x < 90 and y <= 10 else 7 if 20 <= x <= 30 and y <= 30 else 9
+        counties = [sl.County("c_cave", 1, "Cave", "cave_area", "dwarven_road", [100])]
+        provinces = {100: sl.Province(100, (1, 1, 1), "c_cave", 0, floor, (2, 5))}
+        owner = {p: 100 for p in floor}
+        cfg = option_cfg(LINK_REACH=150, LINK_CUT_THROUGH=(), NO_LINK_PAIRS=set())
+        links = sl.adjacency_links(ck, counties, provinces, owner, {(1, 7)}, {7: {50}}, 9, cfg, [])
+        self.assertEqual(len(links), 1)
+        tunnel = links[0].pixels
+        touched = {ck(x + dx, y + dy) for x, y in tunnel for dx, dy in sl.N4} - {100}
+        self.assertEqual(touched - {9, 50, 0}, set())  # never touches the land
+        self.assertTrue(any(y > 30 for _, y in tunnel))  # went below the land block
+        self.assertTrue(connected(tunnel | set(floor)))
+        self.assertIn(50, touched)
 
     def test_link_beyond_reach_stops(self):
         ck, counties, provinces, owner = linked_cave(80)

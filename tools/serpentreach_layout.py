@@ -231,6 +231,20 @@ def smooth_labels(labels, radius, passes):
     return cur
 
 
+def separate_non_neighbours(labels, adj, margin):
+    """`labels` ({(x, y): EU4 id}) less every pixel with a pixel of another label within margin // 2 px (chessboard)
+    that EU4 does not make its neighbour (`adj`, EU4 id -> set of EU4 ids): a `margin` px seam of rock between them.
+    EU4 provinces that meet only at a corner, or a pixel apart, merge once scaled and smoothed."""
+    gap = margin // 2
+    out = {}
+    for (x, y), a in labels.items():
+        nbrs = adj.get(a, ())
+        if not any(b is not None and b != a and b not in nbrs
+                   for b in (labels.get((x + dx, y + dy)) for dx in range(-gap, gap + 1) for dy in range(-gap, gap + 1))):
+            out[(x, y)] = a
+    return out
+
+
 def chamfer(sources, box, limit):
     """Chessboard (8-neighbour) distance from `sources` to every pixel within `limit` inside `box` (x0, y0, x1, y1,
     end-exclusive): {(x, y): d}."""
@@ -580,8 +594,10 @@ def layout(anbennar: Path, eu4: Path, ck3=None, cfg=None, first_id=None, used=No
             if ck(x, y) != src:
                 spill[ck(x, y)] = spill.get(ck(x, y), 0) + 1
     allowed = allowed_neighbours(adj, existing, cprov)
-    traced = clip_floor(smooth_labels(labels, cfg.SMOOTH_RADIUS, cfg.SMOOTH_PASSES), ck, box, src, cfg.WALL_MARGIN,
-                        allowed)
+    smoothed = smooth_labels(labels, cfg.SMOOTH_RADIUS, cfg.SMOOTH_PASSES)
+    if getattr(cfg, "SEPARATE_NON_NEIGHBOURS", False):
+        smoothed = separate_non_neighbours(smoothed, adj, cfg.WALL_MARGIN)
+    traced = clip_floor(smoothed, ck, box, src, cfg.WALL_MARGIN, allowed)
     if spill:
         notes.append("clipped (not province " + str(src) + "): " +
                      ", ".join(f"{cnames.get(p, p)} {n} px" for p, n in sorted(spill.items())))
@@ -662,9 +678,13 @@ def layout(anbennar: Path, eu4: Path, ck3=None, cfg=None, first_id=None, used=No
             if _same_name(enames.get(b), cnames.get(b)):
                 target = b
             else:
-                target = _nearest_land(ck, cx, cy, src, water, impassable)
+                try:
+                    target = _nearest_land(ck, cx, cy, src, water, impassable)
+                except GeneratorError:
+                    target = None  # the EU4 neighbour is off the CK3 map (West Dwarovar's Eastnest): skipped below
         floor = [p for pid in county.baronies for p in provinces[pid].pixels]
-        start, end, corridor = _opening(ck, floor, owner, src, target, cx, cy, cfg)
+        start, end, corridor = (None, None, None) if target is None else _opening(ck, floor, owner, src, target, cx,
+                                                                                   cy, cfg)
         if corridor is None and (a, b) not in cfg.OPENING_TARGETS:
             wanted = target
             for target in _land_near(ck, cx, cy, src, water, impassable, cfg.OPENING_REACH):
@@ -926,6 +946,11 @@ def adjacency_links(ck, counties, provinces, owner, pairs, targets, src, cfg, no
                 continue
             if corridor is not None and (best is None or len(corridor) < len(best[3])):
                 best = (target, start, end, corridor)
+        if best is None:  # land in the way of every straight tunnel: route one through the rock around it
+            start, end, corridor = _routed_corridor(ck, floor, owner, ok, rock, cfg.OPENING_WIDTH / 2, cfg.LINK_REACH)
+            if corridor is not None:
+                best = (ck(*end), start, end, corridor)
+                notes.append(f"tunnel {c.key}: no straight way, routed around land")
         if best is None:
             raise GeneratorError(f"{c.key}: no tunnel within LINK_REACH {cfg.LINK_REACH} px reaches EU4 {b}'s "
                                  f"provinces {sorted(ok)}")
@@ -935,6 +960,71 @@ def adjacency_links(ck, counties, provinces, owner, pairs, targets, src, cfg, no
         notes.append(f"tunnel {c.key} -> {target} (EU4 {a} -> {b}): {len(corridor)} px, "
                      f"{math.dist(start, end):.0f} px long")
     return links
+
+
+def _routed_corridor(ck, floor, owner, ok, rock, half, reach):
+    """(start, end, corridor) of a bent corridor from `floor` to a pixel of an `ok` province: the shortest 8-connected
+    path (at most `reach` steps) through rock pixels (`rock`, not in `owner`) that keep ceil(half) + 1 px (chessboard)
+    from every pixel that is neither rock, nor the floor, nor `ok`, widened to `half`. (None, None, None) when there
+    is none."""
+    fl = set(floor)
+    xs = [p[0] for p in floor]
+    ys = [p[1] for p in floor]
+    box = (min(xs) - reach, min(ys) - reach, max(xs) + reach + 1, max(ys) + reach + 1)
+    clearance = int(math.ceil(half)) + 1
+
+    def passable(p):
+        return ck(*p) in rock and p not in owner
+    blocked = []
+    goal = set()
+    for y in range(box[1], box[3]):
+        for x in range(box[0], box[2]):
+            pid = ck(x, y)
+            if pid in ok:
+                goal.add((x, y))
+            elif pid != 0 and (x, y) not in fl and not passable((x, y)):
+                blocked.append((x, y))
+    if not goal:
+        return None, None, None
+    near = chamfer(blocked, box, clearance)
+    sources = sorted({(x + dx, y + dy) for x, y in fl for dx, dy in N4
+                      if passable((x + dx, y + dy)) and (x + dx, y + dy) not in near}, key=_key)
+    parent = {p: None for p in sources}
+    frontier = sources
+    found = None
+    for _ in range(reach + 1):
+        for p in frontier:
+            if any((p[0] + dx, p[1] + dy) in goal for dx, dy in N4):
+                found = p
+                break
+        if found is not None:
+            break
+        nxt = []
+        for x, y in frontier:
+            for dx, dy in N8:
+                n = (x + dx, y + dy)
+                if n not in parent and box[0] <= n[0] < box[2] and box[1] <= n[1] < box[3] and passable(n) \
+                        and n not in near:
+                    parent[n] = (x, y)
+                    nxt.append(n)
+        frontier = nxt
+        if not frontier:
+            break
+    if found is None:
+        return None, None, None
+    path = [found]
+    while parent[path[-1]] is not None:
+        path.append(parent[path[-1]])
+    first = path[-1]
+    start = min(((first[0] + dx, first[1] + dy) for dx, dy in N4 if (first[0] + dx, first[1] + dy) in fl), key=_key)
+    end = min(((found[0] + dx, found[1] + dy) for dx, dy in N4 if (found[0] + dx, found[1] + dy) in goal), key=_key)
+    r = int(math.ceil(half))
+    corridor = {(x + dx, y + dy) for x, y in path for dx, dy in _disk(r)
+                if dx * dx + dy * dy <= half * half and passable((x + dx, y + dy))}
+    touched = {ck(x + dx, y + dy) for x, y in corridor for dx, dy in N4}
+    if not (touched & set(ok)) or (touched - set(rock) - set(ok) - {0}) or not _joins(corridor, start):
+        return None, None, None
+    return start, end, corridor
 
 
 class _AnyId:

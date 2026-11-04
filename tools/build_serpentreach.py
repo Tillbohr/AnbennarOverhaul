@@ -26,6 +26,7 @@ import pngio  # noqa: E402
 import serpentreach_layout as sl  # noqa: E402
 from data import segbandal as segbandal_data  # noqa: E402
 from data import serpentreach as data  # noqa: E402
+from data import west_dwarovar as west_dwarovar_data  # noqa: E402
 
 SUBMOD = Path(__file__).resolve().parent.parent
 ANBENNAR = SUBMOD.parent / "anbennar-ck3-dev-master"
@@ -453,12 +454,24 @@ def render_locators(anbennar: Path, lays) -> dict:
 
 
 def layouts(anbennar: Path = ANBENNAR, eu4: Path = EU4, ck3=None) -> tuple:
-    """(Serpentreach's layout, Segbandal's): Segbandal's ids follow Serpentreach's and its colours avoid them."""
+    """(Serpentreach's layout, Segbandal's, West Dwarovar's): each region's ids follow the one before and its colours
+    avoid theirs."""
     ck3 = ck3 or sl.load_ck3(anbennar)
     serp = sl.layout(anbennar, eu4, ck3)
     seg = sl.layout(anbennar, eu4, ck3, cfg=segbandal_data, first_id=max(serp.provinces) + 1,
                     used={p.colour for p in serp.provinces.values()})
-    return serp, seg
+    return serp, seg, west_dwarovar_layout(anbennar, eu4, ck3, serp, seg)
+
+
+def west_dwarovar_layout(anbennar: Path, eu4: Path, ck3, serp: sl.Layout, seg: sl.Layout) -> sl.Layout:
+    """West Dwarovar's layout after Serpentreach's and Segbandal's: ids after Segbandal's, colours apart from both,
+    floors kept off theirs, and EU4 adjacencies.csv tunnels to their provinces in LINK_TARGETS (Dwarovrod 24 -> 25)."""
+    earlier = (serp, seg)
+    return sl.layout(anbennar, eu4, ck3, cfg=west_dwarovar_data, first_id=max(seg.provinces) + 1,
+                     used={p.colour for lay in earlier for p in lay.provinces.values()},
+                     avoid={p: pid for lay in earlier for p, pid in lay.owner.items()},
+                     targets={c.eu4_id: list(c.baronies) for lay in earlier for c in lay.counties
+                              if c.eu4_id in west_dwarovar_data.LINK_TARGETS})
 
 
 def build_all(anbennar: Path = ANBENNAR, eu4: Path = EU4, ck3=None) -> dict:

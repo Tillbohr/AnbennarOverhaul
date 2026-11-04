@@ -25,6 +25,7 @@ import gate_transplant as gt  # noqa: E402
 import heightpack as hp  # noqa: E402
 import pngio  # noqa: E402
 import serpentreach_layout as sl  # noqa: E402
+import build_serpentreach as bs  # noqa: E402
 import surround_mask as smask  # noqa: E402
 import carved_ranges as cr  # noqa: E402
 import terrain_fill as tfill  # noqa: E402
@@ -1127,6 +1128,25 @@ def segbandal_layout(roots: Roots, ck3: tuple = None) -> "sl.Layout":
         _SEGBANDAL[key] = sl.layout(roots.anbennar, roots.eu4, loaded, cfg=sb_data, first_id=max(serp.provinces) + 1,
                                     used={p.colour for p in serp.provinces.values()})
     return _SEGBANDAL[key]
+
+
+_WEST_DWAROVAR = {}  # (anbennar, eu4) -> West Dwarovar's layout, one trace per build
+
+
+def west_dwarovar_layout(roots: Roots, ck3: tuple = None) -> "sl.Layout":
+    """West Dwarovar's new provinces (tools/build_serpentreach.layouts: ids after Segbandal's, colours apart from both
+    earlier regions, floors kept off theirs). `ck3` is (province map, water, impassable) when already loaded."""
+    key = _layout_key(roots)
+    if key not in _WEST_DWAROVAR:
+        serp = serpentreach_layout(roots, ck3)
+        seg = segbandal_layout(roots, ck3)
+        if ck3 is None:
+            loaded = sl.load_ck3(roots.anbennar)
+        else:
+            definition = (roots.anbennar / MAP_DATA / "definition.csv").read_bytes().decode("utf-8", errors="replace")
+            loaded = (ck3[0], definition, ck3[1], ck3[2])
+        _WEST_DWAROVAR[key] = bs.west_dwarovar_layout(roots.anbennar, roots.eu4, loaded, serp, seg)
+    return _WEST_DWAROVAR[key]
 
 
 def carved_ranges(roots: Roots, ck3: tuple = None) -> list:

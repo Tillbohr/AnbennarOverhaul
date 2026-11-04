@@ -197,12 +197,12 @@ class MapTests(unittest.TestCase):
         cls.lays = bs.layouts(ANBENNAR, EU4)
         cls.files = bs.build_from_layout(ANBENNAR, cls.lays)
 
-    def test_map_files_hold_both_regions(self):
-        serp, seg = self.lays
+    def test_map_files_hold_every_region(self):
+        serp, seg, wd = self.lays
         rows = self.files["map_data/definition.csv"].decode("utf-8", errors="replace").splitlines()
         anbennar = (ANBENNAR / "map_data/definition.csv").read_bytes().decode("utf-8", errors="replace").splitlines()
         new = [int(r.split(";")[0]) for r in rows[len(anbennar):]]
-        self.assertEqual(new, sorted(serp.provinces) + sorted(seg.provinces))
+        self.assertEqual(new, sorted(serp.provinces) + sorted(seg.provinces) + sorted(wd.provinces))
         colours = [tuple(r.split(";")[1:4]) for r in rows if r[:1].isdigit() and r.split(";")[0] != "0"]
         self.assertEqual(len(colours), len(set(colours)))
         for name in self.bs.LOCATOR_FILES:
@@ -211,7 +211,7 @@ class MapTests(unittest.TestCase):
                 self.assertEqual(len(re.findall(r"\bid=" + str(pid) + r"\n", text)), 1, (name, pid))
 
     def test_serpentreach_ids_unchanged(self):
-        serp, seg = self.lays
+        serp, seg = self.lays[:2]
         self.assertEqual((min(serp.provinces), max(serp.provinces)), (6944, 7067))
         self.assertEqual(min(seg.provinces), 7068)
 
