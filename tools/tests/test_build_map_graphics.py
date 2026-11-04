@@ -1073,20 +1073,19 @@ class ConeRealTests(unittest.TestCase):
         import carved_ranges as cr
         import serpentreach_layout as sl
         files = real_build()[0]
-        carved, _ = sl.carve(self.new, bmg.serpentreach_layout(ROOTS), self.pm, self.water)
+        stamp = bmg.restore_land(self.new, self.lifted, bmg.vale_pixels(ROOTS))
+        carved, _ = sl.carve(stamp, bmg.serpentreach_layout(ROOTS), self.pm, self.water)
         for _, floor, terrain, rock, land in bmg.carved_ranges(ROOTS):
             carved, _ = cr.carve(carved, floor, terrain, rock, self.pm, self.water, data.CARVE_RAMP, land=land)
         self.assertEqual(pngio.write_png(carved.to_png()), files["map_data/heightmap.png"])
 
     def test_vale_heights_untouched(self):
-        """Serpent's Vale is never carved or walled: its heights in the build are the stamp's (Anbennar's basin, with
-        the gates already transplanted)."""
+        """Serpent's Vale is never raised by a gate's cone, carved or walled: its heights in the build are Anbennar's
+        basin after the dwarven raise (which leaves the Vale alone)."""
         final = hp.Grid.from_png(pngio.read_png(real_build()[0]["map_data/heightmap.png"]))
-        wd = bmg.west_dwarovar_layout(ROOTS)
-        county = {c.key: c for c in wd.counties}
-        vale = [p for p, pid in wd.owner.items() if county[wd.provinces[pid].county].type == "surface"]
+        vale = bmg.vale_pixels(ROOTS)
         self.assertGreater(len(vale), 1000)
-        self.assertEqual([p for p in vale if final.get(*p) != self.new.get(*p)], [])
+        self.assertEqual([p for p in vale if final.get(*p) != self.lifted.get(*p)], [])
 
     def test_changes_stay_near_a_gate_and_nothing_is_lowered(self):
         """Every changed pixel is in a cone, or in a gate's range-join region (behind its face, within the join
@@ -1492,6 +1491,16 @@ class HeightOutputsTests(unittest.TestCase):
             near = any((px + dx, py + dy) in floor for dx in range(-sr.PIECE_FLOOR_CLEARANCE, sr.PIECE_FLOOR_CLEARANCE + 1)
                        for dy in range(-sr.PIECE_FLOOR_CLEARANCE, sr.PIECE_FLOOR_CLEARANCE + 1))
             self.assertFalse(near, (x, y))
+
+    def test_gate_pieces_stay_off_the_vale(self):
+        from data import serpentreach as sr
+        text = self.files["gfx/map/map_object_data/aov_dwarven_gate_overlays.txt"].decode("utf-8-sig")
+        vale = set(bmg.vale_pixels(ROOTS))
+        c = sr.PIECE_FLOOR_CLEARANCE
+        on_vale = [(x, y) for x, _, y in re.findall(r"^\s*([\d.]+) ([\d.-]+) ([\d.]+) ", text, re.M)
+                   if any((int(float(x)) + dx, int(float(y)) + dy) in vale
+                          for dx in range(-c, c + 1) for dy in range(-c, c + 1))]
+        self.assertEqual(on_vale, [])
 
     def test_every_gate_has_a_cone_rising_to_its_peak(self):
         """The cone peak is at least foot + 0.8 * k * Erebor's peak; where the soft ceiling compresses the sum (a gate

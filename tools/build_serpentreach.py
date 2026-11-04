@@ -175,6 +175,10 @@ class Realm:
             if ckey not in self.county or self.kingdom_of[self.duchy_of[ckey]] != kkey:
                 raise GeneratorError(f"KINGDOM_CAPITALS: {ckey} is not a county of {kkey}")
             self.hold_duchy[kkey] = self.duchy_of[ckey]
+        if getattr(cfg, "HOLD_DUCHIES_NAMED_LIKE_KINGDOM", False):  # else the hold duchy keeps its EU4 area's name
+            for kkey in self.new_kingdoms():
+                dkey = self.hold_duchy[kkey]
+                self.duchies[dkey] = (self.kingdoms[kkey][0], self.duchies[dkey][1])
         empty = sorted(d for d, (_, counties) in self.duchies.items() if not counties and d not in self.existing_duchies)
         if empty:
             raise GeneratorError(f"duchies with no county: {', '.join(empty)}")

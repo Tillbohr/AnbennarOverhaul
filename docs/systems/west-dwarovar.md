@@ -37,7 +37,8 @@ I09 and I10 (`python -I tools/eu4_import.py convert gfx/flags/<tag>.tga gfx/coat
   unconnected).
 - **Seams:** Dwarovrod 12 and Massive Shaft are a pixel apart in EU4 and merged once scaled; `SEPARATE_NON_NEIGHBOURS`
   cuts a `WALL_MARGIN` rock seam between labels EU4 does not make neighbours (West Dwarovar only).
-- **Titles:** `e_west_dwarovar` (capital Amldihr, colour 60 40 80) holds eight new kingdoms in place (a full chain at
+- **Titles:** each new kingdom's hold duchy is named like the kingdom (`HOLD_DUCHIES_NAMED_LIKE_KINGDOM`; the keys
+  keep EU4's area names, e.g. `d_orldhum` "Haraz Orldhûm"). `e_west_dwarovar` (capital Amldihr, colour 60 40 80) holds eight new kingdoms in place (a full chain at
   load) and `k_aov_west_dwarovar_parking`, which holds the three new duchies of Anbennar's `k_khugdihr`
   (Dwarovrod 1-3, Fallen Asra, Snotslair). History at 1.1.1 moves `k_khugdihr` into the empire, the parked duchies
   into `k_khugdihr` and `c_dwarovrod1` into Dwarovrod 1-3; the moves are computed from Anbennar's current titles. The
@@ -59,7 +60,9 @@ I09 and I10 (`python -I tools/eu4_import.py convert gfx/flags/<tag>.tga gfx/coat
   range (ground ~28,400); Serpent's Vale and the earlier regions' floors are `land` to that carve (never walled; floors
   ramp to them over `CARVE_RAMP`). The Vale is painted by terrain (`SURFACE_MATERIALS`, feathered over 4 px).
   Westnest, Eastnest and Zokkorna are `mushroom` (moss). Every opening and Vale mouth gets an Erebor gate (turn
-  pinned to 0); the tunnel gets none. `SURROUND_BOX` starts at mask row 300, clearing the fog off Dûr-Vazhatun;
+  pinned to 0); the tunnel gets none. The Vale is still 2426 on Anbennar's map, so the gate transplant treats it as
+  range: `build_heightmap` restores its heights after the transplant (`vale_pixels`, `restore_land`) and drops gate
+  pieces within `PIECE_FLOOR_CLEARANCE` of it. `SURROUND_BOX` starts at mask row 300, clearing the fog off Dûr-Vazhatun;
   Krakdhum stays fogged.
 - **Needs an in-game test:**
   1. The map loads with the new ids; locators sit on the floors and in the Vale.
@@ -68,6 +71,6 @@ I09 and I10 (`python -I tools/eu4_import.py convert gfx/flags/<tag>.tga gfx/coat
   3. Khugdihr is kobold and unheld; the eight dwarven kingdoms have their elders.
   4. Cave floors versus the Vale: the floors stand ~28,400 and the Vale ~5,000-12,000, so the mouths ramp steeply
      over 12 px (risk: a cliff). Fixes: a longer `CARVE_RAMP` for this range, or a fixed ground height.
-  5. Gates face the right way (out of the caves; into the Vale at the mouths); gate cones at the Vale mouths may
-     raise the Vale's edge.
+  5. Gates face the right way (out of the caves; into the Vale at the mouths). A mouth gate's direction is one of
+     the four axes (its `start` is a 4-neighbour of the mouth), and its cone stops at the Vale's edge.
   6. Dûr-Vazhatun is out of the fog; the tunnel from Dwarovrod 24 reads as a tunnel into Segbandal.

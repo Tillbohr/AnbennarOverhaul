@@ -270,6 +270,14 @@ class TitleTests(unittest.TestCase):
             if kkey != "k_khugdihr":
                 self.assertRegex(self.titles, rf"\n\t\td_\w+ = \{{\n\t\t\tcolor = \{{[^}}]*\}}\n\t\t\tcapital = {ckey}\n")
 
+    def test_hold_duchies_named_like_their_kingdom(self):
+        """Spec §3: each hold's duchy is named like its kingdom (EU4's area names differ: Orldhûm, The Railyard, ...)."""
+        loc = self.files[self.bwd.LOC].decode("utf-8-sig")
+        for kkey, (kname, kareas) in data.KINGDOMS.items():
+            if kkey == "k_khugdihr":
+                continue
+            self.assertIn(f' {self.duchy_of_area(kareas[0])}:0 "{kname}"', loc, kkey)
+
     def test_holders(self):
         self.assertIn("k_amldihr = {\n\t860.1.1 = { holder = aov_wd_emperor_1 }", self.history)
         self.assertIn("d_amldihr = {\n\t860.1.1 = { holder = aov_wd_emperor_1 }", self.history)

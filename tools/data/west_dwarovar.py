@@ -111,6 +111,9 @@ KINGDOM_CULTURES = {k: "silver_dwarvish" for k in KINGDOMS}
 KINGDOM_CULTURES["k_khugdihr"] = "darkscale"
 # Kingdoms left to kobolds: kingdom -> (culture, faith) of their new baronies; no rulers, no characters.
 KOBOLD_KINGDOMS = {"k_khugdihr": ("darkscale", "nimrithani")}
+# Each new kingdom's hold duchy is named like the kingdom (spec §3); EU4 names the areas otherwise (Orldhûm, The
+# Railyard, Stunad Kozenad, Jorkad Junction, Orlazam, Vazhatun).
+HOLD_DUCHIES_NAMED_LIKE_KINGDOM = True
 CHARACTER_PREFIX = "aov_wd"  # aov_wd_<duchy>_1 (the elder), _2 (his son); aov_wd_emperor_*
 DYNASTY_PREFIX = ("aov_wd_dynasty_", "dynn_aov_wd_")
 DYNASTY_NAMES = {}

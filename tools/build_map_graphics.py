@@ -1168,6 +1168,22 @@ def west_dwarovar_layout(roots: Roots, ck3: tuple = None) -> "sl.Layout":
     return _WEST_DWAROVAR[key]
 
 
+def vale_pixels(roots: Roots, ck3: tuple = None) -> list:
+    """Serpent's Vale (West Dwarovar's surface counties), sorted. It is still impassable 2426 on Anbennar's map, so
+    the gate transplant would treat it as range; the build keeps its heights and keeps gate pieces off it."""
+    wd = west_dwarovar_layout(roots, ck3)
+    surface = {pid for c in wd.counties if c.type == "surface" for pid in c.baronies}
+    return sorted((p for p, pid in wd.owner.items() if pid in surface), key=lambda p: (p[1], p[0]))
+
+
+def restore_land(grid, source, pixels) -> "hp.Grid":
+    """A copy of `grid` with `pixels` set back to their heights in `source`."""
+    values = grid.values[:]
+    for x, y in pixels:
+        values[y * grid.width + x] = source.values[y * grid.width + x]
+    return hp.Grid(grid.width, grid.height, values)
+
+
 def carved_ranges(roots: Roots, ck3: tuple = None) -> list:
     """[(county, floor {(x, y): province}, province terrain, rock provinces, land {(x, y): province})] for every
     CARVED_RANGES county, from Anbennar's map. `land` is rock on Anbennar's map that the carve treats as land: Serpent's
@@ -1275,9 +1291,13 @@ def build_heightmap(roots: Roots, notes: list = None) -> dict:
     comp = gt.load_composition(roots.rie)
     new, plans = gt.transplant(lifted, pm, water, placed, comp, transplant_overrides(sr_sites),
                                ranges=set(dwarven) | set(impassable), piece_bounds=piece_bounds(roots.rie, comp))
+    # Serpent's Vale reads as range (2426) to the transplant: its cones and pieces come off it again
+    vale = vale_pixels(roots, (pm, water, impassable))
+    new = restore_land(new, lifted, vale)
     carved_floors = carved_ranges(roots, (pm, water, impassable))
     for plan in plans:
         drop_pieces_on_floor(plan, lay.owner, sr_data.PIECE_FLOOR_CLEARANCE)
+        drop_pieces_on_floor(plan, set(vale), sr_data.PIECE_FLOOR_CLEARANCE)
         for _, floor, _, _, _ in carved_floors:
             drop_pieces_on_floor(plan, floor, sr_data.PIECE_FLOOR_CLEARANCE)
     new, carved = sl.carve(new, lay, pm, water)
