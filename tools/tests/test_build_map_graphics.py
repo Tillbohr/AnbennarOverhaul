@@ -423,6 +423,30 @@ class RealFileTests(unittest.TestCase):
         cls.anb = (ROOTS.anbennar / "gfx/map/terrain/materials.settings").read_text(encoding="utf-8")
         cls.rie = (ROOTS.rie / "gfx/map/terrain/materials.settings").read_text(encoding="utf-8")
 
+    def test_surround_fog_pulled_back_from_the_serpentspine(self):
+        """The fog starts on the Serpentspine's crest in Anbennar's mask; the build clears it near the range (the
+        reported spot, map 3360,2108 from the bottom) and keeps it deep in the Big Waste and outside the box."""
+        import eu4_import as eu4i
+        files, _ = real_build()
+        anb_bytes = (ROOTS.anbennar / bmg.SURROUND_MASK_REL).read_bytes()
+        ours_bytes = files[bmg.SURROUND_MASK_REL]
+        w, h, anb = eu4i.read_dds(anb_bytes)
+        _, _, ours = eu4i.read_dds(ours_bytes)
+        red = lambda img, x, y: img[(y * w + x) * 4 + 2]  # noqa: E731
+        spot = (3360 // 2, (4096 - 2108) // 2)
+        self.assertGreater(red(anb, *spot), 128)
+        self.assertLess(red(ours, *spot), red(anb, *spot) // 2)
+        deep = (2100, 700)
+        self.assertEqual(red(ours, *deep), red(anb, *deep))
+        self.assertTrue(all(o <= a for i, (o, a) in enumerate(zip(ours, anb)) if i % 4 != 3), "fog was added")
+        x0, y0, x1, y1 = data.SURROUND_BOX
+        blocks_wide = w // 4
+        for by in range(0, h // 4, 7):
+            for bx in range(0, blocks_wide, 7):
+                if not (x0 // 4 <= bx <= (x1 - 1) // 4 and y0 // 4 <= by <= (y1 - 1) // 4):
+                    at = 128 + (by * blocks_wide + bx) * 16
+                    self.assertEqual(ours_bytes[at:at + 16], anb_bytes[at:at + 16], (bx, by))
+
     def test_terrain_gaps_filled(self):
         """Anbennar's blend maps have unpainted pixels (drawn black); the build fills every one, large gaps with
         TERRAIN_FILL_MATERIAL at its position in Anbennar's material list (the terrain texture-array index)."""

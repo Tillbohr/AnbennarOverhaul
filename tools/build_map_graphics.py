@@ -25,12 +25,14 @@ import gate_transplant as gt  # noqa: E402
 import heightpack as hp  # noqa: E402
 import pngio  # noqa: E402
 import serpentreach_layout as sl  # noqa: E402
+import surround_mask as smask  # noqa: E402
 import carved_ranges as cr  # noqa: E402
 import terrain_fill as tfill  # noqa: E402
 from data import map_graphics as data  # noqa: E402
 from data.holds import HOLDS  # noqa: E402
 from data import segbandal as sb_data  # noqa: E402
 from data import serpentreach as sr_data  # noqa: E402
+import eu4_import as eu4i  # noqa: E402
 from eu4_import import EU4_ROOTS  # noqa: E402
 
 MARKER = "# Anbennar Overhaul"
@@ -1277,6 +1279,43 @@ def merge_parts(parts: list) -> dict:
     return merged
 
 
+SURROUND_MASK_REL = "gfx/map/surround_map/surround_mask.dds"
+
+
+def build_surround_mask(roots: Roots, heightmap_png: bytes, notes: list = None) -> dict:
+    """Anbennar's surround mask with its fog pulled back from the Serpentspine (`tools/surround_mask.py`), judged on
+    this build's heightmap."""
+    source = roots.anbennar / SURROUND_MASK_REL
+    if not source.is_file():
+        raise GeneratorError(f"Anbennar not found: {source} does not exist")
+    raw = source.read_bytes()
+    width, height = smask.dxt5_size(raw)
+    _, _, pixels = eu4i.read_dds(raw)
+    heights = pngio.read_png(heightmap_png)
+    step = heights.width // width
+    if heights.width != width * step or heights.height != height * step:
+        raise GeneratorError(f"surround mask {width}x{height} does not divide heightmap.png "
+                             f"{heights.width}x{heights.height}")
+    bpp = 2 if heights.bit_depth == 16 else 1
+
+    def ground(x, y):
+        return heights.pixels[((y * step) * heights.width + x * step) * bpp]
+
+    def fog(x, y):
+        return pixels[(y * width + x) * 4 + 2]
+
+    box = data.SURROUND_BOX
+    if not (0 <= box[0] < box[2] <= width and 0 <= box[1] < box[3] <= height):
+        raise GeneratorError(f"SURROUND_BOX {box} is outside the {width}x{height} surround mask")
+    ridge = smask.range_pixels(ground, fog, box, data.SURROUND_THRESHOLD)
+    edited = bytearray(pixels)
+    changed = smask.push_back(edited, width, ridge, box, data.SURROUND_REVEAL, data.SURROUND_FADE,
+                              data.SURROUND_FEATHER)
+    if notes is not None:
+        notes.append(f"surround fog pulled back from the Serpentspine: {len(changed)} mask px")
+    return {SURROUND_MASK_REL: smask.patch_dxt5(raw, edited, changed)}
+
+
 def build_all(roots: Roots, notes: list = None) -> dict:
     """Every output (rel path -> bytes). Nothing is written here. Notes about skipped grading boxes and the
     raised ranges and gates are appended to `notes` when given."""
@@ -1287,9 +1326,10 @@ def build_all(roots: Roots, notes: list = None) -> dict:
     grading, grading_notes = build_grading(roots)
     if notes is not None:
         notes.extend(grading_notes)
+    heights = build_heightmap(roots, notes)
     files = merge_parts([build_terrain(roots), build_shaders(roots), build_court_scene(roots), build_environment(roots),
-                         grading,
-                         build_heightmap(roots, notes), build_terrain_fill(roots, notes)])
+                         grading, heights, build_terrain_fill(roots, notes),
+                         build_surround_mask(roots, heights[f"{MAP_DATA}/heightmap.png"], notes)])
     check_asset_effects(files, files[COURT_SCENE_REL].decode("utf-8"))
     return files
 
