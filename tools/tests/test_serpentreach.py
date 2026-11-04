@@ -202,6 +202,70 @@ class CarveTests(unittest.TestCase):
         self.assertEqual(bytes(blank.pixels), bytes(w * h * 4))  # inputs not modified
 
 
+def option_cfg(**values):
+    """Serpentreach's data module with `values` replaced (West Dwarovar's tracer options)."""
+    from types import SimpleNamespace
+    from data import serpentreach as data
+    return SimpleNamespace(**{**{k: getattr(data, k) for k in dir(data) if k.isupper()}, **values})
+
+
+class OptionTests(unittest.TestCase):
+    """Tracer options West Dwarovar needs; each is off by default so Serpentreach and Segbandal build unchanged."""
+
+    @unittest.skipUnless(Path("C:/Program Files (x86)/Steam/steamapps/workshop/content/236850/1385440355").is_dir(),
+                         "needs EU4 Anbennar")
+    def test_regions_union(self):
+        import eu4_import as eu4i
+        eu4 = Path("C:/Program Files (x86)/Steam/steamapps/workshop/content/236850/1385440355")
+        regions = ("west_dwarovar_region", "serpents_vale_region")
+        got, label = sl.region_set(option_cfg(REGIONS=regions), eu4)
+        self.assertEqual(got, eu4i.region_provinces(regions[:1], eu4) | eu4i.region_provinces(regions[1:], eu4))
+        self.assertIn("serpents_vale_region", label)
+        # REGION alone still works
+        self.assertEqual(sl.region_set(option_cfg(), eu4)[0], eu4i.region_provinces(("serpentreach_region",), eu4))
+
+    @unittest.skipUnless(Path("C:/Program Files (x86)/Steam/steamapps/workshop/content/236850/1385440355").is_dir(),
+                         "needs EU4 Anbennar")
+    def test_excluded_area_not_traced(self):
+        import eu4_import as eu4i
+        eu4 = Path("C:/Program Files (x86)/Steam/steamapps/workshop/content/236850/1385440355")
+        areas = eu4i.province_areas(eu4)
+        excluded = ("krakdhum_area", "anvils_horn_area", "dead_end_tunnel_area")
+        got, _ = sl.region_set(option_cfg(REGIONS=("west_dwarovar_region",), EXCLUDE_AREAS=excluded), eu4)
+        self.assertTrue(got)
+        self.assertFalse({areas[p] for p in got} & set(excluded))
+        self.assertIn(4208, eu4i.region_provinces(("west_dwarovar_region",), eu4))  # Krakdhumvror, now left out
+        self.assertNotIn(4208, got)
+        with self.assertRaisesRegex(GeneratorError, "orlghelovar_area"):
+            sl.region_set(option_cfg(REGIONS=("west_dwarovar_region",), EXCLUDE_AREAS=("orlghelovar_area",)), eu4)
+
+    def test_surface_type_only_in_surface_areas(self):
+        cfg = option_cfg(SURFACE_AREAS=("royal_terrace_area",), SURFACE_BARONIES=3)
+        self.assertEqual(sl.county_type(None, "royal_terrace_area", cfg, "c_royal_terrace"), ("surface", 3))
+        self.assertEqual(sl.county_type("hills", "royal_terrace_area", cfg, "c_northvale"), ("surface", 3))
+        self.assertEqual(sl.county_type("dwarven_road", "royal_terrace_area", cfg, "c_southern_entrance"),
+                         ("dwarven_road", 1))  # the Vale's tunnels are caves
+        with self.assertRaisesRegex(GeneratorError, "c_lamb_hills"):
+            sl.county_type(None, "orldhum_area", cfg, "c_lamb_hills")
+        with self.assertRaisesRegex(GeneratorError, "c_x"):
+            sl.county_type(None, "royal_terrace_area", option_cfg(), "c_x")  # no SURFACE_AREAS: never surface
+
+    def test_avoid_keeps_margin(self):
+        # rock 9 everywhere; the label "a" covers x 5..25; an earlier region's floor pixel sits at (20, 6), still rock
+        # on Anbennar's map
+        W, H = 32, 12
+
+        def ck(x, y):
+            return 9 if 0 <= x < W and 0 <= y < H else 0
+        labels = {(x, y): "a" for x in range(5, 26) for y in range(H)}
+        free = sl.clip_floor(labels, ck, (0, 0, W, H), 9, 4, {})["a"]
+        self.assertIn((20, 6), free)
+        floor = sl.clip_floor(labels, ck, (0, 0, W, H), 9, 4, {}, avoid={(20, 6)})["a"]
+        self.assertTrue(floor)
+        self.assertFalse([p for p in floor if max(abs(p[0] - 20), abs(p[1] - 6)) < 4])
+        self.assertIn((24, 6), floor)
+
+
 LOCATORS = """\ufeffgame_object_locator={
 \tname="buildings"
 \tinstances={

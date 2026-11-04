@@ -397,9 +397,28 @@ def allowed_neighbours(adj, existing, county_provinces):
             for a, nbrs in adj.items()}
 
 
-def clip_floor(labels, ck, box, src, margin, allowed):
+AVOIDED = -1  # province id an `avoid` pixel (an earlier region's floor, still rock on Anbennar's map) reads as
+
+
+def overlay(ck, avoid):
+    """`ck` with the `avoid` pixels reading as other provinces: a dict gives each its province id (earlier layouts'
+    `owner` maps), a set reads as AVOIDED. Earlier floors are still rock on Anbennar's map, so without this a new
+    floor or corridor could run into them."""
+    if not avoid:
+        return ck
+    get = avoid.get if isinstance(avoid, dict) else (lambda p: AVOIDED if p in avoid else None)
+
+    def wrapped(x, y):
+        pid = get((x, y))
+        return ck(x, y) if pid is None else pid
+    return wrapped
+
+
+def clip_floor(labels, ck, box, src, margin, allowed, avoid=None):
     """{label: set of floor pixels}: a labelled pixel is floor when it is on `src` and every other province within
-    `margin` - 1 px (chessboard) of it is one its label may touch (`allowed`, label -> province ids)."""
+    `margin` - 1 px (chessboard) of it is one its label may touch (`allowed`, label -> province ids). `avoid` pixels
+    (see `overlay`) count as other provinces."""
+    ck = overlay(ck, avoid)
     groups = {}
     for y in range(box[1], box[3]):
         for x in range(box[0], box[2]):
@@ -420,6 +439,35 @@ def clip_floor(labels, ck, box, src, margin, allowed):
 
 # --- layout -------------------------------------------------------------------------------------------------------
 
+def region_set(cfg, eu4: Path):
+    """(EU4 provinces to trace, label): those of `cfg.REGIONS` (else `cfg.REGION`) less `cfg.EXCLUDE_AREAS`'s. Stops
+    on an excluded area that is not one of the regions'."""
+    regions = tuple(getattr(cfg, "REGIONS", None) or (cfg.REGION,))
+    label = "/".join(regions)
+    provinces = eu4i.region_provinces(regions, eu4)
+    if not provinces:
+        raise GeneratorError(f"EU4 region {label} has no provinces")
+    excluded = tuple(getattr(cfg, "EXCLUDE_AREAS", ()))
+    if excluded:
+        areas = eu4i.province_areas(eu4)
+        unknown = sorted(set(excluded) - {areas.get(p) for p in provinces})
+        if unknown:
+            raise GeneratorError(f"EXCLUDE_AREAS names areas not in {label}: {', '.join(unknown)}")
+        provinces = {p for p in provinces if areas.get(p) not in excluded}
+    return provinces, label
+
+
+def county_type(kind, area, cfg, key):
+    """(county type, barony count) of a traced province with EU4 terrain `kind`: a cave kind of `cfg.BARONIES`, or
+    "surface" (`cfg.SURFACE_BARONIES`) for any other terrain in one of `cfg.SURFACE_AREAS`; stops otherwise."""
+    if kind in cfg.BARONIES:
+        return kind, cfg.BARONIES[kind]
+    if area in tuple(getattr(cfg, "SURFACE_AREAS", ())):
+        return "surface", getattr(cfg, "SURFACE_BARONIES", 3)
+    raise GeneratorError(f"{key}: EU4 terrain {kind} is not one of {sorted(cfg.BARONIES)} and its area {area} is "
+                         "not in SURFACE_AREAS")
+
+
 def load_ck3(anbennar: Path):
     folder = anbennar / "map_data"
     for name in ("provinces.png", "definition.csv", "default.map"):
@@ -431,10 +479,11 @@ def load_ck3(anbennar: Path):
     return pm, definition, water, impassable
 
 
-def layout(anbennar: Path, eu4: Path, ck3=None, cfg=None, first_id=None, used=None) -> Layout:
+def layout(anbennar: Path, eu4: Path, ck3=None, cfg=None, first_id=None, used=None, avoid=None) -> Layout:
     """A traced region's provinces on Anbennar's map. `ck3` is load_ck3(anbennar), passed when already loaded; `cfg`
     is the region's data module (default Serpentreach's); new ids start at `first_id` (default: after Anbennar's
-    last) and colours avoid `used` (RGB tuples) as well as Anbennar's."""
+    last) and colours avoid `used` (RGB tuples) as well as Anbennar's. `avoid` holds earlier layouts' floor pixels
+    (see `overlay`): the new floor keeps WALL_MARGIN from them and no corridor runs into them."""
     cfg = cfg or data
     if not (eu4 / "map/provinces.bmp").is_file():
         raise GeneratorError(f"EU4 Anbennar not found: {eu4 / 'map/provinces.bmp'} does not exist")
@@ -442,13 +491,15 @@ def layout(anbennar: Path, eu4: Path, ck3=None, cfg=None, first_id=None, used=No
     W, H, ids = pm.width, pm.height, pm.ids
     notes = []
 
-    def ck(x, y):
+    def ck_map(x, y):
         return ids[y * W + x] if 0 <= x < W and 0 <= y < H else 0
+    ck = overlay(ck_map, avoid)
+    if avoid:
+        impassable = set(impassable) | (set(avoid.values()) if isinstance(avoid, dict) else {AVOIDED})
 
     emap = Eu4Map(eu4)
-    serp = eu4i.region_provinces((cfg.REGION,), eu4)
-    if not serp:
-        raise GeneratorError(f"EU4 region {cfg.REGION} has no provinces")
+    serp, label = region_set(cfg, eu4)
+    excluded = eu4i.region_provinces(tuple(getattr(cfg, "REGIONS", None) or (cfg.REGION,)), eu4) - serp
     enames = eu4i.province_names(eu4)
     eareas = eu4i.province_areas(eu4)
     eterrain = eu4_terrain_overrides(eu4)
@@ -465,13 +516,13 @@ def layout(anbennar: Path, eu4: Path, ck3=None, cfg=None, first_id=None, used=No
         if lost:
             raise GeneratorError(f"EXISTING names counties Anbennar no longer has: {', '.join(lost)}")
     no_link = tuple(getattr(cfg, "NO_LINK_REGIONS", ()))
-    nolink = eu4i.region_provinces(no_link, eu4) if no_link else set()
+    nolink = (eu4i.region_provinces(no_link, eu4) if no_link else set()) | excluded  # excluded areas: no opening
 
     # fit
     ex0, ey0, ex1, ey1 = cfg.FIT_BOX
     ecent = _centroids(emap.at, cfg.FIT_BOX, _AnyId())
     wanted = {pid for pid in ecent if pid not in serp and _same_name(enames.get(pid), cnames.get(pid))}
-    ccent = _centroids(ck, cfg.CK3_FIT_BOX, wanted)
+    ccent = _centroids(ck_map, cfg.CK3_FIT_BOX, wanted)
     pairs = [(ecent[p][0], ecent[p][1], ccent[p][0], ccent[p][1]) for p in sorted(ccent)]
     fit = fit_affine(pairs)
     res = sorted(math.dist(apply(fit, ex, ey), (cx, cy)) for ex, ey, cx, cy in pairs)
@@ -501,7 +552,7 @@ def layout(anbennar: Path, eu4: Path, ck3=None, cfg=None, first_id=None, used=No
                         contacts.setdefault((a, b), []).append((x + 0.5 + dx / 2, y + 0.5 + dy / 2))
     missing = sorted(serp - set(epix))
     if missing:
-        raise GeneratorError(f"EU4 provinces of {cfg.REGION} outside FIT_BOX: {missing}")
+        raise GeneratorError(f"EU4 provinces of {label} outside FIT_BOX: {missing}")
 
     # CK3 box of the transformed region
     corners = [apply(fit, x, y) for x, y in ((ex0, ey0), (ex1, ey0), (ex0, ey1), (ex1, ey1))]
@@ -535,7 +586,7 @@ def layout(anbennar: Path, eu4: Path, ck3=None, cfg=None, first_id=None, used=No
     listed = list(cfg.AREA_ORDER)
     for name, areas in (("AREA_ORDER", listed), ("KINGDOMS", [a for _, (_, k) in cfg.KINGDOMS.items() for a in k])):
         if sorted(areas) != sorted(region_areas):
-            raise GeneratorError(f"{name} must list exactly the areas of {cfg.REGION}: missing "
+            raise GeneratorError(f"{name} must list exactly the areas of {label}: missing "
                                  f"{sorted(region_areas - set(areas))}, extra {sorted(set(areas) - region_areas)}")
     if existing:
         # an EU4 province Anbennar has since added as its own county must join EXISTING, not be traced twice
@@ -562,16 +613,14 @@ def layout(anbennar: Path, eu4: Path, ck3=None, cfg=None, first_id=None, used=No
             if key in keys:
                 key = f"{key}_{e}"
             keys.add(key)
-            kind = eterrain.get(e)
-            if kind not in cfg.BARONIES:
-                raise GeneratorError(f"EU4 province {e} ({name}) has terrain {kind}, not one of {sorted(cfg.BARONIES)}")
+            kind, count = county_type(eterrain.get(e), area, cfg, f"EU4 province {e} ({name})")
             comps = components(traced.get(e, ()))
             if not comps:
                 raise GeneratorError(f"{key}: no floor left after clipping to province {src}")
             dropped = sum(len(c) for c in comps[1:])
             if dropped:
                 notes.append(f"{key}: dropped {dropped} px in {len(comps) - 1} stray pieces")
-            k = cfg.BARONY_OVERRIDES.get(key, cfg.BARONIES[kind])
+            k = cfg.BARONY_OVERRIDES.get(key, count)
             pieces = split(comps[0], k, cfg.MIN_BARONY_PX, key)
             pids = []
             for i, piece in enumerate(pieces):
@@ -642,12 +691,12 @@ def layout(anbennar: Path, eu4: Path, ck3=None, cfg=None, first_id=None, used=No
         if len(comps) > 1:
             cut = sorted({provinces[owner[p]].county for c in comps if not any(ck(*q) in old for q in c)
                           for p in c if p in owner})
-            raise GeneratorError(f"{cfg.REGION}: floor falls apart into {len(comps)} pieces; cut off: {', '.join(cut)}")
+            raise GeneratorError(f"{label}: floor falls apart into {len(comps)} pieces; cut off: {', '.join(cut)}")
         # corridors may reach what the trace kept apart: no new floor may touch a county or Anbennar province EU4
         # does not make its neighbour
         bad = foreign_contacts(ck, owner, provinces, counties, adj, allowed, old)
         if bad:
-            raise GeneratorError(f"{cfg.REGION}: floors touch what EU4 does not make their neighbours: "
+            raise GeneratorError(f"{label}: floors touch what EU4 does not make their neighbours: "
                                  + ", ".join(f"{a} -> {b}" for a, b in bad[:10]))
 
     area_names = {a: display_name(loc.get(a, a)) for a in listed}
