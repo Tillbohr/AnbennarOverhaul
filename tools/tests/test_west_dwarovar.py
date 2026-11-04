@@ -130,11 +130,11 @@ class LayoutTests(unittest.TestCase):
         self.assertEqual(len(sl.components(pixels)), 1)
 
     def test_no_floor_touches_deepwoods_or_northern_pass(self):
-        # every province a new floor or Vale pixel touches is new, Khugdihr's, rock, or an opening's or tunnel's
+        # every province a new floor or Vale pixel touches is new, Khugdihr's, rock, or an opening's or link's
         # target: nothing of the Deepwoods, the Northern Pass or any other land
         pm = self.ck3[0]
         earlier = {**self.serp.owner, **self.seg.owner}
-        ok = ({data.SOURCE_PROVINCE} | set(data.LINK_CUT_THROUGH) | self.old | set(self.wd.provinces)
+        ok = ({data.SOURCE_PROVINCE} | self.old | set(self.wd.provinces)
               | {op.target for op in self.wd.openings} | {lk.target for lk in self.wd.links})
         touched = set()
         for x, y in self.wd.owner:
@@ -144,10 +144,9 @@ class LayoutTests(unittest.TestCase):
         self.assertEqual(touched - ok, set())
 
     def test_no_floor_near_earlier_regions(self):
-        link = {p for lk in self.wd.links if lk.target in self.seg.provinces for p in lk.pixels}
         earlier = set(self.serp.owner) | set(self.seg.owner)
         m = data.WALL_MARGIN - 1
-        near = [p for p in self.wd.owner if p not in link and
+        near = [p for p in self.wd.owner if
                 any((p[0] + dx, p[1] + dy) in earlier for dx in range(-m, m + 1) for dy in range(-m, m + 1))]
         self.assertEqual(near, [])
 
@@ -156,10 +155,9 @@ class LayoutTests(unittest.TestCase):
         openings = {(self.area_of[op.county], op.target) for op in self.wd.openings}
         self.assertEqual(openings, {("fallen_asra_area", 860), ("chainlink_mines_area", 2556),
                                     ("jorkad_junction_area", 3005)})
-        dwarovrod_25 = {pid for c in self.seg.counties if c.eu4_id == 2885 for pid in c.baronies}
-        tunnels = [lk for lk in self.wd.links if lk.target in dwarovrod_25]
-        self.assertEqual(len(tunnels), 1)
-        self.assertEqual(self.area_of[tunnels[0].county], "dwarovrod_21_24_area")
+        # no carved tunnel into Segbandal or Serpentreach: Dwarovrod 24 -> 25 and Gorrod 2 -> 1 are crossings
+        earlier = set(self.seg.provinces) | set(self.serp.provinces)
+        self.assertEqual([lk for lk in self.wd.links if lk.target in earlier], [])
         # Dark Depths, Dwarfbreak and Orlazam open straight into the Vale; Amldihr through its two Entrance tunnels,
         # which EU4 puts in the Vale's areas
         caves = {self.area_of[m.county] for m in self.wd.mouths} - VALE_AREAS
@@ -197,6 +195,22 @@ class MapTests(unittest.TestCase):
             text = self.files[f"{self.bs.LOCATOR_DIR}/{name}.txt"].decode("utf-8")
             for pid in list(wd.provinces)[:3] + list(wd.provinces)[-3:]:
                 self.assertEqual(len(re.findall(r"\bid=" + str(pid) + r"\n", text)), 1, (name, pid))
+
+    def test_crossings(self):
+        # Gorrod 2 (EU4 4103) reaches Serpentreach's Gorrod 1 (2981), Dwarovrod 24 (2884) Segbandal's Dwarovrod 25
+        # (2885), each by one adjacencies.csv crossing through the rock; Anbennar's rows stay as they are
+        serp, seg, wd = self.lays
+        text = self.files[self.bs.ADJACENCIES]
+        rows = [r.split(";") for r in text.decode("utf-8").splitlines()]
+        for a, b, lay in ((4103, 2981, serp), (2884, 2885, seg)):
+            ca = next(c for c in wd.counties if c.eu4_id == a)
+            cb = next(c for c in lay.counties if c.eu4_id == b)
+            ours = [r for r in rows if r[0].isdigit() and int(r[0]) in ca.baronies]
+            self.assertEqual(len(ours), 1, a)
+            self.assertIn(int(ours[0][1]), cb.baronies)
+            self.assertEqual(ours[0][2:4], ["sea", "2426"])
+            text = text.replace(";".join(ours[0]).encode() + b"\r\n", b"")
+        self.assertEqual(text, (ANBENNAR / "map_data/adjacencies.csv").read_bytes())
 
     def test_map_files_current(self):
         stale = [rel for rel, content in self.files.items()

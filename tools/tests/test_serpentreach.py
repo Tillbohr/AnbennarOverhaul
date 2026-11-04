@@ -438,6 +438,23 @@ class OutputTests(unittest.TestCase):
         self.assertIn("\t\t\tid=1\n\t\t\tposition={ 1.000000 0.000000 2.000000 }\n", out)
         self.assertTrue(out.endswith("\t\t}\n\t}\n}\n"))
 
+    def test_crossing_joins_the_nearest_baronies_before_the_closing_row(self):
+        import build_serpentreach as bs
+        prov = {1: sl.Province(1, (1, 1, 1), "c_a", 0, [(0, 0), (5, 0)], (0, 0)),
+                2: sl.Province(2, (2, 2, 2), "c_a", 1, [(9, 0)], (9, 0)),
+                3: sl.Province(3, (3, 3, 3), "c_b", 0, [(30, 0), (14, 1)], (30, 0))}
+        counties = [sl.County("c_a", 100, "Gorrod 2", "x", "cave", [1, 2]),
+                    sl.County("c_b", 200, "Gorrod 1", "y", "cave", [3])]
+        lay = sl.Layout(40, 4, counties, prov, {}, [], {}, [], [], [])
+        cfg = option_cfg(CROSSINGS=((100, 200),))
+        self.assertEqual(bs.crossings([lay], (cfg,)), [(2, 3, (9, 0), (14, 1), "Gorrod 2-Gorrod 1")])
+        original = b"From;To\r\n1;2;sea;3;-1;-1;-1;-1;x\r\n-1;-1;;-1;-1;-1;-1;-1;\r\n"
+        self.assertEqual(bs.render_adjacencies(original, [lay], cfgs=(cfg,)),
+                         b"From;To\r\n1;2;sea;3;-1;-1;-1;-1;x\r\n2;3;sea;2426;9;0;14;1;Gorrod 2-Gorrod 1\r\n"
+                         b"-1;-1;;-1;-1;-1;-1;-1;\r\n")
+        with self.assertRaisesRegex(GeneratorError, "drawn in no layout"):
+            bs.crossings([lay], (option_cfg(CROSSINGS=((100, 300),)),))
+
     def test_title_collision_raises(self):
         import build_serpentreach as bs
         with self.assertRaisesRegex(GeneratorError, "c_x"):

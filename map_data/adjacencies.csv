@@ -1,0 +1,127 @@
+From;To;Type;Through;start_x;start_y;stop_x;stop_y;Comment
+#DAMERIA;;;;;;;;
+11;935;sea;1271;1116;2362;1126;2368;Middletooth-Millmore
+11;936;sea;1271;1100;2362;1084;2367;Middletooth-Pointsfort
+13;936;sea;1271;1050;2355;1060;2361;Toothsend-Pointsfort
+928;935;sea;1271;1149;2388;1143;2383;Toothspier-Millmore
+2;934;sea;1272;1307;2394;1317;2388;Eargate-Floodtower Pass
+276;934;sea;1272;1320;2372;1318;2381;Damescross-Floodtower Pass
+55;394;river_large;1527;-1;-1;-1;-1;Riverglade-Eastbright
+898;1778;river_large;1533;-1;-1;-1;-1;Aranthíl-Colúmionn
+281;1754;river_large;1547;-1;-1;-1;-1;Plumwall-?
+569;331;river_large;1530;-1;-1;-1;-1;Menibor-Oldtower
+569;1823;river_large;1530;-1;-1;-1;-1;Menibor-Dhiamaire
+;;;;;;;;
+#DAMESHEAD APPROACH;;;;;;;;
+46;14;sea;1293;1091;2160;1103;2152;Jewelpoint-The Pearls
+51;945;sea;1293;1229;2119;1191;2122;Watchman's Point-The Pearls
+945;1056;sea;1293;1170;2125;1163;2127;Inter-Pearls Strait
+1791;1796;sea;1280;1337;1982;1341;1981;Stingport-?
+375;1796;sea;1280;1388;1959;1386;1962;The Tail-?
+33;1094;sea;1297;902;2284;898;2281;Toarnaire-Elendwen
+54;1728;sea;1274;1262;2249;1263;2246;Dancer's Retreat-?
+109;1832;river_large;1531;-1;-1;-1;-1;Elensbridge-?
+327;1839;river_large;1532;-1;-1;-1;-1;Cestaire-?
+;;;;;;;;
+#SHATTERED BAY;;;;;;;;
+146;1398;sea;1299;744;2860;755;2869;Baycodds-?
+;;;;;;;;
+#THE REACH;;;;;;;;
+707;713;sea;1256;1770;3291;1782;3294;Estjotun-Chillpoint
+707;2657;sea;1256;1738;3316;1735;3323;Estjotun-?
+2657;2658;sea;1256;1704;3321;1681;3300;?
+704;2658;sea;1256;1645;3288;1655;3296;Reachspier-?
+2684;2686;sea;1477;1620;3373;1630;3378;?
+2655;2656;sea;1477;1839;3364;1839;3369;?
+718;2633;sea;1286;2007;3343;2011;3345;?
+2631;2633;sea;1286;2026;3343;2025;3345;?
+735;736;sea;1286;2086;3342;2088;3348;Seawall-Isle Vroren
+197;198;sea;1321;1051;3321;1036;3353;Coddorran-Oddcodd
+197;199;sea;1320;941;3305;892;3312;Coddorran-Docodd
+;;;;;;;;
+#BUSINOR;;;;;;;;
+39;379;sea;1296;1675;1847;1680;1835;Lion's Pass-Stonegaze
+36;1627;sea;1302;1661;1770;1645;1780;?
+1628;1631;sea;1302;1694;1791;1696;1777;?-New Tefkora
+1630;1631;sea;1302;1711;1786;1711;1782;?-New Tefkora
+1622;1624;sea;1296;1531;1805;1546;1791;?
+;;;;;;;;
+#CASTANOR;;;;;;;;
+2424;2427;sea;1326;2118;2807;2118;2812;The South Citadel-Berkaleth
+754;2432;river_large;1511;2072;2966;-1;-1;Westgate-Alesward
+839;2497;river_large;1511;-1;-1;-1;-1;Acendur-Fortgros
+749;2473;river_large;1512;-1;-1;-1;-1;Uelced-Adobridge
+753;2480;river_large;1512;-1;-1;-1;-1;Rudashel-Stamhthil
+;;;;;;;;
+#GAWED;;;;;;;;
+216;1949;river_large;1508;1291;2877;1295;2877;Bal Vertesk-Cres
+337;1965;river_large;1522;1265;2945;1262;2943;Alenath-Henhurst Hall
+220;1964;river_large;1523;-1;-1;-1;-1;Ginnfield-Drunkman's Copse
+339;1960;river_large;1523;-1;-1;-1;-1;Elwick-upon-Alen-Shoebridge
+223;1988;river_large;1520;-1;-1;-1;-1;Drakesford-?
+227;241;river_large;1516;-1;-1;-1;-1;Aldtempel-Wolfden
+229;710;river_large;1515;1760;3047;1759;3050;Balmire-Mirelook
+729;2494;river_large;1513;-1;-1;-1;-1;Athfork-?
+;;;;;;;;
+#LORENT;;;;;;;;
+101;1037;river_large;1496;-1;-1;-1;-1;Wineport-?
+97;1036;river_large;1496;-1;-1;-1;-1;Minara's Bosom-Minartrás
+79;1033;river_large;1497;-1;-1;-1;-1;Lower Bloodwine-?
+1140;1142;river_large;1509;-1;-1;-1;-1;?-Fulkaire
+;;;;;;;;
+#SMALL COUNTRY;;;;;;;;
+60;155;river_large;1499;-1;-1;-1;-1;East Saltfort-West Saltfort
+63;66;river_large;1501;-1;-1;-1;-1;North Viswall-South Viswall
+;;;;;;;;
+#ESMAR;;;;;;;;
+44;1865;river_large;1549;-1;-1;-1;-1;Tomansford-?
+916;1857;river_large;1541;-1;-1;-1;-1;Seinathíl-Heraldbrook
+274;1858;river_large;1541;1458;2437;-1;-1;Notesbridge-Brassblare
+267;1871;river_large;1550;-1;-1;-1;-1;Themarenn-?
+266;1874;river_large;1544;-1;-1;-1;-1;Esmarainé-?
+266;1876;river_large;1544;-1;-1;-1;-1;Esmarainé-?
+1874;1875;river_large;1544;-1;-1;-1;-1;?
+260;1878;river_large;1543;-1;-1;-1;-1;Gabmórionn-?
+262;1886;river_large;1542;-1;-1;-1;-1;Aranmas-Weaver's Rock
+234;2035;river_large;1540;-1;-1;-1;-1;Damescrown-Dhanmewer
+268;1907;river_large;1545;-1;-1;-1;-1;Bennon-Gabnamm
+909;1913;river_large;1545;-1;-1;-1;-1;Havorton-?
+901;1915;river_large;1546;-1;-1;-1;-1;Leslinpár-Arca Dea
+;;;;;;;;
+#DOSTANOR;;;;;;;;
+445;451;sea;1303;1942;2207;1946;2207;Jorathur Fields-Nathalaire
+447;451;sea;1303;1971;2187;1971;2190;Corveld-Nathalaire
+512;6779;sea;1298;2199;2085;2192;2074;Humac's Island-?
+2808;6779;sea;1298;2192;2050;2182;2050;Humac's Island-?
+442;2221;river_large;1565;-1;-1;-1;-1;Bronhyl-?
+431;2198;river_large;1562;-1;-1;-1;-1;Ravenhill-?
+803;2309;river_large;1562;-1;-1;-1;-1;Dostan's Way-?
+;;;;;;;;
+#PHOENIX EMPIRE;;;;;;;;
+2853;2828;sea;1298;1976;2049;1981;2052;?
+523;581;sea;1313;2159;1784;2153;1781;Zorntanas-Yamatšes
+530;2861;sea;1312;2378;1876;2379;1873;Vernat-?
+2860;2861;sea;1312;2404;1879;2401;1877;?
+2869;2870;sea;1311;2551;1828;-1;-1;?
+580;582;sea;1311;2596;1607;2602;1613;Drolaspand-Azka Girakĕru
+495;494;sea;1308;2464;1358;2461;1360;Khetraz-Rosutaaru
+680;6682;sea;1309;2956;1170;2953;1166;Sihbaga-?
+5434;5668;sea;3073;4419;640;4436;643;Azka-szel-Udam-Dasmatus
+5668;6719;sea;3073;4476;657;4496;656;Dasmatus-?
+6733;6734;sea;1348;4604;838;4620;834;Edesukeru-Subkaliss
+;;;;;;;;
+#GERUDIA;;;;;;;;
+2738;2760;sea;1322;1339;3590;1336;3591;Drekkoddr-Eshavn
+2660;708;sea;1322;1254;3528;1237;3555;Dukklhriður-Jotunsglotta
+698;2761;sea;1322;1250;3505;1253;3505;?-Robert's Watch
+2761;708;sea;1322;1253;3574;1247;3571;Robert's Watch-Jotunsglotta
+952;2765;sea;1322;1239;3608;1218;3613;Sporreyn-Urdrstrond
+708;2762;sea;1322;1219;3570;1219;3573;Jotunsglotta-Vindreyj
+2765;2762;sea;1322;-1;-1;-1;-1;Urdrstrond-Vindreyj
+953;2764;sea;1322;1168;3628;-1;-1;Fuglborg-Sokkiðmyrr
+2764;2763;sea;1322;-1;-1;-1;-1;Sokkiðmyrr-Eynreki
+997;2764;sea;1322;-1;-1;-1;-1;Eikodr-Sokkiðmyrr
+;;;;;;;;
+7282;7040;sea;2426;3070;2215;3064;2135;Gorrod 2-Gorrod 1
+7295;7068;sea;2426;3386;1948;3453;1852;Dwarovrod 24-Dwarovrod 25
+-1;-1;;-1;-1;-1;-1;-1;

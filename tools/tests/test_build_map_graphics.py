@@ -425,7 +425,7 @@ def _impassable():
 
 def region_gates():
     """Gates the regions add to Anbennar's 9: one per opening of Serpentreach, Segbandal and West Dwarovar, and one
-    per West Dwarovar Vale mouth (none on the Dwarovrod 24-25 tunnel)."""
+    per West Dwarovar Vale mouth (none on the Dwarovrod 24-25 and Gorrod crossings, which carve nothing)."""
     wd = bmg.west_dwarovar_layout(ROOTS)
     return (len(bmg.serpentreach_layout(ROOTS).openings) + len(bmg.segbandal_layout(ROOTS).openings)
             + len(wd.openings) + len(wd.mouths))
@@ -1454,9 +1454,7 @@ class HeightOutputsTests(unittest.TestCase):
         self.assertEqual(len(wd.mouths), 6)
         for op in list(wd.openings) + list(wd.mouths):
             self.assertRegex(notes, rf"(?m)^gate {op.county}/")
-        tunnel = [lk for lk in wd.links if lk.target in bmg.segbandal_layout(ROOTS).provinces]
-        self.assertEqual(len(tunnel), 1)
-        self.assertNotRegex(notes, rf"(?m)^gate {tunnel[0].county}/")
+        self.assertEqual([lk for lk in wd.links if lk.target in bmg.segbandal_layout(ROOTS).provinces], [])
 
     def test_notes_cover_ranges_and_sites(self):
         lay = bmg.serpentreach_layout(ROOTS)

@@ -47,18 +47,18 @@ SURFACE_TERRAIN = {
 OPENING_CUT_THROUGH = ()  # no Deepwoods opening, so no Deepwoods Wasteland cut
 BARONY_OVERRIDES = {}
 OPENING_TARGETS = {}
-# EU4 contacts with these regions make no opening: Serpentreach and Segbandal are drawn already (Segbandal is reached
-# by the Dwarovrod tunnel below), the Northern Pass waits for its own iteration, and the East Deepwoods openings were
-# declined (spec, Connections).
+# EU4 contacts with these regions make no opening: Serpentreach and Segbandal are drawn already (both are reached by
+# the CROSSINGS below), the Northern Pass waits for its own iteration, and the East Deepwoods openings were declined
+# (spec, Connections).
 NO_LINK_REGIONS = ("serpentreach_region", "middle_dwarovar_region", "northern_pass_region", "east_deepwoods_region")
 NO_LINK_PAIRS = set()  # EU4 province pairs (either order) whose opening, tunnel or Vale mouth is dropped
-# EU4 adjacencies.csv tunnels to provinces an earlier layout drew (Dwarovrod 24 -> Segbandal's Dwarovrod 25, ~170 px
-# on the CK3 map): at most LINK_REACH px, through 2426 and Segbandal's rock.
-LINK_REACH = 220
-LINK_CUT_THROUGH = (2608,)
-# EU4 provinces of the earlier layouts that get a tunnel. EU4 also tunnels Gorrod 2 (Jorkad Junction) to Serpentreach's
-# Gorrod 1 (2981); the spec leaves Serpentreach unconnected, so that one is not listed.
-LINK_TARGETS = (2885,)
+# EU4 provinces of the earlier layouts that get a carved tunnel (with LINK_REACH and LINK_CUT_THROUGH): none, the EU4
+# adjacencies.csv tunnels are CROSSINGS.
+LINK_TARGETS = ()
+# EU4 adjacencies.csv tunnels to provinces an earlier layout drew, as crossings (EU4 pairs): a CK3 adjacencies.csv
+# row through SOURCE_PROVINCE, so armies step from one floor to the other like over a strait and nothing is carved.
+# Gorrod 2 (Jorkad Junction) -> Serpentreach's Gorrod 1; Dwarovrod 24 -> Segbandal's Dwarovrod 25.
+CROSSINGS = ((4103, 2981), (2884, 2885))
 
 # EU4 provinces Anbennar already has: EU4 id -> Anbennar county. Not traced; new floors may touch them where EU4 makes
 # them neighbours.

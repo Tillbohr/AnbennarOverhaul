@@ -29,12 +29,15 @@ I09 and I10 (`python -I tools/eu4_import.py convert gfx/flags/<tag>.tga gfx/coat
   Pass and East Deepwoods): Bladebreaker Pass -> Steelhyl (860), Dwarfhope -> Glimmerfoe (2556; EU4's Fogwood lies
   behind Glimmerfoe on the CK3 map), Hul-Jorkad -> Ijenmyfor3 (3005). Eastern Reach's neighbour (Damazgubli) is off the
   CK3 map: skipped (noted). `NO_LINK_PAIRS` drops any opening, tunnel or mouth by EU4 pair.
-- **Tunnel to Segbandal:** EU4 joins Dwarovrod 24 to Dwarovrod 25 only through `map/adjacencies.csv`
-  (`eu4_adjacencies`, `adjacency_links`, `LINK_TARGETS = (2885,)`, `LINK_REACH` 220, through 2426 and Segbandal's
-  rock 2608). Anbennar's Bezhetsk and Khinkeion poke into the rock on the straight line, so the tunnel is routed
-  around them through the rock (`_routed_corridor`, BFS keeping the corridor's clearance): 121 steps, 1,526 px. EU4's
-  other tunnel to an earlier region, Gorrod 2 -> Serpentreach's Gorrod 1, is left out (spec: Serpentreach stays
-  unconnected).
+- **Crossings to the earlier regions:** EU4 joins Gorrod 2 (Jorkad Junction) to Serpentreach's Gorrod 1 and
+  Dwarovrod 24 to Segbandal's Dwarovrod 25 only through its `map/adjacencies.csv` tunnels. Neither is carved:
+  `CROSSINGS = ((4103, 2981), (2884, 2885))` makes `build_serpentreach.py` add a `sea` row through 2426 to
+  `map_data/adjacencies.csv` (a whole-file override of Anbennar's), so armies step between the floors like across a
+  strait. Each row runs between the two floors' nearest pixels: Gorrod about 80 px, its line over Anbennar's
+  Deepwoods122 (6902); Dwarovrod about 117 px, its line over Bezhetsk and Khinkeion, the surface above the tunnel. RiE
+  (67 rows) and Godherja cross their impassable mountains the same way. `LINK_TARGETS` is empty, so the carved-tunnel
+  machinery (`adjacency_links`, `_routed_corridor`, `LINK_REACH`, `LINK_CUT_THROUGH`) is unused here; until
+  2026-11-04 it carved a 1,526 px corridor from Dwarovrod 24 around Bezhetsk and Khinkeion.
 - **Seams:** Dwarovrod 12 and Massive Shaft are a pixel apart in EU4 and merged once scaled; `SEPARATE_NON_NEIGHBOURS`
   cuts a `WALL_MARGIN` rock seam between labels EU4 does not make neighbours (West Dwarovar only).
 - **Titles:** each new kingdom's hold duchy is named like the kingdom (`HOLD_DUCHIES_NAMED_LIKE_KINGDOM`; the keys
@@ -60,7 +63,7 @@ I09 and I10 (`python -I tools/eu4_import.py convert gfx/flags/<tag>.tga gfx/coat
   range (ground ~28,400); Serpent's Vale and the earlier regions' floors are `land` to that carve (never walled; floors
   ramp to them over `CARVE_RAMP`). The Vale is painted by terrain (`SURFACE_MATERIALS`, feathered over 4 px).
   Westnest, Eastnest and Zokkorna are `mushroom` (moss). Every opening and Vale mouth gets an Erebor gate (turn
-  pinned to 0); the tunnel gets none. The Vale is still 2426 on Anbennar's map, so the gate transplant treats it as
+  pinned to 0); the crossings get none. The Vale is still 2426 on Anbennar's map, so the gate transplant treats it as
   range: `build_heightmap` restores its heights after the transplant (`vale_pixels`, `restore_land`) and drops gate
   pieces within `PIECE_FLOOR_CLEARANCE` of it. `SURROUND_BOX` starts at mask row 300, clearing the fog off Dûr-Vazhatun;
   Krakdhum stays fogged.
@@ -73,4 +76,7 @@ I09 and I10 (`python -I tools/eu4_import.py convert gfx/flags/<tag>.tga gfx/coat
      over 12 px (risk: a cliff). Fixes: a longer `CARVE_RAMP` for this range, or a fixed ground height.
   5. Gates face the right way (out of the caves; into the Vale at the mouths). A mouth gate's direction is one of
      the four axes (its `start` is a 4-neighbour of the mouth), and its cone stops at the Vale's edge.
-  6. Dûr-Vazhatun is out of the fog; the tunnel from Dwarovrod 24 reads as a tunnel into Segbandal.
+  6. Dûr-Vazhatun is out of the fog.
+  7. Armies cross Gorrod 2 <-> Gorrod 1 and Dwarovrod 24 <-> 25 (a dashed crossing line on the map), and the AI
+     paths through them in a war; the error log has no adjacency error for `7282;7040` or `7295;7068`. The game
+     reads map files at launch only: relaunch after rebuilding them.

@@ -36,6 +36,7 @@ BOM = "﻿"
 
 PROVINCES_PNG = "map_data/provinces.png"
 DEFINITION = "map_data/definition.csv"
+ADJACENCIES = "map_data/adjacencies.csv"
 TITLES = "common/landed_titles/aov_serpentreach.txt"
 PROVINCE_HISTORY = "history/provinces/aov_serpentreach.txt"
 TITLE_HISTORY = "history/titles/aov_serpentreach.txt"
@@ -507,6 +508,45 @@ def render_definition(original: bytes, lays) -> bytes:
     return out + nl.join(rows) + nl
 
 
+CROSSING_CFGS = (data, segbandal_data, west_dwarovar_data)
+
+
+def crossings(lays, cfgs=CROSSING_CFGS) -> list:
+    """(from, to, start, stop, comment) per EU4 pair in a data module's CROSSINGS: the two counties' baronies whose
+    pixels come closest, `start`/`stop` those nearest pixels (CK3 map coordinates, y = 0 at the south edge)."""
+    by_eu4 = {c.eu4_id: (lay, c) for lay in lays for c in lay.counties}
+    out = []
+    for a, b in (pair for cfg in cfgs for pair in getattr(cfg, "CROSSINGS", ())):
+        missing = [e for e in (a, b) if e not in by_eu4]
+        if missing:
+            raise GeneratorError(f"CROSSINGS: EU4 {missing} drawn in no layout")
+        (la, ca), (lb, cb) = by_eu4[a], by_eu4[b]
+        best = None
+        for pa in ca.baronies:
+            for pb in cb.baronies:
+                for p in la.provinces[pa].pixels:
+                    for q in lb.provinces[pb].pixels:
+                        d = (p[0] - q[0]) ** 2 + (p[1] - q[1]) ** 2
+                        if best is None or d < best[0]:
+                            best = (d, pa, pb, p, q)
+        _, pa, pb, p, q = best
+        out.append((pa, pb, p, q, f"{ascii_name(ca.name)}-{ascii_name(cb.name)}"))
+    return out
+
+
+def render_adjacencies(original: bytes, lays, source: int = data.SOURCE_PROVINCE, cfgs=CROSSING_CFGS) -> bytes:
+    """Anbennar's adjacencies.csv with a `sea` crossing through `source` (the Serpentspine rock) per CROSSINGS pair,
+    inserted before the closing `-1;-1;...` row."""
+    nl = b"\r\n" if b"\r\n" in original else b"\n"
+    lines = original.split(nl)
+    end = next((i for i, line in enumerate(lines) if line.startswith(b"-1;-1;")), None)
+    if end is None:
+        raise GeneratorError("Anbennar's adjacencies.csv has no closing -1;-1; row")
+    rows = [f"{a};{b};sea;{source};{p[0]};{p[1]};{q[0]};{q[1]};{comment}".encode("ascii")
+            for a, b, p, q, comment in crossings(lays, cfgs)]
+    return nl.join(lines[:end] + rows + lines[end:])
+
+
 def render_provinces(png: bytes, lays) -> bytes:
     img = pngio.read_png(png)
     if img.bit_depth != 8 or img.color_type not in (2, 6):
@@ -545,7 +585,8 @@ def layouts(anbennar: Path = ANBENNAR, eu4: Path = EU4, ck3=None) -> tuple:
 
 def west_dwarovar_layout(anbennar: Path, eu4: Path, ck3, serp: sl.Layout, seg: sl.Layout) -> sl.Layout:
     """West Dwarovar's layout after Serpentreach's and Segbandal's: ids after Segbandal's, colours apart from both,
-    floors kept off theirs, and EU4 adjacencies.csv tunnels to their provinces in LINK_TARGETS (Dwarovrod 24 -> 25)."""
+    floors kept off theirs, and carved tunnels to their provinces in LINK_TARGETS (none: its EU4 adjacencies.csv
+    tunnels to them are CROSSINGS, rows of map_data/adjacencies.csv)."""
     earlier = (serp, seg)
     return sl.layout(anbennar, eu4, ck3, cfg=west_dwarovar_data, first_id=max(seg.provinces) + 1,
                      used={p.colour for lay in earlier for p in lay.provinces.values()},
@@ -577,6 +618,7 @@ def build_from_layout(anbennar: Path, lays) -> dict:
     files = {
         PROVINCES_PNG: render_provinces((folder / "provinces.png").read_bytes(), lays),
         DEFINITION: render_definition((folder / "definition.csv").read_bytes(), lays),
+        ADJACENCIES: render_adjacencies((folder / "adjacencies.csv").read_bytes(), lays),
         TITLES: render_titles(realm),
         PROVINCE_HISTORY: render_province_history(realm),
         TITLE_HISTORY: render_title_history(realm, people),

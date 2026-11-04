@@ -632,6 +632,1917 @@
 {
   "confidence": "reasonable",
   "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 14,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 14,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 14,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 14,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 6,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 14,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 14,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 14,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 25,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 25,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 25,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 25,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 6,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 25,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 25,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 25,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 28,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 28,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 28,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 28,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 6,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 28,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 28,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 28,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 41,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 41,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 41,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 41,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 6,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 41,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 41,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 41,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 48,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 48,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 48,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 48,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 6,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 48,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 48,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 48,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 55,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 55,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 55,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 55,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 6,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 55,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 55,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 55,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 65,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 65,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 65,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 65,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 6,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 65,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 65,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 65,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 71,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 71,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 71,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 71,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 6,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 71,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 71,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 71,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 75,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 75,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 75,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 75,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 6,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 75,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 75,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 75,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 90,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 90,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 90,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 90,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 6,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 90,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 90,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 90,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 99,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 99,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 99,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 99,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 6,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 99,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 99,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 99,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 112,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 112,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 112,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 112,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 6,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 112,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 112,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 112,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 1,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 124,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 2,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 124,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 4,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 124,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected province id",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 5,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 124,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 6,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 124,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 7,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 124,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected x coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
+  "key": "parse-error",
+  "locations": [
+    {
+      "column": 8,
+      "from": "MOD",
+      "fullpath": ".\\map_data\\adjacencies.csv",
+      "length": 1,
+      "line": ";;;;;;;;",
+      "linenr": 124,
+      "path": "map_data\\adjacencies.csv",
+      "stage": null,
+      "tag": null
+    }
+  ],
+  "message": "expected y coordinate",
+  "severity": "error",
+  "wiki": null
+},
+{
+  "confidence": "reasonable",
+  "info": null,
   "key": "image-format",
   "locations": [
     {
