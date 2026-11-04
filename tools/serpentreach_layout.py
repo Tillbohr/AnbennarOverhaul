@@ -26,8 +26,11 @@ County = namedtuple("County", "key eu4_id name area type baronies")  # baronies:
 Province = namedtuple("Province", "id colour county index pixels interior")  # pixels sorted by (y, x)
 # corridor pixels (a set); mouth: the target pixel it opens onto; start: the floor pixel it leaves from
 Opening = namedtuple("Opening", "county target pixels mouth start")
-# links: corridors from a new county to a province it neighbours in EU4 that the trace did not reach (Segbandal)
-Layout = namedtuple("Layout", "width height counties provinces owner openings area_names notes links", defaults=((),))
+# links: corridors from a new county to a province it neighbours in EU4 that the trace did not reach (Segbandal), or
+# that EU4 joins to it only through adjacencies.csv (West Dwarovar's Dwarovrod 24 -> 25); mouths: where a cave floor
+# meets a surface county (Serpent's Vale), `target` that county's capital barony
+Layout = namedtuple("Layout", "width height counties provinces owner openings area_names notes links mouths",
+                    defaults=((), ()))
 
 N4 = ((1, 0), (-1, 0), (0, 1), (0, -1))
 N8 = N4 + ((1, 1), (1, -1), (-1, 1), (-1, -1))
@@ -479,11 +482,14 @@ def load_ck3(anbennar: Path):
     return pm, definition, water, impassable
 
 
-def layout(anbennar: Path, eu4: Path, ck3=None, cfg=None, first_id=None, used=None, avoid=None) -> Layout:
+def layout(anbennar: Path, eu4: Path, ck3=None, cfg=None, first_id=None, used=None, avoid=None,
+           targets=None) -> Layout:
     """A traced region's provinces on Anbennar's map. `ck3` is load_ck3(anbennar), passed when already loaded; `cfg`
     is the region's data module (default Serpentreach's); new ids start at `first_id` (default: after Anbennar's
     last) and colours avoid `used` (RGB tuples) as well as Anbennar's. `avoid` holds earlier layouts' floor pixels
-    (see `overlay`): the new floor keeps WALL_MARGIN from them and no corridor runs into them."""
+    (see `overlay`): the new floor keeps WALL_MARGIN from them and no corridor runs into them. `targets` maps EU4 ids
+    to the CK3 provinces earlier layouts drew for them: with `cfg.LINK_REACH` set, an EU4 adjacencies.csv pair from a
+    traced province to one of them (or to an EXISTING county) gets a tunnel (`adjacency_links`)."""
     cfg = cfg or data
     if not (eu4 / "map/provinces.bmp").is_file():
         raise GeneratorError(f"EU4 Anbennar not found: {eu4 / 'map/provinces.bmp'} does not exist")
@@ -644,6 +650,9 @@ def layout(anbennar: Path, eu4: Path, ck3=None, cfg=None, first_id=None, used=No
     # openings
     openings = []
     for (a, b), pts in sorted(contacts.items()):
+        if dropped_pair(cfg, a, b):
+            notes.append(f"opening EU4 {a} -> {b}: in NO_LINK_PAIRS; skipped")
+            continue
         county = by_eu4[a]
         mx = sum(p[0] for p in pts) / len(pts)
         my = sum(p[1] for p in pts) / len(pts)
@@ -682,8 +691,15 @@ def layout(anbennar: Path, eu4: Path, ck3=None, cfg=None, first_id=None, used=No
                      f"{math.dist(start, end):.0f} px long")
 
     links = []
+    if getattr(cfg, "LINK_REACH", None):
+        tmap = {b: set(pids) for b, pids in (targets or {}).items()}
+        tmap.update({e: set(cprov[c]) for e, c in existing.items()})
+        pairs = {(a, b) for a, b in eu4_adjacencies(eu4) if a in by_eu4 and b in tmap}
+        links += adjacency_links(ck, counties, provinces, owner, pairs, tmap, src, cfg, notes)
+        for a, b in pairs:
+            allowed.setdefault(a, set()).update(tmap[b])
     if existing:
-        links = _links(ck, counties, provinces, owner, adj, allowed, src, cfg, notes)
+        links += _links(ck, counties, provinces, owner, adj, allowed, src, cfg, notes)
         old = {pid for c in set(existing.values()) for pid in cprov[c]}
         old_px = {(x, y) for y in range(box[1], box[3]) for x in range(box[0], box[2]) if ck(x, y) in old}
         links += join_pieces(ck, counties, provinces, owner, allowed, old_px, src, cfg, notes)
@@ -700,7 +716,10 @@ def layout(anbennar: Path, eu4: Path, ck3=None, cfg=None, first_id=None, used=No
                                  + ", ".join(f"{a} -> {b}" for a, b in bad[:10]))
 
     area_names = {a: display_name(loc.get(a, a)) for a in listed}
-    return Layout(W, H, counties, provinces, owner, openings, area_names, notes, links)
+    found = mouths(counties, provinces, owner, cfg)
+    for m in found:
+        notes.append(f"mouth {m.county} -> {provinces[m.target].county}: {len(m.pixels)} floor px")
+    return Layout(W, H, counties, provinces, owner, openings, area_names, notes, links, found)
 
 
 def foreign_contacts(ck, owner, provinces, counties, adj, allowed, watched):
@@ -833,6 +852,88 @@ def _links(ck, counties, provinces, owner, adj, allowed, src, cfg, notes):
         _attach(provinces, owner, start, corridor)
         links.append(Opening(c.key, target, corridor, end, start))
         notes.append(f"link {c.key} -> {target}: {len(corridor)} px")
+    return links
+
+
+def dropped_pair(cfg, a, b):
+    """The EU4 pair (either order) is in `cfg.NO_LINK_PAIRS`: no opening, link or mouth between them."""
+    pairs = getattr(cfg, "NO_LINK_PAIRS", ()) or ()
+    return (a, b) in pairs or (b, a) in pairs
+
+
+def eu4_adjacencies(eu4: Path) -> set:
+    """{(from, to)} EU4 province pairs of map/adjacencies.csv, both directions."""
+    out = set()
+    for line in (eu4 / "map/adjacencies.csv").read_text(encoding="latin-1").splitlines():
+        f = line.split(";")
+        if len(f) > 2 and f[0].strip().isdigit() and f[1].strip().isdigit():
+            a, b = int(f[0]), int(f[1])
+            if a > 0 and b > 0:
+                out |= {(a, b), (b, a)}
+    return out
+
+
+def mouths(counties, provinces, owner, cfg):
+    """One Opening per (cave county, surface county) whose floors touch: `target` the surface county's capital
+    barony, `mouth` the surface pixel nearest the middle of the contact, `start` the floor pixel beside it (smallest
+    (y, x)), `pixels` the cave county's floor within OPENING_WIDTH of the mouth."""
+    county = {c.key: c for c in counties}
+    contact = {}
+    for (x, y), pid in owner.items():
+        a = county[provinces[pid].county]
+        if a.type == "surface":
+            continue
+        for dx, dy in N4:
+            q = owner.get((x + dx, y + dy))
+            if q is not None and county[provinces[q].county].type == "surface":
+                contact.setdefault((a.key, provinces[q].county), set()).add((x + dx, y + dy))
+    out = []
+    for (ckey, skey), pts in sorted(contact.items()):
+        if dropped_pair(cfg, county[ckey].eu4_id, county[skey].eu4_id):
+            continue
+        mx = sum(p[0] for p in pts) / len(pts)
+        my = sum(p[1] for p in pts) / len(pts)
+        mouth = min(pts, key=lambda p: (_d2(p, (mx, my)), p[1], p[0]))
+        floor = {p for pid in county[ckey].baronies for p in provinces[pid].pixels}
+        start = min(((mouth[0] + dx, mouth[1] + dy) for dx, dy in N4 if (mouth[0] + dx, mouth[1] + dy) in floor),
+                    key=_key)
+        pixels = {p for p in floor if math.dist(p, mouth) <= cfg.OPENING_WIDTH}
+        out.append(Opening(ckey, county[skey].baronies[0], pixels, mouth, start))
+    return out
+
+
+def adjacency_links(ck, counties, provinces, owner, pairs, targets, src, cfg, notes):
+    """A corridor OPENING_WIDTH wide, at most LINK_REACH px, from each new county to the CK3 provinces (`targets`,
+    EU4 id -> province ids) of an EU4 province it is joined to only by `pairs` (EU4 adjacencies.csv), through `src`
+    and LINK_CUT_THROUGH; pixels join the barony they leave from. Stops when one has no corridor in reach."""
+    by_eu4 = {c.eu4_id: c for c in counties}
+    rock = {src} | set(getattr(cfg, "LINK_CUT_THROUGH", ()))
+    links = []
+    for a, b in sorted(pairs):
+        if a not in by_eu4 or b not in targets or dropped_pair(cfg, a, b):
+            continue
+        c = by_eu4[a]
+        floor = [p for pid in c.baronies for p in provinces[pid].pixels]
+        cx = sum(p[0] for p in floor) / len(floor)
+        cy = sum(p[1] for p in floor) / len(floor)
+        ok = set(targets[b])
+        best = None
+        for target in sorted(ok):
+            try:
+                start, end, corridor = _opening(ck, floor, owner, src, target, cx, cy, cfg, reach=cfg.LINK_REACH,
+                                                rock=rock, ok=ok)
+            except GeneratorError:
+                continue
+            if corridor is not None and (best is None or len(corridor) < len(best[3])):
+                best = (target, start, end, corridor)
+        if best is None:
+            raise GeneratorError(f"{c.key}: no tunnel within LINK_REACH {cfg.LINK_REACH} px reaches EU4 {b}'s "
+                                 f"provinces {sorted(ok)}")
+        target, start, end, corridor = best
+        _attach(provinces, owner, start, corridor)
+        links.append(Opening(c.key, target, corridor, end, start))
+        notes.append(f"tunnel {c.key} -> {target} (EU4 {a} -> {b}): {len(corridor)} px, "
+                     f"{math.dist(start, end):.0f} px long")
     return links
 
 
@@ -1052,20 +1153,22 @@ def rock_provinces(cfg=None):
     return {cfg.SOURCE_PROVINCE} | set(cfg.OPENING_CUT_THROUGH)
 
 
-def _opening(ck, floor, owner, src, target, cx, cy, cfg=None):
+def _opening(ck, floor, owner, src, target, cx, cy, cfg=None, reach=None, rock=None, ok=()):
     """(start, end, corridor) of the shortest corridor from `floor` to `target` that touches no province but the
-    target and `src`; corridor None when none is found. Candidate ends are the target's pixels in order of their
-    distance to the floor."""
+    target, `ok` and the rock (`rock`, default `rock_provinces(cfg)`) and runs at most `reach` (default OPENING_REACH)
+    px; corridor None when none is found. Candidate ends are the target's pixels in order of their distance to the
+    floor."""
     cfg = cfg or data
+    reach = cfg.OPENING_REACH if reach is None else reach
     tpix = _province_pixels_near(ck, target, cx, cy, 250)
     if not tpix:
         raise GeneratorError(f"opening to {target}: no pixel of the target within 250 px of ({cx:.0f}, {cy:.0f})")
     xs = [p[0] for p in floor]
     ys = [p[1] for p in floor]
-    box = (min(xs) - cfg.OPENING_REACH, min(ys) - cfg.OPENING_REACH, max(xs) + cfg.OPENING_REACH + 1, max(ys) + cfg.OPENING_REACH + 1)
-    dist = chamfer(floor, box, cfg.OPENING_REACH)
+    box = (min(xs) - reach, min(ys) - reach, max(xs) + reach + 1, max(ys) + reach + 1)
+    dist = chamfer(floor, box, reach)
     ends = sorted((t for t in tpix if t in dist), key=lambda t: (dist[t], t[1], t[0]))
-    rock = rock_provinces(cfg)
+    rock = rock_provinces(cfg) if rock is None else set(rock)
     tried = set()
     for end in ends[:OPENING_TRIES]:
         start = min(floor, key=lambda p: (_d2(p, end), p[1], p[0]))
@@ -1074,7 +1177,7 @@ def _opening(ck, floor, owner, src, target, cx, cy, cfg=None):
         tried.add((start, end))
         corridor = _corridor(start, end, cfg.OPENING_WIDTH / 2, lambda p: ck(*p) in rock and p not in owner)
         touched = {ck(x + dx, y + dy) for x, y in corridor for dx, dy in N4}
-        if target in touched and not (touched - rock - {target, 0}) and _joins(corridor, start):
+        if target in touched and not (touched - rock - {target, 0} - set(ok)) and _joins(corridor, start):
             return start, end, corridor
     return None, None, None
 

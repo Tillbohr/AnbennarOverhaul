@@ -266,6 +266,82 @@ class OptionTests(unittest.TestCase):
         self.assertIn((24, 6), floor)
 
 
+def cave_and_vale():
+    """A cave county (EU4 1, province 100, x 0..9) beside a two-barony surface county (EU4 2, provinces 200 and 201,
+    x 10..19), rows 0..9: (counties, provinces, owner)."""
+    cave = sorted(((x, y) for x in range(10) for y in range(10)), key=lambda p: (p[1], p[0]))
+    vale = [sorted(((x, y) for x in range(10 + 5 * i, 15 + 5 * i) for y in range(10)), key=lambda p: (p[1], p[0]))
+            for i in range(2)]
+    counties = [sl.County("c_cave", 1, "Cave", "cave_area", "cavern", [100]),
+                sl.County("c_vale", 2, "Vale", "vale_area", "surface", [200, 201])]
+    provinces = {100: sl.Province(100, (1, 1, 1), "c_cave", 0, cave, (5, 5)),
+                 200: sl.Province(200, (2, 2, 2), "c_vale", 0, vale[0], (12, 5)),
+                 201: sl.Province(201, (3, 3, 3), "c_vale", 1, vale[1], (17, 5))}
+    owner = {p: pid for pid, prov in provinces.items() for p in prov.pixels}
+    return counties, provinces, owner
+
+
+def linked_cave(gap):
+    """Rock 9 with a cave floor (EU4 1, province 100) at x 0..4 and an earlier region's province 50 at x 5 + gap ..
+    34 + gap, rows 0..19: (ck, counties, provinces, owner)."""
+    floor = sorted(((x, y) for x in range(5) for y in range(20)), key=lambda p: (p[1], p[0]))
+
+    def ck(x, y):
+        if not (0 <= x < 200 and 0 <= y < 20):
+            return 0
+        return 50 if 5 + gap <= x < 35 + gap else 9
+    counties = [sl.County("c_cave", 1, "Cave", "cave_area", "dwarven_road", [100])]
+    provinces = {100: sl.Province(100, (1, 1, 1), "c_cave", 0, floor, (2, 10))}
+    return ck, counties, provinces, {p: 100 for p in floor}
+
+
+class ConnectionTests(unittest.TestCase):
+    """Vale mouths, EU4 adjacencies.csv tunnel links and NO_LINK_PAIRS."""
+
+    @unittest.skipUnless(Path("C:/Program Files (x86)/Steam/steamapps/workshop/content/236850/1385440355").is_dir(),
+                         "needs EU4 Anbennar")
+    def test_eu4_adjacencies_reads_dwarovrod_tunnel(self):
+        pairs = sl.eu4_adjacencies(Path("C:/Program Files (x86)/Steam/steamapps/workshop/content/236850/1385440355"))
+        self.assertIn((2884, 2885), pairs)
+        self.assertIn((2885, 2884), pairs)
+
+    def test_mouth_between_cave_and_surface(self):
+        counties, provinces, owner = cave_and_vale()
+        mouths = sl.mouths(counties, provinces, owner, option_cfg())
+        self.assertEqual(len(mouths), 1)
+        m = mouths[0]
+        self.assertEqual((m.county, m.target), ("c_cave", 200))  # the surface county's capital barony
+        self.assertEqual(provinces[owner[m.mouth]].county, "c_vale")
+        self.assertEqual(owner[m.start], 100)
+        self.assertEqual(abs(m.mouth[0] - m.start[0]) + abs(m.mouth[1] - m.start[1]), 1)
+        self.assertTrue(m.pixels)
+        self.assertTrue(all(owner[p] == 100 and math.dist(p, m.mouth) <= 10 for p in m.pixels))
+
+    def test_link_within_reach(self):
+        ck, counties, provinces, owner = linked_cave(40)
+        cfg = option_cfg(LINK_REACH=60, LINK_CUT_THROUGH=(), NO_LINK_PAIRS=set())
+        notes = []
+        links = sl.adjacency_links(ck, counties, provinces, owner, {(1, 7), (7, 1)}, {7: {50}}, 9, cfg, notes)
+        self.assertEqual([(l.county, l.target) for l in links], [("c_cave", 50)])
+        self.assertTrue(all(owner[p] == 100 for p in links[0].pixels))
+        self.assertTrue(any(ck(x + 1, y) == 50 for x, y in links[0].pixels))
+
+    def test_link_beyond_reach_stops(self):
+        ck, counties, provinces, owner = linked_cave(80)
+        cfg = option_cfg(LINK_REACH=60, LINK_CUT_THROUGH=(), NO_LINK_PAIRS=set())
+        with self.assertRaisesRegex(GeneratorError, "c_cave"):
+            sl.adjacency_links(ck, counties, provinces, owner, {(1, 7)}, {7: {50}}, 9, cfg, [])
+
+    def test_no_link_pairs_drops_opening(self):
+        counties, provinces, owner = cave_and_vale()
+        self.assertEqual(sl.mouths(counties, provinces, owner, option_cfg(NO_LINK_PAIRS={(2, 1)})), [])
+        ck, counties, provinces, owner = linked_cave(80)  # out of reach, but dropped before it is tried
+        cfg = option_cfg(LINK_REACH=60, LINK_CUT_THROUGH=(), NO_LINK_PAIRS={(1, 7)})
+        self.assertEqual(sl.adjacency_links(ck, counties, provinces, owner, {(1, 7)}, {7: {50}}, 9, cfg, []), [])
+        self.assertTrue(sl.dropped_pair(cfg, 7, 1))
+        self.assertFalse(sl.dropped_pair(option_cfg(), 1, 7))  # no NO_LINK_PAIRS: nothing dropped
+
+
 LOCATORS = """\ufeffgame_object_locator={
 \tname="buildings"
 \tinstances={
