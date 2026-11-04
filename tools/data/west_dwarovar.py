@@ -85,3 +85,86 @@ KINGDOMS = {
 # Province ids (from Segbandal's last + 1) are numbered area by area in this order. Keep it fixed: reordering renumbers
 # every West Dwarovar province, so a kingdom change only touches KINGDOMS.
 AREA_ORDER = tuple(a for _, areas in KINGDOMS.values() for a in areas)
+
+# --- titles, people and arms (tools/build_west_dwarovar.py) ------------------------------------------------------------
+GENERATOR = "tools/build_west_dwarovar.py"  # named in the generated files' header
+DATA_FILE = "tools/data/west_dwarovar.py"
+EMPIRE = ("e_west_dwarovar", "West Dwarovar")
+EMPIRE_CAPITAL = "c_amldihr"
+EMPIRE_COLOUR = (60, 40, 80)  # Amldihr's EU4 purple (I01); e_serpentreach is bronze, e_middle_dwarovar blue
+# Anbennar's k_khugdihr (de jure e_castanor) moves in by history; its new duchies are defined in PARKING_KINGDOM
+# (inside e_west_dwarovar, so every title has a full chain at load) and moved to it on 1.1.1. The parking kingdom ends
+# with no de jure land and no holder.
+EXISTING_KINGDOMS = ("k_khugdihr",)
+PARKING_KINGDOM = "k_aov_west_dwarovar_parking"
+PARKING_NAME = "West Dwarovar Unsorted"
+PARKING_COLOUR = (90, 90, 90)
+KINGDOM_CAPITALS = {
+    "k_khugdihr": "c_khugdihr", "k_haraz_orldhum": "c_haraz_orldhum", "k_mithradhum": "c_mithradhum",
+    "k_er_natvir": "c_er_natvir", "k_verkal_kozenad": "c_verkal_kozenad", "k_hul_jorkad": "c_hul_jorkad",
+    "k_orlazam_az_dihr": "c_orlazam_az_dihr", "k_dur_vazhatun": "c_dur_vazhatun", "k_amldihr": "c_amldihr",
+}
+# CK3 has none of the holds' EU4 cultures (kronium, platinum, mithril, dagrite, opal, lead, ramsteel, sapphire
+# dwarves): silver_dwarvish (EU4's dwarves of the fallen west) stands in until a cultures spec. Khugdihr stays the
+# darkscale kobolds' land Anbennar makes it.
+KINGDOM_CULTURES = {k: "silver_dwarvish" for k in KINGDOMS}
+KINGDOM_CULTURES["k_khugdihr"] = "darkscale"
+# Kingdoms left to kobolds: kingdom -> (culture, faith) of their new baronies; no rulers, no characters.
+KOBOLD_KINGDOMS = {"k_khugdihr": ("darkscale", "nimrithani")}
+CHARACTER_PREFIX = "aov_wd"  # aov_wd_<duchy>_1 (the elder), _2 (his son); aov_wd_emperor_*
+DYNASTY_PREFIX = ("aov_wd_dynasty_", "dynn_aov_wd_")
+DYNASTY_NAMES = {}
+REGION_NAME = "world_west_dwarovar"
+# Vale counties (type "surface") by barony position: castle, city, church.
+SURFACE_HOLDINGS = ["castle_holding", "city_holding", "church_holding"]
+HOLDINGS = {**HOLDINGS, "surface": SURFACE_HOLDINGS}
+# kingdom -> (EU4 tag, map colour, arms background: the flag's most common pixel). Map colours are the EU4 countries'
+# (spec §3); k_khugdihr keeps Anbennar's map colour and only takes I07's flag. Flags converted once into
+# gfx/coat_of_arms/textured_emblems/aov_<kingdom key without k_>.dds (python -I tools/eu4_import.py convert
+# gfx/flags/<tag>.tga <dds> --upscale2x --mips).
+KINGDOM_ARMS = {
+    "k_khugdihr": ("I07", (149, 131, 101), (128, 106, 76)),
+    "k_haraz_orldhum": ("I08", (74, 80, 97), (255, 255, 255)),
+    "k_mithradhum": ("I05", (81, 231, 213), (181, 181, 189)),
+    "k_er_natvir": ("I06", (147, 191, 155), (32, 32, 32)),
+    "k_verkal_kozenad": ("I09", (255, 228, 216), (8, 53, 29)),
+    "k_hul_jorkad": ("I10", (160, 114, 158), (79, 79, 79)),
+    "k_orlazam_az_dihr": ("I04", (74, 111, 121), (178, 169, 154)),
+    "k_dur_vazhatun": ("I03", (0, 25, 119), (39, 36, 95)),
+    "k_amldihr": ("I01", (60, 40, 80), (53, 66, 109)),
+}
+# Arms of the other new duchies (as Serpentreach's): one dwarven charge from the area's EU4 lore, generic game and
+# Anbennar emblems only. area -> charges, each (colored emblem, (x, y), (scale x, scale y)).
+_CENTRE = ((0.5, 0.5), (0.65, 0.65))
+DUCHY_CHARGES = {area: ((f"{charge}.dds",) + _CENTRE,) for area, charge in (
+    ("dwarovrod_1_3_area", "ce_anb_bridge_two_arch"),  # the Dwarovrod's first stretch
+    ("fallen_asra_area", "ce_swords_crossed"),
+    ("snotslair_area", "ce_bat"),
+    ("dwarovrod_4_6_area", "ce_wheel"),
+    ("dwarfbreak_area", "ce_india_small_dagger"),
+    ("dark_depths_area", "ce_wyvern"),
+    ("chainlink_mines_area", "ce_chains"),
+    ("dwarovrod_7_9_area", "ce_anb_bridge_one_arch"),
+    ("dwarovrod_10_12_area", "ce_pagan_wheel"),
+    ("riftway_area", "ce_india_small_arched_hill"),
+    ("railyard_exchange_area", "ce_anb_waterwheel"),
+    ("dagrite_depths_area", "ce_anb_crystal"),
+    ("goblins_bypass_area", "ce_portcullis"),
+    ("skulkers_lair_area", "ce_snake"),
+    ("dwarovrod_15_17_area", "ce_anb_bridge_three_arch"),
+    ("zokkorna_caverns_area", "ce_wyvern_rising"),
+    ("travelers_refuge_area", "ce_anb_lamp"),
+    ("westnest_area", "ce_african_snake"),
+    ("eastnest_area", "ce_snake_fylfot"),
+    ("azmak_area", "ce_anb_skull"),
+    ("dwarovrod_21_24_area", "ce_key"),
+    ("dagrinrod_4_6_area", "ce_anb_aramari_horseshoe"),
+    ("dagrinrod_7_9_area", "ce_bull_horn"),
+    ("broken_dagger_pass_area", "ce_india_small_dagger_02"),
+    ("old_dagrinrod_area", "ce_ram_horn"),
+    ("dagrinrod_13_15_area", "ce_tower"),
+    ("royal_terrace_area", "ce_crown"),
+    ("common_terrace_area", "ce_sheep"),
+    ("assembly_terrace_area", "ce_bell"),
+    ("castle_hill_area", "ce_castle"),
+)}

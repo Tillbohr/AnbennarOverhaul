@@ -204,5 +204,138 @@ class MapTests(unittest.TestCase):
         self.assertEqual(stale, [], "stale: rerun python -I tools/build_serpentreach.py")
 
 
+KHUGDIHR_TITLES = ("k_khugdihr", "d_khugdihr", "c_khugdihr", "c_khugscave", "c_outerkhugscave", "c_dwarovrod1")
+PARKED = ("d_dwarovrod_1_3", "d_fallen_asra", "d_snotslair")
+
+
+@unittest.skipUnless(HAVE_GAME_DATA, "needs EU4 Anbennar and Anbennar CK3")
+class TitleTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        import build_segbandal as bsb
+        import build_west_dwarovar as bwd
+        import eu4_import as eu4i
+        cls.bsb, cls.bwd = bsb, bwd
+        (_, _, cls.lay), _ = layouts()
+        cls.files = bwd.build_from_layout(ANBENNAR, cls.lay, EU4)
+        cls.titles = cls.files[bwd.TITLES].decode("utf-8-sig")
+        cls.history = cls.files[bwd.TITLE_HISTORY].decode("utf-8-sig")
+        cls.provinces = cls.files[bwd.PROVINCE_HISTORY].decode("utf-8-sig")
+        cls.areas = eu4i.province_areas(EU4)
+        cls.anbennar_titles = titles_text()
+
+    def de_jure(self):
+        """Every title's de jure parent after our titles and history apply over Anbennar's."""
+        parents = self.bsb.title_parents(self.anbennar_titles)
+        parents.update(self.bsb.title_parents(self.titles))
+        for key, liege in re.findall(r"(?m)^(\w+) = \{\n\t1\.1\.1 = \{ de_jure_liege = (\w+) \}", self.history):
+            parents[key] = liege
+        return parents
+
+    def duchy_of_area(self, area):
+        return "d_" + sl.slug(self.lay.area_names[area])
+
+    def test_every_title_has_a_full_chain_at_load(self):
+        parents = self.bsb.title_parents(self.titles)
+        tiers = "cdke"
+        for key, parent in parents.items():
+            if key.startswith("e_"):
+                self.assertIsNone(parent, key)
+            else:
+                self.assertIsNotNone(parent, f"{key} has no parent in landed titles")
+                self.assertEqual(tiers.index(parent[0]), tiers.index(key[0]) + 1, f"{key} under {parent}")
+        self.assertEqual(parents[data.PARKING_KINGDOM], data.EMPIRE[0])
+        self.assertEqual({k for k, p in parents.items() if p == data.PARKING_KINGDOM}, set(PARKED))
+        self.assertFalse(set(parents) & set(self.bsb.title_parents(self.anbennar_titles)))
+
+    def test_de_jure_matches_areas(self):
+        parents = self.de_jure()
+        for c in self.lay.counties:
+            self.assertEqual(parents[c.key], self.duchy_of_area(c.area), c.key)
+        for eu4_id, county in data.EXISTING.items():
+            self.assertEqual(parents[county], self.duchy_of_area(self.areas[eu4_id]), county)
+        for kkey, (_, kareas) in data.KINGDOMS.items():
+            for area in kareas:
+                self.assertEqual(parents[self.duchy_of_area(area)], kkey, area)
+            self.assertEqual(parents[kkey], data.EMPIRE[0], kkey)
+        self.assertEqual(parents["k_khugdihr"], "e_west_dwarovar")
+        self.assertEqual({k for k, p in parents.items() if p == data.PARKING_KINGDOM}, set())  # parking ends empty
+        self.assertNotRegex(self.history, rf"(?m)^{data.PARKING_KINGDOM} = ")
+
+    def test_duchies_list_capital_first(self):
+        for _, duchy, body in re.findall(r"(?ms)^(\t*)(d_\w+) = \{\n(.*?)^\1\}", self.titles):
+            counties = re.findall(r"(?m)^\t*(c_\w+) = \{", body)
+            self.assertEqual(counties[0], re.search(r"capital = (c_\w+)", body).group(1), duchy)
+        for kkey, ckey in data.KINGDOM_CAPITALS.items():
+            if kkey != "k_khugdihr":
+                self.assertRegex(self.titles, rf"\n\t\td_\w+ = \{{\n\t\t\tcolor = \{{[^}}]*\}}\n\t\t\tcapital = {ckey}\n")
+
+    def test_holders(self):
+        self.assertIn("k_amldihr = {\n\t860.1.1 = { holder = aov_wd_emperor_1 }", self.history)
+        self.assertIn("d_amldihr = {\n\t860.1.1 = { holder = aov_wd_emperor_1 }", self.history)
+        self.assertIn("e_west_dwarovar = {\n\t860.1.1 = { holder = aov_wd_emperor_1 }", self.history)
+        for kkey, ckey in data.KINGDOM_CAPITALS.items():
+            if kkey in ("k_khugdihr", "k_amldihr"):
+                continue
+            duchy = self.duchy_of_area(data.KINGDOMS[kkey][1][0])
+            self.assertIn(f"{kkey} = {{\n\t860.1.1 = {{ holder = aov_wd_{duchy[2:]}_1 liege = e_west_dwarovar }}",
+                          self.history)
+        khugdihr = set(KHUGDIHR_TITLES) | set(PARKED)
+        khugdihr |= {c.key for c in self.lay.counties if self.duchy_of_area(c.area) in PARKED}
+        for key in khugdihr:
+            block = re.search(rf"(?ms)^{key} = \{{\n.*?^\}}", self.history)
+            if block:
+                self.assertNotIn("holder", block.group(0), key)
+        self.assertNotIn("aov_wd_dwarovrod_1_3", self.files[self.bwd.CHARACTERS].decode("utf-8-sig"))
+
+    def test_khugdihr_untouched(self):
+        anbennar = sl.county_provinces(self.anbennar_titles)
+        for county in data.EXISTING.values():
+            for pid in anbennar[county]:
+                self.assertNotRegex(self.provinces, rf"(?m)^{pid} = \{{", county)
+        parked = [c for c in self.lay.counties if self.duchy_of_area(c.area) in PARKED]
+        self.assertTrue(parked)
+        for c in parked:
+            for pid in c.baronies:
+                self.assertRegex(self.provinces, rf"(?m)^{pid} = \{{\t# .*\n\tculture = darkscale\n\treligion = nimrithani\n")
+        for key in KHUGDIHR_TITLES:
+            self.assertNotRegex(self.titles, rf"(?m)^\t*{key} = \{{", key)
+
+    def test_khugdihr_holder_appears_stops(self):
+        history = self.bsb._read_history(ANBENNAR) + "\nc_khugscave = {\n\t1000.1.1 = { holder = 42 }\n}\n"
+        with self.assertRaisesRegex(GeneratorError, "c_khugscave"):
+            self.bwd.check_khugdihr(self.anbennar_titles, history)
+        self.bwd.check_khugdihr(self.anbennar_titles, self.bsb._read_history(ANBENNAR))
+        extra = self.anbennar_titles.replace("\t\t\tc_khugscave = {", "\t\t\tc_newcave = {\n\t\t\t}\n\t\t\tc_khugscave = {", 1)
+        with self.assertRaisesRegex(GeneratorError, "c_newcave"):
+            self.bwd.check_khugdihr(extra, self.bsb._read_history(ANBENNAR))
+
+    def test_vale_terrain_and_holdings(self):
+        terrain = self.files[self.bwd.TERRAIN].decode("utf-8-sig")
+        for c in self.lay.counties:
+            want = data.SURFACE_TERRAIN[c.key] if c.type == "surface" else c.type
+            for pid in c.baronies:
+                self.assertIn(f"\n{pid}={want}\n", terrain + "\n")
+            if c.type == "surface":
+                for pid, holding in zip(c.baronies, data.SURFACE_HOLDINGS):
+                    self.assertRegex(self.provinces, rf"(?m)^{pid} = \{{\t# .*\n\tculture = silver_dwarvish\n"
+                                                     rf"\treligion = ancestor_worship\n\tholding = {holding}\n")
+
+    def test_every_new_key_has_loc(self):
+        loc = self.files[self.bwd.LOC].decode("utf-8-sig")
+        for key in re.findall(r"(?m)^\t*([ekdcb]_\w+) = \{", self.titles):
+            self.assertRegex(loc, rf"(?m)^ {key}:0 \"")
+        self.assertIn(' e_west_dwarovar:0 "West Dwarovar"', loc)
+        self.assertIn(' d_dwarovrod_1_3:0 "Dwarovrod 1-3"', loc)
+        self.assertNotIn(" k_khugdihr:0", loc)
+        regions = self.files[self.bwd.REGIONS].decode("utf-8-sig")
+        self.assertIn("world_west_dwarovar = {\n\tkingdoms = { " + " ".join(data.KINGDOMS) + " }", regions)
+
+    def test_outputs_current(self):
+        stale = [rel for rel, content in self.files.items()
+                 if not (self.bwd.SUBMOD / rel).is_file() or (self.bwd.SUBMOD / rel).read_bytes() != content]
+        self.assertEqual(stale, [], "stale: rerun python -I tools/build_west_dwarovar.py")
+
+
 if __name__ == "__main__":
     unittest.main()

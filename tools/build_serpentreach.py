@@ -199,9 +199,12 @@ class Realm:
         return self.cfg.KINGDOM_CULTURES[self.kingdom_of[dkey]]
 
     def duchy_capital(self, dkey: str) -> str:
+        """The duchy's kingdom capital (KINGDOM_CAPITALS) when it holds it, else its first hold, else its first
+        county."""
         counties = self.duchies[dkey][1]
+        capitals = [c for c in counties if c in self.cfg.KINGDOM_CAPITALS.values()]
         holds = [c for c in counties if self.county[c].type in ("dwarven_hold", "dwarven_hold_surface")]
-        return (holds or counties)[0]
+        return (capitals or holds or counties)[0]
 
     def barony_keys(self, ckey: str) -> list:
         n = len(self.county[ckey].baronies)
