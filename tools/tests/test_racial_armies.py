@@ -4,6 +4,7 @@
 """
 
 import re
+import struct
 import sys
 import unittest
 from pathlib import Path
@@ -195,6 +196,11 @@ ROSTER = {  # key -> role, men, damage, toughness (spec roster tables)
     "aov_lens_crossbows": ("crossbow", 80, 70, 32), "aov_lightflare_guard": ("heavy_infantry", 50, 75, 150),
     "aov_flint_forest_rangers": ("skirmishers", 80, 32, 45), "aov_orcrend_guard": ("pikemen", 80, 42, 62),
     "aov_basalt_berserkers": ("heavy_infantry", 50, 130, 55),
+    # West Dwarovar clans (docs/superpowers/plans/2026-11-05-west-dwarovar-dwarf-cultures.md)
+    "aov_amldavhad_guard": ("heavy_infantry", 50, 90, 130), "aov_platinum_warsuits": ("heavy_infantry", 25, 180, 320),
+    "aov_mithril_warchanters": ("heavy_infantry", 50, 105, 105), "aov_mercenary_guards": ("heavy_infantry", 50, 90, 95),
+    "aov_railway_robbers": ("skirmishers", 80, 38, 38), "aov_sewer_wardens": ("skirmishers", 80, 30, 52),
+    "aov_fourfoot_chargers": ("heavy_cavalry", 50, 150, 90),
 }
 
 
@@ -293,6 +299,13 @@ EXPECTED.update({  # spec dwarf tables
     "aov_flint_forest_rangers": ("skirmishers", 80, 32, 45, 0, 0, "PARAM:aov_unlock_maa_flint_forest_rangers"),
     "aov_orcrend_guard": ("pikemen", 80, 42, 62, 0, 0, "PARAM:aov_unlock_maa_orcrend_guard"),
     "aov_basalt_berserkers": ("heavy_infantry", 50, 130, 55, 0, 0, "PARAM:aov_unlock_maa_basalt_berserkers"),
+    "aov_amldavhad_guard": ("heavy_infantry", 50, 90, 130, 0, 0, "PARAM:aov_unlock_maa_amldavhad_guard"),
+    "aov_platinum_warsuits": ("heavy_infantry", 25, 180, 320, 0, 0, "PARAM:aov_unlock_maa_platinum_warsuits"),
+    "aov_mithril_warchanters": ("heavy_infantry", 50, 105, 105, 0, 0, "PARAM:aov_unlock_maa_mithril_warchanters"),
+    "aov_mercenary_guards": ("heavy_infantry", 50, 90, 95, 0, 0, "PARAM:aov_unlock_maa_mercenary_guards"),
+    "aov_railway_robbers": ("skirmishers", 80, 38, 38, 40, 0, "PARAM:aov_unlock_maa_railway_robbers"),
+    "aov_sewer_wardens": ("skirmishers", 80, 30, 52, 0, 0, "PARAM:aov_unlock_maa_sewer_wardens"),
+    "aov_fourfoot_chargers": ("heavy_cavalry", 50, 150, 90, 40, 0, "PARAM:aov_unlock_maa_fourfoot_chargers"),
 })
 DWARF_TERRAIN = {"hills": 0.3, "mountains": 0.45, "desert_mountains": 0.45, "dwarven_hold": 0.65,
                  "dwarven_hold_surface": 0.65, "cavern": 0.65, "dwarven_road": 0.65, "forest": -0.15}
@@ -300,7 +313,10 @@ DWARF_EXTRA = {"aov_grudgebearers": {"plains": 0.2, "farmlands": 0.2},
                "aov_uthojdihr_marines": {"wetlands": 0.5, "floodplains": 0.5, "oasis": 0.5},
                "aov_seg_band_gnollhunters": {"desert": 0.5, "drylands": 0.5, "desert_mountains": 0.5},
                "aov_golden_gate_guard": {"dwarven_hold": 1.0}, "aov_copper_road_wardens": {"dwarven_road": 1.0},
-               "aov_lightflare_guard": {"cavern": 1.0}, "aov_flint_forest_rangers": {"forest": 0.5, "taiga": 0.5}}
+               "aov_lightflare_guard": {"cavern": 1.0}, "aov_flint_forest_rangers": {"forest": 0.5, "taiga": 0.5},
+               "aov_mercenary_guards": {"dwarven_road": 1.0}, "aov_railway_robbers": {"dwarven_road": 1.0},
+               "aov_sewer_wardens": {"dwarven_hold": 1.0, "cavern": 1.0},
+               "aov_fourfoot_chargers": {"plains": 0.5, "farmlands": 0.5}}
 TERRAIN_SETS.update({key: dict(DWARF_TERRAIN, **DWARF_EXTRA.get(key, {}))
                      for key, row in EXPECTED.items() if row[6] == DWARF or row[6].startswith("PARAM:aov_")})
 CHANGED_FIELDS = ("stack", "damage", "toughness", "pursuit", "screen", "icon")
@@ -395,11 +411,46 @@ class MaaTests(unittest.TestCase):
 
     def test_clan_unit_art_copied(self):
         for key in ("aov_lens_crossbows", "aov_lightflare_guard", "aov_flint_forest_rangers", "aov_orcrend_guard",
-                    "aov_basalt_berserkers"):
+                    "aov_basalt_berserkers", "aov_amldavhad_guard", "aov_platinum_warsuits", "aov_mithril_warchanters",
+                    "aov_mercenary_guards", "aov_railway_robbers", "aov_sewer_wardens", "aov_fourfoot_chargers"):
             icon = field(self.unit(key), "icon")
             for folder in ("gfx/interface/icons/regimenttypes", "gfx/interface/illustrations/men_at_arms_big",
                            "gfx/interface/illustrations/men_at_arms_small"):
                 self.assertTrue((SUBMOD / folder / f"{icon}.dds").is_file(), f"{key}: {folder}/{icon}.dds")
+
+    WEST_DWAROVAR_ICONS = {"aov_amldavhad_guard": "aov_amldavhad_guard",
+                           "aov_platinum_warsuits": "aov_rie_undying_of_khazad_dum",
+                           "aov_mithril_warchanters": "aov_mithril_warchanters",
+                           "aov_mercenary_guards": "aov_rie_blacklock_mercenaries",
+                           "aov_railway_robbers": "aov_railway_robbers",
+                           "aov_sewer_wardens": "aov_rie_blacklock_engineers",
+                           "aov_fourfoot_chargers": "aov_rie_longbeard_cavalry"}
+
+    def test_west_dwarovar_icons_are_120_square(self):
+        for key, icon in self.WEST_DWAROVAR_ICONS.items():
+            self.assertEqual(field(self.unit(key), "icon"), icon, key)
+            data = (SUBMOD / "gfx/interface/icons/regimenttypes" / f"{icon}.dds").read_bytes()
+            self.assertEqual(struct.unpack_from("<II", data, 12), (120, 120), icon)
+
+    def test_west_dwarovar_art_sources(self):
+        """The game finds pictures by icon name, so pin what each copied file came from."""
+        anbennar = ANBENNAR / "gfx/interface/icons/regimenttypes"
+        ours = SUBMOD / "gfx/interface"
+        for icon, source in (("aov_mithril_warchanters", "paladins"), ("aov_railway_robbers", "rogues")):
+            self.assertEqual((ours / "icons/regimenttypes" / f"{icon}.dds").read_bytes(),
+                             (anbennar / f"{source}.dds").read_bytes(), icon)
+        rie = Path("C:/Program Files (x86)/Steam/steamapps/workshop/content/1158310/2291024373/gfx/interface")
+        if not rie.is_dir():
+            self.skipTest("Realms in Exile is not installed")
+        for icon, source in (("aov_amldavhad_guard", "blacklock_heavy_infantry"),
+                             ("aov_mithril_warchanters", "stiffbeard_heavy_infantry"),
+                             ("aov_railway_robbers", "blacklock_skirmishers"),
+                             ("aov_rie_undying_of_khazad_dum", "undying_of_khazad_dum"),
+                             ("aov_rie_blacklock_mercenaries", "blacklock_mercenaries"),
+                             ("aov_rie_blacklock_engineers", "Blacklock_engineers")):
+            for folder in ("men_at_arms_big", "men_at_arms_small"):
+                self.assertEqual((ours / "illustrations" / folder / f"{icon}.dds").read_bytes(),
+                                 (rie / "illustrations" / folder / f"{source}.dds").read_bytes(), f"{icon} {folder}")
 
     def test_engineer_corps_siege(self):
         body = self.unit("aov_silverforge_engineers")

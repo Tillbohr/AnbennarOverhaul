@@ -540,6 +540,250 @@ aov_basalt_berserkers = {
 	icon = aov_rie_firebeard_heavy_infantry
 	allowed_in_hired_troops = no
 }
+
+### West Dwarovar clans (docs/superpowers/plans/2026-11-05-west-dwarovar-dwarf-cultures.md)
+
+# Amldihr: the clanless Shields of the Assembly.
+aov_amldavhad_guard = {
+	type = heavy_infantry
+
+	damage = 90
+	toughness = 130
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		pikemen = 1
+	}
+	terrain_bonus = {
+		hills = { damage = 27 toughness = 39 }
+		mountains = { damage = 41 toughness = 59 }
+		desert_mountains = { damage = 41 toughness = 59 }
+		dwarven_hold = { damage = 59 toughness = 85 }
+		dwarven_hold_surface = { damage = 59 toughness = 85 }
+		cavern = { damage = 59 toughness = 85 }
+		dwarven_road = { damage = 59 toughness = 85 }
+		forest = { damage = -14 toughness = -20 }
+	}
+	can_recruit = {
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_amldavhad_guard } # the clan tradition (racial-traditions.md)
+	}
+	buy_cost = { gold = aov_amldavhad_guard_recruitment_cost }
+	low_maintenance_cost = { gold = aov_amldavhad_guard_low_maint_cost }
+	high_maintenance_cost = { gold = aov_amldavhad_guard_high_maint_cost }
+	stack = 50
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = aov_amldavhad_guard
+	allowed_in_hired_troops = no
+}
+
+# Haraz Orldhûm: few suits, so a small and very strong regiment.
+aov_platinum_warsuits = {
+	type = heavy_infantry
+
+	damage = 180
+	toughness = 320
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		pikemen = 1
+	}
+	terrain_bonus = {
+		hills = { damage = 54 toughness = 96 }
+		mountains = { damage = 81 toughness = 144 }
+		desert_mountains = { damage = 81 toughness = 144 }
+		dwarven_hold = { damage = 117 toughness = 208 }
+		dwarven_hold_surface = { damage = 117 toughness = 208 }
+		cavern = { damage = 117 toughness = 208 }
+		dwarven_road = { damage = 117 toughness = 208 }
+		forest = { damage = -27 toughness = -48 }
+	}
+	can_recruit = {
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_platinum_warsuits } # the clan tradition (racial-traditions.md)
+	}
+	buy_cost = { gold = aov_platinum_warsuits_recruitment_cost }
+	low_maintenance_cost = { gold = aov_platinum_warsuits_low_maint_cost }
+	high_maintenance_cost = { gold = aov_platinum_warsuits_high_maint_cost }
+	stack = 25
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = aov_rie_undying_of_khazad_dum
+	allowed_in_hired_troops = no
+}
+
+# Mithradhûm: they call an ancestor's name with every blow.
+aov_mithril_warchanters = {
+	type = heavy_infantry
+
+	damage = 105
+	toughness = 105
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		pikemen = 1
+	}
+	terrain_bonus = {
+		hills = { damage = 32 toughness = 32 }
+		mountains = { damage = 47 toughness = 47 }
+		desert_mountains = { damage = 47 toughness = 47 }
+		dwarven_hold = { damage = 68 toughness = 68 }
+		dwarven_hold_surface = { damage = 68 toughness = 68 }
+		cavern = { damage = 68 toughness = 68 }
+		dwarven_road = { damage = 68 toughness = 68 }
+		forest = { damage = -16 toughness = -16 }
+	}
+	can_recruit = {
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_mithril_warchanters } # the clan tradition (racial-traditions.md)
+	}
+	buy_cost = { gold = aov_mithril_warchanters_recruitment_cost }
+	low_maintenance_cost = { gold = aov_mithril_warchanters_low_maint_cost }
+	high_maintenance_cost = { gold = aov_mithril_warchanters_high_maint_cost }
+	stack = 50
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = aov_mithril_warchanters
+	allowed_in_hired_troops = no
+}
+
+# Er-Natvir: hired to guard the rails, at their best on the roads.
+aov_mercenary_guards = {
+	type = heavy_infantry
+
+	damage = 90
+	toughness = 95
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		pikemen = 1
+	}
+	terrain_bonus = {
+		hills = { damage = 27 toughness = 29 }
+		mountains = { damage = 41 toughness = 43 }
+		desert_mountains = { damage = 41 toughness = 43 }
+		dwarven_hold = { damage = 59 toughness = 62 }
+		dwarven_hold_surface = { damage = 59 toughness = 62 }
+		cavern = { damage = 59 toughness = 62 }
+		dwarven_road = { damage = 90 toughness = 95 }
+		forest = { damage = -14 toughness = -14 }
+	}
+	can_recruit = {
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_mercenary_guards } # the clan tradition (racial-traditions.md)
+	}
+	buy_cost = { gold = aov_mercenary_guards_recruitment_cost }
+	low_maintenance_cost = { gold = aov_mercenary_guards_low_maint_cost }
+	high_maintenance_cost = { gold = aov_mercenary_guards_high_maint_cost }
+	stack = 50
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = aov_rie_blacklock_mercenaries
+	allowed_in_hired_troops = no
+}
+
+# Verkal Kozenad: bandits of the rail lines, at their best on the roads.
+aov_railway_robbers = {
+	type = skirmishers
+
+	damage = 38
+	toughness = 38
+	pursuit = 40
+	screen = 0
+
+	counters = {
+		heavy_infantry = 1
+	}
+	terrain_bonus = {
+		hills = { damage = 11 toughness = 11 }
+		mountains = { damage = 17 toughness = 17 }
+		desert_mountains = { damage = 17 toughness = 17 }
+		dwarven_hold = { damage = 25 toughness = 25 }
+		dwarven_hold_surface = { damage = 25 toughness = 25 }
+		cavern = { damage = 25 toughness = 25 }
+		dwarven_road = { damage = 38 toughness = 38 }
+		forest = { damage = -6 toughness = -6 }
+	}
+	can_recruit = {
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_railway_robbers } # the clan tradition (racial-traditions.md)
+	}
+	buy_cost = { gold = aov_railway_robbers_recruitment_cost }
+	low_maintenance_cost = { gold = aov_railway_robbers_low_maint_cost }
+	high_maintenance_cost = { gold = aov_railway_robbers_high_maint_cost }
+	stack = 80
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = aov_railway_robbers
+	allowed_in_hired_troops = no
+}
+
+# Hul-Jorkad: raised in the tunnels under the hold.
+aov_sewer_wardens = {
+	type = skirmishers
+
+	damage = 30
+	toughness = 52
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		heavy_infantry = 1
+	}
+	terrain_bonus = {
+		hills = { damage = 9 toughness = 16 }
+		mountains = { damage = 14 toughness = 23 }
+		desert_mountains = { damage = 14 toughness = 23 }
+		dwarven_hold = { damage = 30 toughness = 52 }
+		dwarven_hold_surface = { damage = 20 toughness = 34 }
+		cavern = { damage = 30 toughness = 52 }
+		dwarven_road = { damage = 20 toughness = 34 }
+		forest = { damage = -5 toughness = -8 }
+	}
+	can_recruit = {
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_sewer_wardens } # the clan tradition (racial-traditions.md)
+	}
+	buy_cost = { gold = aov_sewer_wardens_recruitment_cost }
+	low_maintenance_cost = { gold = aov_sewer_wardens_low_maint_cost }
+	high_maintenance_cost = { gold = aov_sewer_wardens_high_maint_cost }
+	stack = 80
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = aov_rie_blacklock_engineers
+	allowed_in_hired_troops = no
+}
+
+# Orlazam-az-dihr: heavy ram cavalry, at their best in open country.
+aov_fourfoot_chargers = {
+	type = heavy_cavalry
+
+	damage = 150
+	toughness = 90
+	pursuit = 40
+	screen = 0
+
+	counters = {
+		archers = 1
+		gunpowder = 1
+	}
+	terrain_bonus = {
+		hills = { damage = 45 toughness = 27 }
+		mountains = { damage = 68 toughness = 41 }
+		desert_mountains = { damage = 68 toughness = 41 }
+		dwarven_hold = { damage = 98 toughness = 59 }
+		dwarven_hold_surface = { damage = 98 toughness = 59 }
+		cavern = { damage = 98 toughness = 59 }
+		dwarven_road = { damage = 98 toughness = 59 }
+		forest = { damage = -23 toughness = -14 }
+		plains = { damage = 75 toughness = 45 }
+		farmlands = { damage = 75 toughness = 45 }
+	}
+	can_recruit = {
+		valid_for_maa_trigger = { PARAMETER = aov_unlock_maa_fourfoot_chargers } # the clan tradition (racial-traditions.md)
+	}
+	buy_cost = { gold = aov_fourfoot_chargers_recruitment_cost }
+	low_maintenance_cost = { gold = aov_fourfoot_chargers_low_maint_cost }
+	high_maintenance_cost = { gold = aov_fourfoot_chargers_high_maint_cost }
+	stack = 50
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = aov_rie_longbeard_cavalry
+	allowed_in_hired_troops = no
+}
+
 # Silver dwarves: the best siege unit (spec). Shaped like Anbennar's dwarven_bombards.
 aov_silverforge_engineers = {
 	type = siege_weapon
