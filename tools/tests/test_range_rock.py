@@ -8,6 +8,7 @@ from types import SimpleNamespace
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # python -I does not add the tools folder
 import dwarven_mountains as dm  # noqa: E402
 import range_rock as rr  # noqa: E402
+import shared_trace  # noqa: E402
 
 EU4 = Path("C:/Program Files (x86)/Steam/steamapps/workshop/content/236850/1385440355")
 ANBENNAR = Path(__file__).resolve().parents[2].parent / "anbennar-ck3-dev-master"
@@ -142,10 +143,8 @@ class BuildTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         import build_serpentreach as bs
-        import serpentreach_layout as sl
         cls.bs = bs
-        cls.ck3 = sl.load_ck3(ANBENNAR)
-        cls.lays = bs.layouts(ANBENNAR, EU4, cls.ck3)
+        cls.lays, cls.ck3 = shared_trace.layouts()
         cls.rocks = bs.range_rocks(ANBENNAR, cls.lays, cls.ck3)
         cls.serp_rock, cls.wd_rock = cls.rocks
         cls.floors = {p for lay in cls.lays for p in lay.owner}

@@ -194,8 +194,8 @@ class MapTests(unittest.TestCase):
     def setUpClass(cls):
         import build_serpentreach as bs
         cls.bs = bs
-        cls.lays, _ = shared_trace.layouts()
-        cls.files = bs.build_from_layout(ANBENNAR, cls.lays)
+        cls.lays, ck3 = shared_trace.layouts()
+        cls.files = bs.build_from_layout(ANBENNAR, cls.lays, ck3)
 
     def test_map_files_hold_every_region(self):
         serp, seg, wd = self.lays

@@ -480,9 +480,9 @@ class BuildTests(unittest.TestCase):
     def setUpClass(cls):
         import build_serpentreach as bs
         cls.bs = bs
-        cls.lays, _ = shared_trace.layouts()
+        cls.lays, ck3 = shared_trace.layouts()
         cls.lay = cls.lays[0]
-        cls.files = bs.build_from_layout(ANBENNAR, cls.lays)
+        cls.files = bs.build_from_layout(ANBENNAR, cls.lays, ck3)
 
     def test_generated_files_match_the_mod(self):
         stale = [rel for rel, content in self.files.items()

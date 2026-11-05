@@ -180,7 +180,7 @@ class CodeFileTests(unittest.TestCase):
     def test_the_tracer_and_its_regions_are_inputs(self):
         names = {p.relative_to(st.TOOLS).as_posix() for p in st.code_files()}
         self.assertLessEqual({"build_serpentreach.py", "serpentreach_layout.py", "dwarven_mountains.py",
-                              "eu4_import.py", "pngio.py", "terrain_fill.py", "heightpack.py",
+                              "eu4_import.py", "pngio.py", "range_rock.py", "terrain_fill.py", "heightpack.py",
                               "data/serpentreach.py", "data/segbandal.py", "data/west_dwarovar.py",
                               "data/map_graphics.py"}, names)
 
