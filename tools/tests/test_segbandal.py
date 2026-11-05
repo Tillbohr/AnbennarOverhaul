@@ -202,7 +202,8 @@ class MapTests(unittest.TestCase):
         rows = self.files["map_data/definition.csv"].decode("utf-8", errors="replace").splitlines()
         anbennar = (ANBENNAR / "map_data/definition.csv").read_bytes().decode("utf-8", errors="replace").splitlines()
         new = [int(r.split(";")[0]) for r in rows[len(anbennar):]]
-        self.assertEqual(new, sorted(serp.provinces) + sorted(seg.provinces) + sorted(wd.provinces))
+        rock_ids = [max(wd.provinces) + 1, max(wd.provinces) + 2]  # the range rock (test_range_rock.py)
+        self.assertEqual(new, sorted(serp.provinces) + sorted(seg.provinces) + sorted(wd.provinces) + rock_ids)
         colours = [tuple(r.split(";")[1:4]) for r in rows if r[:1].isdigit() and r.split(";")[0] != "0"]
         self.assertEqual(len(colours), len(set(colours)))
         for name in self.bs.LOCATOR_FILES:

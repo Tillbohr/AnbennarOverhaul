@@ -122,6 +122,6 @@ From;To;Type;Through;start_x;start_y;stop_x;stop_y;Comment
 2764;2763;sea;1322;-1;-1;-1;-1;Sokkiðmyrr-Eynreki
 997;2764;sea;1322;-1;-1;-1;-1;Eikodr-Sokkiðmyrr
 ;;;;;;;;
-7282;7040;sea;2426;3070;2215;3064;2135;Gorrod 2-Gorrod 1
-7295;7068;sea;2426;3386;1948;3453;1852;Dwarovrod 24-Dwarovrod 25
+7282;7040;sea;7385;3070;2215;3064;2135;Gorrod 2-Gorrod 1
+7295;7068;sea;7385;3386;1948;3453;1852;Dwarovrod 24-Dwarovrod 25
 -1;-1;;-1;-1;-1;-1;-1;

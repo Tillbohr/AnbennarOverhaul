@@ -188,7 +188,8 @@ class MapTests(unittest.TestCase):
         rows = self.files["map_data/definition.csv"].decode("utf-8", errors="replace").splitlines()
         anbennar = (ANBENNAR / "map_data/definition.csv").read_bytes().decode("utf-8", errors="replace").splitlines()
         new = [int(r.split(";")[0]) for r in rows[len(anbennar):]]
-        self.assertEqual(new, sorted(serp.provinces) + sorted(seg.provinces) + sorted(wd.provinces))
+        rock_ids = [max(wd.provinces) + 1, max(wd.provinces) + 2]  # the range rock (test_range_rock.py)
+        self.assertEqual(new, sorted(serp.provinces) + sorted(seg.provinces) + sorted(wd.provinces) + rock_ids)
         colours = [tuple(r.split(";")[1:4]) for r in rows if r[:1].isdigit() and r.split(";")[0] != "0"]
         self.assertEqual(len(colours), len(set(colours)))
         for name in self.bs.LOCATOR_FILES:
@@ -208,7 +209,7 @@ class MapTests(unittest.TestCase):
             ours = [r for r in rows if r[0].isdigit() and int(r[0]) in ca.baronies]
             self.assertEqual(len(ours), 1, a)
             self.assertIn(int(ours[0][1]), cb.baronies)
-            self.assertEqual(ours[0][2:4], ["sea", "2426"])
+            self.assertEqual(ours[0][2:4], ["sea", str(max(wd.provinces) + 2)])  # West Dwarovar's range rock
             text = text.replace(";".join(ours[0]).encode() + b"\r\n", b"")
         self.assertEqual(text, (ANBENNAR / "map_data/adjacencies.csv").read_bytes())
 

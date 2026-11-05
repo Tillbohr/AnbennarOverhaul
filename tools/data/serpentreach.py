@@ -20,6 +20,17 @@ OPENING_REACH = 160  # px: farthest a corridor may run from the floor to its tar
 # Impassable provinces an opening corridor may also cut through (their pixels on the corridor become the barony's):
 # Deepwoods Wasteland, between Verkal Skomdihr and the Deepwoods.
 OPENING_CUT_THROUGH = (1782,)
+# Range rock (tools/range_rock.py): each range's rock is cut out of 2426 as its own impassable province, small enough
+# for the game to fill with the realm's map colour, as Segbandal's 2608. (name in definition.csv, index in `layouts`).
+RANGE_ROCKS = (("Serpentreach Wasteland", 0), ("West Dwarovar Wasteland", 2))
+ROCK_SOURCE = SOURCE_PROVINCE
+ROCK_AVOID = (2608,)  # rock nearer Segbandal's stays 2426: West Dwarovar's must not run along Segbandal's northern rim
+ROCK_MIN_HEIGHT = 48  # 0-255: the range's foot; the Big Waste's plain is ~21
+ROCK_ALWAYS = 16  # px around a floor that are rock at any height (the tunnels crossing the plain)
+ROCK_REACH = 450  # px from a floor; wide enough to end on the range's own foot
+ROCK_MAX_Y = 3496  # the surround fog's edge (SURROUND_BOX, mask row 300)
+ROCK_SLIVER = 10  # waste narrower than 2 * this against a range joins it
+ROCK_ISLAND_GAP = 30  # px of land a ridge may be cut off by and still join (the ridge around Dwaroval)
 PIECE_FLOOR_CLEARANCE = 3  # px: a gate's mountain pieces closer than this to the floor are dropped
 MIN_BARONY_PX = 60  # a county needs at least this many floor px per barony
 MIN_FRAGMENT_PX = 0  # floor pieces cut off from their county's main piece are dropped (reported)
