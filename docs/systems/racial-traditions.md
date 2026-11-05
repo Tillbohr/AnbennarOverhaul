@@ -4,13 +4,14 @@ Every racial culture that had no tradition of its own gets one, written from EU4
 culture group, and most of them unlock a men-at-arms unit. Three human cultures with two traditions or fewer get an
 existing tradition. The Sundancer Legions are back for sun elves, without their levy penalty. The five Serpentreach
 hold cultures (`serpentreach.md`) get a clan tradition and unit each, and marble dwarves get a second tradition for
-their homeland.
+their homeland. The eight West Dwarovar hold cultures (`west-dwarovar.md`) get a clan tradition each, and all but
+Sapphire a unit.
 
 ## Files
 
 | File | Generator | Why |
 |---|---|---|
-| `common/culture/traditions/aov_racial_traditions.txt`, `common/men_at_arms_types/aov_regional_maa_types.txt`, `common/script_values/aov_regional_maa_values.txt`, `common/scripted_effects/aov_racial_traditions_effects.txt`, `localization/english/aov_racial_traditions_l_english.yml` | `python -I tools/build_racial_traditions.py` (data `tools/data/racial_traditions.py`) | 40 traditions, 17 units with their costs, the game-start grants and their text, from one data file. It errors on an unknown culture or tradition, a unit no tradition unlocks, a missing icon, or a Realms in Exile word in our text. Rerun `build_racial_levies.py` afterwards if a tradition gains a levy modifier. |
+| `common/culture/traditions/aov_racial_traditions.txt`, `common/men_at_arms_types/aov_regional_maa_types.txt`, `common/script_values/aov_regional_maa_values.txt`, `common/scripted_effects/aov_racial_traditions_effects.txt`, `localization/english/aov_racial_traditions_l_english.yml` | `python -I tools/build_racial_traditions.py` (data `tools/data/racial_traditions.py`) | 48 traditions, 17 units with their costs, the game-start grants and their text, from one data file. It errors on an unknown culture or tradition, a unit no tradition unlocks, a missing icon, or a Realms in Exile word in our text. Rerun `build_racial_levies.py` afterwards if a tradition gains a levy modifier. |
 
 Hand-written:
 - `common/on_action/aov_racial_traditions_on_actions.txt`: the `on_game_start` hook.
@@ -74,6 +75,14 @@ Hand-written:
 | The Warding Gate | flint_dwarvish | defender advantage +4, enemy hostile scheme success −10, hostile county attrition +10% | Flint Forest Rangers |
 | The Hold Where Love Lives | garnet_dwarvish | fertility +15%, spouse opinion +15; counties: opinion +5 | Orcrend Guard |
 | Hearts of Fire | basalt_dwarvish | prowess +2, heavy infantry damage +15%, hostile county attrition +10% | Basalt Berserkers |
+| The High Assembly | kronium_dwarvish | vassal limit +5, vassal opinion +5, county control growth +15% | Amldavhad Guard |
+| Reign of the Highlord | platinum_dwarvish | prestige +10%, hostile county attrition +15%, heavy infantry toughness +10% | Platinum Warsuits |
+| The Vow of Honesty | mithril_dwarvish | enemy hostile scheme success −10, piety +10%, heavy infantry damage +10% | Warchanters of Mithradhûm |
+| All Roads Lead to Er-Natvir | dagrite_dwarvish | domain tax +10%, supply duration +25%, cultural acceptance +25% (culture) | Er-Natvir Mercenary Guards |
+| Spymasters of Aul-Dwarov | opal_dwarvish | hostile scheme success +10, Intrigue +1, loot +25% | Opal Railway Robbers |
+| Dwarven Plumbing | lead_dwarvish | health +0.25, garrison +20%; counties: development +10% | Hul-Jorkad Sewer Wardens |
+| Stewards of the Vale | ramsteel_dwarvish | heavy cavalry damage +15%, movement speed +15%, plains and farmlands advantage +3 | Fourfoot Chargers |
+| The Setzunkhûpa | sapphire_dwarvish | cultural fascination +20%, Learning +1, learning lifestyle experience +15% | |
 | Scavengers and Raiders | sandfang_gnoll | raid speed +25%, loot +25%, supply duration +20% | Hyena Riders |
 | A Tight Leash | fieldstalker_gnoll | dread gain +20%, county control growth +15%, hostile county attrition +10% | Fieldstalker Packs |
 | Apple Lords | ciderfoot_halfling | health +0.2, stress gain −10%, domain tax +10% | Orchard Bowmen |

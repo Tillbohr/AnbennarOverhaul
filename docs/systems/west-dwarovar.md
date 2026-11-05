@@ -50,9 +50,21 @@ I09 and I10 (`python -I tools/eu4_import.py convert gfx/flags/<tag>.tga gfx/coat
   counties of `k_khugdihr` are `darkscale`/`nimrithani` and unheld (`KOBOLD_KINGDOMS`). `check_khugdihr` stops the
   build when Anbennar gives any `k_khugdihr` title a holder or adds a county under it.
 - **People:** per duchy of the eight dwarven kingdoms an elder (from 860.1.1, dies 1000-1010) and his son (`aov_wd_*`,
-  dynasties `aov_wd_dynasty_*` named `az-<duchy>`); the emperor holds Amldihr; each other kingdom is held by its hold
-  duke under him. `silver_dwarvish` stands in for the holds' EU4 cultures (kronium, platinum, mithril, dagrite, opal,
-  lead, ramsteel, sapphire), `ancestor_worship`. Vale counties: castle, city, church; terrain from `SURFACE_TERRAIN`.
+  dynasties `aov_wd_dynasty_*`); the emperor holds Amldihr; each other kingdom is held by its hold duke under him.
+  Every county, character and dynasty of a kingdom has its hold's culture (`KINGDOM_CULTURES`), `ancestor_worship`.
+  Dynasties are named `az-<duchy>`, except ten that take EU4 names with no prefix (`DYNASTY_NAMES`): Strongbellow,
+  Goldbeard and Goblinslayer (Mithril), Ironhelm (Dagrite), Forktongue, Ringbeard and Kezdori (Opal), Leadpipe (Lead),
+  Fourfoot (Ramsteel) and Melmarn (Sapphire). Vale counties: castle, city, church; terrain from `SURFACE_TERRAIN`.
+- **Cultures** (hand-written; spec `docs/superpowers/specs/2026-11-05-west-dwarovar-dwarf-cultures-design.md`, plan
+  `docs/superpowers/plans/2026-11-05-west-dwarovar-dwarf-cultures.md`): one EU4 culture per hold, `kronium_dwarvish`
+  (Amldihr, with the Vale's terraces), `platinum_dwarvish` (Haraz Orldhûm), `mithril_dwarvish` (Mithradhûm),
+  `dagrite_dwarvish` (Er-Natvir), `opal_dwarvish` (Verkal Kozenad), `lead_dwarvish` (Hul-Jorkad), `ramsteel_dwarvish`
+  (Orlazam-az-dihr) and `sapphire_dwarvish` (Dûr-Vazhatun) in `common/culture/cultures/aov_west_dwarovar_cultures.txt`,
+  speaking `language_west_dwarovar_dwarven` (`common/culture/pillars/aov_west_dwarovar_language.txt`); loc in
+  `aov_west_dwarovar_cultures_l_english.yml`. Ethos and base traditions come from each hold's EU4 ideas. Every other
+  field is `stone_dwarvish`'s from the overhaul's generated `anb_dwarf.txt`, including the RiE gfx keys, which the
+  generators only add to Anbennar's files. `test_west_dwarovar_cultures.py` keeps the two equal, so copy any change by
+  hand. Each culture's own tradition and clan unit are in `racial-traditions.md` and `racial-armies.md`.
 - **Arms:** each kingdom, its hold duchy and hold county carry its EU4 flag on the flag's commonest colour
   (`KINGDOM_ARMS`; `k_khugdihr`, `d_khugdihr`, `c_khugdihr` I07's, Anbennar scripting none; the build stops if it
   ever does); the 30 other new duchies a charge from their lore (`DUCHY_CHARGES`).
@@ -80,3 +92,17 @@ I09 and I10 (`python -I tools/eu4_import.py convert gfx/flags/<tag>.tga gfx/coat
   7. Armies cross Gorrod 2 <-> Gorrod 1 and Dwarovrod 24 <-> 25 (a dashed crossing line on the map), and the AI
      paths through them in a war; the error log has no adjacency error for `7282;7040` or `7295;7068`. The game
      reads map files at launch only: relaunch after rebuilding them.
+  8. Cultures: each of the eight kingdoms' counties and characters shows its culture at both bookmarks; Khugdihr is
+     still kobold.
+  9. The culture window shows West Dwarovar Dwarven, the base traditions and the own tradition. Platinum shows Artisans
+     with Royal Court.
+  10. Legalistic, Caravaneers, Culinary Art and Sorcerous Metallurgy show and apply on their cultures, though their
+      `is_shown` or `can_pick` would not offer them there.
+  11. Each of the seven clan units is in its own culture's recruit list only, with its icon and pictures. Sapphire has
+      none. Warchanters show silver armour; Railway Robbers show spears and shields. Check how the Anbennar icons
+      (`paladins`, `rogues`) look beside the RiE ones.
+  12. Dynasty names read as listed, with no "az-"; other duchies keep it.
+  13. Every modifier shows in its tradition tooltip with no blank line, above all `heavy_cavalry_damage_mult`,
+      `plains_advantage`, `farmlands_advantage` and `monthly_learning_lifestyle_xp_gain_mult`, new to this system.
+  14. Holdings, clothes and armies use the RiE dwarf assets. In the culture map mode, check Platinum beside Moorman's
+      near-identical colour, and Sapphire beside Serpentreach's Cobalt.
