@@ -1,0 +1,217 @@
+﻿# Anbennar Overhaul: West Dwarovar cultures (docs/systems/west-dwarovar.md). One culture per West Dwarovar hold, from EU4
+# Anbennar's dwarven group. Traditions follow each hold's EU4 ideas; the racial traditions system grants each its own
+# clan tradition at game start (docs/systems/racial-traditions.md).
+# Every field but color, ethos, language and traditions is stone_dwarvish's from the overhaul's anb_dwarf.txt, so the
+# RiE buildings, clothes and armies show for them too (tools/tests/test_west_dwarovar_cultures.py keeps them equal).
+
+kronium_dwarvish = { # Amldihr, the Gates of the Assembly
+	color = { 60 40 80 }
+
+	ethos = ethos_bureaucratic
+	heritage = heritage_dwarven
+	language = language_west_dwarovar_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_legalistic # Rule with a Kronium Glove
+		tradition_agrarian # Serpent's Vale Terraced Farming
+	}
+
+	name_list = name_list_dwarven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
+
+	ethnicities = {
+		100 = dwarf
+	}
+}
+
+platinum_dwarvish = { # Haraz Orldhûm, the Hold of the Highlords
+	color = { 74 80 97 }
+
+	ethos = ethos_courtly
+	heritage = heritage_dwarven
+	language = language_west_dwarovar_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_ruling_caste # Vainglorious Nobility, the Hold of Platinum Chains
+		tradition_castle_keepers # Turrets of Orldhûm
+	}
+	dlc_tradition = {
+		trait = tradition_artisans # Platinum Jewellers
+		requires_dlc_flag = royal_court
+	}
+
+	name_list = name_list_dwarven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
+
+	ethnicities = {
+		100 = dwarf
+	}
+}
+
+mithril_dwarvish = { # Mithradhûm, the Truehold
+	color = { 81 231 213 }
+
+	ethos = ethos_stoic
+	heritage = heritage_dwarven
+	language = language_west_dwarovar_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_loyal_soldiers # High King's Favorite
+		tradition_storytellers # The Warchanters' folklorists, a thousand generations remembered
+	}
+
+	name_list = name_list_dwarven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
+
+	ethnicities = {
+		100 = dwarf
+	}
+}
+
+dagrite_dwarvish = { # Er-Natvir, the rail hub of the Serpentspine
+	color = { 147 191 155 }
+
+	ethos = ethos_egalitarian
+	heritage = heritage_dwarven
+	language = language_west_dwarovar_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_caravaneers # Dwarovstapola
+		tradition_swords_for_hire # Mercenary Guards
+	}
+
+	name_list = name_list_dwarven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
+
+	ethnicities = {
+		100 = dwarf
+	}
+}
+
+opal_dwarvish = { # Verkal Kozenad, the people of the Grand Scheme
+	color = { 255 228 216 }
+
+	ethos = ethos_spiritual
+	heritage = heritage_dwarven
+	language = language_west_dwarovar_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_battlefield_looters # Opal Railway Robbers
+		tradition_life_is_just_a_joke # Bad Luck!
+	}
+
+	name_list = name_list_dwarven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
+
+	ethnicities = {
+		100 = dwarf
+	}
+}
+
+lead_dwarvish = { # Hul-Jorkad, the Junction
+	color = { 160 114 158 }
+
+	ethos = ethos_communal
+	heritage = heritage_dwarven
+	language = language_west_dwarovar_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_city_keepers # The Junction's facilities
+		tradition_sorcerous_metallurgy # A Tale of Lead and Gold
+	}
+
+	name_list = name_list_dwarven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
+
+	ethnicities = {
+		100 = dwarf
+	}
+}
+
+ramsteel_dwarvish = { # Orlazam-az-dihr, the Ramlords
+	color = { 74 111 121 }
+
+	ethos = ethos_bellicose
+	heritage = heritage_dwarven
+	language = language_west_dwarovar_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_horse_breeder # Originator of Ram Cavalry
+		tradition_culinary_art # Legend of the Slow-roasted Orlazam Lamb
+	}
+
+	name_list = name_list_dwarven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
+
+	ethnicities = {
+		100 = dwarf
+	}
+}
+
+sapphire_dwarvish = { # Dûr-Vazhatun, the Home of the Dark Sky Watchers
+	color = { 0 25 119 }
+
+	ethos = ethos_bureaucratic
+	heritage = heritage_dwarven
+	language = language_west_dwarovar_dwarven
+	martial_custom = martial_custom_male_only
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_philosopher_culture # Scholars of the Dwarovar
+		tradition_astute_diplomats # Sapphire Wit
+	}
+
+	name_list = name_list_dwarven
+
+	coa_gfx = { western_coa_gfx }
+	building_gfx = { aov_dwarven_building_gfx western_building_gfx } # Anbennar Overhaul
+	clothing_gfx = { aov_dwarf_clothing_gfx northern_clothing_gfx western_clothing_gfx } # Anbennar Overhaul
+	unit_gfx = { aov_dwarven_unit_gfx dwarven_unit_gfx } # Anbennar Overhaul
+
+	ethnicities = {
+		100 = dwarf
+	}
+}
