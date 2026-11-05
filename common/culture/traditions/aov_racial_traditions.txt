@@ -1196,7 +1196,7 @@ tradition_reign_of_the_highlord = {
 	}
 	character_modifier = {
 		monthly_prestige_gain_mult = 0.1
-		hostile_county_attrition = 0.15
+		defender_advantage = 4
 		heavy_infantry_toughness_mult = 0.1
 	}
 	cost = {

@@ -76,7 +76,7 @@ Hand-written:
 | The Hold Where Love Lives | garnet_dwarvish | fertility +15%, spouse opinion +15; counties: opinion +5 | Orcrend Guard |
 | Hearts of Fire | basalt_dwarvish | prowess +2, heavy infantry damage +15%, hostile county attrition +10% | Basalt Berserkers |
 | The High Assembly | kronium_dwarvish | vassal limit +5, vassal opinion +5, county control growth +15% | Amldavhad Guard |
-| Reign of the Highlord | platinum_dwarvish | prestige +10%, hostile county attrition +15%, heavy infantry toughness +10% | Platinum Warsuits |
+| Reign of the Highlord | platinum_dwarvish | prestige +10%, defender advantage +4, heavy infantry toughness +10% | Platinum Warsuits |
 | The Vow of Honesty | mithril_dwarvish | enemy hostile scheme success −10, piety +10%, heavy infantry damage +10% | Warchanters of Mithradhûm |
 | All Roads Lead to Er-Natvir | dagrite_dwarvish | domain tax +10%, supply duration +25%, cultural acceptance +25% (culture) | Er-Natvir Mercenary Guards |
 | Spymasters of Aul-Dwarov | opal_dwarvish | hostile scheme success +10, Intrigue +1, loot +25% | Opal Railway Robbers |

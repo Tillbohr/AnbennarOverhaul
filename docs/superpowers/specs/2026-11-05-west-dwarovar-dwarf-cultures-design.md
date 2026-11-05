@@ -86,7 +86,7 @@ game-start grants. Each costs the base prestige with no ethos penalty, like the 
 | Key | Name | Category | Layers | Character | County / culture | Parameter |
 |---|---|---|---|---|---|---|
 | `tradition_high_assembly` | The High Assembly | realm | diplo, western, council | `vassal_limit` 5, `vassal_opinion` 5, `monthly_county_control_growth_factor` 0.15 | | `aov_unlock_maa_amldavhad_guard` |
-| `tradition_reign_of_the_highlord` | Reign of the Highlord | realm | steward, western, crown | `monthly_prestige_gain_mult` 0.1, `hostile_county_attrition` 0.15, `heavy_infantry_toughness_mult` 0.1 | | `aov_unlock_maa_platinum_warsuits` |
+| `tradition_reign_of_the_highlord` | Reign of the Highlord | realm | steward, western, crown | `monthly_prestige_gain_mult` 0.1, `defender_advantage` 4, `heavy_infantry_toughness_mult` 0.1 | | `aov_unlock_maa_platinum_warsuits` |
 | `tradition_vow_of_honesty` | The Vow of Honesty | societal | martial, western, warrior_monk | `enemy_hostile_scheme_success_chance_add` -10, `monthly_piety_gain_mult` 0.1, `heavy_infantry_damage_mult` 0.1 | | `aov_unlock_maa_mithril_warchanters` |
 | `tradition_all_roads_lead_to_er_natvir` | All Roads Lead to Er-Natvir | realm | steward, western, city | `domain_tax_mult` 0.1, `supply_duration` 0.25 | culture: `cultural_acceptance_gain_mult` 0.25 | `aov_unlock_maa_mercenary_guards` |
 | `tradition_spymasters_of_aul_dwarov` | Spymasters of Aul-Dwarov | societal | intrigue, western, palace_politics | `owned_hostile_scheme_success_chance_add` 10, `intrigue` 1, `max_loot_mult` 0.25 | | `aov_unlock_maa_railway_robbers` |

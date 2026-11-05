@@ -55,7 +55,7 @@
  aov_platinum_warsuits:0 "Platinum Warsuits"
  aov_platinum_warsuits_flavor:0 "#F The noblest warriors of Haraz Orldhûm wear armour said to lend them the strength of the mountain itself. Few suits were ever made, for Orldhûm keeps the secret even from its own rivals at home.#!"
  aov_mithril_warchanters:0 "Warchanters of Mithradhûm"
- aov_mithril_warchanters_flavor:0 "#F Mithril soldiers chant the names of their forerunners on the march and call one with every blow of hammer or axe. Their foes find it unnerving, and the chanters find little left to fear.#!"
+ aov_mithril_warchanters_flavor:0 "#F On the march, Mithril soldiers sing out the dead of their line, and each blow lands on an ancestor's name. Foes find it unnerving, and the singers find little left to fear.#!"
  aov_mercenary_guards:0 "Er-Natvir Mercenary Guards"
  aov_mercenary_guards_flavor:0 "#F The merchants of Er-Natvir pay better than its kings, so hired clans guard their caravans and rail yards. Their loyalty lasts as long as the coin, which is long enough to stop most Opal bandits.#!"
  aov_railway_robbers:0 "Opal Railway Robbers"
@@ -63,7 +63,7 @@
  aov_sewer_wardens:0 "Hul-Jorkad Sewer Wardens"
  aov_sewer_wardens_flavor:0 "#F Every soldier of Hul-Jorkad comes of age in the tunnels beneath the hold, clearing skitterer webs, goblin squatters and worse from the pipes. After the sewers, few battlefields trouble them.#!"
  aov_fourfoot_chargers:0 "Fourfoot Chargers"
- aov_fourfoot_chargers_flavor:0 "#F The Ramlords of Orlazam still tell of Tednur Fourfoot, whose charge broke one of the largest goblin hordes in history. His heirs ride the same great rams and hit just as hard.#!"
+ aov_fourfoot_chargers_flavor:0 "#F The Ramlords of Orlazam still tell of Tednur Fourfoot, whose charge ground a vast goblin horde into the tunnel floor. His heirs ride the same great rams and hit just as hard.#!"
  # Debug battles
  aov_racial_armies_debug_army:0 "Test Army"
  # Heritage parameters (heritage tooltip)

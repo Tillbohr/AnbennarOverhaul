@@ -280,8 +280,7 @@ TRADITIONS = {
         name="Reign of the Highlord", heritage="heritage_dwarven", gate=culture("platinum_dwarvish"), category="realm",
         layers=("steward", "western", "crown.dds"),
         eu4="Haraz Orldhûm ideas: Reign of the Highlord, Turrets of Orldhûm, Vainglorious Nobility",
-        character={"monthly_prestige_gain_mult": 0.1, "hostile_county_attrition": 0.15,
-                   "heavy_infantry_toughness_mult": 0.1},
+        character={"monthly_prestige_gain_mult": 0.1, "defender_advantage": 4, "heavy_infantry_toughness_mult": 0.1},
         parameters=("aov_unlock_maa_platinum_warsuits",),
         desc="The Highlord of Haraz Orldhûm was called first among the kings of the Dwarovar, and its nobles have "
              "never let anyone forget it. Outposts carved into the surrounding caverns make every approach to the "
@@ -293,34 +292,32 @@ TRADITIONS = {
         character={"enemy_hostile_scheme_success_chance_add": -10, "monthly_piety_gain_mult": 0.1,
                    "heavy_infantry_damage_mult": 0.1},
         parameters=("aov_unlock_maa_mithril_warchanters",),
-        desc="Every Mithril child swears a lifelong vow of honesty on coming of age, and few ever break it. The "
-             "Goblinslayer Academy teaches the same honour to its soldiers, who carry the names of their ancestors "
-             "into battle."),
+        desc="Mithril children become adults by swearing never to lie, and few ever break that oath. The Goblinslayer "
+             "Academy teaches the same honour to its soldiers, who carry the names of their ancestors into battle."),
     "tradition_all_roads_lead_to_er_natvir": dict(
         name="All Roads Lead to Er-Natvir", heritage="heritage_dwarven", gate=culture("dagrite_dwarvish"),
         category="realm", layers=("steward", "western", "city.dds"),
         eu4="Er-Natvir ideas: All Roads Lead to Er-Natvir, Melting Pot, Immaculate Supply Lines",
         character={"domain_tax_mult": 0.1, "supply_duration": 0.25}, culture={"cultural_acceptance_gain_mult": 0.25},
         parameters=("aov_unlock_maa_mercenary_guards",),
-        desc="The rail hub of Er-Natvir connects every hold in the Serpentspine, and its markets drew in dwarves of "
-             "every culture. Its quartermasters are said never to have missed a delivery by so much as a grain of "
-             "wheat."),
+        desc="Every rail line under the Serpentspine meets at Er-Natvir, and its markets drew in dwarves of every "
+             "culture. Its quartermasters are said never to have missed a delivery by so much as a grain of wheat."),
     "tradition_spymasters_of_aul_dwarov": dict(
         name="Spymasters of Aul-Dwarov", heritage="heritage_dwarven", gate=culture("opal_dwarvish"), category="societal",
         layers=("intrigue", "western", "palace_politics.dds"),
         eu4="Verkal Kozenad ideas: Spymasters of Aul-Dwarov, Opal Railway Robbers, Ladies of the Opal Calling",
         character={"owned_hostile_scheme_success_chance_add": 10, "intrigue": 1, "max_loot_mult": 0.25},
         parameters=("aov_unlock_maa_railway_robbers",),
-        desc="Despite their famous bad luck, Opal dwarves held the old empire's posts of intrigue and skullduggery. "
-             "Those who did not spy on the rail lines robbed them instead."),
+        desc="Opal dwarves were famously unlucky, yet the old empire kept trusting them with its spies and secrets. "
+             "Those who did not watch the rail lines robbed them instead."),
     "tradition_dwarven_plumbing": dict(
         name="Dwarven Plumbing", heritage="heritage_dwarven", gate=culture("lead_dwarvish"), category="realm",
         layers=("steward", "western", "garden_architects.dds"),
         eu4="Hul-Jorkad ideas: Dwarven Plumbing, Lead Lined Lives, Life-bearing Lake",
         character={"health": 0.25, "garrison_size": 0.2}, county={"development_growth_factor": 0.1},
         parameters=("aov_unlock_maa_sewer_wardens",),
-        desc="The engineers of Hul-Jorkad cleared millennia of sludge from their pipes and gave the hold the finest "
-             "water in the Serpentspine. The lead that lines those pipes also fills the hold's shot towers."),
+        desc="The engineers of Hul-Jorkad scoured their ancient pipes clean and gave the hold the finest water in the "
+             "Serpentspine. The lead that lines those pipes also fills the hold's shot towers."),
     "tradition_stewards_of_the_vale": dict(
         name="Stewards of the Vale", heritage="heritage_dwarven", gate=culture("ramsteel_dwarvish"), category="combat",
         layers=("martial", "western", "rider.dds"),
