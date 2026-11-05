@@ -98,1375 +98,1375 @@
 }
 
 7155 = {	# Orldhûm Pass
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7156 = {	# Orldhûm Pass Halls
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7157 = {	# Turret Gorge
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7158 = {	# Turret Gorge Halls
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7159 = {	# Haraz Orldhûm
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7160 = {	# Haraz Orldhûm Halls
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7161 = {	# Haraz Orldhûm Deeps
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7162 = {	# Haraz Orldhûm Vaults
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7163 = {	# Haraza Depths
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7164 = {	# Haraza Depths Halls
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7165 = {	# Dwarovrod 4
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7166 = {	# Dwarovrod 5
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7167 = {	# Dwarovrod 6
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7168 = {	# Gurrukur
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7169 = {	# Gurrukur Halls
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7170 = {	# Orcsbreach
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7171 = {	# Orcsbreach Halls
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7172 = {	# Tzem Chasm
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7173 = {	# Tzem Chasm Halls
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7174 = {	# Red Hoard
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7175 = {	# Red Hoard Halls
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7176 = {	# Scavengers' Hovel
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7177 = {	# Scavengers' Hovel Halls
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7178 = {	# Longneck Cave
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7179 = {	# Longneck Cave Halls
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7180 = {	# The Flooded Pit
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7181 = {	# The Flooded Pit Halls
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7182 = {	# Tunnels of Woe
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7183 = {	# Tunnels of Woe Halls
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7184 = {	# Chainquarry
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7185 = {	# Chainquarry Halls
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7186 = {	# Dwarfhope
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7187 = {	# Dwarfhope Halls
-	culture = silver_dwarvish
+	culture = platinum_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7188 = {	# Trueforge Hall
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7189 = {	# Trueforge Hall Halls
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7190 = {	# Valourmount
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7191 = {	# Valourmount Halls
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7192 = {	# Shaft of Begooy
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7193 = {	# Shaft of Begooy Halls
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7194 = {	# Mithradhûm
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7195 = {	# Mithradhûm Halls
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7196 = {	# Mithradhûm Deeps
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7197 = {	# Mithradhûm Vaults
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7198 = {	# Dwarovrod 7
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7199 = {	# Dwarovrod 8
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7200 = {	# Dwarovrod 9
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7201 = {	# Dwarovrod 10
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7202 = {	# Dwarovrod 11
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7203 = {	# Dwarovrod 12
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7204 = {	# Shieldwall Cavern
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7205 = {	# Shieldwall Cavern Halls
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7206 = {	# Lommak Abyss
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7207 = {	# Lommak Abyss Halls
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7208 = {	# Rodhole
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7209 = {	# Rodhole Halls
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7210 = {	# Zhandam Rift
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7211 = {	# Zhandam Rift Halls
-	culture = silver_dwarvish
+	culture = mithril_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7212 = {	# Er-Natvir
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7213 = {	# Er-Natvir Halls
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7214 = {	# Er-Natvir Deeps
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7215 = {	# Er-Natvir Vaults
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7216 = {	# Natvirod 1
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7217 = {	# Dagrinrod 2
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7218 = {	# Dagrinrod 3
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7219 = {	# Dwarovrod 13
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7220 = {	# Dwarovrod 14
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7221 = {	# Dagrinrod 1
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7222 = {	# Natvirod 2
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7223 = {	# Oldhole
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7224 = {	# Oldhole Halls
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7225 = {	# Massive Shaft
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7226 = {	# Massive Shaft Halls
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7227 = {	# Bignick
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7228 = {	# Bignick Halls
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7229 = {	# Goblinsroad
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7230 = {	# Goblinsroad Halls
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7231 = {	# Watcher's Rock
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7232 = {	# Watcher's Rock Halls
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7233 = {	# Cartsfall
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7234 = {	# Cartsfall Halls
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7235 = {	# Den of Jatuz
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7236 = {	# Den of Jatuz Halls
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7237 = {	# Underpassage
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7238 = {	# Underpassage Halls
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7239 = {	# Underlair
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7240 = {	# Underlair Halls
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7241 = {	# Skulker's Tunnel
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7242 = {	# Skulker's Tunnel Halls
-	culture = silver_dwarvish
+	culture = dagrite_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7243 = {	# Robber's Hideaway
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7244 = {	# Robber's Hideaway Halls
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7245 = {	# Verkal Kozenad
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7246 = {	# Verkal Kozenad Halls
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7247 = {	# Verkal Kozenad Deeps
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7248 = {	# Verkal Kozenad Vaults
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7249 = {	# Orgund Breach
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7250 = {	# Orgund Breach Halls
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7251 = {	# Dwarovrod 15
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7252 = {	# Dwarovrod 16
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7253 = {	# Dwarovrod 17
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7254 = {	# Kikkimig Outlet
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7255 = {	# Kikkimig Outlet Halls
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7256 = {	# Endless Chasm
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7257 = {	# Endless Chasm Halls
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7258 = {	# Blackden Rift
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7259 = {	# Blackden Rift Halls
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7260 = {	# Lair of Zokkorna
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7261 = {	# Lair of Zokkorna Halls
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7262 = {	# Opalheights
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7263 = {	# Opalheights Halls
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7264 = {	# Drindr Cave
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7265 = {	# Drindr Cave Halls
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7266 = {	# Traveler's Refuge
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7267 = {	# Traveler's Refuge Halls
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7268 = {	# Skittering Cave
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7269 = {	# Skittering Cave Halls
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7270 = {	# Silken Path
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7271 = {	# Silken Path Halls
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7272 = {	# Yidab's Nest
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7273 = {	# Yidab's Nest Halls
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7274 = {	# Weballey
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7275 = {	# Weballey Halls
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7276 = {	# Spinning Channel
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7277 = {	# Spinning Channel Halls
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7278 = {	# Eastern Reach
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7279 = {	# Eastern Reach Halls
-	culture = silver_dwarvish
+	culture = opal_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7280 = {	# Dwarovrod 18
-	culture = silver_dwarvish
+	culture = lead_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7281 = {	# Dwarovrod 19
-	culture = silver_dwarvish
+	culture = lead_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7282 = {	# Gorrod 2
-	culture = silver_dwarvish
+	culture = lead_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7283 = {	# Hul-Jorkad
-	culture = silver_dwarvish
+	culture = lead_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7284 = {	# Hul-Jorkad Halls
-	culture = silver_dwarvish
+	culture = lead_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7285 = {	# Hul-Jorkad Deeps
-	culture = silver_dwarvish
+	culture = lead_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7286 = {	# Hul-Jorkad Vaults
-	culture = silver_dwarvish
+	culture = lead_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7287 = {	# Dwarovrod 20
-	culture = silver_dwarvish
+	culture = lead_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7288 = {	# Skullgrave Hall
-	culture = silver_dwarvish
+	culture = lead_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7289 = {	# Skullgrave Hall Halls
-	culture = silver_dwarvish
+	culture = lead_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7290 = {	# Azmak Quarry
-	culture = silver_dwarvish
+	culture = lead_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7291 = {	# Azmak Quarry Halls
-	culture = silver_dwarvish
+	culture = lead_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7292 = {	# Dwarovrod 21
-	culture = silver_dwarvish
+	culture = lead_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7293 = {	# Dwarovrod 22
-	culture = silver_dwarvish
+	culture = lead_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7294 = {	# Dwarovrod 23
-	culture = silver_dwarvish
+	culture = lead_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7295 = {	# Dwarovrod 24
-	culture = silver_dwarvish
+	culture = lead_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7296 = {	# Dagrinrod 10
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7297 = {	# Dagrinrod 11
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7298 = {	# Dagrinrod 12
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7299 = {	# Orlazam-az-dihr
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7300 = {	# Orlazam-az-dihr Halls
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7301 = {	# Orlazam-az-dihr Deeps
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7302 = {	# Orlazam-az-dihr Vaults
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7303 = {	# Dagrinrod 4
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7304 = {	# Dagrinrod 5
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7305 = {	# Dagrinrod 6
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7306 = {	# Dagrinrod 7
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7307 = {	# Dagrinrod 8
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7308 = {	# Dagrinrod 9
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7309 = {	# Qelleg Fissure
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7310 = {	# Qelleg Fissure Halls
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7311 = {	# Broken Dagger Pass
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7312 = {	# Broken Dagger Pass Halls
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7313 = {	# Railsright
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7314 = {	# Railsright Halls
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7315 = {	# Pikten Quarry
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7316 = {	# Pikten Quarry Halls
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7317 = {	# Lord's Gorge
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7318 = {	# Lord's Gorge Halls
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7319 = {	# Ramvault
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7320 = {	# Ramvault Halls
-	culture = silver_dwarvish
+	culture = ramsteel_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7321 = {	# Dagrinrod 16
-	culture = silver_dwarvish
+	culture = sapphire_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7322 = {	# Dagrinrod 17
-	culture = silver_dwarvish
+	culture = sapphire_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7323 = {	# Dûr-Vazhatun
-	culture = silver_dwarvish
+	culture = sapphire_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7324 = {	# Dûr-Vazhatun Halls
-	culture = silver_dwarvish
+	culture = sapphire_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7325 = {	# Dûr-Vazhatun Deeps
-	culture = silver_dwarvish
+	culture = sapphire_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7326 = {	# Dûr-Vazhatun Vaults
-	culture = silver_dwarvish
+	culture = sapphire_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7327 = {	# Dagrinrod 13
-	culture = silver_dwarvish
+	culture = sapphire_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7328 = {	# Dagrinrod 14
-	culture = silver_dwarvish
+	culture = sapphire_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7329 = {	# Dagrinrod 15
-	culture = silver_dwarvish
+	culture = sapphire_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7330 = {	# Verkal Vazkron
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7331 = {	# Verkal Vazkron Halls
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7332 = {	# Verkal Vazkron Deeps
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7333 = {	# Verkal Vazkron Vaults
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7334 = {	# Hall of the Ancestors
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7335 = {	# Hall of the Ancestors Halls
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7336 = {	# Hall of the Ancestors Deeps
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7337 = {	# Hall of the Ancestors Vaults
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7338 = {	# Amldihr
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7339 = {	# Amldihr Halls
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7340 = {	# Amldihr Deeps
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7341 = {	# Amldihr Vaults
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7342 = {	# Amlharaz
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7343 = {	# Amlharaz Halls
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7344 = {	# Amlharaz Deeps
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7345 = {	# Amlharaz Vaults
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = none
 }
 
 7346 = {	# Royal Terrace
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7347 = {	# Royal Terrace Halls
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7348 = {	# Royal Terrace Deeps
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7349 = {	# Terraceway
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7350 = {	# Terraceway Halls
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7351 = {	# Terraceway Deeps
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7352 = {	# Porgir's Valley
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7353 = {	# Porgir's Valley Halls
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7354 = {	# Porgir's Valley Deeps
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7355 = {	# Southern Entrance
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7356 = {	# Serpent's Vale
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7357 = {	# Serpent's Vale Halls
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7358 = {	# Serpent's Vale Deeps
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7359 = {	# Common Terrace
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7360 = {	# Common Terrace Halls
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7361 = {	# Common Terrace Deeps
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7362 = {	# Lamb Hills
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7363 = {	# Lamb Hills Halls
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7364 = {	# Lamb Hills Deeps
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7365 = {	# Kingsrock Hill
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7366 = {	# Kingsrock Hill Halls
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7367 = {	# Kingsrock Hill Deeps
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7368 = {	# Kheness Swamp
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7369 = {	# Kheness Swamp Halls
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7370 = {	# Kheness Swamp Deeps
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7371 = {	# Assembly Terrace
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7372 = {	# Assembly Terrace Halls
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7373 = {	# Assembly Terrace Deeps
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7374 = {	# Verkal Hul
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7375 = {	# Verkal Hul Halls
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7376 = {	# Verkal Hul Deeps
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7377 = {	# Northvale
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7378 = {	# Northvale Halls
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7379 = {	# Northvale Deeps
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7380 = {	# Hornriver
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }
 
 7381 = {	# Hornriver Halls
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = city_holding
 }
 
 7382 = {	# Hornriver Deeps
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = church_holding
 }
 
 7383 = {	# Eastern Entrance
-	culture = silver_dwarvish
+	culture = kronium_dwarvish
 	religion = ancestor_worship
 	holding = castle_holding
 }

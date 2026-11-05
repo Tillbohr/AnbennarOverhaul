@@ -104,11 +104,13 @@ KINGDOM_CAPITALS = {
     "k_er_natvir": "c_er_natvir", "k_verkal_kozenad": "c_verkal_kozenad", "k_hul_jorkad": "c_hul_jorkad",
     "k_orlazam_az_dihr": "c_orlazam_az_dihr", "k_dur_vazhatun": "c_dur_vazhatun", "k_amldihr": "c_amldihr",
 }
-# CK3 has none of the holds' EU4 cultures (kronium, platinum, mithril, dagrite, opal, lead, ramsteel, sapphire
-# dwarves): silver_dwarvish (EU4's dwarves of the fallen west) stands in until a cultures spec. Khugdihr stays the
-# darkscale kobolds' land Anbennar makes it.
-KINGDOM_CULTURES = {k: "silver_dwarvish" for k in KINGDOMS}
-KINGDOM_CULTURES["k_khugdihr"] = "darkscale"
+# Each hold's EU4 culture (docs/superpowers/specs/2026-11-05-west-dwarovar-dwarf-cultures-design.md), defined in
+# common/culture/cultures/aov_west_dwarovar_cultures.txt. Khugdihr stays the darkscale kobolds' land Anbennar makes it.
+KINGDOM_CULTURES = {
+    "k_khugdihr": "darkscale", "k_amldihr": "kronium_dwarvish", "k_haraz_orldhum": "platinum_dwarvish",
+    "k_mithradhum": "mithril_dwarvish", "k_er_natvir": "dagrite_dwarvish", "k_verkal_kozenad": "opal_dwarvish",
+    "k_hul_jorkad": "lead_dwarvish", "k_orlazam_az_dihr": "ramsteel_dwarvish", "k_dur_vazhatun": "sapphire_dwarvish",
+}
 # Kingdoms left to kobolds: kingdom -> (culture, faith) of their new baronies; no rulers, no characters.
 KOBOLD_KINGDOMS = {"k_khugdihr": ("darkscale", "nimrithani")}
 # Each new kingdom's hold duchy is named like the kingdom (spec §3); EU4 names the areas otherwise (Orldhûm, The
@@ -116,7 +118,13 @@ KOBOLD_KINGDOMS = {"k_khugdihr": ("darkscale", "nimrithani")}
 HOLD_DUCHIES_NAMED_LIKE_KINGDOM = True
 CHARACTER_PREFIX = "aov_wd"  # aov_wd_<duchy>_1 (the elder), _2 (his son); aov_wd_emperor_*
 DYNASTY_PREFIX = ("aov_wd_dynasty_", "dynn_aov_wd_")
-DYNASTY_NAMES = {}
+# Forktongue and Leadpipe are from EU4's culture dynasty lists; the others are figures in each hold's EU4 idea texts.
+# They show with no "az-" prefix; every other duchy keeps az-<duchy>.
+DYNASTY_NAMES = {
+    "d_mithradhum": "Strongbellow", "d_riftway": "Goldbeard", "d_dwarovrod_7_9": "Goblinslayer",
+    "d_the_railyard": "Ironhelm", "d_stunad_kozenad": "Forktongue", "d_zokkorna_caverns": "Ringbeard",
+    "d_westnest": "Kezdori", "d_jorkad_junction": "Leadpipe", "d_orlazam": "Fourfoot", "d_vazhatun": "Melmarn",
+}
 REGION_NAME = "world_west_dwarovar"
 # Vale counties (type "surface") by barony position: castle, city, church.
 SURFACE_HOLDINGS = ["castle_holding", "city_holding", "church_holding"]
