@@ -13,6 +13,7 @@ import dwarven_mountains as dm  # noqa: E402
 import gate_transplant as gt  # noqa: E402
 import heightpack as hp  # noqa: E402
 import pngio  # noqa: E402
+import shared_trace  # noqa: E402
 from data import map_graphics as data  # noqa: E402
 
 ANB = """# comment
@@ -414,6 +415,13 @@ ROOTS = bmg.Roots.default()
 MOD = Path(__file__).resolve().parents[2]
 INSTALLED = ROOTS.rie.is_dir() and (ROOTS.anbennar / "gfx/map/terrain/materials.settings").is_file()
 _BUILD = []
+_ANALYSIS = []
+
+
+def setUpModule():
+    """The carved regions' layouts come from the shared trace; every file is still rendered for real."""
+    if INSTALLED and ROOTS.eu4.is_dir():
+        shared_trace.seed_map_graphics(bmg, ROOTS)
 
 
 def _impassable():
@@ -437,6 +445,13 @@ def real_build():
         notes = []
         _BUILD.append((bmg.build_all(ROOTS, notes), notes))
     return _BUILD[0]
+
+
+def real_analysis():
+    """bmg._analyse of the installed mods, shared by the tests that look at its parts; read-only."""
+    if not _ANALYSIS:
+        _ANALYSIS.append(bmg._analyse(ROOTS))
+    return _ANALYSIS[0]
 
 
 @unittest.skipUnless(INSTALLED, "RiE and Anbennar are not installed")
@@ -1048,7 +1063,7 @@ class ConeRealTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.pm, cls.water, impassable, cls.dwarven, cls.sites = bmg._analyse(ROOTS)
+        cls.pm, cls.water, impassable, cls.dwarven, cls.sites = real_analysis()
         cls.sr_sites = bmg.serpentreach_sites(ROOTS, (cls.pm, cls.water, impassable))
         cls.sites = cls.sites + cls.sr_sites
         old = hp.Grid.from_png(pngio.read_png((ROOTS.anbennar / "map_data/heightmap.png").read_bytes()))
@@ -1204,7 +1219,7 @@ class ConeRealTests(unittest.TestCase):
 class SeaGateRealTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.pm, cls.water, cls.impassable, cls.dwarven, cls.sites = bmg._analyse(ROOTS)
+        cls.pm, cls.water, cls.impassable, cls.dwarven, cls.sites = real_analysis()
         folder = ROOTS.anbennar
         cls.sea = dm.sea_zone_ids((folder / "map_data/default.map").read_text(encoding="utf-8-sig"))
         cls.titles_text = "\n".join(p.read_text(encoding="utf-8-sig")
@@ -1371,7 +1386,7 @@ class HeightOutputsTests(unittest.TestCase):
         import carved_ranges as cr
         import serpentreach_layout as sl
         _, floor, _, rock, _ = next(r for r in bmg.carved_ranges(ROOTS) if r[0] == "c_seghdihr")
-        pm, _, water, _ = sl.load_ck3(ROOTS.anbennar)
+        pm, _, water, _ = shared_trace.layouts()[1]
         ramp = set(sl.chamfer(list(cr._open_land(pm, floor, rock, water)), (0, 0, pm.width, pm.height),
                               data.CARVE_RAMP))
         self.assertEqual([p for p in seg.owner if p not in ramp and self.new_height.get(*p) not in levels], [])
@@ -1407,7 +1422,7 @@ class HeightOutputsTests(unittest.TestCase):
         self.assertTrue(set(floor) >= {p for p, pid in wd.owner.items() if p not in land})
         self.assertTrue({6301, 6467, 6472} <= set(floor.values()))  # Khugdihr's own baronies
         levels = set(self.carved_levels("c_khugdihr").values())
-        pm, _, water, _ = sl.load_ck3(ROOTS.anbennar)
+        pm, _, water, _ = shared_trace.layouts()[1]
         ramp = set(sl.chamfer(list(cr._open_land(pm, floor, rock, water, land)), (0, 0, pm.width, pm.height),
                               data.CARVE_RAMP))
         self.assertEqual([p for p in floor if p not in ramp and self.new_height.get(*p) not in levels], [])

@@ -6,6 +6,7 @@ from types import SimpleNamespace
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # python -I does not add the tools folder
 import serpentreach_layout as sl  # noqa: E402
+import shared_trace  # noqa: E402
 from build_hud_override import GeneratorError  # noqa: E402
 from data import segbandal as data  # noqa: E402
 
@@ -142,8 +143,7 @@ class GuardTests(unittest.TestCase):
 class LayoutTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.ck3 = sl.load_ck3(ANBENNAR)
-        cls.lay = sl.layout(ANBENNAR, EU4, cls.ck3, cfg=data)
+        (_, cls.lay, _), cls.ck3 = shared_trace.layouts()
         cls.counties = sl.county_provinces(titles_text())
 
     def test_existing_county_missing_stops(self):
@@ -194,7 +194,7 @@ class MapTests(unittest.TestCase):
     def setUpClass(cls):
         import build_serpentreach as bs
         cls.bs = bs
-        cls.lays = bs.layouts(ANBENNAR, EU4)
+        cls.lays, _ = shared_trace.layouts()
         cls.files = bs.build_from_layout(ANBENNAR, cls.lays)
 
     def test_map_files_hold_every_region(self):
@@ -236,10 +236,9 @@ class TitleTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         import build_segbandal as bsb
-        import build_serpentreach as bs
         import eu4_import as eu4i
         cls.bsb = bsb
-        cls.lay = bs.layouts(ANBENNAR, EU4)[1]
+        cls.lay = shared_trace.layouts()[0][1]
         cls.files = bsb.build_from_layout(ANBENNAR, cls.lay)
         cls.titles = cls.files[bsb.TITLES].decode("utf-8-sig")
         cls.history = cls.files[bsb.TITLE_HISTORY].decode("utf-8-sig")

@@ -5,6 +5,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # python -I does not add the tools folder
 import serpentreach_layout as sl  # noqa: E402
+import shared_trace  # noqa: E402
 from build_hud_override import GeneratorError  # noqa: E402
 
 
@@ -479,7 +480,7 @@ class BuildTests(unittest.TestCase):
     def setUpClass(cls):
         import build_serpentreach as bs
         cls.bs = bs
-        cls.lays = bs.layouts(ANBENNAR, EU4)
+        cls.lays, _ = shared_trace.layouts()
         cls.lay = cls.lays[0]
         cls.files = bs.build_from_layout(ANBENNAR, cls.lays)
 

@@ -36,8 +36,13 @@ After the hard part is done, say so, so the user can switch back to Sonnet 5.5 m
 | Validate (new reports only) | `python -I tools/validate.py` |
 | Validate (everything) | `python -I tools/validate.py --all` |
 | Accept current reports as baseline | `python -I tools/validate.py --baseline` (only after confirming they are inherited from Anbennar or from a file copied verbatim from Realms in Exile; record them in `docs/systems/validation-baseline.md`) |
-| Run the tests for what you changed | `python -I -m unittest discover -s tools/tests -p "test_<name>*.py"` (fast; prefer this) |
-| Run all tool tests | `python -I -m unittest discover -s tools/tests` (no `-v`: it prints a line per test, ~900 lines) |
+| Run the tests for what you changed | `python -I tools/run_tests.py <name> [<name> ...]` (modules whose name contains a word; fast; prefer this) |
+| Run all tool tests | `python -I tools/run_tests.py` (one process per module, `-j N` at a time; prints failures in full and a summary) |
+| Run all tool tests one after another | `python -I -m unittest discover -s tools/tests` (the same tests, much slower; no `-v`: it prints a line per test) |
+
+Tests share one trace of the carved regions through `tools/tests/shared_trace.py`, cached in the git-ignored
+`tools/tests/.trace_cache/` and keyed by a hash of every input (Anbennar's and EU4's files, the tracer's code). A changed
+input traces again by itself. Generators never use the cache, and tests still render every file from the trace.
 | Rebuild anything | see the system's doc below; every command and its prerequisites are in `docs/systems/updating.md` |
 
 ## Loading

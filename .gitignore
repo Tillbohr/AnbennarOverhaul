@@ -2,6 +2,8 @@
 .claude/settings.local.json
 # Python
 __pycache__/
+# Layout traces cached for the tests (tools/tests/shared_trace.py)
+/tools/tests/.trace_cache/
 # Editor/backup files
 *.bak
 /.vs

@@ -86,7 +86,7 @@ Rerun `python -I tools/build_rie_dwarves.py`, then `build_holds.py` and `build_h
 | Rebuild dynasty name lists | `python -I tools/build_dynasty_names.py` (EU4 names are committed in `tools/data/dynasty_names.py`; nothing is read from EU4) |
 | Rebuild racial traditions | `python -I tools/build_racial_traditions.py` (needs the unit art copied; then rerun `build_racial_levies.py` if a tradition gained a levy modifier) |
 | Rebuild monuments | `python -I tools/build_monuments.py` (every region; `--region <name>` for one, the shared illustration file is always rebuilt from all) |
-| Run tool tests | `python -I -m unittest discover -s tools/tests` |
+| Run tool tests | `python -I tools/run_tests.py` (or, one after another, `python -I -m unittest discover -s tools/tests`) |
 | Rebuild inventions | `python -I tools/build_inventions.py` (icons are committed; nothing is read from EU4) |
 | Rebuild spells | `python -I tools/build_spells.py` (art is committed; nothing is read from EU4) |
 | Rebuild magic advancements | `python -I tools/build_advancements.py` (art is committed; nothing is read from EU4) |

@@ -6,6 +6,7 @@ from types import SimpleNamespace
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # python -I does not add the tools folder
 import serpentreach_layout as sl  # noqa: E402
+import shared_trace  # noqa: E402
 from build_hud_override import GeneratorError  # noqa: E402
 from data import west_dwarovar as data  # noqa: E402
 
@@ -14,22 +15,10 @@ ANBENNAR = Path(__file__).resolve().parents[2].parent / "anbennar-ck3-dev-master
 HAVE_GAME_DATA = EU4.is_dir() and ANBENNAR.is_dir()
 VALE_AREAS = set(data.SURFACE_AREAS)
 
-_CACHE = {}
-
 
 def titles_text():
     return "\n".join(p.read_text(encoding="utf-8-sig", errors="replace")
                      for p in sorted((ANBENNAR / "common/landed_titles").glob("*.txt")))
-
-
-def layouts():
-    """(Serpentreach's, Segbandal's, West Dwarovar's) layouts and Anbennar's map, traced once for the whole module."""
-    if "lays" not in _CACHE:
-        import build_serpentreach as bs
-        ck3 = sl.load_ck3(ANBENNAR)
-        _CACHE["ck3"] = ck3
-        _CACHE["lays"] = bs.layouts(ANBENNAR, EU4, ck3)
-    return _CACHE["lays"], _CACHE["ck3"]
 
 
 def area_adjacency():
@@ -83,7 +72,7 @@ class DataTests(unittest.TestCase):
 class LayoutTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        (cls.serp, cls.seg, cls.wd), cls.ck3 = layouts()
+        (cls.serp, cls.seg, cls.wd), cls.ck3 = shared_trace.layouts()
         cls.counties = sl.county_provinces(titles_text())
         cls.area_of = {c.key: c.area for c in cls.wd.counties}
         cls.old = {pid for c in data.EXISTING.values() for pid in cls.counties[c]}
@@ -180,7 +169,7 @@ class MapTests(unittest.TestCase):
     def setUpClass(cls):
         import build_serpentreach as bs
         cls.bs = bs
-        cls.lays, _ = layouts()
+        cls.lays, _ = shared_trace.layouts()
         cls.files = bs.build_from_layout(ANBENNAR, cls.lays)
 
     def test_map_files_hold_three_regions(self):
@@ -230,7 +219,7 @@ class TitleTests(unittest.TestCase):
         import build_west_dwarovar as bwd
         import eu4_import as eu4i
         cls.bsb, cls.bwd = bsb, bwd
-        (_, _, cls.lay), _ = layouts()
+        (_, _, cls.lay), _ = shared_trace.layouts()
         cls.files = bwd.build_from_layout(ANBENNAR, cls.lay, EU4)
         cls.titles = cls.files[bwd.TITLES].decode("utf-8-sig")
         cls.history = cls.files[bwd.TITLE_HISTORY].decode("utf-8-sig")
