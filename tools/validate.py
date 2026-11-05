@@ -35,6 +35,7 @@ def main() -> None:
     cmd.append(".")
     result = subprocess.run(cmd, cwd=SUBMOD, capture_output=True, text=True, encoding="utf-8")
     report = result.stdout.strip()
+    sys.stdout.reconfigure(encoding="utf-8")  # redirected output defaults to the code page, which cannot hold every report
     print(report if report else "ck3-tiger: no new reports")
     sys.exit(result.returncode)
 
