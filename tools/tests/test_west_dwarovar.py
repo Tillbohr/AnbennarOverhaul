@@ -177,7 +177,8 @@ class MapTests(unittest.TestCase):
         rows = self.files["map_data/definition.csv"].decode("utf-8", errors="replace").splitlines()
         anbennar = (ANBENNAR / "map_data/definition.csv").read_bytes().decode("utf-8", errors="replace").splitlines()
         new = [int(r.split(";")[0]) for r in rows[len(anbennar):]]
-        self.assertEqual(new, sorted(serp.provinces) + sorted(seg.provinces) + sorted(wd.provinces))
+        rock_ids = [max(wd.provinces) + 1, max(wd.provinces) + 2]  # the range rock (test_range_rock.py)
+        self.assertEqual(new, sorted(serp.provinces) + sorted(seg.provinces) + sorted(wd.provinces) + rock_ids)
         colours = [tuple(r.split(";")[1:4]) for r in rows if r[:1].isdigit() and r.split(";")[0] != "0"]
         self.assertEqual(len(colours), len(set(colours)))
         for name in self.bs.LOCATOR_FILES:
@@ -197,7 +198,7 @@ class MapTests(unittest.TestCase):
             ours = [r for r in rows if r[0].isdigit() and int(r[0]) in ca.baronies]
             self.assertEqual(len(ours), 1, a)
             self.assertIn(int(ours[0][1]), cb.baronies)
-            self.assertEqual(ours[0][2:4], ["sea", "2426"])
+            self.assertEqual(ours[0][2:4], ["sea", str(max(wd.provinces) + 2)])  # West Dwarovar's range rock
             text = text.replace(";".join(ours[0]).encode() + b"\r\n", b"")
         self.assertEqual(text, (ANBENNAR / "map_data/adjacencies.csv").read_bytes())
 
@@ -329,8 +330,42 @@ class TitleTests(unittest.TestCase):
                 self.assertIn(f"\n{pid}={want}\n", terrain + "\n")
             if c.type == "surface":
                 for pid, holding in zip(c.baronies, data.SURFACE_HOLDINGS):
-                    self.assertRegex(self.provinces, rf"(?m)^{pid} = \{{\t# .*\n\tculture = silver_dwarvish\n"
+                    self.assertRegex(self.provinces, rf"(?m)^{pid} = \{{\t# .*\n\tculture = kronium_dwarvish\n"
                                                      rf"\treligion = ancestor_worship\n\tholding = {holding}\n")
+
+    def test_every_county_and_character_has_its_kingdom_culture(self):
+        want = {"k_khugdihr": "darkscale", "k_amldihr": "kronium_dwarvish", "k_haraz_orldhum": "platinum_dwarvish",
+                "k_mithradhum": "mithril_dwarvish", "k_er_natvir": "dagrite_dwarvish",
+                "k_verkal_kozenad": "opal_dwarvish", "k_hul_jorkad": "lead_dwarvish",
+                "k_orlazam_az_dihr": "ramsteel_dwarvish", "k_dur_vazhatun": "sapphire_dwarvish"}
+        self.assertEqual(data.KINGDOM_CULTURES, want)
+        characters = self.files[self.bwd.CHARACTERS].decode("utf-8-sig")
+        dynasties = self.files[self.bwd.DYNASTIES].decode("utf-8-sig")
+        for text in (self.provinces, characters, dynasties):
+            self.assertNotIn("silver_dwarvish", text)
+        for kkey, (_, kareas) in data.KINGDOMS.items():
+            for c in (c for c in self.lay.counties if c.area in kareas):
+                for pid in c.baronies:
+                    self.assertRegex(self.provinces, rf"(?m)^{pid} = \{{\t# .*\n\tculture = {want[kkey]}\n")
+        self.assertRegex(characters, r'aov_wd_emperor_1 = \{[^}]*culture = "kronium_dwarvish"')
+        self.assertRegex(characters, r'aov_wd_orlazam_1 = \{[^}]*culture = "ramsteel_dwarvish"')
+        self.assertRegex(dynasties, r"aov_wd_dynasty_riftway = \{[^}]*culture = mithril_dwarvish")
+
+    def test_eu4_dynasty_names_without_prefix(self):
+        want = {"d_mithradhum": "Strongbellow", "d_riftway": "Goldbeard", "d_dwarovrod_7_9": "Goblinslayer",
+                "d_the_railyard": "Ironhelm", "d_stunad_kozenad": "Forktongue", "d_zokkorna_caverns": "Ringbeard",
+                "d_westnest": "Kezdori", "d_jorkad_junction": "Leadpipe", "d_orlazam": "Fourfoot",
+                "d_vazhatun": "Melmarn"}
+        self.assertEqual(data.DYNASTY_NAMES, want)
+        dynasties = self.files[self.bwd.DYNASTIES].decode("utf-8-sig")
+        loc = self.files[self.bwd.LOC].decode("utf-8-sig")
+        for dkey, name in want.items():
+            block = re.search(rf"(?ms)^aov_wd_dynasty_{dkey[2:]} = \{{.*?^\}}", dynasties).group(0)
+            self.assertNotIn("prefix", block, dkey)
+            self.assertIn(f' dynn_aov_wd_{dkey[2:]}:0 "{name}"', loc)
+        self.assertEqual(dynasties.count('prefix = "dynnp_az"'), 35 - len(want))
+        names = re.findall(r'(?m)^ dynn_aov_wd_\w+:0 "([^"]*)"', loc)
+        self.assertEqual(len(names), len(set(names)))
 
     def test_every_new_key_has_loc(self):
         loc = self.files[self.bwd.LOC].decode("utf-8-sig")

@@ -1,0 +1,20 @@
+﻿# Anbennar Overhaul: West Dwarovar cultures (docs/systems/west-dwarovar.md). The language of the eight West Dwarovar
+# hold cultures, defined like Anbennar's dwarven languages (anb_language.txt).
+
+language_west_dwarovar_dwarven = {
+	type = language
+	is_shown = {
+		language_is_shown_trigger = {
+			LANGUAGE = language_west_dwarovar_dwarven
+		}
+	}
+	ai_will_do = {
+		value = 10
+		if = {
+			limit = { has_cultural_pillar = language_west_dwarovar_dwarven }
+			multiply = 10
+		}
+	}
+
+	color = { 96 72 128 }
+}

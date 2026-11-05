@@ -121,6 +121,29 @@ aov_basalt_berserkers_recruitment_cost = 143
 aov_basalt_berserkers_low_maint_cost = 0.64
 aov_basalt_berserkers_high_maint_cost = 1.92
 
+# West Dwarovar clans
+aov_amldavhad_guard_recruitment_cost = 185
+aov_amldavhad_guard_low_maint_cost = 0.82
+aov_amldavhad_guard_high_maint_cost = 2.46
+aov_platinum_warsuits_recruitment_cost = 205
+aov_platinum_warsuits_low_maint_cost = 0.90
+aov_platinum_warsuits_high_maint_cost = 2.70
+aov_mithril_warchanters_recruitment_cost = 180
+aov_mithril_warchanters_low_maint_cost = 0.79
+aov_mithril_warchanters_high_maint_cost = 2.37
+aov_mercenary_guards_recruitment_cost = 155
+aov_mercenary_guards_low_maint_cost = 0.70
+aov_mercenary_guards_high_maint_cost = 2.10
+aov_railway_robbers_recruitment_cost = 110
+aov_railway_robbers_low_maint_cost = 0.36
+aov_railway_robbers_high_maint_cost = 1.08
+aov_sewer_wardens_recruitment_cost = 110
+aov_sewer_wardens_low_maint_cost = 0.37
+aov_sewer_wardens_high_maint_cost = 1.11
+aov_fourfoot_chargers_recruitment_cost = 395
+aov_fourfoot_chargers_low_maint_cost = 1.37
+aov_fourfoot_chargers_high_maint_cost = 4.11
+
 # Silverforge Engineer Corps: 1.3x Anbennar's Dwarven Bombards (its buy cost and its maintenance values).
 aov_silverforge_engineers_recruitment_cost = {
 	value = dwarven_bombards_recruitment_cost

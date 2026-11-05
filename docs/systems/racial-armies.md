@@ -71,7 +71,7 @@ Spec: `docs/superpowers/specs/2026-10-21-racial-armies-design.md` (every stat an
   | Sun elves | Sundancer Legionaries, Jaherkadezim (retuned), Sunspear Phalanx, Phoenix Bowmen, Sandwind Outriders, Duneblades |
   | Wood elves | Ayethi, Felwyr, Glaifes, Hyodeth (retuned), Greatoak Wardens |
   | Every dwarf | Guardians, Shieldwall, Armor Breakers, Ramriders (retuned), Dwarven Bombards (Anbennar's) |
-  | Dwarf clans | Ruby Grudgebearers, Silver Silverforge Engineer Corps, Stone Tortoise Formation, Agate Giantbane Crossbows, Copper Uthojdihr Marines, Citrine Seg Band Gnollhunters, Gold Golden Gate Guard, Pyrite Massed Clockwork Bows, Titanium Dauvek Veker, Topaz Copper Road Wardens, Marble Brightbeard Hammers; Serpentreach: Cobalt Lens Crossbows, Diamond Lightflare Guard, Flint Forest Rangers, Garnet Orcrend Guard, Basalt Berserkers |
+  | Dwarf clans | Ruby Grudgebearers, Silver Silverforge Engineer Corps, Stone Tortoise Formation, Agate Giantbane Crossbows, Copper Uthojdihr Marines, Citrine Seg Band Gnollhunters, Gold Golden Gate Guard, Pyrite Massed Clockwork Bows, Titanium Dauvek Veker, Topaz Copper Road Wardens, Marble Brightbeard Hammers; Serpentreach: Cobalt Lens Crossbows, Diamond Lightflare Guard, Flint Forest Rangers, Garnet Orcrend Guard, Basalt Berserkers; West Dwarovar: Kronium Amldavhad Guard, Platinum Warsuits, Mithril Warchanters of Mithradhûm, Dagrite Er-Natvir Mercenary Guards, Opal Railway Robbers, Lead Hul-Jorkad Sewer Wardens, Ramsteel Fourfoot Chargers |
 
   Retuned units are single-object overrides in `common/men_at_arms_types/zz_aov_racial_maa_overrides.txt` (only stack,
   stats, terrain and winter bonuses, gate, costs and `ai_quality` change); new units are in
@@ -82,11 +82,14 @@ Spec: `docs/superpowers/specs/2026-10-21-racial-armies-design.md` (every stat an
   an `aov_rie_` prefix into `gfx/interface/icons/regimenttypes/`, `gfx/interface/illustrations/men_at_arms_big/` and
   `men_at_arms_small/`; each unit's `icon` names the file. Sun elves use RiE's Calaquendi (`high_elven_*`) set and
   `noldor_heavy_infantry`, moon elves its Lomiquendi (`grey_elven_*`) set, wood elves its Moriquendi (`green_elven_*`,
-  Avarin) set, and every dwarf unit the Longbeard set, chosen by unit role, except the five Serpentreach clan units,
-  which take RiE dwarf sets no other unit uses (Broadbeam, Stiffbeard, Firebeard) so the new clans look apart. Lens
+  Avarin) set, and every dwarf unit the Longbeard set, chosen by unit role, except the Serpentreach and West Dwarovar
+  clan units, which take other RiE dwarf sets (Broadbeam, Stiffbeard, Firebeard, Blacklock) so the new clans look apart. Lens
   Crossbows use the game's own crossbowmen icon (the Longbeard crossbow without its banner; RiE's other crossbow icons
   are hand-drawn and clash) with RiE's Ironfist crossbow pictures, all three saved as `aov_lens_crossbows`, because the
-  game finds a unit's pictures by its icon name:
+  game finds a unit's pictures by its icon name. Three West Dwarovar units mix sources the same way: Amldavhad Guard's
+  icon has no pictures of its own, and Warchanters and Railway Robbers take Anbennar icons that no unit used
+  (`paladins`, `rogues`). Fourfoot Chargers share the Ramriders' art, the only ram-mounted art.
+  `test_west_dwarovar_art_sources` pins the copied files to their sources:
 
   | RiE picture | Units |
   |---|---|
@@ -102,8 +105,16 @@ Spec: `docs/superpowers/specs/2026-10-21-racial-armies-design.md` (every stat an
   | `longbeard_skirmishers` | Uthojdihr Marines, Seg Band Gnollhunters |
   | `broadbeam_heavy_infantry`, `stiffbeard_skirmishers`, `firebeard_pikemen`, `firebeard_heavy_infantry` | Lightflare Guard, Flint Forest Rangers, Orcrend Guard, Basalt Berserkers |
   | game `crossbowmen` icon + `ironfist_crossbowmen` pictures (`aov_lens_crossbows`) | Lens Crossbows |
+  | `house_guard_dwarf` icon + `blacklock_heavy_infantry` pictures (`aov_amldavhad_guard`) | Amldavhad Guard |
+  | `undying_of_khazad_dum` | Platinum Warsuits |
+  | Anbennar `paladins` icon + `stiffbeard_heavy_infantry` pictures (`aov_mithril_warchanters`) | Warchanters of Mithradhûm |
+  | `blacklock_mercenaries` | Er-Natvir Mercenary Guards |
+  | Anbennar `rogues` icon + `blacklock_skirmishers` pictures (`aov_railway_robbers`) | Opal Railway Robbers |
+  | `Blacklock_engineers` (`aov_rie_blacklock_engineers`) | Hul-Jorkad Sewer Wardens |
+  | `longbeard_cavalry` | Fourfoot Chargers (with Ramriders) |
 
-  The two light cavalry icons were 130×130 DXT5 in RiE and are resized to 120×120 (`eu4_import.py convert --resize`).
+  The two light cavalry icons were 130×130 DXT5 in RiE and are resized to 120×120 (`eu4_import.py convert --resize`),
+  as are the non-square `blacklock_mercenaries` and `Blacklock_engineers` icons.
   Siege units (Silverforge Engineer Corps, Dwarven Bombards) keep the vanilla bombard art. The military window's levy
   and knight pictures for elf and dwarf rulers (RiE's `levies_elven`, `levies_longbeard`, `knights_elven`,
   `knights_falathrim`, `knights_silvan`, `knights_longbeard`, copied the same way) are wired up by

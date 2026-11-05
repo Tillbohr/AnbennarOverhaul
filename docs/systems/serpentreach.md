@@ -4,7 +4,7 @@
 
 | File | Generator | Why |
 |---|---|---|
-| `map_data/provinces.png`, `map_data/definition.csv`, `map_data/adjacencies.csv`, `gfx/map/map_object_data/{building,special_building,combat,player_stack,siege,other_stack,stack}_locators.txt`, `gfx/map/map_object_data/activities.txt` (whole-file overrides of Anbennar's), `common/landed_titles/aov_serpentreach.txt`, `history/provinces/aov_serpentreach.txt`, `history/titles/aov_serpentreach.txt`, `history/characters/aov_serpentreach.txt`, `common/dynasties/aov_serpentreach_dynasties.txt`, `common/province_terrain/aov_serpentreach_terrain.txt`, `map_data/geographical_regions/aov_serpentreach_regions.txt`, `localization/english/aov_serpentreach_l_english.yml`, `common/coat_of_arms/coat_of_arms/aov_serpentreach.txt` | `python -I tools/build_serpentreach.py` | EU4 Anbennar's `serpentreach_region` traced onto CK3 province 2426 by `tools/serpentreach_layout.py` with `tools/data/serpentreach.py`; the shared map files also hold Segbandal's and West Dwarovar's new provinces (`layouts` returns the three layouts; `segbandal.md`, `west-dwarovar.md`). `adjacencies.csv` is Anbennar's plus one crossing per `CROSSINGS` pair (`crossings`, `render_adjacencies`). Anbennar's `other_stack_locators` has stray instances for ids above 6943; each new province's is replaced by ours. Rerun after any Anbennar map, title or locator change, then `build_segbandal.py`, `build_west_dwarovar.py`, `build_holds.py` and `build_map_graphics.py`. |
+| `map_data/provinces.png`, `map_data/definition.csv`, `map_data/default.map`, `map_data/adjacencies.csv`, `gfx/map/map_object_data/{building,special_building,combat,player_stack,siege,other_stack,stack}_locators.txt`, `gfx/map/map_object_data/activities.txt` (whole-file overrides of Anbennar's), `common/landed_titles/aov_serpentreach.txt`, `history/provinces/aov_serpentreach.txt`, `history/titles/aov_serpentreach.txt`, `history/characters/aov_serpentreach.txt`, `common/dynasties/aov_serpentreach_dynasties.txt`, `common/province_terrain/aov_serpentreach_terrain.txt`, `map_data/geographical_regions/aov_serpentreach_regions.txt`, `localization/english/aov_serpentreach_l_english.yml`, `common/coat_of_arms/coat_of_arms/aov_serpentreach.txt` | `python -I tools/build_serpentreach.py` | EU4 Anbennar's `serpentreach_region` traced onto CK3 province 2426 by `tools/serpentreach_layout.py` with `tools/data/serpentreach.py`; the shared map files also hold Segbandal's and West Dwarovar's new provinces (`layouts` returns the three layouts; `segbandal.md`, `west-dwarovar.md`). `adjacencies.csv` is Anbennar's plus one crossing per `CROSSINGS` pair (`crossings`, `render_adjacencies`). Anbennar's `other_stack_locators` has stray instances for ids above 6943; each new province's is replaced by ours. Rerun after any Anbennar map, title or locator change, then `build_segbandal.py`, `build_west_dwarovar.py`, `build_holds.py` and `build_map_graphics.py`. |
 
 Imported once (no generator): `gfx/coat_of_arms/textured_emblems/aov_{orlghelovar,shazstundihr,arg_ordstun,verkal_skomdihr,ovdal_lodhum,gor_burad}.dds`,
 the EU4 flags of the six holds (`KINGDOM_ARMS` names the tag) converted with
@@ -43,6 +43,21 @@ The generator stops when one is missing.
 - **Rulers:** the emperor holds Arg-Ôrdstun's kingdom and duchy; each other kingdom is held by the lord of its hold's
   duchy, a vassal of the emperor, and the other dukes of a kingdom are the king's vassals (King's Caverns is the
   emperor's). The realm map mode shows the empire's colour; the kingdom colours show in the de jure kingdom map mode.
+- **Range rock** (`tools/range_rock.py`, `range_rocks`, `RANGE_ROCKS` and `ROCK_*` in `tools/data/serpentreach.py`):
+  the game fills an impassable province with a neighbour's map colour, and counts it in the realm's name, only below
+  Anbennar's `LARGE_IMPASSABLE_PROVINCE_PIXELS` (500,000; the build stops at or above it). Segbandal's rock (2608,
+  170,000 px) qualifies, so that range shows its realm's colour; 2426 (20 million px, the whole outer world) never
+  does. So the rock around Serpentreach and West Dwarovar is cut out of 2426 as two new impassable provinces, listed
+  in `map_data/default.map`: 7384 "Serpentreach Wasteland" (88,000 px) and 7385 "West Dwarovar Wasteland" (299,000 px),
+  ids after West Dwarovar's last. A range is the 2426 rock reached from its floors (nearest floor wins) over ground at
+  least `ROCK_MIN_HEIGHT` 48 high, `ROCK_ALWAYS` 16 px around a floor at any height (the tunnels crossing the plain), up
+  to `ROCK_REACH` 450 px and south of `ROCK_MAX_Y` 3496 (the fog's edge). Rock nearer Segbandal's stays 2426
+  (`ROCK_AVOID`), or West Dwarovar would run along Segbandal's northern rim. Enclosed waste and strips narrower than 2 x
+  `ROCK_SLIVER` 10 px join the range, as does a ridge cut off by up to `ROCK_ISLAND_GAP` 30 px of land (around Dwaroval).
+  Only the province map changes: every other generator reads Anbennar's map, where this rock is still 2426, so the
+  carve, terrain and gates do not move. They are listed only in `other_stack_locators` and `stack_locators`, like
+  Anbennar's impassable provinces, and have no province history, like 2426. The whole range takes one colour per map
+  mode, as Segbandal's does; which neighbour gives it is the engine's choice.
 - **Openings:** corridors `OPENING_WIDTH` 10 px wide, at most `OPENING_REACH` 160 px long: Shazstundihr -> Basilan
   (county Bazibar; Bazibar itself is not reachable at that width), Orlghelovar -> Grenwoud, Glogund Cave -> Rianelen
   (Azkasad is boxed in by its own county), Verkal Skomdihr -> Deepwoods85, cut through Deepwoods Wasteland (1782,
@@ -95,7 +110,9 @@ The generator stops when one is missing.
   Lodhum, H77's native line), Slatecutter (Still Caverns), Whitebeard (Shazstundihr) and Brightbeard (South Altar).
   The 6 holds are in `tools/data/holds.py`.
 - **Needs an in-game test:** the map loads with the new ids; locators, province terrain and region files are read;
-  textures and wall heights look right (tune in `tools/data/serpentreach.py`). Cultures:
+  textures and wall heights look right (tune in `tools/data/serpentreach.py`). The rock around Serpentreach and West
+  Dwarovar shows its realm's colour and the realm's name spreads over it, as on Segbandal; armies cannot enter it.
+  Cultures:
   1. Each kingdom's counties show its hold culture, and the culture window shows Serpentreach Dwarven (marble:
      Segbandalic).
   2. Rulers' dynasties read Whiteforged, Stormheart, Garnetpick, Slatecutter, Whitebeard and Brightbeard, with no

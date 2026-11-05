@@ -110,6 +110,30 @@ aov_racial_traditions_game_start_effect = {
 	culture:basalt_dwarvish = {
 		if = { limit = { NOT = { has_cultural_tradition = tradition_hearts_of_fire } } add_culture_tradition = tradition_hearts_of_fire }
 	}
+	culture:kronium_dwarvish = {
+		if = { limit = { NOT = { has_cultural_tradition = tradition_high_assembly } } add_culture_tradition = tradition_high_assembly }
+	}
+	culture:platinum_dwarvish = {
+		if = { limit = { NOT = { has_cultural_tradition = tradition_reign_of_the_highlord } } add_culture_tradition = tradition_reign_of_the_highlord }
+	}
+	culture:mithril_dwarvish = {
+		if = { limit = { NOT = { has_cultural_tradition = tradition_vow_of_honesty } } add_culture_tradition = tradition_vow_of_honesty }
+	}
+	culture:dagrite_dwarvish = {
+		if = { limit = { NOT = { has_cultural_tradition = tradition_all_roads_lead_to_er_natvir } } add_culture_tradition = tradition_all_roads_lead_to_er_natvir }
+	}
+	culture:opal_dwarvish = {
+		if = { limit = { NOT = { has_cultural_tradition = tradition_spymasters_of_aul_dwarov } } add_culture_tradition = tradition_spymasters_of_aul_dwarov }
+	}
+	culture:lead_dwarvish = {
+		if = { limit = { NOT = { has_cultural_tradition = tradition_dwarven_plumbing } } add_culture_tradition = tradition_dwarven_plumbing }
+	}
+	culture:ramsteel_dwarvish = {
+		if = { limit = { NOT = { has_cultural_tradition = tradition_stewards_of_the_vale } } add_culture_tradition = tradition_stewards_of_the_vale }
+	}
+	culture:sapphire_dwarvish = {
+		if = { limit = { NOT = { has_cultural_tradition = tradition_setzunkhupa } } add_culture_tradition = tradition_setzunkhupa }
+	}
 	culture:sandfang_gnoll = {
 		if = { limit = { NOT = { has_cultural_tradition = tradition_scavengers_and_raiders } } add_culture_tradition = tradition_scavengers_and_raiders }
 	}
