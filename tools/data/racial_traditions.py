@@ -266,6 +266,79 @@ TRADITIONS = {
         parameters=("aov_unlock_maa_basalt_berserkers",),
         desc="The fire of Firetop Mountain burns in every basalt dwarf. They settle their quarrels by Borbordûz, the "
              "fire duel above the lava lake, and few who invade their scorched halls endure the heat."),
+    # --- West Dwarovar hold cultures (docs/systems/west-dwarovar.md) --------------------------------------------------
+    "tradition_high_assembly": dict(
+        name="The High Assembly", heritage="heritage_dwarven", gate=culture("kronium_dwarvish"), category="realm",
+        layers=("diplo", "western", "council.dds"),
+        eu4="Amldihr ideas: The High Assembly of Aul-Dwarov, Birthplace of the Old Empire, Rule with a Kronium Glove",
+        character={"vassal_limit": 5, "vassal_opinion": 5, "monthly_county_control_growth_factor": 0.15},
+        parameters=("aov_unlock_maa_amldavhad_guard",),
+        desc="Amldihr is the Gates of the Assembly, where Udrek the Consolidator talked the warring holds into one "
+             "empire. Its rulers still govern with a conscience for those who follow and a heavy hand for those who "
+             "do not."),
+    "tradition_reign_of_the_highlord": dict(
+        name="Reign of the Highlord", heritage="heritage_dwarven", gate=culture("platinum_dwarvish"), category="realm",
+        layers=("steward", "western", "crown.dds"),
+        eu4="Haraz Orldhûm ideas: Reign of the Highlord, Turrets of Orldhûm, Vainglorious Nobility",
+        character={"monthly_prestige_gain_mult": 0.1, "hostile_county_attrition": 0.15,
+                   "heavy_infantry_toughness_mult": 0.1},
+        parameters=("aov_unlock_maa_platinum_warsuits",),
+        desc="The Highlord of Haraz Orldhûm was called first among the kings of the Dwarovar, and its nobles have "
+             "never let anyone forget it. Outposts carved into the surrounding caverns make every approach to the "
+             "hold a killing field."),
+    "tradition_vow_of_honesty": dict(
+        name="The Vow of Honesty", heritage="heritage_dwarven", gate=culture("mithril_dwarvish"), category="societal",
+        layers=("martial", "western", "warrior_monk.dds"),
+        eu4="Mithradhûm ideas: Vow of Honesty, The Warchanters of Mithradhum, Goblinslayer Academy",
+        character={"enemy_hostile_scheme_success_chance_add": -10, "monthly_piety_gain_mult": 0.1,
+                   "heavy_infantry_damage_mult": 0.1},
+        parameters=("aov_unlock_maa_mithril_warchanters",),
+        desc="Every Mithril child swears a lifelong vow of honesty on coming of age, and few ever break it. The "
+             "Goblinslayer Academy teaches the same honour to its soldiers, who carry the names of their ancestors "
+             "into battle."),
+    "tradition_all_roads_lead_to_er_natvir": dict(
+        name="All Roads Lead to Er-Natvir", heritage="heritage_dwarven", gate=culture("dagrite_dwarvish"),
+        category="realm", layers=("steward", "western", "city.dds"),
+        eu4="Er-Natvir ideas: All Roads Lead to Er-Natvir, Melting Pot, Immaculate Supply Lines",
+        character={"domain_tax_mult": 0.1, "supply_duration": 0.25}, culture={"cultural_acceptance_gain_mult": 0.25},
+        parameters=("aov_unlock_maa_mercenary_guards",),
+        desc="The rail hub of Er-Natvir connects every hold in the Serpentspine, and its markets drew in dwarves of "
+             "every culture. Its quartermasters are said never to have missed a delivery by so much as a grain of "
+             "wheat."),
+    "tradition_spymasters_of_aul_dwarov": dict(
+        name="Spymasters of Aul-Dwarov", heritage="heritage_dwarven", gate=culture("opal_dwarvish"), category="societal",
+        layers=("intrigue", "western", "palace_politics.dds"),
+        eu4="Verkal Kozenad ideas: Spymasters of Aul-Dwarov, Opal Railway Robbers, Ladies of the Opal Calling",
+        character={"owned_hostile_scheme_success_chance_add": 10, "intrigue": 1, "max_loot_mult": 0.25},
+        parameters=("aov_unlock_maa_railway_robbers",),
+        desc="Despite their famous bad luck, Opal dwarves held the old empire's posts of intrigue and skullduggery. "
+             "Those who did not spy on the rail lines robbed them instead."),
+    "tradition_dwarven_plumbing": dict(
+        name="Dwarven Plumbing", heritage="heritage_dwarven", gate=culture("lead_dwarvish"), category="realm",
+        layers=("steward", "western", "garden_architects.dds"),
+        eu4="Hul-Jorkad ideas: Dwarven Plumbing, Lead Lined Lives, Life-bearing Lake",
+        character={"health": 0.25, "garrison_size": 0.2}, county={"development_growth_factor": 0.1},
+        parameters=("aov_unlock_maa_sewer_wardens",),
+        desc="The engineers of Hul-Jorkad cleared millennia of sludge from their pipes and gave the hold the finest "
+             "water in the Serpentspine. The lead that lines those pipes also fills the hold's shot towers."),
+    "tradition_stewards_of_the_vale": dict(
+        name="Stewards of the Vale", heritage="heritage_dwarven", gate=culture("ramsteel_dwarvish"), category="combat",
+        layers=("martial", "western", "rider.dds"),
+        eu4="Orlazam-az-dihr ideas: Originator of Ram Cavalry, Stewards of Vale and Beyond, The Charge of Tednur Fourfoot",
+        character={"heavy_cavalry_damage_mult": 0.15, "movement_speed": 0.15, "plains_advantage": 3,
+                   "farmlands_advantage": 3},
+        parameters=("aov_unlock_maa_fourfoot_chargers",),
+        desc="Ramsteel herders bred the first war rams and guarded the terraces of the Serpent's Vale for the High "
+             "Kings. No other dwarves are so at home under the open sky, or so quick across it."),
+    "tradition_setzunkhupa": dict(
+        name="The Setzunkhûpa", heritage="heritage_dwarven", gate=culture("sapphire_dwarvish"), category="societal",
+        layers=("learning", "western", "philosopher.dds"),
+        eu4="Dûr-Vazhatun ideas: The Setzunkhûpa, Skygazers, Students of Mind and Sky",
+        character={"cultural_head_fascination_mult": 0.2, "learning": 1,
+                   "monthly_learning_lifestyle_xp_gain_mult": 0.15},
+        desc="Most dwarves distrust the sky, but the Sapphire dwarves raised the Setzunkhûpa, the great Sky Dome, to "
+             "study it. Their scholars were the envy of Aul-Dwarov, and their wit was feared as much as their "
+             "learning was admired."),
     # --- Gnolls ----------------------------------------------------------------------------------------------------
     "tradition_scavengers_and_raiders": dict(
         name="Scavengers and Raiders", heritage="heritage_gnollish", gate=culture("sandfang_gnoll"), category="combat",
@@ -464,6 +537,14 @@ GRANTS = {
     "flint_dwarvish": ("tradition_warding_gate",),
     "garnet_dwarvish": ("tradition_hold_where_love_lives",),
     "basalt_dwarvish": ("tradition_hearts_of_fire",),
+    "kronium_dwarvish": ("tradition_high_assembly",),
+    "platinum_dwarvish": ("tradition_reign_of_the_highlord",),
+    "mithril_dwarvish": ("tradition_vow_of_honesty",),
+    "dagrite_dwarvish": ("tradition_all_roads_lead_to_er_natvir",),
+    "opal_dwarvish": ("tradition_spymasters_of_aul_dwarov",),
+    "lead_dwarvish": ("tradition_dwarven_plumbing",),
+    "ramsteel_dwarvish": ("tradition_stewards_of_the_vale",),
+    "sapphire_dwarvish": ("tradition_setzunkhupa",),
     "sandfang_gnoll": ("tradition_scavengers_and_raiders",),
     "fieldstalker_gnoll": ("tradition_tight_leash",),
     "ciderfoot_halfling": ("tradition_apple_lords",),

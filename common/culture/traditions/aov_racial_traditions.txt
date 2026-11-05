@@ -1140,6 +1140,296 @@ tradition_hearts_of_fire = {
 	ai_will_do = { value = 100 }
 }
 
+# Amldihr ideas: The High Assembly of Aul-Dwarov, Birthplace of the Old Empire, Rule with a Kronium Glove
+tradition_high_assembly = {
+	category = realm
+	layers = {
+		0 = diplo
+		1 = western
+		4 = council.dds
+	}
+	is_shown = { has_cultural_pillar = heritage_dwarven }
+	can_pick = {
+		OR = {
+			this = culture:kronium_dwarvish
+			any_parent_culture_or_above = { this = culture:kronium_dwarvish }
+		}
+	}
+	parameters = {
+		aov_unlock_maa_amldavhad_guard = yes
+	}
+	character_modifier = {
+		vassal_limit = 5
+		vassal_opinion = 5
+		monthly_county_control_growth_factor = 0.15
+	}
+	cost = {
+		prestige = {
+			add = {
+				value = tradition_base_cost
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+			multiply = tradition_replacement_cost_if_relevant
+		}
+	}
+	ai_will_do = { value = 100 }
+}
+
+# Haraz Orldhûm ideas: Reign of the Highlord, Turrets of Orldhûm, Vainglorious Nobility
+tradition_reign_of_the_highlord = {
+	category = realm
+	layers = {
+		0 = steward
+		1 = western
+		4 = crown.dds
+	}
+	is_shown = { has_cultural_pillar = heritage_dwarven }
+	can_pick = {
+		OR = {
+			this = culture:platinum_dwarvish
+			any_parent_culture_or_above = { this = culture:platinum_dwarvish }
+		}
+	}
+	parameters = {
+		aov_unlock_maa_platinum_warsuits = yes
+	}
+	character_modifier = {
+		monthly_prestige_gain_mult = 0.1
+		hostile_county_attrition = 0.15
+		heavy_infantry_toughness_mult = 0.1
+	}
+	cost = {
+		prestige = {
+			add = {
+				value = tradition_base_cost
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+			multiply = tradition_replacement_cost_if_relevant
+		}
+	}
+	ai_will_do = { value = 100 }
+}
+
+# Mithradhûm ideas: Vow of Honesty, The Warchanters of Mithradhum, Goblinslayer Academy
+tradition_vow_of_honesty = {
+	category = societal
+	layers = {
+		0 = martial
+		1 = western
+		4 = warrior_monk.dds
+	}
+	is_shown = { has_cultural_pillar = heritage_dwarven }
+	can_pick = {
+		OR = {
+			this = culture:mithril_dwarvish
+			any_parent_culture_or_above = { this = culture:mithril_dwarvish }
+		}
+	}
+	parameters = {
+		aov_unlock_maa_mithril_warchanters = yes
+	}
+	character_modifier = {
+		enemy_hostile_scheme_success_chance_add = -10
+		monthly_piety_gain_mult = 0.1
+		heavy_infantry_damage_mult = 0.1
+	}
+	cost = {
+		prestige = {
+			add = {
+				value = tradition_base_cost
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+			multiply = tradition_replacement_cost_if_relevant
+		}
+	}
+	ai_will_do = { value = 100 }
+}
+
+# Er-Natvir ideas: All Roads Lead to Er-Natvir, Melting Pot, Immaculate Supply Lines
+tradition_all_roads_lead_to_er_natvir = {
+	category = realm
+	layers = {
+		0 = steward
+		1 = western
+		4 = city.dds
+	}
+	is_shown = { has_cultural_pillar = heritage_dwarven }
+	can_pick = {
+		OR = {
+			this = culture:dagrite_dwarvish
+			any_parent_culture_or_above = { this = culture:dagrite_dwarvish }
+		}
+	}
+	parameters = {
+		aov_unlock_maa_mercenary_guards = yes
+	}
+	character_modifier = {
+		domain_tax_mult = 0.1
+		supply_duration = 0.25
+	}
+	culture_modifier = {
+		cultural_acceptance_gain_mult = 0.25
+	}
+	cost = {
+		prestige = {
+			add = {
+				value = tradition_base_cost
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+			multiply = tradition_replacement_cost_if_relevant
+		}
+	}
+	ai_will_do = { value = 100 }
+}
+
+# Verkal Kozenad ideas: Spymasters of Aul-Dwarov, Opal Railway Robbers, Ladies of the Opal Calling
+tradition_spymasters_of_aul_dwarov = {
+	category = societal
+	layers = {
+		0 = intrigue
+		1 = western
+		4 = palace_politics.dds
+	}
+	is_shown = { has_cultural_pillar = heritage_dwarven }
+	can_pick = {
+		OR = {
+			this = culture:opal_dwarvish
+			any_parent_culture_or_above = { this = culture:opal_dwarvish }
+		}
+	}
+	parameters = {
+		aov_unlock_maa_railway_robbers = yes
+	}
+	character_modifier = {
+		owned_hostile_scheme_success_chance_add = 10
+		intrigue = 1
+		max_loot_mult = 0.25
+	}
+	cost = {
+		prestige = {
+			add = {
+				value = tradition_base_cost
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+			multiply = tradition_replacement_cost_if_relevant
+		}
+	}
+	ai_will_do = { value = 100 }
+}
+
+# Hul-Jorkad ideas: Dwarven Plumbing, Lead Lined Lives, Life-bearing Lake
+tradition_dwarven_plumbing = {
+	category = realm
+	layers = {
+		0 = steward
+		1 = western
+		4 = garden_architects.dds
+	}
+	is_shown = { has_cultural_pillar = heritage_dwarven }
+	can_pick = {
+		OR = {
+			this = culture:lead_dwarvish
+			any_parent_culture_or_above = { this = culture:lead_dwarvish }
+		}
+	}
+	parameters = {
+		aov_unlock_maa_sewer_wardens = yes
+	}
+	character_modifier = {
+		health = 0.25
+		garrison_size = 0.2
+	}
+	county_modifier = {
+		development_growth_factor = 0.1
+	}
+	cost = {
+		prestige = {
+			add = {
+				value = tradition_base_cost
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+			multiply = tradition_replacement_cost_if_relevant
+		}
+	}
+	ai_will_do = { value = 100 }
+}
+
+# Orlazam-az-dihr ideas: Originator of Ram Cavalry, Stewards of Vale and Beyond, The Charge of Tednur Fourfoot
+tradition_stewards_of_the_vale = {
+	category = combat
+	layers = {
+		0 = martial
+		1 = western
+		4 = rider.dds
+	}
+	is_shown = { has_cultural_pillar = heritage_dwarven }
+	can_pick = {
+		OR = {
+			this = culture:ramsteel_dwarvish
+			any_parent_culture_or_above = { this = culture:ramsteel_dwarvish }
+		}
+	}
+	parameters = {
+		aov_unlock_maa_fourfoot_chargers = yes
+	}
+	character_modifier = {
+		heavy_cavalry_damage_mult = 0.15
+		movement_speed = 0.15
+		plains_advantage = 3
+		farmlands_advantage = 3
+	}
+	cost = {
+		prestige = {
+			add = {
+				value = tradition_base_cost
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+			multiply = tradition_replacement_cost_if_relevant
+		}
+	}
+	ai_will_do = { value = 100 }
+}
+
+# Dûr-Vazhatun ideas: The Setzunkhûpa, Skygazers, Students of Mind and Sky
+tradition_setzunkhupa = {
+	category = societal
+	layers = {
+		0 = learning
+		1 = western
+		4 = philosopher.dds
+	}
+	is_shown = { has_cultural_pillar = heritage_dwarven }
+	can_pick = {
+		OR = {
+			this = culture:sapphire_dwarvish
+			any_parent_culture_or_above = { this = culture:sapphire_dwarvish }
+		}
+	}
+	character_modifier = {
+		cultural_head_fascination_mult = 0.2
+		learning = 1
+		monthly_learning_lifestyle_xp_gain_mult = 0.15
+	}
+	cost = {
+		prestige = {
+			add = {
+				value = tradition_base_cost
+				desc = BASE
+				format = "BASE_VALUE_FORMAT"
+			}
+			multiply = tradition_replacement_cost_if_relevant
+		}
+	}
+	ai_will_do = { value = 100 }
+}
+
 # gnollish ideas: A Race of Scavengers and Raiders, Flesh Eaters
 tradition_scavengers_and_raiders = {
 	category = combat

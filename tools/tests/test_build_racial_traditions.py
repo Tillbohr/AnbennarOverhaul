@@ -25,7 +25,8 @@ GATED_ELSEWHERE.update({f"aov_unlock_maa_{u}": "common/men_at_arms_types/aov_dwa
     "grudgebearers", "silverforge_engineers", "tortoise_formation", "giantbane_crossbows", "uthojdihr_marines",
     "seg_band_gnollhunters", "golden_gate_guard", "clockwork_bows", "dauvek_veker", "copper_road_wardens",
     "brightbeard_hammers", "lens_crossbows", "lightflare_guard", "flint_forest_rangers", "orcrend_guard",
-    "basalt_berserkers")})
+    "basalt_berserkers", "amldavhad_guard", "platinum_warsuits", "mithril_warchanters", "mercenary_guards",
+    "railway_robbers", "sewer_wardens", "fourfoot_chargers")})
 
 
 def _text(rel):
@@ -115,6 +116,17 @@ class GeneratedTests(unittest.TestCase):
         for culture, tradition in want.items():
             self.assertEqual(data.GRANTS[culture], (tradition,), culture)
             self.assertEqual(data.TRADITIONS[tradition]["gate"], ("culture", culture), tradition)
+
+    def test_west_dwarovar_cultures_granted(self):
+        want = {"kronium_dwarvish": "tradition_high_assembly", "platinum_dwarvish": "tradition_reign_of_the_highlord",
+                "mithril_dwarvish": "tradition_vow_of_honesty",
+                "dagrite_dwarvish": "tradition_all_roads_lead_to_er_natvir",
+                "opal_dwarvish": "tradition_spymasters_of_aul_dwarov", "lead_dwarvish": "tradition_dwarven_plumbing",
+                "ramsteel_dwarvish": "tradition_stewards_of_the_vale", "sapphire_dwarvish": "tradition_setzunkhupa"}
+        for culture, tradition in want.items():
+            self.assertEqual(data.GRANTS[culture], (tradition,), culture)
+            self.assertEqual(data.TRADITIONS[tradition]["gate"], ("culture", culture), tradition)
+        self.assertNotIn("parameters", data.TRADITIONS["tradition_setzunkhupa"])
 
     def test_regional_elves_get_their_parents_tradition(self):
         for culture in ("redglader", "ibevari", "celmaldorian", "venaili"):
