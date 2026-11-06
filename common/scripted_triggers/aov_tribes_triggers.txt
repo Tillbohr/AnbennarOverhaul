@@ -1,0 +1,22 @@
+﻿# Anbennar Overhaul: Dwarovar tribes (docs/systems/dwarovar-tribes.md).
+
+# County title scope: inside the carved Serpentspine.
+aov_title_in_serpentspine_trigger = {
+	title_province = {
+		OR = {
+			geographical_region = world_serpentreach
+			geographical_region = world_west_dwarovar
+			geographical_region = world_segbandal
+		}
+	}
+}
+
+# In a war's valid_to_start: an AI tribe aiming at the surface, which the lore keeps for the Greentide of 1424. Players
+# are free, and raiding is not a war.
+aov_ai_tribe_may_not_target_trigger = {
+	scope:attacker = {
+		is_ai = yes
+		government_has_flag = government_is_dwarovar_tribe
+	}
+	scope:target = { aov_title_in_serpentspine_trigger = no }
+}
