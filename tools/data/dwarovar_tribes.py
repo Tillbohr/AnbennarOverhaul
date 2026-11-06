@@ -86,6 +86,11 @@ TRIBE_START = "980.1.1"
 CHIEF_BIRTH = (940, 955)
 CHIEF_DEATH = (1000, 1015)
 CHILD_BIRTH = (985, 998)  # before CHIEF_DEATH's first year, so an heir is always alive to take over
+# Each living head has a wife of their race and two children: race bars marriage outward, so a tribe with no women of
+# its own would have no next generation.
+WEDDING = "1016.1.1"
+WIFE_BIRTH = (985, 1000)
+KIN_BIRTH = (1017, 1021)
 
 # Starting values to tune.
 POOL = {"orc": {"duchy": 40, "kingdom": 20, "empire": 6}, "goblin": {"duchy": 40, "kingdom": 15, "empire": 4}}

@@ -25,6 +25,13 @@ aov_form_tribal_duchy_decision = {
 			text = aov_tribe_no_free_title
 			aov_tribe_has_free_title_trigger = { TIER = duchy }
 		}
+		custom_description = {
+			text = aov_tribe_would_rival_liege
+			OR = {
+				is_independent_ruler = yes
+				liege ?= { highest_held_title_tier > tier_duchy }
+			}
+		}
 	}
 
 	is_valid_showing_failures_only = {
@@ -93,6 +100,13 @@ aov_form_tribal_kingdom_decision = {
 			text = aov_tribe_no_free_title
 			aov_tribe_has_free_title_trigger = { TIER = kingdom }
 		}
+		custom_description = {
+			text = aov_tribe_would_rival_liege
+			OR = {
+				is_independent_ruler = yes
+				liege ?= { highest_held_title_tier > tier_kingdom }
+			}
+		}
 	}
 
 	is_valid_showing_failures_only = {
@@ -160,6 +174,13 @@ aov_form_tribal_empire_decision = {
 		custom_description = {
 			text = aov_tribe_no_free_title
 			aov_tribe_has_free_title_trigger = { TIER = empire }
+		}
+		custom_description = {
+			text = aov_tribe_would_rival_liege
+			OR = {
+				is_independent_ruler = yes
+				liege ?= { highest_held_title_tier > tier_empire }
+			}
 		}
 	}
 

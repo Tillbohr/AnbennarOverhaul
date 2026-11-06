@@ -203,7 +203,7 @@ class SystemTests(unittest.TestCase):
         self.assertNotIn("aov_ai_tribe_may_not_target_trigger", purge)
 
     def test_surface_rule_regions(self):
-        trigger = block(read(TRIBE_TRIGGERS), "aov_title_in_serpentspine_trigger")
+        trigger = block(read(TRIBE_TRIGGERS), "aov_province_in_serpentspine_trigger")
         for region in ("world_serpentreach", "world_west_dwarovar", "world_segbandal"):
             self.assertIn(f"geographical_region = {region}", trigger)
             self.assertTrue((MOD / "map_data/geographical_regions").glob("*"), region)

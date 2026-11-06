@@ -1,6 +1,7 @@
 ﻿l_english:
  # Anbennar Overhaul: Dwarovar tribes (docs/systems/dwarovar-tribes.md)
  aov_tribe_no_free_title:0 "Every title of this rank is already held by another tribe"
+ aov_tribe_would_rival_liege:0 "This would match your liege's rank"
  aov_form_tribal_duchy_decision:0 "Form a Warband or Chiefdom"
  aov_form_tribal_duchy_decision_desc:0 "Enough land answers to me that I can call it more than a county. The land has its own old names and its old claimants; I care for neither."
  aov_form_tribal_duchy_decision_tooltip:0 "Take a duchy-rank title named for your dynasty, on no de jure land"

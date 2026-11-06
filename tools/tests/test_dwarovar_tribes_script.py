@@ -49,10 +49,12 @@ class FormDecisionTests(unittest.TestCase):
             self.assertIn("government_has_flag = government_is_dwarovar_tribe",
                           section(self.decision(tier), "is_shown"), tier)
 
-    def test_form_decisions_independent_or_not(self):
-        # a vassal count may form a duchy; the tier gate and the county count are the only limits
+    def test_forming_a_title_cannot_free_a_vassal(self):
+        """A vassal reaching their liege's rank leaves the realm, so 250 prestige would be a free way out."""
         for tier in TIERS:
-            self.assertNotIn("is_independent_ruler", self.decision(tier), tier)
+            valid = section(self.decision(tier), "is_valid")
+            self.assertRegex(valid, rf"text = aov_tribe_would_rival_liege\s*OR = \{{\s*is_independent_ruler = yes\s*"
+                                    rf"liege \?= \{{ highest_held_title_tier > tier_{tier} \}}", tier)
 
     def test_form_decisions_need_a_free_title(self):
         for tier in TIERS:
@@ -117,7 +119,7 @@ class LocTests(unittest.TestCase):
     def test_loc_complete(self):
         loc = read("localization/english/aov_tribes_decisions_l_english.yml")
         keys = ["aov_raise_tribal_vassal_interaction", "aov_raise_tribal_vassal_interaction_desc",
-                "aov_tribe_no_free_title"]
+                "aov_tribe_no_free_title", "aov_tribe_would_rival_liege"]
         for tier in TIERS:
             base = f"aov_form_tribal_{tier}_decision"
             keys += [base, f"{base}_desc", f"{base}_tooltip", f"{base}_confirm"]

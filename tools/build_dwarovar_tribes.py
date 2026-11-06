@@ -35,6 +35,9 @@ DYNASTIES_PATH = "common/dynasties/aov_dwarovar_tribes.txt"
 ARMS_PATH = "common/coat_of_arms/coat_of_arms/aov_dwarovar_tribes.txt"
 TITLE_OVERRIDE_PATH = "common/landed_titles/zz_aov_dwarovar_tribes_overrides.txt"
 NAME_LISTS_PATH = "common/culture/name_lists/aov_tribes.txt"
+WAR_OVERRIDES_PATH = "common/casus_belli_types/zz_aov_dwarovar_tribes_overrides.txt"
+RACIAL_OVERRIDE_PATH = "common/scripted_effects/zz_aov_tribes_racial_effects.txt"
+RACIAL_SOURCE = "common/scripted_effects/anb_scripted_effects/anb_racial_effects.txt"
 GOVERNMENTS_PATH = "common/governments/aov_dwarovar_governments.txt"
 TITLES_PATH = "common/landed_titles/aov_dwarovar_tribes.txt"
 EFFECTS_PATH = "common/scripted_effects/aov_tribes_pool_effects.txt"
@@ -75,6 +78,11 @@ DECISION_KEYS = ("convert_to_feudalism_liege_converted_decision", "convert_whole
 DECISION_GATE = ("\t\tNOT = { government_has_flag = government_is_dwarovar_tribe } "
                  "# Anbennar Overhaul: Dwarovar tribes")
 IS_SHOWN = re.compile(r"^\tis_shown\s*=\s*\{\s*$")
+# The game's conquest wars are open to government_is_tribal, so they get the AI surface rule too.
+WAR_KEYS = ("county_conquest_cb", "duchy_conquest_cb", "ducal_conquest_cb", "invasion_war")
+WAR_SOURCES = ("common/casus_belli_types/00_conquest.txt", "common/casus_belli_types/00_invasion_war.txt")
+WAR_GATE = "\t\tNOT = { aov_ai_tribe_may_not_target_trigger = yes } # Anbennar Overhaul: Dwarovar tribes"
+VALID_TO_START = re.compile(r"^\tvalid_to_start\s*=\s*\{\s*$")
 
 
 def pool_keys(race: str = None, tier: str = None) -> list:
@@ -219,6 +227,68 @@ def render_decision_overrides(anbennar: Path, game: Path) -> str:
                       *([""] if variables else []), *blocks])
 
 
+def render_war_overrides(anbennar: Path) -> str:
+    """The conquest wars in WAR_KEYS copied from Anbennar, with the AI surface rule first in valid_to_start."""
+    found = {}
+    variables = []
+    for rel in WAR_SOURCES:
+        text = bp.lf((Path(anbennar) / rel).read_bytes().decode("utf-8-sig"))
+        keys = tuple(k for k in WAR_KEYS if re.search(rf"(?m)^{k}\s*=\s*\{{", text))
+        if keys:
+            bodies = brr.top_blocks(text, keys, rel)
+            found.update(bodies)
+            variables += [v for v in brr.file_variables(text, list(bodies.values())) if v not in variables]
+    missing = [k for k in WAR_KEYS if k not in found]
+    if missing:
+        raise GeneratorError(f"not in {', '.join(WAR_SOURCES)}: " + ", ".join(missing))
+    brr.check_clash(WAR_KEYS, SUBMOD, WAR_OVERRIDES_PATH)
+    blocks = []
+    for key in WAR_KEYS:
+        lines = found[key].split("\n")
+        opens = [i for i, line in enumerate(lines) if VALID_TO_START.match(line)]
+        if len(opens) != 1:
+            raise GeneratorError(f"{key} has {len(opens)} valid_to_start blocks")
+        lines.insert(opens[0] + 1, WAR_GATE)
+        blocks += ["\n".join(lines), ""]
+    return "\n".join([HEADER + "# The game's conquest wars with the AI surface rule (aov_tribes_triggers.txt).", "", *variables,
+                      *([""] if variables else []), *blocks])
+
+
+RACE_BRANCHES = """\t# Anbennar Overhaul: Dwarovar tribes
+\telse_if = {
+\t\tlimit = {
+\t\t\tculture = { has_cultural_pillar = heritage_orcish }
+\t\t}
+\t\tadd_trait = race_orc
+\t}
+\t# Anbennar Overhaul: Dwarovar tribes
+\telse_if = {
+\t\tlimit = {
+\t\t\tculture = { has_cultural_pillar = heritage_goblinoid }
+\t\t}
+\t\tadd_trait = race_goblin
+\t}
+"""
+RACE_ANCHOR = "\telse_if = {\n\t\tlimit = {\n\t\t\tis_dwarvish_culture = yes\n\t\t}\n\t\tadd_trait = race_dwarf\n\t}\n"
+
+
+def racial_override_text(source: str) -> str:
+    """Anbennar's assign_racial_trait_effect with the orc and goblin branches it has commented out, for the placeholder
+    heritages: the character templates and the yearly racial.0001 read it."""
+    text = bp.lf(source.lstrip(BOM))
+    body = brr.top_blocks(text, ("assign_racial_trait_effect",), RACIAL_SOURCE)["assign_racial_trait_effect"]
+    for gone in ("is_orcish_culture", "is_goblin_culture"):
+        if re.search(rf"(?m)^[^#\n]*\b{gone}\b", body):
+            raise GeneratorError(f"Anbennar's assign_racial_trait_effect now uses {gone}; drop this override's branch")
+    if body.count(RACE_ANCHOR) != 1:
+        raise GeneratorError("assign_racial_trait_effect no longer has its dwarven branch to insert after")
+    return HEADER + "\n" + body.replace(RACE_ANCHOR, RACE_BRANCHES + RACE_ANCHOR) + "\n"
+
+
+def render_racial_override(anbennar: Path) -> str:
+    return racial_override_text((Path(anbennar) / RACIAL_SOURCE).read_bytes().decode("utf-8-sig"))
+
+
 # --- Anbennar's Segbandal titles -------------------------------------------------------------------------------------
 
 OVERRIDDEN_EMPIRE = "e_middle_dwarovar"
@@ -331,6 +401,7 @@ class TribePeople:
         self.new_names = {}  # dynn_ key -> text
         free = {race: iter(_name_list(dt.CULTURE[race], "dynasty_names")) for race in dt.POOL}
         males = {race: _name_list(dt.CULTURE[race], "male_names") for race in dt.POOL}
+        self.females = {race: _name_list(dt.CULTURE[race], "female_names") for race in dt.POOL}
         pools = {race: iter(pool_keys(race, "duchy")) for race in dt.POOL}
         for slug, tribe in dt.TRIBES.items():
             race = tribe.race
@@ -369,8 +440,13 @@ class TribePeople:
         chars = [(elder, males[bs._hash("name:" + elder) % len(males)], bs.life_date(elder, dt.CHIEF_BIRTH),
                   bs.life_date(elder + "d", dt.CHIEF_DEATH)),
                  (child, males[bs._hash("name:" + child) % len(males)], bs.life_date(child, dt.CHILD_BIRTH), None)]
+        kin = {}
+        for suffix, names, years in (("wife", self.females[race], dt.WIFE_BIRTH), ("son", males, dt.KIN_BIRTH),
+                                     ("daughter", self.females[race], dt.KIN_BIRTH)):
+            cid = f"{child}_{suffix}"
+            kin[suffix] = (cid, names[bs._hash("name:" + cid) % len(names)], bs.life_date(cid, years))
         self.lines.append({"dynasty": dynasty, "name_key": name_key, "culture": dt.CULTURE[race], "race": race,
-                           "chars": chars})
+                           "chars": chars, "kin": kin})
 
     def line_of(self, char_id: str) -> dict:
         return next(line for line in self.lines if line["chars"][0][0] == char_id)
@@ -410,7 +486,19 @@ def render_characters(people: TribePeople) -> str:
             out.append(f"\t{birth} = {{ birth = yes }}\n")
             if death:
                 out.append(f"\t{death} = {{ death = yes }}\n")
+            if cid != elder:
+                out.append(f'\t{dt.WEDDING} = {{ add_spouse = {line["kin"]["wife"][0]} }}\n')
             out.append("}\n")
+        head = line["chars"][1][0]
+        common = (f'\treligion = "{dt.FAITH[line["race"]]}"\n\tculture = "{line["culture"]}"\n'
+                  f'\ttrait = race_{line["race"]}\n')
+        wife, wife_name, wife_birth = line["kin"]["wife"]
+        out.append(f'\n{wife} = {{\n\tname = "{wife_name}"\n\tfemale = yes\n{common}\t{wife_birth} = {{ birth = yes }}\n}}\n')
+        for suffix in ("son", "daughter"):
+            cid, name, birth = line["kin"][suffix]
+            female = "\tfemale = yes\n" if suffix == "daughter" else ""
+            out.append(f'\n{cid} = {{\n\tname = "{name}"\n{female}\tdynasty = {line["dynasty"]}\n{common}'
+                       f'\tfather = {head}\n\tmother = {wife}\n\t{birth} = {{ birth = yes }}\n}}\n')
     return "".join(out)
 
 
@@ -475,6 +563,7 @@ def build_all(anbennar: Path = ANBENNAR, game: Path = GAME, lays=None) -> dict:
         raise GeneratorError(f"flag emblems missing from {bs.EMBLEM_DIR}: {', '.join(missing)}")
     texts = {GOVERNMENTS_PATH: render_governments(source), TITLES_PATH: render_pool_titles(),
              TITLE_OVERRIDE_PATH: render_title_override(anbennar), TITLE_HISTORY_PATH: render_title_history(people),
+             WAR_OVERRIDES_PATH: render_war_overrides(anbennar), RACIAL_OVERRIDE_PATH: render_racial_override(anbennar),
              CHARACTERS_PATH: render_characters(people), DYNASTIES_PATH: render_dynasties(people),
              ARMS_PATH: render_arms(people),
              EFFECTS_PATH: render_pool_effects(), TRIGGERS_PATH: render_pool_triggers(), VALUES_PATH: render_values(),

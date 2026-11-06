@@ -325,6 +325,123 @@ class OnTheMapTests(unittest.TestCase):
                               for lay in self.lays])
 
 
+class RaceTraitTests(unittest.TestCase):
+    """Anbennar's assign_racial_trait_effect has its orc and goblin branches commented out, so a generated orc would stay
+    traitless: civilised, unable to marry orcs, and destroying any pool title reaching them."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.text = bdt.render_racial_override(bdt.ANBENNAR)
+        cls.body = blocks(cls.text)["assign_racial_trait_effect"]
+
+    def test_both_heritages_get_their_trait(self):
+        self.assertRegex(self.body, r"else_if = \{\s*limit = \{\s*culture = \{ has_cultural_pillar = heritage_orcish \}\s*\}\s*add_trait = race_orc")
+        self.assertRegex(self.body, r"else_if = \{\s*limit = \{\s*culture = \{ has_cultural_pillar = heritage_goblinoid \}\s*\}\s*add_trait = race_goblin")
+
+    def test_every_tribe_culture_is_covered(self):
+        cultures = blocks(read("common/culture/cultures/aov_tribes_cultures.txt"))
+        for race, culture in dt.CULTURE.items():
+            heritage = re.search(r"heritage = (\w+)", cultures[culture]).group(1)
+            self.assertRegex(self.body, rf"has_cultural_pillar = {heritage} \}}\s*\}}\s*add_trait = race_{race}", culture)
+
+    def test_rest_of_the_effect_is_anbennars(self):
+        source = (bdt.ANBENNAR / bdt.RACIAL_SOURCE).read_text(encoding="utf-8-sig")
+        restored = re.sub(r"(?ms)^\t# Anbennar Overhaul: Dwarovar tribes\n\telse_if = \{\n.*?^\t\}\n", "", self.text)
+        self.assertEqual(blocks(restored)["assign_racial_trait_effect"], blocks(source)["assign_racial_trait_effect"])
+
+    def test_anbennar_enabling_its_branch_stops(self):
+        source = (bdt.ANBENNAR / bdt.RACIAL_SOURCE).read_text(encoding="utf-8-sig")
+        enabled = source.replace("# is_orcish_culture = yes", "is_orcish_culture = yes", 1)
+        with self.assertRaisesRegex(GeneratorError, "is_orcish_culture"):
+            bdt.racial_override_text(enabled)
+
+    def test_game_start_assigns_generated_characters(self):
+        start = blocks(read("common/on_action/aov_tribes_on_actions.txt"))["aov_tribe_game_start"]
+        self.assertRegex(start, r"every_living_character = \{\s*limit = \{\s*NOT = \{ has_racial_trait = yes \}")
+        self.assertIn("has_cultural_pillar = heritage_orcish", start)
+        self.assertIn("has_cultural_pillar = heritage_goblinoid", start)
+        self.assertIn("assign_racial_trait_effect = yes", start)
+
+
+class KinTests(unittest.TestCase):
+    """Marriage across races is barred, so a tribe with no women of its own has no next generation."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.people = bdt.TribePeople(shared_trace.layouts()[0])
+        cls.characters = bdt.render_characters(cls.people)
+
+    def char(self, cid):
+        return re.search(rf"(?ms)^{cid} = \{{\n(.*?)^\}}", self.characters).group(1)
+
+    def test_every_living_head_has_a_wife_and_children(self):
+        self.assertEqual(self.characters.count("_wife = {"), len(self.people.lines))
+        self.assertEqual(self.characters.count("_son = {"), len(self.people.lines))
+        self.assertEqual(self.characters.count("_daughter = {"), len(self.people.lines))
+
+    def test_wife_is_a_woman_of_the_race_married_to_the_head(self):
+        head, wife = "aov_tr_amldihr_orcs_chief_2", "aov_tr_amldihr_orcs_chief_2_wife"
+        self.assertIn("female = yes", self.char(wife))
+        self.assertIn("trait = race_orc", self.char(wife))
+        self.assertIn('culture = "black_orc"', self.char(wife))
+        self.assertRegex(self.char(head), rf"{bdt.dt.WEDDING} = \{{ add_spouse = {wife} \}}")
+        self.assertIn("female = yes", self.char("aov_tr_skomdihr_goblins_chief_2_wife"))
+        self.assertIn("trait = race_goblin", self.char("aov_tr_skomdihr_goblins_chief_2_wife"))
+
+    def test_children_carry_the_dynasty_and_both_parents(self):
+        for kin, female in (("son", False), ("daughter", True)):
+            child = self.char(f"aov_tr_amldihr_orcs_chief_2_{kin}")
+            self.assertIn("dynasty = aov_tr_dynasty_amldihr_orcs", child)
+            self.assertIn("father = aov_tr_amldihr_orcs_chief_2\n", child)
+            self.assertIn("mother = aov_tr_amldihr_orcs_chief_2_wife\n", child)
+            self.assertEqual("female = yes" in child, female)
+
+    def test_dates_are_in_order(self):
+        def year(text):
+            return int(re.search(r"(\d+)\.\d+\.\d+ = \{ birth", text).group(1))
+        for line in self.people.lines:
+            head = line["chars"][1][0]
+            wedding = int(dt.WEDDING.split(".")[0])
+            self.assertLess(year(self.char(head)), wedding - 15, head)
+            self.assertLess(year(self.char(f"{head}_wife")), wedding - 15, head)
+            self.assertGreater(year(self.char(f"{head}_son")), wedding, head)
+            self.assertLess(year(self.char(f"{head}_son")), 1022, head)
+
+
+class ConquestWarTests(unittest.TestCase):
+    """can_use_conquest_cbs_trigger accepts government_is_tribal, so the game's conquest wars reach the surface too."""
+
+    KEYS = ("county_conquest_cb", "duchy_conquest_cb", "ducal_conquest_cb", "invasion_war")
+
+    @classmethod
+    def setUpClass(cls):
+        cls.text = bdt.render_war_overrides(bdt.ANBENNAR)
+        cls.wars = blocks(cls.text)
+
+    def test_every_conquest_war_refuses_ai_tribes_on_the_surface(self):
+        self.assertEqual(set(self.wars), set(self.KEYS))
+        for key, body in self.wars.items():
+            valid = re.search(r"(?m)^\tvalid_to_start = \{\n(.*)", body, re.S).group(1)
+            self.assertTrue(valid.startswith("\t\tNOT = { aov_ai_tribe_may_not_target_trigger = yes }"), key)
+
+    def test_rest_of_each_war_is_anbennars(self):
+        restored = re.sub(r"\t\tNOT = \{ aov_ai_tribe_may_not_target_trigger = yes \}[^\n]*\n", "", self.text)
+        source = "".join((bdt.ANBENNAR / "common/casus_belli_types" / f).read_text(encoding="utf-8-sig")
+                         for f in ("00_conquest.txt", "00_invasion_war.txt"))
+        for key, body in blocks(restored).items():
+            self.assertEqual(body, blocks(source)[key], key)
+
+    def test_rule_reads_any_tier_of_title(self):
+        trigger = blocks(read("common/scripted_triggers/aov_tribes_triggers.txt"))["aov_title_in_serpentspine_trigger"]
+        self.assertIn("limit = { tier = tier_county }", trigger)
+        self.assertIn("title_capital_county", trigger)
+
+    def test_missing_war_stops(self):
+        with mock.patch.object(bdt, "WAR_KEYS", ("no_such_war",)):
+            with self.assertRaisesRegex(GeneratorError, "no_such_war"):
+                bdt.render_war_overrides(bdt.ANBENNAR)
+
+
 class AnbennarTitleOverrideTests(unittest.TestCase):
     """Test round 4: redefining a title clears its own fields, so the override repeats them, nested as in Anbennar."""
 

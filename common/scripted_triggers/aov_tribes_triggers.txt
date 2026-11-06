@@ -1,13 +1,21 @@
 ﻿# Anbennar Overhaul: Dwarovar tribes (docs/systems/dwarovar-tribes.md).
 
-# County title scope: inside the carved Serpentspine.
+aov_province_in_serpentspine_trigger = {
+	OR = {
+		geographical_region = world_serpentreach
+		geographical_region = world_west_dwarovar
+		geographical_region = world_segbandal
+	}
+}
+
+# Title scope, any tier: the title's capital is inside the carved Serpentspine.
 aov_title_in_serpentspine_trigger = {
-	title_province = {
-		OR = {
-			geographical_region = world_serpentreach
-			geographical_region = world_west_dwarovar
-			geographical_region = world_segbandal
-		}
+	trigger_if = {
+		limit = { tier = tier_county }
+		title_province = { aov_province_in_serpentspine_trigger = yes }
+	}
+	trigger_else = {
+		title_capital_county.title_province = { aov_province_in_serpentspine_trigger = yes }
 	}
 }
 
