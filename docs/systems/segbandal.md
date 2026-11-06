@@ -62,9 +62,9 @@ Imported once (no generator): `gfx/coat_of_arms/textured_emblems/aov_gor_vazumbr
   blue (58 39 236); `k_gor_ozumbrog`, `d_gor_ozumbrog` and `c_gor_ozumbrog` I17's flag on its dark grey (56 57 56);
   `d_hehorod` a one-arch bridge (the road to Hehodovar) and `d_xazorod` an empty gem socket (the road past the Pit of
   Xazor), each on its Anbennar map colour. The build stops if Anbennar ever scripts arms for any of these keys.
-- **Gor Vazumbrog** is a dwarven hold (`tools/data/holds.py`, level 2, not ruined); its options 16 in the hand-written
-  delve and ruin pickers (`events/aov_hold_delve_events.txt`, `events/aov_hold_ruin_events.txt`,
-  `common/decisions/aov_hold_decisions.txt` and their loc) were added by copying option 15.
+- **Gor Vazumbrog** is a dwarven hold (`tools/data/holds.py`, level 2); its options 16 in the hand-written
+  delve picker (`events/aov_hold_delve_events.txt`, `common/decisions/aov_hold_decisions.txt` and their loc) were
+  added by copying option 15.
 - **Look:** Segbandal's carve (`map-graphics.md`, carved ranges) covers the new floors too; Steamsource is painted
   `volcanic`, Deep One's Lair `mushroom` (moss), Ulagom `garnet` (red canyon), the rest Serpentreach's `default`
   (`AREA_STYLES`). Preview: `art_work/segbandal_reworked_preview.png` (git-ignored).

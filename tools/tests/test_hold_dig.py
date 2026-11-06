@@ -71,7 +71,7 @@ class HoldDigTests(unittest.TestCase):
     def test_can_dig_needs_level_below_ten(self):
         self.assertIn("aov_can_start_dig_base = yes", trigger_block("aov_can_dig_at"))
         t = trigger_block("aov_can_start_dig_base")
-        self.assertIn("aov_hold_is_working = yes", t)
+        self.assertIn("aov_is_hold = yes", t)
         self.assertIn("aov_hold_level < 10", t)
         self.assertRegex(t, r"NOT = \{ aov_hold_dig_running = yes \}")
         self.assertIn("barony.holder = scope:digger", t)
@@ -102,8 +102,7 @@ class HoldDigTests(unittest.TestCase):
         self.assertIn("aov_dig_progress < 0", e)
         self.assertIn("aov_hold_check_dig_complete_effect = yes", e)
 
-    def test_ruin_ends_dig(self):
-        self.assertIn("aov_hold_end_dig_effect = yes", effect_block("aov_hold_ruin_effect"))
+    def test_end_dig_clears_the_dig(self):
         end = effect_block("aov_hold_end_dig_effect")
         self.assertIn("remove_variable = aov_dig_progress", end)
         self.assertIn("remove_variable = aov_dig_target_level", end)
@@ -150,13 +149,6 @@ class HoldDigTests(unittest.TestCase):
             line = re.search(rf"^ aov_delve_deeper_cost_{n}:0 \"(.*)\"$", loc, re.M).group(1)
             self.assertIn("ScriptValue('aov_dig_cost')", line)
         self.assertIn(" aov_delve_deeper_no_gold:0 ", loc)
-
-    def test_ruin_event_tells_of_a_lost_dig(self):
-        e = effect_block("aov_hold_ruin_effect")
-        self.assertRegex(e, r"limit = \{ aov_hold_dig_running = yes \}\s*save_scope_value_as = \{ name = aov_lost_dig")
-        self.assertLess(e.index("aov_lost_dig"), e.index("aov_hold_end_dig_effect"))
-        self.assertIn("scope:aov_lost_dig", read("events/aov_hold_ruin_events.txt"))
-        self.assertIn(" aov_hold_ruin.1.desc.lost_dig:0 ", read("localization/english/aov_hold_ruin_l_english.yml"))
 
     def test_picker_excludes_running_digs(self):
         ev = event_block("aov_hold_delve.1")

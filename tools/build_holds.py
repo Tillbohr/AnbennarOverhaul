@@ -60,17 +60,12 @@ def castle_assets(root: Path):
     return variables, {k: v for k, v in assets.items() if k in set(holds.ASSET_BAND.values())}
 
 
-def fmt(x):
-    return f"{x:g}" if isinstance(x, float) else str(x)
-
-
 def level_key(n):
     return f"dwarven_hold_{n:02d}"
 
 
-# The hold levels work only under a dwarven holder in an unruined hold.
-IS_ENABLED = ("\tis_enabled = {\n\t\tscope:holder = {\n\t\t\tis_dwarvish_culture = yes\n\t\t}\n"
-              "\t\tNOT = { has_variable = aov_hold_ruined }\n\t}\n\n")
+# The hold levels work only under a dwarven holder.
+IS_ENABLED = "\tis_enabled = {\n\t\tscope:holder = {\n\t\t\tis_dwarvish_culture = yes\n\t\t}\n\t}\n\n"
 
 
 def dwarf_asset(n, castle_lines, fallback, regions, provinces):
@@ -151,11 +146,7 @@ HOLDING_LOC = [
 
 
 def render_modifiers() -> str:
-    ruined = "".join(f"\t{k} = {fmt(v)}\n" for k, v in holds.RUINED_MODIFIER.items())
     return (HEADER + "\n"
-            f"aov_ruined_hold = {{\n\ticon = economy_negative\n{ruined}}}\n\n"
-            "# Province modifier while a ruined hold is being restored; the effects come from the restoration.\n"
-            "aov_restoring_hold = {\n\ticon = economy_positive\n}\n\n"
             "# County modifier from a rich vein found while digging.\n"
             "aov_hold_rich_vein = {\n\ticon = economy_positive\n\ttax_mult = 0.1\n}\n\n"
             "# Province modifier while a dig to that level is under way; it has no effects.\n"
@@ -169,9 +160,6 @@ def render_setup() -> str:
                  "\t\tset_holding_type = dwarven_hold_holding"]
         lines += [f"\t\tadd_building = {level_key(n)}" for n in range(2, h["start_level"] + 1)]
         lines.append("\t\tset_variable = { name = aov_dig_progress value = 0 }")
-        if h["ruined"]:
-            lines += ["\t\tset_variable = aov_hold_ruined",
-                      "\t\tcounty = { add_county_modifier = { modifier = aov_ruined_hold } }"]
         lines.append("\t}")
         blocks.append("\n".join(lines))
     return (HEADER + "\n# Converts the dwarven holds at game start. Special buildings are left alone.\n"
@@ -180,11 +168,7 @@ def render_setup() -> str:
 
 def loc_lines():
     out = list(HOLDING_LOC)
-    out += [' aov_ruined_hold:0 "Ruined Hold"',
-            ' aov_ruined_hold_desc:0 "The halls lie broken and empty, and the county gains little from them."',
-            ' aov_restoring_hold:0 "Hold Under Restoration"',
-            ' aov_restoring_hold_desc:0 "Dwarven masons are clearing and rebuilding the halls of this hold."',
-            ' aov_hold_rich_vein:0 "Rich Vein"',
+    out += [' aov_hold_rich_vein:0 "Rich Vein"',
             ' aov_hold_rich_vein_desc:0 "The diggers struck a rich vein of ore."']
     for n in range(2, 11):
         out += [f' aov_delving_{n:02d}:0 "Delving to Level {n}"',

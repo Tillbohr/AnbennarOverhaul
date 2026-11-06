@@ -850,12 +850,9 @@ class ArtTests(unittest.TestCase):
         self.assertNotIn('texture = "[', gui)
         self.assertEqual(gui.count("{"), gui.count("}"))
 
-    def test_monument_painting_before_ruined_entry(self):
+    def test_monument_painting_before_terrain_art(self):
         cl = bm.render_shared()[bm.SHARED]
-        self.assertLess(cl.index("aov_monument_art_khugdihr_bank"), cl.index("aov_monument_art_ruined_hold"))
-        self.assertLess(cl.index("aov_monument_art_ruined_hold"), cl.index("fallback = yes"))
-        self.assertIn("aov_hold_is_ruined = yes", cl)
-        self.assertEqual(bm.render_shared()[bm.SHARED_LOC].count(" aov_monument_art_ruined_hold:"), 1)
+        self.assertLess(cl.index("aov_monument_art_khugdihr_bank"), cl.index("aov_monument_art_terrain_dwarven_hold"))
 
     def test_eu4_terrain_art_by_title(self):
         """EU4-only terrains (ancient forest) show on built holdings in the titles matched to EU4's provinces; every
@@ -875,13 +872,12 @@ class ArtTests(unittest.TestCase):
 
     def test_dwarven_terrain_art_for_built_holdings(self):
         """A built holding on a dwarven terrain shows its EU4 terrain picture (ours upscaled 4x, else Anbennar's)
-        instead of vanilla's castle art, drawn like the vanilla illustration; a ruined hold keeps its picture."""
+        instead of vanilla's castle art, drawn like the vanilla illustration."""
         cl = bm.render_shared()[bm.SHARED]
         gui = "\n".join(bm.painting_backgrounds(bm.all_monuments()))
         for t in ("dwarven_hold", "dwarven_hold_surface", "cavern", "dwarven_road"):
             self.assertIn(f"\t\t\thas_holding = yes\n\t\t\tterrain = {t}\n\t\t}}\n"
                           f"\t\tlocalization_key = aov_monument_art_terrain_{t}", cl)
-            self.assertLess(cl.index("aov_monument_art_ruined_hold"), cl.index(f"aov_monument_art_terrain_{t}"))
             self.assertLess(cl.index(f"aov_monument_art_terrain_{t}"), cl.index("fallback = yes"))
             block = gui[gui.index(f"Localize('aov_monument_art_terrain_{t}')"):]
             block = block[:block.index("\n}")]
@@ -899,11 +895,6 @@ class ArtTests(unittest.TestCase):
                 with self.assertRaises(bm.GeneratorError):
                     bm.check_extra_art([], roots=(bm.SUBMOD, bm.SUBMOD, bm.SUBMOD))
         bm.check_extra_art(bm.all_monuments())
-
-    def test_ruined_background_uses_vanilla_art(self):
-        gui = "\n".join(bm.painting_backgrounds(bm.all_monuments()))
-        self.assertIn('texture = "gfx/interface/illustrations/event_scenes/tgp_ruined_holding.dds"', gui)
-        self.assertIn("Localize('aov_monument_art_ruined_hold')", gui)
 
 @unittest.skipUnless(LIVE, "needs Anbennar CK3")
 class RegionTests(unittest.TestCase):

@@ -7,9 +7,9 @@ docs/superpowers/specs/2026-10-17-rie-dwarves-design.md (Section 2)
 """
 
 
-def _hold(name, eu4_province, title, barony, start_level, ruined=False):
+def _hold(name, eu4_province, title, barony, start_level):
     return {"name": name, "eu4_province": eu4_province, "title": title, "barony": barony,
-            "start_level": start_level, "ruined": ruined}
+            "start_level": start_level}
 
 
 HOLDS = [
@@ -21,7 +21,7 @@ HOLDS = [
     _hold("Rubyhold", 62, "c_rubyhold", "b_hul_az_amekh", 2),
     _hold("Hehodovar", 4078, "c_hehodovar", "b_kar_hargun", 2),
     _hold("Gor Ozumbrog", 4218, "c_gor_ozumbrog", "b_topazhjardan", 2),
-    _hold("Khugdihr", 2863, "c_khugdihr", "b_aghatehargun", 1, ruined=True),
+    _hold("Khugdihr", 2863, "c_khugdihr", "b_aghatehargun", 1),
     # Serpentreach (tools/build_serpentreach.py makes these titles)
     _hold("Arg-Ôrdstun", 4093, "c_arg_ordstun", "b_arg_ordstun", 2),
     _hold("Ovdal Lodhum", 2973, "c_ovdal_lodhum", "b_ovdal_lodhum", 2),
@@ -53,8 +53,5 @@ def dig_months(target):
     return 12 * (8 + 4 * (target - 1))
 
 
-RESTORE = {"gold": 300, "prestige": 200, "years": 5}
-RUINED_MODIFIER = {"tax_mult": -0.5, "development_growth_factor": -0.5, "levy_size": -0.5}
 ASSET_BAND = {1: "castle_01", 2: "castle_01", 3: "castle_02", 4: "castle_02", 5: "castle_03", 6: "castle_03",
               7: "castle_03", 8: "castle_04", 9: "castle_04", 10: "castle_04"}
-RUINED_ART = "gfx/interface/illustrations/event_scenes/tgp_ruined_holding.dds"

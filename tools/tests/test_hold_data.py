@@ -8,10 +8,24 @@ from data import holds  # noqa: E402
 
 ANBENNAR_CK3 = pdx_script.ANBENNAR_CK3
 LIVE = ANBENNAR_CK3.is_dir()
+RUIN_NAMES = ("aov_hold_ruined", "aov_hold_is_ruined", "aov_hold_is_working", "aov_clear_ruins_decision",
+              "aov_hold_ruin", "aov_ruined_hold", "aov_restoring_hold", "aov_restore_pending",
+              "aov_hold_begin_restoration_effect", "ruined_hold")
 
 
 class HoldDataTests(unittest.TestCase):
-    def test_twenty_four_holds_one_ruined(self):
+    def test_no_ruin_names_left(self):
+        """The ruined holds mechanic is gone from script, interface, localization and tools."""
+        root = Path(__file__).resolve().parents[2]
+        here = Path(__file__).resolve()
+        files = [p for top, suffixes in (("common", {".txt"}), ("events", {".txt"}), ("gui", {".gui"}),
+                                         ("localization", {".yml"}), ("tools", {".py"}))
+                 for p in (root / top).rglob("*") if p.suffix in suffixes and p != here]
+        found = sorted(str(p.relative_to(root)) for p in files
+                       if any(n in p.read_text(encoding="utf-8-sig", errors="replace") for n in RUIN_NAMES))
+        self.assertEqual(found, [])
+
+    def test_twenty_four_holds(self):
         self.assertEqual(len(holds.HOLDS), 24)
         rows = [(h["name"], h["eu4_province"], h["title"], h["barony"], h["start_level"]) for h in holds.HOLDS]
         self.assertIn(("Gor Vazumbrog", 4217, "c_gor_vazumbrog", "b_gor_vazumbrog", 2), rows)
@@ -24,7 +38,6 @@ class HoldDataTests(unittest.TestCase):
             ("Hul-Jorkad", 2963, "c_hul_jorkad", "b_hul_jorkad", 1),
             ("Orlazam-az-dihr", 4147, "c_orlazam_az_dihr", "b_orlazam_az_dihr", 1),
             ("Dûr-Vazhatun", 4020, "c_dur_vazhatun", "b_dur_vazhatun", 1)])
-        self.assertEqual([h["name"] for h in holds.HOLDS if h["ruined"]], ["Khugdihr"])
 
     @unittest.skipUnless(LIVE, "needs Anbennar CK3")
     def test_titles_and_baronies_exist(self):

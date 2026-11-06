@@ -17,7 +17,7 @@ aov_hold_dig_yearly = {
 			limit = {
 				tier = tier_barony
 				title_province ?= {
-					aov_hold_is_working = yes
+					aov_is_hold = yes
 					aov_hold_dig_running = yes
 					is_occupied = no
 				}

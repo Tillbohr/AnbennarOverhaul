@@ -52,8 +52,6 @@ aov_hold_setup_effect = {
 	title:b_aghatehargun.title_province = {
 		set_holding_type = dwarven_hold_holding
 		set_variable = { name = aov_dig_progress value = 0 }
-		set_variable = aov_hold_ruined
-		county = { add_county_modifier = { modifier = aov_ruined_hold } }
 	}
 	# Arg-Ôrdstun
 	title:b_arg_ordstun.title_province = {

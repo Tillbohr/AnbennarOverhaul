@@ -362,7 +362,6 @@ dwarven_hold_01 = {
 		scope:holder = {
 			is_dwarvish_culture = yes
 		}
-		NOT = { has_variable = aov_hold_ruined }
 	}
 
 	cost_gold = main_building_tier_1_cost
@@ -743,7 +742,6 @@ dwarven_hold_02 = {
 		scope:holder = {
 			is_dwarvish_culture = yes
 		}
-		NOT = { has_variable = aov_hold_ruined }
 	}
 
 	cost_gold = main_building_tier_1_cost
@@ -1112,7 +1110,6 @@ dwarven_hold_03 = {
 		scope:holder = {
 			is_dwarvish_culture = yes
 		}
-		NOT = { has_variable = aov_hold_ruined }
 	}
 
 	cost_gold = main_building_tier_1_cost
@@ -1482,7 +1479,6 @@ dwarven_hold_04 = {
 		scope:holder = {
 			is_dwarvish_culture = yes
 		}
-		NOT = { has_variable = aov_hold_ruined }
 	}
 
 	cost_gold = main_building_tier_1_cost
@@ -1858,7 +1854,6 @@ dwarven_hold_05 = {
 		scope:holder = {
 			is_dwarvish_culture = yes
 		}
-		NOT = { has_variable = aov_hold_ruined }
 	}
 
 	cost_gold = main_building_tier_1_cost
@@ -2234,7 +2229,6 @@ dwarven_hold_06 = {
 		scope:holder = {
 			is_dwarvish_culture = yes
 		}
-		NOT = { has_variable = aov_hold_ruined }
 	}
 
 	cost_gold = main_building_tier_1_cost
@@ -2610,7 +2604,6 @@ dwarven_hold_07 = {
 		scope:holder = {
 			is_dwarvish_culture = yes
 		}
-		NOT = { has_variable = aov_hold_ruined }
 	}
 
 	cost_gold = main_building_tier_1_cost
@@ -2986,7 +2979,6 @@ dwarven_hold_08 = {
 		scope:holder = {
 			is_dwarvish_culture = yes
 		}
-		NOT = { has_variable = aov_hold_ruined }
 	}
 
 	cost_gold = main_building_tier_1_cost
@@ -3367,7 +3359,6 @@ dwarven_hold_09 = {
 		scope:holder = {
 			is_dwarvish_culture = yes
 		}
-		NOT = { has_variable = aov_hold_ruined }
 	}
 
 	cost_gold = main_building_tier_1_cost
@@ -3748,7 +3739,6 @@ dwarven_hold_10 = {
 		scope:holder = {
 			is_dwarvish_culture = yes
 		}
-		NOT = { has_variable = aov_hold_ruined }
 	}
 
 	cost_gold = main_building_tier_1_cost

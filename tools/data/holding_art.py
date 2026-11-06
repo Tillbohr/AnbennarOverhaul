@@ -17,8 +17,6 @@ e.g. "has_holding = yes\nbarony.holder ?= { culture = { has_clothing_gfx = aov_l
 (the wood elf key of tools/data/portraits.py). Put an entry that should beat a broader one (a terrain) before it.
 """
 
-from data import holds
-
 # Anbennar ships an EU4 picture for each dwarven terrain (gfx/interface/illustrations/terrain_types/<terrain>.dds),
 # shown for an empty holding; a built holding there shows it too instead of vanilla's castle or city art. Ours in
 # aov_terrain/ are EU4's province-view terrain pictures (330x85) upscaled 4x outside (Upscayl standard 4x).
@@ -63,8 +61,6 @@ def titles_trigger(titles: tuple) -> str:
 
 
 HOLDING_ART = [
-    {"key": "ruined_hold", "trigger": "aov_hold_is_ruined = yes", "texture": holds.RUINED_ART, "style": "painting"},
-] + [
     {"key": f"terrain_{t}", "trigger": f"has_holding = yes\nterrain = {t}",
      "texture": terrain_texture(t), "style": "illustration"}
     for t in TERRAIN_ART
