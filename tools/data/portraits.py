@@ -147,3 +147,81 @@ EXTRA_ENTRIES = {
                 "portrait_aov_lasgalendrim_clothing_trigger = yes }"]),
     ],
 }
+
+
+# Templates added to Anbennar's gene files that are not copied from RiE: gene -> template -> body without its index
+# (build_genes gives each a free index). Elder Kings 2's orc lists, Workshop 2887120253 (docs/systems/orc-portraits.md):
+# every accessory is Anbennar's or the game's, and the build stops if one disappears.
+EXTRA_TEMPLATES = {
+    "hairstyles": {
+        "orc_hairstyles": (
+            "\t\t\t\tmale = {\n"
+            "\t\t\t\t\t1 = male_hair_western_02\n"
+            "\t\t\t\t\t1 = male_hair_western_03\n"
+            "\t\t\t\t\t1 = male_hair_western_04\n"
+            "\t\t\t\t\t1 = male_hair_mena_01\n"
+            "\t\t\t\t\t1 = male_hair_mena_03\n"
+            "\t\t\t\t\t1 = male_hair_mena_04\n"
+            "\t\t\t\t\t1 = male_hair_sub_saharan_01\n"
+            "\t\t\t\t\t1 = male_hair_sub_saharan_02\n"
+            "\t\t\t\t\t1 = male_hair_rtt_01\n"
+            "\t\t\t\t\t1 = male_hair_steppe_01\n"
+            "\t\t\t\t\t1 = male_hair_steppe_02\n"
+            "\t\t\t\t\t1 = male_hair_indian_03\n"
+            "\t\t\t\t\t1 = male_hair_northern_01\n"
+            "\t\t\t\t\t1 = male_hair_northern_02\n"
+            "\t\t\t\t\t1 = male_hair_northern_03\n"
+            "\t\t\t\t\t1 = male_hair_fp1_02\n"
+            "\t\t\t\t\t1 = male_hair_fp1_03\n"
+            "\t\t\t\t\t1 = male_hair_fp1_04\n"
+            "\t\t\t\t\t1 = male_hair_fp1_05\n"
+            "\t\t\t\t\t1 = male_hair_fp1_08\n"
+            "\t\t\t\t\t1 = male_hair_fp1_09\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tfemale = {\n"
+            "\t\t\t\t\t1 = female_hair_western_02\n"
+            "\t\t\t\t\t1 = female_hair_western_05\n"
+            "\t\t\t\t\t1 = female_hair_western_09\n"
+            "\t\t\t\t\t1 = female_hair_western_10\n"
+            "\t\t\t\t\t1 = female_hair_byzantine_01\n"
+            "\t\t\t\t\t1 = female_hair_sub_saharan_02\n"
+            "\t\t\t\t\t1 = female_hair_rtt_01\n"
+            "\t\t\t\t\t1 = female_hair_rtt_02\n"
+            "\t\t\t\t\t1 = female_hair_rtt_02_milla\n"
+            "\t\t\t\t\t1 = female_hair_northern_01\n"
+            "\t\t\t\t\t1 = female_hair_northern_02\n"
+            "\t\t\t\t\t1 = female_hair_northern_03\n"
+            "\t\t\t\t\t1 = female_hair_steppe_01\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tboy = male\n"
+            "\t\t\t\tgirl = female\n"
+        ),
+    },
+    "beards": {
+        "orc_beards": (
+            "\t\t\t\tmale = {\n"
+            "\t\t\t\t\t2 = male_beard_western_01\n"
+            "\t\t\t\t\t2 = male_beard_western_02\n"
+            "\t\t\t\t\t2 = male_beard_western_03\n"
+            "\t\t\t\t\t2 = male_beard_western_04\n"
+            "\t\t\t\t\t2 = male_beard_western_07\n"
+            "\t\t\t\t\t1 = male_beard_western_08\n"
+            "\t\t\t\t\t1 = male_beard_western_09\n"
+            "\t\t\t\t\t1 = male_beard_mena_01\n"
+            "\t\t\t\t\t2 = male_beard_mena_04\n"
+            "\t\t\t\t\t1 = male_beard_northern_01\n"
+            "\t\t\t\t\t2 = male_beard_northern_02\n"
+            "\t\t\t\t\t2 = male_beard_northern_03\n"
+            "\t\t\t\t\t1 = male_beard_steppe_02\n"
+            "\t\t\t\t\t2 = male_beard_sub_saharan_01\n"
+            "\t\t\t\t\t1 = male_beard_sub_saharan_02\n"
+            "\t\t\t\t\t1 = male_beard_sub_saharan_03\n"
+            "\t\t\t\t\t1 = male_beard_indian_02\n"
+            "\t\t\t\t\t1 = male_beard_indian_03\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tfemale = {\n"
+            "\t\t\t\t\t1 = empty\n"
+            "\t\t\t\t}\n"
+        ),
+    },
+}

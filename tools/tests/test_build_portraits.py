@@ -180,6 +180,57 @@ class GeneTests(unittest.TestCase):
             with self.assertRaises(bp.GeneratorError):
                 bp.build_genes(roots, _entries("nowhere"))
 
+    def _roots_with_accessories(self, tmp):
+        roots = self._roots(tmp)
+        folder = roots.anbennar / "gfx/portraits/accessories"
+        folder.mkdir(parents=True)
+        (folder / "x.txt").write_text("keep_acc = {\n}\nmine_acc = {\n}\n", "utf-8", newline="")
+        return roots
+
+    EXTRA = {"clothes": {"mine": "\t\t\t\tmale = { 1 = mine_acc }\n"}}
+
+    def test_extra_template_goes_in_under_its_own_marker_at_a_free_index(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            roots = self._roots_with_accessories(tmp)
+            bp._texts.cache_clear()
+            files, accessories, _notes = bp.build_genes(roots, _entries("new_one"), extra_templates=self.EXTRA)
+        text = files[f"{bp.GENES_DIR}/05_clothes.txt"].decode("utf-8")
+        self.assertIn("\t\t# Anbennar Overhaul: other templates (tools/data/portraits.py)\n"
+                      "\t\t\tmine = {\n\t\t\t\tindex = 3\n\t\t\t\tmale = { 1 = mine_acc }\n\t\t\t}\n"
+                      "\t\t# Anbennar Overhaul: end of other templates\n", text)
+        self.assertIn("new_one = {\n\t\t\t\tindex = 1\n", text)  # the RiE template keeps the lowest free index
+        self.assertNotIn("mine_acc", accessories)  # Anbennar's accessory, not copied from RiE
+
+    def test_extra_template_alone_writes_its_gene_file(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            roots = self._roots_with_accessories(tmp)
+            bp._texts.cache_clear()
+            files, _accessories, _notes = bp.build_genes(roots, _entries("keep"), extra_templates=self.EXTRA)
+        self.assertIn("mine = {\n\t\t\t\tindex = 1\n", files[f"{bp.GENES_DIR}/05_clothes.txt"].decode("utf-8"))
+
+    def test_extra_template_naming_a_missing_accessory_raises(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            roots = self._roots_with_accessories(tmp)
+            bp._texts.cache_clear()
+            with self.assertRaisesRegex(bp.GeneratorError, "gone_acc"):
+                bp.build_genes(roots, _entries("keep"),
+                               extra_templates={"clothes": {"mine": "\t\t\t\tmale = { 1 = gone_acc }\n"}})
+
+    def test_extra_template_that_already_exists_raises(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            roots = self._roots_with_accessories(tmp)
+            bp._texts.cache_clear()
+            with self.assertRaisesRegex(bp.GeneratorError, "other"):
+                bp.build_genes(roots, _entries("keep"),
+                               extra_templates={"clothes": {"other": "\t\t\t\tmale = { 1 = mine_acc }\n"}})
+
+    def test_extra_template_for_an_unknown_gene_raises(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            roots = self._roots_with_accessories(tmp)
+            bp._texts.cache_clear()
+            with self.assertRaisesRegex(bp.GeneratorError, "nowhere"):
+                bp.build_genes(roots, _entries("keep"), extra_templates={"nowhere": {"mine": "\t\t\t\tmale = {}\n"}})
+
     def tearDown(self):
         bp._texts.cache_clear()
 
@@ -227,6 +278,31 @@ class RealTests(unittest.TestCase):
     def setUpClass(cls):
         cls.notes = []
         cls.files = bp.build_all(REAL, cls.notes)
+
+    @staticmethod
+    def _template_accessories(text: str, gene_marker: str, template: str) -> dict:
+        """{(male or female, accessory): weight} of a template, comments dropped, within the text after gene_marker."""
+        body = bp.code(text[text.index(gene_marker):])
+        out = {}
+        for names, start, end in bp.blocks(body, strict=False):
+            if names[-2:] in ((template, "male"), (template, "female")):
+                for weight, name in re.findall(r'(\d+)\s*=\s*"?([A-Za-z_][A-Za-z0-9_]*)', body[start:end]):
+                    out[names[-1], name] = int(weight)
+        return out
+
+    def test_orc_lists_are_eks(self):
+        import build_orc_portraits as orc
+        ek2 = orc.DEFAULT_EK2 / "common/genes"
+        if not ek2.is_dir():
+            self.skipTest("needs Elder Kings 2")
+        marker = "# Anbennar Overhaul: other templates"
+        for filename, template, males in (("03_genes_special_accessories_hairstyles.txt", "orc_hairstyles", 21),
+                                          ("04_genes_special_accessories_beards.txt", "orc_beards", 18)):
+            ours = self.files[f"{bp.GENES_DIR}/{filename}"].decode("utf-8-sig")
+            theirs = (ek2 / filename).read_text("utf-8-sig", errors="replace")
+            mine = self._template_accessories(ours, marker, template)
+            self.assertEqual(mine, self._template_accessories(theirs, "accessory_genes", template), template)
+            self.assertEqual(sum(1 for sex, _name in mine if sex == "male"), males, template)
 
     def test_every_listed_entry_is_copied(self):
         entries = bp.copied_entries(REAL)
@@ -351,6 +427,8 @@ class RealTests(unittest.TestCase):
                 end = "\t\t# Anbennar Overhaul: end of Realms in Exile templates\n"
                 self.assertIn(begin, ours)
                 stripped = re.sub(re.escape(begin) + ".*?" + re.escape(end), "", ours, flags=re.S)
+                stripped = re.sub(r"\t\t# Anbennar Overhaul: other templates .*?"
+                                  r"\t\t# Anbennar Overhaul: end of other templates\n", "", stripped, flags=re.S)
                 self.assertEqual(stripped, base, f"{rel}: removing the insertions must give Anbennar's file back")
 
     def test_copied_files_never_shadow_anbennar_or_game(self):
