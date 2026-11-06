@@ -262,9 +262,9 @@ dwarven title.
   and empire they write, refusing `government_is_dwarovar_tribe`, and `de_jure_drift_disabled = yes` to their kingdoms
   and empires.
 - **Anbennar's titles:** `k_seghdihr`, `k_hehodovar`, `k_verkal_gulan`, `k_gor_ozumbrog`, their duchies and
-  `e_middle_dwarovar` live in Anbennar's files. The first test checks whether a later file can add these fields to an
-  existing title. If not, the fallback is a generated override of Anbennar's titles file, the last choice under the
-  project's rules; before taking it, the user is asked whether it is worth doing, or whether the gap can stay.
+  `e_middle_dwarovar` live in Anbennar's files. A generated `zz_aov_` override redefines only these titles, nested as in
+  Anbennar, repeating each one's own fields copied from Anbennar and adding the same `can_create` and drift settings. Their
+  counties are not repeated and stay as they are. The first test shows why it takes this form (see First test results).
 - **Dwarven rulers removed:**
   - The elders of whole duchies now held by tribes.
   - The emperors of `e_serpentreach` and `e_west_dwarovar`, which end unheld.
@@ -424,6 +424,37 @@ ruler notes corrected.
 8. Culture revival.
 9. Docs, tiger baseline review and the full in-game list.
 
+## First test results
+
+Run in game over four rounds on a throwaway branch, since deleted.
+
+| Question | Answer | What gets built |
+|---|---|---|
+| Does the title name read the holder's dynasty? | Yes. The duchy's window reads "Skewered Drake Warband"; the map reads "SKEWERED DRAKE" and never "The Orcs". A primary kingdom reads "The Skewered Drake Kingdom (Skewered Drake Warhost)" | The `GetTitleByKey` name; the `set_title_name` table is not needed |
+| Does the dynasty's arms apply? | Yes, with both `set_coa = holder.dynasty` and `set_coa = holder.house` | `set_coa = holder.dynasty` |
+| Do de jure penalties go? | Yes. No rightful-liege line in a vassal's opinion, and vassals pay full tax and levies | `government_ignores_rightful_liege_penalties` as designed |
+| Does land stay put? | No drift seen. A drift-off title and a control with no drift setting both showed no progress after a year, with rulers holding the duchies and no drift line in the title window. Why the control does not drift is unknown | `de_jure_drift_disabled` stays on every title; the observer run (in-game item 3) checks again |
+| Can a later file add `can_create` to an Anbennar title? | Only by redefining the title, in its real parent, with its own fields repeated | The generated override under "Keeping dwarven titles dwarven" |
+
+How redefining a title behaves:
+
+- At the top level, `k_hehodovar` left `e_middle_dwarovar`, though its provinces kept their titles.
+- Nested in `e_middle_dwarovar`, it stayed, but the empire lost its colour and cultural name. Redefining a title clears its
+  own fields; children left out of the redefinition keep theirs.
+- Nested with the fields repeated, `k_hehodovar` has its colour and duchies and refuses creation. The user did not report
+  the empire's name and colour in that round, so that check joins the in-game list.
+
+Other findings:
+
+- `error.log` shows 12 lines per new government: "Could not find the preregistered modifier type '<government>_opinion'",
+  and the same for `_vassal_opinion`, `_tributary_opinion`, `_opinion_same_faith` and the tax, levy, herd and prestige
+  contribution modifiers. Entries in `common/modifier_definition_formats` did not silence them, so the build does not ship
+  that file. RiE has no such entries for its own government either. The government worked anyway, but no test has shown
+  these modifiers are harmless beyond that.
+- A name list's names and `name_list_<key>` need loc, or the engine logs an error for each.
+- `race_orc` reads "Orc (Sin): -10" under `ancestor_worship`. The placeholder faiths must not have this.
+- A city barony generates a mayor vassal, so tribe counties leave their other baronies empty, as designed.
+
 ## Testing
 
 **Tool tests:**
@@ -444,7 +475,8 @@ ruler notes corrected.
 
 1. The game starts cleanly with all pool titles and tribes.
 2. Tribes, characters, cultures and faiths show as in the tables; six holds are dwarven.
-3. The de jure kingdom map mode is unchanged at the start and after a long observer run.
+3. The de jure kingdom map mode is unchanged at the start and after a long observer run. `e_middle_dwarovar` still reads
+   "Segbandal" to a dwarven ruler, with colour `36 96 143`.
 4. What the game does with counties left unheld, such as Khugdihr's. This was not checked during design.
 5. Cultures with no followers survive and are not stuck far behind on innovations when revived. If they are, the revival
    decision catches them up.
