@@ -1,0 +1,153 @@
+"""Regenerate the teeth gene override that gives orcs Elder Kings 2's tusked teeth.
+
+The template aov_orc_teeth belongs in the game's teeth_accessory gene, in common/genes/02_genes_accessories_misc.txt, which
+Anbennar does not override. Gene files can only be overridden whole, so the submod ships the game's file with the template
+added between marker comments. Run this after a CK3 patch:
+
+    python -I tools/build_orc_portraits.py [path/to/game]
+
+The art is imported once from Elder Kings 2 (Workshop 2887120253) and committed, unchanged and under new names:
+
+    python -I tools/build_orc_portraits.py --import [path/to/elder/kings/2]
+
+See docs/systems/orc-portraits.md.
+"""
+
+import argparse
+import re
+import shutil
+import sys
+from pathlib import Path
+
+MARKER = "# Anbennar Overhaul"
+
+SUBMOD = Path(__file__).resolve().parent.parent
+DEFAULT_EK2 = Path("C:/Program Files (x86)/Steam/steamapps/workshop/content/1158310/2887120253")
+DEFAULT_GAME = Path("C:/Program Files (x86)/Steam/steamapps/common/Crusader Kings III/game")
+
+TEETH_GENE_FILE = "common/genes/02_genes_accessories_misc.txt"
+GENE = "teeth_accessory"
+TEMPLATE = "aov_orc_teeth"
+MAX_TEMPLATE_INDEX = 255  # DNA stores a gene's template index in one byte
+
+_PORTRAITS = "gfx/models/portraits"
+
+
+def _imports() -> dict:
+    """Elder Kings 2 path -> overhaul path, copied unchanged by --import."""
+    out = {}
+    for sex in ("male", "female"):
+        head = f"{_PORTRAITS}/{sex}_head"
+        out[f"{head}/blendshapes/{sex}_orc_nose.mesh"] = f"{head}/blendshapes/aov_orc_{sex}_nose.mesh"
+        out[f"{head}/blendshapes/{sex}_orc_teeth_lips.mesh"] = f"{head}/blendshapes/aov_orc_{sex}_lips.mesh"
+        teeth = f"{head}/{sex}_teeth/{sex}_teeth_ek2"
+        ours = f"{_PORTRAITS}/aov_orc/aov_orc_{sex}_teeth"
+        out[f"{teeth}.mesh"] = f"{ours}.mesh"
+        for theirs, mine in (("lower_down", "lower_down"), ("cheek_fat_neg", "cheek_fat_neg"), ("orc_tusks", "tusks")):
+            out[f"{teeth}_bs_{theirs}.mesh"] = f"{ours}_bs_{mine}.mesh"
+    decals = f"{_PORTRAITS}/decals"
+    mine = f"{_PORTRAITS}/aov_orc"
+    out[f"{_PORTRAITS}/male_head/blendshapes/male_giantish_head_spikes.mesh"] = (
+        f"{_PORTRAITS}/male_head/blendshapes/aov_orc_male_horns.mesh")
+    # EK2's versions of these differ from the game's, which every other character keeps
+    out[f"{_PORTRAITS}/male_head/male_teeth/male_teeth_diffuse.dds"] = f"{mine}/aov_orc_teeth_diffuse.dds"
+    out[f"{_PORTRAITS}/male_head/male_teeth/male_teeth_ssao_color.dds"] = f"{mine}/aov_orc_teeth_ssao_color.dds"
+    out[f"{decals}/male_head/mer_head_forehead_01.dds"] = f"{mine}/aov_orc_male_forehead_normal.dds"
+    out[f"{decals}/female_head/mer_head_forehead_02.dds"] = f"{mine}/aov_orc_female_forehead_normal.dds"
+    for kind in ("diffuse", "normal", "properties"):
+        out[f"{decals}/male_head/giant_horns/giantish_horns_01_{kind}.dds"] = f"{mine}/aov_orc_horns_{kind}.dds"
+    return out
+
+
+IMPORTS = _imports()
+
+
+def _strip_ours(text: str) -> str:
+    return re.sub(rf"[ \t]*{re.escape(MARKER)}: orc teeth.*?{re.escape(MARKER)}: end of orc teeth\n", "", text,
+                  flags=re.DOTALL)
+
+
+def _gene_span(text: str) -> tuple:
+    """(start of the gene's body, offset of its closing brace). Exits if the gene is missing."""
+    match = re.search(rf"(?m)^\s*{GENE}\s*=\s*\{{", text)
+    if not match:
+        sys.exit(f"error: gene {GENE} not found in {TEETH_GENE_FILE}")
+    depth, at = 1, match.end()
+    while depth:
+        if at >= len(text):
+            sys.exit(f"error: gene {GENE} is not closed in {TEETH_GENE_FILE}")
+        depth += {"{": 1, "}": -1}.get(text[at], 0)
+        at += 1
+    return match.end(), at - 1
+
+
+def add_orc_teeth(text: str) -> str:
+    """The gene file with the orc teeth template at the gene's lowest free index, just before the gene closes. Exits if
+    the gene is missing or full."""
+    text = _strip_ours(text)
+    start, close = _gene_span(text)
+    used = {int(i) for i in re.findall(r"\bindex\s*=\s*(\d+)", text[start:close])}
+    free = [i for i in range(MAX_TEMPLATE_INDEX + 1) if i not in used]
+    if not free:
+        sys.exit(f"error: gene {GENE} has no free template index")
+    block = (
+        f"\t\t{MARKER}: orc teeth (tools/build_orc_portraits.py)\n"
+        f"\t\t{TEMPLATE} = {{\n"
+        f"\t\t\tindex = {free[0]}\n"
+        f'\t\t\tmale = {{ 1 = "male_{TEMPLATE}" }}\n'
+        f'\t\t\tfemale = {{ 1 = "female_{TEMPLATE}" }}\n'
+        "\t\t\tboy = male\n"
+        "\t\t\tgirl = female\n"
+        "\t\t}\n"
+        f"\t\t{MARKER}: end of orc teeth\n"
+    )
+    line_start = text.rfind("\n", 0, close) + 1
+    return text[:line_start] + block + text[line_start:]
+
+
+def teeth_gene_bytes(game: bytes) -> bytes:
+    """The override's bytes from the game's file, keeping its BOM and line endings."""
+    bom = game.startswith(b"\xef\xbb\xbf")
+    text = game.decode("utf-8-sig")
+    crlf = "\r\n" in text
+    text = add_orc_teeth(text.replace("\r\n", "\n"))
+    if crlf:
+        text = text.replace("\n", "\r\n")
+    return (b"\xef\xbb\xbf" if bom else b"") + text.encode("utf-8")
+
+
+def build(game: Path) -> None:
+    src = game / TEETH_GENE_FILE
+    if not src.is_file():
+        sys.exit(f"error: game gene file not found: {src}")
+    out = SUBMOD / TEETH_GENE_FILE
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_bytes(teeth_gene_bytes(src.read_bytes()))
+    print(f"wrote {out}")
+
+
+def import_ek2(ek2: Path) -> None:
+    missing = [rel for rel in IMPORTS if not (ek2 / rel).is_file()]
+    if missing:
+        sys.exit(f"error: Elder Kings 2 files not found under {ek2}: {missing}")
+    for src_rel, out_rel in IMPORTS.items():
+        out = SUBMOD / out_rel
+        out.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(ek2 / src_rel, out)
+        print(f"copied {out}")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    parser.add_argument("game", nargs="?", type=Path, default=DEFAULT_GAME, help="CK3 game folder")
+    parser.add_argument("--import", dest="ek2", nargs="?", type=Path, const=DEFAULT_EK2,
+                        help="copy the orc art from Elder Kings 2 instead of building the gene file")
+    args = parser.parse_args()
+    if args.ek2:
+        import_ek2(args.ek2)
+    else:
+        build(args.game)
+
+
+if __name__ == "__main__":
+    main()

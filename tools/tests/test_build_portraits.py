@@ -404,8 +404,10 @@ class FreshnessTests(unittest.TestCase):
         # (docs/systems/gnoll-portraits.md)
         import build_gnoll_portraits as gnoll
         import build_head_assets as head
+        import build_orc_portraits as orc
         gnoll_files = (set(head.HEADS.values()) | set(gnoll.IMPORTS.values())
-                       | {gnoll.FUR, "gfx/models/portraits/aov_gnoll/aov_gnoll_eyes.asset"})
+                       | {gnoll.FUR, "gfx/models/portraits/aov_gnoll/aov_gnoll_eyes.asset"}
+                       | set(orc.IMPORTS.values()) | {"gfx/models/portraits/aov_orc/aov_orc_teeth.asset"})
         if models.is_dir():
             orphans += [p.relative_to(bp.SUBMOD).as_posix() for p in models.rglob("*")
                         if p.is_file() and p.relative_to(bp.SUBMOD).as_posix() not in produced | gnoll_files

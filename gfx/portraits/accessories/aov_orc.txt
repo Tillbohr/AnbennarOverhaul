@@ -1,0 +1,9 @@
+﻿# Anbennar Overhaul: Elder Kings 2's tusked teeth for orcs (docs/systems/orc-portraits.md).
+
+male_aov_orc_teeth = {
+	entity = { entity = "aov_orc_male_teeth_entity"		shared_pose_entity = head }
+}
+
+female_aov_orc_teeth = {
+	entity = { entity = "aov_orc_female_teeth_entity"		shared_pose_entity = head }
+}
