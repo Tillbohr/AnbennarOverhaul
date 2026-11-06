@@ -88,6 +88,52 @@ class TeethGeneTests(unittest.TestCase):
             orc.add_orc_teeth(GENE_FIXTURE.replace("teeth_accessory", "other_accessory"))
 
 
+class PatternArrayTests(unittest.TestCase):
+    """The game loads all pattern textures into texture arrays, whose members must match the first one in size, format
+    and mip count. One mismatch makes CreateTexture2D fail and the game crash on launch."""
+
+    def test_every_pattern_texture_fits_the_games_arrays(self):
+        folder = SUBMOD / "gfx/portraits/accessory_variations/textures/patterns"
+        files = list(folder.rglob("*.dds"))
+        self.assertTrue(files)
+        for path in files:
+            head = path.read_bytes()[:128]
+            size = struct.unpack("<II", head[12:20])
+            mips = struct.unpack_from("<I", head, 28)[0]
+            self.assertEqual((size, mips, head[84:88]), ((512, 512), 10, b"DXT5"), path.name)
+
+    def test_every_pattern_set_the_mod_declares_fits_the_games_arrays(self):
+        checked = 0
+        for variations in (SUBMOD / "gfx/portraits/accessory_variations").glob("*.txt"):
+            text = variations.read_bytes().decode("utf-8-sig")
+            for block in re.findall(r"(?s)pattern_textures\s*=\s*\{(.*?)\}", re.sub(r"#[^\n]*", "", text)):
+                for rel in re.findall(r'"(gfx/[^"]+\.dds)"', block):
+                    path = SUBMOD / rel
+                    if not path.is_file():
+                        continue  # the game's own, which fit by definition
+                    head = path.read_bytes()[:128]
+                    self.assertEqual((struct.unpack("<II", head[12:20]), struct.unpack_from("<I", head, 28)[0], head[84:88]),
+                                     ((512, 512), 10, b"DXT5"), rel)
+                    checked += 1
+        self.assertGreater(checked, 3)
+
+    def test_fur_mask_is_eks_with_a_full_mip_chain(self):
+        source = orc.DEFAULT_EK2 / orc.FUR_MASK_SOURCE
+        if not source.is_file():
+            self.skipTest("needs Elder Kings 2")
+        self.assertEqual((SUBMOD / orc.FUR_MASK).read_bytes(), orc.full_mip_dds(source.read_bytes()))
+
+    def test_fur_mask_keeps_eks_picture(self):
+        from eu4_import import read_dds
+        source = orc.DEFAULT_EK2 / orc.FUR_MASK_SOURCE
+        if not source.is_file():
+            self.skipTest("needs Elder Kings 2")
+        _w, _h, before = read_dds(source.read_bytes())
+        _w, _h, after = read_dds((SUBMOD / orc.FUR_MASK).read_bytes())
+        difference = sum(abs(a - b) for a, b in zip(before[::97], after[::97])) / len(before[::97])
+        self.assertLess(difference, 6)
+
+
 class ShadowTests(unittest.TestCase):
     def test_build_stops_if_anbennar_ships_the_gene_file(self):
         import tempfile

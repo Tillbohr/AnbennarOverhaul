@@ -7,7 +7,7 @@ added between marker comments. Run this after a CK3 patch:
     python -I tools/build_orc_portraits.py [path/to/game]
 
 The art is imported once from Elder Kings 2 (Workshop 2887120253) and committed, under new names, unchanged except the
-goblin rags' palette, which is lightened:
+goblin rags' palette, which is lightened, and the fur mask, which gets the mip chain the game's texture arrays need:
 
     python -I tools/build_orc_portraits.py --import [path/to/elder/kings/2]
 
@@ -19,6 +19,10 @@ import re
 import shutil
 import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))  # python -I does not add the tools folder
+import dxt5  # noqa: E402
+from eu4_import import read_dds  # noqa: E402
 
 MARKER = "# Anbennar Overhaul"
 
@@ -41,6 +45,11 @@ _FEMALE_RAG_SHAPES = _MALE_RAG_SHAPES + ("breast_size_max", "pregnant")
 RAG_PALETTE_SOURCE = "gfx/portraits/accessory_variations/textures/color_palette_riekling_02.dds"
 RAG_PALETTE = "gfx/portraits/accessory_variations/textures/aov_orc_rags_palette.dds"
 RAG_PALETTE_SCALE = 1.8
+
+# EK2's fur mask, rewritten by --import with a full mip chain. The game loads pattern textures into arrays whose members must
+# match the first in size, format and mip count, or it crashes on launch. The game's masks have 10 mips; all of EK2's have 2.
+FUR_MASK_SOURCE = "gfx/portraits/accessory_variations/textures/patterns/fur/fur_masks.dds"
+FUR_MASK = f"{_PATTERNS}/aov_orc_fur_masks.dds"
 
 
 def _imports() -> dict:
@@ -77,7 +86,7 @@ def _imports() -> dict:
             out[f"{_PORTRAITS}/{theirs}_bs_{shape}.mesh"] = f"{rags}_{ours}_bs_{shape}.mesh"
     for kind in ("diffuse", "masks", "normal", "properties"):
         out[f"{_PORTRAITS}/m_clothes/ek2_goblin/com_01/m_clothes_sec_ek2_goblin_com_01_{kind}.dds"] = f"{rags}_m_01_{kind}.dds"
-    for kind in ("masks", "normal", "properties"):
+    for kind in ("normal", "properties"):
         out[f"gfx/portraits/accessory_variations/textures/patterns/fur/fur_{kind}.dds"] = f"{_PATTERNS}/aov_orc_fur_{kind}.dds"
     return out
 
@@ -160,8 +169,14 @@ def lighter_palette(dds: bytes) -> bytes:
     return bytes(out)
 
 
+def full_mip_dds(dds: bytes) -> bytes:
+    """The DDS's top level rewritten as a DXT5 with a full mip chain."""
+    width, height, bgra = read_dds(dds)
+    return dxt5.write_dds(width, height, bgra)
+
+
 def import_ek2(ek2: Path) -> None:
-    missing = [rel for rel in [*IMPORTS, RAG_PALETTE_SOURCE] if not (ek2 / rel).is_file()]
+    missing = [rel for rel in [*IMPORTS, RAG_PALETTE_SOURCE, FUR_MASK_SOURCE] if not (ek2 / rel).is_file()]
     if missing:
         sys.exit(f"error: Elder Kings 2 files not found under {ek2}: {missing}")
     for src_rel, out_rel in IMPORTS.items():
@@ -173,6 +188,9 @@ def import_ek2(ek2: Path) -> None:
     palette.parent.mkdir(parents=True, exist_ok=True)
     palette.write_bytes(lighter_palette((ek2 / RAG_PALETTE_SOURCE).read_bytes()))
     print(f"wrote {palette} (lighter)")
+    mask = SUBMOD / FUR_MASK
+    mask.write_bytes(full_mip_dds((ek2 / FUR_MASK_SOURCE).read_bytes()))
+    print(f"wrote {mask} (full mip chain)")
 
 
 def main() -> None:
