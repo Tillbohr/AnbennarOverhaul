@@ -1,0 +1,337 @@
+﻿# Anbennar Overhaul: Serpentspine orcs. orc_base is Elder Kings 2's race_orc (Workshop 2887120253; credit to its team),
+# with its genes renamed and without its green skin. See docs/systems/orc-portraits.md.
+# skin_color_saturation: 0 removes all colour, 0.5 changes nothing. All three colours use this one template, so a
+# brown and a gray parent can pass on a value between the two.
+
+orc_base = {
+	template = "vanity_character_base"
+	using = "black_orc"
+	
+	gene_height = {
+
+		2 = { name = normal_height		range = { 0.48 0.5 }		} 
+		10 = { name = normal_height		range = { 0.5 0.53 }		} 
+		12 = { name = normal_height		range = { 0.53 0.55 }		} 
+		4 = { name = normal_height		range = { 0.55 0.62 }		} 
+	}
+
+	aov_orc_wrinkles = {
+		1 = { name = orc_wrinkles  range = { 1.0 1.0 }}
+		1 = { name = orc_wrinkles  range = { 0.9 1.0 }}
+	}	
+	aov_orc_horns = {
+		2 = { name = orc_horns  range = { 0.5 1.0 }}
+		1 = { name = orc_horns  range = { 0.1 1.0 }}
+		8 = { name = no_orc_horns  range = { 0.0 0.0 }}
+	}
+
+	eye_color = {
+		20 = { 0.0 0.15 0.0 0.5 }
+		35 = { 0.05 0.2 0.35 0.55 }
+		20 = { 0.3 0.1 0.4 0.4 }	
+		40 = { 0.3 0.35 0.65 0.75 }		
+		20 = { 0.2 0.7 0.7 0.8 }  
+	}
+
+	hair_color = {
+		20= { 0.0 0.55 0.0 1.0 }
+
+		40 = { 0.0 0.9 0.44 1.0 }
+
+		30 = { 0.44 0.8 0.79 1.0 }
+
+		5 = { 0.74 0.5 0.88 0.7 }
+		
+	}
+
+	gene_head_profile = {
+		1 = { name = head_profile_pos	range = { 0 1 }}
+	}
+
+	gene_bs_body_type = {
+		10 = { name = body_fat_head_fat_low	range = { 0.54 0.65 }	}
+		10 = { name = body_fat_head_fat_medium	range = { 0.54 0.65 }	}
+		10 = { name = body_fat_head_fat_full	range = { 0.54 0.65 }	}  
+	}
+
+	gene_bs_body_shape = {
+		1 = { name = body_shape_average	range = { 0.25 0.62 }	}
+		1 = { name = body_shape_apple_half	range = { 0.25 0.62 }	}
+		1 = { name = body_shape_apple_full	range = { 0.25 0.62 }	}
+		1 = { name = body_shape_pear_half	range = { 0.25 0.62 }	}
+		1 = { name = body_shape_pear_full	range = { 0.25 0.62 }	}
+		1 = { name = body_shape_hourglass_half	range = { 0.25 0.62 }	}
+		1 = { name = body_shape_hourglass_full	range = { 0.25 0.62 }	}
+		10 = { name = body_shape_rectangle_half	range = { 0.25 0.62 }	}
+		1 = { name = body_shape_rectangle_full	range = { 0.25 0.62 }	}
+		10 = { name = body_shape_triangle_half	range = { 0.25 0.62 }	}
+		5 = { name = body_shape_triangle_full	range = { 0.25 0.62 }	}
+	}	
+
+	gene_age = {
+		10 = { name = old_beauty_1	range = { 0.0 1.0 } }
+	}
+
+	gene_body_hair = {
+		10 = {  name = body_hair_sparse					range = { 0.5 1.0 }	}
+		10 = {  name = body_hair_sparse_low_stubble		range = { 0.5 1.0 }	}
+		30 = {  name = body_hair_avg					range = { 0.5 1.0 }	}
+		30 = {  name = body_hair_avg_low_stubble		range = { 0.5 1.0 }	}
+		20 = {  name = body_hair_dense					range = { 0.5 1.0 }	}
+		20 = {  name = body_hair_dense_low_stubble		range = { 0.5 1.0 }	}
+	}
+
+	expression_other = {
+		30 = {  name = cheek_wrinkles_both_01			range = { 0.5 1.0 }	}
+		70 = {  name = nose_wrinkles_01			range = { 0.8 1.0 }	}
+	}
+	
+	aov_orc_forehead = {
+		1 = { name = orc_forehead			range = { 0.65 0.85 } }
+	}
+
+	aov_orc_nose = {
+		10 = { name = orc_nose			range = { 0.45 0.8 } }
+		5 = { name = orc_nose			range = { 0.8 1.0 } }
+	}	
+
+	expression_forehead_wrinkles = {
+		10 = {  name = forehead_wrinkles_01			range = { 0.8 1.0 }	}
+		10 = {  name = forehead_wrinkles_02			range = { 0.8 1.0 }	}
+		10 = {  name = forehead_wrinkles_03			range = { 0.8 1.0 }	}
+	}
+
+	expression_eye_wrinkles = {
+		10 = {  name = eye_wrinkles_01			range = { 0.8 1.0 }	}
+		10 = {  name = eye_wrinkles_02			range = { 0.8 1.0 }	}
+		10 = {  name = eye_wrinkles_03			range = { 0.8 1.0 }	}
+	}
+
+	expression_brow_wrinkles = {
+		5 = {  name = brow_wrinkles_01			range = { 0.8 1.0 }	}
+		5 = {  name = brow_wrinkles_02			range = { 0.8 1.0 }	}
+		5 = {  name = brow_wrinkles_03			range = { 0.8 1.0 }	}
+		5 = {  name = brow_wrinkles_04			range = { 0.8 1.0 }	}
+	}
+
+	face_detail_eye_socket = {
+		15 = {  name = eye_socket_01			range = { 0.8 1.0 }	}
+
+		15 = {  name = eye_socket_02			range = { 0.8 1.0 }	}
+
+		15 = {  name = eye_socket_03			range = { 0.8 1.0 }	}
+	}
+
+	face_detail_eye_lower_lid_def = {
+		5 = {  name = eye_lower_lid_def			range = { 0.6 1.0 }	}
+	}
+
+	gene_eye_shut = {
+		1 = { name = eye_shut_neg range = {0.5 0.7}}
+	}
+
+	gene_chin_height = {
+		80 = { name = chin_height_neg	range = { 0.35 0.55  }	}
+	}
+
+	gene_chin_width = {
+		10 = { name = chin_width_neg	range = { 0.8 1.0  }	}
+	}
+
+	gene_eye_angle = {
+		10 = { name = eye_angle_neg	range = { 0.7 0.9  }	}
+	}
+
+	gene_neck_width = {
+		75 = { name = neck_width_neg	range = { 0.65 0.9 }	}
+	}
+
+	face_detail_cheek_fat = {
+		25 = { name = cheek_fat_01_pos	range = { 0.0 1.0  }	}
+	}
+
+	face_detail_temple_def = {
+		25 = { name = temple_def	range = { 0.2 1.0  }	}
+
+	}
+
+	gene_jaw_width = {
+		10 = { name = jaw_width_neg	range = { 0.55 0.75 }	}
+	}
+
+	face_detail_cheek_def = {
+		90 = { name = cheek_def_02	range = { 0.8 1.0 }	}
+	}
+
+	gene_bs_cheek_width = {
+		40 = { name = cheek_width_pos	range = { 0.42 0.62 }	}
+	}
+
+	gene_bs_nose_profile = {
+		9 = { name = nose_profile_pos	range = { 0.3 0.7  }	}
+		1 = { name = nose_profile_pos	range = { 0.7 1.0  }	}
+
+		9 = { name = nose_profile_hawk	range = { 0.3 0.7  }	}
+		1 = { name = nose_profile_hawk	range = { 0.7 1.0  }	}
+	}
+
+	gene_bs_nose_ridge_angle = {
+		40 = { name = nose_ridge_angle_neg	range = { 0.0 1.0  }	}
+	}
+
+	gene_forehead_height = {
+		1 = { name = forehead_height_neg range = { 0.2 0.55 }}
+		1 = { name = forehead_height_neg range = { 0.0 0.6 }}
+	}
+	gene_forehead_brow_height = {
+		1 = { name = forehead_brow_height_neg range = { 0.1 0.3 }}
+	}
+	gene_bs_forehead_brow_forward = {
+		1 = { name = forehead_brow_forward_pos range = {0.8 0.95}}
+		1 = { name = forehead_brow_forward_pos range = {0.7 0.95}}
+	}
+
+	gene_bs_nose_ridge_width = {
+		40 = { name = nose_ridge_width_pos	range = { 0.5 1.0 }	}
+	}
+
+	gene_head_height = {
+		1 = { name = head_height_pos range = {0.25 0.6} }
+		3 = { name = head_height_pos range = {0.4 0.6} }
+	}
+
+	gene_bs_nose_tip_angle = {
+		10 = { name = nose_tip_angle_neg	range = { 0.0 0.15  }	}
+		30 = { name = nose_tip_angle_neg	range = { 0.15 0.4  }	}
+		10 = { name = nose_tip_angle_neg	range = { 0.4 0.7  }	}
+	}
+
+	gene_bs_nose_tip_forward = {
+		80 = { name = nose_tip_forward_neg	range = { 0.0 0.25 }	}
+		20 = { name = nose_tip_forward_neg	range = { 0.25 0.5 }	}
+
+		80 = { name = nose_tip_forward_pos	range = { 0.0 0.3 }	}
+		20 = { name = nose_tip_forward_pos	range = { 0.3 0.7 }	}
+	}
+
+	gene_bs_nose_tip_width = {
+		20 = { name = nose_tip_width_neg	range = { 0.0 0.5 }	}
+		80 = { name = nose_tip_width_neg	range = { 0.5 1.0 }	}
+	}
+
+	race_gene_mer_ears_01 = {
+		90 = {  name = mer_ears_03			range = { 0.2 0.6 }	}
+		90 = {  name = mer_ears_02			range = { 0.2 0.6 }	}
+	}
+
+	race_gene_mer_ears_02 = {
+		90 = {  name = mer_ears_03			range = { 0.2 0.6 }	}
+		90 = {  name = mer_ears_02			range = { 0.2 0.6 }	}
+	}
+
+	gene_eyebrows_fullness = {
+		10 = {  name = layer_2_avg_thickness			range = { 0.5 1.0 }	}
+		10 = {  name = layer_2_high_thickness			range = { 0.5 1.0 }	}
+		10 = {  name = layer_2_lower_thickness			range = { 0.5 1.0 }	}		
+	}
+
+	gene_bs_nose_nostril_width = {
+		15 = { name = nose_nostril_width_neg	range = { 0.0 0.3 }	}
+		30 = { name = nose_nostril_width_neg	range = { 0.3 0.8 }	}
+		15 = { name = nose_nostril_width_neg	range = { 0.8 1.0 }	}
+		30 = { name = nose_nostril_width_pos	range = { 0.0 0.25 }	}
+		20 = { name = nose_nostril_width_pos	range = { 0.0 0.5 }	}
+	}
+
+	gene_eyebrows_shape = {
+		10 = {  name = avg_spacing_avg_thickness			range = { 0.65 1.0 }	}
+		2 = {  name = avg_spacing_high_thickness			range = { 0.65 1.0 }	}
+		10 = {  name = avg_spacing_low_thickness			range = { 0.65 1.0 }	}
+		10 = {  name = avg_spacing_lower_thickness			range = { 0.65 1.0 }	}
+
+		10 = {  name = far_spacing_avg_thickness			range = { 0.65 1.0 }	}
+		2 = {  name = far_spacing_high_thickness			range = { 0.65 1.0 }	}
+		10 = {  name = far_spacing_low_thickness			range = { 0.65 1.0 }	}
+		10 = {  name = far_spacing_lower_thickness			range = { 0.65 1.0 }	}
+
+		10 = {  name = close_spacing_avg_thickness			range = { 0.65 1.0 }	}
+		2 = {  name = close_spacing_high_thickness			range = { 0.65 1.0 }	}
+		10 = {  name = close_spacing_low_thickness			range = { 0.65 1.0 }	}
+		10 = {  name = close_spacing_lower_thickness			range = { 0.65 1.0 }	}
+	}
+
+	gene_mouth_width = {
+		10 = { name = mouth_width_pos	range = { 0.1 0.77  }	}
+	}
+
+	gene_bs_ear_angle = {
+		5 = { name = ear_angle_neg	range = { 0.0 1.0 }	}
+	}
+
+	gene_bs_ear_inner_shape = {
+		5 = { name = ear_inner_shape_pos	range = { 0.0 0.6 }	}
+	}
+
+	gene_bs_ear_bend = {		
+		5 = { name = ear_both_bend_pos	range = { 0.0 0.7 }	}
+	}
+
+	gene_bs_ear_outward = {
+		5 = { name = ear_outward_pos	range = { 0.1 0.5}	}
+	}
+
+	gene_bs_ear_size = {
+		5 = { name = ear_size_pos	range = { 0.0 0.3 }	}
+	}
+	aov_orc_tusks = {
+		50 = {  name = orc_tusk_size			range = { 0.8 1.0 }}
+		4 = {  name = orc_tusk_size			range = { 0.6 1.0 }}
+		4 = {  name = orc_tusk_size			range = { 0.4 1.0 }}
+	}
+
+	gene_bs_eye_size = {
+		1 = { name = eye_size_neg range = { 0.0 0.4 } }
+	}
+}
+
+# The game's dark browns, unchanged
+orc_brown = {
+	template = "orc_base"
+	visible = yes
+
+	skin_color = {
+		1 = { 0.4 0.65 0.8 0.85 }
+	}
+
+	skin_color_saturation = {
+		1 = { name = skin_color_saturation range = { 0.5 0.5 } }
+	}
+}
+
+# Mid to dark palette, almost no colour
+orc_gray = {
+	template = "orc_base"
+	visible = yes
+
+	skin_color = {
+		1 = { 0.0 0.5 0.2 0.75 }
+	}
+
+	skin_color_saturation = {
+		1 = { name = skin_color_saturation range = { 0.0 0.05 } }
+	}
+}
+
+# The darkest palette range, almost no colour
+orc_black = {
+	template = "orc_base"
+	visible = yes
+
+	skin_color = {
+		1 = { 0.0 0.85 0.2 1.0 }
+	}
+
+	skin_color_saturation = {
+		1 = { name = skin_color_saturation range = { 0.0 0.05 } }
+	}
+}

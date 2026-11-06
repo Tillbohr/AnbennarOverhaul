@@ -1,0 +1,95 @@
+﻿# Anbennar Overhaul: Elder Kings 2's orc teeth, hair and beards, by race trait. The orc face, skin and build are genes set
+# by the orc ethnicities (common/ethnicities/aov_orc_ethnicities.txt). See docs/systems/orc-portraits.md.
+
+@baby_hair_age = 5 # Anbennar's value in 01_hairstyles_base.txt
+
+# Tusked teeth. teeth_accessory is not inherited, so a half-orc raised in a human culture would otherwise lose them. A Lich
+# is left to the Lich portrait (aov_lich.txt), which hides the head.
+aov_orc_teeth = {
+	usage = game
+
+	aov_orc_teeth = {
+		dna_modifiers = {
+			accessory = {
+				mode = replace
+				gene = teeth_accessory
+				template = aov_orc_teeth
+				value = 0.5
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 100
+				exists = this
+				OR = {
+					has_trait = race_orc
+					has_trait = race_half_orc
+				}
+				NOT = { has_trait = lich }
+			}
+		}
+	}
+}
+
+# Hair and beards set no priority, like Anbennar's base groups, so this file overrides them by file order while religious,
+# situational and special groups still win. The base groups hold the baby hair and boys' lack of beards, so these groups
+# stop short of those ages.
+aov_orc_hair = {
+	usage = game
+	selection_behavior = weighted_random
+
+	aov_orc_hair = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = hairstyles
+				template = orc_hairstyles
+				range = { 0 1 } # For the randomness to work correctly
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 100
+				exists = this
+				has_trait = race_orc
+				scope:age >= @baby_hair_age
+				NOR = {
+					is_from_ruler_designer = yes
+					has_character_flag = has_scripted_appearance
+				}
+			}
+		}
+	}
+}
+
+aov_orc_beards = {
+	usage = game
+	selection_behavior = weighted_random
+
+	aov_orc_beards = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = beards
+				template = orc_beards
+				range = { 0 1 } # For the randomness to work correctly
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 100
+				exists = this
+				has_trait = race_orc
+				is_female = no
+				scope:age >= 18
+				NOR = {
+					is_from_ruler_designer = yes
+					has_character_flag = has_scripted_appearance
+				}
+			}
+		}
+	}
+}

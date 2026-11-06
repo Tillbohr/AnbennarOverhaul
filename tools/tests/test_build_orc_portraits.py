@@ -275,5 +275,159 @@ class GeneTests(unittest.TestCase):
         self.assertTrue(found, "age_preset_child_features_wide_range is defined nowhere: copy EK2's definition")
 
 
+ETHNICITIES_FILE = "common/ethnicities/aov_orc_ethnicities.txt"
+MODIFIER_FILE = "gfx/portraits/portrait_modifiers/aov_orc.txt"
+CULTURES_FILE = "common/culture/cultures/aov_tribes_cultures.txt"
+COLOUR_GENES = ("skin_color", "eye_color", "hair_color")
+LEFT_OUT = ("race_gene_skin_color", "race_gene_skin_metallic", "eye_sclera", "eye_pupil", "race_gene_mer_eyebrows_01",
+            "hairline_type", "teeth_accessory", "gene_eye_size", "beast_teeth", "race_gene_mer_nose",
+            "race_gene_mer_forehead", "race_extra_wrinkly_gene", "race_giantish_horns")
+
+
+def defined_genes() -> dict:
+    """gene -> templates, from this mod's gene files over Anbennar's over the game's (by file name)."""
+    import build_portraits as bp
+    files = {}
+    for folder in (orc.DEFAULT_GAME / "common/genes", ANBENNAR / "common/genes", SUBMOD / "common/genes"):
+        for path in folder.glob("*.txt"):
+            files[path.name] = path
+    genes = {}
+    for path in files.values():
+        text = bp.code(path.read_bytes().decode("utf-8-sig", "replace"))
+        for names, _start, _end in bp.blocks(text, strict=False):
+            inner = names[1:] if names[0] != "special_genes" else names[2:]
+            if names[0] in ("morph_genes", "accessory_genes", "special_genes") and len(inner) == 1:
+                genes.setdefault(inner[0], set())
+            elif names[0] in ("morph_genes", "accessory_genes", "special_genes") and len(inner) == 2:
+                genes.setdefault(inner[0], set()).add(inner[1])
+    return genes
+
+
+def ethnicity_genes(body: str) -> dict:
+    """gene -> template names an ethnicity's block sets, leaving out its plain values."""
+    out = {}
+    for match in re.finditer(r"(?m)^\t(\w+) = \{", body):
+        out[match.group(1)] = set(re.findall(r"name\s*=\s*(\w+)", block_of(body, match.group(1))))
+    return out
+
+
+class EthnicityTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.text = code(read(ETHNICITIES_FILE))
+
+    def _all(self) -> dict:
+        return {name: ethnicity_genes(block_of(self.text, name))
+                for name in ("orc_base", "orc_brown", "orc_gray", "orc_black")}
+
+    @unittest.skipUnless(orc.DEFAULT_GAME.is_dir() and ANBENNAR.is_dir(), "needs the game and Anbennar")
+    def test_every_gene_and_template_in_the_ethnicities_is_defined(self):
+        known = defined_genes()
+        for name, genes in self._all().items():
+            for gene, templates in genes.items():
+                if gene in COLOUR_GENES:
+                    continue
+                self.assertIn(gene, known, f"{name}: gene {gene}")
+                self.assertEqual(templates - known[gene], set(), f"{name}: {gene}")
+
+    def test_no_left_out_gene_is_named(self):
+        for name, genes in self._all().items():
+            for gene in LEFT_OUT:
+                self.assertNotIn(gene, genes, name)
+
+    def test_base_sets_the_five_orc_genes(self):
+        base = self._all()["orc_base"]
+        for gene, template in ORC_GENES.items():
+            self.assertIn(template, base.get(gene, set()), gene)
+        self.assertEqual(base["aov_orc_horns"], {"orc_horns", "no_orc_horns"})  # 3 in 11 men have horns
+
+    def test_base_has_no_skin_so_only_the_colours_set_it(self):
+        self.assertNotIn("skin_color", self._all()["orc_base"])
+        self.assertNotIn("skin_color_saturation", self._all()["orc_base"])
+
+    def test_colours_build_on_the_base(self):
+        for name in ("orc_brown", "orc_gray", "orc_black"):
+            self.assertIn('template = "orc_base"', block_of(self.text, name), name)
+
+    def test_colours_are_the_specs(self):
+        boxes = {"orc_brown": "0.4 0.65 0.8 0.85", "orc_gray": "0.0 0.5 0.2 0.75", "orc_black": "0.0 0.85 0.2 1.0"}
+        saturations = {"orc_brown": "0.5 0.5", "orc_gray": "0.0 0.05", "orc_black": "0.0 0.05"}
+        for name, box in boxes.items():
+            body = block_of(self.text, name)
+            self.assertRegex(block_of(body, "skin_color"), rf"= \{{ {box} \}}", name)
+            self.assertRegex(block_of(body, "skin_color_saturation"),
+                             rf"name = skin_color_saturation\s+range = \{{ {saturations[name]} \}}", name)
+
+    def test_eye_size_uses_the_games_gene(self):
+        self.assertRegex(block_of(block_of(self.text, "orc_base"), "gene_bs_eye_size"),
+                         r"name = eye_size_neg\s+range = \{ 0\.0 0\.4 \}")
+
+    def test_hair_colour_and_tusks_keep_eks_weights(self):
+        base = block_of(self.text, "orc_base")
+        self.assertRegex(block_of(base, "aov_orc_tusks"), r"50 = \{\s*name = orc_tusk_size\s+range = \{ 0\.8 1\.0 \}")
+        horns = block_of(base, "aov_orc_horns")
+        self.assertRegex(horns, r"2 = \{ name = orc_horns\s+range = \{ 0\.5 1\.0 \}")
+        self.assertRegex(horns, r"8 = \{ name = no_orc_horns\s+range = \{ 0\.0 0\.0 \}")
+
+    def test_black_orc_lists_the_three_colours_and_cave_goblin_is_unchanged(self):
+        cultures = code(read(CULTURES_FILE))
+        black, goblin = block_of(cultures, "black_orc"), block_of(cultures, "cave_goblin")
+        self.assertEqual(re.findall(r"(\d+) = (\w+)", block_of(black, "ethnicities")),
+                         [("1", "orc_brown"), ("1", "orc_gray"), ("1", "orc_black")])
+        self.assertIn("western_clothing_gfx", black)  # clothes are chosen separately
+        self.assertEqual(re.findall(r"(\d+) = (\w+)", block_of(goblin, "ethnicities")), [("100", "arab")])
+
+
+class ModifierTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.text = code(read(MODIFIER_FILE))
+        cls.teeth = block_of(cls.text, "aov_orc_teeth")
+        cls.hair = block_of(cls.text, "aov_orc_hair")
+        cls.beards = block_of(cls.text, "aov_orc_beards")
+
+    def test_teeth_skip_liches(self):
+        self.assertRegex(self.teeth, r"has_trait = race_orc")
+        self.assertRegex(self.teeth, r"has_trait = race_half_orc")
+        self.assertRegex(self.teeth, r"NOT = \{ has_trait = lich \}")
+
+    def test_teeth_replace_the_gene_with_our_template(self):
+        self.assertRegex(self.teeth, r"mode = replace\s+gene = teeth_accessory\s+template = aov_orc_teeth\s+value = 0\.5")
+
+    def test_age_conditions(self):
+        self.assertRegex(self.text, r"(?m)^@baby_hair_age = 5\s*$")  # comments are stripped, leaving a space
+        self.assertIn("scope:age >= @baby_hair_age", self.hair)
+        self.assertIn("scope:age >= 18", self.beards)
+
+    def test_baby_hair_age_matches_anbennars(self):
+        base = ANBENNAR / "gfx/portraits/portrait_modifiers/01_hairstyles_base.txt"
+        if base.is_file():
+            self.assertRegex(base.read_bytes().decode("utf-8-sig", "replace"), r"(?m)^@baby_hair_age = 5\b")
+
+    def test_hair_and_beards_use_mode_add_and_race_orc_only(self):
+        # the engine rejects replace on these special genes
+        for body, gene, template in ((self.hair, "hairstyles", "orc_hairstyles"), (self.beards, "beards", "orc_beards")):
+            self.assertRegex(body, rf"mode = add\s+gene = {gene}\s+template = {template}\s+range = \{{ 0 1 \}}")
+            self.assertIn("has_trait = race_orc", body)
+            self.assertNotIn("race_half_orc", body)
+
+    def test_hair_and_beards_keep_eks_exclusions_and_no_priority(self):
+        for body in (self.hair, self.beards):
+            self.assertIn("is_from_ruler_designer = yes", body)
+            self.assertIn("has_character_flag = has_scripted_appearance", body)
+            self.assertNotIn("priority", body)
+
+    def test_women_get_no_beard_list(self):
+        self.assertIn("is_female = no", self.beards)
+
+
+class LocalizationTests(unittest.TestCase):
+    def test_each_gene_is_named(self):
+        text = read("localization/english/aov_orc_portraits_l_english.yml")
+        self.assertTrue(text.startswith("l_english:"))
+        for gene in ORC_GENES:
+            self.assertRegex(text, rf'(?m)^ {gene}: "')
+
+
 if __name__ == "__main__":
     unittest.main()
