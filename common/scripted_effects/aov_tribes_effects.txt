@@ -1,0 +1,9 @@
+﻿# Anbennar Overhaul: Dwarovar tribes (docs/systems/dwarovar-tribes.md).
+
+# Title scope, a pool title: it wears its holder's dynasty arms. Its name reads the dynasty by itself (its localization).
+aov_tribe_title_sync_effect = {
+	if = {
+		limit = { exists = holder.dynasty }
+		set_coa = holder.dynasty
+	}
+}

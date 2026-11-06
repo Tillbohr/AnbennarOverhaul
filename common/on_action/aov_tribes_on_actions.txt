@@ -1,0 +1,75 @@
+﻿# Anbennar Overhaul: Dwarovar tribes (docs/systems/dwarovar-tribes.md), appended to vanilla on_actions.
+
+on_title_gain = {
+	on_actions = { aov_tribe_title_gain }
+}
+
+on_game_start = {
+	on_actions = { aov_tribe_game_start }
+}
+
+# Root = new holder. A pool title reaching someone who is neither orc nor goblin is destroyed, which frees it; otherwise
+# it takes the new holder's arms. Then an orc or goblin who gains a pool title, or anything inside a tribal realm, takes
+# their race's government.
+aov_tribe_title_gain = {
+	effect = {
+		if = {
+			limit = {
+				scope:title = {
+					tier >= tier_duchy
+					aov_is_pool_title_trigger = yes
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						OR = {
+							has_trait = race_orc
+							has_trait = race_goblin
+						}
+					}
+				}
+				destroy_title = scope:title
+			}
+			else = {
+				scope:title = { aov_tribe_title_sync_effect = yes }
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					has_trait = race_orc
+					has_trait = race_goblin
+				}
+				OR = {
+					scope:title = {
+						tier >= tier_duchy
+						aov_is_pool_title_trigger = yes
+					}
+					top_liege = { government_has_flag = government_is_dwarovar_tribe }
+				}
+			}
+			if = {
+				limit = {
+					has_trait = race_orc
+					NOT = { government_has_flag = government_is_orcish_warband }
+				}
+				change_government = orcish_warband_government
+			}
+			else_if = {
+				limit = {
+					has_trait = race_goblin
+					NOT = { government_has_flag = government_is_goblin_chiefdom }
+				}
+				change_government = goblin_chiefdom_government
+			}
+		}
+	}
+}
+
+# Pool titles in history wear their holders' capitals and arms from the first day.
+aov_tribe_game_start = {
+	effect = {
+		aov_tribe_sync_all_pool_titles_effect = yes
+	}
+}
