@@ -7,41 +7,45 @@ docs/superpowers/specs/2026-10-17-rie-dwarves-design.md (Section 2)
 """
 
 
-def _hold(name, eu4_province, title, barony, start_level):
+def _hold(name, eu4_province, title, barony, start_level, culture=None, kingdom=None):
+    """culture, kingdom: what a hold-less dwarf who settles here can revive, and the de jure kingdom that must be
+    unformed for it (docs/superpowers/specs/2026-11-05-dwarovar-tribes-design.md). None for Anbennar's holds outside the
+    Serpentspine."""
     return {"name": name, "eu4_province": eu4_province, "title": title, "barony": barony,
-            "start_level": start_level}
+            "start_level": start_level, "culture": culture, "kingdom": kingdom}
 
 
 HOLDS = [
     _hold("Marrhold", 4097, "c_marrhold", "b_marrhold", 1),
     _hold("Anvilwright", 912, "b_anvilwright", "b_anvilwright", 1),
-    _hold("Verkal Gulan", 2914, "c_verkal_gulan", "b_gulandhum", 2),
-    _hold("Seghdihr", 4124, "c_seghdihr", "b_kar_fimthrun", 2),
+    _hold("Verkal Gulan", 2914, "c_verkal_gulan", "b_gulandhum", 2, "gold_dwarvish", "k_verkal_gulan"),
+    _hold("Seghdihr", 4124, "c_seghdihr", "b_kar_fimthrun", 2, "citrine_dwarvish", "k_seghdihr"),
     _hold("Ovdal Tûngr", 526, "c_ovdal_tungr", "b_irovar", 2),
     _hold("Rubyhold", 62, "c_rubyhold", "b_hul_az_amekh", 2),
-    _hold("Hehodovar", 4078, "c_hehodovar", "b_kar_hargun", 2),
-    _hold("Gor Ozumbrog", 4218, "c_gor_ozumbrog", "b_topazhjardan", 2),
-    _hold("Khugdihr", 2863, "c_khugdihr", "b_aghatehargun", 1),
+    _hold("Hehodovar", 4078, "c_hehodovar", "b_kar_hargun", 2, "pyrite_dwarvish", "k_hehodovar"),
+    _hold("Gor Ozumbrog", 4218, "c_gor_ozumbrog", "b_topazhjardan", 2, "topaz_dwarvish", "k_gor_ozumbrog"),
+    _hold("Khugdihr", 2863, "c_khugdihr", "b_aghatehargun", 1, "agate_dwarvish", "k_khugdihr"),
     # Serpentreach (tools/build_serpentreach.py makes these titles)
-    _hold("Arg-Ôrdstun", 4093, "c_arg_ordstun", "b_arg_ordstun", 2),
-    _hold("Ovdal Lodhum", 2973, "c_ovdal_lodhum", "b_ovdal_lodhum", 2),
-    _hold("Gor Bûrad", 4039, "c_gor_burad", "b_gor_burad", 2),
-    _hold("Shazstundihr", 2942, "c_shazstundihr", "b_shazstundihr", 1),
-    _hold("Verkal Skomdihr", 4100, "c_verkal_skomdihr", "b_verkal_skomdihr", 1),
-    _hold("Orlghelovar", 4238, "c_orlghelovar", "b_orlghelovar", 1),
+    _hold("Arg-Ôrdstun", 4093, "c_arg_ordstun", "b_arg_ordstun", 2, "diamond_dwarvish", "k_arg_ordstun"),
+    _hold("Ovdal Lodhum", 2973, "c_ovdal_lodhum", "b_ovdal_lodhum", 2, "garnet_dwarvish", "k_ovdal_lodhum"),
+    _hold("Gor Bûrad", 4039, "c_gor_burad", "b_gor_burad", 2, "basalt_dwarvish", "k_gor_burad"),
+    _hold("Shazstundihr", 2942, "c_shazstundihr", "b_shazstundihr", 1, "marble_dwarvish", "k_shazstundihr"),
+    _hold("Verkal Skomdihr", 4100, "c_verkal_skomdihr", "b_verkal_skomdihr", 1, "flint_dwarvish", "k_verkal_skomdihr"),
+    _hold("Orlghelovar", 4238, "c_orlghelovar", "b_orlghelovar", 1, "cobalt_dwarvish", "k_orlghelovar"),
     # Segbandal (tools/build_segbandal.py makes these titles)
-    _hold("Gor Vazumbrog", 4217, "c_gor_vazumbrog", "b_gor_vazumbrog", 2),
+    _hold("Gor Vazumbrog", 4217, "c_gor_vazumbrog", "b_gor_vazumbrog", 2, "titanium_dwarvish", "k_gor_vazumbrog"),
     # West Dwarovar (tools/build_west_dwarovar.py makes these titles); Amldihr, the old capital, starts deeper
-    _hold("Amldihr", 4119, "c_amldihr", "b_amldihr", 2),
-    _hold("Haraz Orldhûm", 2868, "c_haraz_orldhum", "b_haraz_orldhum", 1),
-    _hold("Mithradhûm", 4236, "c_mithradhum", "b_mithradhum", 1),
-    _hold("Er-Natvir", 2931, "c_er_natvir", "b_er_natvir", 1),
-    _hold("Verkal Kozenad", 4056, "c_verkal_kozenad", "b_verkal_kozenad", 1),
-    _hold("Hul-Jorkad", 2963, "c_hul_jorkad", "b_hul_jorkad", 1),
-    _hold("Orlazam-az-dihr", 4147, "c_orlazam_az_dihr", "b_orlazam_az_dihr", 1),
-    _hold("Dûr-Vazhatun", 4020, "c_dur_vazhatun", "b_dur_vazhatun", 1),
+    _hold("Amldihr", 4119, "c_amldihr", "b_amldihr", 2, "kronium_dwarvish", "k_amldihr"),
+    _hold("Haraz Orldhûm", 2868, "c_haraz_orldhum", "b_haraz_orldhum", 1, "platinum_dwarvish", "k_haraz_orldhum"),
+    _hold("Mithradhûm", 4236, "c_mithradhum", "b_mithradhum", 1, "mithril_dwarvish", "k_mithradhum"),
+    _hold("Er-Natvir", 2931, "c_er_natvir", "b_er_natvir", 1, "dagrite_dwarvish", "k_er_natvir"),
+    _hold("Verkal Kozenad", 4056, "c_verkal_kozenad", "b_verkal_kozenad", 1, "opal_dwarvish", "k_verkal_kozenad"),
+    _hold("Hul-Jorkad", 2963, "c_hul_jorkad", "b_hul_jorkad", 1, "lead_dwarvish", "k_hul_jorkad"),
+    _hold("Orlazam-az-dihr", 4147, "c_orlazam_az_dihr", "b_orlazam_az_dihr", 1, "ramsteel_dwarvish", "k_orlazam_az_dihr"),
+    _hold("Dûr-Vazhatun", 4020, "c_dur_vazhatun", "b_dur_vazhatun", 1, "sapphire_dwarvish", "k_dur_vazhatun"),
 ]
 
+REVIVAL_PRESTIGE = 500
 DIG_COST_PER_LEVEL = 150
 EVENT_CHANCE = 40
 STAGE_SHARES = (0.25, 0.75)

@@ -353,6 +353,62 @@ class DigRequirementTests(unittest.TestCase):
         self.assertRegex(effect, r"aov_hold_setup_effect = yes\n\t+aov_rie_deposit_setup_effect = yes\n")
 
 
+class RevivalTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.decisions = parse_blocks(bh.render_revival_decisions())
+        cls.loc = bh.render_revival_loc()
+
+    def block(self, name="orlghelovar"):
+        return self.decisions[f"aov_revive_{name}_decision"]
+
+    def section(self, body, name):
+        return re.search(rf"(?ms)^\t{name} = \{{\n(.*?)^\t\}}", body).group(1)
+
+    def test_one_decision_per_hold(self):
+        self.assertEqual(len(self.decisions), 20)
+        self.assertNotIn("aov_revive_marrhold_decision", self.decisions)
+
+    def test_requires_only_one_hold(self):
+        shown = self.section(self.block(), "is_shown")
+        self.assertRegex(shown, r"any_held_title = \{\s*count = 1\s*tier = tier_barony\s*title_province = \{ aov_is_hold = yes \}")
+        self.assertIn("has_title = title:b_orlghelovar", shown)
+
+    def test_requires_dwarf_and_unformed(self):
+        shown = self.section(self.block(), "is_shown")
+        self.assertIn("is_dwarvish_culture = yes", shown)
+        self.assertIn("is_landed = yes", shown)
+        self.assertIn("NOT = { exists = title:k_orlghelovar.holder }", shown)
+        self.assertIn("NOT = { has_culture = culture:cobalt_dwarvish }", shown)
+
+    def test_no_prompt_on_creation(self):
+        for path in (SUBMOD / "common/on_action").glob("*.txt"):
+            text = path.read_text(encoding="utf-8-sig", errors="replace")
+            self.assertNotIn("aov_revive", text, path.name)
+        self.assertNotIn("flag:created", bh.render_revival_decisions())
+
+    def test_effect_converts_family_and_county(self):
+        effect = self.section(self.block(), "effect")
+        self.assertRegex(effect, r"(?m)^\t\tset_culture = culture:cobalt_dwarvish$")
+        self.assertRegex(effect, r"every_spouse = \{\s*set_culture = culture:cobalt_dwarvish")
+        self.assertRegex(effect, r"every_child = \{\s*set_culture = culture:cobalt_dwarvish")
+        self.assertIn("title:c_orlghelovar = { set_county_culture = culture:cobalt_dwarvish }", effect)
+        self.assertEqual(effect.count("set_county_culture"), 1)
+
+    def test_cost(self):
+        self.assertIn("prestige = aov_revival_prestige", self.section(self.block(), "cost"))
+        self.assertIn("aov_revival_prestige = 500\n", bh.render_values())
+
+    def test_ai_only_at_capital(self):
+        self.assertIn("capital_province = title:b_orlghelovar.title_province", self.section(self.block(), "ai_potential"))
+
+    def test_loc_for_every_decision(self):
+        for key in self.decisions:
+            for suffix in ("", "_desc", "_tooltip", "_confirm"):
+                self.assertRegex(self.loc, rf'(?m)^ {key}{suffix}:0 "', key)
+        self.assertIn('aov_revive_orlghelovar_decision:0 "Revive the Heritage of Orlghelovar"', self.loc)
+
+
 @unittest.skipUnless(HAVE_REAL, "RiE, Anbennar and game needed")
 class FreshTests(unittest.TestCase):
     def test_written_files_are_fresh(self):

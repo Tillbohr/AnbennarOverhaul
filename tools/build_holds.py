@@ -30,6 +30,8 @@ VALUES_PATH = "common/script_values/aov_hold_values.txt"
 LOC_PATH = "localization/english/aov_holds_l_english.yml"
 SETUP_PATH = "common/scripted_effects/aov_hold_setup_effects.txt"
 MODIFIERS_PATH = "common/modifiers/aov_hold_modifiers.txt"
+REVIVAL_PATH = "common/decisions/aov_hold_revival_decisions.txt"
+REVIVAL_LOC_PATH = "localization/english/aov_hold_revival_l_english.yml"
 
 BAND_DESCS = (
     (range(1, 3), "A young hold, a few halls and passages cut into the rock."),
@@ -128,7 +130,9 @@ def render_values() -> str:
             "# Province scope: gold cost of a dig.\n"
             f"aov_dig_cost = {{\n\tvalue = aov_dig_target_value\n\tmultiply = {holds.DIG_COST_PER_LEVEL}\n}}\n\n"
             "# Province scope: months a dig takes, 12 x (8 + 4 x (target - 1)).\n"
-            "aov_dig_months = {\n\tvalue = aov_dig_target_value\n\tsubtract = 1\n\tmultiply = 4\n\tadd = 8\n\tmultiply = 12\n}\n")
+            "aov_dig_months = {\n\tvalue = aov_dig_target_value\n\tsubtract = 1\n\tmultiply = 4\n\tadd = 8\n\tmultiply = 12\n}\n\n"
+            "# Prestige cost of reviving a lost hold's culture.\n"
+            f"aov_revival_prestige = {holds.REVIVAL_PRESTIGE}\n")
 
 
 HOLDING_LOC = [
@@ -151,6 +155,83 @@ def render_modifiers() -> str:
             "aov_hold_rich_vein = {\n\ticon = economy_positive\n\ttax_mult = 0.1\n}\n\n"
             "# Province modifier while a dig to that level is under way; it has no effects.\n"
             + "\n".join(f"aov_delving_{n:02d} = {{\n\ticon = economy_positive\n}}" for n in range(2, 11)) + "\n")
+
+
+def revival_key(hold: dict) -> str:
+    return f"aov_revive_{hold['title'][2:]}_decision"
+
+
+def render_revival_decisions() -> str:
+    """One decision per hold with a culture. A ruler with exactly one hold sees at most one, so no picker is needed."""
+    out = [HEADER, "\n# A hold-less dwarf who settles a lost hold can bring its culture back, while its kingdom is unformed.\n"]
+    for hold in (h for h in holds.HOLDS if h["culture"]):
+        key, culture, barony = revival_key(hold), f"culture:{hold['culture']}", hold["barony"]
+        out.append(f"""
+{key} = {{
+	picture = {{
+		reference = "gfx/interface/illustrations/decisions/decision_realm.dds"
+	}}
+	decision_group_type = major
+	sort_order = 96
+	ai_check_interval = 60
+
+	desc = {key}_desc
+	selection_tooltip = {key}_tooltip
+	confirm_text = {key}_confirm
+
+	is_shown = {{
+		is_landed = yes
+		is_dwarvish_culture = yes
+		has_title = title:{barony}
+		any_held_title = {{
+			count = 1
+			tier = tier_barony
+			title_province = {{ aov_is_hold = yes }}
+		}}
+		NOT = {{ exists = title:{hold['kingdom']}.holder }}
+		NOT = {{ has_culture = {culture} }}
+	}}
+
+	is_valid_showing_failures_only = {{
+		is_available_adult = yes
+	}}
+
+	cost = {{
+		prestige = aov_revival_prestige
+	}}
+
+	effect = {{
+		set_culture = {culture}
+		every_spouse = {{
+			set_culture = {culture}
+		}}
+		every_child = {{
+			set_culture = {culture}
+		}}
+		title:{hold['title']} = {{ set_county_culture = {culture} }}
+	}}
+
+	ai_potential = {{
+		capital_province = title:{barony}.title_province
+	}}
+
+	ai_will_do = {{
+		base = 100
+	}}
+}}
+""")
+    return "".join(out)
+
+
+def render_revival_loc() -> str:
+    out = ["l_english:"]
+    for hold in (h for h in holds.HOLDS if h["culture"]):
+        key, name = revival_key(hold), hold["name"]
+        out += [f' {key}:0 "Revive the Heritage of {name}"',
+                f' {key}_desc:0 "The clans of {name} are gone, but their halls are mine now. Let the old ways of this hold live again in my house."',
+                f' {key}_tooltip:0 "Your family and the county of {name} take the hold\'s lost culture"',
+                f' {key}_confirm:0 "The hold remembers"']
+    return "\n".join(out) + "\n"
 
 
 def render_setup() -> str:
@@ -192,7 +273,8 @@ def render_all(root: Path = None, roots: bp.Roots = None) -> dict:
     if root is not None:
         roots = bp.Roots(rie=roots.rie, anbennar=Path(root), game=roots.game)
     return {BUILDINGS_PATH: render_buildings(roots), VALUES_PATH: render_values(), LOC_PATH: render_loc(),
-            SETUP_PATH: render_setup(), MODIFIERS_PATH: render_modifiers()}
+            SETUP_PATH: render_setup(), MODIFIERS_PATH: render_modifiers(),
+            REVIVAL_PATH: render_revival_decisions(), REVIVAL_LOC_PATH: render_revival_loc()}
 
 
 def write_all(files: dict, root: Path = SUBMOD) -> None:
