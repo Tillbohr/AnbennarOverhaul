@@ -4,3 +4,7 @@
  aov_orc_tusks: "Orc Tusks"
  aov_orc_wrinkles: "Orc Wrinkles"
  aov_orc_horns: "Orc Horns"
+ orc_base: "Orc"
+ orc_brown: "Brown Orc"
+ orc_gray: "Gray Orc"
+ orc_black: "Black Orc"

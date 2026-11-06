@@ -428,6 +428,11 @@ class LocalizationTests(unittest.TestCase):
         for gene in ORC_GENES:
             self.assertRegex(text, rf'(?m)^ {gene}: "')
 
+    def test_each_ethnicity_is_named(self):
+        text = read("localization/english/aov_orc_portraits_l_english.yml")
+        for ethnicity in ("orc_base", "orc_brown", "orc_gray", "orc_black"):
+            self.assertRegex(text, rf'(?m)^ {ethnicity}: "')
+
 
 if __name__ == "__main__":
     unittest.main()
