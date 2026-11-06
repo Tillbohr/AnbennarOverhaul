@@ -88,6 +88,22 @@ class TeethGeneTests(unittest.TestCase):
             orc.add_orc_teeth(GENE_FIXTURE.replace("teeth_accessory", "other_accessory"))
 
 
+class ShadowTests(unittest.TestCase):
+    def test_build_stops_if_anbennar_ships_the_gene_file(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            game, anbennar = Path(tmp) / "game", Path(tmp) / "anbennar"
+            for root in (game, anbennar):
+                (root / "common/genes").mkdir(parents=True)
+                (root / orc.TEETH_GENE_FILE).write_text(GENE_FIXTURE, "utf-8")
+            with self.assertRaises(SystemExit) as stopped:
+                orc.build(game, anbennar)
+            self.assertIn("Anbennar", str(stopped.exception))
+
+    def test_anbennar_does_not_ship_it_today(self):
+        self.assertFalse((ANBENNAR / orc.TEETH_GENE_FILE).exists())
+
+
 class ArtTests(unittest.TestCase):
     def test_imported_art_present(self):
         for out_rel in orc.IMPORTS.values():
@@ -406,7 +422,7 @@ class ModifierTests(unittest.TestCase):
 
     def test_hair_and_beards_use_mode_add_and_race_orc_only(self):
         # the engine rejects replace on these special genes
-        for body, gene, template in ((self.hair, "hairstyles", "orc_hairstyles"), (self.beards, "beards", "orc_beards")):
+        for body, gene, template in ((self.hair, "hairstyles", "aov_orc_hairstyles"), (self.beards, "beards", "aov_orc_beards")):
             self.assertRegex(body, rf"mode = add\s+gene = {gene}\s+template = {template}\s+range = \{{ 0 1 \}}")
             self.assertIn("has_trait = race_orc", body)
             self.assertNotIn("race_half_orc", body)
@@ -417,8 +433,193 @@ class ModifierTests(unittest.TestCase):
             self.assertIn("has_character_flag = has_scripted_appearance", body)
             self.assertNotIn("priority", body)
 
+    def test_forced_shaving_still_wins_over_the_beard_group(self):
+        # Later groups of equal priority win, so a eunuch or a monk would otherwise get a full beard
+        for condition in ("has_trait = beardless_eunuch", "has_character_flag = no_beard"):
+            self.assertIn(condition, self.beards)
+
+    def test_forced_baldness_still_wins_over_the_hair_group(self):
+        for condition in ("has_nickname = nick_the_actually_bald", "has_character_modifier = hajj_halq_modifier",
+                          "has_character_modifier = shaven_bald_modifier", "has_character_flag = bald_head"):
+            self.assertIn(condition, self.hair)
+
     def test_women_get_no_beard_list(self):
         self.assertIn("is_female = no", self.beards)
+
+
+def gene_file_template(filename: str, template: str) -> str:
+    return block_of(code(read(f"common/genes/{filename}")), template)
+
+
+HAIR_GENES = "03_genes_special_accessories_hairstyles.txt"
+BEARD_GENES = "04_genes_special_accessories_beards.txt"
+CLOTHES_GENES = "05_genes_special_accessories_clothes.txt"
+HEADGEAR_GENES = "06_genes_special_accessories_headgear.txt"
+LEGWEAR_GENES = "07_genes_special_accessories_misc.txt"
+# Clean, styled human looks: what made orcs look like bearded men in the first in-game test.
+HUMAN_HAIR = re.compile(r"\b(male_hair_(western_0[2-9]|mena|sub_saharan|rtt|steppe|indian|northern|byzantine)\w*)\b")
+HUMAN_BEARDS = re.compile(r"\bmale_beard_(western|mena|northern|steppe|sub_saharan|indian)\w*")
+
+
+def weights(body: str) -> dict:
+    return {name: int(weight) for weight, name in re.findall(r'(\d+)\s*=\s*"?([A-Za-z_]\w*)', body)}
+
+
+class GruffHairTests(unittest.TestCase):
+    def test_no_styled_human_hair_for_men(self):
+        male = block_of(gene_file_template(HAIR_GENES, "aov_orc_hairstyles"), "male")
+        self.assertEqual(HUMAN_HAIR.findall(male), [])
+
+    def test_hair_favours_shaved_heads_and_rie_orc_hair(self):
+        male = weights(block_of(gene_file_template(HAIR_GENES, "aov_orc_hairstyles"), "male"))
+        self.assertIn("empty", male)
+        self.assertIn("male_hair_mountain_orc_01", male)
+        self.assertIn("male_hair_uruk_01", male)
+        self.assertEqual(max(male, key=male.get), "male_hair_mountain_orc_01")
+
+    def test_no_human_beards(self):
+        self.assertEqual(HUMAN_BEARDS.findall(gene_file_template(BEARD_GENES, "aov_orc_beards")), [])
+
+    def test_most_men_are_clean_shaven_so_the_tusks_show(self):
+        male = weights(block_of(gene_file_template(BEARD_GENES, "aov_orc_beards"), "male"))
+        self.assertEqual(male, {"empty": 40, "male_beard_mountain_orc_01": 5, "male_beard_mountain_orc_02": 1,
+                                "beard_tywins_muttonchops": 4})  # RiE's orc_beards
+
+    def test_eks_lists_are_gone(self):
+        for filename in (HAIR_GENES, BEARD_GENES):
+            self.assertNotIn("orc_hairstyles = {" if filename == HAIR_GENES else "\torc_beards = {",
+                             read(f"common/genes/{filename}").replace("aov_orc_hairstyles", "").replace("aov_orc_beards", ""))
+
+    def test_modifier_uses_the_new_lists(self):
+        modifier = code(read(MODIFIER_FILE))
+        self.assertIn("template = aov_orc_hairstyles", modifier)
+        self.assertIn("template = aov_orc_beards", modifier)
+
+
+RAGS = "gfx/models/portraits/aov_orc/rags"
+
+
+class WardrobeTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.text = code(read(MODIFIER_FILE))
+
+    def _accessories_exist(self, names):
+        ours = read("gfx/portraits/accessories/aov_orc.txt") + read("gfx/portraits/accessories/aov_rie_portraits.txt")
+        for name in names:
+            self.assertRegex(ours, rf"(?m)^{name}\s*=\s*\{{", name)
+
+    def test_templates_hold_the_recommended_mix(self):
+        expected = {
+            (CLOTHES_GENES, "aov_orc_common_clothes"): ({"m_clothes_sec_ek2_goblin_com_01", "m_clothes_sec_ek2_goblin_com_02"},
+                                                        {"fem_clothes_sec_ek2_goblin_com_01"}),
+            (CLOTHES_GENES, "aov_orc_chief_clothes"): ({"male_clothes_secular_riekling_01"},
+                                                       {"female_clothes_secular_riekling_01"}),
+            (CLOTHES_GENES, "aov_orc_ruler_clothes"): ({"male_clothes_moria_orc_01"}, {"female_clothes_goblin_armor_01"}),
+            (CLOTHES_GENES, "aov_orc_war_clothes"): ({"male_clothes_mordor_uruk_01"}, {"female_clothes_mordor_uruk_01"}),
+            (LEGWEAR_GENES, "aov_orc_chief_legwear"): ({"male_legwear_uruk_beserker_1"}, {"female_legwear_uruk_beserker_1"}),
+            (LEGWEAR_GENES, "aov_orc_ruler_legwear"): ({"male_legwear_orc_war_01"}, {"female_legwear_mordor_uruk_02"}),
+            (LEGWEAR_GENES, "aov_orc_war_legwear"): ({"male_legwear_uruk_soldier"}, {"female_legwear_uruk_soldier"}),
+            (HEADGEAR_GENES, "aov_orc_crown_headgear"): ({"male_headgear_goblin_king"}, {"female_headgear_goblin_king"}),
+            (HEADGEAR_GENES, "aov_orc_war_headgear"): ({"male_headgear_uruk_isengard_1"}, {"female_headgear_uruk_isengard_1"}),
+        }
+        for (filename, template), (male, female) in expected.items():
+            body = gene_file_template(filename, template)
+            self.assertEqual(set(weights(block_of(body, "male"))), male, template)
+            self.assertEqual(set(weights(block_of(body, "female"))), female, template)
+            self.assertRegex(self.text, rf"template = {template}\b", template)
+            self._accessories_exist(male | female)
+
+    def _group(self, name):
+        return block_of(self.text, name)
+
+    def test_rank_clothes_use_their_triggers(self):
+        clothes = self._group("aov_orc_clothes")
+        self.assertRegex(clothes, r"priority = 1\b")
+        self.assertRegex(block_of(clothes, "aov_orc_common"), r"portrait_commoner_clothing_trigger = \{\s*CULTURE_INPUT = aov_orc")
+        self.assertRegex(block_of(clothes, "aov_orc_chief"), r"portrait_low_nobles_clothing_trigger = \{\s*CULTURE_INPUT = aov_orc")
+        ruler = block_of(clothes, "aov_orc_ruler")
+        for rank in ("high_nobles", "royalty", "imperial"):
+            self.assertRegex(ruler, rf"portrait_{rank}_clothing_trigger = \{{\s*CULTURE_INPUT = aov_orc")
+
+    def test_children_wear_the_rags_because_the_armour_has_no_child_shape(self):
+        clothes = self._group("aov_orc_clothes")
+        self.assertIn("scope:age < 16", block_of(clothes, "aov_orc_child"))
+        for entry in ("aov_orc_chief", "aov_orc_ruler"):
+            self.assertIn("scope:age >= 16", block_of(clothes, entry))
+        self.assertIn("template = aov_orc_common_clothes", block_of(clothes, "aov_orc_child"))
+
+    def test_war_clothes_are_armour_for_every_rank(self):
+        armor = self._group("aov_orc_clothes_armor")
+        self.assertRegex(armor, r"priority = 4\b")
+        self.assertIn("military_outfit", armor)
+        self.assertIn("portrait_wear_armor_trigger = yes", armor)
+        for rank in ("commoner", "low_nobles", "high_nobles", "royalty"):
+            self.assertRegex(armor, rf"portrait_{rank}_armor_trigger = \{{\s*CULTURE_INPUT = aov_orc", rank)
+        self.assertRegex(armor, r"portrait_imperial_trigger = \{\s*CULTURE_INPUT = aov_orc")  # no imperial armour trigger exists
+
+    def test_helmets_only_in_war(self):
+        helmets = self._group("aov_orc_headgear_armor")
+        self.assertRegex(helmets, r"priority = 4\b")
+        self.assertIn("portrait_wear_helmet_trigger = yes", helmets)
+        self.assertIn("template = aov_orc_war_headgear", helmets)
+
+    def test_only_great_rulers_are_crowned_and_no_one_else_wears_a_western_hat(self):
+        headgear = self._group("aov_orc_headgear")
+        self.assertRegex(headgear, r"priority = 1\b")
+        crown = block_of(headgear, "aov_orc_crown")
+        for rank in ("high_nobles", "royalty", "imperial"):
+            self.assertRegex(crown, rf"portrait_{rank}_headgear_trigger = \{{\s*CULTURE_INPUT = aov_orc")
+        self.assertIn("template = no_headgear", block_of(headgear, "aov_orc_no_hat"))
+        self.assertLess(headgear.index("aov_orc_crown"), headgear.index("aov_orc_no_hat"))  # the first at 100 or more wins
+
+    def test_no_western_cloaks(self):
+        self.assertIn("template = no_cloak", self._group("aov_orc_cloaks"))
+
+    def test_clothes_follow_the_culture_key(self):
+        cultures = code(read(CULTURES_FILE))
+        self.assertEqual(re.findall(r"\w+", block_of(block_of(cultures, "black_orc"), "clothing_gfx")),
+                         ["aov_orc_clothing_gfx", "western_clothing_gfx"])
+        self.assertNotIn("aov_orc", block_of(cultures, "cave_goblin"))
+        triggers = read("common/scripted_triggers/aov_rie_portrait_triggers.txt")
+        self.assertIn("portrait_aov_orc_clothing_trigger = {", triggers)
+        self.assertIn("portrait_aov_orc_clothing_spouse_trigger = {", triggers)
+
+    def test_rags_are_wired(self):
+        accessories = read("gfx/portraits/accessories/aov_orc.txt")
+        asset = read(f"{RAGS}/aov_orc_rags.asset")
+        variations = read("gfx/portraits/accessory_variations/aov_orc.txt")
+        for entity in re.findall(r'entity = "?(aov_orc_rags\w+)', accessories):
+            self.assertIn(f'name = "{entity}"', asset)
+        self.assertEqual(len(re.findall(r'entity = "?aov_orc_rags', accessories)), 3)
+        self.assertEqual(set(re.findall(r'variation = "(\w+)"', asset)), {"aov_orc_rags"})
+        self.assertIn('name = "aov_orc_rags"', variations)
+        self.assertNotIn("ek2", re.sub(r"#[^\n]*", "", asset))
+        for mesh in re.findall(r'"(aov_orc_rags\w+\.mesh)"', asset):
+            self.assertTrue((SUBMOD / RAGS / mesh).is_file(), mesh)
+        for tex in re.findall(r'"(aov_orc_rags\w+\.dds)"', asset):
+            self.assertTrue((SUBMOD / RAGS / tex).is_file(), tex)
+        for path in re.findall(r'"(gfx/[^"]+\.dds)"', asset + variations):
+            self.assertTrue((SUBMOD / path).is_file() or (orc.DEFAULT_GAME / path).is_file(), path)
+
+    def test_rag_palette_is_lighter_so_it_reads_on_black_skin(self):
+        from eu4_import import read_dds
+        ek2 = orc.DEFAULT_EK2 / orc.RAG_PALETTE_SOURCE
+        if not ek2.is_file():
+            self.skipTest("needs Elder Kings 2")
+        _w, _h, before = read_dds(ek2.read_bytes())
+        raw = (SUBMOD / orc.RAG_PALETTE).read_bytes()
+        _w, _h, after = read_dds(raw)
+        self.assertEqual(raw, orc.lighter_palette(ek2.read_bytes()))
+        mean = lambda px: sum(px[i] for i in range(len(px)) if i % 4 != 3) / (len(px) * 3 / 4)
+        self.assertGreater(mean(after), 1.5 * mean(before))
+        self.assertEqual(after[3::4], before[3::4])
+
+    def test_lighter_palette_keeps_alpha_and_caps_at_white(self):
+        header = bytes(128)
+        out = orc.lighter_palette(header + bytes((10, 200, 100, 77)))
+        self.assertEqual(out[:128], header)
+        self.assertEqual(out[128:], bytes((18, 255, 180, 77)))
 
 
 class LocalizationTests(unittest.TestCase):
@@ -427,6 +628,9 @@ class LocalizationTests(unittest.TestCase):
         self.assertTrue(text.startswith("l_english:"))
         for gene in ORC_GENES:
             self.assertRegex(text, rf'(?m)^ {gene}: "')
+
+    def test_clothing_key_is_named(self):
+        self.assertRegex(read("localization/english/aov_orc_portraits_l_english.yml"), r'(?m)^ aov_orc_clothing_gfx: "')
 
     def test_each_ethnicity_is_named(self):
         text = read("localization/english/aov_orc_portraits_l_english.yml")

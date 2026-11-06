@@ -51,3 +51,122 @@ entity = {
 		}
 	}
 }
+
+pdxmesh = {
+	name = "male_hair_mesofp1_09b_cap_02_mesh"
+	file = "male_hair_mesofp1_09b_cap_02.mesh"
+
+	meshsettings = {
+		name = "male_hair_fp1_09_cap_02Shape"
+		index = 0
+		texture_diffuse = "male_hair_mesofp1_09b_diffuse.dds"
+		texture_normal = "aov_rie_m_hair_fp1_09_normal.dds"
+		texture_specular = "m_hair_fp1_09_properties.dds"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "male_hair_mesofp1_09b_cap_02_entity"
+	pdxmesh = "male_hair_mesofp1_09b_cap_02_mesh"
+	
+	scale = 0.993
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = {0.0 1.0}
+			}
+		}
+	}
+}
+
+pdxmesh = {
+	name = "male_hair_mesofp1_09b_cap_mesh"
+	file = "male_hair_mesofp1_09b_cap.mesh"
+
+	meshsettings = {
+		name = "male_hair_fp1_09_capShape"
+		index = 0
+		texture_diffuse = "male_hair_mesofp1_09b_diffuse.dds"
+		texture_normal = "aov_rie_m_hair_fp1_09_normal.dds"
+		texture_specular = "m_hair_fp1_09_properties.dds"
+		shader = "portrait_hair"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "male_hair_mesofp1_09b_cap_entity"
+	pdxmesh = "male_hair_mesofp1_09b_cap_mesh"
+	
+	scale = 0.993
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = {0.0 1.0}
+			}
+		}
+	}
+}
+
+pdxmesh = {
+	name = "male_hair_mesofp1_09b_crown_mesh"
+	file = "male_hair_mesofp1_09b_crown.mesh"
+
+	meshsettings = {
+		name = "male_hair_fp1_09_crownShape"
+		index = 0
+		texture_diffuse = "male_hair_mesofp1_09b_diffuse.dds"
+		texture_normal = "aov_rie_m_hair_fp1_09_normal.dds"
+		texture_specular = "m_hair_fp1_09_properties.dds"
+		shader = "portrait_hair"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "male_hair_mesofp1_09b_crown_entity"
+	pdxmesh = "male_hair_mesofp1_09b_crown_mesh"
+	
+	scale = 0.993
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = {0.0 1.0}
+			}
+		}
+	}
+}
+
+pdxmesh = {
+	name = "male_hair_mesofp1_09b_mesh"
+	file = "male_hair_mesofp1_09b.mesh"
+
+	meshsettings = {
+		name = "male_hair_fp1_09Shape"
+		index = 0
+		texture_diffuse = "male_hair_mesofp1_09b_diffuse.dds"
+		texture_normal = "aov_rie_m_hair_fp1_09_normal.dds"
+		texture_specular = "m_hair_fp1_09_properties.dds"
+		shader = "portrait_hair"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+}
+
+entity = {
+	name = "male_hair_mesofp1_09b_entity"
+	pdxmesh = "male_hair_mesofp1_09b_mesh"
+	
+	scale = 0.993
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = {0.0 1.0}
+			}
+		}
+	}
+}

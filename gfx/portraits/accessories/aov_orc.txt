@@ -7,3 +7,16 @@ male_aov_orc_teeth = {
 female_aov_orc_teeth = {
 	entity = { entity = "aov_orc_female_teeth_entity"		shared_pose_entity = head }
 }
+
+# Elder Kings 2's goblin rags, the orcs' everyday clothes. The names stay EK2's; the entities are ours.
+m_clothes_sec_ek2_goblin_com_01 = {
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = "aov_orc_rags_m_01_entity" }
+}
+
+m_clothes_sec_ek2_goblin_com_02 = {
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = "aov_orc_rags_m_02_entity" }
+}
+
+fem_clothes_sec_ek2_goblin_com_01 = {
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = "aov_orc_rags_f_01_entity" }
+}

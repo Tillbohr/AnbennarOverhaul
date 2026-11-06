@@ -4228,6 +4228,53 @@ special_genes = {
 				girl = female				
 			}			
 		# Anbennar Overhaul: end of Realms in Exile templates
+		# Anbennar Overhaul: other templates (tools/data/portraits.py)
+			aov_orc_common_clothes = {
+				index = 220
+				male = {
+					1 = m_clothes_sec_ek2_goblin_com_01
+					1 = m_clothes_sec_ek2_goblin_com_02
+				}
+				female = {
+					1 = fem_clothes_sec_ek2_goblin_com_01
+				}
+				boy = male
+				girl = female
+			}
+			aov_orc_chief_clothes = {
+				index = 221
+				male = {
+					1 = male_clothes_secular_riekling_01
+				}
+				female = {
+					1 = female_clothes_secular_riekling_01
+				}
+				boy = male
+				girl = female
+			}
+			aov_orc_ruler_clothes = {
+				index = 222
+				male = {
+					1 = male_clothes_moria_orc_01
+				}
+				female = {
+					1 = female_clothes_goblin_armor_01
+				}
+				boy = male
+				girl = female
+			}
+			aov_orc_war_clothes = {
+				index = 223
+				male = {
+					1 = male_clothes_mordor_uruk_01
+				}
+				female = {
+					1 = female_clothes_mordor_uruk_01
+				}
+				boy = male
+				girl = female
+			}
+		# Anbennar Overhaul: end of other templates
 		}
 	}
 }

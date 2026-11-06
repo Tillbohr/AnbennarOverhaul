@@ -6,7 +6,8 @@ added between marker comments. Run this after a CK3 patch:
 
     python -I tools/build_orc_portraits.py [path/to/game]
 
-The art is imported once from Elder Kings 2 (Workshop 2887120253) and committed, unchanged and under new names:
+The art is imported once from Elder Kings 2 (Workshop 2887120253) and committed, under new names, unchanged except the
+goblin rags' palette, which is lightened:
 
     python -I tools/build_orc_portraits.py --import [path/to/elder/kings/2]
 
@@ -22,6 +23,7 @@ from pathlib import Path
 MARKER = "# Anbennar Overhaul"
 
 SUBMOD = Path(__file__).resolve().parent.parent
+DEFAULT_ANBENNAR = SUBMOD.parent / "anbennar-ck3-dev-master"
 DEFAULT_EK2 = Path("C:/Program Files (x86)/Steam/steamapps/workshop/content/1158310/2887120253")
 DEFAULT_GAME = Path("C:/Program Files (x86)/Steam/steamapps/common/Crusader Kings III/game")
 
@@ -31,6 +33,14 @@ TEMPLATE = "aov_orc_teeth"
 MAX_TEMPLATE_INDEX = 255  # DNA stores a gene's template index in one byte
 
 _PORTRAITS = "gfx/models/portraits"
+_PATTERNS = "gfx/portraits/accessory_variations/textures/patterns/aov_orc"
+_MALE_RAG_SHAPES = ("dwarf", "fat", "gaunt", "infant", "muscular", "old")
+_FEMALE_RAG_SHAPES = _MALE_RAG_SHAPES + ("breast_size_max", "pregnant")
+
+# EK2's palette for the rags, written lighter by --import: as shipped the hide sits too close to black skin.
+RAG_PALETTE_SOURCE = "gfx/portraits/accessory_variations/textures/color_palette_riekling_02.dds"
+RAG_PALETTE = "gfx/portraits/accessory_variations/textures/aov_orc_rags_palette.dds"
+RAG_PALETTE_SCALE = 1.8
 
 
 def _imports() -> dict:
@@ -56,6 +66,19 @@ def _imports() -> dict:
     out[f"{decals}/female_head/mer_head_forehead_02.dds"] = f"{mine}/aov_orc_female_forehead_normal.dds"
     for kind in ("diffuse", "normal", "properties"):
         out[f"{decals}/male_head/giant_horns/giantish_horns_01_{kind}.dds"] = f"{mine}/aov_orc_horns_{kind}.dds"
+    # EK2's goblin rags, the orcs' everyday clothes
+    rags = f"{mine}/rags/aov_orc_rags"
+    for theirs, ours, shapes in (
+            ("m_clothes/ek2_goblin/com_01/m_clothes_sec_ek2_goblin_com_01", "m_01", _MALE_RAG_SHAPES),
+            ("m_clothes/ek2_goblin/com_01/m_clothes_sec_ek2_goblin_com_02", "m_02", _MALE_RAG_SHAPES),
+            ("f_clothes/ek2_goblin/com_01/f_clothes_sec_ek2_goblin_com_01", "f_01", _FEMALE_RAG_SHAPES)):
+        out[f"{_PORTRAITS}/{theirs}.mesh"] = f"{rags}_{ours}.mesh"
+        for shape in shapes:
+            out[f"{_PORTRAITS}/{theirs}_bs_{shape}.mesh"] = f"{rags}_{ours}_bs_{shape}.mesh"
+    for kind in ("diffuse", "masks", "normal", "properties"):
+        out[f"{_PORTRAITS}/m_clothes/ek2_goblin/com_01/m_clothes_sec_ek2_goblin_com_01_{kind}.dds"] = f"{rags}_m_01_{kind}.dds"
+    for kind in ("masks", "normal", "properties"):
+        out[f"gfx/portraits/accessory_variations/textures/patterns/fur/fur_{kind}.dds"] = f"{_PATTERNS}/aov_orc_fur_{kind}.dds"
     return out
 
 
@@ -116,18 +139,29 @@ def teeth_gene_bytes(game: bytes) -> bytes:
     return (b"\xef\xbb\xbf" if bom else b"") + text.encode("utf-8")
 
 
-def build(game: Path) -> None:
+def build(game: Path, anbennar: Path = None) -> None:
     src = game / TEETH_GENE_FILE
     if not src.is_file():
         sys.exit(f"error: game gene file not found: {src}")
+    if ((anbennar or DEFAULT_ANBENNAR) / TEETH_GENE_FILE).exists():
+        sys.exit(f"error: Anbennar now ships {TEETH_GENE_FILE}, which this override would replace; build from its copy")
     out = SUBMOD / TEETH_GENE_FILE
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_bytes(teeth_gene_bytes(src.read_bytes()))
     print(f"wrote {out}")
 
 
+def lighter_palette(dds: bytes) -> bytes:
+    """An uncompressed 32-bit palette DDS with its colour channels scaled up, alpha and header unchanged."""
+    out = bytearray(dds)
+    for i in range(128, len(out)):
+        if (i - 128) % 4 != 3:
+            out[i] = min(255, int(out[i] * RAG_PALETTE_SCALE))
+    return bytes(out)
+
+
 def import_ek2(ek2: Path) -> None:
-    missing = [rel for rel in IMPORTS if not (ek2 / rel).is_file()]
+    missing = [rel for rel in [*IMPORTS, RAG_PALETTE_SOURCE] if not (ek2 / rel).is_file()]
     if missing:
         sys.exit(f"error: Elder Kings 2 files not found under {ek2}: {missing}")
     for src_rel, out_rel in IMPORTS.items():
@@ -135,6 +169,10 @@ def import_ek2(ek2: Path) -> None:
         out.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(ek2 / src_rel, out)
         print(f"copied {out}")
+    palette = SUBMOD / RAG_PALETTE
+    palette.parent.mkdir(parents=True, exist_ok=True)
+    palette.write_bytes(lighter_palette((ek2 / RAG_PALETTE_SOURCE).read_bytes()))
+    print(f"wrote {palette} (lighter)")
 
 
 def main() -> None:

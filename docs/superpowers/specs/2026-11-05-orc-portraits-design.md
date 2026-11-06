@@ -6,6 +6,11 @@ and hair lists. Their skin is brown, gray or black instead of EK2's green. Cloth
 The placeholder `black_orc` culture currently uses the human `arab` ethnicity (`docs/systems/dwarovar-tribes.md`,
 Placeholders). This replaces that for orcs only.
 
+> **Changed after the first in-game test (user choice):** EK2's hair and beard lists made orcs look human, so hair and beards
+> are now RiE's orc lists, and the clothes that were out of scope below are the comparison's recommended mix. The review also
+> found that groups with no priority do not lose to one another by rank, so the "special groups still win" wording below is
+> wrong for those. `docs/systems/orc-portraits.md` is current.
+
 ## Intent
 
 - **User asked:** port EK2's orc appearance, keeping the standard orc look. Serpentspine orcs range from brown through
