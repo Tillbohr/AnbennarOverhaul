@@ -2,188 +2,188 @@
 # Anbennar Overhaul: do not edit by hand; edit tools/data/serpentreach.py and rerun the generator.
 
 6944 = {	# Orlghelovar
-	culture = cobalt_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = castle_holding
 }
 
 6945 = {	# Orlghelovar Halls
-	culture = cobalt_dwarvish
-	religion = ancestor_worship
-	holding = city_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = none
 }
 
 6946 = {	# Orlghelovar Deeps
-	culture = cobalt_dwarvish
-	religion = ancestor_worship
-	holding = church_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = none
 }
 
 6947 = {	# Orlghelovar Vaults
-	culture = cobalt_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 6948 = {	# Cobalt Mines
-	culture = cobalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 6949 = {	# Cobalt Mines Halls
-	culture = cobalt_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 6950 = {	# Ranger's Post
-	culture = cobalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 6951 = {	# Ranger's Post Halls
-	culture = cobalt_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 6952 = {	# Nez Argrod 3
-	culture = cobalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 6953 = {	# Marble Galleries
-	culture = marble_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 6954 = {	# Marble Galleries Halls
-	culture = marble_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 6955 = {	# Bloodrock Cavern
-	culture = marble_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 6956 = {	# Bloodrock Cavern Halls
-	culture = marble_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 6957 = {	# Broken Axe Pass
-	culture = marble_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 6958 = {	# Broken Axe Pass Halls
-	culture = marble_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 6959 = {	# Chopper's Cavern
-	culture = cobalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 6960 = {	# Chopper's Cavern Halls
-	culture = cobalt_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 6961 = {	# Bloodied Altar
-	culture = cobalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 6962 = {	# Bloodied Altar Halls
-	culture = cobalt_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 6963 = {	# Deadbeard Lane
-	culture = cobalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 6964 = {	# Deadbeard Lane Halls
-	culture = cobalt_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 6965 = {	# Argrod 2
-	culture = cobalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 6966 = {	# Argrod 1
-	culture = cobalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 6967 = {	# Nez Argrod 1
-	culture = cobalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 6968 = {	# Nez Argrod 2
-	culture = cobalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 6969 = {	# Greater Mines
-	culture = diamond_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 6970 = {	# Greater Mines Halls
-	culture = diamond_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 6971 = {	# Diamond Quarry
-	culture = diamond_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 6972 = {	# Diamond Quarry Halls
-	culture = diamond_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 6973 = {	# Lesser Mines
-	culture = diamond_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 6974 = {	# Lesser Mines Halls
-	culture = diamond_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
@@ -212,206 +212,206 @@
 }
 
 6979 = {	# Argrod 5
-	culture = marble_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 6980 = {	# Argrod 4
-	culture = marble_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 6981 = {	# Argrod 3
-	culture = marble_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 6982 = {	# Shazstundihr
-	culture = marble_dwarvish
-	religion = ancestor_worship
+	culture = cave_goblin
+	religion = goblinic_shamanism
 	holding = castle_holding
 }
 
 6983 = {	# Shazstundihr Halls
-	culture = marble_dwarvish
-	religion = ancestor_worship
-	holding = city_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = none
 }
 
 6984 = {	# Shazstundihr Deeps
-	culture = marble_dwarvish
-	religion = ancestor_worship
-	holding = church_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = none
 }
 
 6985 = {	# Shazstundihr Vaults
-	culture = marble_dwarvish
-	religion = ancestor_worship
+	culture = cave_goblin
+	religion = goblinic_shamanism
 	holding = none
 }
 
 6986 = {	# Rightful Gorge
-	culture = diamond_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 6987 = {	# Rightful Gorge Halls
-	culture = diamond_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 6988 = {	# Hazabor Quarry
-	culture = diamond_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 6989 = {	# Hazabor Quarry Halls
-	culture = diamond_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 6990 = {	# King's Border
-	culture = diamond_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 6991 = {	# King's Border Halls
-	culture = diamond_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 6992 = {	# Argrod 8
-	culture = flint_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 6993 = {	# Argrod 7
-	culture = flint_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 6994 = {	# Argrod 6
-	culture = flint_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 6995 = {	# Bacza Tunnel
-	culture = flint_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 6996 = {	# Bacza Tunnel Halls
-	culture = flint_dwarvish
-	religion = ancestor_worship
+	culture = cave_goblin
+	religion = goblinic_shamanism
 	holding = none
 }
 
 6997 = {	# Verkal Skomdihr
-	culture = flint_dwarvish
-	religion = ancestor_worship
+	culture = cave_goblin
+	religion = goblinic_shamanism
 	holding = castle_holding
 }
 
 6998 = {	# Verkal Skomdihr Halls
-	culture = flint_dwarvish
-	religion = ancestor_worship
-	holding = city_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = none
 }
 
 6999 = {	# Verkal Skomdihr Deeps
-	culture = flint_dwarvish
-	religion = ancestor_worship
-	holding = church_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = none
 }
 
 7000 = {	# Verkal Skomdihr Vaults
-	culture = flint_dwarvish
-	religion = ancestor_worship
+	culture = cave_goblin
+	religion = goblinic_shamanism
 	holding = none
 }
 
 7001 = {	# Flintrock
-	culture = flint_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 7002 = {	# Flintrock Halls
-	culture = flint_dwarvish
-	religion = ancestor_worship
+	culture = cave_goblin
+	religion = goblinic_shamanism
 	holding = none
 }
 
 7003 = {	# Kekig's Prototype
-	culture = flint_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 7004 = {	# Kekig's Prototype Halls
-	culture = flint_dwarvish
-	religion = ancestor_worship
+	culture = cave_goblin
+	religion = goblinic_shamanism
 	holding = none
 }
 
 7005 = {	# Stonecolumn
-	culture = flint_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 7006 = {	# Stonecolumn Halls
-	culture = flint_dwarvish
-	religion = ancestor_worship
+	culture = cave_goblin
+	religion = goblinic_shamanism
 	holding = none
 }
 
 7007 = {	# Glogund Cave
-	culture = flint_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 7008 = {	# Glogund Cave Halls
-	culture = flint_dwarvish
-	religion = ancestor_worship
+	culture = cave_goblin
+	religion = goblinic_shamanism
 	holding = none
 }
 
 7009 = {	# Thieves' Grave
-	culture = flint_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 7010 = {	# Thieves' Grave Halls
-	culture = flint_dwarvish
-	religion = ancestor_worship
+	culture = cave_goblin
+	religion = goblinic_shamanism
 	holding = none
 }
 
 7011 = {	# Arrowden
-	culture = flint_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 7012 = {	# Arrowden Halls
-	culture = flint_dwarvish
-	religion = ancestor_worship
+	culture = cave_goblin
+	religion = goblinic_shamanism
 	holding = none
 }
 
@@ -476,271 +476,271 @@
 }
 
 7023 = {	# Argrod 11
-	culture = garnet_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 7024 = {	# Argrod 10
-	culture = garnet_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 7025 = {	# Argrod 9
-	culture = garnet_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 7026 = {	# East Fissure
-	culture = garnet_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 7027 = {	# East Fissure Halls
-	culture = garnet_dwarvish
-	religion = ancestor_worship
+	culture = cave_goblin
+	religion = goblinic_shamanism
 	holding = none
 }
 
 7028 = {	# Shroomcave
-	culture = garnet_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 7029 = {	# Shroomcave Halls
-	culture = garnet_dwarvish
-	religion = ancestor_worship
+	culture = cave_goblin
+	religion = goblinic_shamanism
 	holding = none
 }
 
 7030 = {	# Orcsfall
-	culture = garnet_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 7031 = {	# Orcsfall Halls
-	culture = garnet_dwarvish
-	religion = ancestor_worship
+	culture = cave_goblin
+	religion = goblinic_shamanism
 	holding = none
 }
 
 7032 = {	# Claxac's Abyss
-	culture = garnet_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 7033 = {	# Claxac's Abyss Halls
-	culture = garnet_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 7034 = {	# Red Pass
-	culture = garnet_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 7035 = {	# Red Pass Halls
-	culture = garnet_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 7036 = {	# Caravan's Rest
-	culture = garnet_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 7037 = {	# Caravan's Rest Halls
-	culture = garnet_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 7038 = {	# Grogir's Crack
-	culture = garnet_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 7039 = {	# Grogir's Crack Halls
-	culture = garnet_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 7040 = {	# Gorrod 1
-	culture = basalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 7041 = {	# Argrod 13
-	culture = basalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 7042 = {	# Argrod 12
-	culture = basalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 7043 = {	# Chasm of Zarn
-	culture = basalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 7044 = {	# Chasm of Zarn Halls
-	culture = basalt_dwarvish
-	religion = ancestor_worship
+	culture = cave_goblin
+	religion = goblinic_shamanism
 	holding = none
 }
 
 7045 = {	# Zarnic Breach
-	culture = basalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 7046 = {	# Zarnic Breach Halls
-	culture = basalt_dwarvish
-	religion = ancestor_worship
+	culture = cave_goblin
+	religion = goblinic_shamanism
 	holding = none
 }
 
 7047 = {	# Traitor's Lair
-	culture = basalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 7048 = {	# Traitor's Lair Halls
-	culture = basalt_dwarvish
-	religion = ancestor_worship
+	culture = cave_goblin
+	religion = goblinic_shamanism
 	holding = none
 }
 
 7049 = {	# Syrad Cave
-	culture = basalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 7050 = {	# Syrad Cave Halls
-	culture = basalt_dwarvish
-	religion = ancestor_worship
+	culture = cave_goblin
+	religion = goblinic_shamanism
 	holding = none
 }
 
 7051 = {	# Argrod 16
-	culture = basalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 7052 = {	# Argrod 15
-	culture = basalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 7053 = {	# Argrod 14
-	culture = basalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 7054 = {	# Lavawater
-	culture = basalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 7055 = {	# Lavawater Halls
-	culture = basalt_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 7056 = {	# Bûrad Depths
-	culture = basalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 7057 = {	# Bûrad Depths Halls
-	culture = basalt_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 7058 = {	# Molten Core
-	culture = basalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 7059 = {	# Molten Core Halls
-	culture = basalt_dwarvish
-	religion = ancestor_worship
+	culture = cave_goblin
+	religion = goblinic_shamanism
 	holding = none
 }
 
 7060 = {	# Bûradforge
-	culture = basalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = cave_goblin
+	religion = goblinic_shamanism
+	holding = tribal_holding
 }
 
 7061 = {	# Bûradforge Halls
-	culture = basalt_dwarvish
-	religion = ancestor_worship
+	culture = cave_goblin
+	religion = goblinic_shamanism
 	holding = none
 }
 
 7062 = {	# Gor Bûrad
-	culture = basalt_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = castle_holding
 }
 
 7063 = {	# Gor Bûrad Halls
-	culture = basalt_dwarvish
-	religion = ancestor_worship
-	holding = city_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = none
 }
 
 7064 = {	# Gor Bûrad Deeps
-	culture = basalt_dwarvish
-	religion = ancestor_worship
-	holding = church_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = none
 }
 
 7065 = {	# Gor Bûrad Vaults
-	culture = basalt_dwarvish
-	religion = ancestor_worship
+	culture = black_orc
+	religion = old_dookan
 	holding = none
 }
 
 7066 = {	# Argrod 18
-	culture = basalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }
 
 7067 = {	# Argrod 17
-	culture = basalt_dwarvish
-	religion = ancestor_worship
-	holding = castle_holding
+	culture = black_orc
+	religion = old_dookan
+	holding = tribal_holding
 }

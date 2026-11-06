@@ -9,7 +9,9 @@ from unittest import mock
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # python -I does not add the tools folder
 import build_dwarovar_tribes as bdt  # noqa: E402
+import eu4_import as ei  # noqa: E402
 import pdx_script  # noqa: E402
+import shared_trace  # noqa: E402
 from build_hud_override import GeneratorError  # noqa: E402
 from data import dwarovar_tribes as dt  # noqa: E402
 
@@ -23,6 +25,18 @@ def read(rel: str) -> str:
 
 def blocks(text: str) -> dict:
     return pdx_script.parse_blocks(pdx_script.strip_comments(text))
+
+
+def test_titles(text: str) -> list:
+    """(key, own text without child titles) for every title of a nested landed titles text."""
+    out = []
+    for m in re.finditer(r"(?m)^(\t*)([dke]_\w+) = \{\n", text):
+        tabs, depth, i = m.group(1), 1, m.end()
+        while depth:
+            depth += {"{": 1, "}": -1}.get(text[i], 0)
+            i += 1
+        out.append((m.group(2), re.sub(rf"(?ms)^{tabs}\t[dk]_\w+ = \{{\n.*?^{tabs}\t\}}\n", "", text[m.end():i])))
+    return out
 
 
 class GovernmentTests(unittest.TestCase):
@@ -228,9 +242,128 @@ class ScriptTests(unittest.TestCase):
         self.assertGreater(self.gain.index("change_government"), self.gain.index("aov_tribe_title_sync_effect"))
 
 
+class OnTheMapTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.lays = shared_trace.layouts()[0]
+        cls.people = bdt.TribePeople(cls.lays)
+        cls.history = bdt.render_title_history(cls.people)
+        cls.characters = bdt.render_characters(cls.people)
+        cls.dynasties = bdt.render_dynasties(cls.people)
+        cls.arms = bdt.render_arms(cls.people)
+
+    def test_chief_holds_pool_title_and_seat(self):
+        first = self.people.tribes["masked_butcher"]
+        self.assertEqual(first["pool_title"], "d_aov_warband_01")
+        self.assertEqual(first["chief"], "aov_tr_masked_butcher_chief_1")
+        self.assertEqual(self.people.tribes["skomdihr_goblins"]["pool_title"], "d_aov_chiefdom_01")
+        self.assertIn("d_aov_warband_01 = {\n\t980.1.1 = { holder = aov_tr_masked_butcher_chief_1 "
+                      "government = orcish_warband_government }", self.history)
+        self.assertIn("c_gor_burad = {\n\t980.1.1 = { holder = aov_tr_moltenbrand_chief_1 "
+                      "government = orcish_warband_government }", self.history)
+
+    def test_sub_chiefs_are_vassals(self):
+        tribe = self.people.tribes["amldihr_orcs"]
+        self.assertEqual(set(tribe["sub_chiefs"]), {"royal_terrace_area", "common_terrace_area",
+                                                    "assembly_terrace_area", "castle_hill_area"})
+        pool = tribe["pool_title"]
+        self.assertRegex(self.history, rf"holder = aov_tr_amldihr_orcs_royal_terrace_area_1 "
+                                       rf"government = orcish_warband_government liege = {pool} \}}")
+
+    def test_sub_chiefs_have_their_own_dynasties(self):
+        """A duel only changes a realm's name and arms if the winner is of another dynasty."""
+        ids = {}
+        for m in re.finditer(r"(?m)^(aov_tr_\w+) = \{\n\tname = \"\w+\"\n\tdynasty = (\w+)", self.characters):
+            ids[m.group(1)] = m.group(2)
+        self.assertNotEqual(ids["aov_tr_amldihr_orcs_chief_1"], ids["aov_tr_amldihr_orcs_royal_terrace_area_1"])
+        self.assertEqual(ids["aov_tr_amldihr_orcs_chief_1"], ids["aov_tr_amldihr_orcs_chief_2"])
+
+    def test_no_tribe_holds_a_dwarven_title(self):
+        keys = set(re.findall(r"(?m)^([dke]_\w+) = \{", self.history))
+        self.assertEqual({k for k in keys if "_aov_" not in k}, set())
+        self.assertLessEqual({k for k in keys}, set(bdt.pool_keys()))
+
+    def test_every_tribe_county_is_held(self):
+        area_of = ei.province_areas()
+        for lay in self.lays:
+            for c in lay.counties:
+                tribe = dt.tribe_of(c.eu4_id, area_of.get(c.eu4_id))
+                if tribe:
+                    self.assertRegex(self.history, rf"(?m)^{c.key} = \{{\n\t980\.1\.1 = \{{ holder = aov_tr_", c.key)
+
+    def test_ten_dynasties_have_flags(self):
+        for slug, tribe in dt.TRIBES.items():
+            if tribe.tag:
+                self.assertIn(f'texture = "aov_tribe_{slug}.dds"', self.arms, slug)
+                self.assertTrue((SUBMOD / f"gfx/coat_of_arms/textured_emblems/aov_tribe_{slug}.dds").is_file(), slug)
+        self.assertEqual(self.arms.count("textured_emblem"), 10)
+        self.assertEqual(re.findall(r"(?m)^aov_tr_dynasty_\w+", self.arms), re.findall(r"(?m)^aov_tr_dynasty_\w+", self.dynasties))
+        self.assertIn('name = "dynn_aov_tr_masked_butcher"', self.dynasties)
+        self.assertIn(' dynn_aov_tr_masked_butcher:0 "Masked Butcher"', bdt.render_loc())
+
+    def test_dynasty_names_are_all_different(self):
+        names = re.findall(r'name = "(\w+)"', self.dynasties)
+        self.assertEqual(len(names), len(set(names)))
+
+    def test_race_traits(self):
+        for name, body in re.findall(r"(?ms)^(aov_tr_\w+) = \{\n(.*?)^\}", self.characters):
+            slug = next(s for s in dt.TRIBES if name.startswith(f"aov_tr_{s}_"))
+            race = dt.TRIBES[slug].race
+            self.assertIn(f"trait = race_{race}", body, name)
+            self.assertIn(f'culture = "{dt.CULTURE[race]}"', body, name)
+            self.assertIn(f'religion = "{dt.FAITH[race]}"', body, name)
+
+    def test_missing_area_stops(self):
+        with self.assertRaisesRegex(GeneratorError, "north_altar_area"):
+            bdt.check_tribes([type(lay)(**{**lay._asdict(), "counties": [c for c in lay.counties
+                                                                       if c.area != "north_altar_area"]})
+                              for lay in self.lays])
+
+    def test_missing_seat_stops(self):
+        with self.assertRaisesRegex(GeneratorError, "4033"):
+            bdt.check_tribes([type(lay)(**{**lay._asdict(), "counties": [c for c in lay.counties if c.eu4_id != 4033]})
+                              for lay in self.lays])
+
+
+class AnbennarTitleOverrideTests(unittest.TestCase):
+    """Test round 4: redefining a title clears its own fields, so the override repeats them, nested as in Anbennar."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.text = bdt.render_title_override(bdt.ANBENNAR)
+        cls.base = (bdt.ANBENNAR / "common/landed_titles/anb_landed_titles.txt").read_text(encoding="utf-8-sig")
+
+    def test_nested_in_the_real_parent(self):
+        self.assertEqual(re.findall(r"(?m)^([ekd]_\w+) = \{", self.text), ["e_middle_dwarovar"])
+        self.assertEqual(set(re.findall(r"(?m)^\t(k_\w+) = \{", self.text)),
+                         {"k_seghdihr", "k_hehodovar", "k_verkal_gulan", "k_gor_ozumbrog"})
+        self.assertRegex(self.text, r"(?m)^\t\td_seghdihr = \{")
+
+    def test_no_county_or_barony_is_repeated(self):
+        self.assertNotRegex(self.text, r"(?m)^\s*[cb]_\w+ = \{")
+
+    def test_own_fields_repeated(self):
+        self.assertIn("color =  { 36 96 143 }", self.text)
+        self.assertIn("name_list_dwarven = cn_segbandal", self.text)
+        self.assertIn("capital = c_hehodovar", self.text)
+        self.assertIn("color =  { 15 82 186 }", self.text)
+        self.assertIn("@correct_culture_primary_score = 100", self.text)
+
+    def test_every_title_refuses_tribes(self):
+        for key, block in test_titles(self.text):
+            self.assertIn("government_has_flag = government_is_dwarovar_tribe", block, key)
+            if key[0] in "ke":
+                self.assertIn("de_jure_drift_disabled = yes", block, key)
+
+    def test_existing_can_create_stops(self):
+        with self.assertRaisesRegex(GeneratorError, "can_create"):
+            bdt.title_override_text(self.base.replace("e_middle_dwarovar = {\n",
+                                                      "e_middle_dwarovar = {\n\tcan_create = { always = yes }\n", 1))
+
+
 class FreshnessTests(unittest.TestCase):
     def test_written_files_are_fresh(self):
-        for rel, data in bdt.build_all().items():
+        for rel, data in bdt.build_all(lays=shared_trace.layouts()[0]).items():
             self.assertEqual((SUBMOD / rel).read_bytes(), data, rel)
 
 

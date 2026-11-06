@@ -23,6 +23,7 @@ import build_serpentreach as bs  # noqa: E402
 import eu4_import as eu4i  # noqa: E402
 import serpentreach_layout as sl  # noqa: E402
 from data import segbandal as data  # noqa: E402
+from data import dwarovar_tribes as tribes  # noqa: E402
 
 SUBMOD = bs.SUBMOD
 ANBENNAR = bs.ANBENNAR
@@ -121,6 +122,8 @@ class Segbandal:
     def __init__(self, lay: sl.Layout, titles_text: str, history_text: str, areas: dict, area_order: dict):
         self.lay = lay
         self.area_order = area_order
+        self.areas = areas
+        self.history_text = history_text
         self.county = {c.key: c for c in lay.counties}
         self.parents = title_parents(titles_text)
         self.duchy_area = {d: a for a, (d, _, _) in data.AREA_DUCHIES.items()}
@@ -154,7 +157,8 @@ class Segbandal:
                 pass  # unheld (Hehodovar, Gor Ozumbrog)
         self.king = {k: title_holder(history_text, k) for k in data.ELDER_KINGDOMS}
         self.elder_duchies = [d for d, counties in self.duchies.items()
-                              if d not in self.reused and counties and self.kingdom_of[d] in data.ELDER_KINGDOMS]
+                              if d not in self.reused and counties and self.kingdom_of[d] in data.ELDER_KINGDOMS
+                              and all(bs.is_dwarven(self.county[c]) for c in counties)]
         new_kingdom = data.NEW_KINGDOM[0]
         self.kingdom_colours = {k: data.NEW_KINGDOM[3] if k == new_kingdom else kingdom_colour(titles_text, k)
                                 for k in data.KINGDOMS}
@@ -186,6 +190,16 @@ class Segbandal:
 
     def culture_of(self, ckey: str) -> str:
         return data.KINGDOM_CULTURES[data.AREA_DUCHIES[self.county[ckey].area][1]]
+
+    def dwarven_counties(self) -> list:
+        """(county, its duchy) for Anbennar's and the new counties of the living holds, Anbennar's first."""
+        out = []
+        for eu4_id, county in sorted(data.EXISTING.items()):
+            area = self.areas[eu4_id]
+            if tribes.tribe_of(eu4_id, area) is not None:
+                raise GeneratorError(f"tools/data/dwarovar_tribes.py gives a tribe Anbennar's {county}")
+            out.append((county, data.AREA_DUCHIES[area][0]))
+        return out + [(c, d) for d, counties in self.duchies.items() for c in counties if bs.is_dwarven(self.county[c])]
 
     def colours(self) -> dict:
         """New titles' map colours: the new kingdom its EU4 colour; new duchies shades of their kingdom's (spread by
@@ -230,7 +244,7 @@ def _duchy_lines(sb: Segbandal, duchy: str, colour: dict, tabs: int) -> list:
     lines = [f"{t}{duchy} = {{", f"{t}\tcolor = {bs.rgb_text(colour[duchy])}", f"{t}\tcapital = {sb.capital(duchy)}", ""]
     for ckey in sb.duchies[duchy]:
         lines += _county_lines(sb, ckey, colour, tabs + 1)
-    return lines + [f"{t}}}"]
+    return lines + bs.refuse_tribes(tabs + 1) + [f"{t}}}"]
 
 
 def render_titles(sb: Segbandal) -> bytes:
@@ -248,17 +262,19 @@ def render_titles(sb: Segbandal) -> bytes:
                               f"\t{kkey} = {{", f"\t\tcolor = {bs.rgb_text(colour[kkey])}", f"\t\tcapital = {kcapital}", ""]
     for area in data.KINGDOMS[kkey][1]:
         lines += _duchy_lines(sb, data.AREA_DUCHIES[area][0], colour, 2)
-    lines += ["\t}", "", f"\t{pk} = {{", f"\t\tcolor = {grey}", f"\t\tcapital = {sb.capital(duchies[0])}", ""]
+    lines += bs.refuse_tribes(2, drift=True) + ["\t}", "", f"\t{pk} = {{", f"\t\tcolor = {grey}", f"\t\tcapital = {sb.capital(duchies[0])}", ""]
     for duchy in duchies:
         lines += _duchy_lines(sb, duchy, colour, 2)
     lines += ["", f"\t\t{pd} = {{", f"\t\t\tcolor = {grey}", f"\t\t\tcapital = {counties[0]}", ""]
     for ckey in counties:
         lines += _county_lines(sb, ckey, colour, 3)
-    return _text(lines + ["\t\t}", "\t}", "}"])
+    return _text(lines + bs.refuse_tribes(3) + ["\t\t}"] + bs.refuse_tribes(2, drift=True) + ["\t}"]
+                 + bs.refuse_tribes(1, drift=True) + ["}"])
 
 
 class People:
-    """An elder and his son per elder duchy: {duchy: {"dynasty", "dyn_key", "dyn_name", "culture", "chars"}}."""
+    """An elder and his son per elder duchy, and per kingdom of KING_LINES, a king and his son: {duchy or kingdom:
+    {"dynasty", "dyn_key", "dyn_name", "culture", "chars"}}."""
 
     def __init__(self, sb: Segbandal, names: list):
         self.lines = {}
@@ -275,48 +291,79 @@ class People:
             culture = data.KINGDOM_CULTURES[sb.kingdom_of[duchy]]
             self.lines[duchy] = {"dynasty": f"aov_sb_dynasty_{duchy[2:]}", "dyn_key": f"dynn_aov_sb_{duchy[2:]}",
                                  "dyn_name": dyn_name, "culture": culture, "chars": chars}
+        for kingdom, (slug, dyn_name, _hold) in data.KING_LINES.items():
+            prefix = f"aov_sb_king_{slug}"
+            chars = []
+            for cid, birth, death in ((f"{prefix}_1", data.ELDER_BIRTH, data.ELDER_DEATH), (f"{prefix}_2", data.SON_BIRTH, None)):
+                chars.append((cid, names[bs._hash("name:" + cid) % len(names)], bs.life_date(cid, birth),
+                              bs.life_date(cid + "d", death) if death else None))
+            self.lines[kingdom] = {"dynasty": f"aov_sb_dynasty_king_{slug}", "dyn_key": f"dynn_aov_sb_king_{slug}",
+                                   "dyn_name": dyn_name, "culture": data.KINGDOM_CULTURES[kingdom], "chars": chars}
 
 
 def render_title_history(sb: Segbandal, people: People) -> bytes:
-    lines = header_lines()
+    """De jure moves and the dwarves' holders: Anbennar's kings, the kings of KING_LINES, and the elders left. A living
+    hold's county Anbennar leaves unheld goes to its king. Counties held by tribes are not here:
+    tools/build_dwarovar_tribes.py rules them."""
+    entries = {}  # title -> [(date, entry)], one block per title
 
-    def block(key, entries):
-        return ["", f"{key} = {{"] + [f"\t{d} = {{ {e} }}" for d, e in sorted(entries, key=lambda x: _date_key(x[0]))] + ["}"]
+    def add(key, *new):
+        entries.setdefault(key, []).extend(new)
+
+    def line_holders(line):
+        (elder, _, _, death), (son, _, _, _) = line["chars"]
+        return (data.START, f"holder = {elder}"), (death, f"holder = {son}")
 
     kkey = data.NEW_KINGDOM[0]
-    lines += block(kkey, [(DE_JURE_DATE, f"de_jure_liege = {data.EMPIRE}")])
+    add(kkey, (DE_JURE_DATE, f"de_jure_liege = {data.EMPIRE}"))
     for duchy in sb.new_duchies():
-        entries = [] if sb.kingdom_of[duchy] == kkey else [(DE_JURE_DATE, f"de_jure_liege = {sb.kingdom_of[duchy]}")]
+        if sb.kingdom_of[duchy] != kkey:
+            add(duchy, (DE_JURE_DATE, f"de_jure_liege = {sb.kingdom_of[duchy]}"))
         line = people.lines.get(duchy)
         if line:
-            (elder, _, _, death), (son, _, _, _) = line["chars"]
-            king_date = sb.king[sb.kingdom_of[duchy]][0]
-            entries += [(data.START, f"holder = {elder}"), (king_date, f"liege = {sb.kingdom_of[duchy]}"),
-                        (death, f"holder = {son}")]
-        if entries:
-            lines += block(duchy, entries)
-        for ckey in sb.duchies[duchy] if line else ():
-            lines += block(ckey, [(data.START, f"holder = {elder}"), (death, f"holder = {son}")])
-    for duchy in sb.duchies:
-        if duchy in sb.reused:
+            start, succeed = line_holders(line)
+            add(duchy, start, (sb.king[sb.kingdom_of[duchy]][0], f"liege = {sb.kingdom_of[duchy]}"), succeed)
             for ckey in sb.duchies[duchy]:
-                entries = [(DE_JURE_DATE, f"de_jure_liege = {duchy}")]
-                if duchy in sb.duchy_holder:
-                    date, holder = sb.duchy_holder[duchy]
-                    entries.append((date, f"holder = {holder}"))
-                lines += block(ckey, entries)
+                add(ckey, start, succeed)
+    for kingdom, (_slug, _name, hold) in data.KING_LINES.items():
+        start, succeed = line_holders(people.lines[kingdom])
+        add(kingdom, start, (data.KING_LIEGE_DATE, f"liege = {data.EMPIRE}"), succeed)
+        add(hold, start, succeed)
+    for duchy in sorted(sb.reused):
+        for ckey in sb.duchies[duchy]:
+            add(ckey, (DE_JURE_DATE, f"de_jure_liege = {duchy}"))
     for key, target in sb.moves.items():
-        lines += block(key, [(DE_JURE_DATE, f"de_jure_liege = {target}")])
+        add(key, (DE_JURE_DATE, f"de_jure_liege = {target}"))
+    for ckey, duchy in sb.dwarven_counties():
+        if ckey in sb.county and duchy in people.lines:
+            continue  # an elder's, added above
+        kingdom = sb.kingdom_of[duchy]
+        if kingdom in data.KING_LINES:
+            add(ckey, *line_holders(people.lines[kingdom]))
+            continue
+        try:
+            title_holder(sb.history_text, ckey)
+        except GeneratorError:
+            add(ckey, _holder_entry(sb, duchy, kingdom))
+    lines = header_lines()
+    for key, dated in entries.items():
+        lines += ["", f"{key} = {{"] + [f"\t{d} = {{ {e} }}" for d, e in sorted(dated, key=lambda x: _date_key(x[0]))] + ["}"]
     return _text(lines)
+
+
+def _holder_entry(sb: Segbandal, duchy: str, kingdom: str) -> tuple:
+    """The history entry giving a county its duchy's Anbennar holder, else its kingdom's king."""
+    date, holder = sb.duchy_holder.get(duchy, sb.king[kingdom])
+    return date, f"holder = {holder}"
 
 
 def render_province_history(sb: Segbandal) -> bytes:
     lines = header_lines()
     for c in sb.lay.counties:
-        holdings = data.HOLDINGS[c.type]
+        culture, religion, holdings = bs.county_people(c, sb.culture_of(c.key), data.RELIGION, data.HOLDINGS[c.type])
         for i, (pid, name) in enumerate(zip(c.baronies, sb.barony_names(c.key))):
             holding = holdings[i] if i < len(holdings) else None
-            lines += ["", f"{pid} = {{\t# {name}", f"\tculture = {sb.culture_of(c.key)}", f"\treligion = {data.RELIGION}",
+            lines += ["", f"{pid} = {{\t# {name}", f"\tculture = {culture}", f"\treligion = {religion}",
                       f"\tholding = {holding or 'none'}", "}"]
     return _text(lines)
 

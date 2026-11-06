@@ -7,26 +7,14 @@ aov_sb_dynasty_steamsource = {
 	culture = citrine_dwarvish
 }
 
-aov_sb_dynasty_stunad_kradoz = {
+aov_sb_dynasty_king_hehodovar = {
 	prefix = "dynnp_az"
-	name = "dynn_aov_sb_stunad_kradoz"
-	culture = citrine_dwarvish
+	name = "dynn_aov_sb_king_hehodovar"
+	culture = pyrite_dwarvish
 }
 
-aov_sb_dynasty_goblin_grotto = {
+aov_sb_dynasty_king_gor_ozumbrog = {
 	prefix = "dynnp_az"
-	name = "dynn_aov_sb_goblin_grotto"
-	culture = citrine_dwarvish
-}
-
-aov_sb_dynasty_greatcavern = {
-	prefix = "dynnp_az"
-	name = "dynn_aov_sb_greatcavern"
-	culture = gold_dwarvish
-}
-
-aov_sb_dynasty_xazor = {
-	prefix = "dynnp_az"
-	name = "dynn_aov_sb_xazor"
-	culture = gold_dwarvish
+	name = "dynn_aov_sb_king_gor_ozumbrog"
+	culture = topaz_dwarvish
 }

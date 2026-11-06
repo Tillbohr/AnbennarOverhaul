@@ -80,6 +80,13 @@ def tribe_of(eu4_id: int, area: str):
     return None if tribe is None or eu4_id in tribe.removed else tribe
 
 
+# People (placeholders): a chief holds from TRIBE_START, their child from the chief's death. Orcs and goblins live
+# human lifespans, so these are not the dwarven regions' 860 start and 170-year elders.
+TRIBE_START = "980.1.1"
+CHIEF_BIRTH = (940, 955)
+CHIEF_DEATH = (1000, 1015)
+CHILD_BIRTH = (985, 998)  # before CHIEF_DEATH's first year, so an heir is always alive to take over
+
 # Starting values to tune.
 POOL = {"orc": {"duchy": 40, "kingdom": 20, "empire": 6}, "goblin": {"duchy": 40, "kingdom": 15, "empire": 4}}
 FORM = {"duchy": (3, 250), "kingdom": (15, 500), "empire": (40, 1000)}  # tier -> counties in the realm, prestige

@@ -39,6 +39,20 @@ def area_adjacency():
 
 
 @unittest.skipUnless(HAVE_GAME_DATA, "needs EU4 Anbennar and Anbennar CK3")
+def title_blocks(titles: str) -> list:
+    """(key, own text without child titles) for every d_, k_ and e_ title of a landed titles file."""
+    import re
+    out = []
+    for m in re.finditer(r"(?m)^(\t*)([dke]_\w+) = \{\n", titles):
+        tabs, depth, i = m.group(1), 1, m.end()
+        while depth:
+            depth += {"{": 1, "}": -1}.get(titles[i], 0)
+            i += 1
+        body = re.sub(rf"(?ms)^{tabs}\t[bcdk]_\w+ = \{{\n.*?^{tabs}\t\}}\n", "", titles[m.end():i])
+        out.append((m.group(2), body))
+    return out
+
+
 class DataTests(unittest.TestCase):
     def test_areas_cover_regions(self):
         import eu4_import as eu4i
@@ -282,23 +296,26 @@ class TitleTests(unittest.TestCase):
                 continue
             self.assertIn(f' {self.duchy_of_area(kareas[0])}:0 "{kname}"', loc, kkey)
 
-    def test_holders(self):
-        self.assertIn("k_amldihr = {\n\t860.1.1 = { holder = aov_wd_emperor_1 }", self.history)
-        self.assertIn("d_amldihr = {\n\t860.1.1 = { holder = aov_wd_emperor_1 }", self.history)
-        self.assertIn("e_west_dwarovar = {\n\t860.1.1 = { holder = aov_wd_emperor_1 }", self.history)
-        for kkey, ckey in data.KINGDOM_CAPITALS.items():
-            if kkey in ("k_khugdihr", "k_amldihr"):
-                continue
-            duchy = self.duchy_of_area(data.KINGDOMS[kkey][1][0])
-            self.assertIn(f"{kkey} = {{\n\t860.1.1 = {{ holder = aov_wd_{duchy[2:]}_1 liege = e_west_dwarovar }}",
-                          self.history)
-        khugdihr = set(KHUGDIHR_TITLES) | set(PARKED)
-        khugdihr |= {c.key for c in self.lay.counties if self.duchy_of_area(c.area) in PARKED}
-        for key in khugdihr:
-            block = re.search(rf"(?ms)^{key} = \{{\n.*?^\}}", self.history)
-            if block:
-                self.assertNotIn("holder", block.group(0), key)
-        self.assertNotIn("aov_wd_dwarovrod_1_3", self.files[self.bwd.CHARACTERS].decode("utf-8-sig"))
+    def test_generated_titles_refuse_tribes(self):
+        import re
+        titles = self.titles
+        for key, block in title_blocks(titles):
+            self.assertIn("government_has_flag = government_is_dwarovar_tribe", block, key)
+
+    def test_generated_kingdoms_no_drift(self):
+        titles = self.titles
+        for key, block in title_blocks(titles):
+            if key[0] in "ke":
+                self.assertIn("de_jure_drift_disabled = yes", block, key)
+
+    def test_no_dwarven_rulers(self):
+        self.assertNotRegex(self.history, r"\bholder\b")
+        self.assertNotRegex(self.history, r"\bliege\s*=(?! e_| k_| d_)")
+        self.assertNotIn("aov_wd_", self.files[self.bwd.CHARACTERS].decode("utf-8-sig"))
+        self.assertNotIn("aov_wd_", self.files[self.bwd.DYNASTIES].decode("utf-8-sig"))
+
+    def test_de_jure_moves_stay(self):
+        self.assertIn("k_khugdihr = {\n\t1.1.1 = { de_jure_liege = e_west_dwarovar }", self.history)
 
     def test_khugdihr_untouched(self):
         anbennar = sl.county_provinces(self.anbennar_titles)
@@ -307,7 +324,10 @@ class TitleTests(unittest.TestCase):
                 self.assertNotRegex(self.provinces, rf"(?m)^{pid} = \{{", county)
         parked = [c for c in self.lay.counties if self.duchy_of_area(c.area) in PARKED]
         self.assertTrue(parked)
-        for c in parked:
+        from data import dwarovar_tribes as dt
+        kobolds = [c for c in parked if dt.tribe_of(c.eu4_id, c.area) is None]
+        self.assertTrue(kobolds)  # the rest of k_khugdihr's de jure land is the Orldhûm orcs'
+        for c in kobolds:
             for pid in c.baronies:
                 self.assertRegex(self.provinces, rf"(?m)^{pid} = \{{\t# .*\n\tculture = darkscale\n\treligion = nimrithani\n")
         for key in KHUGDIHR_TITLES:
@@ -329,9 +349,10 @@ class TitleTests(unittest.TestCase):
             for pid in c.baronies:
                 self.assertIn(f"\n{pid}={want}\n", terrain + "\n")
             if c.type == "surface":
-                for pid, holding in zip(c.baronies, data.SURFACE_HOLDINGS):
-                    self.assertRegex(self.provinces, rf"(?m)^{pid} = \{{\t# .*\n\tculture = kronium_dwarvish\n"
-                                                     rf"\treligion = ancestor_worship\n\tholding = {holding}\n")
+                for i, pid in enumerate(c.baronies):  # held by the Amldihr orcs for now
+                    holding = "none" if i else "tribal_holding"
+                    self.assertRegex(self.provinces, rf"(?m)^{pid} = \{{\t# .*\n\tculture = black_orc\n"
+                                                     rf"\treligion = old_dookan\n\tholding = {holding}\n")
 
     def test_every_county_and_character_has_its_kingdom_culture(self):
         want = {"k_khugdihr": "darkscale", "k_amldihr": "kronium_dwarvish", "k_haraz_orldhum": "platinum_dwarvish",
@@ -343,29 +364,13 @@ class TitleTests(unittest.TestCase):
         dynasties = self.files[self.bwd.DYNASTIES].decode("utf-8-sig")
         for text in (self.provinces, characters, dynasties):
             self.assertNotIn("silver_dwarvish", text)
+        from data import dwarovar_tribes as dt
         for kkey, (_, kareas) in data.KINGDOMS.items():
             for c in (c for c in self.lay.counties if c.area in kareas):
+                tribe = dt.tribe_of(c.eu4_id, c.area)
+                culture = dt.CULTURE[tribe.race] if tribe else want[kkey]
                 for pid in c.baronies:
-                    self.assertRegex(self.provinces, rf"(?m)^{pid} = \{{\t# .*\n\tculture = {want[kkey]}\n")
-        self.assertRegex(characters, r'aov_wd_emperor_1 = \{[^}]*culture = "kronium_dwarvish"')
-        self.assertRegex(characters, r'aov_wd_orlazam_1 = \{[^}]*culture = "ramsteel_dwarvish"')
-        self.assertRegex(dynasties, r"aov_wd_dynasty_riftway = \{[^}]*culture = mithril_dwarvish")
-
-    def test_eu4_dynasty_names_without_prefix(self):
-        want = {"d_mithradhum": "Strongbellow", "d_riftway": "Goldbeard", "d_dwarovrod_7_9": "Goblinslayer",
-                "d_the_railyard": "Ironhelm", "d_stunad_kozenad": "Forktongue", "d_zokkorna_caverns": "Ringbeard",
-                "d_westnest": "Kezdori", "d_jorkad_junction": "Leadpipe", "d_orlazam": "Fourfoot",
-                "d_vazhatun": "Melmarn"}
-        self.assertEqual(data.DYNASTY_NAMES, want)
-        dynasties = self.files[self.bwd.DYNASTIES].decode("utf-8-sig")
-        loc = self.files[self.bwd.LOC].decode("utf-8-sig")
-        for dkey, name in want.items():
-            block = re.search(rf"(?ms)^aov_wd_dynasty_{dkey[2:]} = \{{.*?^\}}", dynasties).group(0)
-            self.assertNotIn("prefix", block, dkey)
-            self.assertIn(f' dynn_aov_wd_{dkey[2:]}:0 "{name}"', loc)
-        self.assertEqual(dynasties.count('prefix = "dynnp_az"'), 35 - len(want))
-        names = re.findall(r'(?m)^ dynn_aov_wd_\w+:0 "([^"]*)"', loc)
-        self.assertEqual(len(names), len(set(names)))
+                    self.assertRegex(self.provinces, rf"(?m)^{pid} = \{{\t# .*\n\tculture = {culture}\n")
 
     def test_every_new_key_has_loc(self):
         loc = self.files[self.bwd.LOC].decode("utf-8-sig")

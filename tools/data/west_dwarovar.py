@@ -8,6 +8,8 @@ from tools/build_west_dwarovar.py. Values marked "as Serpentreach" are imported 
 Spec: docs/superpowers/specs/2026-11-03-west-dwarovar-design.md
 """
 
+LIVING_KINGDOMS = ()  # no dwarves here in 1022 (docs/superpowers/specs/2026-11-05-dwarovar-tribes-design.md)
+
 from data.serpentreach import (  # noqa: F401  (as Serpentreach)
     BARONIES, BARONY_SUFFIXES, CARVE_GROUND_RADIUS, CHARGE_DARK, CHARGE_METAL, COUNTY_JITTER, DUCHY_PATTERNS,
     DUCHY_SHADES, ELDER_BIRTH, ELDER_DEATH, HOLDINGS, MIN_BARONY_PX, MIN_FRAGMENT_PX, MIN_WALL, OPENING_REACH,

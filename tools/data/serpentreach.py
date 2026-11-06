@@ -175,6 +175,10 @@ ELDER_DEATH = (1000, 1010)
 SON_BIRTH = (975, 990)
 START = "860.1.1"
 
+# The two holds still dwarven in 1022 (docs/superpowers/specs/2026-11-05-dwarovar-tribes-design.md): independent kings
+# with no emperor over them. The first line is the old emperors', now Arg-Ôrdstun's kings.
+LIVING_KINGDOMS = ("k_arg_ordstun", "k_ovdal_lodhum")
+
 CHARACTER_PREFIX = "aov_sr"  # character ids: aov_sr_<duchy>_1 (the elder), _2 (his son); aov_sr_emperor_*
 
 # Provinces Anbennar already has (none here; see tools/data/segbandal.py) and regions whose contacts make no opening.
