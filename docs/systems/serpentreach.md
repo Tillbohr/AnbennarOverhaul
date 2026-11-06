@@ -40,9 +40,9 @@ The generator stops when one is missing.
   steel (120 124 132) so it does not merge with Shazstundihr's off-white beside it. Duchies are HLS lightness shades
   of it (`DUCHY_SHADES`, slid together to stay within 0.12-0.92 so none repeats); counties vary
   +/- `COUNTY_JITTER` around their duchy's; `e_serpentreach` is bronze (`EMPIRE_COLOUR`).
-- **Rulers:** the emperor holds Arg-Ôrdstun's kingdom and duchy; each other kingdom is held by the lord of its hold's
-  duchy, a vassal of the emperor, and the other dukes of a kingdom are the king's vassals (King's Caverns is the
-  emperor's). The realm map mode shows the empire's colour; the kingdom colours show in the de jure kingdom map mode.
+- **Rulers:** only `LIVING_KINGDOMS` are held in 1022: independent kings of Arg-Ôrdstun (the hold county alone) and
+  Ovdal Lodhum (its four counties). `e_serpentreach` and the other kingdoms end unheld, as titles to reclaim, and tribes
+  hold the rest (see `dwarovar-tribes.md`). The kingdom colours show in the de jure kingdom map mode.
 - **Range rock** (`tools/range_rock.py`, `range_rocks`, `RANGE_ROCKS` and `ROCK_*` in `tools/data/serpentreach.py`):
   the game fills an impassable province with a neighbour's map colour, and counts it in the realm's name, only below
   Anbennar's `LARGE_IMPASSABLE_PROVINCE_PIXELS` (500,000; the build stops at or above it). Segbandal's rock (2608,
@@ -104,8 +104,8 @@ The generator stops when one is missing.
   model whoever holds them: `build_holding_models.dwarf_model_provinces` reads this mod's province terrain too
   (`holding-models.md`), so rerun `build_holding_models.py` and `build_holds.py` after this generator.
 - **People:** every county, character and dynasty of a kingdom has its hold's culture (`KINGDOM_CULTURES`; marble for
-  Shazstundihr). Per duchy there is an elder (holds from 860.1.1, dies 1000-1010) and his son; the emperor holds
-  `d_arg_ordstun` himself. Dynasties are named `az-<duchy>`, except six that take EU4 names with no prefix
+  Shazstundihr), except tribe counties, which take the tribe's. Only the two living kingdoms have people: a king (holds
+  from 860.1.1, dies 1000-1010) and his son; Arg-Ôrdstun's keep the `aov_sr_emperor_*` ids. Dynasties are named `az-<duchy>`, except six that take EU4 names with no prefix
   (`DYNASTY_NAMES`): Whiteforged (Arg-Ôrdstun, H76's 1444 dynasty), Stormheart (King's Caverns), Garnetpick (Ovdal
   Lodhum, H77's native line), Slatecutter (Still Caverns), Whitebeard (Shazstundihr) and Brightbeard (South Altar).
   The 6 holds are in `tools/data/holds.py`.

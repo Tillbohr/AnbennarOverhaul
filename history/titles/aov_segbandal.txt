@@ -36,107 +36,56 @@ c_steaming_fissure = {
 
 d_stunad_kradoz = {
 	1.1.1 = { de_jure_liege = k_seghdihr }
-	860.1.1 = { holder = aov_sb_stunad_kradoz_1 }
-	921.9.24 = { liege = k_seghdihr }
-	1003.1.6 = { holder = aov_sb_stunad_kradoz_2 }
-}
-
-c_kradoz_breach = {
-	860.1.1 = { holder = aov_sb_stunad_kradoz_1 }
-	1003.1.6 = { holder = aov_sb_stunad_kradoz_2 }
-}
-
-c_misty_cave = {
-	860.1.1 = { holder = aov_sb_stunad_kradoz_1 }
-	1003.1.6 = { holder = aov_sb_stunad_kradoz_2 }
-}
-
-c_kano_ravine = {
-	860.1.1 = { holder = aov_sb_stunad_kradoz_1 }
-	1003.1.6 = { holder = aov_sb_stunad_kradoz_2 }
 }
 
 d_goblin_grotto = {
 	1.1.1 = { de_jure_liege = k_seghdihr }
-	860.1.1 = { holder = aov_sb_goblin_grotto_1 }
-	921.9.24 = { liege = k_seghdihr }
-	1006.2.11 = { holder = aov_sb_goblin_grotto_2 }
-}
-
-c_old_coinvault = {
-	860.1.1 = { holder = aov_sb_goblin_grotto_1 }
-	1006.2.11 = { holder = aov_sb_goblin_grotto_2 }
-}
-
-c_goblin_grotto = {
-	860.1.1 = { holder = aov_sb_goblin_grotto_1 }
-	1006.2.11 = { holder = aov_sb_goblin_grotto_2 }
-}
-
-c_kubbik_cut = {
-	860.1.1 = { holder = aov_sb_goblin_grotto_1 }
-	1006.2.11 = { holder = aov_sb_goblin_grotto_2 }
 }
 
 d_greatcavern = {
 	1.1.1 = { de_jure_liege = k_verkal_gulan }
-	860.1.1 = { holder = aov_sb_greatcavern_1 }
-	903.4.17 = { liege = k_verkal_gulan }
-	1003.7.5 = { holder = aov_sb_greatcavern_2 }
-}
-
-c_west_greatcavern = {
-	860.1.1 = { holder = aov_sb_greatcavern_1 }
-	1003.7.5 = { holder = aov_sb_greatcavern_2 }
-}
-
-c_north_greatcavern = {
-	860.1.1 = { holder = aov_sb_greatcavern_1 }
-	1003.7.5 = { holder = aov_sb_greatcavern_2 }
-}
-
-c_south_greatcavern = {
-	860.1.1 = { holder = aov_sb_greatcavern_1 }
-	1003.7.5 = { holder = aov_sb_greatcavern_2 }
-}
-
-c_east_greatcavern = {
-	860.1.1 = { holder = aov_sb_greatcavern_1 }
-	1003.7.5 = { holder = aov_sb_greatcavern_2 }
 }
 
 d_xazor = {
 	1.1.1 = { de_jure_liege = k_verkal_gulan }
-	860.1.1 = { holder = aov_sb_xazor_1 }
-	903.4.17 = { liege = k_verkal_gulan }
-	1001.10.24 = { holder = aov_sb_xazor_2 }
-}
-
-c_the_cranny = {
-	860.1.1 = { holder = aov_sb_xazor_1 }
-	1001.10.24 = { holder = aov_sb_xazor_2 }
-}
-
-c_pit_of_xazor = {
-	860.1.1 = { holder = aov_sb_xazor_1 }
-	1001.10.24 = { holder = aov_sb_xazor_2 }
-}
-
-c_xazor_rift = {
-	860.1.1 = { holder = aov_sb_xazor_1 }
-	1001.10.24 = { holder = aov_sb_xazor_2 }
 }
 
 d_ulagom = {
 	1.1.1 = { de_jure_liege = k_gor_ozumbrog }
 }
 
+k_hehodovar = {
+	860.1.1 = { holder = aov_sb_king_hehodovar_1 }
+	921.9.24 = { liege = e_middle_dwarovar }
+	1008.8.10 = { holder = aov_sb_king_hehodovar_2 }
+}
+
+d_hehodovar = {
+	860.1.1 = { holder = aov_sb_king_hehodovar_1 }
+	1008.8.10 = { holder = aov_sb_king_hehodovar_2 }
+}
+
+k_gor_ozumbrog = {
+	860.1.1 = { holder = aov_sb_king_gor_ozumbrog_1 }
+	921.9.24 = { liege = e_middle_dwarovar }
+	1000.7.17 = { holder = aov_sb_king_gor_ozumbrog_2 }
+}
+
+d_gor_ozumbrog = {
+	860.1.1 = { holder = aov_sb_king_gor_ozumbrog_1 }
+	1000.7.17 = { holder = aov_sb_king_gor_ozumbrog_2 }
+}
+
 c_bahged_breach = {
 	1.1.1 = { de_jure_liege = d_hehodovar }
+	860.1.1 = { holder = aov_sb_king_hehodovar_1 }
+	1008.8.10 = { holder = aov_sb_king_hehodovar_2 }
 }
 
 c_hehogrims_mausoleum = {
 	1.1.1 = { de_jure_liege = d_hehodovar }
+	860.1.1 = { holder = aov_sb_king_hehodovar_1 }
+	1008.8.10 = { holder = aov_sb_king_hehodovar_2 }
 }
 
 c_stonewall = {
@@ -151,44 +100,95 @@ c_easthollow = {
 
 c_dwarovrod32 = {
 	1.1.1 = { de_jure_liege = d_hehorod }
+	860.1.1 = { holder = aov_sb_king_hehodovar_1 }
+	1008.8.10 = { holder = aov_sb_king_hehodovar_2 }
 }
 
 c_dwarovrod34 = {
 	1.1.1 = { de_jure_liege = d_dwarovrod_33_35 }
+	921.9.24 = { holder = 126 }
 }
 
 c_dwarovrod35 = {
 	1.1.1 = { de_jure_liege = d_dwarovrod_33_35 }
+	921.9.24 = { holder = 126 }
 }
 
 c_dwarovrod36 = {
 	1.1.1 = { de_jure_liege = d_verkal_gulan }
+	903.4.17 = { holder = 128 }
 }
 
 c_dwarovrod37 = {
 	1.1.1 = { de_jure_liege = d_verkal_gulan }
+	903.4.17 = { holder = 128 }
 }
 
 c_dwarovrod33 = {
 	1.1.1 = { de_jure_liege = d_dwarovrod_33_35 }
+	921.9.24 = { holder = 126 }
 }
 
 c_seghrod = {
 	1.1.1 = { de_jure_liege = d_seghdihr }
+	921.9.24 = { holder = 126 }
 }
 
 c_dwarovrod44 = {
 	1.1.1 = { de_jure_liege = d_gor_ozumbrog }
+	860.1.1 = { holder = aov_sb_king_gor_ozumbrog_1 }
+	1000.7.17 = { holder = aov_sb_king_gor_ozumbrog_2 }
 }
 
 c_dwarovrod42 = {
 	1.1.1 = { de_jure_liege = d_gor_ozumbrog }
+	860.1.1 = { holder = aov_sb_king_gor_ozumbrog_1 }
+	1000.7.17 = { holder = aov_sb_king_gor_ozumbrog_2 }
 }
 
 c_dwarovrod43 = {
 	1.1.1 = { de_jure_liege = d_gor_ozumbrog }
+	860.1.1 = { holder = aov_sb_king_gor_ozumbrog_1 }
+	1000.7.17 = { holder = aov_sb_king_gor_ozumbrog_2 }
 }
 
 c_dwarovrod38 = {
 	1.1.1 = { de_jure_liege = d_xazorod }
+	860.1.1 = { holder = aov_sb_king_gor_ozumbrog_1 }
+	1000.7.17 = { holder = aov_sb_king_gor_ozumbrog_2 }
+}
+
+c_dwarovrod30 = {
+	860.1.1 = { holder = aov_sb_king_hehodovar_1 }
+	1008.8.10 = { holder = aov_sb_king_hehodovar_2 }
+}
+
+c_dwarovrod31 = {
+	860.1.1 = { holder = aov_sb_king_hehodovar_1 }
+	1008.8.10 = { holder = aov_sb_king_hehodovar_2 }
+}
+
+c_hehodovar = {
+	860.1.1 = { holder = aov_sb_king_hehodovar_1 }
+	1008.8.10 = { holder = aov_sb_king_hehodovar_2 }
+}
+
+c_dwarovrod39 = {
+	860.1.1 = { holder = aov_sb_king_gor_ozumbrog_1 }
+	1000.7.17 = { holder = aov_sb_king_gor_ozumbrog_2 }
+}
+
+c_dwarovrod40 = {
+	860.1.1 = { holder = aov_sb_king_gor_ozumbrog_1 }
+	1000.7.17 = { holder = aov_sb_king_gor_ozumbrog_2 }
+}
+
+c_dwarovrod41 = {
+	860.1.1 = { holder = aov_sb_king_gor_ozumbrog_1 }
+	1000.7.17 = { holder = aov_sb_king_gor_ozumbrog_2 }
+}
+
+c_gor_ozumbrog = {
+	860.1.1 = { holder = aov_sb_king_gor_ozumbrog_1 }
+	1000.7.17 = { holder = aov_sb_king_gor_ozumbrog_2 }
 }

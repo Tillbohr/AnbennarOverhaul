@@ -8,10 +8,24 @@ from data import holds  # noqa: E402
 
 ANBENNAR_CK3 = pdx_script.ANBENNAR_CK3
 LIVE = ANBENNAR_CK3.is_dir()
+RUIN_NAMES = ("aov_hold_ruined", "aov_hold_is_ruined", "aov_hold_is_working", "aov_clear_ruins_decision",
+              "aov_hold_ruin", "aov_ruined_hold", "aov_restoring_hold", "aov_restore_pending",
+              "aov_hold_begin_restoration_effect", "ruined_hold")
 
 
 class HoldDataTests(unittest.TestCase):
-    def test_twenty_four_holds_one_ruined(self):
+    def test_no_ruin_names_left(self):
+        """The ruined holds mechanic is gone from script, interface, localization and tools."""
+        root = Path(__file__).resolve().parents[2]
+        here = Path(__file__).resolve()
+        files = [p for top, suffixes in (("common", {".txt"}), ("events", {".txt"}), ("gui", {".gui"}),
+                                         ("localization", {".yml"}), ("tools", {".py"}))
+                 for p in (root / top).rglob("*") if p.suffix in suffixes and p != here]
+        found = sorted(str(p.relative_to(root)) for p in files
+                       if any(n in p.read_text(encoding="utf-8-sig", errors="replace") for n in RUIN_NAMES))
+        self.assertEqual(found, [])
+
+    def test_twenty_four_holds(self):
         self.assertEqual(len(holds.HOLDS), 24)
         rows = [(h["name"], h["eu4_province"], h["title"], h["barony"], h["start_level"]) for h in holds.HOLDS]
         self.assertIn(("Gor Vazumbrog", 4217, "c_gor_vazumbrog", "b_gor_vazumbrog", 2), rows)
@@ -24,7 +38,6 @@ class HoldDataTests(unittest.TestCase):
             ("Hul-Jorkad", 2963, "c_hul_jorkad", "b_hul_jorkad", 1),
             ("Orlazam-az-dihr", 4147, "c_orlazam_az_dihr", "b_orlazam_az_dihr", 1),
             ("Dûr-Vazhatun", 4020, "c_dur_vazhatun", "b_dur_vazhatun", 1)])
-        self.assertEqual([h["name"] for h in holds.HOLDS if h["ruined"]], ["Khugdihr"])
 
     @unittest.skipUnless(LIVE, "needs Anbennar CK3")
     def test_titles_and_baronies_exist(self):
@@ -47,6 +60,42 @@ class HoldDataTests(unittest.TestCase):
                           "Verkal Skomdihr": 1, "Orlghelovar": 1, "Gor Vazumbrog": 2, "Amldihr": 2,
                           "Haraz Orldhûm": 1, "Mithradhûm": 1, "Er-Natvir": 1, "Verkal Kozenad": 1, "Hul-Jorkad": 1,
                           "Orlazam-az-dihr": 1, "Dûr-Vazhatun": 1})
+
+    def test_twenty_holds_have_cultures(self):
+        cultures = {h["name"]: h["culture"] for h in holds.HOLDS if h["culture"]}
+        self.assertEqual(cultures, {
+            "Hul-Jorkad": "lead_dwarvish", "Verkal Kozenad": "opal_dwarvish", "Er-Natvir": "dagrite_dwarvish",
+            "Mithradhûm": "mithril_dwarvish", "Amldihr": "kronium_dwarvish", "Orlazam-az-dihr": "ramsteel_dwarvish",
+            "Haraz Orldhûm": "platinum_dwarvish", "Dûr-Vazhatun": "sapphire_dwarvish", "Orlghelovar": "cobalt_dwarvish",
+            "Shazstundihr": "marble_dwarvish", "Verkal Skomdihr": "flint_dwarvish", "Gor Bûrad": "basalt_dwarvish",
+            "Gor Vazumbrog": "titanium_dwarvish", "Khugdihr": "agate_dwarvish", "Seghdihr": "citrine_dwarvish",
+            "Hehodovar": "pyrite_dwarvish", "Verkal Gulan": "gold_dwarvish", "Gor Ozumbrog": "topaz_dwarvish",
+            "Arg-Ôrdstun": "diamond_dwarvish", "Ovdal Lodhum": "garnet_dwarvish"})
+        self.assertEqual([h["name"] for h in holds.HOLDS if not h["culture"]],
+                         ["Marrhold", "Anvilwright", "Ovdal Tûngr", "Rubyhold"])
+        self.assertEqual(holds.REVIVAL_PRESTIGE, 500)
+
+    def test_every_culture_hold_has_a_kingdom(self):
+        for h in holds.HOLDS:
+            self.assertEqual(bool(h["culture"]), bool(h["kingdom"]), h["name"])
+
+    @unittest.skipUnless(LIVE, "needs Anbennar CK3")
+    def test_cultures_exist(self):
+        root = Path(__file__).resolve().parents[2]
+        text = "".join(f.read_text(encoding="utf-8-sig", errors="replace")
+                       for r in (root, ANBENNAR_CK3) for f in (r / "common/culture/cultures").glob("*.txt"))
+        for h in holds.HOLDS:
+            if h["culture"]:
+                self.assertRegex(text, rf"(?m)^{h['culture']} = \{{", h["name"])
+
+    @unittest.skipUnless(LIVE, "needs Anbennar CK3")
+    def test_kingdoms_exist(self):
+        root = Path(__file__).resolve().parents[2]
+        text = "".join(f.read_text(encoding="utf-8-sig", errors="replace")
+                       for r in (root, ANBENNAR_CK3) for f in (r / "common/landed_titles").glob("*.txt"))
+        for h in holds.HOLDS:
+            if h["kingdom"]:
+                self.assertRegex(text, rf"(?m)^\t*{h['kingdom']} = \{{", h["name"])
 
     def test_buildings_and_constants(self):
         self.assertEqual(set(holds.ASSET_BAND), set(range(1, 11)))

@@ -34,7 +34,8 @@ Imported once (no generator): `gfx/coat_of_arms/textured_emblems/aov_gor_vazumbr
 - **Kingdoms**, one per hold, west to east: `k_gor_vazumbrog` (new: Vazumbrog, Dwarovrod 27-29, Misty Cave Trail),
   `k_hehodovar` (+ Dwarovrod 30-32, Deep One's Lair, Digger's Road), `k_seghdihr` (+ Dwarovrod 33-35, Steamsource,
   Stunad Kradoz, Goblin Grotto), `k_verkal_gulan` (+ Greatcavern, Xazor), `k_gor_ozumbrog` (+ Dwarovrod 38-41, Ulagom).
-- **No Anbennar file is overridden:** `aov_segbandal.txt` defines every new title under three parking titles
+- **No Anbennar file is overridden here** (`build_dwarovar_tribes.py` overrides the Segbandal's titles, one by one, to
+  refuse tribes): `aov_segbandal.txt` defines every new title under three parking titles
   (`PARKING`: `e_`, `k_` and `d_aov_segbandal_parking`): `k_gor_vazumbrog` with its duchies, every other new duchy in
   the parking kingdom, and the new counties of reused Anbennar duchies (Stonewall, Easthollow, Hehogrim's Mausoleum,
   Bahged Breach) in the parking duchy. `history/titles/aov_segbandal.txt` moves them to their real parents with
@@ -46,11 +47,12 @@ Imported once (no generator): `gfx/coat_of_arms/textured_emblems/aov_gor_vazumbr
   on every start. No vanilla or Anbennar landed title lacks a county -> duchy -> kingdom -> empire chain in the landed
   titles, and history de jure moves come too late. `TitleTests.test_every_title_has_a_full_chain_at_load` keeps every
   new title on a full chain.
-- **Rulers:** the new duchies of `k_seghdihr` and `k_verkal_gulan` with new counties (Steamsource, Stunad Kradoz,
-  Goblin Grotto, Greatcavern, Xazor) get an elder (from 860.1.1, dies 1000-1010) and his son (`aov_sb_*`, dynasties
-  `az-<duchy>`), who become vassals of the king from the king's first holder date in Anbennar's history (Ungrim
-  921.9.24, Girud 903.4.17). Stonewall and Easthollow go to `d_seghdihr`'s holder (Ungrim). Everything new in Hehodovar,
-  Gor Ozumbrog and Gor Vazumbrog stays unheld, as Anbennar leaves those holds.
+- **Rulers:** Steamsource, the one new duchy of `k_seghdihr` and `k_verkal_gulan` still all dwarven, gets an elder (from
+  860.1.1, dies 1000-1010) and his son (`aov_sb_*`, dynasty `az-Steamsource`), a vassal of the king from the king's first
+  holder date in Anbennar's history (Ungrim 921.9.24). `KING_LINES` adds the kings Anbennar leaves out: Hehodovar and Gor
+  Ozumbrog (az-Fiobmhor, from the wiki), each with their kingdom, hold duchy and every dwarven county, under
+  `e_middle_dwarovar` from 921.9.24. A living hold's other unheld county goes to its duchy's holder, else its king.
+  Tribes hold the rest, including Gor Vazumbrog (see `dwarovar-tribes.md`).
 - **Cultures:** new baronies and characters take their kingdom hold's culture: Gor Vazumbrog `titanium_dwarvish`
   (EU4 I14's `titanium_dwarf`), Hehodovar `pyrite_dwarvish`, Seghdihr `citrine_dwarvish`, Verkal Gulan
   `gold_dwarvish`, Gor Ozumbrog `topaz_dwarvish`; `ancestor_worship`.
@@ -62,9 +64,9 @@ Imported once (no generator): `gfx/coat_of_arms/textured_emblems/aov_gor_vazumbr
   blue (58 39 236); `k_gor_ozumbrog`, `d_gor_ozumbrog` and `c_gor_ozumbrog` I17's flag on its dark grey (56 57 56);
   `d_hehorod` a one-arch bridge (the road to Hehodovar) and `d_xazorod` an empty gem socket (the road past the Pit of
   Xazor), each on its Anbennar map colour. The build stops if Anbennar ever scripts arms for any of these keys.
-- **Gor Vazumbrog** is a dwarven hold (`tools/data/holds.py`, level 2, not ruined); its options 16 in the hand-written
-  delve and ruin pickers (`events/aov_hold_delve_events.txt`, `events/aov_hold_ruin_events.txt`,
-  `common/decisions/aov_hold_decisions.txt` and their loc) were added by copying option 15.
+- **Gor Vazumbrog** is a dwarven hold (`tools/data/holds.py`, level 2); its options 16 in the hand-written
+  delve picker (`events/aov_hold_delve_events.txt`, `common/decisions/aov_hold_decisions.txt` and their loc) were
+  added by copying option 15.
 - **Look:** Segbandal's carve (`map-graphics.md`, carved ranges) covers the new floors too; Steamsource is painted
   `volcanic`, Deep One's Lair `mushroom` (moss), Ulagom `garnet` (red canyon), the rest Serpentreach's `default`
   (`AREA_STYLES`). Preview: `art_work/segbandal_reworked_preview.png` (git-ignored).
@@ -74,7 +76,7 @@ Imported once (no generator): `gfx/coat_of_arms/textured_emblems/aov_gor_vazumbr
      parents from history: check the de jure kingdom map mode for five Segbandal kingdoms, Gor Vazumbrog's in the
      west, and that no "Segbandal Unsorted" title shows anywhere.
   3. `d_seghrod`, `d_gulanrod` and `d_ozumrod` no longer show; Dwarovrod 32, 35 and 38 sit in their new kingdoms.
-  4. Elders hold Steamsource, Stunad Kradoz, Goblin Grotto, Greatcavern and Xazor as vassals of Ungrim and Girud.
+  4. An elder holds Steamsource as Ungrim's vassal; new kings hold Hehodovar and Gor Ozumbrog under the Segbandal.
   5. Gor Vazumbrog's arms show I14's flag, Hehodovar's I15's and Gor Ozumbrog's I17's (kingdom, hold duchy, hold
      county); Hehorod and Xazorod show their charges. Gor Vazumbrog appears in the Delve Deeper picker for its holder.
   6. Floors and walls look right; tune `AREA_STYLES` and the carve values.

@@ -22,6 +22,20 @@ def connected(pixels):
     return len(seen) == len(pixels)
 
 
+def title_blocks(titles: str) -> list:
+    """(key, own text without child titles) for every d_, k_ and e_ title of a landed titles file."""
+    import re
+    out = []
+    for m in re.finditer(r"(?m)^(\t*)([dke]_\w+) = \{\n", titles):
+        tabs, depth, i = m.group(1), 1, m.end()
+        while depth:
+            depth += {"{": 1, "}": -1}.get(titles[i], 0)
+            i += 1
+        body = re.sub(rf"(?ms)^{tabs}\t[bcdk]_\w+ = \{{\n.*?^{tabs}\t\}}\n", "", titles[m.end():i])
+        out.append((m.group(2), body))
+    return out
+
+
 class GeometryTests(unittest.TestCase):
     def test_fit_affine_recovers_transform(self):
         pts = [(10, 20), (50, 25), (33, 80), (90, 60), (5, 5)]
@@ -544,13 +558,45 @@ class BuildTests(unittest.TestCase):
             colours = re.findall(r"(?m)^\t\td_\w+ = \{\n\t\t\tcolor = (\{[^}]*\})", block)
             self.assertEqual(len(colours), len(set(colours)), block[:40])
 
-    def test_kings_hold_under_the_emperor(self):
+    def test_generated_titles_refuse_tribes(self):
+        import re
+        titles = self.files["common/landed_titles/aov_serpentreach.txt"].decode("utf-8-sig")
+        for key, block in title_blocks(titles):
+            self.assertIn("government_has_flag = government_is_dwarovar_tribe", block, key)
+
+    def test_generated_kingdoms_no_drift(self):
+        titles = self.files["common/landed_titles/aov_serpentreach.txt"].decode("utf-8-sig")
+        for key, block in title_blocks(titles):
+            if key[0] in "ke":
+                self.assertIn("de_jure_drift_disabled = yes", block, key)
+
+    def test_only_two_dwarven_kingdoms(self):
+        import re
         history = self.files["history/titles/aov_serpentreach.txt"].decode("utf-8-sig")
+        held = set(re.findall(r"(?m)^(\w+) = \{\n\t860\.1\.1 = \{ holder", history))
+        self.assertEqual({k for k in held if k[0] in "ke"}, {"k_arg_ordstun", "k_ovdal_lodhum"})
+        self.assertEqual({k for k in held if k[0] == "d"}, {"d_arg_ordstun", "d_ovdal_lodhum"})
+        self.assertEqual(sum(1 for k in held if k[0] == "c"), 5)
+        self.assertIn("c_arg_ordstun", held)
+        self.assertNotIn("liege", history)
+        self.assertNotIn("e_serpentreach", history)
         self.assertIn("k_arg_ordstun = {\n\t860.1.1 = { holder = aov_sr_emperor_1 }", history)
-        self.assertIn("k_gor_burad = {\n\t860.1.1 = { holder = aov_sr_gor_burad_1 liege = e_serpentreach }", history)
-        self.assertIn("d_zarn = {\n\t860.1.1 = { holder = aov_sr_zarn_1 liege = k_gor_burad }", history)
-        self.assertIn("d_kings_caverns = {\n\t860.1.1 = { holder = aov_sr_kings_caverns_1 liege = e_serpentreach }",
-                      history)
+
+    def test_tribe_counties_take_tribe_people(self):
+        history = self.files["history/provinces/aov_serpentreach.txt"].decode("utf-8-sig")
+        self.assertRegex(history, r"(?m)^\d+ = \{\t# Bloodied Altar\n\tculture = black_orc\n\treligion = old_dookan\n"
+                                  r"\tholding = tribal_holding\n")
+
+    def test_hold_barony_stays_castle_in_history(self):
+        history = self.files["history/provinces/aov_serpentreach.txt"].decode("utf-8-sig")
+        self.assertRegex(history, r"(?m)^\d+ = \{\t# Gor Bûrad\n\tculture = black_orc\n\treligion = old_dookan\n"
+                                  r"\tholding = castle_holding\n")
+        self.assertRegex(history, r"(?m)^\d+ = \{\t# Gor Bûrad Halls\n\tculture = black_orc\n\treligion = old_dookan\n"
+                                  r"\tholding = none\n")
+
+    def test_living_holds_keep_their_people(self):
+        history = self.files["history/provinces/aov_serpentreach.txt"].decode("utf-8-sig")
+        self.assertRegex(history, r"(?m)^\d+ = \{\t# Arg-Ôrdstun\n\tculture = diamond_dwarvish\n\treligion = ancestor_worship\n")
 
     def test_each_duchy_lists_its_capital_county_first(self):
         """The game puts a duchy's capital building in its first county, whatever `capital` says (seen in game:
@@ -573,28 +619,31 @@ class BuildTests(unittest.TestCase):
         history = self.files["history/provinces/aov_serpentreach.txt"].decode("utf-8-sig")
         self.assertNotIn("stone_dwarvish", history)
         titles = self.files["common/landed_titles/aov_serpentreach.txt"].decode("utf-8-sig")
+        from data import dwarovar_tribes as dt
+        tribal = {pid: dt.tribe_of(c.eu4_id, c.area) for c in self.lay.counties for pid in c.baronies}
         for block in re.split(r"(?m)^\t(?=k_)", titles)[1:]:
             kkey = block.split(" ", 1)[0]
             for pid in re.findall(r"province = (\d+)", block):
-                self.assertRegex(history, rf"(?m)^{pid} = \{{\t# .*\n\tculture = {data.KINGDOM_CULTURES[kkey]}\n")
+                tribe = tribal[int(pid)]
+                culture = dt.CULTURE[tribe.race] if tribe else data.KINGDOM_CULTURES[kkey]
+                self.assertRegex(history, rf"(?m)^{pid} = \{{\t# .*\n\tculture = {culture}\n")
         characters = self.files["history/characters/aov_serpentreach.txt"].decode("utf-8-sig")
         self.assertNotIn("stone_dwarvish", characters)
         self.assertRegex(characters, r'aov_sr_emperor_1 = \{[^}]*culture = "diamond_dwarvish"')
-        self.assertRegex(characters, r'aov_sr_zarn_1 = \{[^}]*culture = "basalt_dwarvish"')
+        self.assertRegex(characters, r'aov_sr_ovdal_lodhum_1 = \{[^}]*culture = "garnet_dwarvish"')
         dynasties = self.files[self.bs.DYNASTIES].decode("utf-8-sig")
-        self.assertRegex(dynasties, r"aov_dynasty_still_caverns = \{[^}]*culture = garnet_dwarvish")
+        self.assertRegex(dynasties, r"aov_dynasty_ovdal_lodhum = \{[^}]*culture = garnet_dwarvish")
 
     def test_eu4_dynasty_names_without_prefix(self):
         import re
-        want = {"d_arg_ordstun": "Whiteforged", "d_kings_caverns": "Stormheart", "d_ovdal_lodhum": "Garnetpick",
-                "d_still_caverns": "Slatecutter", "d_shazstundihr": "Whitebeard", "d_south_altar": "Brightbeard"}
+        want = {"d_arg_ordstun": "Whiteforged", "d_ovdal_lodhum": "Garnetpick"}
         dynasties = self.files[self.bs.DYNASTIES].decode("utf-8-sig")
         loc = self.files["localization/english/aov_serpentreach_l_english.yml"].decode("utf-8-sig")
         for dkey, name in want.items():
             block = re.search(rf"(?ms)^aov_dynasty_{dkey[2:]} = \{{.*?^\}}", dynasties).group(0)
             self.assertNotIn("prefix", block, dkey)
             self.assertIn(f' dynn_aov_{dkey[2:]}:0 "{name}"', loc)
-        self.assertEqual(dynasties.count('prefix = "dynnp_az"'), 19 - len(want))
+        self.assertEqual(dynasties.count('prefix = "dynnp_az"'), 0)
         names = re.findall(r'(?m)^ dynn_aov_\w+:0 "([^"]*)"', loc)
         self.assertEqual(len(names), len(set(names)))
 

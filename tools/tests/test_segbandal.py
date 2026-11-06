@@ -21,6 +21,20 @@ def titles_text():
                      for p in sorted((ANBENNAR / "common/landed_titles").glob("*.txt")))
 
 
+def title_blocks(titles: str) -> list:
+    """(key, own text without child titles) for every d_, k_ and e_ title of a landed titles file."""
+    import re
+    out = []
+    for m in re.finditer(r"(?m)^(\t*)([dke]_\w+) = \{\n", titles):
+        tabs, depth, i = m.group(1), 1, m.end()
+        while depth:
+            depth += {"{": 1, "}": -1}.get(titles[i], 0)
+            i += 1
+        body = re.sub(rf"(?ms)^{tabs}\t[bcdk]_\w+ = \{{\n.*?^{tabs}\t\}}\n", "", titles[m.end():i])
+        out.append((m.group(2), body))
+    return out
+
+
 class ClipTests(unittest.TestCase):
     def test_floor_keeps_margin_from_non_neighbours(self):
         # rock 9 everywhere; road A (id 1) a column at x 10, road B (id 2) a column at x 20; the EU4 label "a" covers
@@ -299,27 +313,65 @@ class TitleTests(unittest.TestCase):
         self.assertRegex(self.titles, r"\n\t\td_vazumbrog = \{\n\t\t\tcolor = \{[^}]*\}\n\t\t\tcapital = c_gor_vazumbrog\n")
         self.assertRegex(self.titles, r"\n\t\td_dwarovrod_33_35 = \{\n\t\t\tcolor = \{[^}]*\}\n\t\t\tcapital = c_dwarovrod33\n")
 
+    def test_generated_titles_refuse_tribes(self):
+        import re
+        titles = self.titles
+        for key, block in title_blocks(titles):
+            self.assertIn("government_has_flag = government_is_dwarovar_tribe", block, key)
+
+    def test_generated_kingdoms_no_drift(self):
+        titles = self.titles
+        for key, block in title_blocks(titles):
+            if key[0] in "ke":
+                self.assertIn("de_jure_drift_disabled = yes", block, key)
+
+    def test_elders_left(self):
+        held = set(re.findall(r"(?m)^(\w+) = \{\n(?:\t1\.1\.1 = \{[^\n]*\n)?\t860\.1\.1 = \{ holder = aov_sb_", self.history))
+        self.assertEqual({k for k in held if k.startswith("d_")}, {"d_steamsource"} | {"d_hehodovar", "d_gor_ozumbrog"})
+
+    def test_new_kings(self):
+        for kingdom, slug, culture in (("k_hehodovar", "hehodovar", "pyrite_dwarvish"),
+                                       ("k_gor_ozumbrog", "gor_ozumbrog", "topaz_dwarvish")):
+            self.assertRegex(self.history, rf"(?m)^{kingdom} = \{{\n\t860\.1\.1 = \{{ holder = aov_sb_king_{slug}_1 \}}\n"
+                                           r"\t921\.9\.24 = \{ liege = e_middle_dwarovar \}")
+            self.assertRegex(self.files[self.bsb.CHARACTERS].decode("utf-8-sig"),
+                             rf'aov_sb_king_{slug}_1 = \{{[^}}]*culture = "{culture}"')
+        loc = self.files[self.bsb.LOC].decode("utf-8-sig")
+        self.assertIn(' dynn_aov_sb_king_gor_ozumbrog:0 "Fiobmhor"', loc)
+        self.assertRegex(self.files[self.bsb.DYNASTIES].decode("utf-8-sig"),
+                         r'aov_sb_dynasty_king_gor_ozumbrog = \{\n\tprefix = "dynnp_az"')
+
+    def test_dwarven_counties_all_held(self):
+        """Every county of a living Segbandal hold has a holder in Anbennar's history or ours."""
+        from data import dwarovar_tribes as dt
+        history = self.history + self.bsb._read_history(ANBENNAR)
+        wanted = {c.key for c in self.lay.counties if dt.tribe_of(c.eu4_id, c.area) is None}
+        wanted |= {k for e, k in self.bsb.data.EXISTING.items()}
+        unheld = [k for k in sorted(wanted) if not any(
+            re.search(r"\bholder\s*=", b) for b in re.findall(rf"(?ms)^{k} = \{{\n.*?^\}}", history))]
+        self.assertEqual(unheld, [])
+
+    def test_tribe_counties_are_left_to_the_tribes(self):
+        for county in ("c_gor_vazumbrog", "c_ulagom_canyon", "c_deep_ones_cave"):
+            self.assertNotRegex(self.history, rf"(?ms)^{county} = \{{[^}}]*holder")
+
     def test_holders(self):
-        elders = {"d_steamsource", "d_stunad_kradoz", "d_goblin_grotto", "d_greatcavern", "d_xazor"}
-        held = set(re.findall(r"(?m)^(\w+) = \{\n(?:\t1\.1\.1 = \{[^\n]*\n)?\t860\.1\.1 = \{ holder = aov_sb_",
-                              self.history))
-        self.assertEqual({k for k in held if k.startswith("d_")}, elders)
         self.assertIn("d_steamsource = {\n\t1.1.1 = { de_jure_liege = k_seghdihr }\n"
                       "\t860.1.1 = { holder = aov_sb_steamsource_1 }\n\t921.9.24 = { liege = k_seghdihr }", self.history)
-        self.assertIn("d_xazor = {\n\t1.1.1 = { de_jure_liege = k_verkal_gulan }\n"
-                      "\t860.1.1 = { holder = aov_sb_xazor_1 }\n\t903.4.17 = { liege = k_verkal_gulan }", self.history)
+        self.assertIn("d_xazor = {\n\t1.1.1 = { de_jure_liege = k_verkal_gulan }\n}", self.history)
         self.assertIn("c_stonewall = {\n\t1.1.1 = { de_jure_liege = d_seghdihr }\n\t921.9.24 = { holder = 126 }", self.history)
-        for county in ("c_gor_vazumbrog", "c_hehogrims_mausoleum", "c_ulagom_canyon", "c_deep_ones_cave"):
-            self.assertNotRegex(self.history, rf"(?ms)^{county} = \{{[^}}]*holder")
 
     def test_cultures(self):
         history = self.files[self.bsb.PROVINCE_HISTORY].decode("utf-8-sig")
         want = {"k_gor_vazumbrog": "titanium_dwarvish", "k_hehodovar": "pyrite_dwarvish",
                 "k_seghdihr": "citrine_dwarvish", "k_verkal_gulan": "gold_dwarvish", "k_gor_ozumbrog": "topaz_dwarvish"}
+        from data import dwarovar_tribes as dt
         for c in self.lay.counties:
-            culture = want[data.AREA_DUCHIES[c.area][1]]
+            tribe = dt.tribe_of(c.eu4_id, c.area)
+            culture = dt.CULTURE[tribe.race] if tribe else want[data.AREA_DUCHIES[c.area][1]]
+            faith = dt.FAITH[tribe.race] if tribe else "ancestor_worship"
             for pid in c.baronies:
-                self.assertRegex(history, rf"(?m)^{pid} = \{{\t# .*\n\tculture = {culture}\n\treligion = ancestor_worship")
+                self.assertRegex(history, rf"(?m)^{pid} = \{{\t# .*\n\tculture = {culture}\n\treligion = {faith}")
 
     def test_arms(self):
         arms = self.files[self.bsb.ARMS].decode("utf-8-sig")

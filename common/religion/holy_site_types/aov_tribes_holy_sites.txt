@@ -1,0 +1,91 @@
+﻿# Anbennar Overhaul: Dwarovar tribes (docs/systems/dwarovar-tribes.md). Placeholder content.
+
+aov_dookan_hul_jorkad = {
+	county = c_hul_jorkad
+
+	character_modifier = {
+		name = holy_site_aov_dookan_hul_jorkad_effect_name
+		monthly_martial_lifestyle_xp_gain_mult = 0.15
+	}
+}
+
+aov_dookan_amldihr = {
+	county = c_amldihr
+
+	character_modifier = {
+		name = holy_site_aov_dookan_amldihr_effect_name
+		monthly_martial_lifestyle_xp_gain_mult = 0.15
+	}
+}
+
+aov_dookan_gor_burad = {
+	county = c_gor_burad
+
+	character_modifier = {
+		name = holy_site_aov_dookan_gor_burad_effect_name
+		monthly_martial_lifestyle_xp_gain_mult = 0.15
+	}
+}
+
+aov_dookan_orlghelovar = {
+	county = c_orlghelovar
+
+	character_modifier = {
+		name = holy_site_aov_dookan_orlghelovar_effect_name
+		monthly_martial_lifestyle_xp_gain_mult = 0.15
+	}
+}
+
+aov_dookan_mithradhum = {
+	county = c_mithradhum
+
+	character_modifier = {
+		name = holy_site_aov_dookan_mithradhum_effect_name
+		monthly_martial_lifestyle_xp_gain_mult = 0.15
+	}
+}
+
+aov_goblin_shamanism_shazstundihr = {
+	county = c_shazstundihr
+
+	character_modifier = {
+		name = holy_site_aov_goblin_shamanism_shazstundihr_effect_name
+		monthly_intrigue_lifestyle_xp_gain_mult = 0.15
+	}
+}
+
+aov_goblin_shamanism_verkal_skomdihr = {
+	county = c_verkal_skomdihr
+
+	character_modifier = {
+		name = holy_site_aov_goblin_shamanism_verkal_skomdihr_effect_name
+		monthly_intrigue_lifestyle_xp_gain_mult = 0.15
+	}
+}
+
+aov_goblin_shamanism_dur_vazhatun = {
+	county = c_dur_vazhatun
+
+	character_modifier = {
+		name = holy_site_aov_goblin_shamanism_dur_vazhatun_effect_name
+		monthly_intrigue_lifestyle_xp_gain_mult = 0.15
+	}
+}
+
+aov_goblin_shamanism_weballey = {
+	county = c_weballey
+
+	character_modifier = {
+		name = holy_site_aov_goblin_shamanism_weballey_effect_name
+		monthly_intrigue_lifestyle_xp_gain_mult = 0.15
+	}
+}
+
+aov_goblin_shamanism_old_coinvault = {
+	county = c_old_coinvault
+
+	character_modifier = {
+		name = holy_site_aov_goblin_shamanism_old_coinvault_effect_name
+		monthly_intrigue_lifestyle_xp_gain_mult = 0.15
+	}
+}

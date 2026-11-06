@@ -50,8 +50,8 @@ MASK_PEAK = 242  # 95% opacity in the middle
 # Short at the top (spires reach it) and the bottom (the painting fills the panel down to its bottom edge, under
 # the building slot row; a margin there left a dark bar under the painting).
 MASK_FADE = {"left": 0.10, "right": 0.08, "top": 0.06, "bottom": 0.06}
-# Pictures that are not monument paintings (ruined holds, dwarven terrain art): tools/data/holding_art.py. They come
-# after every monument entry in the custom loc (a monument painting wins, e.g. ruined Khugdihr).
+# Pictures that are not monument paintings (dwarven terrain art): tools/data/holding_art.py. They come after every
+# monument entry in the custom loc (a monument painting wins).
 EXTRA_ART = holding_art.HOLDING_ART
 ART_STYLES = ("painting", "illustration")
 VANILLA_MASK = "gfx/interface/window_county/mask_holding_illustration.dds"

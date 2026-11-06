@@ -25,6 +25,8 @@ import eu4_import as eu4i  # noqa: E402
 import pngio  # noqa: E402
 import range_rock as rr  # noqa: E402
 import serpentreach_layout as sl  # noqa: E402
+from data import dwarovar_tribes as tribes  # noqa: E402
+from data import holds as hold_data  # noqa: E402
 from data import segbandal as segbandal_data  # noqa: E402
 from data import serpentreach as data  # noqa: E402
 from data import west_dwarovar as west_dwarovar_data  # noqa: E402
@@ -67,6 +69,31 @@ def header_lines(cfg=None) -> list:
 
 def _text(lines) -> bytes:
     return (BOM + "\n".join(lines) + "\n").encode("utf-8")
+
+
+def refuse_tribes(tabs: int, drift: bool = False) -> list:
+    """A dwarven title's lines keeping it out of tribal hands: no tribe creates it, and with `drift` (kingdoms and
+    empires) no land drifts in or out of it."""
+    t = "\t" * tabs
+    return ([f"{t}de_jure_drift_disabled = yes"] if drift else []) + [
+        f"{t}can_create = {{", f"{t}\tNOT = {{ government_has_flag = government_is_dwarovar_tribe }}", f"{t}}}"]
+
+
+HOLD_PROVINCES = {h["eu4_province"] for h in hold_data.HOLDS}
+
+
+def county_people(county, culture: str, religion: str, holdings: list) -> tuple:
+    """(culture, religion, holdings by barony) of a county in 1022: the given ones for a dwarven or kobold county; for a
+    tribe's, the tribe's people in one holding, with a hold's first barony left for aov_hold_setup_effect to convert."""
+    tribe = tribes.tribe_of(county.eu4_id, county.area)
+    if tribe is None:
+        return culture, religion, holdings
+    first = holdings[0] if county.eu4_id in HOLD_PROVINCES else "tribal_holding"
+    return tribes.CULTURE[tribe.race], tribes.FAITH[tribe.race], [first]
+
+
+def is_dwarven(county) -> bool:
+    return tribes.tribe_of(county.eu4_id, county.area) is None
 
 
 def _hash(key: str) -> int:
@@ -274,7 +301,7 @@ def _duchy_title_lines(realm: Realm, dkey: str, colour: dict) -> list:
             lines += [f"\t\t\t\t{bkey} = {{", f"\t\t\t\t\tprovince = {pid}",
                       f"\t\t\t\t\tcolor = {colour[ckey]}", "\t\t\t\t}"]
         lines.append("\t\t\t}")
-    lines.append("\t\t}")
+    lines += refuse_tribes(3) + ["\t\t}"]
     return lines
 
 
@@ -290,7 +317,7 @@ def render_titles(realm: Realm, cfg=None) -> bytes:
                   f"\t\tcapital = {cfg.KINGDOM_CAPITALS[kkey]}", ""]
         for dkey in realm.kingdoms[kkey][1]:
             lines += _duchy_title_lines(realm, dkey, colour)
-        lines.append("\t}")
+        lines += refuse_tribes(2, drift=True) + ["\t}"]
     parked = realm.parked_duchies()
     if parked:
         grey = rgb_text(getattr(cfg, "PARKING_COLOUR", (90, 90, 90)))
@@ -298,8 +325,8 @@ def render_titles(realm: Realm, cfg=None) -> bytes:
                   f"\t\tcapital = {realm.duchy_capital(parked[0])}", ""]
         for dkey in parked:
             lines += _duchy_title_lines(realm, dkey, colour)
-        lines.append("\t}")
-    lines.append("}")
+        lines += refuse_tribes(2, drift=True) + ["\t}"]
+    lines += refuse_tribes(1, drift=True) + ["}"]
     return _text(lines)
 
 
@@ -307,11 +334,11 @@ def render_province_history(realm: Realm, cfg=None) -> bytes:
     cfg = cfg or realm.cfg
     lines = header_lines(cfg)
     for c in realm.lay.counties:
-        holdings = cfg.HOLDINGS[c.type]
+        culture, religion, holdings = county_people(c, realm.culture_of(realm.duchy_of[c.key]), cfg.RELIGION,
+                                                    cfg.HOLDINGS[c.type])
         for i, (pid, name) in enumerate(zip(c.baronies, realm.barony_names(c.key))):
             holding = holdings[i] if i < len(holdings) else None
-            lines += ["", f"{pid} = {{\t# {name}", f"\tculture = {realm.culture_of(realm.duchy_of[c.key])}",
-                      f"\treligion = {cfg.RELIGION}",
+            lines += ["", f"{pid} = {{\t# {name}", f"\tculture = {culture}", f"\treligion = {religion}",
                       f"\tholding = {holding or 'none'}", "}"]
     return _text(lines)
 
@@ -331,8 +358,9 @@ def male_names(anbennar: Path) -> list:
 
 
 class People:
-    """Two generations per duchy (the emperor's duchy has the emperor's line): (dynasty, [(id, name, birth,
-    death or None)]). Character ids start with CHARACTER_PREFIX, dynasties with DYNASTY_PREFIX (key, name key)."""
+    """Two generations per duchy with a dwarven county (the emperor's duchy has the emperor's line): (dynasty, [(id,
+    name, birth, death or None)]). Character ids start with CHARACTER_PREFIX, dynasties with DYNASTY_PREFIX (key, name
+    key). A duchy all held by tribes has no one: tools/build_dwarovar_tribes.py rules its counties."""
 
     def __init__(self, realm: Realm, names: list, cfg=None):
         cfg = cfg or realm.cfg
@@ -340,8 +368,8 @@ class People:
         dynasty_names = getattr(cfg, "DYNASTY_NAMES", {})
         dyn_prefix, name_prefix = getattr(cfg, "DYNASTY_PREFIX", ("aov_dynasty_", "dynn_aov_"))
         used = set(dynasty_names.values())  # a generated name never repeats an EU4 one
-        for dkey, (dname, _) in realm.duchies.items():
-            if dkey in realm.existing_duchies:
+        for dkey, (dname, counties) in realm.duchies.items():
+            if dkey in realm.existing_duchies or not any(is_dwarven(realm.county[c]) for c in counties):
                 continue
             prefix = (f"{cfg.CHARACTER_PREFIX}_emperor" if dkey == realm.emperor_duchy
                       else f"{cfg.CHARACTER_PREFIX}_{dkey[2:]}")
@@ -389,31 +417,22 @@ def render_characters(people: People, cfg=None) -> bytes:
 
 
 def render_title_history(realm: Realm, people: People, cfg=None) -> bytes:
+    """The kings of LIVING_KINGDOMS, independent, each holding the kingdom, its hold's duchy and that duchy's dwarven
+    counties. Nothing else is held: the empire and the fallen kingdoms are titles to reclaim."""
     cfg = cfg or realm.cfg
     lines = header_lines(cfg)
 
-    def block(key, liege, line):
+    def block(key, line):
         (elder, _, _, death), (son, _, _, _) = line["chars"]
-        extra = f" liege = {liege}" if liege else ""
-        return ["", f"{key} = {{", f"\t{cfg.START} = {{ holder = {elder}{extra} }}",
-                f"\t{death} = {{ holder = {son} }}", "}"]
+        return ["", f"{key} = {{", f"\t{cfg.START} = {{ holder = {elder} }}", f"\t{death} = {{ holder = {son} }}", "}"]
 
-    # Each kingdom is held by the lord of its hold's duchy, a vassal of the emperor (who holds the capital hold's); the
-    # other dukes of a kingdom are the king's vassals. A title's liege is the highest title of its holder's liege.
-    empire = cfg.EMPIRE[0]
-    lines += block(empire, None, people.lines[realm.emperor_duchy])
-    for kkey in realm.new_kingdoms():
-        duchies = realm.kingdoms[kkey][1]
+    for kkey in cfg.LIVING_KINGDOMS:
         hold = realm.hold_duchy[kkey]
-        royal = hold == realm.emperor_duchy
-        lines += block(kkey, None if royal else empire, people.lines[hold])
-        for dkey in duchies:
-            line = people.lines[dkey]
-            mine = dkey == realm.emperor_duchy
-            liege = None if mine else empire if royal or dkey == hold else kkey
-            lines += block(dkey, liege, line)
-            for ckey in realm.duchies[dkey][1]:
-                lines += block(ckey, empire if mine else dkey, line)
+        line = people.lines[hold]
+        lines += block(kkey, line) + block(hold, line)
+        for ckey in realm.duchies[hold][1]:
+            if is_dwarven(realm.county[ckey]):
+                lines += block(ckey, line)
     return _text(lines)
 
 

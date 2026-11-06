@@ -1,0 +1,439 @@
+﻿# Anbennar Overhaul: Dwarovar tribes (docs/systems/dwarovar-tribes.md). Placeholder content.
+
+aov_dookan_religion = {
+	family = rf_aov_serpentspine_tribes
+	graphical_faith = pagan_gfx
+	doctrine = pagan_hostility_doctrine
+
+	#Main Group
+	doctrine = doctrine_polytheist
+	doctrine = doctrine_no_head
+	doctrine = doctrine_gender_male_dominated
+	doctrine = doctrine_pluralism_fundamentalist
+	doctrine = doctrine_theocracy_temporal
+
+	#Marriage
+	doctrine = doctrine_polygamy
+	doctrine = doctrine_divorce_allowed
+	doctrine = doctrine_bastardry_none
+	doctrine = doctrine_consanguinity_cousins
+
+	#Crimes
+	doctrine = doctrine_homosexuality_accepted
+	doctrine = doctrine_adultery_men_accepted
+	doctrine = doctrine_adultery_women_accepted
+	doctrine = doctrine_kinslaying_any_dynasty_member_crime
+	doctrine = doctrine_deviancy_accepted
+	doctrine = doctrine_witchcraft_accepted
+
+	#Clerical Functions
+	doctrine = doctrine_clerical_function_recruitment
+	doctrine = doctrine_clerical_gender_male_only
+	doctrine = doctrine_clerical_marriage_allowed
+	doctrine = doctrine_clerical_succession_temporal_appointment
+
+	doctrine = doctrine_pilgrimage_encouraged
+	doctrine = doctrine_funeral_sky_burial
+	doctrine = doctrine_no_anointment
+
+	traits = {
+		virtues = {
+			brave
+			wrathful
+			ambitious
+		}
+		sins = {
+			craven
+			content
+			forgiving
+		}
+	}
+
+	custom_faith_icons = {
+		custom_faith_1 custom_faith_2 custom_faith_3 custom_faith_4 custom_faith_5 custom_faith_6 custom_faith_7 custom_faith_8 custom_faith_9 custom_faith_10
+	}
+
+	holy_order_names = {
+		{ name = "holy_order_aov_dookan" }
+	}
+
+	holy_order_maa = { armored_footmen }
+
+	localization = {
+		HighGodName = aov_dookan_high_god_name
+		HighGodName2 = aov_dookan_high_god_name
+		HighGodNamePossessive = aov_dookan_high_god_name_possessive
+		HighGodNameSheHe = CHARACTER_SHEHE_HE
+		HighGodHerselfHimself = CHARACTER_HERHIS_HIS
+		HighGodHerHis = CHARACTER_HERHIM_HIM
+		HighGodNameAlternate = aov_dookan_high_god_name_alternate
+		HighGodNameAlternatePossessive = aov_dookan_high_god_name_alternate_possessive
+		CreatorName = aov_dookan_creator_god_name
+		CreatorNamePossessive = aov_dookan_creator_god_name_possessive
+		CreatorSheHe = CHARACTER_SHEHE_HE
+		CreatorHerHis = CHARACTER_HERHIS_HIS
+		CreatorHerHim = CHARACTER_HERHIM_HIM
+		HealthGodName = aov_dookan_health_god_name
+		HealthGodNamePossessive = aov_dookan_health_god_name_possessive
+		HealthGodSheHe = CHARACTER_SHEHE_HE
+		HealthGodHerHis = CHARACTER_HERHIS_HIS
+		HealthGodHerHim = CHARACTER_HERHIM_HIM
+		FertilityGodName = aov_dookan_fertility_god_name
+		FertilityGodNamePossessive = aov_dookan_fertility_god_name_possessive
+		FertilityGodSheHe = CHARACTER_SHEHE_HE
+		FertilityGodHerHis = CHARACTER_HERHIS_HIS
+		FertilityGodHerHim = CHARACTER_HERHIM_HIM
+		WealthGodName = aov_dookan_wealth_god_name
+		WealthGodNamePossessive = aov_dookan_wealth_god_name_possessive
+		WealthGodSheHe = CHARACTER_SHEHE_HE
+		WealthGodHerHis = CHARACTER_HERHIS_HIS
+		WealthGodHerHim = CHARACTER_HERHIM_HIM
+		HouseholdGodName = aov_dookan_household_god_name
+		HouseholdGodNamePossessive = aov_dookan_household_god_name_possessive
+		HouseholdGodSheHe = CHARACTER_SHEHE_HE
+		HouseholdGodHerHis = CHARACTER_HERHIS_HIS
+		HouseholdGodHerHim = CHARACTER_HERHIM_HIM
+		FateGodName = aov_dookan_fate_god_name
+		FateGodNamePossessive = aov_dookan_fate_god_name_possessive
+		FateGodSheHe = CHARACTER_SHEHE_HE
+		FateGodHerHis = CHARACTER_HERHIS_HIS
+		FateGodHerHim = CHARACTER_HERHIM_HIM
+		KnowledgeGodName = aov_dookan_knowledge_god_name
+		KnowledgeGodNamePossessive = aov_dookan_knowledge_god_name_possessive
+		KnowledgeGodSheHe = CHARACTER_SHEHE_HE
+		KnowledgeGodHerHis = CHARACTER_HERHIS_HIS
+		KnowledgeGodHerHim = CHARACTER_HERHIM_HIM
+		WarGodName = aov_dookan_war_god_name
+		WarGodNamePossessive = aov_dookan_war_god_name_possessive
+		WarGodSheHe = CHARACTER_SHEHE_HE
+		WarGodHerHis = CHARACTER_HERHIS_HIS
+		WarGodHerHim = CHARACTER_HERHIM_HIM
+		TricksterGodName = aov_dookan_trickster_god_name
+		TricksterGodNamePossessive = aov_dookan_trickster_god_name_possessive
+		TricksterGodSheHe = CHARACTER_SHEHE_HE
+		TricksterGodHerHis = CHARACTER_HERHIS_HIS
+		TricksterGodHerHim = CHARACTER_HERHIM_HIM
+		NightGodName = aov_dookan_night_god_name
+		NightGodNamePossessive = aov_dookan_night_god_name_possessive
+		NightGodSheHe = CHARACTER_SHEHE_HE
+		NightGodHerHis = CHARACTER_HERHIS_HIS
+		NightGodHerHim = CHARACTER_HERHIM_HIM
+		WaterGodName = aov_dookan_water_god_name
+		WaterGodNamePossessive = aov_dookan_water_god_name_possessive
+		WaterGodSheHe = CHARACTER_SHEHE_HE
+		WaterGodHerHis = CHARACTER_HERHIS_HIS
+		WaterGodHerHim = CHARACTER_HERHIM_HIM
+
+
+		PantheonTerm = aov_dookan_high_god_name
+		PantheonTerm2 = aov_dookan_high_god_name
+		PantheonTerm3 = aov_dookan_high_god_name
+		PantheonTermHasHave = pantheon_term_has
+		GoodGodNames = {
+			aov_dookan_high_god_name
+			aov_dookan_high_god_name_alternate
+		}
+		
+		DevilName = aov_dookan_devil_name
+		DevilNamePossessive = aov_dookan_devil_name_possessive
+		DevilSheHe = CHARACTER_SHEHE_HE
+		DevilHerHis = CHARACTER_HERHIS_HIS
+		DevilHerselfHimself = aov_dookan_devil_herselfhimself
+		EvilGodNames = {
+			aov_dookan_devil_name
+			aov_dookan_evil_god_malevolent_dark
+		}
+		HouseOfWorship = aov_dookan_house_of_worship
+		HouseOfWorship2 = aov_dookan_house_of_worship
+		HouseOfWorship3 = aov_dookan_house_of_worship
+		HouseOfWorshipPlural = aov_dookan_house_of_worship_plural
+		ReligiousSymbol = aov_dookan_religious_symbol
+		ReligiousSymbol2 = aov_dookan_religious_symbol
+		ReligiousSymbol3 = aov_dookan_religious_symbol
+		ReligiousText = aov_dookan_religious_text
+		ReligiousText2 = aov_dookan_religious_text
+		ReligiousText3 = aov_dookan_religious_text
+		ReligiousHeadName = aov_dookan_religious_head_title
+		ReligiousHeadTitleName = aov_dookan_religious_head_title_name
+		DevoteeMale = aov_dookan_devotee_male
+		DevoteeMalePlural = aov_dookan_devotee_male_plural
+		DevoteeFemale = aov_dookan_devotee_female
+		DevoteeFemalePlural = aov_dookan_devotee_female_plural
+		DevoteeNeuter = aov_dookan_devotee_neuter
+		DevoteeNeuterPlural = aov_dookan_devotee_neuter_plural
+		PriestMale = aov_dookan_priest
+		PriestMalePlural = aov_dookan_priest_plural
+		PriestFemale = aov_dookan_priest
+		PriestFemalePlural = aov_dookan_priest_plural
+		PriestNeuter = aov_dookan_priest
+		PriestNeuterPlural = aov_dookan_priest_plural
+		AltPriestTermPlural = aov_dookan_priest_term_plural
+		BishopMale = aov_dookan_bishop
+		BishopMalePlural = aov_dookan_bishop_plural
+		BishopFemale = aov_dookan_bishop
+		BishopFemalePlural = aov_dookan_bishop_plural
+		BishopNeuter = aov_dookan_bishop
+		BishopNeuterPlural = aov_dookan_bishop_plural
+		DivineRealm = aov_dookan_positive_afterlife
+		DivineRealm2 = aov_dookan_positive_afterlife
+		DivineRealm3 = aov_dookan_positive_afterlife
+		PositiveAfterLife = aov_dookan_positive_afterlife
+		PositiveAfterLife2 = aov_dookan_positive_afterlife
+		PositiveAfterLife3 = aov_dookan_positive_afterlife
+		NegativeAfterLife = aov_dookan_negative_afterlife
+		NegativeAfterLife2 = aov_dookan_negative_afterlife
+		NegativeAfterLife3 = aov_dookan_negative_afterlife
+		DeathDeityName = aov_dookan_death_name
+		DeathDeityNamePossessive = aov_dookan_death_name_possessive
+		DeathDeitySheHe = CHARACTER_SHEHE_HE
+		DeathDeityHerHis = CHARACTER_HERHIS_HIS
+		DeathDeityHerHim = CHARACTER_HERHIM_HIM
+
+		WitchGodName = aov_dookan_witch_god_name
+		WitchGodNamePossessive = aov_dookan_witch_god_name_possessive
+		WitchGodHerHis = CHARACTER_HERHIS_HIS
+		WitchGodSheHe = CHARACTER_SHEHE_HE
+		WitchGodHerHim = CHARACTER_HERHIM_HIM
+		WitchGodMistressMaster = witch_spirit
+		WitchGodMotherFather = witch_source
+
+		GHWName = ghw_purification
+		GHWNamePlural = ghw_purifications
+	}
+
+	faiths = {
+		old_dookan = {
+			color = { 110 30 30 }
+			icon = custom_faith_fp1_fenrir
+
+			holy_site = aov_dookan_hul_jorkad
+			holy_site = aov_dookan_amldihr
+			holy_site = aov_dookan_gor_burad
+			holy_site = aov_dookan_orlghelovar
+			holy_site = aov_dookan_mithradhum
+
+			doctrine = tenet_warmonger
+			doctrine = tenet_ritual_celebrations
+			doctrine = tenet_adaptive
+		}
+	}
+}
+
+aov_goblin_shamanism_religion = {
+	family = rf_aov_serpentspine_tribes
+	graphical_faith = pagan_gfx
+	doctrine = pagan_hostility_doctrine
+
+	#Main Group
+	doctrine = doctrine_polytheist
+	doctrine = doctrine_no_head
+	doctrine = doctrine_gender_equal
+	doctrine = doctrine_pluralism_pluralistic
+	doctrine = doctrine_theocracy_temporal
+
+	#Marriage
+	doctrine = doctrine_polygamy
+	doctrine = doctrine_divorce_allowed
+	doctrine = doctrine_bastardry_none
+	doctrine = doctrine_consanguinity_cousins
+
+	#Crimes
+	doctrine = doctrine_homosexuality_accepted
+	doctrine = doctrine_adultery_men_accepted
+	doctrine = doctrine_adultery_women_accepted
+	doctrine = doctrine_kinslaying_any_dynasty_member_crime
+	doctrine = doctrine_deviancy_accepted
+	doctrine = doctrine_witchcraft_accepted
+
+	#Clerical Functions
+	doctrine = doctrine_clerical_function_alms_and_pacification
+	doctrine = doctrine_clerical_gender_either
+	doctrine = doctrine_clerical_marriage_allowed
+	doctrine = doctrine_clerical_succession_temporal_appointment
+
+	doctrine = doctrine_pilgrimage_encouraged
+	doctrine = doctrine_funeral_sky_burial
+	doctrine = doctrine_no_anointment
+
+	traits = {
+		virtues = {
+			deceitful
+			greedy
+			diligent
+		}
+		sins = {
+			honest
+			generous
+			lazy
+		}
+	}
+
+	custom_faith_icons = {
+		custom_faith_1 custom_faith_2 custom_faith_3 custom_faith_4 custom_faith_5 custom_faith_6 custom_faith_7 custom_faith_8 custom_faith_9 custom_faith_10
+	}
+
+	holy_order_names = {
+		{ name = "holy_order_aov_goblin_shamanism" }
+	}
+
+	holy_order_maa = { armored_footmen }
+
+	localization = {
+		HighGodName = aov_goblin_shamanism_high_god_name
+		HighGodName2 = aov_goblin_shamanism_high_god_name
+		HighGodNamePossessive = aov_goblin_shamanism_high_god_name_possessive
+		HighGodNameSheHe = CHARACTER_SHEHE_HE
+		HighGodHerselfHimself = CHARACTER_HERHIS_HIS
+		HighGodHerHis = CHARACTER_HERHIM_HIM
+		HighGodNameAlternate = aov_goblin_shamanism_high_god_name_alternate
+		HighGodNameAlternatePossessive = aov_goblin_shamanism_high_god_name_alternate_possessive
+		CreatorName = aov_goblin_shamanism_creator_god_name
+		CreatorNamePossessive = aov_goblin_shamanism_creator_god_name_possessive
+		CreatorSheHe = CHARACTER_SHEHE_HE
+		CreatorHerHis = CHARACTER_HERHIS_HIS
+		CreatorHerHim = CHARACTER_HERHIM_HIM
+		HealthGodName = aov_goblin_shamanism_health_god_name
+		HealthGodNamePossessive = aov_goblin_shamanism_health_god_name_possessive
+		HealthGodSheHe = CHARACTER_SHEHE_HE
+		HealthGodHerHis = CHARACTER_HERHIS_HIS
+		HealthGodHerHim = CHARACTER_HERHIM_HIM
+		FertilityGodName = aov_goblin_shamanism_fertility_god_name
+		FertilityGodNamePossessive = aov_goblin_shamanism_fertility_god_name_possessive
+		FertilityGodSheHe = CHARACTER_SHEHE_HE
+		FertilityGodHerHis = CHARACTER_HERHIS_HIS
+		FertilityGodHerHim = CHARACTER_HERHIM_HIM
+		WealthGodName = aov_goblin_shamanism_wealth_god_name
+		WealthGodNamePossessive = aov_goblin_shamanism_wealth_god_name_possessive
+		WealthGodSheHe = CHARACTER_SHEHE_HE
+		WealthGodHerHis = CHARACTER_HERHIS_HIS
+		WealthGodHerHim = CHARACTER_HERHIM_HIM
+		HouseholdGodName = aov_goblin_shamanism_household_god_name
+		HouseholdGodNamePossessive = aov_goblin_shamanism_household_god_name_possessive
+		HouseholdGodSheHe = CHARACTER_SHEHE_HE
+		HouseholdGodHerHis = CHARACTER_HERHIS_HIS
+		HouseholdGodHerHim = CHARACTER_HERHIM_HIM
+		FateGodName = aov_goblin_shamanism_fate_god_name
+		FateGodNamePossessive = aov_goblin_shamanism_fate_god_name_possessive
+		FateGodSheHe = CHARACTER_SHEHE_HE
+		FateGodHerHis = CHARACTER_HERHIS_HIS
+		FateGodHerHim = CHARACTER_HERHIM_HIM
+		KnowledgeGodName = aov_goblin_shamanism_knowledge_god_name
+		KnowledgeGodNamePossessive = aov_goblin_shamanism_knowledge_god_name_possessive
+		KnowledgeGodSheHe = CHARACTER_SHEHE_HE
+		KnowledgeGodHerHis = CHARACTER_HERHIS_HIS
+		KnowledgeGodHerHim = CHARACTER_HERHIM_HIM
+		WarGodName = aov_goblin_shamanism_war_god_name
+		WarGodNamePossessive = aov_goblin_shamanism_war_god_name_possessive
+		WarGodSheHe = CHARACTER_SHEHE_HE
+		WarGodHerHis = CHARACTER_HERHIS_HIS
+		WarGodHerHim = CHARACTER_HERHIM_HIM
+		TricksterGodName = aov_goblin_shamanism_trickster_god_name
+		TricksterGodNamePossessive = aov_goblin_shamanism_trickster_god_name_possessive
+		TricksterGodSheHe = CHARACTER_SHEHE_HE
+		TricksterGodHerHis = CHARACTER_HERHIS_HIS
+		TricksterGodHerHim = CHARACTER_HERHIM_HIM
+		NightGodName = aov_goblin_shamanism_night_god_name
+		NightGodNamePossessive = aov_goblin_shamanism_night_god_name_possessive
+		NightGodSheHe = CHARACTER_SHEHE_HE
+		NightGodHerHis = CHARACTER_HERHIS_HIS
+		NightGodHerHim = CHARACTER_HERHIM_HIM
+		WaterGodName = aov_goblin_shamanism_water_god_name
+		WaterGodNamePossessive = aov_goblin_shamanism_water_god_name_possessive
+		WaterGodSheHe = CHARACTER_SHEHE_HE
+		WaterGodHerHis = CHARACTER_HERHIS_HIS
+		WaterGodHerHim = CHARACTER_HERHIM_HIM
+
+
+		PantheonTerm = aov_goblin_shamanism_high_god_name
+		PantheonTerm2 = aov_goblin_shamanism_high_god_name
+		PantheonTerm3 = aov_goblin_shamanism_high_god_name
+		PantheonTermHasHave = pantheon_term_has
+		GoodGodNames = {
+			aov_goblin_shamanism_high_god_name
+			aov_goblin_shamanism_high_god_name_alternate
+		}
+		
+		DevilName = aov_goblin_shamanism_devil_name
+		DevilNamePossessive = aov_goblin_shamanism_devil_name_possessive
+		DevilSheHe = CHARACTER_SHEHE_HE
+		DevilHerHis = CHARACTER_HERHIS_HIS
+		DevilHerselfHimself = aov_goblin_shamanism_devil_herselfhimself
+		EvilGodNames = {
+			aov_goblin_shamanism_devil_name
+			aov_goblin_shamanism_evil_god_malevolent_dark
+		}
+		HouseOfWorship = aov_goblin_shamanism_house_of_worship
+		HouseOfWorship2 = aov_goblin_shamanism_house_of_worship
+		HouseOfWorship3 = aov_goblin_shamanism_house_of_worship
+		HouseOfWorshipPlural = aov_goblin_shamanism_house_of_worship_plural
+		ReligiousSymbol = aov_goblin_shamanism_religious_symbol
+		ReligiousSymbol2 = aov_goblin_shamanism_religious_symbol
+		ReligiousSymbol3 = aov_goblin_shamanism_religious_symbol
+		ReligiousText = aov_goblin_shamanism_religious_text
+		ReligiousText2 = aov_goblin_shamanism_religious_text
+		ReligiousText3 = aov_goblin_shamanism_religious_text
+		ReligiousHeadName = aov_goblin_shamanism_religious_head_title
+		ReligiousHeadTitleName = aov_goblin_shamanism_religious_head_title_name
+		DevoteeMale = aov_goblin_shamanism_devotee_male
+		DevoteeMalePlural = aov_goblin_shamanism_devotee_male_plural
+		DevoteeFemale = aov_goblin_shamanism_devotee_female
+		DevoteeFemalePlural = aov_goblin_shamanism_devotee_female_plural
+		DevoteeNeuter = aov_goblin_shamanism_devotee_neuter
+		DevoteeNeuterPlural = aov_goblin_shamanism_devotee_neuter_plural
+		PriestMale = aov_goblin_shamanism_priest
+		PriestMalePlural = aov_goblin_shamanism_priest_plural
+		PriestFemale = aov_goblin_shamanism_priest
+		PriestFemalePlural = aov_goblin_shamanism_priest_plural
+		PriestNeuter = aov_goblin_shamanism_priest
+		PriestNeuterPlural = aov_goblin_shamanism_priest_plural
+		AltPriestTermPlural = aov_goblin_shamanism_priest_term_plural
+		BishopMale = aov_goblin_shamanism_bishop
+		BishopMalePlural = aov_goblin_shamanism_bishop_plural
+		BishopFemale = aov_goblin_shamanism_bishop
+		BishopFemalePlural = aov_goblin_shamanism_bishop_plural
+		BishopNeuter = aov_goblin_shamanism_bishop
+		BishopNeuterPlural = aov_goblin_shamanism_bishop_plural
+		DivineRealm = aov_goblin_shamanism_positive_afterlife
+		DivineRealm2 = aov_goblin_shamanism_positive_afterlife
+		DivineRealm3 = aov_goblin_shamanism_positive_afterlife
+		PositiveAfterLife = aov_goblin_shamanism_positive_afterlife
+		PositiveAfterLife2 = aov_goblin_shamanism_positive_afterlife
+		PositiveAfterLife3 = aov_goblin_shamanism_positive_afterlife
+		NegativeAfterLife = aov_goblin_shamanism_negative_afterlife
+		NegativeAfterLife2 = aov_goblin_shamanism_negative_afterlife
+		NegativeAfterLife3 = aov_goblin_shamanism_negative_afterlife
+		DeathDeityName = aov_goblin_shamanism_death_name
+		DeathDeityNamePossessive = aov_goblin_shamanism_death_name_possessive
+		DeathDeitySheHe = CHARACTER_SHEHE_HE
+		DeathDeityHerHis = CHARACTER_HERHIS_HIS
+		DeathDeityHerHim = CHARACTER_HERHIM_HIM
+
+		WitchGodName = aov_goblin_shamanism_witch_god_name
+		WitchGodNamePossessive = aov_goblin_shamanism_witch_god_name_possessive
+		WitchGodHerHis = CHARACTER_HERHIS_HIS
+		WitchGodSheHe = CHARACTER_SHEHE_HE
+		WitchGodHerHim = CHARACTER_HERHIM_HIM
+		WitchGodMistressMaster = witch_spirit
+		WitchGodMotherFather = witch_source
+
+		GHWName = ghw_purification
+		GHWNamePlural = ghw_purifications
+	}
+
+	faiths = {
+		goblinic_shamanism = {
+			color = { 70 120 50 }
+			icon = custom_faith_fp1_jormungandr
+
+			holy_site = aov_goblin_shamanism_shazstundihr
+			holy_site = aov_goblin_shamanism_verkal_skomdihr
+			holy_site = aov_goblin_shamanism_dur_vazhatun
+			holy_site = aov_goblin_shamanism_weballey
+			holy_site = aov_goblin_shamanism_old_coinvault
+
+			doctrine = tenet_sanctity_of_nature
+			doctrine = tenet_ritual_celebrations
+			doctrine = tenet_adaptive
+		}
+	}
+}

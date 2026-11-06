@@ -1671,15 +1671,6 @@ window = {
 					}
 				}
 				background = {
-					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_ruined_hold') )]"
-					texture = "gfx/interface/illustrations/event_scenes/tgp_ruined_holding.dds"
-					fittype = start
-					modify_texture = {
-						texture = "gfx/interface/window_county/aov_monument_painting_mask.dds"
-						blend_mode = alphamultiply
-					}
-				}
-				background = {
 					visible = "[EqualTo_string( HoldingView.GetProvince.Custom('AovMonumentIllustration'), Localize('aov_monument_art_terrain_dwarven_hold') )]"
 					texture = "gfx/interface/illustrations/terrain_types/dwarven_hold.dds"
 					alpha = 0.8

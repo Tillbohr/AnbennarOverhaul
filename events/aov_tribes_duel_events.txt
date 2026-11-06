@@ -1,0 +1,155 @@
+﻿# Anbennar Overhaul: Dwarovar tribes (docs/systems/dwarovar-tribes.md). An orc vassal's challenge to their warband's ruler,
+# modelled on vanilla's tribal.1001, without the champions and the flyting.
+namespace = aov_tribe_duel
+
+# Root = the challenged ruler. scope:challenger, scope:ruler. Either may have died, been imprisoned or gone to war since
+# the challenge was sent: then nothing happens at all.
+aov_tribe_duel.1 = {
+	type = character_event
+	title = aov_tribe_duel.1.t
+	desc = aov_tribe_duel.1.desc
+	theme = realm
+	left_portrait = {
+		character = scope:challenger
+		animation = personality_bold
+	}
+
+	trigger = {
+		is_alive = yes
+		is_imprisoned = no
+		is_at_war = no
+		can_start_single_combat_trigger = yes
+		scope:challenger = {
+			is_alive = yes
+			is_imprisoned = no
+			is_at_war = no
+			can_start_single_combat_trigger = yes
+			liege = root
+		}
+	}
+
+	option = {
+		name = aov_tribe_duel.1.a
+		scope:challenger = {
+			send_interface_toast = {
+				title = aov_tribe_duel.1.accepted
+				left_icon = root
+			}
+		}
+		configure_start_single_combat_effect = {
+			SC_INITIATOR = scope:challenger
+			SC_ATTACKER = scope:challenger
+			SC_DEFENDER = root
+			FATALITY = no
+			FIXED = no
+			LOCALE = throne_room
+			OUTPUT_EVENT = aov_tribe_duel.2
+			INVALIDATION_EVENT = aov_tribe_duel.3
+		}
+		ai_chance = {
+			base = 95
+		}
+	}
+
+	option = {
+		name = aov_tribe_duel.1.b
+		add_prestige_level = -5
+		add_character_modifier = {
+			modifier = aov_refused_challenge
+		}
+		scope:challenger = {
+			send_interface_toast = {
+				title = aov_tribe_duel.1.refused
+				left_icon = root
+			}
+		}
+		# Rarely, and only from someone far weaker: refusal costs nearly as much as losing.
+		ai_chance = {
+			base = 1
+			modifier = {
+				add = 25
+				prowess < {
+					value = scope:challenger.prowess
+					subtract = 12
+				}
+			}
+		}
+	}
+}
+
+# The fight's result, on the initiator. Nobody dies inside the combat (FATALITY = no), so the top title moves first and
+# the old ruler's other titles then pass to their heir.
+aov_tribe_duel.2 = {
+	hidden = yes
+
+	immediate = {
+		single_combat_clean_shirtlessness_effect = {
+			ATTACKER = scope:challenger
+			DEFENDER = scope:ruler
+		}
+		if = {
+			limit = { scope:sc_victor = scope:challenger }
+			aov_tribe_duel_winner_takes_title_effect = yes
+			scope:title_being_fought_over = {
+				if = {
+					limit = {
+						tier >= tier_duchy
+						aov_is_pool_title_trigger = yes
+					}
+					set_capital_county = scope:challenger.capital_county
+					aov_tribe_title_sync_effect = yes
+				}
+			}
+			scope:challenger = {
+				send_interface_toast = {
+					title = aov_tribe_duel.2.won
+					left_icon = scope:ruler
+				}
+			}
+			scope:ruler = {
+				death = {
+					death_reason = death_duel
+					killer = scope:sc_victor
+				}
+			}
+		}
+		else = {
+			scope:ruler = {
+				send_interface_toast = {
+					title = aov_tribe_duel.2.lost
+					left_icon = scope:challenger
+				}
+			}
+			scope:challenger = {
+				death = {
+					death_reason = death_duel
+					killer = scope:sc_victor
+				}
+			}
+		}
+	}
+}
+
+# The fight could not happen (one of them became unable). No one loses anything.
+aov_tribe_duel.3 = {
+	hidden = yes
+
+	immediate = {
+		single_combat_clean_shirtlessness_effect = {
+			ATTACKER = scope:challenger
+			DEFENDER = scope:ruler
+		}
+		scope:challenger = {
+			send_interface_toast = {
+				title = aov_tribe_duel.3.invalid
+				left_icon = scope:ruler
+			}
+		}
+		scope:ruler = {
+			send_interface_toast = {
+				title = aov_tribe_duel.3.invalid
+				left_icon = scope:challenger
+			}
+		}
+	}
+}

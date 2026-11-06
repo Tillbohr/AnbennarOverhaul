@@ -149,7 +149,8 @@ class FreshnessTests(unittest.TestCase):
 
     def test_no_leftover_overrides(self):
         ours = {f"{d}/{p.name}" for d in (bhs.RELIGION_DIR, bhs.DOCTRINE_DIR) for p in (bhs.SUBMOD / d).glob("*.txt")}
-        self.assertEqual(ours - set(self.files), set())
+        own = {f"{bhs.RELIGION_DIR}/aov_tribes_religions.txt"}  # the tribes' faiths: new, not a copy of Anbennar's
+        self.assertEqual(ours - set(self.files) - own, set())
 
     def test_copies_differ_only_by_marked_lines(self):
         for rel, content in self.files.items():

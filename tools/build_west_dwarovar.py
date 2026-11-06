@@ -135,7 +135,7 @@ class WestDwarovar:
             kingdom = realm.kingdom_of[realm.duchy_of[c.key]]
             culture, religion = data.KOBOLD_KINGDOMS.get(kingdom, (realm.culture_of(realm.duchy_of[c.key]),
                                                                    data.RELIGION))
-            holdings = data.HOLDINGS[c.type]
+            culture, religion, holdings = bs.county_people(c, culture, religion, data.HOLDINGS[c.type])
             for i, (pid, name) in enumerate(zip(c.baronies, realm.barony_names(c.key))):
                 holding = holdings[i] if i < len(holdings) else None
                 lines += ["", f"{pid} = {{\t# {name}", f"\tculture = {culture}", f"\treligion = {religion}",
@@ -144,9 +144,8 @@ class WestDwarovar:
 
 
 def render_title_history(wd: WestDwarovar) -> bytes:
-    """The rulers (build_serpentreach's: the emperor on Amldihr, each other kingdom's hold duke under him, the other
-    dukes under their king), then the de jure moves: k_khugdihr into e_west_dwarovar, the parked duchies into
-    k_khugdihr, Dwarovrod 1 into Dwarovrod 1-3."""
+    """No rulers (no dwarves here in 1022; tools/build_dwarovar_tribes.py rules the tribes' counties), then the de jure
+    moves: k_khugdihr into e_west_dwarovar, the parked duchies into k_khugdihr, Dwarovrod 1 into Dwarovrod 1-3."""
     text = bs.render_title_history(wd.realm, wd.people, data)
     lines = []
     for key, target in wd.moves.items():

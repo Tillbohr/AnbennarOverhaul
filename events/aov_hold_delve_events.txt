@@ -28,7 +28,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_marrhold = { holder = root }
 			save_temporary_scope_as = digger
@@ -70,7 +70,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_anvilwright = { holder = root }
 			save_temporary_scope_as = digger
@@ -112,7 +112,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_gulandhum = { holder = root }
 			save_temporary_scope_as = digger
@@ -154,7 +154,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_kar_fimthrun = { holder = root }
 			save_temporary_scope_as = digger
@@ -196,7 +196,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_irovar = { holder = root }
 			save_temporary_scope_as = digger
@@ -238,7 +238,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_hul_az_amekh = { holder = root }
 			save_temporary_scope_as = digger
@@ -280,7 +280,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_kar_hargun = { holder = root }
 			save_temporary_scope_as = digger
@@ -322,7 +322,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_topazhjardan = { holder = root }
 			save_temporary_scope_as = digger
@@ -364,7 +364,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_aghatehargun = { holder = root }
 			save_temporary_scope_as = digger
@@ -405,7 +405,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_arg_ordstun = { holder = root }
 			save_temporary_scope_as = digger
@@ -446,7 +446,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_ovdal_lodhum = { holder = root }
 			save_temporary_scope_as = digger
@@ -487,7 +487,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_gor_burad = { holder = root }
 			save_temporary_scope_as = digger
@@ -528,7 +528,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_shazstundihr = { holder = root }
 			save_temporary_scope_as = digger
@@ -569,7 +569,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_verkal_skomdihr = { holder = root }
 			save_temporary_scope_as = digger
@@ -610,7 +610,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_orlghelovar = { holder = root }
 			save_temporary_scope_as = digger
@@ -651,7 +651,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_gor_vazumbrog = { holder = root }
 			save_temporary_scope_as = digger
@@ -692,7 +692,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_amldihr = { holder = root }
 			save_temporary_scope_as = digger
@@ -733,7 +733,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_haraz_orldhum = { holder = root }
 			save_temporary_scope_as = digger
@@ -774,7 +774,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_mithradhum = { holder = root }
 			save_temporary_scope_as = digger
@@ -815,7 +815,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_er_natvir = { holder = root }
 			save_temporary_scope_as = digger
@@ -856,7 +856,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_verkal_kozenad = { holder = root }
 			save_temporary_scope_as = digger
@@ -897,7 +897,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_hul_jorkad = { holder = root }
 			save_temporary_scope_as = digger
@@ -938,7 +938,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_orlazam_az_dihr = { holder = root }
 			save_temporary_scope_as = digger
@@ -979,7 +979,7 @@ aov_hold_delve.1 = {
 			}
 		}
 		# Shown greyed out, with the reason, while the hold could be dug but lacks its next level's buildings
-		# or the gold; holds being dug, at level 10, ruined or occupied stay hidden.
+		# or the gold; holds being dug, at level 10 or occupied stay hidden.
 		show_as_unavailable = {
 			title:b_dur_vazhatun = { holder = root }
 			save_temporary_scope_as = digger

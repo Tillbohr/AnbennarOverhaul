@@ -40,7 +40,6 @@ class HoldBuildingTests(unittest.TestCase):
             block = self.blocks[f"dwarven_hold_{n:02d}"]
             self.assertIn("always = no", block)
             self.assertIn("is_dwarvish_culture = yes", block)
-            self.assertIn("aov_hold_ruined", block)
             self.assertEqual(f"next_building = dwarven_hold_{n + 1:02d}" in block, n < 10)
 
     def test_level_effects_come_from_rie(self):
@@ -61,7 +60,6 @@ class HoldBuildingTests(unittest.TestCase):
             self.assertEqual(re.findall(r"\tis_enabled = \{\n.*?\n\t\}\n", block, re.S), [bh.IS_ENABLED.rstrip("\n") + "\n"],
                              n)
             self.assertIn("scope:holder = {\n\t\t\tis_dwarvish_culture = yes", bh.IS_ENABLED)
-            self.assertIn("NOT = { has_variable = aov_hold_ruined }", bh.IS_ENABLED)
 
     def test_old_dwarven_buildings_gone(self):
         self.assertIsNone(OLD_BUILDINGS.search(self.text))
@@ -222,11 +220,9 @@ class SetupTests(unittest.TestCase):
         t = bh.render_setup()
         for h in holds.HOLDS:
             self.assertIn(f"title:{h['barony']}.title_province", t)
-        self.assertEqual(t.count("set_variable = aov_hold_ruined"), 1)
         self.assertEqual(t.count("aov_dig_progress"), len(holds.HOLDS))
         self.assertIn("add_building = dwarven_hold_02", self.block_for("Rubyhold"))
         self.assertNotIn("add_building = dwarven_hold_02", self.block_for("Anvilwright"))
-        self.assertIn("aov_ruined_hold", self.block_for("Khugdihr"))
 
     def test_conversion_keeps_special_buildings(self):
         t = bh.render_setup()
@@ -241,18 +237,13 @@ class SetupTests(unittest.TestCase):
         self.assertRegex(t, r"on_game_start = \{\s*on_actions = \{ aov_hold_game_start \}")
         self.assertRegex(t, r"aov_hold_game_start = \{\s*effect = \{\s*aov_hold_setup_effect = yes")
 
-    def test_modifiers_match_data(self):
-        t = bh.render_modifiers()
-        for k, v in holds.RUINED_MODIFIER.items():
-            self.assertIn(f"{k} = {bh.fmt(v)}", t)
-        for key in ("aov_ruined_hold", "aov_restoring_hold", "aov_hold_rich_vein"):
-            self.assertIn(f"{key} = {{", t)
-            self.assertIn(f" {key}_desc:0", bh.render_loc())
+    def test_rich_vein_modifier(self):
+        self.assertIn("aov_hold_rich_vein = {", bh.render_modifiers())
+        self.assertIn(" aov_hold_rich_vein_desc:0", bh.render_loc())
 
     def test_triggers_defined(self):
         t = (SUBMOD / "common/scripted_triggers/aov_hold_triggers.txt").read_text(encoding="utf-8-sig")
-        for k in ("aov_is_hold", "aov_hold_is_ruined", "aov_hold_is_working", "aov_can_start_dig_base",
-                  "aov_can_dig_at"):
+        for k in ("aov_is_hold", "aov_can_start_dig_base", "aov_can_dig_at"):
             self.assertIn(f"{k} = {{", t)
 
 
@@ -299,7 +290,7 @@ class DigRequirementTests(unittest.TestCase):
         self.assertEqual(triggers["aov_can_dig_at"],
                          "\taov_can_start_dig_base = yes\n\taov_hold_dig_requirements_met_trigger = yes\n")
         base = triggers["aov_can_start_dig_base"]
-        for line in ("aov_hold_is_working = yes", "aov_hold_level < 10", "NOT = { aov_hold_dig_running = yes }",
+        for line in ("aov_is_hold = yes", "aov_hold_level < 10", "NOT = { aov_hold_dig_running = yes }",
                      "is_occupied = no", "barony.holder = scope:digger", "is_dwarvish_culture = yes"):
             self.assertIn(line, base)
         self.assertNotIn("aov_hold_dig_requirements", base)
@@ -344,29 +335,78 @@ class DigRequirementTests(unittest.TestCase):
             self.assertIn("aov_can_dig_at = yes", trigger, h["name"])  # the option itself needs the buildings
 
     def test_every_picker_lists_every_hold(self):
-        """Each hold has its Delve Deeper progress and cost lines, its Restore option and their loc, numbered in
-        HOLDS order."""
-        n = len(holds.HOLDS)
+        """Each hold has its Delve Deeper progress and cost lines and their loc, numbered in HOLDS order."""
         decision = self.hand("common/decisions/aov_hold_decisions.txt")
-        ruin = self.hand("events/aov_hold_ruin_events.txt")
-        options = re.findall(r"\toption = \{\n\t\tname = aov_hold_ruin\.2\.hold_(\d+)\n(.*?)\n\t\}\n", ruin, re.S)
-        self.assertEqual([int(i) for i, _ in options], list(range(1, n + 1)))
-        loc = (self.hand("localization/english/aov_hold_delve_l_english.yml")
-               + self.hand("localization/english/aov_hold_ruin_l_english.yml"))
+        loc = self.hand("localization/english/aov_hold_delve_l_english.yml")
         for i, h in enumerate(holds.HOLDS, 1):
             b = h["barony"]
-            self.assertIn(f"title:{b} = {{ holder = root }}", options[i - 1][1], h["name"])
             for check, desc in (("aov_hold_dig_running", f"aov_delve_deeper_decision_desc_{i}"),
                                 ("aov_can_dig_at", f"aov_delve_deeper_cost_{i}")):
                 self.assertIn(f"title:{b} = {{ holder = root }}\n\t\t\t\ttitle:{b}.title_province = "
                               f"{{ {check} = yes }}\n\t\t\t}}\n\t\t\tdesc = {desc}\n", decision, h["name"])
             for key in (f"aov_delve_deeper_decision_desc_{i}", f"aov_hold_delve.1.hold_{i}",
-                        f"aov_delve_deeper_cost_{i}", f"aov_hold_ruin.2.hold_{i}"):
+                        f"aov_delve_deeper_cost_{i}"):
                 self.assertRegex(loc, rf"(?m)^ {re.escape(key)}:0 \".*GetTitleByKey\('{b}'\)", key)
 
     def test_game_start_sets_deposits(self):
         effect = parse_blocks(self.hand("common/on_action/aov_hold_on_actions.txt"))["aov_hold_game_start"]
         self.assertRegex(effect, r"aov_hold_setup_effect = yes\n\t+aov_rie_deposit_setup_effect = yes\n")
+
+
+class RevivalTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.decisions = parse_blocks(bh.render_revival_decisions())
+        cls.loc = bh.render_revival_loc()
+
+    def block(self, name="orlghelovar"):
+        return self.decisions[f"aov_revive_{name}_decision"]
+
+    def section(self, body, name):
+        return re.search(rf"(?ms)^\t{name} = \{{\n(.*?)^\t\}}", body).group(1)
+
+    def test_one_decision_per_hold(self):
+        self.assertEqual(len(self.decisions), 20)
+        self.assertNotIn("aov_revive_marrhold_decision", self.decisions)
+
+    def test_requires_only_one_hold(self):
+        shown = self.section(self.block(), "is_shown")
+        self.assertRegex(shown, r"any_held_title = \{\s*count = 1\s*tier = tier_barony\s*title_province = \{ aov_is_hold = yes \}")
+        self.assertIn("has_title = title:b_orlghelovar", shown)
+
+    def test_requires_dwarf_and_unformed(self):
+        shown = self.section(self.block(), "is_shown")
+        self.assertIn("is_dwarvish_culture = yes", shown)
+        self.assertIn("is_landed = yes", shown)
+        self.assertIn("NOT = { exists = title:k_orlghelovar.holder }", shown)
+        self.assertIn("NOT = { has_culture = culture:cobalt_dwarvish }", shown)
+
+    def test_no_prompt_on_creation(self):
+        for path in (SUBMOD / "common/on_action").glob("*.txt"):
+            text = path.read_text(encoding="utf-8-sig", errors="replace")
+            self.assertNotIn("aov_revive", text, path.name)
+        self.assertNotIn("flag:created", bh.render_revival_decisions())
+
+    def test_effect_converts_family_and_county(self):
+        effect = self.section(self.block(), "effect")
+        self.assertRegex(effect, r"(?m)^\t\tset_culture = culture:cobalt_dwarvish$")
+        self.assertRegex(effect, r"every_spouse = \{\s*set_culture = culture:cobalt_dwarvish")
+        self.assertRegex(effect, r"every_child = \{\s*set_culture = culture:cobalt_dwarvish")
+        self.assertIn("title:c_orlghelovar = { set_county_culture = culture:cobalt_dwarvish }", effect)
+        self.assertEqual(effect.count("set_county_culture"), 1)
+
+    def test_cost(self):
+        self.assertIn("prestige = aov_revival_prestige", self.section(self.block(), "cost"))
+        self.assertIn("aov_revival_prestige = 500\n", bh.render_values())
+
+    def test_ai_only_at_capital(self):
+        self.assertIn("capital_province = title:b_orlghelovar.title_province", self.section(self.block(), "ai_potential"))
+
+    def test_loc_for_every_decision(self):
+        for key in self.decisions:
+            for suffix in ("", "_desc", "_tooltip", "_confirm"):
+                self.assertRegex(self.loc, rf'(?m)^ {key}{suffix}:0 "', key)
+        self.assertIn('aov_revive_orlghelovar_decision:0 "Revive the Heritage of Orlghelovar"', self.loc)
 
 
 @unittest.skipUnless(HAVE_REAL, "RiE, Anbennar and game needed")

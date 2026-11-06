@@ -21,82 +21,42 @@ aov_sb_steamsource_2 = {
 	979.9.10 = { birth = yes }
 }
 
-aov_sb_stunad_kradoz_1 = {
-	name = "Adun"
-	dynasty = aov_sb_dynasty_stunad_kradoz
+aov_sb_king_hehodovar_1 = {
+	name = "Thrun"
+	dynasty = aov_sb_dynasty_king_hehodovar
 	religion = "ancestor_worship"
-	culture = "citrine_dwarvish"
+	culture = "pyrite_dwarvish"
 	trait = race_dwarf
-	841.11.20 = { birth = yes }
-	1003.1.6 = { death = yes }
+	845.6.2 = { birth = yes }
+	1008.8.10 = { death = yes }
 }
 
-aov_sb_stunad_kradoz_2 = {
-	name = "Ungrim"
-	dynasty = aov_sb_dynasty_stunad_kradoz
+aov_sb_king_hehodovar_2 = {
+	name = "Dorri"
+	dynasty = aov_sb_dynasty_king_hehodovar
 	religion = "ancestor_worship"
-	culture = "citrine_dwarvish"
+	culture = "pyrite_dwarvish"
 	trait = race_dwarf
-	father = aov_sb_stunad_kradoz_1
-	977.3.7 = { birth = yes }
+	father = aov_sb_king_hehodovar_1
+	977.2.9 = { birth = yes }
 }
 
-aov_sb_goblin_grotto_1 = {
-	name = "Thorin"
-	dynasty = aov_sb_dynasty_goblin_grotto
+aov_sb_king_gor_ozumbrog_1 = {
+	name = "Borin"
+	dynasty = aov_sb_dynasty_king_gor_ozumbrog
 	religion = "ancestor_worship"
-	culture = "citrine_dwarvish"
+	culture = "topaz_dwarvish"
 	trait = race_dwarf
-	830.5.7 = { birth = yes }
-	1006.2.11 = { death = yes }
+	834.10.23 = { birth = yes }
+	1000.7.17 = { death = yes }
 }
 
-aov_sb_goblin_grotto_2 = {
-	name = "Bruenor"
-	dynasty = aov_sb_dynasty_goblin_grotto
+aov_sb_king_gor_ozumbrog_2 = {
+	name = "Thindobar"
+	dynasty = aov_sb_dynasty_king_gor_ozumbrog
 	religion = "ancestor_worship"
-	culture = "citrine_dwarvish"
+	culture = "topaz_dwarvish"
 	trait = race_dwarf
-	father = aov_sb_goblin_grotto_1
-	990.5.2 = { birth = yes }
-}
-
-aov_sb_greatcavern_1 = {
-	name = "Foldan"
-	dynasty = aov_sb_dynasty_greatcavern
-	religion = "ancestor_worship"
-	culture = "gold_dwarvish"
-	trait = race_dwarf
-	840.7.1 = { birth = yes }
-	1003.7.5 = { death = yes }
-}
-
-aov_sb_greatcavern_2 = {
-	name = "Runimur"
-	dynasty = aov_sb_dynasty_greatcavern
-	religion = "ancestor_worship"
-	culture = "gold_dwarvish"
-	trait = race_dwarf
-	father = aov_sb_greatcavern_1
-	990.1.27 = { birth = yes }
-}
-
-aov_sb_xazor_1 = {
-	name = "Hjal"
-	dynasty = aov_sb_dynasty_xazor
-	religion = "ancestor_worship"
-	culture = "gold_dwarvish"
-	trait = race_dwarf
-	838.4.15 = { birth = yes }
-	1001.10.24 = { death = yes }
-}
-
-aov_sb_xazor_2 = {
-	name = "Thingrim"
-	dynasty = aov_sb_dynasty_xazor
-	religion = "ancestor_worship"
-	culture = "gold_dwarvish"
-	trait = race_dwarf
-	father = aov_sb_xazor_1
-	985.4.20 = { birth = yes }
+	father = aov_sb_king_gor_ozumbrog_1
+	975.12.18 = { birth = yes }
 }

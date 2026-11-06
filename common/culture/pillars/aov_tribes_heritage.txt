@@ -1,0 +1,21 @@
+﻿# Anbennar Overhaul: Dwarovar tribes (docs/systems/dwarovar-tribes.md). Placeholder content.
+
+heritage_orcish = {
+	type = heritage
+	is_shown = {
+		heritage_is_shown_trigger = {
+			HERITAGE = heritage_orcish
+		}
+	}
+	audio_parameter = european
+}
+
+heritage_goblinoid = {
+	type = heritage
+	is_shown = {
+		heritage_is_shown_trigger = {
+			HERITAGE = heritage_goblinoid
+		}
+	}
+	audio_parameter = european
+}

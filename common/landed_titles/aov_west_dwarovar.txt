@@ -69,6 +69,9 @@ e_west_dwarovar = {
 					color = { 85 92 111 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
 		}
 		d_dwarovrod_4_6 = {
 			color = { 49 52 64 }
@@ -97,6 +100,9 @@ e_west_dwarovar = {
 					province = 7167
 					color = { 49 52 64 }
 				}
+			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
 			}
 		}
 		d_dwarfbreak = {
@@ -139,6 +145,9 @@ e_west_dwarovar = {
 					color = { 93 100 121 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
 		}
 		d_dark_depths = {
 			color = { 26 29 35 }
@@ -179,6 +188,9 @@ e_west_dwarovar = {
 					province = 7179
 					color = { 32 36 43 }
 				}
+			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
 			}
 		}
 		d_chainlink_mines = {
@@ -233,6 +245,13 @@ e_west_dwarovar = {
 					color = { 122 131 154 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
+		}
+		de_jure_drift_disabled = yes
+		can_create = {
+			NOT = { government_has_flag = government_is_dwarovar_tribe }
 		}
 	}
 	k_mithradhum = {
@@ -299,6 +318,9 @@ e_west_dwarovar = {
 					color = { 93 233 216 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
 		}
 		d_dwarovrod_7_9 = {
 			color = { 30 220 198 }
@@ -328,6 +350,9 @@ e_west_dwarovar = {
 					color = { 38 225 204 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
 		}
 		d_dwarovrod_10_12 = {
 			color = { 135 238 226 }
@@ -356,6 +381,9 @@ e_west_dwarovar = {
 					province = 7203
 					color = { 148 240 229 }
 				}
+			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
 			}
 		}
 		d_riftway = {
@@ -410,6 +438,13 @@ e_west_dwarovar = {
 					color = { 27 198 176 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
+		}
+		de_jure_drift_disabled = yes
+		can_create = {
+			NOT = { government_has_flag = government_is_dwarovar_tribe }
 		}
 	}
 	k_er_natvir = {
@@ -464,6 +499,9 @@ e_west_dwarovar = {
 					color = { 144 189 152 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
 		}
 		d_railyard_exchange = {
 			color = { 109 168 119 }
@@ -492,6 +530,9 @@ e_west_dwarovar = {
 					province = 7221
 					color = { 99 162 109 }
 				}
+			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
 			}
 		}
 		d_dagrite_depths = {
@@ -541,6 +582,9 @@ e_west_dwarovar = {
 					province = 7228
 					color = { 174 207 181 }
 				}
+			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
 			}
 		}
 		d_goblins_bypass = {
@@ -595,6 +639,9 @@ e_west_dwarovar = {
 					color = { 86 146 98 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
 		}
 		d_skulkers_lair = {
 			color = { 217 233 220 }
@@ -636,6 +683,13 @@ e_west_dwarovar = {
 					color = { 202 225 207 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
+		}
+		de_jure_drift_disabled = yes
+		can_create = {
+			NOT = { government_has_flag = government_is_dwarovar_tribe }
 		}
 	}
 	k_verkal_kozenad = {
@@ -690,6 +744,9 @@ e_west_dwarovar = {
 					color = { 255 138 86 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
 		}
 		d_dwarovrod_15_17 = {
 			color = { 255 107 41 }
@@ -718,6 +775,9 @@ e_west_dwarovar = {
 					province = 7253
 					color = { 255 92 20 }
 				}
+			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
 			}
 		}
 		d_zokkorna_caverns = {
@@ -772,6 +832,9 @@ e_west_dwarovar = {
 					color = { 255 175 141 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
 		}
 		d_travelers_refuge = {
 			color = { 245 75 0 }
@@ -812,6 +875,9 @@ e_west_dwarovar = {
 					province = 7267
 					color = { 255 86 11 }
 				}
+			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
 			}
 		}
 		d_westnest = {
@@ -854,6 +920,9 @@ e_west_dwarovar = {
 					color = { 255 219 203 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
 		}
 		d_eastnest = {
 			color = { 255 149 102 }
@@ -895,6 +964,13 @@ e_west_dwarovar = {
 					color = { 255 134 81 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
+		}
+		de_jure_drift_disabled = yes
+		can_create = {
+			NOT = { government_has_flag = government_is_dwarovar_tribe }
 		}
 	}
 	k_hul_jorkad = {
@@ -957,6 +1033,9 @@ e_west_dwarovar = {
 					color = { 167 124 165 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
 		}
 		d_azmak = {
 			color = { 127 86 125 }
@@ -985,6 +1064,9 @@ e_west_dwarovar = {
 					province = 7291
 					color = { 116 79 114 }
 				}
+			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
 			}
 		}
 		d_dwarovrod_21_24 = {
@@ -1023,6 +1105,13 @@ e_west_dwarovar = {
 					color = { 176 138 174 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
+		}
+		de_jure_drift_disabled = yes
+		can_create = {
+			NOT = { government_has_flag = government_is_dwarovar_tribe }
 		}
 	}
 	k_orlazam_az_dihr = {
@@ -1077,6 +1166,9 @@ e_west_dwarovar = {
 					color = { 66 99 108 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
 		}
 		d_dagrinrod_4_6 = {
 			color = { 51 76 83 }
@@ -1106,6 +1198,9 @@ e_west_dwarovar = {
 					color = { 59 89 97 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
 		}
 		d_dagrinrod_7_9 = {
 			color = { 98 146 159 }
@@ -1134,6 +1229,9 @@ e_west_dwarovar = {
 					province = 7308
 					color = { 100 148 160 }
 				}
+			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
 			}
 		}
 		d_broken_dagger_pass = {
@@ -1176,6 +1274,9 @@ e_west_dwarovar = {
 					color = { 29 43 47 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
 		}
 		d_old_dagrinrod = {
 			color = { 129 168 178 }
@@ -1217,6 +1318,13 @@ e_west_dwarovar = {
 					color = { 137 173 183 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
+		}
+		de_jure_drift_disabled = yes
+		can_create = {
+			NOT = { government_has_flag = government_is_dwarovar_tribe }
 		}
 	}
 	k_dur_vazhatun = {
@@ -1263,6 +1371,9 @@ e_west_dwarovar = {
 					color = { 0 31 144 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
 		}
 		d_dagrinrod_13_15 = {
 			color = { 0 13 61 }
@@ -1292,6 +1403,13 @@ e_west_dwarovar = {
 					color = { 0 14 64 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
+		}
+		de_jure_drift_disabled = yes
+		can_create = {
+			NOT = { government_has_flag = government_is_dwarovar_tribe }
 		}
 	}
 	k_amldihr = {
@@ -1382,6 +1500,9 @@ e_west_dwarovar = {
 					color = { 75 50 100 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
 		}
 		d_royal_terrace = {
 			color = { 56 37 75 }
@@ -1443,6 +1564,9 @@ e_west_dwarovar = {
 					color = { 68 45 91 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
 		}
 		d_common_terrace = {
 			color = { 117 78 156 }
@@ -1496,6 +1620,9 @@ e_west_dwarovar = {
 					color = { 127 84 169 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
 		}
 		d_assembly_terrace = {
 			color = { 31 20 41 }
@@ -1548,6 +1675,9 @@ e_west_dwarovar = {
 					province = 7373
 					color = { 33 21 43 }
 				}
+			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
 			}
 		}
 		d_castle_hill = {
@@ -1610,6 +1740,13 @@ e_west_dwarovar = {
 					color = { 156 122 188 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
+		}
+		de_jure_drift_disabled = yes
+		can_create = {
+			NOT = { government_has_flag = government_is_dwarovar_tribe }
 		}
 	}
 	k_aov_west_dwarovar_parking = {
@@ -1635,6 +1772,9 @@ e_west_dwarovar = {
 					province = 7140
 					color = { 120 105 81 }
 				}
+			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
 			}
 		}
 		d_fallen_asra = {
@@ -1689,6 +1829,9 @@ e_west_dwarovar = {
 					color = { 181 168 147 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
 		}
 		d_snotslair = {
 			color = { 82 72 56 }
@@ -1730,6 +1873,17 @@ e_west_dwarovar = {
 					color = { 69 60 47 }
 				}
 			}
+			can_create = {
+				NOT = { government_has_flag = government_is_dwarovar_tribe }
+			}
 		}
+		de_jure_drift_disabled = yes
+		can_create = {
+			NOT = { government_has_flag = government_is_dwarovar_tribe }
+		}
+	}
+	de_jure_drift_disabled = yes
+	can_create = {
+		NOT = { government_has_flag = government_is_dwarovar_tribe }
 	}
 }

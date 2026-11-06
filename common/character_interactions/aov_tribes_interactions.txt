@@ -1,0 +1,103 @@
+﻿# Anbennar Overhaul: Dwarovar tribes (docs/systems/dwarovar-tribes.md). A tribal ruler raises a vassal two or more tiers
+# below them to a free pool title one tier below the ruler: kings raise dukes, emperors raise kings.
+
+aov_raise_tribal_vassal_interaction = {
+	category = interaction_category_vassal
+	common_interaction = no
+	icon = icon_vassal
+	desc = aov_raise_tribal_vassal_interaction_desc
+
+	is_shown = {
+		scope:actor = {
+			government_has_flag = government_is_dwarovar_tribe
+			highest_held_title_tier >= tier_kingdom
+		}
+		scope:recipient = {
+			liege = scope:actor
+			government_has_flag = government_is_dwarovar_tribe
+		}
+		OR = {
+			AND = {
+				scope:actor = { highest_held_title_tier = tier_kingdom }
+				scope:recipient = { highest_held_title_tier <= tier_county }
+			}
+			AND = {
+				scope:actor = { highest_held_title_tier = tier_empire }
+				scope:recipient = { highest_held_title_tier <= tier_duchy }
+			}
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = { is_available_adult = yes }
+		custom_description = {
+			text = aov_tribe_no_free_title
+			scope:recipient = {
+				trigger_if = {
+					limit = { scope:actor = { highest_held_title_tier = tier_kingdom } }
+					aov_tribe_has_free_title_trigger = { TIER = duchy }
+				}
+				trigger_else = {
+					aov_tribe_has_free_title_trigger = { TIER = kingdom }
+				}
+			}
+		}
+	}
+
+	cost = {
+		prestige = aov_raise_prestige
+	}
+
+	on_accept = {
+		if = {
+			limit = { scope:actor = { highest_held_title_tier = tier_kingdom } }
+			scope:recipient = {
+				aov_tribe_take_free_title_effect = { TIER = duchy }
+			}
+		}
+		else = {
+			scope:recipient = {
+				aov_tribe_take_free_title_effect = { TIER = kingdom }
+			}
+		}
+		create_title_and_vassal_change = {
+			type = created
+			save_scope_as = change
+			add_claim_on_loss = no
+		}
+		scope:aov_new_title = {
+			change_title_holder = {
+				holder = scope:recipient
+				change = scope:change
+			}
+		}
+		resolve_title_and_vassal_change = scope:change
+	}
+
+	auto_accept = yes
+
+	ai_targets = {
+		ai_recipients = vassals
+	}
+	ai_frequency = 60
+
+	# Only with as much prestige again in reserve, and only for a vassal the ruler likes.
+	ai_will_do = {
+		base = 0
+		modifier = {
+			add = 25
+			scope:actor = {
+				prestige >= {
+					value = aov_raise_prestige
+					multiply = 2
+				}
+			}
+			scope:recipient = {
+				opinion = {
+					target = scope:actor
+					value >= 0
+				}
+			}
+		}
+	}
+}

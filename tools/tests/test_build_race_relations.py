@@ -20,6 +20,7 @@ TRAITS = "common/traits/aov_race_relations_traits.txt"
 SECRETS = "common/secret_types/aov_race_relations_secrets.txt"
 ON_ACTIONS = "common/on_action/aov_race_relations_on_actions.txt"
 WARS = "common/casus_belli_types/aov_race_relations_wars.txt"
+TRIBE_TRIGGERS = "common/scripted_triggers/aov_tribes_triggers.txt"
 LOC = "localization/english/aov_race_relations_l_english.yml"
 LICH = "common/scripted_effects/aov_advancement_level_effects.txt"
 
@@ -173,10 +174,49 @@ class SystemTests(unittest.TestCase):
         self.assertIn("aov_is_monstrous_trigger = no", purge.split("allowed_against_character")[0])
         self.assertIn("scope:defender = { aov_is_monstrous_trigger = yes }", purge)
 
+    def test_tribal_war_both_sides_tribes(self):
+        war = block(read(WARS), "aov_tribal_war_cb")
+        before, after = war.split("allowed_against_character")
+        self.assertIn("government_has_flag = government_is_dwarovar_tribe", before)
+        self.assertIn("scope:defender = { government_has_flag = government_is_dwarovar_tribe }", after)
+        self.assertNotIn("aov_is_monstrous_trigger", war)
+
+    def test_tribal_war_neighbouring_county(self):
+        war = block(read(WARS), "aov_tribal_war_cb")
+        self.assertIn("target_title_tier = county", war)
+        self.assertIn("is_neighbor_to_realm = scope:attacker", war)
+
+    def test_tribal_war_costs_as_the_monster_war(self):
+        wars = read(WARS)
+        cost = lambda name: re.search(r"(?ms)^\tcost = \{\n.*?^\t\}", block(wars, name)).group(0)
+        self.assertEqual(cost("aov_tribal_war_cb"), cost("aov_monster_conquest_cb"))
+
+    def test_monster_conquest_keeps_non_monstrous_target(self):
+        self.assertIn("scope:defender = { aov_is_monstrous_trigger = no }", block(read(WARS), "aov_monster_conquest_cb"))
+
+    def test_ai_surface_rule_on_both_wars(self):
+        wars = read(WARS)
+        for name in ("aov_monster_conquest_cb", "aov_tribal_war_cb"):
+            valid = re.search(r"(?ms)^\tvalid_to_start = \{\n(.*?)^\t\}", block(wars, name)).group(1)
+            self.assertIn("NOT = { aov_ai_tribe_may_not_target_trigger = yes }", valid, name)
+        purge = re.search(r"(?ms)^\tvalid_to_start = \{\n(.*?)^\t\}", block(wars, "aov_purge_monsters_cb")).group(1)
+        self.assertNotIn("aov_ai_tribe_may_not_target_trigger", purge)
+
+    def test_surface_rule_regions(self):
+        trigger = block(read(TRIBE_TRIGGERS), "aov_province_in_serpentspine_trigger")
+        for region in ("world_serpentreach", "world_west_dwarovar", "world_segbandal"):
+            self.assertIn(f"geographical_region = {region}", trigger)
+            self.assertTrue((MOD / "map_data/geographical_regions").glob("*"), region)
+
+    def test_surface_rule_is_ai_only(self):
+        trigger = block(read(TRIBE_TRIGGERS), "aov_ai_tribe_may_not_target_trigger")
+        self.assertRegex(trigger, r"scope:attacker = \{\s*is_ai = yes\s*government_has_flag = government_is_dwarovar_tribe")
+        self.assertIn("scope:target = { aov_title_in_serpentspine_trigger = no }", trigger)
+
     def test_localization_complete(self):
         loc = read(LOC)
         keys = ["trait_aov_monstrous", "trait_aov_monstrous_desc", "trait_aov_civilized", "trait_aov_civilized_desc",
-                "aov_monster_conquest_cb", "aov_purge_monsters_cb"]
+                "aov_monster_conquest_cb", "aov_purge_monsters_cb", "aov_tribal_war_cb"]
         for secret in ("secret_aov_vampire", "secret_aov_werewolf"):
             keys += [secret, f"{secret}_desc", f"{secret}_tooltip_desc", f"{secret}_type_desc"]
         for text in re.findall(r"text = (\w+)", read(TRIGGERS)):

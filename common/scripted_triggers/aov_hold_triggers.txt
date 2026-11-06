@@ -4,26 +4,16 @@ aov_is_hold = {
 	has_holding_type = dwarven_hold_holding
 }
 
-aov_hold_is_ruined = {
-	has_variable = aov_hold_ruined
-}
-
-aov_hold_is_working = {
-	aov_is_hold = yes
-	NOT = { aov_hold_is_ruined = yes }
-	NOT = { has_province_modifier = aov_restoring_hold }
-}
-
 # A dig (Delve Deeper) is running at the hold.
 aov_hold_dig_running = {
 	has_variable = aov_dig_target_level
 }
 
-# Province scope, scope:digger is the character who would dig: a working hold below level 10, not already being
+# Province scope, scope:digger is the character who would dig: a hold below level 10, not already being
 # dug, not occupied, held by the digger, who is a dwarf. The hold may still lack the buildings of its next level
 # (Delve Deeper opens its picker for such holds and shows them greyed out).
 aov_can_start_dig_base = {
-	aov_hold_is_working = yes
+	aov_is_hold = yes
 	aov_hold_level < 10
 	NOT = { aov_hold_dig_running = yes }
 	is_occupied = no

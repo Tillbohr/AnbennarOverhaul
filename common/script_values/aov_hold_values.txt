@@ -73,3 +73,6 @@ aov_dig_months = {
 	add = 8
 	multiply = 12
 }
+
+# Prestige cost of reviving a lost hold's culture.
+aov_revival_prestige = 500

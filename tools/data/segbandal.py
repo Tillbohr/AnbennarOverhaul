@@ -87,6 +87,11 @@ KINGDOM_CULTURES = {"k_gor_vazumbrog": "titanium_dwarvish", "k_hehodovar": "pyri
 # Kingdoms whose new duchies get an elder and his son as the king's vassals; the others' new land stays unheld, as
 # Anbennar leaves Hehodovar and Gor Ozumbrog.
 ELDER_KINGDOMS = ("k_seghdihr", "k_verkal_gulan")
+# Anbennar ships these two kingdoms with no holder: kingdom -> (slug, dynasty name, hold duchy). Gor Ozumbrog's is from
+# the wiki (az-Fiobmhor). Their kings come under e_middle_dwarovar as Verkal Gulan's does.
+KING_LINES = {"k_hehodovar": ("hehodovar", "Hehodovar", "d_hehodovar"),
+              "k_gor_ozumbrog": ("gor_ozumbrog", "Fiobmhor", "d_gor_ozumbrog")}
+KING_LIEGE_DATE = "921.9.24"
 # Arms of the new duchies other than Gor Vazumbrog's: a charge from the area's EU4 lore (as Serpentreach's), generic
 # game and Anbennar emblems only. area -> charges, each (colored emblem, (x, y), (scale x, scale y)).
 _CENTRE = ((0.5, 0.5), (0.65, 0.65))

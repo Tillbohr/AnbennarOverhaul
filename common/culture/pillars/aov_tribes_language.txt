@@ -1,0 +1,37 @@
+﻿# Anbennar Overhaul: Dwarovar tribes (docs/systems/dwarovar-tribes.md). Placeholder content.
+
+language_orcish = {
+	type = language
+	is_shown = {
+		language_is_shown_trigger = {
+			LANGUAGE = language_orcish
+		}
+	}
+	ai_will_do = {
+		value = 10
+		if = {
+			limit = { has_cultural_pillar = language_orcish }
+			multiply = 10
+		}
+	}
+
+	color = { 120 40 30 }
+}
+
+language_goblin = {
+	type = language
+	is_shown = {
+		language_is_shown_trigger = {
+			LANGUAGE = language_goblin
+		}
+	}
+	ai_will_do = {
+		value = 10
+		if = {
+			limit = { has_cultural_pillar = language_goblin }
+			multiply = 10
+		}
+	}
+
+	color = { 70 120 50 }
+}
