@@ -113,7 +113,8 @@ Read only the doc for the system you are working on. Each holds the generated-fi
 | Isle of Adráil: Anbennar's test realm on province 524 (`e_test`, `k_test`, `d_test_1`, Emperor Testor) turned back into EU4's Isle of Adráil under Damesear | `docs/systems/adrail.md` | none (hand-written) |
 | Base art fixes: Anbennar art copied to the file name the game looks up (Adeanic knight education icons, griffon rider icon); Warcraft mod pictures for griffon riders; nine men-at-arms switched to the unit icons Anbennar ships for them; icons for the avatar, racial purist, planetouched, vampire, lycanthrope, bladeshunned, Sun Reborn and Scion of the Sun Reborn traits; Sun Reborn text | `docs/systems/base-art-fixes.md` | none (copied once) |
 | Race knight badges: EU4 tech group icons (gear removed) as the knight badge for elf, dwarf, gnome and kobold rulers; RiE levy and knight pictures in the military window for elf and dwarf rulers | `docs/systems/knight-icons.md` | `build_knight_icons.py` |
-| Gnoll portraits: Victoria 3 Anbennar's hyena head (blend shape, spotted fur, gnoll eyes, no hair or beard) for every `race_gnoll` character, by portrait modifier | `docs/systems/gnoll-portraits.md` | `build_gnoll_portraits.py` |
+| Gnoll portraits: Victoria 3 Anbennar's hyena head (blend shape, spotted fur, gnoll eyes, no hair or beard) for every `race_gnoll` character, by portrait modifier | `docs/systems/gnoll-portraits.md` | `build_gnoll_portraits.py` (art), `build_head_assets.py` |
+| Orc portraits: Elder Kings 2's standard orc (face, tusks, male horns, build) on `black_orc`, by ethnicity and inherited genes, in brown, gray or black skin (not EK2's green); tusked teeth by portrait modifier, for half-orcs too; gruff RiE hair and beards; clothes by rank from EK2's goblin rags and RiE's orc gear | `docs/systems/orc-portraits.md` | `build_orc_portraits.py`, `build_head_assets.py`, `build_portraits.py` (hair and beard lists) |
 
 ## Updating and validation
 

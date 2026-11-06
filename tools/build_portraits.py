@@ -448,9 +448,35 @@ def apply_template_renames(entries: dict, renames: dict) -> dict:
             for filename, groups in entries.items()}
 
 
-def build_genes(roots: Roots, entries: dict, renames=None) -> tuple:
+def _extra_additions(roots: Roots, extra_templates: dict, ours_index: dict) -> tuple:
+    """((gene file, gene) -> [(template, body)], RiE accessories they need copied) for templates kept in our own data,
+    checked: the gene must exist, the template must not, and every accessory must be Anbennar's, the game's, our own
+    hand-written orc accessories (aov_orc.txt) or RiE's."""
+    known = top_blocks(effective_texts(roots, "gfx/portraits/accessories"))
+    known = {**known, **top_blocks(_texts(str(SUBMOD / "gfx/portraits/accessories"), "aov_orc.txt"))}
+    rie = top_blocks(_texts(str(roots.rie / "gfx/portraits/accessories"), "*.txt"))
+    out, from_rie = {}, []
+    for gene, templates in extra_templates.items():
+        if ("gene", gene) not in ours_index:
+            raise GeneratorError(f"gene {gene} of EXTRA_TEMPLATES is not defined by Anbennar or the game")
+        for template, body in templates.items():
+            if (gene, template) in ours_index:
+                raise GeneratorError(f"EXTRA_TEMPLATES template {gene} {template} already exists")
+            for name in TEMPLATE_ACCESSORY.findall(code(body)):
+                if name == "empty" or name in known:
+                    continue
+                if name not in rie:
+                    raise GeneratorError(f"EXTRA_TEMPLATES template {template} names accessory {name}, "
+                                         "which neither Anbennar, the game, aov_orc.txt nor RiE defines")
+                if name not in from_rie:
+                    from_rie.append(name)
+            out.setdefault((ours_index[("gene", gene)][0], gene), []).append((template, body))
+    return out, from_rie
+
+
+def build_genes(roots: Roots, entries: dict, renames=None, extra_templates=None) -> tuple:
     """(overridden gene files, accessory names the new templates use, notes). renames: (gene, RiE template) ->
-    the name it is copied under."""
+    the name it is copied under. extra_templates: gene -> template -> body, without the index, from our own data."""
     sources = {(gene, new): template for (gene, template), new in (renames or {}).items()}
     ours = effective_texts(roots, GENES_DIR)
     texts = dict(ours)
@@ -479,13 +505,17 @@ def build_genes(roots: Roots, entries: dict, renames=None) -> tuple:
         for name in TEMPLATE_ACCESSORY.findall(code(body)):
             if name != "empty" and name not in accessories:
                 accessories.append(name)
+    extras, from_rie = _extra_additions(roots, extra_templates or {}, ours_index)
+    accessories += [name for name in from_rie if name not in accessories]
     out, notes = {}, []
-    for path in sorted({p for p, _g in additions}):
+    for path in sorted({p for p, _g in additions} | {p for p, _g in extras}):
         text = texts[path]
         inserts = []
-        for (file, gene), templates in additions.items():
+        for file, gene in sorted({*additions, *extras}):
             if file != path:
                 continue
+            templates = additions.get((file, gene), [])
+            mine = extras.get((file, gene), [])
             _p, gstart, gend = ours_index[("gene", gene)]
             used = set()
             for names, s, e in blocks(text, 4):
@@ -494,17 +524,25 @@ def build_genes(roots: Roots, entries: dict, renames=None) -> tuple:
                     if match:
                         used.add(int(match.group(1)))
             free = [i for i in range(MAX_TEMPLATE_INDEX + 1) if i not in used]
-            if len(free) < len(templates):
-                raise GeneratorError(f"gene {gene}: {len(templates)} new templates but only {len(free)} free indices "
+            count = len(templates) + len(mine)
+            if len(free) < count:
+                raise GeneratorError(f"gene {gene}: {count} new templates but only {len(free)} free indices "
                                      f"(0..{MAX_TEMPLATE_INDEX})")
-            pieces = [f"\t\t{MARKER}: Realms in Exile templates (tools/build_portraits.py)\n"]
-            for (template, body), index in zip(templates, free):
-                pieces.append(lf(INDEX.sub(f"index = {index}", body, count=1)))
-            pieces.append(f"\t\t{MARKER}: end of Realms in Exile templates\n")
+            pieces = []
+            if templates:
+                pieces.append(f"\t\t{MARKER}: Realms in Exile templates (tools/build_portraits.py)\n")
+                for (template, body), index in zip(templates, free):
+                    pieces.append(lf(INDEX.sub(f"index = {index}", body, count=1)))
+                pieces.append(f"\t\t{MARKER}: end of Realms in Exile templates\n")
+            if mine:
+                pieces.append(f"\t\t{MARKER}: other templates (tools/data/portraits.py)\n")
+                for (template, body), index in zip(mine, free[len(templates):]):
+                    pieces.append(f"\t\t\t{template} = {{\n\t\t\t\tindex = {index}\n{body}\t\t\t}}\n")
+                pieces.append(f"\t\t{MARKER}: end of other templates\n")
             closing = text.rfind("\n", 0, gend - 1) + 1
             inserts.append((closing, "".join(pieces)))
-            notes.append(f"gene {gene}: {len(templates)} RiE templates at indices {free[0]}..{free[len(templates) - 1]}"
-                         f" ({len(used) + len(templates)} of {MAX_TEMPLATE_INDEX + 1} used)")
+            notes.append(f"gene {gene}: {count} templates at indices {free[0]}..{free[count - 1]}"
+                         f" ({len(used) + count} of {MAX_TEMPLATE_INDEX + 1} used)")
         for offset, piece in sorted(inserts, reverse=True):
             text = text[:offset] + piece + text[offset:]
         out[f"{GENES_DIR}/{path}"] = (BOM + text).encode("utf-8")
@@ -537,21 +575,24 @@ def accessory_renames(roots: Roots, names: list) -> dict:
 
 
 def rename_accessories_in_templates(files: dict, renames: dict) -> dict:
-    """The gene files with the renamed accessories' names replaced inside our RiE template insertions."""
+    """The gene files with the renamed accessories' names replaced inside our template insertions."""
     if not renames:
         return files
-    begin = f"{MARKER}: Realms in Exile templates (tools/build_portraits.py)\n"
-    end = f"{MARKER}: end of Realms in Exile templates\n"
     pattern = re.compile(r"(=\s*\"?)(" + "|".join(re.escape(n) for n in sorted(renames, key=len, reverse=True)) + r")\b")
     out = {}
     for rel, content in files.items():
         text = content.decode("utf-8")
-        pieces, rest = [], text
-        while begin in rest:
-            before, rest = rest.split(begin, 1)
-            inside, rest = rest.split(end, 1)
-            pieces += [before, begin, pattern.sub(lambda m: m.group(1) + renames[m.group(2)], inside), end]
-        out[rel] = ("".join(pieces) + rest).encode("utf-8")
+        for begin, end in ((f"{MARKER}: Realms in Exile templates (tools/build_portraits.py)\n",
+                            f"{MARKER}: end of Realms in Exile templates\n"),
+                           (f"{MARKER}: other templates (tools/data/portraits.py)\n",
+                            f"{MARKER}: end of other templates\n")):
+            pieces, rest = [], text
+            while begin in rest:
+                before, rest = rest.split(begin, 1)
+                inside, rest = rest.split(end, 1)
+                pieces += [before, begin, pattern.sub(lambda m: m.group(1) + renames[m.group(2)], inside), end]
+            text = "".join(pieces) + rest
+        out[rel] = text.encode("utf-8")
     return out
 
 
@@ -856,7 +897,7 @@ def build_all(roots: Roots, notes=None) -> dict:
     files = {}
     files.update(modifier_files(entries))
     files.update(triggers_file())
-    genes, accessory_names, gene_notes = build_genes(roots, entries, renames)
+    genes, accessory_names, gene_notes = build_genes(roots, entries, renames, data.EXTRA_TEMPLATES)
     acc_renames = accessory_renames(roots, accessory_names)
     files.update(rename_accessories_in_templates(genes, acc_renames))
     notes += gene_notes

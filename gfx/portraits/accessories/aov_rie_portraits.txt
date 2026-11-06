@@ -1919,3 +1919,183 @@ female_headgear_dwarf_war_03_darksteel = {
 	set_tags = "no_hair"
 	entity = { required_tags = ""			shared_pose_entity = head		entity = female_headgear_dwarf_war_03_darksteel_entity 	 }		
 }
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+male_hair_mountain_orc_01 = {
+	entity = {	required_tags = "no_hair"			shared_pose_entity = head	}	
+	entity = {	required_tags = ""						shared_pose_entity = head	entity = "male_hair_mountain_orc_01_entity"}
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+male_hair_uruk_01 = {
+	entity = {	required_tags = "no_hair"			shared_pose_entity = head	}
+	entity = {	required_tags = "helmet"				shared_pose_entity = head	entity = "male_hair_uruk_01_helmet_entity"}	
+	#entity = { required_tags = "cap"				shared_pose_entity = head		entity =  "male_hair_northern_02_cap_entity"  }
+	entity = {	required_tags = ""						shared_pose_entity = head	entity = "male_hair_uruk_01_entity"}
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+male_hair_mountain_orc_02 = {
+	entity = {	required_tags = "no_hair"				shared_pose_entity = head	}	
+	entity = {	required_tags = ""						shared_pose_entity = head	entity = "male_hair_mountain_orc_02_entity"}
+}
+
+# from RiE gfx/portraits/accessories/amerindian_hairstyles.txt
+male_hair_mesoindian_03 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = "cap"				shared_pose_entity = head		entity =  "male_hair_mesoindian_03_cap_entity"  }
+	entity = { required_tags = "crown"				shared_pose_entity = head		entity =  "male_hair_mesoindian_03_crown_entity"  }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_mesoindian_03_entity" }
+	
+}
+
+# from RiE gfx/portraits/accessories/amerindian_accessories.txt
+male_hair_mesoindian_03b = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_mesoindian_03b_entity" }
+}
+
+# from RiE gfx/portraits/accessories/amerindian_accessories.txt
+male_hair_mesoindian_03b2 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_mesoindian_03b2_entity" }
+}
+
+# from RiE gfx/portraits/accessories/amerindian_accessories.txt
+male_hair_mesoindian_03b3 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_mesoindian_03b3_entity" }
+}
+
+# from RiE gfx/portraits/accessories/amerindian_accessories.txt
+male_hair_mesoindian_03b5 = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_mesoindian_03b5_entity" }
+}
+
+# from RiE gfx/portraits/accessories/amerindian_hairstyles.txt
+male_hair_mesofp1_09b = {
+	entity = { required_tags = "no_hair"			shared_pose_entity = head		 }
+	entity = { required_tags = "cap_02"				shared_pose_entity = head		entity = "male_hair_mesofp1_09b_cap_02_entity" }
+	entity = { required_tags = "cap"				shared_pose_entity = head		entity = "male_hair_mesofp1_09b_cap_entity" }
+	entity = { required_tags = "crown"				shared_pose_entity = head		entity = "male_hair_mesofp1_09b_crown_entity" }
+	entity = { required_tags = ""					shared_pose_entity = head		entity = "male_hair_mesofp1_09b_entity" }
+
+}
+
+# from RiE gfx/portraits/accessories/lotr_hair.txt
+female_hair_uruk_01 = {
+	entity = {	required_tags = "no_hair"			shared_pose_entity = head	}
+	entity = {	required_tags = "helmet"				shared_pose_entity = head	entity = "female_hair_uruk_01_helmet_entity"}	
+	entity = { required_tags = "cap"				shared_pose_entity = head		entity =  "female_hair_uruk_01_helmet_entity"  }
+	entity = {	required_tags = ""						shared_pose_entity = head	entity = "female_hair_uruk_01_entity"}
+}
+
+# from RiE gfx/portraits/accessories/lotr_beards.txt
+male_beard_mountain_orc_01 = {
+	entity = { required_tags = "no_beard"	shared_pose_entity = head }
+	entity = {  shared_pose_entity = head   entity = male_beard_mountain_orc_01_entity }	
+}
+
+# from RiE gfx/portraits/accessories/lotr_beards.txt
+male_beard_mountain_orc_02 = {
+	entity = { required_tags = "no_beard"	shared_pose_entity = head }
+	entity = {  shared_pose_entity = head   entity = male_beard_mountain_orc_02_entity }	
+}
+
+# from RiE gfx/portraits/accessories/lotr_beards.txt
+beard_tywins_muttonchops = {
+	entity = { required_tags = "no_beard"			shared_pose_entity = head		 }
+	entity = {  shared_pose_entity = head   entity = beard_tywins_muttonchops_entity }	
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+male_clothes_secular_riekling_01 = { # Riekling Clothing 1, EK2 Asset	
+	set_tags = "shrink_chest,shrink_belly"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_clothes_secular_riekling_01_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+female_clothes_secular_riekling_01 = { # Riekling Clothing 1, EK2 Asset	
+	set_tags = "shrink_chest,shrink_belly"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_clothes_secular_riekling_01_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+male_clothes_moria_orc_01 = {	
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = male_clothing_moria_orc_01_entity 	 }		
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+female_clothes_goblin_armor_01 = {	
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = female_clothes_goblin_armor_01_entity 	 }		
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+male_clothes_mordor_uruk_01 = {	
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = male_clothing_mordor_uruk_01_entity 	 }		
+}
+
+# from RiE gfx/portraits/accessories/lotr_clothes.txt
+female_clothes_mordor_uruk_01 = {
+	set_tags = "shrink_arms,shrink_chest,shrink_belly"	
+	entity = { required_tags = ""			shared_pose_entity = torso		entity = female_clothes_mordor_uruk_01_entity 	 }		
+}
+
+# from RiE gfx/portraits/accessories/lotr_legwear.txt
+male_legwear_uruk_beserker_1 = {
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_legwear_uruk_beserker_1_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_legwear.txt
+female_legwear_uruk_beserker_1 = {
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_legwear_uruk_beserker_1_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_legwear.txt
+male_legwear_orc_war_01 = {
+	set_tags = "shrink_legs,shrink_feet"
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = male_legwear_orc_war_01_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_legwear.txt
+female_legwear_mordor_uruk_02 = {
+	entity = {	required_tags = ""		shared_pose_entity = torso		entity = female_legwear_mordor_uruk_02_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_legwear.txt
+male_legwear_uruk_soldier = {
+	entity = {	required_tags = ""		shared_pose_entity = torso		entity = male_legwear_uruk_soldier_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_legwear.txt
+female_legwear_uruk_soldier = {
+	entity = { required_tags = ""		shared_pose_entity = torso		entity = female_legwear_uruk_soldier_entity }
+}
+
+# from RiE gfx/portraits/accessories/lotr_headgear.txt
+male_headgear_goblin_king = { # AGOT Asset by White Wolf of the Whills
+ 	entity = { required_tags = ""			shared_pose_entity = head		entity = crown_of_the_grey_king_entity }	
+}
+
+# from RiE gfx/portraits/accessories/lotr_headgear.txt
+female_headgear_goblin_king = { # AGOT Asset by White Wolf of the Whills
+ 	entity = { required_tags = ""			shared_pose_entity = head		entity = female_crown_of_the_grey_king_entity }	
+}
+
+# from RiE gfx/portraits/accessories/lotr_headgear.txt
+male_headgear_uruk_isengard_1 = {	
+	set_tags = "helmet"
+	set_tags = "cap,cap_02"
+	entity = { required_tags = ""			shared_pose_entity = head		entity = male_headgear_uruk_isengard_1_entity 	 }		
+}
+
+# from RiE gfx/portraits/accessories/lotr_headgear.txt
+female_headgear_uruk_isengard_1 = {	# Variation with veil and wimple
+	set_tags = "cap,cap_02"
+	set_tags = "helmet"
+	entity = { required_tags = ""			shared_pose_entity = head		entity = female_headgear_uruk_isengard_1_entity 	 }		
+}

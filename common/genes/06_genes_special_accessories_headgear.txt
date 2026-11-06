@@ -4212,6 +4212,30 @@ special_genes = {
 				girl = female
 			}
 		# Anbennar Overhaul: end of Realms in Exile templates
+		# Anbennar Overhaul: other templates (tools/data/portraits.py)
+			aov_orc_crown_headgear = {
+				index = 249
+				male = {
+					1 = male_headgear_goblin_king
+				}
+				female = {
+					1 = female_headgear_goblin_king
+				}
+				boy = male
+				girl = female
+			}
+			aov_orc_war_headgear = {
+				index = 250
+				male = {
+					1 = male_headgear_uruk_isengard_1
+				}
+				female = {
+					1 = female_headgear_uruk_isengard_1
+				}
+				boy = male
+				girl = female
+			}
+		# Anbennar Overhaul: end of other templates
 		}
 		
 		#--------------------------------------------------------------------------------------------------------

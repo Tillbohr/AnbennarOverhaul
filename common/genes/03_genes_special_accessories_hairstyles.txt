@@ -2278,6 +2278,38 @@ special_genes = {
 				girl = female
 			}
 		# Anbennar Overhaul: end of Realms in Exile templates
+		# Anbennar Overhaul: other templates (tools/data/portraits.py)
+			aov_orc_hairstyles = {
+				index = 90
+				male = {
+					8 = male_hair_mountain_orc_01
+					5 = empty
+					4 = male_hair_uruk_01
+					3 = male_hair_mountain_orc_02
+					2 = male_hair_mesoindian_03
+					2 = male_hair_mesoindian_03b
+					2 = male_hair_mesoindian_03b2
+					2 = male_hair_mesoindian_03b3
+					2 = male_hair_mesoindian_03b5
+					2 = meso_hair_steppe_02
+					2 = meso_hair_steppe_02b
+					2 = male_hair_mesofp1_09b
+					1 = m_hair_fp4_western_07_bald
+					1 = m_hair_fp4_mena_02_bald
+					1 = m_hair_fp4_indian_01_bald
+				}
+				female = {
+					1 = empty
+					2 = f_hair_fp3_iranian_02_common
+					2 = female_hair_fp2_iberian_muslim_01_common
+					2 = female_hair_uruk_01
+					2 = female_hair_western_05_disease
+					2 = female_hair_western_02_disease
+				}
+				boy = male
+				girl = female
+			}
+		# Anbennar Overhaul: end of other templates
 		}
 	}
 }

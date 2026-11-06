@@ -1,0 +1,457 @@
+﻿# Anbennar Overhaul: orc teeth, hair and beards by race trait; orc clothes by rank, for cultures with aov_orc_clothing_gfx.
+# The orc face, skin and build are genes set by the orc ethnicities (common/ethnicities/aov_orc_ethnicities.txt). See
+# docs/systems/orc-portraits.md.
+
+@baby_hair_age = 5 # Anbennar's value in 01_hairstyles_base.txt
+
+# Tusked teeth. teeth_accessory is not inherited, so a half-orc raised in a human culture would otherwise lose them. A Lich
+# is left to the Lich portrait (aov_lich.txt), which hides the head.
+aov_orc_teeth = {
+	usage = game
+
+	aov_orc_teeth = {
+		dna_modifiers = {
+			accessory = {
+				mode = replace
+				gene = teeth_accessory
+				template = aov_orc_teeth
+				value = 0.5
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 100
+				exists = this
+				OR = {
+					has_trait = race_orc
+					has_trait = race_half_orc
+				}
+				NOT = { has_trait = lich }
+			}
+		}
+	}
+}
+
+# Hair and beards set no priority, like Anbennar's base groups, so this file overrides them by file order. Groups with a
+# priority still win, but others without one do not, so the forced cases of those groups are excluded here by hand: the
+# base groups' baby hair, boys' lack of beards and forced baldness, and 99_special.txt's beardless eunuchs.
+aov_orc_hair = {
+	usage = game
+	selection_behavior = weighted_random
+
+	aov_orc_hair = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = hairstyles
+				template = aov_orc_hairstyles
+				range = { 0 1 } # For the randomness to work correctly
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 100
+				exists = this
+				has_trait = race_orc
+				scope:age >= @baby_hair_age
+				NOR = {
+					is_from_ruler_designer = yes
+					has_character_flag = has_scripted_appearance
+					# Forced baldness from the base group's no_hair, which this group would override
+					has_nickname = nick_the_actually_bald
+					has_character_modifier = hajj_halq_modifier
+					has_character_modifier = shaven_bald_modifier
+					has_character_flag = bald_head
+				}
+			}
+		}
+	}
+}
+
+aov_orc_beards = {
+	usage = game
+	selection_behavior = weighted_random
+
+	aov_orc_beards = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = beards
+				template = aov_orc_beards
+				range = { 0 1 } # For the randomness to work correctly
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 100
+				exists = this
+				has_trait = race_orc
+				is_female = no
+				scope:age >= 18
+				NOR = {
+					is_from_ruler_designer = yes
+					has_character_flag = has_scripted_appearance
+					# Forced shaving from 99_special.txt and the base group, which this group would override
+					has_trait = beardless_eunuch
+					has_character_flag = no_beard
+				}
+			}
+		}
+	}
+}
+
+# Orc clothes by rank: EK2's goblin rags, the fur-collar tribal tunic, RiE's Moria armour with the bone crown, and RiE's
+# rusted Mordor plate with an Uruk helmet in war. Same priorities as Anbennar's groups. Inside a group the first modifier
+# at 100 or more wins. Children wear the rags, because the tunic and the women's armour have no child shape.
+aov_orc_clothes = {
+	usage = game
+	priority = 1
+	selection_behavior = weighted_random
+
+	aov_orc_child = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = clothes
+				template = aov_orc_common_clothes
+				range = { 0 1 } # For the randomness to work correctly
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 200
+				scope:age < 16
+				portrait_aov_orc_clothing_trigger = yes
+			}
+		}
+	}
+
+	aov_orc_common = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = clothes
+				template = aov_orc_common_clothes
+				range = { 0 1 } # For the randomness to work correctly
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 100
+				portrait_commoner_clothing_trigger = {
+					CULTURE_INPUT = aov_orc
+				}
+			}
+		}
+	}
+
+	aov_orc_chief = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = clothes
+				template = aov_orc_chief_clothes
+				range = { 0 1 } # For the randomness to work correctly
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 100
+				scope:age >= 16
+				portrait_low_nobles_clothing_trigger = {
+					CULTURE_INPUT = aov_orc
+				}
+			}
+		}
+	}
+
+	aov_orc_ruler = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = clothes
+				template = aov_orc_ruler_clothes
+				range = { 0 1 } # For the randomness to work correctly
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 100
+				scope:age >= 16
+				OR = {
+					portrait_high_nobles_clothing_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+					portrait_royalty_clothing_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+					portrait_imperial_clothing_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+				}
+			}
+		}
+	}
+}
+
+aov_orc_clothes_armor = {
+	usage = game
+	priority = 4
+	selection_behavior = weighted_random
+
+	aov_orc_war = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = clothes
+				template = aov_orc_war_clothes
+				range = { 0 1 } # For the randomness to work correctly
+			}
+			accessory = {
+				mode = add
+				gene = cloaks
+				template = no_cloak
+				range = { 0 1 }
+			}
+		}
+		outfit_tags = { military_outfit }
+		weight = {
+			base = 0
+			modifier = {
+				add = 250
+				portrait_wear_armor_trigger = yes
+				OR = {
+					portrait_commoner_armor_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+					portrait_low_nobles_armor_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+					portrait_high_nobles_armor_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+					portrait_royalty_armor_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+					portrait_imperial_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+				}
+			}
+		}
+	}
+}
+
+aov_orc_headgear = {
+	usage = game
+	priority = 1
+	selection_behavior = weighted_random
+
+	aov_orc_crown = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = headgear
+				template = aov_orc_crown_headgear
+				range = { 0 1 } # For the randomness to work correctly
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 200
+				scope:age >= 16
+				OR = {
+					portrait_high_nobles_headgear_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+					portrait_royalty_headgear_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+					portrait_imperial_headgear_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+				}
+			}
+		}
+	}
+
+	aov_orc_no_hat = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = headgear
+				template = no_headgear
+				value = 0
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 100
+				portrait_aov_orc_clothing_trigger = yes
+			}
+		}
+	}
+}
+
+aov_orc_headgear_armor = {
+	usage = game
+	priority = 4
+	selection_behavior = weighted_random
+
+	aov_orc_helmet = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = headgear
+				template = aov_orc_war_headgear
+				range = { 0 1 } # For the randomness to work correctly
+			}
+		}
+		outfit_tags = { military_outfit }
+		weight = {
+			base = 0
+			modifier = {
+				add = 250
+				portrait_wear_helmet_trigger = yes
+				OR = {
+					portrait_commoner_armor_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+					portrait_low_nobles_armor_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+					portrait_high_nobles_armor_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+					portrait_royalty_armor_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+					portrait_imperial_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+				}
+			}
+		}
+	}
+}
+
+aov_orc_legwear = {
+	usage = game
+	selection_behavior = max
+
+	aov_orc_war_legwear = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = legwear
+				template = aov_orc_war_legwear
+				range = { 0 1 } # For the randomness to work correctly
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 120
+				portrait_wear_armor_trigger = yes
+				OR = {
+					portrait_commoner_armor_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+					portrait_low_nobles_armor_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+					portrait_high_nobles_armor_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+					portrait_royalty_armor_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+					portrait_imperial_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+				}
+			}
+		}
+	}
+
+	aov_orc_ruler_legwear = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = legwear
+				template = aov_orc_ruler_legwear
+				range = { 0 1 } # For the randomness to work correctly
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 60
+				scope:age >= 16
+				OR = {
+					portrait_high_nobles_clothing_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+					portrait_royalty_clothing_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+					portrait_imperial_clothing_trigger = {
+						CULTURE_INPUT = aov_orc
+					}
+				}
+			}
+		}
+	}
+
+	aov_orc_chief_legwear = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = legwear
+				template = aov_orc_chief_legwear
+				range = { 0 1 } # For the randomness to work correctly
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 60
+				scope:age >= 16
+				portrait_low_nobles_clothing_trigger = {
+					CULTURE_INPUT = aov_orc
+				}
+			}
+		}
+	}
+}
+
+aov_orc_cloaks = {
+	usage = game
+
+	aov_orc_no_cloak = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = cloaks
+				template = no_cloak
+				range = { 0 1 } # For the randomness to work correctly
+			}
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 1000
+				portrait_aov_orc_clothing_trigger = yes
+			}
+		}
+	}
+}

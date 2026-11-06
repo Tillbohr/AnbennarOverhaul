@@ -1,0 +1,76 @@
+﻿# Anbennar Overhaul: Elder Kings 2's tusked teeth (male_teeth_ek2.asset, female_teeth_ek2.asset; Workshop 2887120253), with
+# only the tusk shape kept. See docs/systems/orc-portraits.md. The normal and properties maps are the game's, by name.
+
+pdxmesh = {
+	name = "aov_orc_male_teeth_mesh"
+	file = "aov_orc_male_teeth.mesh"
+
+	meshsettings = {
+		name = "male_teethShape.001"
+		index = 0
+		texture_diffuse = "aov_orc_teeth_diffuse.dds"
+		texture_normal = "male_teeth_normal.dds"
+		texture_specular = "male_teeth_properties.dds"
+		texture = { file = "aov_orc_teeth_ssao_color.dds" index = 3 }
+		shader = "portrait_skin"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+
+	blend_shape = { id = "aov_orc_male_teeth_bs_lower_down"	type = "aov_orc_male_teeth_bs_lower_down.mesh"  }
+	blend_shape = { id = "aov_orc_male_teeth_bs_cheek_fat_neg"	type = "aov_orc_male_teeth_bs_cheek_fat_neg.mesh"  }
+	blend_shape = { id = "aov_orc_male_teeth_bs_tusks"	type = "aov_orc_male_teeth_bs_tusks.mesh"  }
+}
+
+entity = {
+	name = "aov_orc_male_teeth_entity"
+	pdxmesh = "aov_orc_male_teeth_mesh"
+
+	attribute = { name = "teeth_bs_lower_down"	blend_shape = "aov_orc_male_teeth_bs_lower_down" }
+	attribute = { name = "teeth_bs_cheek_fat_neg"	blend_shape = "aov_orc_male_teeth_bs_cheek_fat_neg" }
+	attribute = { name = "aov_orc_tusks_bs"	blend_shape = "aov_orc_male_teeth_bs_tusks" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = {0.0 1.0}
+			}
+		}
+	}
+}
+
+pdxmesh = {
+	name = "aov_orc_female_teeth_mesh"
+	file = "aov_orc_female_teeth.mesh"
+
+	meshsettings = {
+		name = "male_teethShape.002"
+		index = 0
+		texture_diffuse = "aov_orc_teeth_diffuse.dds"
+		texture_normal = "male_teeth_normal.dds"
+		texture_specular = "male_teeth_properties.dds"
+		texture = { file = "aov_orc_teeth_ssao_color.dds" index = 3 }
+		shader = "portrait_skin"
+		shader_file = "gfx/FX/jomini/portrait.shader"
+	}
+
+	blend_shape = { id = "aov_orc_female_teeth_bs_lower_down"	type = "aov_orc_female_teeth_bs_lower_down.mesh"  }
+	blend_shape = { id = "aov_orc_female_teeth_bs_cheek_fat_neg"	type = "aov_orc_female_teeth_bs_cheek_fat_neg.mesh"  }
+	blend_shape = { id = "aov_orc_female_teeth_bs_tusks"	type = "aov_orc_female_teeth_bs_tusks.mesh"  }
+}
+
+entity = {
+	name = "aov_orc_female_teeth_entity"
+	pdxmesh = "aov_orc_female_teeth_mesh"
+
+	attribute = { name = "teeth_bs_lower_down"	blend_shape = "aov_orc_female_teeth_bs_lower_down" }
+	attribute = { name = "teeth_bs_cheek_fat_neg"	blend_shape = "aov_orc_female_teeth_bs_cheek_fat_neg" }
+	attribute = { name = "aov_orc_tusks_bs"	blend_shape = "aov_orc_female_teeth_bs_tusks" }
+
+	game_data = {
+		portrait_entity_user_data = {
+			color_mask_remap_interval = {
+				interval = {0.0 1.0}
+			}
+		}
+	}
+}

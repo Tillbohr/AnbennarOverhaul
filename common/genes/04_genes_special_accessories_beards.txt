@@ -1003,6 +1003,23 @@ special_genes = {
 				}
 			}
 		# Anbennar Overhaul: end of Realms in Exile templates
+		# Anbennar Overhaul: other templates (tools/data/portraits.py)
+			aov_orc_beards = {
+				index = 47
+				male = {
+					40 = empty
+					5 = male_beard_mountain_orc_01
+					1 = male_beard_mountain_orc_02
+					4 = beard_tywins_muttonchops
+				}
+				female = {
+					1 = empty
+				}
+				boy = {
+					1 = empty
+				}
+			}
+		# Anbennar Overhaul: end of other templates
 		}
 	}
 }

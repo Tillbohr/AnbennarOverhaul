@@ -30,7 +30,7 @@ NONE_INPUT = "aov_rie_none"
 # Our inputs whose triggers test the culture's clothing_gfx key (through vanilla's
 # portrait_shared_clothing_contents_trigger, flag = the input), and inputs made of others: input -> (input it needs,
 # input it excludes). "aov_dwarf" counts every dwarf.
-FLAG_INPUTS = ("aov_hobbit", "aov_vanyar", "aov_noldor", "aov_lasgalendrim", "aov_dwarf")
+FLAG_INPUTS = ("aov_hobbit", "aov_vanyar", "aov_noldor", "aov_lasgalendrim", "aov_dwarf", "aov_orc")
 COMBINED_INPUTS = {}
 
 # RiE dwarf heritages (culture scope) -> our culture triggers (generated with the portrait triggers): RiE's western
@@ -146,4 +146,159 @@ EXTRA_ENTRIES = {
                ["OR = { portrait_aov_vanyar_clothing_trigger = yes portrait_aov_noldor_clothing_trigger = yes "
                 "portrait_aov_lasgalendrim_clothing_trigger = yes }"]),
     ],
+}
+
+
+# Templates added to Anbennar's gene files that are not copied from RiE: gene -> template -> body without its index
+# (build_genes gives each a free index). Accessories come from Anbennar, the game, gfx/portraits/accessories/aov_orc.txt or
+# RiE, which are copied in; the build stops on any other name. See docs/systems/orc-portraits.md.
+# Hair and beards: user choice after the first in-game test, orcs look gruff rather than human. Hair is RiE's Moria orc
+# list without its two groomed human styles, with its purpose-made mountain orc hair on top. Beards are RiE's orc list,
+# mostly clean-shaven, so the tusks show.
+# Clothes: the mix recommended by the wardrobe comparison, by rank (user choice).
+EXTRA_TEMPLATES = {
+    "hairstyles": {
+        "aov_orc_hairstyles": (
+            "\t\t\t\tmale = {\n"
+            "\t\t\t\t\t8 = male_hair_mountain_orc_01\n"
+            "\t\t\t\t\t5 = empty\n"
+            "\t\t\t\t\t4 = male_hair_uruk_01\n"
+            "\t\t\t\t\t3 = male_hair_mountain_orc_02\n"
+            "\t\t\t\t\t2 = male_hair_mesoindian_03\n"
+            "\t\t\t\t\t2 = male_hair_mesoindian_03b\n"
+            "\t\t\t\t\t2 = male_hair_mesoindian_03b2\n"
+            "\t\t\t\t\t2 = male_hair_mesoindian_03b3\n"
+            "\t\t\t\t\t2 = male_hair_mesoindian_03b5\n"
+            "\t\t\t\t\t2 = meso_hair_steppe_02\n"
+            "\t\t\t\t\t2 = meso_hair_steppe_02b\n"
+            "\t\t\t\t\t2 = male_hair_mesofp1_09b\n"
+            "\t\t\t\t\t1 = m_hair_fp4_western_07_bald\n"
+            "\t\t\t\t\t1 = m_hair_fp4_mena_02_bald\n"
+            "\t\t\t\t\t1 = m_hair_fp4_indian_01_bald\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tfemale = {\n"
+            "\t\t\t\t\t1 = empty\n"
+            "\t\t\t\t\t2 = f_hair_fp3_iranian_02_common\n"
+            "\t\t\t\t\t2 = female_hair_fp2_iberian_muslim_01_common\n"
+            "\t\t\t\t\t2 = female_hair_uruk_01\n"
+            "\t\t\t\t\t2 = female_hair_western_05_disease\n"
+            "\t\t\t\t\t2 = female_hair_western_02_disease\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tboy = male\n"
+            "\t\t\t\tgirl = female\n"
+        ),
+    },
+    "beards": {
+        "aov_orc_beards": (
+            "\t\t\t\tmale = {\n"
+            "\t\t\t\t\t40 = empty\n"
+            "\t\t\t\t\t5 = male_beard_mountain_orc_01\n"
+            "\t\t\t\t\t1 = male_beard_mountain_orc_02\n"
+            "\t\t\t\t\t4 = beard_tywins_muttonchops\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tfemale = {\n"
+            "\t\t\t\t\t1 = empty\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tboy = {\n"
+            "\t\t\t\t\t1 = empty\n"
+            "\t\t\t\t}\n"
+        ),
+    },
+    "clothes": {
+        "aov_orc_common_clothes": (
+            "\t\t\t\tmale = {\n"
+            "\t\t\t\t\t1 = m_clothes_sec_ek2_goblin_com_01\n"
+            "\t\t\t\t\t1 = m_clothes_sec_ek2_goblin_com_02\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tfemale = {\n"
+            "\t\t\t\t\t1 = fem_clothes_sec_ek2_goblin_com_01\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tboy = male\n"
+            "\t\t\t\tgirl = female\n"
+        ),
+        "aov_orc_chief_clothes": (
+            "\t\t\t\tmale = {\n"
+            "\t\t\t\t\t1 = male_clothes_secular_riekling_01\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tfemale = {\n"
+            "\t\t\t\t\t1 = female_clothes_secular_riekling_01\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tboy = male\n"
+            "\t\t\t\tgirl = female\n"
+        ),
+        "aov_orc_ruler_clothes": (
+            "\t\t\t\tmale = {\n"
+            "\t\t\t\t\t1 = male_clothes_moria_orc_01\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tfemale = {\n"
+            "\t\t\t\t\t1 = female_clothes_goblin_armor_01\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tboy = male\n"
+            "\t\t\t\tgirl = female\n"
+        ),
+        "aov_orc_war_clothes": (
+            "\t\t\t\tmale = {\n"
+            "\t\t\t\t\t1 = male_clothes_mordor_uruk_01\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tfemale = {\n"
+            "\t\t\t\t\t1 = female_clothes_mordor_uruk_01\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tboy = male\n"
+            "\t\t\t\tgirl = female\n"
+        ),
+    },
+    "legwear": {
+        "aov_orc_chief_legwear": (
+            "\t\t\t\tmale = {\n"
+            "\t\t\t\t\t1 = male_legwear_uruk_beserker_1\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tfemale = {\n"
+            "\t\t\t\t\t1 = female_legwear_uruk_beserker_1\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tboy = male\n"
+            "\t\t\t\tgirl = female\n"
+        ),
+        "aov_orc_ruler_legwear": (
+            "\t\t\t\tmale = {\n"
+            "\t\t\t\t\t1 = male_legwear_orc_war_01\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tfemale = {\n"
+            "\t\t\t\t\t1 = female_legwear_mordor_uruk_02\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tboy = male\n"
+            "\t\t\t\tgirl = female\n"
+        ),
+        "aov_orc_war_legwear": (
+            "\t\t\t\tmale = {\n"
+            "\t\t\t\t\t1 = male_legwear_uruk_soldier\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tfemale = {\n"
+            "\t\t\t\t\t1 = female_legwear_uruk_soldier\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tboy = male\n"
+            "\t\t\t\tgirl = female\n"
+        ),
+    },
+    "headgear": {
+        "aov_orc_crown_headgear": (
+            "\t\t\t\tmale = {\n"
+            "\t\t\t\t\t1 = male_headgear_goblin_king\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tfemale = {\n"
+            "\t\t\t\t\t1 = female_headgear_goblin_king\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tboy = male\n"
+            "\t\t\t\tgirl = female\n"
+        ),
+        "aov_orc_war_headgear": (
+            "\t\t\t\tmale = {\n"
+            "\t\t\t\t\t1 = male_headgear_uruk_isengard_1\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tfemale = {\n"
+            "\t\t\t\t\t1 = female_headgear_uruk_isengard_1\n"
+            "\t\t\t\t}\n"
+            "\t\t\t\tboy = male\n"
+            "\t\t\t\tgirl = female\n"
+        ),
+    },
 }

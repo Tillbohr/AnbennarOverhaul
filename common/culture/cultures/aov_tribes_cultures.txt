@@ -18,11 +18,13 @@ black_orc = {
 
 	coa_gfx = { frisian_coa_gfx western_coa_gfx }
 	building_gfx = { western_building_gfx }
-	clothing_gfx = { western_clothing_gfx }
+	clothing_gfx = { aov_orc_clothing_gfx western_clothing_gfx }
 	unit_gfx = { western_unit_gfx }
 
 	ethnicities = {
-		100 = arab
+		1 = orc_brown
+		1 = orc_gray
+		1 = orc_black
 	}
 }
 

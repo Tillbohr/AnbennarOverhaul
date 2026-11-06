@@ -72,6 +72,20 @@ portrait_aov_dwarf_clothing_spouse_trigger = {
 	}
 }
 
+portrait_aov_orc_clothing_trigger = {
+	portrait_shared_clothing_contents_trigger = {
+		CULTURE_SCOPE = scope:culture
+		CULTURE_FLAG = aov_orc
+	}
+}
+
+portrait_aov_orc_clothing_spouse_trigger = {
+	portrait_shared_clothing_contents_trigger = {
+		CULTURE_SCOPE = culture
+		CULTURE_FLAG = aov_orc
+	}
+}
+
 portrait_aov_rie_none_clothing_trigger = {
 	always = no
 }
