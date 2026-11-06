@@ -1,0 +1,16 @@
+﻿l_english:
+ # Anbennar Overhaul: Dwarovar tribes (docs/systems/dwarovar-tribes.md)
+ aov_challenge_warlord_decision:0 "Challenge the Warlord"
+ aov_challenge_warlord_decision_desc:0 "My ruler holds this warband only because no one has yet proven stronger. I will prove it, before everyone, and take everything they have."
+ aov_challenge_warlord_decision_tooltip:0 "Challenge your ruler to a duel for all their titles"
+ aov_challenge_warlord_decision_confirm:0 "Blood will decide"
+ aov_challenge_warlord_effect_tooltip:0 "Your ruler may fight or refuse.\nIf you win, you take every title they hold and they die. If you lose, you die.\nIf they refuse, they fall to the lowest prestige level and every ruler scorns them for life."
+ aov_tribe_duel.1.t:0 "A Challenge"
+ aov_tribe_duel.1.desc:0 "[challenger.GetFirstName] stands before the whole warband and calls me weak. [challenger.GetSheHe|U] will fight me for everything I hold, and only one of us will walk away.\n\nI can refuse. The warband would never forget it, and neither would anyone else."
+ aov_tribe_duel.1.a:0 "I will crush this whelp"
+ aov_tribe_duel.1.b:0 "I will not fight"
+ aov_tribe_duel.1.accepted:0 "Your challenge is accepted"
+ aov_tribe_duel.1.refused:0 "Your challenge is refused, and the warband saw it"
+ aov_tribe_duel.2.won:0 "You killed your ruler and took their titles"
+ aov_tribe_duel.2.lost:0 "You killed your challenger"
+ aov_tribe_duel.3.invalid:0 "The duel could not be fought"

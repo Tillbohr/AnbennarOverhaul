@@ -204,3 +204,91 @@ aov_form_tribal_empire_decision = {
 		}
 	}
 }
+
+# An orc vassal of an independent warband challenges their ruler for everything (events/aov_tribes_duel_events.txt).
+aov_challenge_warlord_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_destiny_goal.dds"
+	}
+	decision_group_type = major
+	sort_order = 95
+	ai_check_interval = 36
+
+	desc = aov_challenge_warlord_decision_desc
+	selection_tooltip = aov_challenge_warlord_decision_tooltip
+	confirm_text = aov_challenge_warlord_decision_confirm
+
+	cooldown = { years = 5 }
+
+	is_shown = {
+		has_trait = race_orc
+		is_landed = yes
+		is_imprisoned = no
+		can_start_single_combat_trigger = yes
+		liege ?= {
+			this != root
+			is_independent_ruler = yes
+			government_has_flag = government_is_orcish_warband
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		is_adult = yes
+		is_at_war = no
+		can_be_combatant_based_on_gender_trigger = { ARMY_OWNER = liege }
+		liege = {
+			is_available = yes
+			is_adult = yes
+			is_imprisoned = no
+			is_at_war = no
+			can_start_single_combat_trigger = yes
+		}
+	}
+
+	effect = {
+		save_scope_as = challenger
+		liege = {
+			save_scope_as = ruler
+			trigger_event = aov_tribe_duel.1
+		}
+		custom_tooltip = aov_challenge_warlord_effect_tooltip
+	}
+
+	ai_potential = {
+		is_adult = yes
+		OR = {
+			has_trait = ambitious
+			prowess >= {
+				value = liege.prowess
+				add = 6
+			}
+		}
+	}
+
+	# Only ever from strength, more so the further ahead.
+	ai_will_do = {
+		base = 0
+		modifier = {
+			add = 25
+			has_trait = ambitious
+		}
+		modifier = {
+			add = 25
+			prowess >= {
+				value = liege.prowess
+				add = 6
+			}
+		}
+		modifier = {
+			add = 25
+			prowess >= {
+				value = liege.prowess
+				add = 12
+			}
+		}
+		modifier = {
+			factor = 0
+			prowess < liege.prowess
+		}
+	}
+}
