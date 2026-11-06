@@ -1,0 +1,53 @@
+﻿# Anbennar Overhaul: Dwarovar tribes (docs/systems/dwarovar-tribes.md). Placeholder content.
+
+black_orc = {
+	color = { 90 20 20 }
+
+	ethos = ethos_bellicose
+	heritage = heritage_orcish
+	language = language_orcish
+	martial_custom = martial_custom_equal
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_warrior_culture
+		tradition_ancient_miners
+	}
+
+	name_list = name_list_black_orc
+
+	coa_gfx = { frisian_coa_gfx western_coa_gfx }
+	building_gfx = { western_building_gfx }
+	clothing_gfx = { western_clothing_gfx }
+	unit_gfx = { western_unit_gfx }
+
+	ethnicities = {
+		100 = arab
+	}
+}
+
+cave_goblin = {
+	color = { 70 130 60 }
+
+	ethos = ethos_communal
+	heritage = heritage_goblinoid
+	language = language_goblin
+	martial_custom = martial_custom_equal
+	head_determination = head_determination_domain
+	traditions = {
+		tradition_mountain_homes
+		tradition_ancient_miners
+		tradition_stalwart_defenders
+	}
+
+	name_list = name_list_cave_goblin
+
+	coa_gfx = { frisian_coa_gfx western_coa_gfx }
+	building_gfx = { western_building_gfx }
+	clothing_gfx = { western_clothing_gfx }
+	unit_gfx = { western_unit_gfx }
+
+	ethnicities = {
+		100 = arab
+	}
+}

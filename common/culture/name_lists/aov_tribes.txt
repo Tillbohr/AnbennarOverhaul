@@ -1,0 +1,85 @@
+﻿# Anbennar Overhaul: Dwarovar tribes (docs/systems/dwarovar-tribes.md). Placeholder content.
+
+name_list_black_orc = {
+	house_based_map_names = yes
+
+	dynasty_names = {
+		"dynn_Bloodfang" "dynn_Gorehowl" "dynn_Skullgrinder" "dynn_Mountain_Eater" "dynn_Ironskin" "dynn_Ironhide" "dynn_Deadhide" "dynn_Hammerfist" "dynn_Hammerspike" "dynn_Spikefist"
+		"dynn_Swordfist" "dynn_Dead_eye" "dynn_Bloodspear" "dynn_Blackheart" "dynn_Manhunter" "dynn_Pureblood" "dynn_Bright_Eyes" "dynn_Eagle_Eyes" "dynn_Half_Tongue" "dynn_Grog_Maker"
+		"dynn_Deathmonger" "dynn_Swordmaster" "dynn_Warborn" "dynn_Stoneskin" "dynn_Warmonger" "dynn_Rockskull" "dynn_Skullblade" "dynn_Skullhorn" "dynn_Ogreborn" "dynn_Deadeye"
+		"dynn_Longtooth" "dynn_Pigsnout" "dynn_Regehammer" "dynn_Crueldrum" "dynn_Stonefist" "dynn_Angerfang" "dynn_Steelsword" "dynn_Warpsteel" "dynn_Deathforge" "dynn_Cravenkiller"
+		"dynn_Hellspitter" "dynn_Rocksnarler" "dynn_Deadbreath" "dynn_Bitteraxe" "dynn_Shadowfeast" "dynn_Bloodfeast" "dynn_Redfeast" "dynn_Bloodscream" "dynn_Wildmarcher" "dynn_Brokenhammer"
+		"dynn_Brokentusk" "dynn_No_eyes" "dynn_Silentblade" "dynn_Rageblood" "dynn_Rageblade" "dynn_Hellscream" "dynn_Blackhand" "dynn_Doomhammer" "dynn_Saurfang" "dynn_Bladefist"
+		"dynn_Bloodreaver" "dynn_Brightflesh" "dynn_Grandguard" "dynn_Armorskin" "dynn_Armorhide" "dynn_Steelhide" "dynn_Metalhide" "dynn_Metaljaw" "dynn_Sharpears" "dynn_Halfblood"
+		"dynn_Ragechain" "dynn_Chaoschain" "dynn_Chaosblade" "dynn_Flameseeker" "dynn_Fireblood" "dynn_Battlefire" "dynn_Thunderstorm" "dynn_Thunderblood" "dynn_Thunderfang" "dynn_Axemaul"
+		"dynn_Shadowblood" "dynn_Strongblood"
+	}
+
+	male_names = {
+		Adul Amug Azukor Bagga Bakbur Bhagzud Bolg Borgu Bork Bral
+		Brasur Burggob Barog Bubol Buth Conakk Dhog Dramm Drazad Drok
+		Dub Dugz Durg aov_name_Dush Flak Flogg Fubar Gakk Garl Garm
+		Ghad Ghash Ghudd Ghudrag Ghurad Gham Gluk Gokk Golm Grisha
+		Grom Gruk Grumger Gubu Gukk Gund Hoglik Hork Horza Hoshgrish
+		Hura Ikom Ishmoz Kargath Khagor Khrosh Kilrogg Korgus Koth Krakhorn
+		Krimp Kruk Kuga Kurd Larluk Lorm Luga Lurb Mabug Maknag
+		Maku Mogg Mogru Mozu Mug aov_name_Mul aov_name_Muzu Norsko Noruk Nakra
+		Narug aov_name_Nazu Ogal Ogbur Ogg Okegg Olrok Orgrim Orlog Orok
+		Orokag Orthog Prak Pug Pushkrimp Ragdug Rakk Rash Ratak Regar
+		Ronk Rug aov_name_Samur Shador Shaka aov_name_Shag Skak Skoth Skun Snafu
+		Stakuga Takra Tarz Thrak Thral Tugog Tuhorn aov_name_Tuka Uddag Ugakuga
+		Ugol Ukbuk Urim Urimguk Ushak aov_name_Uzul Varbuk Varok Zathra Zhorg
+		Zhuk Zog Zosh Zugor Zur Zeb Zuka
+	}
+	female_names = {
+		Ahe Ahza Atu Awa aov_name_Aadga Bhiel Borba Bura Dhoulza Etrega
+		Ghorza Glasha Grama Grane aov_name_Garona Khaara Lagba Lamma Lazga Mewa
+		Muroga Neevnuz Ohdaka Orbha Oraph Ovga Rerkel Rurti Shel Sheru
+		Tidu Tatga aov_name_Uglaim Uroph Vogaa Voltga Yagza Zien
+	}
+
+	pat_grf_name_chance = 50
+	mat_grf_name_chance = 5
+	father_name_chance = 10
+
+	pat_grm_name_chance = 10
+	mat_grm_name_chance = 50
+	mother_name_chance = 5
+}
+
+name_list_cave_goblin = {
+	house_based_map_names = yes
+
+	dynasty_names = {
+		"dynn_Nettlehunter" "dynn_Crystalparts" "dynn_Highmaw" "dynn_Ironbrew" "dynn_Dewbrew" "dynn_Cragroar" "dynn_Skullchewer" "dynn_Plainbreaker" "dynn_Orbhunter" "dynn_Ironbane"
+		"dynn_pobnek_Lunk" "dynn_pobnek_Qalk" "dynn_pobnek_Noppes" "dynn_pobnek_Uskoa" "dynn_pobnek_Tegil" "dynn_pobnek_Zunewl" "dynn_Sertin" "dynn_pobnek_Mal" "dynn_pobnek_Mit" "dynn_pobek_Zan"
+		"dynn_pobnek_Mokmok" "dynn_Skullgrinder" "dynn_Mountain_Eater" "dynn_Ironskin" "dynn_Ironhide" "dynn_Deadhide" "dynn_Hammerfist" "dynn_Hammerspike" "dynn_Spikefist" "dynn_Swordfist"
+		"dynn_Dead_eye" "dynn_Bloodspear" "dynn_Blackheart" "dynn_Manhunter" "dynn_Pureblood" "dynn_Bright_Eyes" "dynn_Eagle_Eyes" "dynn_Half_Tongue" "dynn_Grog_Maker" "dynn_Deathmonger"
+		"dynn_Swordmaster" "dynn_Warborn" "dynn_Stoneskin" "dynn_Warmonger" "dynn_Rockskull" "dynn_Skullblade" "dynn_Skullhorn" "dynn_Ogreborn" "dynn_Deadeye" "dynn_Longtooth"
+		"dynn_Pigsnout" "dynn_Regehammer" "dynn_Crueldrum" "dynn_Stonefist" "dynn_Angerfang" "dynn_Steelsword" "dynn_Warpsteel" "dynn_Deathforge" "dynn_Cravenkiller" "dynn_Hellspitter"
+		"dynn_Rocksnarler" "dynn_Deadbreath" "dynn_Bitteraxe" "dynn_Shadowfeast" "dynn_Bloodfeast" "dynn_Redfeast" "dynn_Bloodscream" "dynn_Wildmarcher" "dynn_Brokenhammer" "dynn_Brokentusk"
+		"dynn_No_eyes" "dynn_Silentblade" "dynn_Rageblood" "dynn_Rageblade" "dynn_Doomhammer" "dynn_Hellscream" "dynn_Blackhand" "dynn_Saurfang" "dynn_Bladefist" "dynn_Bloodreaver"
+		"dynn_Brightflesh" "dynn_Grandguard" "dynn_Armorskin" "dynn_Armorhide" "dynn_Steelhide" "dynn_Metalhide" "dynn_Metaljaw" "dynn_Sharpears" "dynn_Halfblood" "dynn_Ragechain"
+		"dynn_Chaoschain" "dynn_Chaosblade" "dynn_Flameseeker" "dynn_Fireblood" "dynn_Battlefire" "dynn_Thunderstorm" "dynn_Thunderblood" "dynn_Thunderfang" "dynn_Axemaul" "dynn_Shadowblood"
+	}
+
+	male_names = {
+		Chab Lunk Verk Reb Oubblig Krenzurd Rarsiff Jenthib Idrarseff Porgattub
+		Deekin Qalk Aakax Dheep Rax Nerlisk Zarril Zux Adrax Jukop
+		Vren Qirnux Platzak Noppes Perzuk Feruk Kukov Varabo Zazak Prilric
+		Jeembol Garut Zawul
+	}
+	female_names = {
+		Oxa Uskoa Yutu Guklo Lancha Oktu Zektuphru Gregnuphri Asigloo Motchenboa
+		Eru Tegil Ikse Uho Gakar Laadaa Lerlam Sersa Alra Vakkra
+		Hefta Zunewl Amegikra Floorce Dodoca Gosvo_Garde
+	}
+
+	pat_grf_name_chance = 50
+	mat_grf_name_chance = 5
+	father_name_chance = 10
+
+	pat_grm_name_chance = 10
+	mat_grm_name_chance = 50
+	mother_name_chance = 5
+}
