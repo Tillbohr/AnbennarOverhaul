@@ -138,10 +138,15 @@ order while religious, situational and special groups still win. This is the sam
 portraits (`docs/systems/rie-portraits.md`, still to confirm in game). They keep EK2's exclusions:
 `is_from_ruler_designer`, `has_character_flag = has_scripted_appearance`.
 
-Each also needs an age condition, because Anbennar's base group holds the baby hair. `aov_orc_hair` applies only at
-`scope:age >= @baby_hair_age`, with the variable redefined at the top of the file with Anbennar's value, so babies keep
-their baby hair. Anbennar's random bald chance (`no_hair`) is in the base group too, so adult orcs are never bald unless
-`orc_hairstyles` or a later group makes them so. EK2's orcs have no separate bald chance in its `orc_hair` entry either.
+Each also needs an age condition, because these groups override Anbennar's base groups, which handle the young:
+
+- `aov_orc_hair` applies only at `scope:age >= @baby_hair_age`, with the variable redefined at the top of the file with
+  Anbennar's value (5), so babies keep their baby hair.
+- `aov_orc_beards` applies only at `scope:age >= 18`, Anbennar's own beard age (`01_beards_base.txt`), so boys stay
+  beardless.
+
+Anbennar's random bald chance (`no_hair`) is in the base group too, so adult orcs are never bald unless `orc_hairstyles`
+or a later group makes them so. EK2's orcs have no separate bald chance in its `orc_hair` entry either.
 
 Two changes from EK2: it selects by `heritage_orcish` and we select by the race trait, as gnolls do. And EK2's own beard
 modifier gives `orc_beards` weight 0, with no other orc entry found in its beard files, so EK2's orcs appear to take a
@@ -197,7 +202,8 @@ A clean tiger pass does not prove any of this.
 5. Tusks sit in the mouth and do not tear when the mouth moves, including with the `portrait_skin` shader under
    Anbennar's copy of `portrait.shader`, on men, women and children.
 6. Horns appear on about 3 in 11 men and look right on all three skins.
-7. EK2's hair and beard lists appear, babies keep baby hair, and religious and special headwear still win.
+7. EK2's hair and beard lists appear, babies keep baby hair, boys and women have no beards, and religious and special
+   headwear still win.
 8. Other races' portraits and characters with hand-written DNA in `common/dna_data` are unchanged. The new genes are absent
    from that DNA and should fall back to index 0.
 9. A child of a brown and a gray orc comes out between the two. A half-orc, if one can be made in the console, blends and
