@@ -400,9 +400,11 @@ class FreshnessTests(unittest.TestCase):
         models = bp.SUBMOD / "gfx/models/portraits"
         # Lichdom's skeleton portrait is imported once from Godherja, not built here (docs/systems/magic.md)
         imported = "gfx/models/portraits/aov_lich/"
-        # The gnoll head is built by build_gnoll_portraits.py (docs/systems/gnoll-portraits.md)
+        # The head assets are built by build_head_assets.py and the gnoll art imported by build_gnoll_portraits.py
+        # (docs/systems/gnoll-portraits.md)
         import build_gnoll_portraits as gnoll
-        gnoll_files = ({rel for rel, _, _ in gnoll.HEADS.values()} | set(gnoll.IMPORTS.values())
+        import build_head_assets as head
+        gnoll_files = (set(head.HEADS.values()) | set(gnoll.IMPORTS.values())
                        | {gnoll.FUR, "gfx/models/portraits/aov_gnoll/aov_gnoll_eyes.asset"})
         if models.is_dir():
             orphans += [p.relative_to(bp.SUBMOD).as_posix() for p in models.rglob("*")
