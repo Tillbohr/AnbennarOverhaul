@@ -182,5 +182,98 @@ class WiringTests(unittest.TestCase):
         self.assertEqual(max(pixels[3::4]), 0)
 
 
+GENES_FILE = "common/genes/aov_orc_genes.txt"
+ORC_GENES = {"aov_orc_nose": "orc_nose", "aov_orc_forehead": "orc_forehead", "aov_orc_tusks": "orc_tusk_size",
+             "aov_orc_wrinkles": "orc_wrinkles", "aov_orc_horns": "orc_horns"}
+
+
+def block_of(text: str, key: str) -> str:
+    """The body of the first block named key."""
+    match = re.search(rf"(?m)^\s*{key}\s*=\s*\{{", text)
+    if not match:
+        raise AssertionError(f"no block {key}")
+    depth, at = 1, match.end()
+    while depth:
+        depth += {"{": 1, "}": -1}.get(text[at], 0)
+        at += 1
+    return text[match.end():at - 1]
+
+
+def code(text: str) -> str:
+    return re.sub(r"#[^\n]*", "", text)
+
+
+class GeneTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.genes = code(read(GENES_FILE))
+
+    def test_genes_have_empty_index_zero_and_are_inherited(self):
+        for gene, template in ORC_GENES.items():
+            body = block_of(self.genes, gene)
+            self.assertIn("inheritable = yes", body, gene)
+            first = re.search(r"(\w+)\s*=\s*\{\s*(?:visible = no\s*)?index = 0\s*male = \{\}", body)
+            self.assertIsNotNone(first, f"{gene}: index 0 must be empty so everyone else is unchanged")
+            self.assertRegex(block_of(body, template), r"index = 1\b", gene)
+
+    def test_only_the_orc_templates_are_kept(self):
+        for dropped in ("mer_nose", "kamal", "dremora", "no_dimorphism", "ek_", "male_orc_nose_bs"):
+            self.assertNotIn(dropped, self.genes)
+
+    def test_gene_textures_exist(self):
+        textures = re.findall(r'"(gfx/[^"]+\.dds)"', self.genes)
+        self.assertTrue(textures)
+        for tex in textures:
+            ours, game = SUBMOD / tex, orc.DEFAULT_GAME / tex
+            self.assertTrue(ours.is_file() or game.is_file(), tex)
+
+    def test_gene_attributes_are_on_an_entity(self):
+        import build_head_assets as head
+        asset = read(WiringTests.ASSET)
+        on_head = {attribute for sex in head.ATTRIBUTES for attribute, _shape in head.ATTRIBUTES[sex]}
+        for attribute in set(re.findall(r'attribute = "(\w+)"', self.genes)):
+            self.assertTrue(attribute in on_head or f'name = "{attribute}"' in asset, attribute)
+
+    def test_every_new_attribute_is_on_both_heads_except_horns(self):
+        import build_head_assets as head
+        for attribute in ("aov_orc_nose_bs", "aov_orc_lips_bs", "aov_orc_tusks_bs"):
+            for sex in ("male", "female"):
+                self.assertIn(attribute, [a for a, _s in head.ATTRIBUTES[sex]], f"{sex} {attribute}")
+
+    def test_horns_are_male_only(self):
+        import build_head_assets as head
+        template = block_of(block_of(self.genes, "aov_orc_horns"), "orc_horns")
+        self.assertRegex(template, r"female = \{\s*\}")
+        self.assertIn("girl = female", template)
+        self.assertNotIn("aov_orc_horns_bs", [a for a, _s in head.ATTRIBUTES["female"]])
+        self.assertIn("aov_orc_horns_bs", [a for a, _s in head.ATTRIBUTES["male"]])
+
+    def test_tusks_keep_eks_values(self):
+        gene = block_of(self.genes, "aov_orc_tusks")
+        self.assertIn("sync_inheritance_with = skin_color", gene)
+        template = block_of(gene, "orc_tusk_size")
+        male, female = block_of(template, "male"), block_of(template, "female")
+        for attribute in ("aov_orc_tusks_bs", "aov_orc_lips_bs"):
+            self.assertRegex(male, rf'attribute = "{attribute}"\s+value = \{{ min = 0\.0 max = 1\.0 \}}')
+            self.assertRegex(female, rf'attribute = "{attribute}"\s+value = \{{ min = 0\.0 max = 0\.9 \}}')
+
+    def test_tusks_map_to_the_neutral_head_shape(self):
+        # EK2's way for a teeth shape set by a head gene: the head needs the attribute too, doing nothing
+        import build_head_assets as head
+        for sex in ("male", "female"):
+            self.assertIn(("aov_orc_tusks_bs", f"{sex}_bs_neutral"), head.ATTRIBUTES[sex])
+
+    def test_age_preset_exists(self):
+        presets = set(re.findall(r"age = (age_preset\w+)", self.genes))
+        self.assertEqual(presets, {"age_preset_child_features_wide_range"})
+        found = False
+        for folder in (ANBENNAR / "common/genes", orc.DEFAULT_GAME / "common/genes", SUBMOD / "common/genes"):
+            for path in folder.glob("*.txt"):
+                if re.search(r"(?m)^\s*age_preset_child_features_wide_range\s*=\s*\{",
+                             path.read_bytes().decode("utf-8-sig", "replace")):
+                    found = True
+        self.assertTrue(found, "age_preset_child_features_wide_range is defined nowhere: copy EK2's definition")
+
+
 if __name__ == "__main__":
     unittest.main()

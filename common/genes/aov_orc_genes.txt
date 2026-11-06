@@ -1,0 +1,241 @@
+﻿# Anbennar Overhaul: Elder Kings 2's orc genes (Workshop 2887120253; credit to its team), renamed. See
+# docs/systems/orc-portraits.md. Everyone but orcs keeps each gene's empty index 0, so no other portrait changes.
+# Set by the orc ethnicities (common/ethnicities/aov_orc_ethnicities.txt) and inherited, so half-orcs blend.
+
+morph_genes = {
+
+	aov_orc_nose = { # EK2: race_gene_mer_nose
+		inheritable = yes
+		ugliness_feature_categories = { head }
+		group = nose
+		no_orc_nose = {
+			visible = no
+			index = 0
+			male = {}
+			female = male
+			boy = male
+			girl = male
+		}
+		orc_nose = {
+			index = 1
+			male = {
+				setting = { attribute = "aov_orc_nose_bs"	value = { min = 0.0 max = 1.0 }	age = age_preset_child_features_wide_range }
+			}
+			female = {
+				setting = { attribute = "aov_orc_nose_bs"	value = { min = 0.0 max = 1.0 }	age = age_preset_child_features_wide_range }
+			}
+			boy = male
+			girl = female
+		}
+	}
+
+	aov_orc_forehead = { # EK2: race_gene_mer_forehead
+		inheritable = yes
+		ugliness_feature_categories = { head }
+		group = face
+		no_orc_forehead = {
+			visible = no
+			index = 0
+			male = {}
+			female = male
+			boy = male
+			girl = male
+		}
+		orc_forehead = {
+			index = 1
+			male = {
+				decal = {
+					body_part = head
+					textures = {
+						normal = "gfx/models/portraits/aov_orc/aov_orc_male_forehead_normal.dds"
+					}
+					blend_modes = {
+						normal = overlay
+					}
+					alpha_curve = {
+						{ 0.0 0.0 }
+						{ 1.0 1.0 }
+					}
+					priority = 0
+					decal_apply_order = post_skin_color
+				}
+			}
+			female = {
+				decal = {
+					body_part = head
+					textures = {
+						normal = "gfx/models/portraits/aov_orc/aov_orc_female_forehead_normal.dds"
+					}
+					blend_modes = {
+						normal = overlay
+					}
+					alpha_curve = {
+						{ 0.0 0.0 }
+						{ 1.0 1.0 }
+					}
+					priority = 0
+					decal_apply_order = post_skin_color
+				}
+			}
+			boy = male
+			girl = female
+		}
+	}
+
+	aov_orc_tusks = { # EK2: beast_teeth
+		inheritable = yes
+		sync_inheritance_with = skin_color
+		group = mouth
+		no_orc_tusks = {
+			visible = no
+			index = 0
+			male = {}
+			female = male
+			boy = male
+			girl = male
+		}
+		orc_tusk_size = {
+			visible = no
+			index = 1
+			male = {
+				setting = { attribute = "aov_orc_tusks_bs"	value = { min = 0.0 max = 1.0 }	age = age_preset_child_features_wide_range }
+				setting = { attribute = "aov_orc_lips_bs"	value = { min = 0.0 max = 1.0 }	age = age_preset_child_features_wide_range }
+			}
+			female = {
+				setting = { attribute = "aov_orc_tusks_bs"	value = { min = 0.0 max = 0.9 }	age = age_preset_child_features_wide_range }
+				setting = { attribute = "aov_orc_lips_bs"	value = { min = 0.0 max = 0.9 }	age = age_preset_child_features_wide_range }
+			}
+			boy = male
+			girl = female
+		}
+	}
+
+	aov_orc_wrinkles = { # EK2: race_extra_wrinkly_gene, using the game's own textures
+		inheritable = yes
+		no_orc_wrinkles = {
+			index = 0
+			male = {}
+			female = male
+			boy = male
+			girl = male
+		}
+		orc_wrinkles = {
+			index = 1
+			male = {
+				decal = {
+					body_part = head
+					textures = {
+						diffuse = "gfx/models/portraits/decals/male_head/decal_male_head_old_04_diffuse.dds"
+						normal = "gfx/models/portraits/decals/male_head/decal_male_head_old_04_normal.dds"
+					}
+					blend_modes = {
+						diffuse = multiply
+						normal = overlay
+					}
+					alpha_curve = {
+						{ 0.0 0.0 }
+						{ 0.5 0.2 }
+						{ 1.0 0.5 }
+					}
+					age = {
+						mode = multiply
+						curve = {
+							{ 0.0 0.0 }
+							{ 0.06 0.0 }
+							{ 0.2 1.0 }
+						}
+					}
+					priority = 0
+				}
+				decal = {
+					body_part = torso
+					textures = {
+						diffuse = "gfx/models/portraits/decals/male_body/decal_male_body_old_01_diffuse.dds"
+						normal = "gfx/models/portraits/decals/male_body/decal_male_body_old_01_normal.dds"
+					}
+					blend_modes = {
+						diffuse = multiply
+						normal = overlay
+					}
+					alpha_curve = {
+						{ 0.0 0.0 }
+						{ 0.5 0.2 }
+						{ 1.0 0.5 }
+					}
+					age = {
+						mode = multiply
+						curve = {
+							{ 0.0 0.0 }
+							{ 0.06 0.0 }
+							{ 0.2 1.0 }
+						}
+					}
+					priority = 0
+				}
+			}
+			female = male
+			boy = male
+			girl = male
+		}
+	}
+
+	aov_orc_horns = { # EK2: race_giantish_horns. Male only, as EK2's giantish_horns_1
+		group = head
+		inheritable = yes
+		no_orc_horns = {
+			index = 0
+			male = {}
+			female = male
+			boy = male
+			girl = male
+		}
+		orc_horns = {
+			index = 1
+			male = {
+				setting = {
+					attribute = "aov_orc_horns_bs"	value = { min = 0.0 max = 1.0 }
+					age = {
+						mode = multiply
+						curve = {
+							{ 0.0 0.0 }
+							{ 0.1 0.0 }
+							{ 0.18 1.0 }
+						}
+					}
+				}
+				decal = {
+					body_part = head
+					textures = {
+						diffuse = "gfx/models/portraits/aov_orc/aov_orc_horns_diffuse.dds"
+						normal = "gfx/models/portraits/aov_orc/aov_orc_horns_normal.dds"
+						properties = "gfx/models/portraits/aov_orc/aov_orc_horns_properties.dds"
+					}
+					alpha_curve = {
+						{ 0.0 0.0 }
+						{ 0.5 0.0 }
+						{ 0.55 0.8 }
+						{ 1.0 1.0 }
+					}
+					blend_modes = {
+						diffuse = replace
+						normal = overlay
+						properties = overlay
+					}
+					priority = 3
+					decal_apply_order = post_skin_color
+					age = {
+						mode = multiply
+						curve = {
+							{ 0.0 0.0 }
+							{ 0.1 0.0 }
+							{ 0.18 1.0 }
+						}
+					}
+				}
+			}
+			boy = male
+			female = {}
+			girl = female
+		}
+	}
+}

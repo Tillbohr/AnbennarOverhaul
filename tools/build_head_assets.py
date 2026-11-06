@@ -1,4 +1,4 @@
-"""Regenerate the head .asset overrides that carry the overhaul's extra head shapes (gnoll head; see SHAPES).
+"""Regenerate the head .asset overrides that carry the overhaul's extra head shapes (gnoll head, orc face; see SHAPES).
 
 A head shape is a blend shape on the game's own head mesh, so it must be listed in the head mesh and the head entity,
 which Anbennar defines in its copies of the game's male_head.asset and female_head.asset. Assets can only be overridden
@@ -27,14 +27,34 @@ HEADS = {
 
 # sex: (blend shape id, mesh relative to the asset's folder), added after Anbennar's kobold head normals
 SHAPES = {
-    "male": [("male_gnoll_head", "blendshapes/aov_gnoll_male_head_bs.mesh")],
-    "female": [("female_gnoll_head", "blendshapes/aov_gnoll_female_head_bs.mesh")],
+    "male": [
+        ("male_gnoll_head", "blendshapes/aov_gnoll_male_head_bs.mesh"),
+        ("male_aov_orc_nose", "blendshapes/aov_orc_male_nose.mesh"),
+        ("male_aov_orc_lips", "blendshapes/aov_orc_male_lips.mesh"),
+        ("male_aov_orc_horns", "blendshapes/aov_orc_male_horns.mesh"),
+    ],
+    "female": [
+        ("female_gnoll_head", "blendshapes/aov_gnoll_female_head_bs.mesh"),
+        ("female_aov_orc_nose", "blendshapes/aov_orc_female_nose.mesh"),
+        ("female_aov_orc_lips", "blendshapes/aov_orc_female_lips.mesh"),
+    ],
 }
 
 # sex: (attribute a gene sets, blend shape id), added after Anbennar's kobold head proportions
 ATTRIBUTES = {
-    "male": [("gnoll_head_bs", "male_gnoll_head")],
-    "female": [("gnoll_head_bs", "female_gnoll_head")],
+    "male": [
+        ("gnoll_head_bs", "male_gnoll_head"),
+        ("aov_orc_nose_bs", "male_aov_orc_nose"),
+        ("aov_orc_lips_bs", "male_aov_orc_lips"),
+        ("aov_orc_horns_bs", "male_aov_orc_horns"),
+        ("aov_orc_tusks_bs", "male_bs_neutral"),  # the tusks are on the teeth entity; a head gene sets them, as in EK2
+    ],
+    "female": [
+        ("gnoll_head_bs", "female_gnoll_head"),
+        ("aov_orc_nose_bs", "female_aov_orc_nose"),
+        ("aov_orc_lips_bs", "female_aov_orc_lips"),
+        ("aov_orc_tusks_bs", "female_bs_neutral"),
+    ],
 }
 
 
