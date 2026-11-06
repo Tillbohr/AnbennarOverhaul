@@ -77,7 +77,8 @@ aov_tribe_duel.1 = {
 	}
 }
 
-# The fight's result, on the initiator. Nobody dies inside the combat (FATALITY = no), so the titles move first.
+# The fight's result, on the initiator. Nobody dies inside the combat (FATALITY = no), so the top title moves first and
+# the old ruler's other titles then pass to their heir.
 aov_tribe_duel.2 = {
 	hidden = yes
 
@@ -88,15 +89,18 @@ aov_tribe_duel.2 = {
 		}
 		if = {
 			limit = { scope:sc_victor = scope:challenger }
-			aov_tribe_duel_winner_takes_all_effect = yes
-			scope:challenger = {
-				every_held_title = {
+			aov_tribe_duel_winner_takes_title_effect = yes
+			scope:title_being_fought_over = {
+				if = {
 					limit = {
 						tier >= tier_duchy
 						aov_is_pool_title_trigger = yes
 					}
+					set_capital_county = scope:challenger.capital_county
 					aov_tribe_title_sync_effect = yes
 				}
+			}
+			scope:challenger = {
 				send_interface_toast = {
 					title = aov_tribe_duel.2.won
 					left_icon = scope:ruler

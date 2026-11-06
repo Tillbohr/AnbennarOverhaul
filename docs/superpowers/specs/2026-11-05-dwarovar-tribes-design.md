@@ -296,8 +296,9 @@ Governments).
   - no duel is fought and no titles change. The challenger's cooldown still runs.
 - **The fight:** `FATALITY = no`, so nobody dies inside the combat; the outcome event does the killing, in the order
   below.
-- **If the challenger wins:** they take every title the ruler holds, the ruler's vassals pass with them, and the ruler
-  dies (`death_reason = death_duel`). Transfers happen before the death, so the realm does not partition. The sync
+- **If the challenger wins:** they take the ruler's top title, and the ruler's other vassals pass with it, as in vanilla's
+  tribal challenge. The ruler becomes the winner's vassal with their other titles (or stays independent if they hold
+  another title of the same rank), then dies (`death_reason = death_duel`), so those titles pass to their heir. The sync
   effect then sets the winner's arms and name.
 - **If the ruler wins:** the challenger dies, and their titles pass to their heir normally.
 - **AI:** challenges when its prowess beats the ruler's by a margin, weighted by traits; never when far weaker. An AI
@@ -480,7 +481,8 @@ Other findings:
 4. What the game does with counties left unheld, such as Khugdihr's. This was not checked during design.
 5. Cultures with no followers survive and are not stuck far behind on innovations when revived. If they are, the revival
    decision catches them up.
-6. Duels: all three outcomes. On a win, the realm does not partition and name and arms change. On a refusal, prestige
+6. Duels: all three outcomes. On a win, the winner holds the top title and the vassals, the old ruler's heir keeps the
+   rest as the winner's vassal, and name and arms change. On a refusal, prestige
    falls to the lowest level from any starting level, and the modifier shows -50 in other rulers' opinion breakdowns and
    stays after years pass. A goblin vassal is never offered the challenge.
 7. Forming duchy, kingdom and empire titles; the raise-a-vassal interaction; a duke granting a county to a courtier

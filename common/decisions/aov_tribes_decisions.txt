@@ -226,7 +226,7 @@ aov_form_tribal_empire_decision = {
 	}
 }
 
-# An orc vassal of an independent warband challenges their ruler for everything (events/aov_tribes_duel_events.txt).
+# An orc vassal of an independent warband challenges their ruler for the throne (events/aov_tribes_duel_events.txt).
 aov_challenge_warlord_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/decision_destiny_goal.dds"

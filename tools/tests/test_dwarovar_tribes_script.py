@@ -207,29 +207,55 @@ class DuelEventTests(unittest.TestCase):
     def test_outcome_order(self):
         win = self.outcome[self.outcome.index("scope:sc_victor = scope:challenger"):]
         win = win[:win.index("else = {")]
-        self.assertLess(win.index("aov_tribe_duel_winner_takes_all_effect = yes"), win.index("death = {"))
-        self.assertLess(win.index("aov_tribe_duel_winner_takes_all_effect = yes"), win.index("aov_tribe_title_sync_effect = yes"))
+        self.assertLess(win.index("aov_tribe_duel_winner_takes_title_effect = yes"), win.index("death = {"))
+        self.assertLess(win.index("aov_tribe_duel_winner_takes_title_effect = yes"), win.index("aov_tribe_title_sync_effect = yes"))
         self.assertIn("death_reason = death_duel", win)
         self.assertRegex(win, r"scope:ruler = \{\s*death = \{\s*death_reason = death_duel\s*killer = scope:sc_victor")
 
     def test_ruler_win_kills_challenger(self):
         lose = self.outcome[self.outcome.rindex("else = {"):]
         self.assertRegex(lose, r"scope:challenger = \{\s*death = \{\s*death_reason = death_duel\s*killer = scope:sc_victor")
-        self.assertNotIn("winner_takes_all", lose)
+        self.assertNotIn("winner_takes_title", lose)
 
     def test_invalidated_duel_has_no_consequence(self):
-        for gone in ("death =", "change_title_holder", "winner_takes_all", "add_prestige"):
+        for gone in ("death =", "change_title_holder", "winner_takes_title", "add_prestige"):
             self.assertNotIn(gone, self.invalid)
         self.assertIn("send_interface_toast", self.invalid)
 
-    def test_winner_takes_every_title_and_vassal(self):
-        effect = blocks(read("common/scripted_effects/aov_tribes_effects.txt"))["aov_tribe_duel_winner_takes_all_effect"]
+    def winner_effect(self):
+        return blocks(read("common/scripted_effects/aov_tribes_effects.txt"))["aov_tribe_duel_winner_takes_title_effect"]
+
+    def test_winner_takes_only_the_top_title(self):
+        effect = self.winner_effect()
         self.assertIn("type = usurped", effect)
         self.assertIn("add_claim_on_loss = no", effect)
-        self.assertRegex(effect, r"every_held_title = \{\s*change_title_holder = \{\s*holder = scope:challenger")
-        self.assertRegex(effect, r"every_vassal = \{\s*limit = \{ this != scope:challenger \}\s*change_liege")
+        self.assertRegex(effect, r"primary_title = \{ save_scope_as = title_being_fought_over \}")
+        self.assertRegex(effect, r"scope:title_being_fought_over = \{\s*change_title_holder = \{\s*holder = scope:challenger")
+        self.assertNotIn("every_held_title", effect)
+        self.assertEqual(effect.count("change_title_holder"), 1)
         self.assertIn("resolve_title_and_vassal_change = scope:change", effect)
+
+    def test_vassals_and_the_old_ruler_follow_the_winner(self):
+        effect = self.winner_effect()
+        self.assertRegex(effect, r"every_vassal = \{\s*limit = \{ this != scope:challenger \}\s*add_to_temporary_list = transferred_vassals")
+        self.assertRegex(effect, r"every_in_list = \{\s*list = transferred_vassals\s*change_liege = \{\s*LIEGE = scope:challenger")
+        self.assertRegex(effect, r"any_held_title = \{\s*count = 0\s*this != scope:title_being_fought_over\s*"
+                                 r"tier = scope:title_being_fought_over\.tier\s*\}\s*\}\s*add_to_temporary_list = transferred_vassals")
         self.assertRegex(effect, r"scope:challenger = \{\s*becomes_independent = \{ change = scope:change \}")
+
+    def test_won_pool_title_takes_the_winners_capital_and_arms(self):
+        win = self.outcome[self.outcome.index("scope:sc_victor = scope:challenger"):]
+        win = win[:win.index("else = {")]
+        self.assertNotIn("every_held_title", win)
+        self.assertRegex(win, r"scope:title_being_fought_over = \{\s*if = \{\s*limit = \{\s*tier >= tier_duchy\s*"
+                              r"aov_is_pool_title_trigger = yes\s*\}\s*set_capital_county = scope:challenger\.capital_county\s*"
+                              r"aov_tribe_title_sync_effect = yes")
+
+    def test_text_promises_the_top_title_only(self):
+        loc = read("localization/english/aov_tribes_duel_l_english.yml")
+        self.assertNotIn("every title", loc)
+        self.assertNotIn("everything", loc)
+        self.assertIn("heir", re.search(r'(?m)^ aov_challenge_warlord_effect_tooltip:0 "(.*)"$', loc).group(1))
 
     def test_duel_loc_complete(self):
         loc = read("localization/english/aov_tribes_duel_l_english.yml")
