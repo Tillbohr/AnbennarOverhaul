@@ -52,9 +52,9 @@ I09 and I10 (`python -I tools/eu4_import.py convert gfx/flags/<tag>.tga gfx/coat
 - **Khugdihr stays kobold:** Anbennar's four counties get no culture, faith, holder or province history; the new
   counties of `k_khugdihr` are `darkscale`/`nimrithani` and unheld (`KOBOLD_KINGDOMS`). `check_khugdihr` stops the
   build when Anbennar gives any `k_khugdihr` title a holder or adds a county under it.
-- **People:** per duchy of the eight dwarven kingdoms an elder (from 860.1.1, dies 1000-1010) and his son (`aov_wd_*`,
-  dynasties `aov_wd_dynasty_*`); the emperor holds Amldihr; each other kingdom is held by its hold duke under him.
-  Every county, character and dynasty of a kingdom has its hold's culture (`KINGDOM_CULTURES`), `ancestor_worship`.
+- **People:** no dwarves here in 1022 (`LIVING_KINGDOMS = ()`): the empire and the eight dwarven kingdoms end unheld, as
+  titles to reclaim, and tribes hold their counties (see `dwarovar-tribes.md`). The cultures stay for revival
+  (`KINGDOM_CULTURES`, `DYNASTY_NAMES`), and `DYNASTY_NAMES` is unused until dwarves return.
   Dynasties are named `az-<duchy>`, except ten that take EU4 names with no prefix (`DYNASTY_NAMES`): Strongbellow,
   Goldbeard and Goblinslayer (Mithril), Ironhelm (Dagrite), Forktongue, Ringbeard and Kezdori (Opal), Leadpipe (Lead),
   Fourfoot (Ramsteel) and Melmarn (Sapphire). Vale counties: castle, city, church; terrain from `SURFACE_TERRAIN`.
@@ -86,7 +86,7 @@ I09 and I10 (`python -I tools/eu4_import.py convert gfx/flags/<tag>.tga gfx/coat
   1. The map loads with the new ids; locators sit on the floors and in the Vale.
   2. The de jure map mode shows `e_west_dwarovar` with nine kingdoms (Khugdihr included) and no "West Dwarovar
      Unsorted"; Khugdihr has left `e_castanor` in both bookmarks.
-  3. Khugdihr is kobold and unheld; the eight dwarven kingdoms have their elders.
+  3. Khugdihr is kobold and unheld; tribes hold the rest of the region.
   4. Cave floors versus the Vale: the floors stand ~28,400 and the Vale ~5,000-12,000, so the mouths ramp steeply
      over 12 px (risk: a cliff). Fixes: a longer `CARVE_RAMP` for this range, or a fixed ground height.
   5. Gates face the right way (out of the caves; into the Vale at the mouths). A mouth gate's direction is one of
@@ -96,8 +96,7 @@ I09 and I10 (`python -I tools/eu4_import.py convert gfx/flags/<tag>.tga gfx/coat
      rock their `through` is 7385, which touches only the West Dwarovar side, as 2426 did on the Dwarovrod row), and the AI
      paths through them in a war; the error log has no adjacency error for `7282;7040` or `7295;7068`. The game
      reads map files at launch only: relaunch after rebuilding them.
-  8. Cultures: each of the eight kingdoms' counties and characters shows its culture at both bookmarks; Khugdihr is
-     still kobold.
+  8. Cultures: tribe counties show `black_orc` or `cave_goblin` at both bookmarks; Khugdihr is still kobold.
   9. The culture window shows West Dwarovar Dwarven, the base traditions and the own tradition. Platinum shows Artisans
      with Royal Court.
   10. Legalistic, Caravaneers, Culinary Art and Sorcerous Metallurgy show and apply on their cultures, though their

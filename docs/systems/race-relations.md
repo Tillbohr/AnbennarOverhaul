@@ -25,6 +25,9 @@ Goldscale kobolds, ...); CK3 Anbennar has none of those races or cultures, so th
 | `cb_civ_vs_monster` (neighbours, half aggressive expansion) | `aov_purge_monsters_cb`: the other way round, half the cost, and piety on victory |
 | (none) | No marriage, betrothal, concubinage or alliance across the line; alliances across it break |
 
+A third war in that file, `aov_tribal_war_cb`, is for tribes against each other (see `dwarovar-tribes.md`), which also adds the AI
+surface rule to `aov_monster_conquest_cb`.
+
 Both casus belli (`common/casus_belli_types/aov_race_relations_wars.txt`) are built on the game's `county_conquest_cb`
 and target a county next to the attacker's realm. A war is between rulers, so the ruler's own side counts, not the
 county's people.
